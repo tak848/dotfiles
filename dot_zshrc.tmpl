@@ -37,8 +37,7 @@ GIT_PS1_SHOWUPSTREAM=auto
 # プロンプトの表示設定(好きなようにカスタマイズ可)
 setopt PROMPT_SUBST ; PS1='%F{green}%n@%m%f: %F{cyan}%~%f %F{red}$(__git_ps1 "(%s)")%f
 \$ '
-eval "$(anyenv init -)"
-export GPG_TTY=$(tty)
+# eval "$(anyenv init -)"
 alias vi="nvim"
 alias vim="nvim"
 alias view="nvim -R"
@@ -73,17 +72,14 @@ zinit load agkozak/zsh-z
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-chpwd() {
-    if [[ $(pwd) != $HOME ]]; then;
-        ls
-    fi
-}
 alias killQL='killall -9 -v QuickLookUIService'
 export PATH="/opt/homebrew/opt/tcl-tk/bin:$PATH"
 
 alias ojcpp='(){g++ $1 && oj t -d tests}'
+alias ojclpp='(){clang++ -std=c++20 $1 && oj t -d tests}'
 alias ojpy='(){oj t -c "python $1" -d tests}'
 alias runcpp='(){g++ $1 && echo $2 | ./a.out}'
+alias runc='(){gcc $1 -o $2 && ./$2}'
 alias fvmf='fvm flutter'
 alias mkcd='(){mkdir $1;cd $1}'
 export CPLUS_INCLUDE_PATH="CPLUS_INCLUDE_PATH:/Users/tak/local_documents/atcoder/ac-library"
@@ -91,3 +87,50 @@ eval "$(gh completion -s zsh)"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+alias ls="exa"
+alias cat="bat"
+alias grep="rg"
+alias find="fd"
+
+chpwd() {
+    if [[ $(pwd) != $HOME ]]; then;
+        ls -la
+    fi
+}
+export GPG_TTY=$(tty)
+export PATH=$PATH:$HOME/bin
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
+fbr() {
+  local branches branch
+  branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
+  branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+# プロセスをkill
+fkill() {
+  local pid
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    echo $pid | xargs kill -${1:-9}
+  fi
+}
+export PATH=$PATH:$(go env GOPATH)/bin
+export PATH="/Applications/MATLAB_R2022b.app/bin:$PATH"
+eval "$(github-copilot-cli alias -- "$0")"
+
+fpath=($fpath ~/.zsh/completion)
+
+
+export GRAPHVIZ_DOT="$(brew --prefix graphviz)/bin/dot"
+export DYLD_LIBRARY_PATH="$(brew --prefix graphviz)/lib"
+
+source <(kubectl completion zsh)
+alias k=kubectl
+compdef __start_kubectl k
