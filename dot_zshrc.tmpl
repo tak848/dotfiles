@@ -82,14 +82,14 @@ alias runcpp='(){g++ $1 && echo $2 | ./a.out}'
 alias runc='(){gcc $1 -o $2 && ./$2}'
 alias fvmf='fvm flutter'
 alias mkcd='(){mkdir $1;cd $1}'
-export CPLUS_INCLUDE_PATH="CPLUS_INCLUDE_PATH:/Users/tak/local_documents/atcoder/ac-library"
+export CPLUS_INCLUDE_PATH="CPLUS_INCLUDE_PATH:/Users/{{ .chezmoi.username }}/local_documents/atcoder/ac-library"
 eval "$(gh completion -s zsh)"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
-alias ls="exa"
+alias ls="eza"
 alias cat="bat"
 alias grep="rg"
 alias find="fd"
@@ -134,4 +134,11 @@ export DYLD_LIBRARY_PATH="$(brew --prefix graphviz)/lib"
 source <(kubectl completion zsh)
 alias k=kubectl
 compdef __start_kubectl k
-export SAM_CLI_TELEMETRY=0
+
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /Users/{{ .chezmoi.username }}/.dart-cli-completion/zsh-config.zsh ]] && . /Users/{{ .chezmoi.username }}/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
+export PATH="$PATH":"$HOME/fvm/default/bin"
+# {{ .chezmoi.username }} {{.chezmoi.username | quote}}
