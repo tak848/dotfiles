@@ -10,7 +10,7 @@ set autoindent
 set hlsearch
 set clipboard=unnamed
 set number
-set history=10000
+set history=1000000
 set wildmode=full
 set nocompatible
 filetype plugin on
@@ -22,13 +22,3 @@ autocmd CmdlineLeave * :call system('im-select com.apple.keylayout.ABC')
 endi
 
 syntax on
-
-call plug#begin()
-Plug 'tpope/vim-surround'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-call plug#end()
-
-set smartcase
-set ignorecase
-
-abbr _sh #!/bin/bash

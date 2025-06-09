@@ -1,0 +1,119 @@
+{
+  "checksums": [
+    {
+      "id": "github_release/github.com/cli/cli/v2.74.0/gh_2.74.0_linux_amd64.tar.gz",
+      "checksum": "E55C9D49DC49C0B0FEF0A9ACD3510482FD9E27FF52AE80F8A6E838CD25B4CD89",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/cli/cli/v2.74.0/gh_2.74.0_linux_arm64.tar.gz",
+      "checksum": "221222BD00281AB993F7E2C19B9F3F2482D66FA759BAEDCD8668785C940C8DF7",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/cli/cli/v2.74.0/gh_2.74.0_macOS_amd64.zip",
+      "checksum": "406D6F9BF55B2E11F02B9F5C9FCA71ECDD1C7D4E8F743D7D1DED571F6565BA72",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/cli/cli/v2.74.0/gh_2.74.0_macOS_arm64.zip",
+      "checksum": "4FD32FE65B46966882D7D94466D0B971F10AC69EB8BD7B58242EF489EDA119E4",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/cli/cli/v2.74.0/gh_2.74.0_windows_amd64.zip",
+      "checksum": "00513A42845DB984482F0A0142E854B35056D0E6A19CBCB6FA30AF330C9442D5",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/cli/cli/v2.74.0/gh_2.74.0_windows_arm64.zip",
+      "checksum": "F9DE7F6D53CF6D13BFA86421EC06C9CC2AD193E0E25DD1E2307C4D9DB874354B",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/pnpm/pnpm/v10.12.1/pnpm-linux-arm64",
+      "checksum": "C2F9E9D42D81F9F40A0F895513D014A08D5ECB0ABC9E15C426ECFDE6F492706B",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/pnpm/pnpm/v10.12.1/pnpm-linux-x64",
+      "checksum": "EB2DC1F109BCA046CE734D062C8DD8F34DB2B58A115992F9B086456EFD7B2305",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/pnpm/pnpm/v10.12.1/pnpm-macos-arm64",
+      "checksum": "8B39B2129A19EEEC9511EB7CDDE2450B604E389551D59AD738167F7495B56D52",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/pnpm/pnpm/v10.12.1/pnpm-macos-x64",
+      "checksum": "4C78E34022BFECFAE60C041148A8022858B80B50E3B31C8FA8BA7B2B6259DD4A",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/pnpm/pnpm/v10.12.1/pnpm-win-x64.exe",
+      "checksum": "9B802759436B3BCCFE0A78CB0B86E937AC44902EC16597260F59D5394602F092",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/golang.org/dl/go1.24.4.darwin-amd64.tar.gz",
+      "checksum": "69BEF555E114B4A2252452B6E7049AFC31FBDF2D39790B669165E89525CD3F5C",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/golang.org/dl/go1.24.4.darwin-arm64.tar.gz",
+      "checksum": "27973684B515EAF461065054E6B572D9390C05E69BA4A423076C160165336470",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/golang.org/dl/go1.24.4.linux-amd64.tar.gz",
+      "checksum": "77E5DA33BB72AEAEF1BA4418B6FE511BC4D041873CBF82E5AA6318740DF98717",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/golang.org/dl/go1.24.4.linux-arm64.tar.gz",
+      "checksum": "D5501EE5ACA0F258D5FE9BFAED401958445014495DC115F202D43D5210B45241",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/golang.org/dl/go1.24.4.windows-amd64.zip",
+      "checksum": "B751A1136CB9D8A2E7EBB22C538C4F02C09B98138C7C8BFB78A54A4566C013B1",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/golang.org/dl/go1.24.4.windows-arm64.zip",
+      "checksum": "D17DA51BC85BD010754A4063215D15D2C033CC289D67CA9201A03C9041B2969D",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/nodejs.org/dist/v24.1.0/node-v24.1.0-darwin-arm64.tar.gz",
+      "checksum": "D474192C55B9F54EAD37310DFAB54431B9BA841FB8ABDF8CA800E7A227AFC1FB",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/nodejs.org/dist/v24.1.0/node-v24.1.0-darwin-x64.tar.gz",
+      "checksum": "CDB47A43209C2FA4B6D9CCF7B71E59096448D172D0034AA213284F8931EF0946",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/nodejs.org/dist/v24.1.0/node-v24.1.0-linux-arm64.tar.gz",
+      "checksum": "4ED15737D3781BAA7D69B6A2E576507666229208FD25C83D58ABF8D95B6A56F3",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/nodejs.org/dist/v24.1.0/node-v24.1.0-linux-x64.tar.gz",
+      "checksum": "4D2BEAA55D962C1B31D6A4663CC831087F79F83F304A066963B65C8F4495843F",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/nodejs.org/dist/v24.1.0/node-v24.1.0-win-x64.zip",
+      "checksum": "81D6774F5C1581C7DDD32FB25CF6138F68755DFBB245025D05A249AAFA35EA9D",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.376.0/registry.yaml",
+      "checksum": "0C4BC5CD15FDE98B096CDE89DD5E18BACD44CF8C36B707167616CDEB018B032D",
+      "algorithm": "sha256"
+    }
+  ]
+}
