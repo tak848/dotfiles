@@ -88,6 +88,7 @@ fi
 if ! command -v aqua &> /dev/null; then
   echo "aqua not found. Installing aqua via Homebrew..."
   brew install aquaproj/aqua/aqua
+  aqua i -a -l
   echo "aqua installed successfully."
 else
   # echo "aqua is already installed."
