@@ -20,3 +20,4 @@ packages:
 - name: nodejs/node@v24.1.0
 - name: junegunn/fzf@v0.62.0
 - name: junegunn/fzf/fzf-tmux@v0.62.0
+- name: starship/starship@v1.23.0

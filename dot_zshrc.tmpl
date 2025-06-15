@@ -94,6 +94,11 @@ fi
 # 毎回aqua installを実行（必要なツールがあればインストールされる）
 aqua i -a -l
 
+# Starshipの初期化
+if command -v starship &> /dev/null; then
+  eval "$(starship init zsh)"
+fi
+
 # fzfの設定 (aqua経由でインストールされるfzfを使用)
 if command -v fzf &> /dev/null; then
   source <(fzf --zsh)
