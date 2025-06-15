@@ -1,6 +1,11 @@
 {
   "checksums": [
     {
+      "id": "github_content/github.com/junegunn/fzf/v0.62.0/bin/fzf-tmux",
+      "checksum": "8060C0B517EC82097155043B2909B3AED22728B2E142B80F7832EC83375CB599",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/cli/cli/v2.74.0/gh_2.74.0_linux_amd64.tar.gz",
       "checksum": "E55C9D49DC49C0B0FEF0A9ACD3510482FD9E27FF52AE80F8A6E838CD25B4CD89",
       "algorithm": "sha256"
