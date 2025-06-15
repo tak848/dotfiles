@@ -88,12 +88,11 @@ fi
 if ! command -v aqua &> /dev/null; then
   echo "aqua not found. Installing aqua via Homebrew..."
   brew install aquaproj/aqua/aqua
-  aqua i -a -l
   echo "aqua installed successfully."
-else
-  # aquaが既にインストールされている場合は更新をチェック
-  brew upgrade aquaproj/aqua/aqua 2>/dev/null || true
 fi
+
+# 毎回aqua installを実行（必要なツールがあればインストールされる）
+aqua i -a -l
 
 # fzfの設定 (aqua経由でインストールされるfzfを使用)
 if command -v fzf &> /dev/null; then
@@ -126,5 +125,3 @@ export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.conf
 export NPM_CONFIG_PREFIX=${XDG_DATA_HOME:-$HOME/.local/share}/npm-global
 export PATH=$NPM_CONFIG_PREFIX/bin:$PATH
 
-# 毎回aqua installを実行（必要なツールがあればインストールされる）
-aqua i -a -l
