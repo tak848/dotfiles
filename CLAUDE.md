@@ -40,10 +40,9 @@ chezmoi diff
 
 # Update aqua packages
 aqua update
-aqua i -a -l
 
-# Verify aqua checksums
-cd ~/.config/aquaproj-aqua && aqua policy allow
+# After adding/updating packages in aqua.yaml, update checksums
+aqua update-checksum
 ```
 
 ## Architecture Notes

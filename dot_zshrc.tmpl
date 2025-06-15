@@ -94,15 +94,10 @@ else
   # echo "aqua is already installed."
 fi
 
-# 4. fzfのインストールチェック
-if ! command -v fzf &> /dev/null; then
-  echo "fzf not found. Installing fzf via Homebrew..."
-  brew install fzf
-  echo "fzf installed successfully."
-else
-  # echo "fzf is already installed."
+# fzfの設定 (aqua経由でインストールされるfzfを使用)
+if command -v fzf &> /dev/null; then
+  source <(fzf --zsh)
 fi
-source <(fzf --zsh)
 # fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
 fbr() {
   local branches branch
