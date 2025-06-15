@@ -91,7 +91,8 @@ if ! command -v aqua &> /dev/null; then
   aqua i -a -l
   echo "aqua installed successfully."
 else
-  # echo "aqua is already installed."
+  # aquaが既にインストールされている場合は更新をチェック
+  brew upgrade aquaproj/aqua/aqua 2>/dev/null || true
 fi
 
 # fzfの設定 (aqua経由でインストールされるfzfを使用)
@@ -124,3 +125,6 @@ export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.conf
 # https://zenn.dev/shunsuke_suzuki/articles/aqua-nodejs-support#aqua-%E3%81%A7-node.js-%E3%82%92%E7%AE%A1%E7%90%86%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95
 export NPM_CONFIG_PREFIX=${XDG_DATA_HOME:-$HOME/.local/share}/npm-global
 export PATH=$NPM_CONFIG_PREFIX/bin:$PATH
+
+# 毎回aqua installを実行（必要なツールがあればインストールされる）
+aqua i -a -l
