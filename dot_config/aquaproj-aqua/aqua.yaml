@@ -21,3 +21,6 @@ packages:
 - name: junegunn/fzf@v0.62.0
 - name: junegunn/fzf/fzf-tmux@v0.62.0
 - name: starship/starship@v1.23.0
+- name: astral-sh/uv@0.7.13
+- name: aws/aws-cli@2.27.35
+- name: bufbuild/buf@v1.54.0

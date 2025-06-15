@@ -6,6 +6,61 @@
       "algorithm": "sha256"
     },
     {
+      "id": "github_release/github.com/astral-sh/uv/0.7.13/uv-aarch64-apple-darwin.tar.gz",
+      "checksum": "721F532B73171586574298D4311A91D5EA2C802EF4DB3EBAFC434239330090C6",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/astral-sh/uv/0.7.13/uv-aarch64-unknown-linux-musl.tar.gz",
+      "checksum": "52BABA71881C978D32B7C32216AD0CDE4546A4DC62E606C9834EC4616C1610EB",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/astral-sh/uv/0.7.13/uv-x86_64-apple-darwin.tar.gz",
+      "checksum": "D785753AC092E25316180626AA691C5DFE1FB075290457BA4FDB72C7C5661321",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/astral-sh/uv/0.7.13/uv-x86_64-pc-windows-msvc.zip",
+      "checksum": "E199B10BEF1A7CC540014483E7F60F825A174988F41020E9D2A6B01BD60F0669",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/astral-sh/uv/0.7.13/uv-x86_64-unknown-linux-musl.tar.gz",
+      "checksum": "560BB64E060354E45138D7DD47C8DD48A4F7A349AF5520D29CD3C704E79F286C",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/bufbuild/buf/v1.54.0/buf-Darwin-arm64.tar.gz",
+      "checksum": "F01F32A690EFAB3EF22A1C821AEBC0C4BEC7CA63FADDBF64408D7D614E9D7F92",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/bufbuild/buf/v1.54.0/buf-Darwin-x86_64.tar.gz",
+      "checksum": "22C9836A836B867E49E9D0EF223FD934CBF2690E7400FACDDB9BE07B8809F889",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/bufbuild/buf/v1.54.0/buf-Linux-aarch64.tar.gz",
+      "checksum": "F41EF4431858556ECE6A77662D6B9317FA4406585998CB3DFFB7403B3E86713E",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/bufbuild/buf/v1.54.0/buf-Linux-x86_64.tar.gz",
+      "checksum": "FA10FAF16973F3861992CC2687B651350D70EAFD467AEA72CF0994556C2A0927",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/bufbuild/buf/v1.54.0/buf-Windows-arm64.exe",
+      "checksum": "DFEC21011E8C072D33C6F3B55DD6D158AB752664217C5D77B1354D860ADC627B",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/bufbuild/buf/v1.54.0/buf-Windows-x86_64.exe",
+      "checksum": "C69433B5267794BCFCFB9B84D5F705548F0842B2F99D34B14A97F677EC20F2C2",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/cli/cli/v2.74.0/gh_2.74.0_linux_amd64.tar.gz",
       "checksum": "E55C9D49DC49C0B0FEF0A9ACD3510482FD9E27FF52AE80F8A6E838CD25B4CD89",
       "algorithm": "sha256"
@@ -118,6 +173,21 @@
     {
       "id": "github_release/github.com/starship/starship/v1.23.0/starship-x86_64-unknown-linux-musl.tar.gz",
       "checksum": "8D06D2CC67AEDD6316FF58AB679FB80CDED0D85DE1DCD5727DF0633D35356D57",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.27.35.pkg",
+      "checksum": "6EBF5EB6843AE71408677E09CD19FE3C5EA7E657F3088D2C6721001DA87AA993",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.27.35.zip",
+      "checksum": "E9943EE22FB12C5DF6F20AE21AFA943D33DACC4D0488DA5F706678832A1A4815",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.27.35.zip",
+      "checksum": "8EA745B1B7C92E9AED9C4904A4D8CA6F09F4B4509BEA3B97E7F4603F75441320",
       "algorithm": "sha256"
     },
     {
