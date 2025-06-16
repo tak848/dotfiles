@@ -88,9 +88,9 @@ fi
 aqua i -a -l
 
 # direnvの設定（aqua経由でインストール）
-{{- if lookPath "direnv" }}
-eval "$(direnv hook zsh)"
-{{- end }}
+if command -v direnv &> /dev/null; then
+    eval "$(direnv hook zsh)"
+fi
 
 # Starshipの初期化
 if command -v starship &> /dev/null; then
