@@ -75,16 +75,9 @@ if ! command -v brew &> /dev/null; then
     exit 1
 fi
 
-# 2. direnvのインストールチェック
-if ! command -v direnv &> /dev/null; then
-  echo "direnv not found. Installing direnv via Homebrew..."
-  brew install direnv
-  echo "direnv installed successfully."
-else
-  # echo "direnv is already installed."
-fi
+# direnvはaquaで管理されるため、Homebrewでのインストールは不要
 
-# 3. aquaのインストールチェック
+# 2. aquaのインストールチェック
 if ! command -v aqua &> /dev/null; then
   echo "aqua not found. Installing aqua via Homebrew..."
   brew install aquaproj/aqua/aqua
@@ -93,6 +86,11 @@ fi
 
 # 毎回aqua installを実行（必要なツールがあればインストールされる）
 aqua i -a -l
+
+# direnvの設定（aqua経由でインストール）
+{{- if lookPath "direnv" }}
+eval "$(direnv hook zsh)"
+{{- end }}
 
 # Starshipの初期化
 if command -v starship &> /dev/null; then
@@ -126,9 +124,37 @@ fkill() {
 
 export PATH="$(aqua root-dir)/bin:$PATH"
 export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml
+
+# Rancher Desktopの設定（存在する場合のみ）
+{{- if stat (joinPath .chezmoi.homeDir ".rd/bin") }}
+export PATH="{{ .chezmoi.homeDir }}/.rd/bin:$PATH"
+{{- end }}
+
+# MySQL clientの設定（Homebrewとmysql-clientが存在する場合のみ）
+{{- if lookPath "brew" }}
+{{-   $brewPrefix := output "brew" "--prefix" | trim }}
+{{-   if stat (joinPath $brewPrefix "opt/mysql-client") }}
+export PATH="{{ $brewPrefix }}/opt/mysql-client/bin:$PATH"
+export LDFLAGS="-L{{ $brewPrefix }}/opt/mysql-client/lib"
+export CPPFLAGS="-I{{ $brewPrefix }}/opt/mysql-client/include"
+{{-   end }}
+{{- end }}
 # https://zenn.dev/shunsuke_suzuki/articles/aqua-nodejs-support#aqua-%E3%81%A7-node.js-%E3%82%92%E7%AE%A1%E7%90%86%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95
 export NPM_CONFIG_PREFIX=${XDG_DATA_HOME:-$HOME/.local/share}/npm-global
 export PATH=$NPM_CONFIG_PREFIX/bin:$PATH
+
+# pnpmの設定
+{{- if eq .chezmoi.os "darwin" }}
+export PNPM_HOME="{{ .chezmoi.homeDir }}/Library/pnpm"
+{{- else }}
+export PNPM_HOME="${XDG_DATA_HOME:-{{ .chezmoi.homeDir }}/.local/share}/pnpm"
+{{- end }}
+if [ -d "$PNPM_HOME" ]; then
+    case ":$PATH:" in
+        *":$PNPM_HOME:"*) ;;
+        *) export PATH="$PNPM_HOME:$PATH" ;;
+    esac
+fi
 
 # Git worktree間の移動を楽に
 gwt() {

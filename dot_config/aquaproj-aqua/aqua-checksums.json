@@ -91,6 +91,61 @@
       "algorithm": "sha256"
     },
     {
+      "id": "github_release/github.com/cli/cli/v2.74.1/gh_2.74.1_linux_amd64.tar.gz",
+      "checksum": "D62406233A42E0DC577DCEAD8D7BAFABCC4C548D9C3A6DA761C6709BC8F4B373",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/cli/cli/v2.74.1/gh_2.74.1_linux_arm64.tar.gz",
+      "checksum": "F71257FC489A235EF22100BD12B94334A92DE741EDF5C81EDFC712CE0945B555",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/cli/cli/v2.74.1/gh_2.74.1_macOS_amd64.zip",
+      "checksum": "EEAA8C30C2C3F9DD2D4B1D1E5F78B765D0B8E4C3E891B2333EB088B3D81BE277",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/cli/cli/v2.74.1/gh_2.74.1_macOS_arm64.zip",
+      "checksum": "4649ADE28DFDD397F8AA77FA794241058E569BA38F2F622C8AB75581C9C82060",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/cli/cli/v2.74.1/gh_2.74.1_windows_amd64.zip",
+      "checksum": "7CF1239C4E9D35FD114E4E358E94ED5E948F7FDF199D35D41D0CD2E3A7CA06BA",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/cli/cli/v2.74.1/gh_2.74.1_windows_arm64.zip",
+      "checksum": "0E1825BB24FCCFB7AC19672F25067FE684F7B12EC7C27742385BD6687D78C405",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/direnv/direnv/v2.36.0/direnv.darwin-amd64",
+      "checksum": "254697562A34BCE83C76345DB9C37B2B01D2DE19FA6F201E0094D81864EB3F1A",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/direnv/direnv/v2.36.0/direnv.darwin-arm64",
+      "checksum": "3647EEC0CD072A19DDA33A279B262AD8AB7AF609B87FF3C55530A0E91AC8CB4F",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/direnv/direnv/v2.36.0/direnv.linux-amd64",
+      "checksum": "604F3DC51F05620D7EA8D8360B3A18D72CCC842A181EDABCA4D7BD75B6784F88",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/direnv/direnv/v2.36.0/direnv.linux-arm64",
+      "checksum": "C00A71CDB6EBB28E8232E70A7147DFAB40C6F694406729C2D0430BDBA79FCE10",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/direnv/direnv/v2.36.0/direnv.windows-amd64.exe",
+      "checksum": "7B29C7755319116028F32A5189CDB1B873EB5E560933F2B411F3E1E9C12909D0",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/junegunn/fzf/v0.62.0/fzf-0.62.0-darwin_amd64.tar.gz",
       "checksum": "7657712753FEA74F9390B0DC99D175A9336CA722DE413CCCFCA16AAE86720ACD",
       "algorithm": "sha256"
@@ -181,13 +236,28 @@
       "algorithm": "sha256"
     },
     {
+      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.27.36.pkg",
+      "checksum": "59AA278BDD51F434D05F6F43A0E9C337CBF66313AB15F977E089DF26F590EF79",
+      "algorithm": "sha256"
+    },
+    {
       "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.27.35.zip",
       "checksum": "E9943EE22FB12C5DF6F20AE21AFA943D33DACC4D0488DA5F706678832A1A4815",
       "algorithm": "sha256"
     },
     {
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.27.36.zip",
+      "checksum": "26CAD519A2C625EE9FD1B6ACCD355D0C2363B482A0C21EA9EC6B5E7E05D1147A",
+      "algorithm": "sha256"
+    },
+    {
       "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.27.35.zip",
       "checksum": "8EA745B1B7C92E9AED9C4904A4D8CA6F09F4B4509BEA3B97E7F4603F75441320",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.27.36.zip",
+      "checksum": "A1AD0058195CAEE616B417C3CDF20951392435890B58FB1B8FC2409E252E85DA",
       "algorithm": "sha256"
     },
     {
@@ -246,9 +316,39 @@
       "algorithm": "sha256"
     },
     {
+      "id": "http/nodejs.org/dist/v24.2.0/node-v24.2.0-darwin-arm64.tar.gz",
+      "checksum": "D35C21BB80DBF0D774D670B6B51B9467DD6A92581884BA78F29B09C3B50C9DEE",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/nodejs.org/dist/v24.2.0/node-v24.2.0-darwin-x64.tar.gz",
+      "checksum": "D839EF904D7305F429D45288A8B0B43B095E9797DBBCF3BD67B0C8712066B7A3",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/nodejs.org/dist/v24.2.0/node-v24.2.0-linux-arm64.tar.gz",
+      "checksum": "E82B44212EB10EBF4DE9BD945B2FCF950786117F6578581BCDE0ABF4D471AF4A",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/nodejs.org/dist/v24.2.0/node-v24.2.0-linux-x64.tar.gz",
+      "checksum": "074E93576F2B0F0F689D12B5D71314C5CDC384B6EFC315E264120F6A9DD348AF",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/nodejs.org/dist/v24.2.0/node-v24.2.0-win-x64.zip",
+      "checksum": "9427C71B19D05F1905F151F1E67FCD535A4F671D66358DBF5B934A49C371E500",
+      "algorithm": "sha256"
+    },
+    {
       "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.376.0/registry.yaml",
       "checksum": "0C4BC5CD15FDE98B096CDE89DD5E18BACD44CF8C36B707167616CDEB018B032D",
       "algorithm": "sha256"
+    },
+    {
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.379.0/registry.yaml",
+      "checksum": "E244E31650EE3A27997D11E8F9ED7461BEE14E42CE3A2313300CC5FC31CC5FC775A9118A669A3A0DCEDA07FBA90B52C98E73B872ECC457A40D17D6E32731DA74",
+      "algorithm": "sha512"
     }
   ]
 }
