@@ -31,7 +31,6 @@ chezmoi update
 - `gwt` - worktree間の移動
 - `gwc` - 新規worktreeの作成（ブランチ選択/作成）
 - `gwr` - worktreeの削除
-- `gwi` - 既存リポジトリのworktree化
 
 ### 環境別設定
 Chezmoiテンプレート機能により、環境に応じた設定を自動適用：
