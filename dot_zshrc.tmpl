@@ -87,6 +87,10 @@ fi
 # 毎回aqua installを実行（必要なツールがあればインストールされる）
 aqua i -a -l
 
+# aquaのPATHを設定（aquaでインストールしたツールを使えるようにする）
+export PATH="$(aqua root-dir)/bin:$PATH"
+export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml
+
 # direnvの設定（aqua経由でインストール）
 if command -v direnv &> /dev/null; then
     eval "$(direnv hook zsh)"
@@ -120,10 +124,6 @@ fkill() {
     echo $pid | xargs kill -${1:-9}
   fi
 }
-
-
-export PATH="$(aqua root-dir)/bin:$PATH"
-export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml
 
 # Rancher Desktopの設定（存在する場合のみ）
 {{- if stat (joinPath .chezmoi.homeDir ".rd/bin") }}
