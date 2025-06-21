@@ -100,12 +100,12 @@ if ! command -v aqua &> /dev/null; then
   echo "aqua installed successfully."
 fi
 
-# 毎回aqua installを実行（必要なツールがあればインストールされる）
-aqua i -a -l
-
 # aquaのPATHを設定（aquaでインストールしたツールを使えるようにする）
 export PATH="$(aqua root-dir)/bin:$PATH"
 export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml
+
+# 毎回aqua installを実行（必要なツールがあればインストールされる）
+aqua i -a -l
 
 # direnvの設定（aqua経由でインストール）
 if command -v direnv &> /dev/null; then
