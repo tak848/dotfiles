@@ -9,20 +9,21 @@
 #   - all
 registries:
 - type: standard
-  ref: v4.379.0 # renovate: depName=aquaproj/aqua-registry
+  ref: v4.379.1 # renovate: depName=aquaproj/aqua-registry
 checksum:
   enabled: true
   require_checksum: true
 packages:
 - name: pnpm/pnpm@v10.12.1
 - name: golang/go@go1.24.4
-- name: cli/cli@v2.74.1
+- name: cli/cli@v2.74.2
 - name: nodejs/node@v24.2.0
 - name: junegunn/fzf@v0.62.0
 - name: junegunn/fzf/fzf-tmux@v0.62.0
 - name: starship/starship@v1.23.0
 - name: astral-sh/uv@0.7.13
-- name: aws/aws-cli@2.27.36
-- name: bufbuild/buf@v1.54.0
+- name: aws/aws-cli@2.27.40
+- name: bufbuild/buf@v1.55.1
 - name: direnv/direnv@v2.36.0
 - name: 1password/cli@v2.31.1
+- name: neovim/neovim@v0.11.2
