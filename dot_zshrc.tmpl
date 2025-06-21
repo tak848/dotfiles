@@ -54,19 +54,35 @@ chpwd() {
 export PATH=$PATH:$HOME/bin
 
 
+# Homebrewのパス設定関数
+setup_homebrew_path() {
+{{- if eq .chezmoi.os "darwin" }}
+{{-   if eq .chezmoi.arch "arm64" }}
+  [[ -x "/opt/homebrew/bin/brew" ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+{{-   else }}
+  [[ -x "/usr/local/bin/brew" ]] && eval "$(/usr/local/bin/brew shellenv)"
+{{-   end }}
+{{- else if eq .chezmoi.os "linux" }}
+  # Linux (Ubuntu等)の場合、複数の可能性があるパスをチェック
+  for brew_path in /home/linuxbrew/.linuxbrew/bin/brew $HOME/.linuxbrew/bin/brew /usr/local/bin/brew; do
+    if [[ -x "$brew_path" ]]; then
+      eval "$($brew_path shellenv)"
+      break
+    fi
+  done
+{{- end }}
+}
+
+# Homebrewのパスを設定
+setup_homebrew_path
+
 # 1. Homebrewのインストールチェック
 if ! command -v brew &> /dev/null; then
-  echo "Homebrew not found. Installing Homebrew..."
+  echo "Homebrewが見つかりません。インストール中..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  # HomebrewをPATHに追加する（macOSの標準的な設定）
-  if [[ "$(uname)" == "Darwin" ]] && [[ "$(uname -m)" == "arm64" ]]; then
-      eval "$(/opt/homebrew/bin/brew shellenv)"
-  else
-      eval "$(/usr/local/bin/brew shellenv)"
-  fi
-  echo "Homebrew installed successfully."
-else
-  # echo "Homebrew is already installed."
+  # インストール後、パスを再設定
+  setup_homebrew_path
+  echo "Homebrewのインストールが完了しました。"
 fi
 
 # Homebrewが使えることを確認してから次に進む
