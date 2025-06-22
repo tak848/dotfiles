@@ -13,10 +13,6 @@ export HISTFILE=~/.zsh_history
 export HISTSIZE=100000
 export SAVEHIST=100000
 
-alias vi="nvim"
-alias vim="nvim"
-alias view="nvim -R"
-
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
@@ -109,6 +105,17 @@ if ! command -v brew &> /dev/null; then
     echo "Brew command is still not available. Please check your Homebrew installation and PATH."
     exit 1
 fi
+
+# neovimのインストールチェック（Homebrew経由）
+if ! command -v nvim &> /dev/null; then
+  echo "neovim not found. Installing via Homebrew..."
+  brew install neovim
+fi
+
+# neovimのエイリアス設定
+alias vi="nvim"
+alias vim="nvim"
+alias view="nvim -R"
 
 # direnvはaquaで管理されるため、Homebrewでのインストールは不要
 
