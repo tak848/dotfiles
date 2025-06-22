@@ -26,3 +26,4 @@ packages:
 - name: bufbuild/buf@v1.55.1
 - name: direnv/direnv@v2.36.0
 - name: 1password/cli@v2.31.1
+- name: neovim/neovim@v0.11.2

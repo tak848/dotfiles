@@ -106,17 +106,6 @@ if ! command -v brew &> /dev/null; then
     exit 1
 fi
 
-# neovimのインストールチェック（Homebrew経由）
-if ! command -v nvim &> /dev/null; then
-  echo "neovim not found. Installing via Homebrew..."
-  brew install neovim
-fi
-
-# neovimのエイリアス設定
-alias vi="nvim"
-alias vim="nvim"
-alias view="nvim -R"
-
 # direnvはaquaで管理されるため、Homebrewでのインストールは不要
 
 # 2. aquaのインストールチェック
@@ -132,6 +121,13 @@ export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.conf
 
 # 毎回aqua installを実行（必要なツールがあればインストールされる）
 aqua i -a -l
+
+# neovimのエイリアス設定
+if ! command -v nvim &> /dev/null; then
+  alias vi="nvim"
+  alias vim="nvim"
+  alias view="nvim -R"
+fi
 
 # direnvの設定（aqua経由でインストール）
 if command -v direnv &> /dev/null; then
