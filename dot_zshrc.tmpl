@@ -79,6 +79,25 @@ setup_homebrew_path
 # 1. Homebrewのインストールチェック
 if ! command -v brew &> /dev/null; then
   echo "Homebrewが見つかりません。インストール中..."
+{{- if eq .chezmoi.os "linux" }}
+  # Linuxの場合、ビルドツールが必要
+  {{- if or (eq .chezmoi.osRelease.id "ubuntu") (eq .chezmoi.osRelease.id "debian") }}
+  if ! command -v gcc &> /dev/null; then
+    echo "build-essentialをインストール中..."
+    sudo apt update && sudo apt install -y build-essential
+  fi
+  {{- else if or (eq .chezmoi.osRelease.id "fedora") (eq .chezmoi.osRelease.id "rhel") (eq .chezmoi.osRelease.id "centos") }}
+  if ! command -v gcc &> /dev/null; then
+    echo "開発ツールをインストール中..."
+    sudo dnf install -y gcc gcc-c++ make
+  fi
+  {{- else if eq .chezmoi.osRelease.id "arch" }}
+  if ! command -v gcc &> /dev/null; then
+    echo "base-develをインストール中..."
+    sudo pacman -S --needed base-devel
+  fi
+  {{- end }}
+{{- end }}
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   # インストール後、パスを再設定
   setup_homebrew_path
