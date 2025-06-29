@@ -266,6 +266,36 @@
       "algorithm": "sha256"
     },
     {
+      "id": "http/dl.k8s.io/v1.33.2/bin/darwin/amd64/kubectl",
+      "checksum": "FF468749BD3B5F4F15AD36F2A437E65FCD3195A2081925140334429EACED1A8A",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/dl.k8s.io/v1.33.2/bin/darwin/arm64/kubectl",
+      "checksum": "8730BF6DAB538A1E9710A3668E2CD5F1BDC3C25C68B65A57C5418BDC3472769C",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/dl.k8s.io/v1.33.2/bin/linux/amd64/kubectl",
+      "checksum": "33D0CDEC6967817468F0A4A90F537DFEF394DCF815D91966CA651CC118393EEA",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/dl.k8s.io/v1.33.2/bin/linux/arm64/kubectl",
+      "checksum": "54DC02C8365596EAA2B576FAE4E3AC521DB9130E26912385E1E431D156F8344D",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/dl.k8s.io/v1.33.2/bin/windows/amd64/kubectl.exe",
+      "checksum": "C45A0FB477262EEBD4A4A2936EA6BD10CE6A7DB8F1356CFF6E703C948538C76B",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/dl.k8s.io/v1.33.2/bin/windows/arm64/kubectl.exe",
+      "checksum": "4B067459FC53EA47E8A0B3F545C22F554F4EF70EBCD04D6B65A6610686E29E2C",
+      "algorithm": "sha256"
+    },
+    {
       "id": "http/golang.org/dl/go1.24.4.darwin-amd64.tar.gz",
       "checksum": "69BEF555E114B4A2252452B6E7049AFC31FBDF2D39790B669165E89525CD3F5C",
       "algorithm": "sha256"
