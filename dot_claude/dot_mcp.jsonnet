@@ -27,5 +27,16 @@
       ],
       env: {},
     },
+
+
+    o3: {
+      command: 'npx',
+      args: ['o3-search-mcp'],
+      env: {
+        // OPENAI_API_KEY: 'your-api-key',
+        SEARCH_CONTEXT_SIZE: 'medium',
+        REASONING_EFFORT: 'medium',
+      },
+    },
   },
 }

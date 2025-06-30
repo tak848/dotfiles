@@ -9,6 +9,16 @@
          "env": { },
          "type": "stdio"
       },
+      "o3": {
+         "args": [
+            "o3-search-mcp"
+         ],
+         "command": "npx",
+         "env": {
+            "REASONING_EFFORT": "medium",
+            "SEARCH_CONTEXT_SIZE": "medium"
+         }
+      },
       "playwright": {
          "args": [
             "@playwright/mcp@latest"
