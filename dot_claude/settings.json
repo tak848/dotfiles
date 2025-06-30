@@ -1,10 +1,23 @@
 {
+   "env": {
+      "USE_BUILTIN_RIPGREP": 1
+   },
    "mcpServers": {
+      "playwright": {
+         "args": [
+            "@playwright/mcp@latest"
+         ],
+         "command": "npx",
+         "env": { },
+         "type": "stdio"
+      },
       "puppeteer": {
          "args": [
             "@modelcontextprotocol/server-puppeteer"
          ],
-         "command": "npx"
+         "command": "npx",
+         "env": { },
+         "type": "stdio"
       }
    },
    "model": "opus",
@@ -55,6 +68,13 @@
       "deny": [ ]
    },
    "toolPermissions": {
+      "mcp__playwright": "session",
+      "mcp__playwright__playwright_click": "session",
+      "mcp__playwright__playwright_evaluate": "session",
+      "mcp__playwright__playwright_fill": "session",
+      "mcp__playwright__playwright_navigate": "allow",
+      "mcp__playwright__playwright_screenshot": "allow",
+      "mcp__playwright__playwright_select": "session",
       "mcp__puppeteer": "session",
       "mcp__puppeteer__puppeteer_click": "session",
       "mcp__puppeteer__puppeteer_evaluate": "session",

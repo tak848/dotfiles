@@ -57,19 +57,42 @@
   },
   model: 'opus',
   mcpServers: {
+    playwright: {
+      type: 'stdio',
+      command: 'npx',
+      args: [
+        '@playwright/mcp@latest',
+      ],
+      env: {},
+    },
     puppeteer: {
+      type: 'stdio',
       command: 'npx',
       args: [
         '@modelcontextprotocol/server-puppeteer',
       ],
+      env: {},
     },
   },
   toolPermissions: {
+    // Puppeteer
     mcp__puppeteer: 'session',
     mcp__puppeteer__puppeteer_navigate: 'allow',
     mcp__puppeteer__puppeteer_screenshot: 'allow',
     mcp__puppeteer__puppeteer_click: 'session',
     mcp__puppeteer__puppeteer_type: 'session',
     mcp__puppeteer__puppeteer_evaluate: 'session',
+
+    // Playwright
+    mcp__playwright: 'session',
+    mcp__playwright__playwright_navigate: 'allow',
+    mcp__playwright__playwright_screenshot: 'allow',
+    mcp__playwright__playwright_click: 'session',
+    mcp__playwright__playwright_fill: 'session',
+    mcp__playwright__playwright_select: 'session',
+    mcp__playwright__playwright_evaluate: 'session',
+  },
+  env: {
+    USE_BUILTIN_RIPGREP: 1,
   },
 }
