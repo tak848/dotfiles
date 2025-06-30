@@ -52,15 +52,18 @@
       // docker composeは都度確認
       // "Bash(docker compose:*)",
       'Bash(docker compose ps:*)',
-      'mcp__puppeteer__puppeteer_screenshot',
-      'mcp__puppeteer__puppeteer_navigate',
-      'mcp__puppeteer__puppeteer_click',
-      'mcp__puppeteer__puppeteer_type',
-      'mcp__puppeteer__puppeteer_evaluate',
-      'mcp__puppeteer__puppeteer_fill',
-      'mcp__playwright__playwright_navigate',
-      'mcp__playwright__playwright_screenshot',
-      'mcp__playwright__playwright_click',
+      //   'mcp__puppeteer__puppeteer_screenshot',
+      //   'mcp__puppeteer__puppeteer_navigate',
+      //   'mcp__puppeteer__puppeteer_click',
+      //   'mcp__puppeteer__puppeteer_type',
+      //   'mcp__puppeteer__puppeteer_evaluate',
+      //   'mcp__puppeteer__puppeteer_fill',
+      'mcp__playwright__browser_navigate',
+      'mcp__playwright__browser_type',
+      'mcp__playwright__browser_click',
+      'mcp__playwright__browser_wait_for',
+      'mcp__playwright__browser_take_screenshot',
+      'mcp__playwright__browser_press_key',
     ],
     deny: [],
   },
@@ -74,14 +77,15 @@
       ],
       env: {},
     },
-    puppeteer: {
-      type: 'stdio',
-      command: 'npx',
-      args: [
-        '@modelcontextprotocol/server-puppeteer',
-      ],
-      env: {},
-    },
+    // playwrightの方が使いやすい感覚だったのでコメントアウト
+    // puppeteer: {
+    //   type: 'stdio',
+    //   command: 'npx',
+    //   args: [
+    //     '@modelcontextprotocol/server-puppeteer',
+    //   ],
+    //   env: {},
+    // },
   },
   toolPermissions: {
     // Puppeteer
