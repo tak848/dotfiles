@@ -52,8 +52,8 @@
          "mcp__playwright__browser_wait_for",
          "mcp__playwright__browser_take_screenshot",
          "mcp__playwright__browser_press_key",
-         "mcp__playwright__browser_close",
          "mcp__playwright__browser_tab_list",
+         "mcp__playwright__browser_resize",
          "mcp__o3__o3-search"
       ],
       "defaultMode": "plan",

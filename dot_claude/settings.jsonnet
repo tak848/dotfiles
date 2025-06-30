@@ -65,8 +65,10 @@
       'mcp__playwright__browser_wait_for',
       'mcp__playwright__browser_take_screenshot',
       'mcp__playwright__browser_press_key',
-      'mcp__playwright__browser_close',
+      // ブラウザの終了は、自動で行いはしてもらうが確認を必要とする
+      //   'mcp__playwright__browser_close',
       'mcp__playwright__browser_tab_list',
+      'mcp__playwright__browser_resize',
 
       'mcp__o3__o3-search',
     ],
