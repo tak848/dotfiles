@@ -64,6 +64,8 @@
       'mcp__playwright__browser_wait_for',
       'mcp__playwright__browser_take_screenshot',
       'mcp__playwright__browser_press_key',
+      'mcp__playwright__browser_close',
+      'mcp__playwright__browser_tab_list',
     ],
     deny: [],
   },
@@ -86,6 +88,16 @@
     //   ],
     //   env: {},
     // },
+
+    'gemini-cli': {
+      type: 'stdio',
+      command: 'npx',
+      args: [
+        '@choplin/mcp-gemini-cli',
+        '--allow-npx',
+      ],
+      env: {},
+    },
   },
   toolPermissions: {
     // Puppeteer
