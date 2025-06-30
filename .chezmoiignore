@@ -2,7 +2,6 @@ CLAUDE.md
 README.md
 LICENSE
 .git
-.gitignore
 *.jsonnet
 aqua.yaml
 aqua-checksums.json
