@@ -67,6 +67,8 @@
       'mcp__playwright__browser_press_key',
       'mcp__playwright__browser_close',
       'mcp__playwright__browser_tab_list',
+
+      'mcp__o3__o3-search',
     ],
     deny: [],
   },
