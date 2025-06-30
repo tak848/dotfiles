@@ -1,0 +1,60 @@
+{
+    "permissions": {
+        "allow": [
+            "List(*)",
+            "Bash(ls:*)",
+            "Bash(cp:*)",
+            "Bash(mkdir:*)",
+            "Bash(curl:*)",
+            "Bash(touch:*)",
+            "Bash(lsof:*)",
+            "Bash(awk:*)",
+            "Bash(sed:*)",
+            "Bash(wget:*)",
+            "Bash(ps:*)",
+            "Bash(top:*)",
+            "Bash(which:*)",
+            "Bash(find:*)",
+            "Bash(grep:*)",
+            "Bash(rg:*)",
+            "Fetch(https://*)",
+            "Bash(pnpm:*)",
+            "Bash(make:*)",
+            "Bash(go test:*)",
+            "Bash(go build:*)",
+            "Bash(go fmt:*)",
+            "Bash(gofmt:*)",
+            "Bash(gh pr list:*)",
+            "Bash(gh pr view:*)",
+            "Bash(gh pr diff:*)",
+            "Bash(gh issue create:*)",
+            "Bash(gh issue edit:*)",
+            "Bash(git checkout:*)",
+            "Bash(git add:*)",
+            "Bash(git push:*)",
+            "Bash(git checkout:*)",
+            "Bash(git remote set-url:*)",
+            "Bash(git pull:*)",
+            "Bash(git reset:*)",
+            "Bash(git cherry-pick:*)"
+        ],
+        "deny": []
+    },
+    "model": "opus",
+    "mcpServers": {
+        "puppeteer": {
+            "command": "npx",
+            "args": [
+                "@modelcontextprotocol/server-puppeteer"
+            ]
+        }
+    },
+    "toolPermissions": {
+        "mcp__puppeteer": "session",
+        "mcp__puppeteer__puppeteer_navigate": "allow",
+        "mcp__puppeteer__puppeteer_screenshot": "allow",
+        "mcp__puppeteer__puppeteer_click": "session",
+        "mcp__puppeteer__puppeteer_type": "session",
+        "mcp__puppeteer__puppeteer_evaluate": "session"
+    }
+}
