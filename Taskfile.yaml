@@ -5,13 +5,13 @@ tasks:
     desc: Generate claude settings.json from jsonnet
     cmds:
       - jsonnet dot_claude/settings.jsonnet > dot_claude/settings.json
-      - jsonnet dot_claude/.mcp.jsonnet > dot_claude/.mcp.json
+      - jsonnet dot_claude/dot_mcp.jsonnet > dot_claude/dot_mcp.json
     sources:
       - dot_claude/settings.jsonnet
-      - dot_claude/.mcp.jsonnet
+      - dot_claude/dot_mcp.jsonnet
     generates:
       - dot_claude/settings.json
-      - dot_claude/.mcp.json
+      - dot_claude/dot_mcp.json
 
   generate:
     desc: Generate all json files from jsonnet
