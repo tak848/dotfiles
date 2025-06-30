@@ -1,0 +1,21 @@
+{
+   "mcpServers": {
+      "gemini-cli": {
+         "args": [
+            "@choplin/mcp-gemini-cli",
+            "--allow-npx"
+         ],
+         "command": "npx",
+         "env": { },
+         "type": "stdio"
+      },
+      "playwright": {
+         "args": [
+            "@playwright/mcp@latest"
+         ],
+         "command": "npx",
+         "env": { },
+         "type": "stdio"
+      }
+   }
+}
