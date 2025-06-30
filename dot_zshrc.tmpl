@@ -163,9 +163,13 @@ fkill() {
   fi
 }
 
-# Rancher Desktopの設定（存在する場合のみ）
+{{- if eq .chezmoi.os "darwin" }}
 {{- if stat (joinPath .chezmoi.homeDir ".rd/bin") }}
+# Rancher Desktopの設定（存在する場合のみ）
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="{{ .chezmoi.homeDir }}/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+{{- end }}
 {{- end }}
 
 # MySQL clientの設定（Homebrewとmysql-clientが存在する場合のみ）
