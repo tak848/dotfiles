@@ -57,6 +57,7 @@
       'mcp__puppeteer__puppeteer_click',
       'mcp__puppeteer__puppeteer_type',
       'mcp__puppeteer__puppeteer_evaluate',
+      'mcp__puppeteer__puppeteer_fill',
       'mcp__playwright__playwright_navigate',
       'mcp__playwright__playwright_screenshot',
       'mcp__playwright__playwright_click',

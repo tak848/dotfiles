@@ -63,7 +63,16 @@
          "Bash(git pull:*)",
          "Bash(git reset:*)",
          "Bash(git cherry-pick:*)",
-         "Bash(docker compose ps:*)"
+         "Bash(docker compose ps:*)",
+         "mcp__puppeteer__puppeteer_screenshot",
+         "mcp__puppeteer__puppeteer_navigate",
+         "mcp__puppeteer__puppeteer_click",
+         "mcp__puppeteer__puppeteer_type",
+         "mcp__puppeteer__puppeteer_evaluate",
+         "mcp__puppeteer__puppeteer_fill",
+         "mcp__playwright__playwright_navigate",
+         "mcp__playwright__playwright_screenshot",
+         "mcp__playwright__playwright_click"
       ],
       "deny": [ ]
    },
