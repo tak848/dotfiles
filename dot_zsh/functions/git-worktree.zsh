@@ -69,7 +69,7 @@ gwr() {
 
 # gwc: 既存ブランチ選択と新規ブランチ作成を兼ねる万能版
 gwc() {
-    local default_copy_files=(".envrc.local" ".env.local")
+    local default_copy_files=(".envrc.local" ".env.local", "settings.local.json")
     local extra_copy_files=()
 
     # コマンドラインオプションを解析
