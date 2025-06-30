@@ -1,0 +1,69 @@
+{
+  "checksums": [
+    {
+      "id": "github_release/github.com/go-task/task/v3.44.0/task_darwin_amd64.tar.gz",
+      "checksum": "7BB354C0CEB01D9256373749CC7155D33DE7234587FBBAB4D985EE77C0414274",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/go-task/task/v3.44.0/task_darwin_arm64.tar.gz",
+      "checksum": "CFBFE894AE1987A378AF50230C9B60EC62A072093E96D217C1E5DD9F4B108FBE",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/go-task/task/v3.44.0/task_linux_amd64.tar.gz",
+      "checksum": "D6C9C0A14793659766EE0C06F9843452942AE6982A3151C6BBD78959C1682B82",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/go-task/task/v3.44.0/task_linux_arm64.tar.gz",
+      "checksum": "3B2A79A5372E3806C4B345BDFB4A1A1A93A287A58804986BB57B16665DB5DB22",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/go-task/task/v3.44.0/task_windows_amd64.zip",
+      "checksum": "DB39C209F677C8F1513BEC1B22C0997131D56E252DB0A2D57208414C96AD9056",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/go-task/task/v3.44.0/task_windows_arm64.zip",
+      "checksum": "E2CF946B4352626B4635E87EC8F2D65734B7F08A4EEF2187E02F1D99CB2F1012",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/go-jsonnet/v0.21.0/go-jsonnet_Darwin_arm64.tar.gz",
+      "checksum": "398189A264E31A2C1316EED8EE6308306A221FD10B72F405DEF0100D295EFEAC",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/go-jsonnet/v0.21.0/go-jsonnet_Darwin_x86_64.tar.gz",
+      "checksum": "A6CEE4B381D2319FA807D7A7BF8A4ECF2D0CCA64E2BCD53EEAA575CE1F7689A4",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/go-jsonnet/v0.21.0/go-jsonnet_Linux_arm64.tar.gz",
+      "checksum": "4A263DA605DBE2EDB99529F495266211062FAC476789F2119408BC223338F1D6",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/go-jsonnet/v0.21.0/go-jsonnet_Linux_x86_64.tar.gz",
+      "checksum": "AD3181FDE77726B02D17EB4E72687020BF2CB35B9336CDEAACA4783C7FF104F7",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/go-jsonnet/v0.21.0/go-jsonnet_Windows_arm64.tar.gz",
+      "checksum": "5244713590B976D8CB675ABA57434B2FA667663C299FE777A478C01C86E46341",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/go-jsonnet/v0.21.0/go-jsonnet_Windows_x86_64.tar.gz",
+      "checksum": "81D71A287EE5DFD0860831EEAC281A7327CE8876D5FE9A8B7E19726DBBC0CE4F",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.381.0/registry.yaml",
+      "checksum": "4201558F95E09DE156C1AF819B14E8192C2D84157B3E36B9E72D24F68369A662",
+      "algorithm": "sha256"
+    }
+  ]
+}

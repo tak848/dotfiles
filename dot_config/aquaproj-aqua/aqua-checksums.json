@@ -61,6 +61,31 @@
       "algorithm": "sha256"
     },
     {
+      "id": "github_release/github.com/astral-sh/uv/0.7.17/uv-aarch64-apple-darwin.tar.gz",
+      "checksum": "0777E13BA598CCB9A9F78DF209C98922B219A195765B9F1B309457A08CBAE43D",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/astral-sh/uv/0.7.17/uv-aarch64-unknown-linux-musl.tar.gz",
+      "checksum": "789F3749497181311FBC27D2DA322F4F836D814389901E8A7917EE664F500A6B",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/astral-sh/uv/0.7.17/uv-x86_64-apple-darwin.tar.gz",
+      "checksum": "C0AFF6481443E7DC38C01DFB3535814DB42C00AD3AB374E7B4ED4EBB7F5B2237",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/astral-sh/uv/0.7.17/uv-x86_64-pc-windows-msvc.zip",
+      "checksum": "B49D1A02662AC4A490C886FFF8A340A4ADC32DA8D0634FC653A69459D2B5F863",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/astral-sh/uv/0.7.17/uv-x86_64-unknown-linux-musl.tar.gz",
+      "checksum": "FFD877241741DF0A6436BA6ED0D8CD6573F1F922EDE3A967C32C57D2133C72B0",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/bufbuild/buf/v1.55.1/buf-Darwin-arm64.tar.gz",
       "checksum": "D8A71A9F0A7F5DA819072FDE6264EBA91978FE06CFBC06CBBDD08EB205745C21",
       "algorithm": "sha256"
@@ -143,6 +168,96 @@
     {
       "id": "github_release/github.com/direnv/direnv/v2.36.0/direnv.windows-amd64.exe",
       "checksum": "7B29C7755319116028F32A5189CDB1B873EB5E560933F2B411F3E1E9C12909D0",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/go-task/task/v3.44.0/task_darwin_amd64.tar.gz",
+      "checksum": "7BB354C0CEB01D9256373749CC7155D33DE7234587FBBAB4D985EE77C0414274",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/go-task/task/v3.44.0/task_darwin_arm64.tar.gz",
+      "checksum": "CFBFE894AE1987A378AF50230C9B60EC62A072093E96D217C1E5DD9F4B108FBE",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/go-task/task/v3.44.0/task_linux_amd64.tar.gz",
+      "checksum": "D6C9C0A14793659766EE0C06F9843452942AE6982A3151C6BBD78959C1682B82",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/go-task/task/v3.44.0/task_linux_arm64.tar.gz",
+      "checksum": "3B2A79A5372E3806C4B345BDFB4A1A1A93A287A58804986BB57B16665DB5DB22",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/go-task/task/v3.44.0/task_windows_amd64.zip",
+      "checksum": "DB39C209F677C8F1513BEC1B22C0997131D56E252DB0A2D57208414C96AD9056",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/go-task/task/v3.44.0/task_windows_arm64.zip",
+      "checksum": "E2CF946B4352626B4635E87EC8F2D65734B7F08A4EEF2187E02F1D99CB2F1012",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/go-jsonnet/v0.21.0/go-jsonnet_Darwin_arm64.tar.gz",
+      "checksum": "398189A264E31A2C1316EED8EE6308306A221FD10B72F405DEF0100D295EFEAC",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/go-jsonnet/v0.21.0/go-jsonnet_Darwin_x86_64.tar.gz",
+      "checksum": "A6CEE4B381D2319FA807D7A7BF8A4ECF2D0CCA64E2BCD53EEAA575CE1F7689A4",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/go-jsonnet/v0.21.0/go-jsonnet_Linux_arm64.tar.gz",
+      "checksum": "4A263DA605DBE2EDB99529F495266211062FAC476789F2119408BC223338F1D6",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/go-jsonnet/v0.21.0/go-jsonnet_Linux_x86_64.tar.gz",
+      "checksum": "AD3181FDE77726B02D17EB4E72687020BF2CB35B9336CDEAACA4783C7FF104F7",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/go-jsonnet/v0.21.0/go-jsonnet_Windows_arm64.tar.gz",
+      "checksum": "5244713590B976D8CB675ABA57434B2FA667663C299FE777A478C01C86E46341",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/google/go-jsonnet/v0.21.0/go-jsonnet_Windows_x86_64.tar.gz",
+      "checksum": "81D71A287EE5DFD0860831EEAC281A7327CE8876D5FE9A8B7E19726DBBC0CE4F",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/grafana/jsonnet-language-server/v0.16.0/jsonnet-language-server_0.16.0_darwin_amd64",
+      "checksum": "F37D57FCF851E18FECC3B3867A8E06305EE315E01A9430BF5448438EFF86736C",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/grafana/jsonnet-language-server/v0.16.0/jsonnet-language-server_0.16.0_darwin_arm64",
+      "checksum": "8B6E642374D3004C3AC35254874ED1D14203A85C979F6684FC6218F58A8072D4",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/grafana/jsonnet-language-server/v0.16.0/jsonnet-language-server_0.16.0_linux_amd64",
+      "checksum": "42C7D38515E5A2008DE26D678140E2D7FD1825EB977D78023FE997913E3DC2BE",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/grafana/jsonnet-language-server/v0.16.0/jsonnet-language-server_0.16.0_linux_arm64",
+      "checksum": "155933CBBDA25E9D89B6E14F1C2C52089CDFE82700FDA60D8EBAABAD2C409F18",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/grafana/jsonnet-language-server/v0.16.0/jsonnet-language-server_0.16.0_windows_amd64.exe",
+      "checksum": "53D233A1927AFA52F39A2AE5396DC7FFEB13283B5F13EDFA6DFDC1F41E71199B",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/grafana/jsonnet-language-server/v0.16.0/jsonnet-language-server_0.16.0_windows_arm64.exe",
+      "checksum": "8DAC64BB1E1F215988E3EA8FD2FBFE575251E3B07BA95E9BE3BC3EA3175E3522",
       "algorithm": "sha256"
     },
     {

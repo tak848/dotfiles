@@ -1,0 +1,16 @@
+version: '3'
+
+tasks:
+  generate-claude-settings:
+    desc: Generate claude settings.json from jsonnet
+    cmds:
+      - jsonnet dot_claude/settings.jsonnet > dot_claude/settings.json
+    sources:
+      - dot_claude/settings.jsonnet
+    generates:
+      - dot_claude/settings.json
+
+  generate:
+    desc: Generate all json files from jsonnet
+    deps:
+      - generate-claude-settings
