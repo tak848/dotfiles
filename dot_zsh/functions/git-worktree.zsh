@@ -71,6 +71,19 @@ gwr() {
 gwc() {
     local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json")
     local extra_copy_files=()
+    
+    # Cursor で開くかどうかのフラグ
+    local open_with_cursor=false
+    
+    # cursor コマンドが存在する場合のみ質問
+    if command -v cursor >/dev/null 2>&1; then
+        echo
+        read -q "REPLY?作成後、Cursor で開きますか？ [y/N] "
+        echo
+        if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+            open_with_cursor=true
+        fi
+    fi
 
     # コマンドラインオプションを解析
     while [[ $# -gt 0 ]]; do
@@ -212,6 +225,12 @@ gwc() {
             if command -v aqua >/dev/null 2>&1 && [ -f "aqua.yaml" ]; then aqua policy allow; fi
             if command -v pnpm >/dev/null 2>&1 && [ -f "pnpm-lock.yaml" ]; then pnpm i; fi
         }
+        
+        # 最後に Cursor で開く（最初に選択していた場合）
+        if $open_with_cursor; then
+            echo "\nCursor で開いています..."
+            cursor .
+        fi
         # ★★★ ここまで ★★★
     else
         echo "Worktree creation failed. Skipping setup."
