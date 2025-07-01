@@ -27,15 +27,6 @@
                }
             ],
             "matcher": "Write|Edit|MultiEdit"
-         },
-         {
-            "hooks": [
-               {
-                  "command": "uv run ~/.claude/post_tool_use.py",
-                  "type": "command"
-               }
-            ],
-            "matcher": ""
          }
       ],
       "PreToolUse": [
