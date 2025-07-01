@@ -29,17 +29,7 @@
             "matcher": "Write|Edit|MultiEdit"
          }
       ],
-      "PreToolUse": [
-         {
-            "hooks": [
-               {
-                  "command": "uv run ~/.claude/pre_tool_use.py",
-                  "type": "command"
-               }
-            ],
-            "matcher": ""
-         }
-      ],
+      "PreToolUse": [ ],
       "Stop": [
          {
             "hooks": [

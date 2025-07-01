@@ -123,15 +123,15 @@
       //   },
     ],
     PreToolUse: [
-      {
-        matcher: '',
-        hooks: [
-          {
-            type: 'command',
-            command: 'uv run ~/.claude/pre_tool_use.py',
-          },
-        ],
-      },
+      //   {
+      //     matcher: '',
+      //     hooks: [
+      //       {
+      //         type: 'command',
+      //         command: 'uv run ~/.claude/pre_tool_use.py',
+      //       },
+      //     ],
+      //   },
     ],
     Notification: [
       {
