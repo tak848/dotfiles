@@ -2,6 +2,16 @@
 import json
 import re
 import sys
+import platform
+import subprocess
+
+# sample
+# {
+#   "session_id": "abc123",
+#   "transcript_path": "~/.claude/projects/.../00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl",
+#   "message": "Task completed successfully",
+#   "title": "Claude Code"
+# }
 
 try:
     input_data = json.load(sys.stdin)
@@ -10,3 +20,17 @@ except json.JSONDecodeError as e:
     sys.exit(1)
 
 print(input_data)
+
+# macOSの場合、通知メッセージを音声で読み上げ
+if platform.system() == "Darwin" and "message" in input_data:
+    try:
+        # メッセージをそのまま読み上げ
+        message = input_data["message"]
+        subprocess.run(
+            ["say", "-v", "Kyoko", message],
+            check=False,  # エラーが発生してもスクリプトは続行
+            capture_output=True  # 出力をキャプチャしてコンソールに表示しない
+        )
+    except Exception as e:
+        # sayコマンドが失敗してもスクリプト全体は正常終了
+        print(f"Warning: Failed to play audio notification: {e}", file=sys.stderr)

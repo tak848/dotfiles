@@ -106,6 +106,10 @@
             type: 'command',
             command: "jq -r '.tool_input.file_path | select(endswith(\".js\") or endswith(\".ts\") or endswith(\".jsx\") or endswith(\".tsx\"))' | xargs -r npx prettier --write",
           },
+          {
+            type: 'command',
+            command: "jq -r '.tool_input.file_path | select(endswith(\".go\"))' | xargs -r gofmt -w",
+          },
         ],
       },
       {
