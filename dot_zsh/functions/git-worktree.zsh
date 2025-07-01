@@ -34,14 +34,14 @@ gwt() {
     if [ -n "$selected_line" ]; then
         # 選択された行からワークツリーのパスだけを抽出
         local selected_worktree_root=$(echo "$selected_line" | awk '{print $1}')
-        
+
         # 最終的な移動先ディレクトリを決定
         local target_dir="$selected_worktree_root"
         # 記憶しておいた相対パスが、移動先のワークツリーにも存在すれば、そこを目的地にする
         if [[ -n "$relative_path" && -d "${selected_worktree_root}${relative_path}" ]]; then
             target_dir="${selected_worktree_root}${relative_path}"
         fi
-        
+
         echo "Switching to: $target_dir"
         cd "$target_dir"
     else
@@ -53,7 +53,7 @@ gwt() {
 gwr() {
     # メインのワークツリーは削除対象外にする
     local worktree_to_remove=$(git worktree list | awk 'NR>1 {print $1 " " $3}' | fzf --prompt="Select worktree to REMOVE: " | awk '{print $1}')
-    
+
     if [ -n "$worktree_to_remove" ]; then
         # 最終確認
         read -q "REPLY?Really remove worktree at '$worktree_to_remove'? [y/N] "
@@ -71,45 +71,34 @@ gwr() {
 gwc() {
     local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json")
     local extra_copy_files=()
-    
-    # Cursor で開くかどうかのフラグ
-    local open_with_cursor=false
-    
-    # cursor コマンドが存在する場合のみ質問
-    if command -v cursor >/dev/null 2>&1; then
-        echo
-        read -q "REPLY?作成後、Cursor で開きますか？ [y/N] "
-        echo
-        if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-            open_with_cursor=true
-        fi
-    fi
 
     # コマンドラインオプションを解析
     while [[ $# -gt 0 ]]; do
         case "$1" in
-            --copy)
-                if [ -n "$2" ]; then
-                    extra_copy_files+=("$2")
-                    shift # --copy を消費
-                    shift # ファイル名を消費
-                else
-                    echo "エラー: --copy オプションにはファイル名が必要です。" >&2
-                    return 1
-                fi
-                ;;
-            *)
-                echo "エラー: 不明なオプション '$1'" >&2
+        --copy)
+            if [ -n "$2" ]; then
+                extra_copy_files+=("$2")
+                shift # --copy を消費
+                shift # ファイル名を消費
+            else
+                echo "エラー: --copy オプションにはファイル名が必要です。" >&2
                 return 1
-                ;;
+            fi
+            ;;
+        *)
+            echo "エラー: 不明なオプション '$1'" >&2
+            return 1
+            ;;
         esac
     done
-    
+
     # 最終的なコピー対象リストを結合
     local copy_files=("${default_copy_files[@]}" "${extra_copy_files[@]}")
 
-
-    if ! command -v fzf >/dev/null 2>&1; then echo "fzf is required"; return 1; fi
+    if ! command -v fzf >/dev/null 2>&1; then
+        echo "fzf is required"
+        return 1
+    fi
 
     # ★★★ 改善点1: 元のサブディレクトリを記憶 ★★★
     local root_dir=$(git rev-parse --show-toplevel)
@@ -123,8 +112,8 @@ gwc() {
 
     # --- 1. 構造化されたブランチ情報を生成 ---
     local all_branches_meta=$(
-        (git for-each-ref --format='[L] %(refname:short)%09%(refname)%09local' 'refs/heads') && \
-        (git for-each-ref --format='[R] %(refname:short)%09%(refname)%09remote' 'refs/remotes' | grep -v '/HEAD$')
+        (git for-each-ref --format='[L] %(refname:short)%09%(refname)%09local' 'refs/heads') &&
+            (git for-each-ref --format='[R] %(refname:short)%09%(refname)%09remote' 'refs/remotes' | grep -v '/HEAD$')
     )
     local used_refs=$(git worktree list --porcelain | grep '^branch ' | awk '{print $2}')
     local available_branches_meta=$(grep -v -F -f <(echo "$used_refs") <(echo "$all_branches_meta"))
@@ -136,8 +125,14 @@ gwc() {
         --prompt="Select Branch > " --header="$header" --preview="$preview_command" --preview-window=right:50% \
         --bind "alt-enter:print-query")
 
-    if [ $? -ne 0 ]; then echo "Canceled."; return 1; fi
-    if [ -z "$selection" ]; then echo "Selection was empty. Canceled."; return 1; fi
+    if [ $? -ne 0 ]; then
+        echo "Canceled."
+        return 1
+    fi
+    if [ -z "$selection" ]; then
+        echo "Selection was empty. Canceled."
+        return 1
+    fi
 
     local project_name=$(basename "$root_dir")
     local worktree_path
@@ -148,7 +143,7 @@ gwc() {
         local full_ref=$(echo "$selection" | awk -F$'\t' '{print $2}')
         local branch_type=$(echo "$selection" | awk -F$'\t' '{print $3}')
         local local_branch_name
-        
+
         if [ "$branch_type" = "local" ]; then
             local_branch_name=$(echo "$full_ref" | sed 's:^refs/heads/::')
             local dir_name="${project_name}-$(echo "$local_branch_name" | sed 's/\//-/g')"
@@ -177,17 +172,35 @@ gwc() {
         fi
         local sorted_base_branch_list
         if [ -n "$default_base_display_name" ]; then
-            sorted_base_branch_list=$( (echo "$default_base_display_name"; echo "$all_branches_raw" | grep -v -x -F "$default_base_display_name") )
+            sorted_base_branch_list=$( (
+                echo "$default_base_display_name"
+                echo "$all_branches_raw" | grep -v -x -F "$default_base_display_name"
+            ))
         else
             sorted_base_branch_list=$all_branches_raw
         fi
         local base_selection=$(echo "$sorted_base_branch_list" | fzf --height=10 --prompt="Create from which base branch?: ")
-        if [ $? -ne 0 ] || [ -z "$base_selection" ]; then echo "Canceled."; return 1; fi
+        if [ $? -ne 0 ] || [ -z "$base_selection" ]; then
+            echo "Canceled."
+            return 1
+        fi
         local base_ref=$(echo "$all_branches_meta" | grep -F "$base_selection" | head -n 1 | awk -F$'\t' '{print $2}')
         git worktree add -b "$branch" "$worktree_path" "$base_ref"
     fi
 
-    
+    # Cursor で開くかどうかのフラグ
+    local open_with_cursor=false
+
+    # cursor コマンドが存在する場合のみ質問
+    if command -v cursor >/dev/null 2>&1; then
+        echo
+        read -q "REPLY?作成後、Cursor で開きますか？ [y/N] "
+        echo
+        if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+            open_with_cursor=true
+        fi
+    fi
+
     # --- 4. セットアップコマンドの実行 ---
     if [ $? -eq 0 ]; then
         local find_name_args=()
@@ -199,7 +212,7 @@ gwc() {
                 first=false
             done
         fi
-        
+
         if [ ${#find_name_args[@]} -gt 0 ]; then
             echo "\nSearching for and copying local config files: ${copy_files[*]}"
             local find_grouped_args=(\( "${find_name_args[@]}" \))
@@ -225,7 +238,7 @@ gwc() {
             if command -v aqua >/dev/null 2>&1 && [ -f "aqua.yaml" ]; then aqua policy allow; fi
             if command -v pnpm >/dev/null 2>&1 && [ -f "pnpm-lock.yaml" ]; then pnpm i; fi
         }
-        
+
         # 最後に Cursor で開く（最初に選択していた場合）
         if $open_with_cursor; then
             echo "\nCursor で開いています..."
