@@ -26,11 +26,23 @@ if platform.system() == "Darwin" and "message" in input_data:
     try:
         # メッセージをそのまま読み上げ
         message = input_data["message"]
-        subprocess.run(
-            ["say", "-v", "Kyoko", message],
-            check=False,  # エラーが発生してもスクリプトは続行
-            capture_output=True  # 出力をキャプチャしてコンソールに表示しない
-        )
+        
+        # ASCII文字のみかチェック
+        is_ascii = all(ord(char) < 128 for char in message)
+        
+        # ASCII文字のみなら英語音声、それ以外は日本語音声を使用
+        if is_ascii:
+            subprocess.run(
+                ["say", message],
+                check=False,  # エラーが発生してもスクリプトは続行
+                capture_output=True  # 出力をキャプチャしてコンソールに表示しない
+            )
+        else:
+            subprocess.run(
+                ["say", "-v", "Kyoko", message],
+                check=False,  # エラーが発生してもスクリプトは続行
+                capture_output=True  # 出力をキャプチャしてコンソールに表示しない
+            )
     except Exception as e:
         # sayコマンドが失敗してもスクリプト全体は正常終了
         print(f"Warning: Failed to play audio notification: {e}", file=sys.stderr)

@@ -28,7 +28,7 @@ if platform.system() == "Darwin":
     try:
         # 日本語音声（Kyoko）で読み上げ
         subprocess.run(
-            ["say", "-v", "Kyoko", "Claudeセッションが終了しました"],
+            ["say", "-v", "Kyoko", "-r", "150", "Claudeセッション終了！"],
             check=False,  # エラーが発生してもスクリプトは続行
             capture_output=True  # 出力をキャプチャしてコンソールに表示しない
         )
