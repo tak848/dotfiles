@@ -97,4 +97,28 @@
   env: {
     USE_BUILTIN_RIPGREP: 1,
   },
+  hooks: {
+    PostToolUse: [
+      {
+        matcher: 'Write|Edit|MultiEdit',
+        hooks: [
+          {
+            type: 'command',
+            command: "jq -r '.tool_input.file_path | select(endswith(\".js\") or endswith(\".ts\") or endswith(\".jsx\") or endswith(\".tsx\"))' | xargs -r npx prettier --write",
+          },
+        ],
+      },
+    ],
+    Stop: [
+      {
+        matcher: '',
+        hooks: [
+          {
+            type: 'command',
+            command: 'uv run ~/.claude/stop.py',
+          },
+        ],
+      },
+    ],
+  },
 }
