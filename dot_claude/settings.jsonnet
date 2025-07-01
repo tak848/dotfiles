@@ -108,6 +108,37 @@
           },
         ],
       },
+      {
+        matcher: '',
+        hooks: [
+          {
+            type: 'command',
+            command: 'uv run ~/.claude/post_tool_use.py',
+          },
+        ],
+      },
+    ],
+    PreToolUse: [
+      {
+        matcher: '',
+        hooks: [
+          {
+            type: 'command',
+            command: 'uv run ~/.claude/pre_tool_use.py',
+          },
+        ],
+      },
+    ],
+    Notification: [
+      {
+        matcher: '',
+        hooks: [
+          {
+            type: 'command',
+            command: 'uv run ~/.claude/notification.py',
+          },
+        ],
+      },
     ],
     Stop: [
       {
