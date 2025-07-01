@@ -261,6 +261,31 @@
       "algorithm": "sha256"
     },
     {
+      "id": "github_release/github.com/jqlang/jq/jq-1.8.0/jq-linux-amd64",
+      "checksum": "8926C33326111BCD67A47A970B5A5DB933EF9194AD925994934C639C76A0605C",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/jqlang/jq/jq-1.8.0/jq-linux-arm64",
+      "checksum": "1084E6BF5060A463DAF77193888D326C83E56BCFBC18A52E6EAA99DBE82A8B54",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/jqlang/jq/jq-1.8.0/jq-macos-amd64",
+      "checksum": "A594F3740BF570F0DBC43FF102A9034C17719D1BB5B40F0192751234D67F172A",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/jqlang/jq/jq-1.8.0/jq-macos-arm64",
+      "checksum": "AAF1EFBB376D6E3EAF61F63807C32C1DF519F5857DFC4F581826FA2DF4B715AE",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/jqlang/jq/jq-1.8.0/jq-windows-amd64.exe",
+      "checksum": "B45FCBB27DCB9E9848AC39889A8BF86457B8D9D31E7C56387C6EAB80008FD1F4",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/junegunn/fzf/v0.62.0/fzf-0.62.0-darwin_amd64.tar.gz",
       "checksum": "7657712753FEA74F9390B0DC99D175A9336CA722DE413CCCFCA16AAE86720ACD",
       "algorithm": "sha256"
@@ -318,6 +343,31 @@
     {
       "id": "github_release/github.com/junegunn/fzf/v0.63.0/fzf-0.63.0-windows_arm64.zip",
       "checksum": "57B1F799D7A4C3E2839C766AED7F10BD0D0C662B2034E76FE63B5A64C1C1A279",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/mikefarah/yq/v4.45.4/yq_darwin_amd64",
+      "checksum": "5580FF2C1FC80DD91F248B3E19AF2431F1C95767AD0949A60176601CA5140318",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/mikefarah/yq/v4.45.4/yq_darwin_arm64",
+      "checksum": "602DBBC116AF9EB8A91D2239D0EC286EB9C90B94E76676D5268AB6CA184719B6",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/mikefarah/yq/v4.45.4/yq_linux_amd64",
+      "checksum": "B96DE04645707E14A12F52C37E6266832E03C29E95B9B139CDDCAE7314466E69",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/mikefarah/yq/v4.45.4/yq_linux_arm64",
+      "checksum": "A02CC637409DB44A9F9CB55EA92C40019582BA88083C4D930A727EC4B59ED439",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/mikefarah/yq/v4.45.4/yq_windows_amd64.exe",
+      "checksum": "844DF159573A42606139FF60F2E66B791C4C06413E89473E2AF25E476459FB0E",
       "algorithm": "sha256"
     },
     {
