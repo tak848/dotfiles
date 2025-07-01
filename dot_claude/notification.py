@@ -25,7 +25,9 @@ print(input_data)
 if platform.system() == "Darwin" and "message" in input_data:
     try:
         # メッセージをそのまま読み上げ
-        message = input_data["message"]
+        message = input_data.get("message")
+        if not message:
+            sys.exit(0)
         
         # ASCII文字のみかチェック
         is_ascii = all(ord(char) < 128 for char in message)
