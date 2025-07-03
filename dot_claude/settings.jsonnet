@@ -66,6 +66,7 @@
       'mcp__playwright__browser_take_screenshot',
       'mcp__playwright__browser_press_key',
       'mcp__playwright__browser_console_messages',
+      'mcp__playwright__browser_snapshot',
       // ブラウザの終了は、自動で行いはしてもらうが確認を必要とする
       //   'mcp__playwright__browser_close',
       'mcp__playwright__browser_tab_list',
