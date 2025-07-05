@@ -1,10 +1,16 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = "==3.13.5"
+# dependencies = [
+# ]
+# ///
+
 import json
-import re
-import sys
 import os
 import platform
+import re
 import subprocess
+import sys
 
 # sample
 # {
@@ -30,7 +36,7 @@ if platform.system() == "Darwin":
         subprocess.run(
             ["say", "-v", "Kyoko", "-r", "150", "Claudeセッション終了！"],
             check=False,  # エラーが発生してもスクリプトは続行
-            capture_output=True  # 出力をキャプチャしてコンソールに表示しない
+            capture_output=True,  # 出力をキャプチャしてコンソールに表示しない
         )
     except Exception as e:
         # sayコマンドが失敗してもスクリプト全体は正常終了

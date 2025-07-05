@@ -1,9 +1,15 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = "==3.13.5"
+# dependencies = [
+# ]
+# ///
+
 import json
-import re
-import sys
 import platform
+import re
 import subprocess
+import sys
 
 # sample
 # {
@@ -32,22 +38,22 @@ if platform.system() == "Darwin" and "message" in input_data:
                 message = title
             else:
                 sys.exit(0)
-        
+
         # ASCII文字のみかチェック
         is_ascii = all(ord(char) < 128 for char in message)
-        
+
         # ASCII文字のみなら英語音声、それ以外は日本語音声を使用
         if is_ascii:
             subprocess.run(
                 ["say", message],
                 check=False,  # エラーが発生してもスクリプトは続行
-                capture_output=True  # 出力をキャプチャしてコンソールに表示しない
+                capture_output=True,  # 出力をキャプチャしてコンソールに表示しない
             )
         else:
             subprocess.run(
                 ["say", "-v", "Kyoko", message],
                 check=False,  # エラーが発生してもスクリプトは続行
-                capture_output=True  # 出力をキャプチャしてコンソールに表示しない
+                capture_output=True,  # 出力をキャプチャしてコンソールに表示しない
             )
     except Exception as e:
         # sayコマンドが失敗してもスクリプト全体は正常終了
