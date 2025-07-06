@@ -2,3 +2,4 @@ CLAUDE.local.md
 settings.local.json
 .mcp.json
 z/
+.envrc.local
