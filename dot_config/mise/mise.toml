@@ -1,5 +1,0 @@
-[tools]
-# npmのglobalはmiseで管理する
-"npm:@anthropic-ai/claude-code" = "latest"
-"npm:@google/gemini-cli" = "latest"
-"npm:ccusage" = "latest"
