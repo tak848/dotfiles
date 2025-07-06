@@ -1,5 +1,8 @@
 autoload -Uz compinit && compinit
 
+bindkey -d # キーバインドをリセット
+bindkey -e # emacsモードで使う
+
 setopt auto_pushd
 setopt pushd_ignore_dups
 setopt auto_cd
@@ -12,6 +15,12 @@ set nrformats=hex,bin
 export HISTFILE=~/.zsh_history
 export HISTSIZE=100000
 export SAVEHIST=100000
+
+
+setopt extended_history   # 実行時間も保存
+setopt hist_ignore_dups   # 直前のコマンドと同じコマンドはヒストリに追加しない
+setopt share_history      # 他のシェルとリアルタイムで共有
+setopt hist_reduce_blanks # 余分なスペースを削除してヒストリに保存
 
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
