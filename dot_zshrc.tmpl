@@ -122,6 +122,12 @@ export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.conf
 # 毎回aqua installを実行（必要なツールがあればインストールされる）
 aqua i -a -l
 
+export MISE_GLOBAL_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/mise/config.toml
+# miseのシェル連携を有効化
+if command -v mise &> /dev/null; then
+    eval "$(mise activate zsh)"
+fi
+
 # neovimのエイリアス設定
 if ! command -v nvim &> /dev/null; then
   alias vi="nvim"
@@ -201,12 +207,6 @@ if [ -d "$PNPM_HOME" ]; then
         *":$PNPM_HOME:"*) ;;
         *) export PATH="$PNPM_HOME:$PATH" ;;
     esac
-fi
-
-export MISE_GLOBAL_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/mise/config.toml
-# miseのシェル連携を有効化
-if command -v mise &> /dev/null; then
-    eval "$(mise activate zsh)"
 fi
 
 # ローカル設定の読み込み（最後に実行）
