@@ -203,6 +203,7 @@ if [ -d "$PNPM_HOME" ]; then
     esac
 fi
 
+export MISE_GLOBAL_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/mise/config.toml
 # miseのシェル連携を有効化
 if command -v mise &> /dev/null; then
     eval "$(mise activate zsh)"
