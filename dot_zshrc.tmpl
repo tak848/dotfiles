@@ -123,10 +123,10 @@ export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.conf
 aqua i -a -l
 
 # export MISE_GLOBAL_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/mise/config.toml
-# # miseのシェル連携を有効化
-# if command -v mise &> /dev/null; then
-#     eval "$(mise activate zsh)"
-# fi
+# miseのシェル連携を有効化
+if command -v mise &> /dev/null; then
+    eval "$(mise activate zsh)"
+fi
 
 # neovimのエイリアス設定
 if ! command -v nvim &> /dev/null; then
