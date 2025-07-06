@@ -139,6 +139,11 @@ if command -v starship &> /dev/null; then
   eval "$(starship init zsh)"
 fi
 
+# taskの設定
+if command -v task &> /dev/null; then
+  eval "$(task --completion zsh)"
+fi
+
 # fzfの設定 (aqua経由でインストールされるfzfを使用)
 if command -v fzf &> /dev/null; then
   source <(fzf --zsh)
