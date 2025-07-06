@@ -9,3 +9,4 @@ aqua-checksums.json
 !dot_config/aquaproj-aqua/aqua.yaml
 !dot_config/aquaproj-aqua/aqua-checksums.json
 .task
+renovate.json5
