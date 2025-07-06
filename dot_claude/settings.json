@@ -96,7 +96,8 @@
          "mcp__playwright__browser_snapshot",
          "mcp__playwright__browser_tab_list",
          "mcp__playwright__browser_resize",
-         "mcp__o3__o3-search"
+         "mcp__o3__o3-search",
+         "mcp__gemini-cli__googleSearch"
       ],
       "defaultMode": "plan",
       "deny": [ ]

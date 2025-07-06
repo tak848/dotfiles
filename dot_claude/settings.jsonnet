@@ -73,6 +73,7 @@
       'mcp__playwright__browser_resize',
 
       'mcp__o3__o3-search',
+      'mcp__gemini-cli__googleSearch',
     ],
     deny: [],
   },
