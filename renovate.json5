@@ -1,0 +1,9 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    "config:recommended",
+    "helpers:pinGitHubActionDigestsToSemver",
+    "github>aquaproj/aqua-renovate-config#2.8.0",
+  ],
+  rangeStrategy: "bump",
+}
