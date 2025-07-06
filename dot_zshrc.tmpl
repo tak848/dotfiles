@@ -203,6 +203,11 @@ if [ -d "$PNPM_HOME" ]; then
     esac
 fi
 
+# miseのシェル連携を有効化
+if command -v mise &> /dev/null; then
+    eval "$(mise activate zsh)"
+fi
+
 # ローカル設定の読み込み（最後に実行）
 # これらのファイルはGit管理されません
 if [ -f ~/.zshrc.local ]; then
