@@ -9,7 +9,7 @@
 #   - all
 registries:
 - type: standard
-  ref: v4.381.0 # renovate: depName=aquaproj/aqua-registry
+  ref: v4.382.0 # renovate: depName=aquaproj/aqua-registry
 checksum:
   enabled: true
   require_checksum: true
@@ -21,8 +21,8 @@ packages:
 - name: junegunn/fzf@v0.63.0
 - name: junegunn/fzf/fzf-tmux@v0.63.0
 - name: starship/starship@v1.23.0
-- name: astral-sh/uv@0.7.17
-- name: aws/aws-cli@2.27.45
+- name: astral-sh/uv@0.7.19
+- name: aws/aws-cli@2.27.49
 - name: bufbuild/buf@v1.55.1
 - name: direnv/direnv@v2.36.0
 - name: 1password/cli@v2.31.1
@@ -31,6 +31,5 @@ packages:
 - name: google/go-jsonnet@v0.21.0
 - name: grafana/jsonnet-language-server@v0.16.0
 - name: go-task/task@v3.44.0
-- name: jqlang/jq@jq-1.8.0
+- name: jqlang/jq@jq-1.8.1
 - name: mikefarah/yq@v4.45.4
-- name: jdx/mise@v2025.7.1
