@@ -3,7 +3,7 @@
   extends: [
     "config:recommended",
     "helpers:pinGitHubActionDigestsToSemver",
-    "github>aquaproj/aqua-renovate-config#2.8.0",
+    "github>aquaproj/aqua-renovate-config#2.8.2",
   ],
   rangeStrategy: "bump",
 }
