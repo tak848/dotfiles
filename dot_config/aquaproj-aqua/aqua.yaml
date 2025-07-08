@@ -15,7 +15,7 @@ checksum:
   require_checksum: true
 packages:
 - name: pnpm/pnpm@v10.12.4
-- name: golang/go@go1.24.4
+- name: golang/go@go1.24.5
 - name: cli/cli@v2.74.2
 - name: nodejs/node@v24.3.0
 - name: junegunn/fzf@v0.63.0
