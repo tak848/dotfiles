@@ -6,6 +6,11 @@
       "algorithm": "sha256"
     },
     {
+      "id": "github_content/github.com/junegunn/fzf/v0.64.0/bin/fzf-tmux",
+      "checksum": "8060C0B517EC82097155043B2909B3AED22728B2E142B80F7832EC83375CB599",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/astral-sh/uv/0.7.17/uv-aarch64-apple-darwin.tar.gz",
       "checksum": "0777E13BA598CCB9A9F78DF209C98922B219A195765B9F1B309457A08CBAE43D",
       "algorithm": "sha256"
@@ -271,6 +276,26 @@
       "algorithm": "sha256"
     },
     {
+      "id": "github_release/github.com/jdx/mise/v2025.7.2/mise-v2025.7.2-linux-arm64-musl.tar.gz",
+      "checksum": "0862FDC6BD2A37F8355FCE24A15FEFD6CA351ABB7703B4DFCD91DBAD19D4C9FF",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/jdx/mise/v2025.7.2/mise-v2025.7.2-linux-x64-musl.tar.gz",
+      "checksum": "D3B6356BF0026811085C96BE13B546ED5759A02BBF4EF98729BF6E5CE20B50FD",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/jdx/mise/v2025.7.2/mise-v2025.7.2-macos-arm64.tar.gz",
+      "checksum": "44CFF2F9DFC95D84E33857FEB69CD8E1F4476ADF961C7106ED1396C3182D73AA",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/jdx/mise/v2025.7.2/mise-v2025.7.2-macos-x64.tar.gz",
+      "checksum": "14E9A6E7B125103632D598291320E72C63D35C753EB39126B2CB547EE8EA4A1E",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/jqlang/jq/jq-1.8.0/jq-linux-amd64",
       "checksum": "8926C33326111BCD67A47A970B5A5DB933EF9194AD925994934C639C76A0605C",
       "algorithm": "sha256"
@@ -351,6 +376,36 @@
       "algorithm": "sha256"
     },
     {
+      "id": "github_release/github.com/junegunn/fzf/v0.64.0/fzf-0.64.0-darwin_amd64.tar.gz",
+      "checksum": "9FB8180BBD1BB06AF4E3F7BC8E8F8E84B3FDE12297D6E187DD699A4F620042BB",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/junegunn/fzf/v0.64.0/fzf-0.64.0-darwin_arm64.tar.gz",
+      "checksum": "C71D2528E090DE5D4765017D745F8A4FED44B43703F93247A28F6DC2AA4C7C01",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/junegunn/fzf/v0.64.0/fzf-0.64.0-linux_amd64.tar.gz",
+      "checksum": "E61BDBB4356EE243D2247C2E0BF990B23EB8B8346557D0F496898C61BC835880",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/junegunn/fzf/v0.64.0/fzf-0.64.0-linux_arm64.tar.gz",
+      "checksum": "19EC0C63A0612DBF2B2B2BF3D9B76B40E65B79A8475E7566D2C8569EB5254149",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/junegunn/fzf/v0.64.0/fzf-0.64.0-windows_amd64.zip",
+      "checksum": "B94FEA89D118FFB7F91EB48DB05FB4DEEA689AAB7F8EF52C9C10FDC4489ADBED",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/junegunn/fzf/v0.64.0/fzf-0.64.0-windows_arm64.zip",
+      "checksum": "E8802F42491B8827D6E8B51CB1311EC86A00D4B3F57E57635D621DD66F4EFD74",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/mikefarah/yq/v4.45.4/yq_darwin_amd64",
       "checksum": "5580FF2C1FC80DD91F248B3E19AF2431F1C95767AD0949A60176601CA5140318",
       "algorithm": "sha256"
@@ -423,6 +478,31 @@
     {
       "id": "github_release/github.com/pnpm/pnpm/v10.12.4/pnpm-win-x64.exe",
       "checksum": "F49633DB2D78CF904F92D41500E35D81506338415B9802CE3942F6A2EAD0333C",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/pnpm/pnpm/v10.13.1/pnpm-linux-arm64",
+      "checksum": "0F6D0A1E1B95F2231CE76C13330C754BB76B8F069CA165E5CB8DBE225259F841",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/pnpm/pnpm/v10.13.1/pnpm-linux-x64",
+      "checksum": "E1CAB530EA8252EB90E4ADD71D95838FD6F2656E6977F120DF5ECB6F5B2822E0",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/pnpm/pnpm/v10.13.1/pnpm-macos-arm64",
+      "checksum": "831E5CE1A1B98C922088A3B93DBF1F3A9CC4D689DA6A32F8E743E4AABADD2981",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/pnpm/pnpm/v10.13.1/pnpm-macos-x64",
+      "checksum": "29DE572383F9BAB9342E2677BCE395B4A91D3E9CF2CD46D17D51A8E8FC847B56",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/pnpm/pnpm/v10.13.1/pnpm-win-x64.exe",
+      "checksum": "DC342FD6A2D0A9701CC724E6972E8CBC73991DE5FC3FFF70C201B6433612F78B",
       "algorithm": "sha256"
     },
     {
@@ -546,6 +626,36 @@
       "algorithm": "sha256"
     },
     {
+      "id": "http/golang.org/dl/go1.24.5.darwin-amd64.tar.gz",
+      "checksum": "2FE5F3866B8FBCD20625D531F81019E574376B8A840B0A096D8A2180308B1672",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/golang.org/dl/go1.24.5.darwin-arm64.tar.gz",
+      "checksum": "92D30A678F306C327C544758F2D2FA5515AA60ABE9DBA4CA35FBF9B8BFC53212",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/golang.org/dl/go1.24.5.linux-amd64.tar.gz",
+      "checksum": "10AD9E86233E74C0F6590FE5426895DE6BF388964210EAC34A6D83F38918ECDC",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/golang.org/dl/go1.24.5.linux-arm64.tar.gz",
+      "checksum": "0DF02E6AEB3D3C06C95FF201D575907C736D6C62CFA4B6934C11203F1D600FFA",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/golang.org/dl/go1.24.5.windows-amd64.zip",
+      "checksum": "658F432689106D4E0A401A2EBB522B1213F497BC8357142FE8DEF18D79F02957",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/golang.org/dl/go1.24.5.windows-arm64.zip",
+      "checksum": "CD2955C4E3166A0CEF4B76830025E4CC6E9ECCCFF32C02979A63F534D83C2E66",
+      "algorithm": "sha256"
+    },
+    {
       "id": "http/nodejs.org/dist/v24.3.0/node-v24.3.0-darwin-arm64.tar.gz",
       "checksum": "FEE91AA5FEBEDA47EF9F6C0AFD2F2BCD3DACB0E656C29DE0B5274E0EA1CA3565",
       "algorithm": "sha256"
@@ -578,6 +688,11 @@
     {
       "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.382.0/registry.yaml",
       "checksum": "364C77EA410DA911092CB187D5509C1D593B57496D210FDCD4820DCA278D78AF",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.384.0/registry.yaml",
+      "checksum": "48D1A8057BA09715E9F0AA4D3E110E9B5E19FFD8E83EC90F49E7623D8BF09430",
       "algorithm": "sha256"
     }
   ]
