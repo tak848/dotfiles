@@ -35,5 +35,5 @@ packages:
   - name: grafana/jsonnet-language-server@v0.16.0
   - name: go-task/task@v3.44.0
   - name: jqlang/jq@jq-1.8.1
-  - name: mikefarah/yq@v4.45.4
+  - name: mikefarah/yq@v4.46.1
   - name: jdx/mise@v2025.7.3
