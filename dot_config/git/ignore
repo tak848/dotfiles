@@ -3,3 +3,4 @@ settings.local.json
 .mcp.json
 z/
 .envrc.local
+.DS_STORE
