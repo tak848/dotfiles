@@ -53,8 +53,10 @@ git-commit-ai() {
 
     # コミット可能な変更があるかチェック（--amend モードでない場合）
     if ! $amend_mode; then
-        if [[ -z $(git status --porcelain) ]]; then
-            echo "エラー: コミットする変更がありません。" >&2
+        # ステージされた変更があるかチェック
+        if git diff --staged --quiet; then
+            echo "エラー: ステージされた変更がありません。" >&2
+            echo "ヒント: 'git add' でファイルをステージングしてください。" >&2
             return 1
         fi
     fi
@@ -211,11 +213,6 @@ $common_constraints"
 
     # コミットを実行
     echo -e "\nコミットを実行しています..."
-    
-    # ステージされていない変更がある場合は、すべてをステージング（--amend モードでない場合）
-    if ! $amend_mode && ! git diff --quiet; then
-        git add -A
-    fi
     
     # コミットメッセージを一時ファイルに保存してコミット
     local temp_file=$(mktemp)
