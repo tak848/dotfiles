@@ -356,6 +356,26 @@
       "algorithm": "sha256"
     },
     {
+      "id": "github_release/github.com/jdx/mise/v2025.7.7/mise-v2025.7.7-linux-arm64-musl.tar.gz",
+      "checksum": "4858D3DC266F599B7ACAA06B895CC6C48B8DF95AD0B92189EE20DCE98BD2FC35",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/jdx/mise/v2025.7.7/mise-v2025.7.7-linux-x64-musl.tar.gz",
+      "checksum": "3D9A08701F1792BE8C8FDDB5C979D1A417A96F5D7F75C417DD84381D520A003D",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/jdx/mise/v2025.7.7/mise-v2025.7.7-macos-arm64.tar.gz",
+      "checksum": "6273B208DD29D01092F440377C5FABE5E187EB91F1F4C4AADA10E742B74FFD79",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/jdx/mise/v2025.7.7/mise-v2025.7.7-macos-x64.tar.gz",
+      "checksum": "BDFAE72E6D9058E1900C20F6DE6C38268998A566FBF3C9C008AC7F03138EEC4D",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/jqlang/jq/jq-1.8.0/jq-linux-amd64",
       "checksum": "8926C33326111BCD67A47A970B5A5DB933EF9194AD925994934C639C76A0605C",
       "algorithm": "sha256"
@@ -491,6 +511,26 @@
       "algorithm": "sha256"
     },
     {
+      "id": "github_release/github.com/mikefarah/yq/v4.46.1/yq_darwin_amd64",
+      "checksum": "4C290B4AD1DA8557BE6C030A9CECBEF58B7CB8D4CB201B2D69CB1A5E00C22A9A",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/mikefarah/yq/v4.46.1/yq_darwin_arm64",
+      "checksum": "E639937C2718DE6771FF62FE38D19486324C19B22A9B9441A4829070D07DFB70",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/mikefarah/yq/v4.46.1/yq_linux_amd64",
+      "checksum": "C0EB42F6FBF928F0413422967983DCDF9806CC4DEDC9394EDC60C0DFB4A98529",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/mikefarah/yq/v4.46.1/yq_linux_arm64",
+      "checksum": "4AB0B301059348D671FC1833E99903C1FECC7CA287AC131F72DCA0EB9A6BA87A",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/neovim/neovim/v0.11.2/nvim-linux-arm64.tar.gz",
       "checksum": "8A832289BA2A17918B7A893160FCC4B24BA87141A5A07CDBB7304D53834C0C40",
       "algorithm": "sha256"
@@ -513,6 +553,26 @@
     {
       "id": "github_release/github.com/neovim/neovim/v0.11.2/nvim-win64.zip",
       "checksum": "DFA66AFC95422B7C4A0F8AE330F30A00DBB8E9848993D7BFDE8E2E85BE30DE13",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/neovim/neovim/v0.11.3/nvim-linux-arm64.tar.gz",
+      "checksum": "ED53AF6B8125475003B8A44A2B73D39FA6CC38243EC39C31E2F85062C302CCAA",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/neovim/neovim/v0.11.3/nvim-linux-x86_64.tar.gz",
+      "checksum": "02B808A3EE8FC30161E07FE3C3EDFB24B28BD0295323AC5DBDD8EC7012CAC67D",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/neovim/neovim/v0.11.3/nvim-macos-arm64.tar.gz",
+      "checksum": "17D22826F19FE28A11F9AB4BEE13C43399FDCCE485EABFA2BEA6C5B3D660740F",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/neovim/neovim/v0.11.3/nvim-macos-x86_64.tar.gz",
+      "checksum": "6EA6A62A611FA6E515A92B1A327DADFD7826D5B3D2C514F1F5EF1DE36C710E05",
       "algorithm": "sha256"
     },
     {
@@ -794,6 +854,11 @@
       "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.385.0/registry.yaml",
       "checksum": "D6B641145B349E4892D626216527C86A408FE8E64748D602F400EFC32A9124BCD2F943775E811319EA9FF69B4CE5BA9ACA13CB311E29886E79339832AD188107",
       "algorithm": "sha512"
+    },
+    {
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.386.0/registry.yaml",
+      "checksum": "54B668605371C5D24D6F96CF6D46271A807E719DC58B2514B99D991CF74992FA",
+      "algorithm": "sha256"
     }
   ]
 }
