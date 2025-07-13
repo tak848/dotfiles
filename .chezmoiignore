@@ -11,3 +11,4 @@ aqua-checksums.json
 .task
 .github
 renovate.json5
+.envrc
