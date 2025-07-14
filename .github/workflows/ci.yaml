@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install aqua
+        uses: aquaproj/aqua-installer@v3.1.0
+        with:
+          aqua_version: v2.39.3
+
+      - name: Verify aqua installation (root)
+        run: |
+          aqua version
+          aqua install --test
+          
+      - name: Verify aqua installation (dot_config)
+        run: |
+          cd dot_config/aquaproj-aqua
+          aqua install --test
+          
+      - name: Verify installed tools from dot_config
+        run: |
+          cd dot_config/aquaproj-aqua
+          aqua install
+          PATH="$(aqua root-dir)/bin:$PATH"
+          echo "=== Checking installed tools ==="
+          which pnpm && pnpm --version
+          which go && go version
+          which gh && gh --version
+          which node && node --version
+
+      - name: Install chezmoi
+        run: |
+          sh -c "$(curl -fsLS chezmoi.io/get)"
+          
+      - name: Verify chezmoi templates
+        run: |
+          export PATH=$HOME/bin:$PATH
+          chezmoi --source . --dry-run --verbose apply

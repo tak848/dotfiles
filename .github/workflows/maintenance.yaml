@@ -1,0 +1,106 @@
+name: Maintenance
+
+on:
+  schedule:
+    # Run at 00:00 UTC every Monday
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-aqua-registry:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate GitHub App Token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Install aqua
+        uses: aquaproj/aqua-installer@v3.1.0
+        with:
+          aqua_version: v2.39.3
+
+      - name: Update aqua-registry (root)
+        run: |
+          aqua update-aqua
+          
+      - name: Update aqua-registry (dot_config)
+        run: |
+          cd dot_config/aquaproj-aqua
+          aqua update-aqua
+
+      - name: Check for changes
+        id: check-changes
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.check-changes.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          commit-message: "chore: update aqua-registry"
+          title: "chore: update aqua-registry"
+          body: |
+            This PR updates the aqua-registry to the latest version.
+            
+            - [ ] Verify all tools still work correctly
+            - [ ] Check for any breaking changes
+          branch: update-aqua-registry
+          delete-branch: true
+
+  cleanup-old-checksums:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install aqua
+        uses: aquaproj/aqua-installer@v3.1.0
+        with:
+          aqua_version: v2.39.3
+
+      - name: Clean up unused checksums (root)
+        run: |
+          # aqua will automatically remove unused checksums
+          aqua update-checksum --prune
+          
+      - name: Clean up unused checksums (dot_config)
+        run: |
+          cd dot_config/aquaproj-aqua
+          aqua update-checksum --prune
+          
+      - name: Check for changes
+        id: check-changes
+        run: |
+          if git diff --quiet aqua-checksums.json dot_config/aquaproj-aqua/aqua-checksums.json; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.check-changes.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "chore: cleanup unused aqua checksums"
+          title: "chore: cleanup unused aqua checksums"
+          body: |
+            This PR removes unused checksums from aqua-checksums.json.
+          branch: cleanup-aqua-checksums
+          delete-branch: true
