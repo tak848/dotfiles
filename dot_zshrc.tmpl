@@ -139,7 +139,7 @@ if command -v mise &> /dev/null; then
 fi
 
 # neovimのエイリアス設定
-if ! command -v nvim &> /dev/null; then
+if command -v nvim &> /dev/null; then
   alias vi="nvim"
   alias vim="nvim"
   alias view="nvim -R"
