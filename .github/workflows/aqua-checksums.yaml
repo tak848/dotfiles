@@ -32,7 +32,7 @@ jobs:
       - name: Install aqua
         uses: aquaproj/aqua-installer@v3.1.0
         with:
-          aqua_version: v2.39.3
+          aqua_version: v2.53.2
 
       - name: Update checksums for root aqua.yaml
         run: |
