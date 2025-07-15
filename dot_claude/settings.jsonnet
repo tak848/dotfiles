@@ -100,6 +100,7 @@
   // },
   env: {
     USE_BUILTIN_RIPGREP: 1,
+    BASH_DEFAULT_TIMEOUT_MS: 60000,
   },
   hooks: {
     PostToolUse: [
