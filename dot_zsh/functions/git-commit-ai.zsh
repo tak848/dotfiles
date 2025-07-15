@@ -17,11 +17,11 @@ git-commit-ai() {
     # コマンドラインオプションを解析
     while [[ $# -gt 0 ]]; do
         case "$1" in
-        -y|--yes)
+        -y | --yes)
             auto_commit=true
             shift
             ;;
-        -e|--edit)
+        -e | --edit)
             edit_after=true
             shift
             ;;
@@ -39,13 +39,13 @@ git-commit-ai() {
     done
 
     # Git リポジトリ内かチェック
-    if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    if ! git rev-parse --git-dir >/dev/null 2>&1; then
         echo "エラー: Git リポジトリではありません。" >&2
         return 1
     fi
 
     # claude コマンドが利用可能かチェック
-    if ! command -v claude &> /dev/null; then
+    if ! command -v claude &>/dev/null; then
         echo "エラー: claude コマンドが見つかりません。" >&2
         echo "Claude Code CLI をインストールしてください: npm install -g @anthropic-ai/claude-code" >&2
         return 1
@@ -62,11 +62,11 @@ git-commit-ai() {
     fi
 
     echo "変更内容を確認しています..."
-    
+
     # git status と git diff の情報を収集
     local git_status_output=$(git status --porcelain)
     local git_diff_output=""
-    
+
     if $amend_mode; then
         # --amend モードの場合、最後のコミットとの差分を取得
         git_diff_output=$(git diff HEAD~1 HEAD)
@@ -112,7 +112,8 @@ $git_diff_output
     # 共通の制約事項
     local common_constraints="
 重要: git diffに表示されている内容（ステージされた変更）のみに基づいてメッセージを生成してください。
-git statusに表示されていても、git diffに含まれていない変更は無視してください。
+**git statusに表示されていても、git diffに含まれていない変更は無視してください。**
+**git statusに表示されていても、git diffに含まれていない変更は無視してください。**
 
 以下の指示に厳密に従ってください：
 1. コミットメッセージのテキストのみを出力する
@@ -146,22 +147,22 @@ $common_constraints"
     fi
 
     echo "Claude Code でコミットメッセージを生成中..."
-    
+
     # Claude Code を使ってコミットメッセージを生成
     local commit_message
     if [[ "${GIT_COMMIT_AI_DEBUG:-}" == "1" ]]; then
         echo "Debug: プロンプト長 = ${#prompt} 文字" >&2
     fi
-    
+
     commit_message=$(claude -p "$prompt" 2>&1)
     local claude_exit_code=$?
-    
+
     if [[ $claude_exit_code -ne 0 ]]; then
         echo "エラー: Claude Code の実行に失敗しました (exit code: $claude_exit_code)" >&2
         echo "出力: $commit_message" >&2
         return 1
     fi
-    
+
     if [[ -z "$commit_message" ]]; then
         echo "エラー: コミットメッセージの生成に失敗しました。" >&2
         return 1
@@ -177,11 +178,11 @@ $common_constraints"
     if $edit_after; then
         # 一時ファイルにメッセージを保存
         local temp_file=$(mktemp)
-        echo "$commit_message" > "$temp_file"
-        
+        echo "$commit_message" >"$temp_file"
+
         # エディタで開く
         ${EDITOR:-vim} "$temp_file"
-        
+
         # 編集後のメッセージを読み込む
         commit_message=$(cat "$temp_file")
         rm -f "$temp_file"
@@ -191,33 +192,33 @@ $common_constraints"
     if ! $auto_commit; then
         echo -e "\nこのメッセージでコミットしますか？ [Y/n/e(dit)] "
         read -r response
-        
+
         case "$response" in
-            [nN])
-                echo "キャンセルしました。"
-                return 0
-                ;;
-            [eE])
-                # エディタで編集
-                local temp_file=$(mktemp)
-                echo "$commit_message" > "$temp_file"
-                ${EDITOR:-vim} "$temp_file"
-                commit_message=$(cat "$temp_file")
-                rm -f "$temp_file"
-                ;;
-            *)
-                # Y または Enter の場合は続行
-                ;;
+        [nN])
+            echo "キャンセルしました。"
+            return 0
+            ;;
+        [eE])
+            # エディタで編集
+            local temp_file=$(mktemp)
+            echo "$commit_message" >"$temp_file"
+            ${EDITOR:-vim} "$temp_file"
+            commit_message=$(cat "$temp_file")
+            rm -f "$temp_file"
+            ;;
+        *)
+            # Y または Enter の場合は続行
+            ;;
         esac
     fi
 
     # コミットを実行
     echo -e "\nコミットを実行しています..."
-    
+
     # コミットメッセージを一時ファイルに保存してコミット
     local temp_file=$(mktemp)
-    echo "$commit_message" > "$temp_file"
-    
+    echo "$commit_message" >"$temp_file"
+
     if git commit "${extra_args[@]}" -F "$temp_file"; then
         echo "コミットが完了しました。"
         rm -f "$temp_file"

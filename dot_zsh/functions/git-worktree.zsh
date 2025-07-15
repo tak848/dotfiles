@@ -68,9 +68,21 @@ gwr() {
 }
 
 # gwc: 既存ブランチ選択と新規ブランチ作成を兼ねる万能版
+# 
+# 使用例:
+#   gwc                              # 通常の使用
+#   gwc --copy data.local.json       # 追加ファイルを指定
+#   export GWC_COPY_FILES=".env.test,config.local.json"  # 環境変数で事前設定
+#
 gwc() {
     local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json")
     local extra_copy_files=()
+
+    # 環境変数 GWC_COPY_FILES から追加のコピー対象ファイルを取得
+    if [ -n "$GWC_COPY_FILES" ]; then
+        IFS=',' read -r -A env_copy_files <<< "$GWC_COPY_FILES"
+        extra_copy_files+=("${env_copy_files[@]}")
+    fi
 
     # コマンドラインオプションを解析
     while [[ $# -gt 0 ]]; do
