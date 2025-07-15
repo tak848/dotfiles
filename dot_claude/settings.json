@@ -1,6 +1,6 @@
 {
    "env": {
-      "BASH_DEFAULT_TIMEOUT_MS": 60000,
+      "BASH_DEFAULT_TIMEOUT_MS": 600000,
       "USE_BUILTIN_RIPGREP": 1
    },
    "hooks": {
