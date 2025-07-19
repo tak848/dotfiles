@@ -30,7 +30,7 @@ packages:
   - name: bufbuild/buf@v1.55.1
   - name: direnv/direnv@v2.37.0
   - name: neovim/neovim@v0.11.3
-  - name: kubernetes/kubernetes/kubectl@v1.33.2
+  - name: kubernetes/kubernetes/kubectl@v1.33.3
   - name: google/go-jsonnet@v0.21.0
   - name: grafana/jsonnet-language-server@v0.16.0
   - name: go-task/task@v3.44.0
