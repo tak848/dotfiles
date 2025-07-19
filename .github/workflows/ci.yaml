@@ -46,8 +46,7 @@ jobs:
 
       - name: Install chezmoi
         run: |
-          sh -c "$(curl -fsLS chezmoi.io/get)"
-          echo "$HOME/bin" >> $GITHUB_PATH
+          sh -c "$(curl -fsLS chezmoi.io/get)" -- -b /usr/local/bin
 
       - name: Verify chezmoi templates
         run: |
