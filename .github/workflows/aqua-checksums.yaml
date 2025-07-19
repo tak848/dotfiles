@@ -3,9 +3,9 @@ name: Update aqua checksums
 on:
   pull_request:
     paths:
-      - 'aqua.yaml'
-      - 'dot_config/aquaproj-aqua/aqua.yaml'
-      - '.github/workflows/aqua-checksums.yaml'
+      - "aqua.yaml"
+      - "dot_config/aquaproj-aqua/aqua.yaml"
+      - ".github/workflows/aqua-checksums.yaml"
 
 permissions:
   contents: write
@@ -36,13 +36,13 @@ jobs:
 
       - name: Update checksums for root aqua.yaml
         run: |
-          aqua update-checksum
-          
+          aqua update-checksum --prune
+
       - name: Update checksums for dot_config aqua.yaml
         run: |
           cd dot_config/aquaproj-aqua
-          aqua update-checksum
-          
+          aqua update-checksum --prune
+
       - name: Check if aqua-checksums.json changed
         id: check-changes
         run: |
