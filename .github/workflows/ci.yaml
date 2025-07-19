@@ -27,12 +27,12 @@ jobs:
         run: |
           aqua version
           aqua install --test
-          
+
       - name: Verify aqua installation (dot_config)
         run: |
           cd dot_config/aquaproj-aqua
           aqua install --test
-          
+
       - name: Verify installed tools from dot_config
         run: |
           cd dot_config/aquaproj-aqua
@@ -47,8 +47,8 @@ jobs:
       - name: Install chezmoi
         run: |
           sh -c "$(curl -fsLS chezmoi.io/get)"
-          
+          echo "$HOME/bin" >> $GITHUB_PATH
+
       - name: Verify chezmoi templates
         run: |
-          export PATH=$HOME/bin:$PATH
           chezmoi --source . --dry-run --verbose apply
