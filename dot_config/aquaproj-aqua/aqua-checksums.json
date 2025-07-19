@@ -731,6 +731,26 @@
       "algorithm": "sha256"
     },
     {
+      "id": "http/dl.k8s.io/v1.33.3/bin/darwin/amd64/kubectl",
+      "checksum": "9652B55A58E84454196A7B9009F6D990D3961E2BD4BD03F64111D959282B46B1",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/dl.k8s.io/v1.33.3/bin/darwin/arm64/kubectl",
+      "checksum": "3DE173356753BACB215E6DC7333F896B7F6AB70479362146C6ACCA6E608B3F53",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/dl.k8s.io/v1.33.3/bin/linux/amd64/kubectl",
+      "checksum": "2FCF65C64F352742DC253A25A7C95617C2ABA79843D1B74E585C69FE4884AFB0",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/dl.k8s.io/v1.33.3/bin/linux/arm64/kubectl",
+      "checksum": "3D514DBAE5DC8C09F773DF0EF0F5D449DFAD05B3ACA5C96B13565F886DF345FD",
+      "algorithm": "sha256"
+    },
+    {
       "id": "http/golang.org/dl/go1.24.4.darwin-amd64.tar.gz",
       "checksum": "69BEF555E114B4A2252452B6E7049AFC31FBDF2D39790B669165E89525CD3F5C",
       "algorithm": "sha256"
