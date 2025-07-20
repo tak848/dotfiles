@@ -5,6 +5,6 @@ auto_install = true
 [tools]
 # npmのglobalはmiseで管理する
 "npm:@anthropic-ai/claude-code" = "1.0.56"
-"npm:@google/gemini-cli" = "0.1.12"
+"npm:@google/gemini-cli" = "0.1.13"
 "npm:ccusage" = "15.5.0"
 "1password-cli" = "2.31.1"
