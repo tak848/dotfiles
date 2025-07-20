@@ -28,7 +28,7 @@ packages:
   - name: astral-sh/uv@0.8.0
   - name: aws/aws-cli@2.27.55
   - name: bufbuild/buf@v1.55.1
-  - name: direnv/direnv@v2.37.0
+  - name: direnv/direnv@v2.37.1
   - name: neovim/neovim@v0.11.3
   - name: kubernetes/kubernetes/kubectl@v1.33.3
   - name: google/go-jsonnet@v0.21.0
