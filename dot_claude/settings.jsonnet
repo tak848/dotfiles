@@ -117,15 +117,15 @@
           },
         ],
       },
-      //   {
-      //     matcher: '',
-      //     hooks: [
-      //       {
-      //         type: 'command',
-      //         command: 'uv run ~/.claude/post_tool_use.py',
-      //       },
-      //     ],
-      //   },
+      {
+        matcher: '',
+        hooks: [
+          {
+            type: 'command',
+            command: 'uv run ~/.claude/post_tool_use.py',
+          },
+        ],
+      },
     ],
     PreToolUse: [
       //   {
