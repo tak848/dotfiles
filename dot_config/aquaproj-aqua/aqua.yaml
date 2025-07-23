@@ -37,3 +37,5 @@ packages:
   - name: jqlang/jq@jq-1.8.1
   - name: mikefarah/yq@v4.46.1
   - name: jdx/mise@v2025.7.20
+  - name: x-motemen/ghq@v1.8.0
+  - name: ajeetdsouza/zoxide@v0.9.8
