@@ -20,7 +20,7 @@ checksum:
 packages:
   - name: pnpm/pnpm@v10.13.1
   - name: golang/go@go1.24.5
-  - name: cli/cli@v2.76.0
+  - name: cli/cli@v2.76.1
   - name: nodejs/node@v24.4.1
   - name: junegunn/fzf@v0.64.0
   - name: junegunn/fzf/fzf-tmux@v0.64.0
