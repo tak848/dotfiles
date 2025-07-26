@@ -86,6 +86,21 @@
       "algorithm": "sha256"
     },
     {
+      "id": "github_release/github.com/cloudflare/cloudflared/2025.7.0/cloudflared-darwin-amd64.tgz",
+      "checksum": "5521EEE928D60124B5849E3F3CC97690E2EE16FE2BF085E0291B8AD5DF01F735",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/cloudflare/cloudflared/2025.7.0/cloudflared-linux-amd64",
+      "checksum": "51E3909335FD7BA2ED5C696B0A6FB7D4A74F6A15BF36615CEA0FCCBA620CFB3F",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/cloudflare/cloudflared/2025.7.0/cloudflared-linux-arm64",
+      "checksum": "DB86F73E07133CA3E0E63B8158DBAACF39F5DD4458260CB95CCF12B35C1B6CD9",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/direnv/direnv/v2.37.1/direnv.darwin-amd64",
       "checksum": "24FB9CE48B563D7E9FBDD3A4E3E836941654A31CE3E67EBA9EAAFC3DCD8AE73B",
       "algorithm": "sha256"
