@@ -33,7 +33,7 @@ packages:
   - name: kubernetes/kubernetes/kubectl@v1.33.3
   - name: google/go-jsonnet@v0.21.0
   - name: grafana/jsonnet-language-server@v0.16.0
-  - name: go-task/task@v3.44.0
+  - name: go-task/task@v3.44.1
   - name: jqlang/jq@jq-1.8.1
   - name: mikefarah/yq@v4.46.1
   - name: jdx/mise@v2025.7.20
