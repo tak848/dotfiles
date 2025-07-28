@@ -36,7 +36,7 @@ packages:
   - name: go-task/task@v3.44.1
   - name: jqlang/jq@jq-1.8.1
   - name: mikefarah/yq@v4.47.1
-  - name: jdx/mise@v2025.7.28
+  - name: jdx/mise@v2025.7.29
   - name: x-motemen/ghq@v1.8.0
   - name: ajeetdsouza/zoxide@v0.9.8
   - name: cloudflare/cloudflared@2025.7.0
