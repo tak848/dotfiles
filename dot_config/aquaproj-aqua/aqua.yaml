@@ -18,7 +18,7 @@ checksum:
     - linux
     # - windows
 packages:
-  - name: pnpm/pnpm@v10.13.1
+  - name: pnpm/pnpm@v10.14.0
   - name: golang/go@go1.24.5
   - name: cli/cli@v2.76.2
   - name: nodejs/node@v24.4.1
