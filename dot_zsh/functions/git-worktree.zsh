@@ -245,8 +245,12 @@ gwc() {
         fi
 
         echo "\nChanging to target directory and running setup..."
+        # 先に必要なファイルの存在を確認してallowを実行
+        if command -v direnv >/dev/null 2>&1 && [ -f "$target_dir/.envrc" ]; then
+            direnv allow "$target_dir"
+        fi
+        
         cd "$target_dir" && {
-            if command -v direnv >/dev/null 2>&1 && [ -f ".envrc" ]; then direnv allow .; fi
             if command -v aqua >/dev/null 2>&1 && [ -f "aqua.yaml" ]; then aqua policy allow; fi
             if command -v pnpm >/dev/null 2>&1 && [ -f "pnpm-lock.yaml" ]; then pnpm i; fi
         }
