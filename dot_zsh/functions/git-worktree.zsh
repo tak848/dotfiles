@@ -75,6 +75,9 @@ gwr() {
 #   export GWC_COPY_FILES=".env.test,config.local.json"  # 環境変数で事前設定
 #
 gwc() {
+    # 元のディレクトリを保存
+    local original_dir=$(pwd)
+    
     local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json")
     local extra_copy_files=()
 
@@ -259,6 +262,8 @@ gwc() {
         if $open_with_cursor; then
             echo "\nCursor で開いています..."
             cursor .
+            echo "元のディレクトリに戻ります: $original_dir"
+            cd "$original_dir"
         fi
         # ★★★ ここまで ★★★
     else
