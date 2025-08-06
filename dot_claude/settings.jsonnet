@@ -77,7 +77,8 @@
     ],
     deny: [],
   },
-  model: 'opus',
+  model: 'claude-opus-4-1-20250805',
+  autoUpdaterStatus: 'disabled',
 
   // 無効らしい
   // toolPermissions: {
