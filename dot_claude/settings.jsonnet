@@ -78,7 +78,6 @@
     deny: [],
   },
   model: 'claude-opus-4-1-20250805',
-  autoUpdaterStatus: 'disabled',
 
   // 無効らしい
   // toolPermissions: {
@@ -102,6 +101,7 @@
   env: {
     USE_BUILTIN_RIPGREP: 1,
     BASH_DEFAULT_TIMEOUT_MS: 600000,
+    DISABLE_AUTOUPDATER: 1,
   },
   hooks: {
     PostToolUse: [
