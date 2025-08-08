@@ -245,3 +245,9 @@ fi
 alias cc=$HOME/.local/share/mise/installs/npm-anthropic-ai-claude-code/1.0.55/bin/claude
 alias claude=$HOME/.local/share/mise/installs/npm-anthropic-ai-claude-code/1.0.55/bin/claude
 export CLAUDE_CODE_AUTO_UPDATE=false
+
+# cursor-agentが無ければinstall
+if ! command -v cursor-agent &> /dev/null; then
+  curl https://cursor.com/install -fsS | bash
+fi
+export PATH="$HOME/.local/bin:$PATH"
