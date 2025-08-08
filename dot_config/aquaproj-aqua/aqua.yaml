@@ -9,7 +9,8 @@
 #   - all
 registries:
   - type: standard
-    ref: v4.398.0 # renovate: depName=aquaproj/aqua-registry
+    # v4.398.0
+    ref: 5ea884fb06c62d3e62892fa256a6aa9633ee24ec # renovate: depName=aquaproj/aqua-registry
 checksum:
   enabled: true
   require_checksum: true
