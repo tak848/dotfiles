@@ -40,5 +40,5 @@ packages:
   - name: jdx/mise@v2025.8.7
   - name: x-motemen/ghq@v1.8.0
   - name: ajeetdsouza/zoxide@v0.9.8
-  - name: cloudflare/cloudflared@2025.7.0
+  - name: cloudflare/cloudflared@2025.8.0
   - name: BurntSushi/ripgrep@14.1.1
