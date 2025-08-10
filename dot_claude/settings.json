@@ -1,7 +1,8 @@
 {
    "env": {
       "BASH_DEFAULT_TIMEOUT_MS": 600000,
-      "DISABLE_AUTOUPDATER": 1,
+      "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+      "DISABLE_AUTOUPDATER": "1",
       "USE_BUILTIN_RIPGREP": 1
    },
    "hooks": {
