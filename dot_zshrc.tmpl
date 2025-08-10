@@ -242,6 +242,8 @@ if [ -d ~/.zsh/functions ]; then
     done
 fi
 
+# claudeのauto updaterを意地でも無効化したい。環境変数名がglobalすぎる...（勝手にnpm install -gしてくるの何...）
+export DISABLE_AUTOUPDATER=1
 alias cc=$HOME/.local/share/mise/installs/npm-anthropic-ai-claude-code/1.0.55/bin/claude
 alias claude=$HOME/.local/share/mise/installs/npm-anthropic-ai-claude-code/1.0.55/bin/claude
 export CLAUDE_CODE_AUTO_UPDATE=false
