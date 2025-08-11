@@ -7,5 +7,5 @@ auto_install = true
 "npm:@anthropic-ai/claude-code" = "1.0.55"
 "npm:@google/gemini-cli" = "0.1.18"
 "npm:@openai/codex" = "0.20.0"
-"npm:ccusage" = "15.9.1"
+"npm:ccusage" = "15.9.2"
 "1password-cli" = "2.31.1"
