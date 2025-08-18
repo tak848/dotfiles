@@ -4,3 +4,6 @@ settings.local.json
 z/
 .envrc.local
 .DS_STORE
+.serena
+.lsmcp
+.envrc-aliases
