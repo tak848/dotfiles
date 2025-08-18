@@ -117,13 +117,13 @@
 
   // https://docs.anthropic.com/en/docs/claude-code/settings#environment-variables
   env: {
-    USE_BUILTIN_RIPGREP: 1,
-    BASH_DEFAULT_TIMEOUT_MS: 600000,
+    USE_BUILTIN_RIPGREP: '1',
+    BASH_DEFAULT_TIMEOUT_MS: '600000',
     DISABLE_AUTOUPDATER: '1',
     CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: '1',
-    MCP_TIMEOUT: 600000,
-    MCP_TOOL_TIMEOUT: 600000,
-    MAX_MCP_OUTPUT_TOKENS: 100000,  // default: 25000
+    MCP_TIMEOUT: '600000',
+    MCP_TOOL_TIMEOUT: '600000',
+    MAX_MCP_OUTPUT_TOKENS: '100000',  // default: 25000
   },
   hooks: {
     PostToolUse: [
