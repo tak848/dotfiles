@@ -1,6 +1,6 @@
 # dotfiles
 
-Chezmoiで管理している個人用dotfilesリポジトリです。
+Chezmoi で管理している個人用 dotfiles リポジトリです。
 
 ## セットアップ
 
@@ -21,24 +21,31 @@ chezmoi update
 ## 主な機能
 
 ### 自動セットアップ
+
 初回起動時に以下のツールを自動インストール：
-- Homebrew（macOS用パッケージマネージャー）
+
+- Homebrew（macOS 用パッケージマネージャー）
 - direnv（環境変数管理）via aqua
-- aqua（CLIツールバージョン管理）
+- aqua（CLI ツールバージョン管理）
 - fzf（インタラクティブフィルタ）via aqua
 
-### Git Worktree管理関数
-- `gwt` - worktree間の移動
-- `gwc` - 新規worktreeの作成（ブランチ選択/作成）
-- `gwr` - worktreeの削除
+### Git Worktree 管理関数
+
+- `gwt` - worktree 間の移動
+- `gwc` - 新規 worktree の作成（ブランチ選択/作成）
+- `gwr` - worktree の削除
 
 ### 環境別設定
-Chezmoiテンプレート機能により、環境に応じた設定を自動適用：
-- macOS/Linux別のパス設定
+
+Chezmoi テンプレート機能により、環境に応じた設定を自動適用：
+
+- macOS/Linux 別のパス設定
 - インストール済みツールの検出と設定
 
 ### ローカル設定
-Git管理外のローカル設定をサポート：
+
+Git 管理外のローカル設定をサポート：
+
 - `~/.zshrc.local` - マシン固有の環境変数やエイリアス
 - `~/.zsh/local/*.zsh` - ローカル関数やスクリプト
 
@@ -64,6 +71,7 @@ Git管理外のローカル設定をサポート：
 ## カスタマイズ
 
 ### ローカル設定の追加
+
 `~/.zshrc.local`や`~/.zsh/local/`に独自の設定を追加できます：
 
 ```bash
@@ -79,6 +87,7 @@ function deploy-staging() {
 ```
 
 ### 新しいツールの追加
+
 `dot_config/aquaproj-aqua/aqua.yaml`に追加：
 
 ```yaml
@@ -86,6 +95,7 @@ function deploy-staging() {
 ```
 
 その後：
+
 ```bash
 # チェックサムを更新
 aqua update-checksum
@@ -95,18 +105,29 @@ git add -A && git commit -m "Add example tool" && git push
 
 ## トラブルシューティング
 
-### Chezmoiで管理されているファイルを確認
+### Chezmoi で管理されているファイルを確認
+
 ```bash
 chezmoi managed
 ```
 
 ### 変更内容を確認してから適用
+
 ```bash
 chezmoi diff
 chezmoi apply
 ```
 
 ### 設定をリセット
+
 ```bash
 chezmoi init --apply tak848
+```
+
+## serena mcp
+
+for claude code
+
+```bash
+claude mcp add serena-global -- uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context ide-assistant --project '${PWD}'
 ```
