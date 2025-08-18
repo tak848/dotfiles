@@ -321,6 +321,26 @@
       "algorithm": "sha256"
     },
     {
+      "id": "github_release/github.com/rust-lang/rust-analyzer/2025-08-11/rust-analyzer-aarch64-apple-darwin.gz",
+      "checksum": "9593551866AD9FE5E08C4A5ABED102246ABDB2066B1A338CC4EE2B75232D73D7",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/rust-lang/rust-analyzer/2025-08-11/rust-analyzer-aarch64-unknown-linux-gnu.gz",
+      "checksum": "5607F6388E7C57203EF718DA278759BCD28F5842E47915F9316C575AEBEF8F47",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/rust-lang/rust-analyzer/2025-08-11/rust-analyzer-x86_64-apple-darwin.gz",
+      "checksum": "916B4B43042D885C1CB127BC5BF5BD4EC5BA9AA39852CB961541F36F6FC1CA1D",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/rust-lang/rust-analyzer/2025-08-11/rust-analyzer-x86_64-unknown-linux-gnu.gz",
+      "checksum": "51B90677D73A7A499CE6720279E610BE41FF759825A9626DC3D6E32BE5983BF7",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/starship/starship/v1.23.0/starship-aarch64-apple-darwin.tar.gz",
       "checksum": "042C8001275316836A3C43FDB88D0787395EDFD0C10D209E4892AB5577B80D57",
       "algorithm": "sha256"
