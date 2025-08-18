@@ -43,3 +43,4 @@ packages:
   - name: cloudflare/cloudflared@2025.8.0
   - name: BurntSushi/ripgrep@14.1.1
   - name: golang.org/x/tools/gopls@v0.20.0
+  - name: rust-lang/rust-analyzer@2025-08-11

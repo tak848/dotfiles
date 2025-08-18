@@ -78,7 +78,7 @@ gwc() {
     # 元のディレクトリを保存
     local original_dir=$(pwd)
     
-    local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json")
+    local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json" ".serena")
     local extra_copy_files=()
 
     # 環境変数 GWC_COPY_FILES から追加のコピー対象ファイルを取得
@@ -231,12 +231,21 @@ gwc() {
         if [ ${#find_name_args[@]} -gt 0 ]; then
             echo "\nSearching for and copying local config files: ${copy_files[*]}"
             local find_grouped_args=(\( "${find_name_args[@]}" \))
-            find "$root_dir" -path "$root_dir/.git" -prune -o -path "$root_dir/node_modules" -prune -o "${find_grouped_args[@]}" -print | while read -r src_file; do
-                local rel_path_of_file=${src_file#$root_dir}
-                local dest_file="${worktree_path}${rel_path_of_file}"
-                mkdir -p "$(dirname "$dest_file")"
-                if cp "$src_file" "$dest_file"; then
-                    echo "  Copied .${rel_path_of_file}"
+            find "$root_dir" -path "$root_dir/.git" -prune -o -path "$root_dir/node_modules" -prune -o "${find_grouped_args[@]}" -print | while read -r src_path; do
+                local rel_path=${src_path#$root_dir}
+                local dest_path="${worktree_path}${rel_path}"
+                
+                if [ -d "$src_path" ]; then
+                    # ディレクトリの場合は再帰的にコピー
+                    if cp -r "$src_path" "$dest_path"; then
+                        echo "  Copied directory .${rel_path}"
+                    fi
+                else
+                    # ファイルの場合は通常のコピー
+                    mkdir -p "$(dirname "$dest_path")"
+                    if cp "$src_path" "$dest_path"; then
+                        echo "  Copied .${rel_path}"
+                    fi
                 fi
             done
         fi
