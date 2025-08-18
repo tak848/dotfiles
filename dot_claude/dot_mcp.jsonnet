@@ -38,5 +38,21 @@
         REASONING_EFFORT: 'medium',
       },
     },
+    'serena-global': {
+      type: 'stdio',
+      command: 'uvx',
+      args: [
+        '--from',
+        'git+https://github.com/oraios/serena',
+        'serena',
+        'start-mcp-server',
+        '--context',
+        'ide-assistant',
+        '--project',
+        '${PWD}',
+      ],
+      env: {},
+    },
+
   },
 }

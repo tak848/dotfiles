@@ -74,6 +74,22 @@
 
       'mcp__o3__o3-search',
       'mcp__gemini-cli__googleSearch',
+      // serena-global
+      'mcp__serena-global__get_symbols_overview',
+      'mcp__serena-global__find_symbol',
+      'mcp__serena-global__find_referencing_symbols',
+      'mcp__serena-global__list_dir',
+      'mcp__serena-global__find_file',
+      'mcp__serena-global__search_for_pattern',
+      'mcp__serena-global__list_memories',
+      'mcp__serena-global__write_memory',
+      'mcp__serena-global__read_memory',
+      'mcp__serena-global__delete_memory',
+      'mcp__serena-global__check_onboarding_performed',
+      'mcp__serena-global__onboarding',
+      'mcp__serena-global__think_about_collected_information',
+      'mcp__serena-global__think_about_task_adherence',
+      'mcp__serena-global__think_about_whether_you_are_done',
     ],
     deny: [],
   },
@@ -101,8 +117,8 @@
   env: {
     USE_BUILTIN_RIPGREP: 1,
     BASH_DEFAULT_TIMEOUT_MS: 600000,
-    DISABLE_AUTOUPDATER: "1",
-    CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1",
+    DISABLE_AUTOUPDATER: '1',
+    CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: '1',
   },
   hooks: {
     PostToolUse: [

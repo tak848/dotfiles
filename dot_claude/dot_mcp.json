@@ -26,6 +26,21 @@
          "command": "npx",
          "env": { },
          "type": "stdio"
+      },
+      "serena-global": {
+         "args": [
+            "--from",
+            "git+https://github.com/oraios/serena",
+            "serena",
+            "start-mcp-server",
+            "--context",
+            "ide-assistant",
+            "--project",
+            "${PWD}"
+         ],
+         "command": "uvx",
+         "env": { },
+         "type": "stdio"
       }
    }
 }
