@@ -30,7 +30,7 @@ packages:
   - name: aws/aws-cli@2.28.17
   - name: bufbuild/buf@v1.57.0
   - name: direnv/direnv@v2.37.1
-  - name: neovim/neovim@v0.11.3
+  - name: neovim/neovim@v0.11.4
   - name: kubernetes/kubernetes/kubectl@v1.34.0
   - name: google/go-jsonnet@v0.21.0
   - name: grafana/jsonnet-language-server@v0.16.0
