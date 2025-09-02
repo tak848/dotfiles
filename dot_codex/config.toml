@@ -1,5 +1,5 @@
 model_reasoning_effort = "high"
-notify = ["uv", "run", "~/.claude/notification.py"]
+notify = ["uv", "run", "~/.codex/notification.py"]
 
 [tools]
 web_search = true
