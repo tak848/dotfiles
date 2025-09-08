@@ -8,5 +8,5 @@ auto_install = true
 "npm:@google/gemini-cli" = "0.3.4"
 "npm:@openai/codex" = "0.30.0"
 "npm:ccusage" = "16.2.3"
-"npm:@typescript/native-preview" = "7.0.0-dev.20250906.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20250908.1"
 "1password-cli" = "2.31.1"
