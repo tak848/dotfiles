@@ -78,7 +78,7 @@ gwc() {
     # 元のディレクトリを保存
     local original_dir=$(pwd)
     
-    local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json" ".serena")
+    local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json" ".serena" "config.toml")
     local extra_copy_files=()
 
     # 環境変数 GWC_COPY_FILES から追加のコピー対象ファイルを取得
