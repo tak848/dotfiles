@@ -12,3 +12,6 @@ aqua-checksums.json
 .github
 renovate.json5
 .envrc
+AGENTS.md
+Taskfile.yaml
+create_dot_zsh
