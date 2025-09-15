@@ -141,23 +141,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.44.1/task_darwin_amd64.tar.gz",
-      "checksum": "3544805F14E6FDB216610339F839D1A882C700D7AC18FCBFF79CBFCDC5E8A47E",
+      "id": "github_release/github.com/go-task/task/v3.45.3/task_darwin_amd64.tar.gz",
+      "checksum": "EC181EFC611E17BCA76687B43444E22724983BBA25AD602C3CD068419E642DA6",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.44.1/task_darwin_arm64.tar.gz",
-      "checksum": "0784902E0A531CB4A9A4D91FC6235F344AFDAB963EE08042635E9B020EB72350",
+      "id": "github_release/github.com/go-task/task/v3.45.3/task_darwin_arm64.tar.gz",
+      "checksum": "1C621045B7C6DA164E25D0C458D17339D01386CBEEC67E79A98AE9528BDFE044",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.44.1/task_linux_amd64.tar.gz",
-      "checksum": "62969D22BEE5EA8950CC64A30CC7EB278F89AD67683132E728841457AAE523C1",
+      "id": "github_release/github.com/go-task/task/v3.45.3/task_linux_amd64.tar.gz",
+      "checksum": "2C39D989BA8AB6ED37C025E9094E37240360FA2D69158504FC7A7486C88DC26F",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.44.1/task_linux_arm64.tar.gz",
-      "checksum": "06F390BBC1545997BC08920B51741DD2142713CFDEF748E5B17E9F68AA042BBD",
+      "id": "github_release/github.com/go-task/task/v3.45.3/task_linux_arm64.tar.gz",
+      "checksum": "CB5E6B62A4AE7ACBE69C99BA344EB8E68E37F25905600E4694518FE75E412276",
       "algorithm": "sha256"
     },
     {
@@ -381,18 +381,18 @@
       "algorithm": "sha1"
     },
     {
-      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.30.1.pkg",
-      "checksum": "B45474834DAAFEB8CBC39AAEB8B5EA571FA6D7E3780338ED6FF2DED88CDAD9C9",
+      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.30.2.pkg",
+      "checksum": "FB6B5680A5DBB8E1A4D08BFDC102E5340E851740C1B3D4E25F0CC4C29AB097E3",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.30.1.zip",
-      "checksum": "90AE801D74B99E7DC4EFAE10C6B4236555A6B58B8C7FB2C6D7F0B4C0A2582F76",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.30.2.zip",
+      "checksum": "C54E04AE67FFD69037FF49964888B33A0DA408CCA8DAB1F67313A8B3A2799B95",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.30.1.zip",
-      "checksum": "2F6F4C699F7C93BB2F19A8502BD945D243567D1DD95FB87397E3449204FD69CF",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.30.2.zip",
+      "checksum": "DB9BA28905A63D001F45C2219AFAB415C8379E39712DAB304AD0B9A7E59B17F7",
       "algorithm": "sha256"
     },
     {
