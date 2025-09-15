@@ -27,14 +27,14 @@ packages:
   - name: junegunn/fzf/fzf-tmux@v0.65.2
   - name: starship/starship@v1.23.0
   - name: astral-sh/uv@0.8.17
-  - name: aws/aws-cli@2.30.1
+  - name: aws/aws-cli@2.30.2
   - name: bufbuild/buf@v1.57.0
   - name: direnv/direnv@v2.37.1
   - name: neovim/neovim@v0.11.4
   - name: kubernetes/kubernetes/kubectl@v1.34.1
   - name: google/go-jsonnet@v0.21.0
   - name: grafana/jsonnet-language-server@v0.16.0
-  - name: go-task/task@v3.44.1
+  - name: go-task/task@v3.45.3
   - name: jqlang/jq@jq-1.8.1
   - name: mikefarah/yq@v4.47.2
   - name: jdx/mise@v2025.9.10
