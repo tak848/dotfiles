@@ -46,23 +46,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/astral-sh/uv/0.8.18/uv-aarch64-apple-darwin.tar.gz",
-      "checksum": "CE660D5CDF0ED83D1A045BBE9792B93D06725B8C9E9B88960A503D42192BE445",
+      "id": "github_release/github.com/astral-sh/uv/0.8.22/uv-aarch64-apple-darwin.tar.gz",
+      "checksum": "3F61099E261E449527141DBF125629FAB33AD696468C8C90CEBBAC40185A306C",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/astral-sh/uv/0.8.18/uv-aarch64-unknown-linux-musl.tar.gz",
-      "checksum": "1D7E3BFC3B5EC9D747BC3F42A6A3362249F30560966512B172E8967B11046144",
+      "id": "github_release/github.com/astral-sh/uv/0.8.22/uv-aarch64-unknown-linux-musl.tar.gz",
+      "checksum": "3CB3C891F56891F0027F0287980014930B18875C9396C1D8A19D607B0A6049D9",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/astral-sh/uv/0.8.18/uv-x86_64-apple-darwin.tar.gz",
-      "checksum": "A08C3A6C50F49E68216AC133BD0AAAE952DB2CD8D19A3CD5BE782F8F4BECF135",
+      "id": "github_release/github.com/astral-sh/uv/0.8.22/uv-x86_64-apple-darwin.tar.gz",
+      "checksum": "76638FDCFA91357858771551A1C88DE1F7C3B270B33AB1866F8A0618D9E442D8",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/astral-sh/uv/0.8.18/uv-x86_64-unknown-linux-musl.tar.gz",
-      "checksum": "3A93BC3597AB73C9C31D8AD709B4D0B788961CBB508C5A4DCF21636FD7E3E8CE",
+      "id": "github_release/github.com/astral-sh/uv/0.8.22/uv-x86_64-unknown-linux-musl.tar.gz",
+      "checksum": "06B891EF144BD8390FECB150838F0FF8A34CCAEECF9D744D97945D02EC7389C0",
       "algorithm": "sha256"
     },
     {
@@ -86,38 +86,38 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/cli/cli/v2.79.0/gh_2.79.0_linux_amd64.tar.gz",
-      "checksum": "E7AF0C72A607C0528FDA1989F7C8E3BE85E67D321889002AF0E2938AD9C8FB68",
+      "id": "github_release/github.com/cli/cli/v2.80.0/gh_2.80.0_linux_amd64.tar.gz",
+      "checksum": "E0AFFFBF36548194AED8A1BDAF474314857A808B1B1CFA38743E2F4ED6A35B0B",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/cli/cli/v2.79.0/gh_2.79.0_linux_arm64.tar.gz",
-      "checksum": "1B91E546B30181A8EE6D8C72BBF59EAADBB0600BAB014DFBCC199676C83EA102",
+      "id": "github_release/github.com/cli/cli/v2.80.0/gh_2.80.0_linux_arm64.tar.gz",
+      "checksum": "785A746A7B42BAAF42F7D792C9CA1732451A28B78112A1A3B38884156CDEB8A2",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/cli/cli/v2.79.0/gh_2.79.0_macOS_amd64.zip",
-      "checksum": "C1672616FCB3745A0E4285110143B1CC93C241BD867BF108084DEFDEA3D49331",
+      "id": "github_release/github.com/cli/cli/v2.80.0/gh_2.80.0_macOS_amd64.zip",
+      "checksum": "197E55F4E4A5728FA9C3CACF3891CB04A0874493664A80B0D9BDE1223173F205",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/cli/cli/v2.79.0/gh_2.79.0_macOS_arm64.zip",
-      "checksum": "5454F9509E3DBB8F321310E9E344877D9A01EBB8F8703886B1AFB0936D60FFAA",
+      "id": "github_release/github.com/cli/cli/v2.80.0/gh_2.80.0_macOS_arm64.zip",
+      "checksum": "4E3567687D714272BE3664244C045785573660803EABF41DFF9A3A701B39F3B6",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/cloudflare/cloudflared/2025.9.0/cloudflared-darwin-amd64.tgz",
-      "checksum": "E6E79511797D4F3697614AF6B797E39390CE6432613AFEF4F82FC6AD8FD268D5",
+      "id": "github_release/github.com/cloudflare/cloudflared/2025.9.1/cloudflared-darwin-amd64.tgz",
+      "checksum": "A678196AF2E0F870A9AB95B5696AF38F74586C2DB642884E14EA29ADC424BEC5",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/cloudflare/cloudflared/2025.9.0/cloudflared-linux-amd64",
-      "checksum": "4F48C9FC205ED7D200A35F24170E795171189B77A696E3F8B5704D07A6801957",
+      "id": "github_release/github.com/cloudflare/cloudflared/2025.9.1/cloudflared-linux-amd64",
+      "checksum": "3DC1DC4252EAE3C691861F926E2B8640063A2CE534B07B7A3F4EC2DE439ECFE3",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/cloudflare/cloudflared/2025.9.0/cloudflared-linux-arm64",
-      "checksum": "B44462BB9E2AFD66C5A9CCD2D611D8F0B9603B5C2B2061CD5A605138B3793962",
+      "id": "github_release/github.com/cloudflare/cloudflared/2025.9.1/cloudflared-linux-arm64",
+      "checksum": "449BAA3EB07F1ED7541F7A6E8A25BF7822AC1FDB60FBB2EBE9C344B2DF20951A",
       "algorithm": "sha256"
     },
     {
@@ -201,23 +201,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.9.12/mise-v2025.9.12-linux-arm64-musl.tar.gz",
-      "checksum": "016C117C5F6E0EE5621180A0A97B4646D4BBF6A37EB284FB96E941565D82AA8F",
+      "id": "github_release/github.com/jdx/mise/v2025.9.23/mise-v2025.9.23-linux-arm64-musl.tar.gz",
+      "checksum": "3E8B80887FABEF0343007CB0234AA4890604E413EBD266801A474F683E63C80C",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.9.12/mise-v2025.9.12-linux-x64-musl.tar.gz",
-      "checksum": "E213B91AD0FAE52FE34815DA3FF2EECB3176D2DAD9226B19EC82B818E8F71BF6",
+      "id": "github_release/github.com/jdx/mise/v2025.9.23/mise-v2025.9.23-linux-x64-musl.tar.gz",
+      "checksum": "B3819DBC5848E2D04FC334D69C2C285D5ED87F3E3F7C22CFA2D1F3AE30AFBABA",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.9.12/mise-v2025.9.12-macos-arm64.tar.gz",
-      "checksum": "2D01F2275DC4DE37D414BB407C05911F07D9ACBDAA91F443DF7037D707C1514C",
+      "id": "github_release/github.com/jdx/mise/v2025.9.23/mise-v2025.9.23-macos-arm64.tar.gz",
+      "checksum": "C8C6B6F346F6AEA203B4ACED6491D64FE949DD02A51005999F69BC4B5E87B15A",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.9.12/mise-v2025.9.12-macos-x64.tar.gz",
-      "checksum": "DD25619C55456C305C9D86B77F1585CA63337C5CFC872AB487041839451AE61A",
+      "id": "github_release/github.com/jdx/mise/v2025.9.23/mise-v2025.9.23-macos-x64.tar.gz",
+      "checksum": "40F796D19BDEBB88E1CD12E12243F9916669C8D7E333F413A932C52B3E973F01",
       "algorithm": "sha256"
     },
     {
@@ -301,23 +301,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.17.0/pnpm-linux-arm64",
-      "checksum": "68181BC09EED3EAF4FF661F449EF4DDF9BA253F54EBF7ECA2BDC9BEA358B2F42",
+      "id": "github_release/github.com/pnpm/pnpm/v10.17.1/pnpm-linux-arm64",
+      "checksum": "64601480FC29B88A615007E3D439B19330B1A897D59E159F08A0CE369923DF3F",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.17.0/pnpm-linux-x64",
-      "checksum": "E4A94DA45AE61B3F4B808A7E17CA3628A7D6A381B9E20711140277080BADE122",
+      "id": "github_release/github.com/pnpm/pnpm/v10.17.1/pnpm-linux-x64",
+      "checksum": "5BF591D8A3D5E14DBB15524B65A139A81F4B5954BC214BA0C014968899086C3A",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.17.0/pnpm-macos-arm64",
-      "checksum": "7208202BA8B480AE569ADC8493DDE42F25D62F13A5A70A30B7716E96DD5E83C5",
+      "id": "github_release/github.com/pnpm/pnpm/v10.17.1/pnpm-macos-arm64",
+      "checksum": "AAA3B6DC7C7C13364CA2E7088FE1E1FA5D02EA8756997B57868CD0C46F558224",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.17.0/pnpm-macos-x64",
-      "checksum": "20AF56294A71D300EAA1A8883EDBE9ED7AB830364386E71487123AFFBE4F682A",
+      "id": "github_release/github.com/pnpm/pnpm/v10.17.1/pnpm-macos-x64",
+      "checksum": "2465A24A786FDAAD5C80B1806E3ED84779BEA9FD83F90A25F8DBC7F40741CDAC",
       "algorithm": "sha256"
     },
     {
@@ -381,18 +381,18 @@
       "algorithm": "sha1"
     },
     {
-      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.30.5.pkg",
-      "checksum": "E4252A6E66A7483C40BF4307271767030897D3FEEB8188DD47811A02B5ABBEFC",
+      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.31.3.pkg",
+      "checksum": "AC1C68CDB54BB22598BD86E022A24976F3A16E07AC306D75CFA1566B5A1D5BD2",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.30.5.zip",
-      "checksum": "3A1DC91C2162CEB76F78BF08314F0F2360379D8079CD59C34FFB48878E21DD01",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.31.3.zip",
+      "checksum": "720192A3D64137BF7C1BB3A99E5BA6FC6E5806EF2890C8BB48F361BB0581CF38",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.30.5.zip",
-      "checksum": "247DD2DF8ABC8427B138489D3A26FD91FD3834DDC4A9E7C5710B8894900D051E",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.31.3.zip",
+      "checksum": "5004F50F49B0ACB7D788649898BDC5057234C855DC0C5519BDB2BF425E0AAEB3",
       "algorithm": "sha256"
     },
     {
@@ -436,23 +436,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v24.8.0/node-v24.8.0-darwin-arm64.tar.gz",
-      "checksum": "D81191A1866760EB918CAA976C023036BC1FC7405EA31B148905211522045767",
+      "id": "http/nodejs.org/dist/v24.9.0/node-v24.9.0-darwin-arm64.tar.gz",
+      "checksum": "961024296C2A8E60DAED0784F8B61E0FAB5C51D197502A92EFF052C72B53209B",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v24.8.0/node-v24.8.0-darwin-x64.tar.gz",
-      "checksum": "6FD8496B59BAA8F86A24E3EB03308B763091716FFC6B6E1094D1A5E5696DD6DD",
+      "id": "http/nodejs.org/dist/v24.9.0/node-v24.9.0-darwin-x64.tar.gz",
+      "checksum": "6C9AC12D3160538D96D456DC59A8FEC1479E3F8B20BFC0D61BC809EB9EC11417",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v24.8.0/node-v24.8.0-linux-arm64.tar.gz",
-      "checksum": "5EB16B14AF5A5F494ED54770822144E847C744FE590F8DF093AD4927CF3DD7FD",
+      "id": "http/nodejs.org/dist/v24.9.0/node-v24.9.0-linux-arm64.tar.gz",
+      "checksum": "DAB232A90169737A48149149DD6707E7FDCBAEFBAA94B4871047A38E93DB947F",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v24.8.0/node-v24.8.0-linux-x64.tar.gz",
-      "checksum": "DAF68404B478B4C3616666580D02500A24148C0F439E4D0134D65CE70E90E655",
+      "id": "http/nodejs.org/dist/v24.9.0/node-v24.9.0-linux-x64.tar.gz",
+      "checksum": "D57D6C28A35785F58F33899A0AA0BFC83F7A8EF4448B6CF3F7D0961EFC7B9189",
       "algorithm": "sha256"
     },
     {
