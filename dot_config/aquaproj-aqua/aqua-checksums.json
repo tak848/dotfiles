@@ -201,23 +201,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.9.24/mise-v2025.9.24-linux-arm64-musl.tar.gz",
-      "checksum": "098221F332302DB8BB02829599340998017C50A1266A35F03DA963691960115E",
+      "id": "github_release/github.com/jdx/mise/v2025.9.25/mise-v2025.9.25-linux-arm64-musl.tar.gz",
+      "checksum": "A3DE54F8F50F0C82DE32348415B9EBFB122079E890776C81A5AA0D2055818D6D",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.9.24/mise-v2025.9.24-linux-x64-musl.tar.gz",
-      "checksum": "9393348FCA2746C716D982E4479CFA517A391988B45BDAE1EA326F385F85228D",
+      "id": "github_release/github.com/jdx/mise/v2025.9.25/mise-v2025.9.25-linux-x64-musl.tar.gz",
+      "checksum": "961845AB54976F83C543224217147CAD41D124A2F64B1BE02BE57465A7AEEAA7",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.9.24/mise-v2025.9.24-macos-arm64.tar.gz",
-      "checksum": "578C3E247EE3094075357E5DEF2DD725E7D91F7A8C14BB4747ED538E5D37842A",
+      "id": "github_release/github.com/jdx/mise/v2025.9.25/mise-v2025.9.25-macos-arm64.tar.gz",
+      "checksum": "CC4B26FE75084ABC542A7ACC6EA38F5421C3715796BF1F9827842A882E38DBFC",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.9.24/mise-v2025.9.24-macos-x64.tar.gz",
-      "checksum": "C4E15A7A212ECCD3EE041040AD5BAE19F62E1A2DDCDB6E7CA86F77BE521A1D48",
+      "id": "github_release/github.com/jdx/mise/v2025.9.25/mise-v2025.9.25-macos-x64.tar.gz",
+      "checksum": "CC77B8C99B5B4C83FE55AA1F5C737AF284D25421A9E3256F53C2EAD98454EEE5",
       "algorithm": "sha256"
     },
     {
@@ -381,18 +381,18 @@
       "algorithm": "sha1"
     },
     {
-      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.31.4.pkg",
-      "checksum": "2BCC536CD743BAA77EDB55C6E5F9380507BAD78AFA30A98247993BED9D730590",
+      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.31.5.pkg",
+      "checksum": "B156A79FED2D854F9894242864BD96E12BDB49A19A94C9A906BD330D4F4C996B",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.31.4.zip",
-      "checksum": "BA95F5461B7AA632F19B137ECDAB225BB72CA5758D156322A9B53C04275F1C8A",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.31.5.zip",
+      "checksum": "8B8D6499B3BFA54A70706B27435BAAE17C24C5B2CA72AF0496F4B306D323FDA4",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.31.4.zip",
-      "checksum": "CEACD516336374193EAFA91756B75E6752E9E9E19FBC42689E691ABF480E2361",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.31.5.zip",
+      "checksum": "44AECC254E024629C62364A75860AA77C3BD34DD606AC602E46629B5C166EFFA",
       "algorithm": "sha256"
     },
     {
