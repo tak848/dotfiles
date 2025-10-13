@@ -1,8 +1,8 @@
 {
   "checksums": [
     {
-      "id": "github_content/github.com/junegunn/fzf/v0.65.2/bin/fzf-tmux",
-      "checksum": "8060C0B517EC82097155043B2909B3AED22728B2E142B80F7832EC83375CB599",
+      "id": "github_content/github.com/junegunn/fzf/v0.66.0/bin/fzf-tmux",
+      "checksum": "56C78C65A509F88D8F760E4CCBFB04FC452B79FF2D93341924323F143ADCBB59",
       "algorithm": "sha256"
     },
     {
@@ -241,43 +241,43 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/junegunn/fzf/v0.65.2/fzf-0.65.2-darwin_amd64.tar.gz",
-      "checksum": "4F2D7414E4DBE2469E5581C5830F29B1ED3532A3D672646E6C2E0533FC07CBEA",
+      "id": "github_release/github.com/junegunn/fzf/v0.66.0/fzf-0.66.0-darwin_amd64.tar.gz",
+      "checksum": "DE7A4C272682671AE2BB6B9D7FBF2103361EE3EE64CC1DAEEA87FA6E5DE08CC2",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/junegunn/fzf/v0.65.2/fzf-0.65.2-darwin_arm64.tar.gz",
-      "checksum": "A1464F1D4B75C3A92975F67055F9E407800ED35820EA7D73F2AFB90AEB0491E8",
+      "id": "github_release/github.com/junegunn/fzf/v0.66.0/fzf-0.66.0-darwin_arm64.tar.gz",
+      "checksum": "B64A9862F30F3D4568C0433DD5A23BC626FA1EDE2C6E1A5E8E680BBF96725EA6",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/junegunn/fzf/v0.65.2/fzf-0.65.2-linux_amd64.tar.gz",
-      "checksum": "5EB8EFC0E94AA559F84EA83EEBA99BEA7DCE818E63F92B4B62E60663220F1C14",
+      "id": "github_release/github.com/junegunn/fzf/v0.66.0/fzf-0.66.0-linux_amd64.tar.gz",
+      "checksum": "362D5F92187560A87338B427DBE573D1E1BF8B4FB4BAB1F44ACA6A8F7FE8070F",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/junegunn/fzf/v0.65.2/fzf-0.65.2-linux_arm64.tar.gz",
-      "checksum": "097347160595BF03A426D2ABE0A17E14CA060540DDFC0EA45C0A9BE62BB29A2B",
+      "id": "github_release/github.com/junegunn/fzf/v0.66.0/fzf-0.66.0-linux_arm64.tar.gz",
+      "checksum": "E0EBB2E4D2549CC4C693D80CB6CD16467652AB2385B2EBBB5CBAEE3B63FD2904",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.47.2/yq_darwin_amd64",
-      "checksum": "B945C250A308F0DFCD3F034688E5E4A5275DF95788B597F81A4AB450E74175D5",
+      "id": "github_release/github.com/mikefarah/yq/v4.48.1/yq_darwin_amd64",
+      "checksum": "C93D5E5880C78E22AEC4EFC1D719751B60F9ADC49B2735A8009916581B8457C2",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.47.2/yq_darwin_arm64",
-      "checksum": "4CCC7F2F5F6F37804D70AD211A287B1B589F67024ECB77586C77106030424B9F",
+      "id": "github_release/github.com/mikefarah/yq/v4.48.1/yq_darwin_arm64",
+      "checksum": "05E19DB817704D945F28F73763CC2B3C5142EF114A991F57B83BD034C2B86646",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.47.2/yq_linux_amd64",
-      "checksum": "1BB99E1019E23DE33C7E6AFC23E93DAD72AAD6CF2CB03C797F068EA79814DDB0",
+      "id": "github_release/github.com/mikefarah/yq/v4.48.1/yq_linux_amd64",
+      "checksum": "99DF6047F5B577A9D25F969F7C3823ADA3488DE2E2115B30A0ABB10D9324FD9F",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.47.2/yq_linux_arm64",
-      "checksum": "05DF1F6AED334F223BB3E6A967DB259F7185E33650C3B6447625E16FEA0ED31F",
+      "id": "github_release/github.com/mikefarah/yq/v4.48.1/yq_linux_arm64",
+      "checksum": "0E46B5B926A9E57C526FA2BD8F8E38B7E17FBF6E2403FF1741F3B268E3363A9E",
       "algorithm": "sha256"
     },
     {
@@ -436,23 +436,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v24.9.0/node-v24.9.0-darwin-arm64.tar.gz",
-      "checksum": "961024296C2A8E60DAED0784F8B61E0FAB5C51D197502A92EFF052C72B53209B",
+      "id": "http/nodejs.org/dist/v24.10.0/node-v24.10.0-darwin-arm64.tar.gz",
+      "checksum": "FBC3D6E1E1D962450D058E918214373872CC4C46E08673F31C35932AFAC4A8C5",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v24.9.0/node-v24.9.0-darwin-x64.tar.gz",
-      "checksum": "6C9AC12D3160538D96D456DC59A8FEC1479E3F8B20BFC0D61BC809EB9EC11417",
+      "id": "http/nodejs.org/dist/v24.10.0/node-v24.10.0-darwin-x64.tar.gz",
+      "checksum": "627B884F66DB0DD35F4B46FB9E994774CE560A7FB60798BA1AB81E867A73687D",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v24.9.0/node-v24.9.0-linux-arm64.tar.gz",
-      "checksum": "DAB232A90169737A48149149DD6707E7FDCBAEFBAA94B4871047A38E93DB947F",
+      "id": "http/nodejs.org/dist/v24.10.0/node-v24.10.0-linux-arm64.tar.gz",
+      "checksum": "42776DFC722991B1AC9F302F3D7B5CF989CF7ACA519B479C50E59F0663803B73",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v24.9.0/node-v24.9.0-linux-x64.tar.gz",
-      "checksum": "D57D6C28A35785F58F33899A0AA0BFC83F7A8EF4448B6CF3F7D0961EFC7B9189",
+      "id": "http/nodejs.org/dist/v24.10.0/node-v24.10.0-linux-x64.tar.gz",
+      "checksum": "2B03C5417CE0B1076780DF00E01DA373BEAD3B4B80D1C78C1AD10EE7B918D90C",
       "algorithm": "sha256"
     },
     {
