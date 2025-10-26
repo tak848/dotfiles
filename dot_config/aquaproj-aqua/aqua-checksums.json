@@ -436,23 +436,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v24.10.0/node-v24.10.0-darwin-arm64.tar.gz",
-      "checksum": "FBC3D6E1E1D962450D058E918214373872CC4C46E08673F31C35932AFAC4A8C5",
+      "id": "http/nodejs.org/dist/v25.0.0/node-v25.0.0-darwin-arm64.tar.gz",
+      "checksum": "E3734FE04EBEBF5B88CB6E1DB770D3FBF736BD861748597CA008AD3D51F165F8",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v24.10.0/node-v24.10.0-darwin-x64.tar.gz",
-      "checksum": "627B884F66DB0DD35F4B46FB9E994774CE560A7FB60798BA1AB81E867A73687D",
+      "id": "http/nodejs.org/dist/v25.0.0/node-v25.0.0-darwin-x64.tar.gz",
+      "checksum": "A145D8AC4E70244EE5449D6FB7A4F1F0CD759C2BAB02607252DA7D1A43D7B78F",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v24.10.0/node-v24.10.0-linux-arm64.tar.gz",
-      "checksum": "42776DFC722991B1AC9F302F3D7B5CF989CF7ACA519B479C50E59F0663803B73",
+      "id": "http/nodejs.org/dist/v25.0.0/node-v25.0.0-linux-arm64.tar.gz",
+      "checksum": "748BE87299963EDA7AABEFB072274808576BC2F67B109C3823EEE3AC4FFC930A",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v24.10.0/node-v24.10.0-linux-x64.tar.gz",
-      "checksum": "2B03C5417CE0B1076780DF00E01DA373BEAD3B4B80D1C78C1AD10EE7B918D90C",
+      "id": "http/nodejs.org/dist/v25.0.0/node-v25.0.0-linux-x64.tar.gz",
+      "checksum": "28DD46A6733192647D7C8267343F5A3F1C616F773C448E2C0D2539AE70724B40",
       "algorithm": "sha256"
     },
     {
