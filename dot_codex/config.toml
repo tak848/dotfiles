@@ -1,5 +1,15 @@
-model_reasoning_effort = "high"
 notify = ["uv", "run", "~/.codex/notification.py"]
+model = "gpt-5-codex"
+model_reasoning_effort = "high"
 
-[tools]
-web_search = true
+[features]
+web_search_request = true
+
+[profiles.pro]
+model = "gpt-5-pro"
+model_reasoning_effort = "high"
+# approval_policy = "never"
+
+[profiles.fast]
+model = "gpt-5-codex"
+model_reasoning_effort = "low"
