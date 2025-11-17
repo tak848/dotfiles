@@ -255,9 +255,3 @@ if ! command -v cursor-agent &> /dev/null; then
 fi
 
 alias grep="rg"
-
-codex() {
-  BASE=~/.codex/config.toml
-  EXTRA=$(ls ~/.codex/config.d/*.toml 2>/dev/null | xargs -I{} echo --config {})
-  command codex --config $BASE $EXTRA "$@"
-}
