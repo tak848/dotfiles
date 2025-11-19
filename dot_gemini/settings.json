@@ -1,0 +1,23 @@
+{
+   "general": {
+      "disableAutoUpdate": true
+   },
+   "ide": {
+      "hasSeenNudge": true
+   },
+   "security": {
+      "auth": {
+         "selectedType": "oauth-personal"
+      }
+   },
+   "ui": {
+      "footer": {
+         "hideContextPercentage": false
+      },
+      "showCitations": true,
+      "showLineNumbers": true,
+      "showMemoryUsage": true,
+      "showStatusInTitle": true,
+      "theme": "GitHub"
+   }
+}
