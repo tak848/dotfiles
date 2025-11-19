@@ -1,15 +1,15 @@
 notify = ["uv", "run", "~/.codex/notification.py"]
-model = "gpt-5-codex"
+model = "gpt-5.1-codex"
 model_reasoning_effort = "high"
 
 [features]
 web_search_request = true
 
-[profiles.pro]
-model = "gpt-5-pro"
-model_reasoning_effort = "high"
-# approval_policy = "never"
+# [profiles.pro]
+# model = "gpt-5.1-pro"
+# model_reasoning_effort = "high"
+# # approval_policy = "never"
 
 [profiles.fast]
-model = "gpt-5-codex"
+model = "gpt-5.1-codex"
 model_reasoning_effort = "low"
