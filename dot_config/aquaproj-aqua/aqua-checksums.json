@@ -46,23 +46,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/astral-sh/uv/0.9.9/uv-aarch64-apple-darwin.tar.gz",
-      "checksum": "737E1C2C4F97577AA7764141846E27DE915EEBB3B2A0F467451089A64824D2F7",
+      "id": "github_release/github.com/astral-sh/uv/0.9.10/uv-aarch64-apple-darwin.tar.gz",
+      "checksum": "AF171D5A4EB1C502819DE32740AA811FF71851B1F5EC2D8BD0DDA302ED9554C2",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/astral-sh/uv/0.9.9/uv-aarch64-unknown-linux-musl.tar.gz",
-      "checksum": "84675E9F81C7EC45B11761DB4E1F047C64E772D96A7D99201507A10279F7F835",
+      "id": "github_release/github.com/astral-sh/uv/0.9.10/uv-aarch64-unknown-linux-musl.tar.gz",
+      "checksum": "9DDA17FE2261A16CE0D267617E5898B9678BA6C5F1C8528B7FE48D32D839F427",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/astral-sh/uv/0.9.9/uv-x86_64-apple-darwin.tar.gz",
-      "checksum": "8A755971DBF0B394CB61607C3D21E81AFFD62A22CFD306351EB518BE7A3F0A89",
+      "id": "github_release/github.com/astral-sh/uv/0.9.10/uv-x86_64-apple-darwin.tar.gz",
+      "checksum": "0E395AAD905332BB106F8BB05575ED001DE34E9627A4C455A2F6B9475957719E",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/astral-sh/uv/0.9.9/uv-x86_64-unknown-linux-musl.tar.gz",
-      "checksum": "B0E4530C1FED09720D7EB703703047F097FE23D6B266945A98422F0A0E5C74B4",
+      "id": "github_release/github.com/astral-sh/uv/0.9.10/uv-x86_64-unknown-linux-musl.tar.gz",
+      "checksum": "E614681A150D52446EB8F4CF34F90B5D42B609BD1F2615DA049449D795BFE5B4",
       "algorithm": "sha256"
     },
     {
@@ -201,23 +201,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.11.5/mise-v2025.11.5-linux-arm64-musl.tar.gz",
-      "checksum": "4CE6F2A7DE2418812F4C455F34823EF0027BC652C9D319B6FB1376A51B819F15",
+      "id": "github_release/github.com/jdx/mise/v2025.11.6/mise-v2025.11.6-linux-arm64-musl.tar.gz",
+      "checksum": "8AE6938C7BB4D139BCE9BB50578DF148BF5BCC690349CDF5A429413228DB9CEC",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.11.5/mise-v2025.11.5-linux-x64-musl.tar.gz",
-      "checksum": "3A750BF287747D2C978F23D245143CE9680CAAB6D147378FD5586B690AAEF1EC",
+      "id": "github_release/github.com/jdx/mise/v2025.11.6/mise-v2025.11.6-linux-x64-musl.tar.gz",
+      "checksum": "1C3CC35CDB9D8341594F7190A5510269B2CCD4750C3206CB9F635491C21FA072",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.11.5/mise-v2025.11.5-macos-arm64.tar.gz",
-      "checksum": "D513E83BF84FFCC6BB0E1F3EF3607990127F6CF9A8C253A224254EB194500E8C",
+      "id": "github_release/github.com/jdx/mise/v2025.11.6/mise-v2025.11.6-macos-arm64.tar.gz",
+      "checksum": "F201ED6CC425CA06C8817873ED64BA79B5AAEF34B0BD81F905CF529646AE3568",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.11.5/mise-v2025.11.5-macos-x64.tar.gz",
-      "checksum": "85ACC264786BCEA4DF9185FBC8E0223AF508D821F5739D22453E941D2C7E37E2",
+      "id": "github_release/github.com/jdx/mise/v2025.11.6/mise-v2025.11.6-macos-x64.tar.gz",
+      "checksum": "94EC5A8FBFDECA20B4C83E469C58F43A3C1F224E256C90AB3775F8A58D09F9F3",
       "algorithm": "sha256"
     },
     {
@@ -321,23 +321,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/rust-lang/rust-analyzer/2025-08-11/rust-analyzer-aarch64-apple-darwin.gz",
-      "checksum": "9593551866AD9FE5E08C4A5ABED102246ABDB2066B1A338CC4EE2B75232D73D7",
+      "id": "github_release/github.com/rust-lang/rust-analyzer/2025-11-17/rust-analyzer-aarch64-apple-darwin.gz",
+      "checksum": "36B98259E190BAB4DCF892F6D1F1C6911CC46CB47ACAA22E83CB28035A646C8F",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/rust-lang/rust-analyzer/2025-08-11/rust-analyzer-aarch64-unknown-linux-gnu.gz",
-      "checksum": "5607F6388E7C57203EF718DA278759BCD28F5842E47915F9316C575AEBEF8F47",
+      "id": "github_release/github.com/rust-lang/rust-analyzer/2025-11-17/rust-analyzer-aarch64-unknown-linux-gnu.gz",
+      "checksum": "5FACA68E8A7F9577E14A951944B1A7CB3A42B240BD0DAA3149CEE3FD3459FFCE",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/rust-lang/rust-analyzer/2025-08-11/rust-analyzer-x86_64-apple-darwin.gz",
-      "checksum": "916B4B43042D885C1CB127BC5BF5BD4EC5BA9AA39852CB961541F36F6FC1CA1D",
+      "id": "github_release/github.com/rust-lang/rust-analyzer/2025-11-17/rust-analyzer-x86_64-apple-darwin.gz",
+      "checksum": "987D7492365D3DB482929A2F4A303CF198EA5996FAD2EE9BCBA095D0B02C5F30",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/rust-lang/rust-analyzer/2025-08-11/rust-analyzer-x86_64-unknown-linux-gnu.gz",
-      "checksum": "51B90677D73A7A499CE6720279E610BE41FF759825A9626DC3D6E32BE5983BF7",
+      "id": "github_release/github.com/rust-lang/rust-analyzer/2025-11-17/rust-analyzer-x86_64-unknown-linux-gnu.gz",
+      "checksum": "1907262B86B5C82B7473BE676F22A9C2B0C8490BE7E7D2124424A79680E4F914",
       "algorithm": "sha256"
     },
     {
@@ -381,18 +381,38 @@
       "algorithm": "sha1"
     },
     {
-      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.31.37.pkg",
-      "checksum": "D3AF9971F3454052B7CBCEF208E8A1972A961657FF8E1734D65A1EB3399F66C5",
+      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.31.39.pkg",
+      "checksum": "C98D35EEBFAB905FB09DCE9393E9A57194971BDE58A9CEEC400C4348EA78BE46",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.31.37.zip",
-      "checksum": "B14D6551AF4EA0CA511D4AFF1162F2EBC00EF7BADF937B93A0B14B312AA4C1A1",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.31.39.zip",
+      "checksum": "84917B5DFE88D151B10AB1E91C8C80C90BEE435C423F083C83F85C809E8EAF71",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.31.37.zip",
-      "checksum": "7D39F99F8CE984A0B8F40D4A6F280F5AEF64F534751DD439A718BCEED49C60E1",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.31.39.zip",
+      "checksum": "5A2AD4E63F8F687D735F8E7A132B3622A1CF08FA884C53E3423C9B83A3C0D663",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/cache.agilebits.com/dist/1P/op2/pkg/v2.32.0/op_darwin_amd64_v2.32.0.zip",
+      "checksum": "D65AB2430D95AF45B735045CB797EB33274902B8E85F945CD420929FB9BEC181",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/cache.agilebits.com/dist/1P/op2/pkg/v2.32.0/op_darwin_arm64_v2.32.0.zip",
+      "checksum": "11F92951D25CF77AA1E7E714F45B05B07D816227AFB3F2116595B40E4FF1D8F0",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/cache.agilebits.com/dist/1P/op2/pkg/v2.32.0/op_linux_amd64_v2.32.0.zip",
+      "checksum": "68E3141B11AD38BA5004FB40D71371B710C0BBF94733F0DF9180768336F90097",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/cache.agilebits.com/dist/1P/op2/pkg/v2.32.0/op_linux_arm64_v2.32.0.zip",
+      "checksum": "6F3D571AABE7701E21AD4B0F9D30207C3DCABDB2F9C261E3651106DDE0EE8946",
       "algorithm": "sha256"
     },
     {
@@ -456,8 +476,8 @@
       "algorithm": "sha256"
     },
     {
-      "id": "registries/github_content/github.com/aquaproj/aqua-registry/5ea884fb06c62d3e62892fa256a6aa9633ee24ec/registry.yaml",
-      "checksum": "C0682BE2525B25D9FB01EE737792AD5D6674ABDB96206992AFE701634DC03DD5",
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.436.0/registry.yaml",
+      "checksum": "80CA97D1C348F277348B54F3CE57A1F9DEC29D825950427BED3DA0A40224D542",
       "algorithm": "sha256"
     }
   ]
