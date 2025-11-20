@@ -6,9 +6,11 @@ tasks:
     cmds:
       - jsonnet dot_claude/settings.jsonnet > dot_claude/settings.json
       - jsonnet dot_claude/dot_mcp.jsonnet > dot_claude/dot_mcp.json
+      - jsonnet dot_gemini/settings.jsonnet > dot_gemini/settings.json
     sources:
       - dot_claude/settings.jsonnet
       - dot_claude/dot_mcp.jsonnet
+      - dot_gemini/settings.jsonnet
     generates:
       - dot_claude/settings.json
       - dot_claude/dot_mcp.json
