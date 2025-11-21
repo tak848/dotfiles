@@ -20,4 +20,5 @@
   general: {
     disableAutoUpdate: true,
   },
+  contextFileName: ['CLAUDE.md', 'GEMINI.md'],
 }
