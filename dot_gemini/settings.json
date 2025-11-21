@@ -1,4 +1,8 @@
 {
+   "contextFileName": [
+      "CLAUDE.md",
+      "GEMINI.md"
+   ],
    "general": {
       "disableAutoUpdate": true
    },
