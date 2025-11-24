@@ -261,23 +261,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.48.2/yq_darwin_amd64",
-      "checksum": "CA06DEA96304CBFB1482A177E41E535C87D721F45C553873C97F51C339767C40",
+      "id": "github_release/github.com/mikefarah/yq/v4.49.1/yq_darwin_amd64",
+      "checksum": "9D55C8770BE6EFFDEBE26776E531867F9F5F1FE61DC2896A8E4903FAE626ADF2",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.48.2/yq_darwin_arm64",
-      "checksum": "B3A77A428FDA2DACED121C937BE7F5DFB8107FC62EC506064F1D23BC09415DCB",
+      "id": "github_release/github.com/mikefarah/yq/v4.49.1/yq_darwin_arm64",
+      "checksum": "2798F0B76B78D8C2B6E3796D27145468C2AE094C76C9DFC0D6BB3C7031100714",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.48.2/yq_linux_amd64",
-      "checksum": "0FFC35320180D4911BC3A772934DA508715E08AF444CB33D4D43660065E25BCC",
+      "id": "github_release/github.com/mikefarah/yq/v4.49.1/yq_linux_amd64",
+      "checksum": "897045E4A42933951EA8E143C44EA3F7F8005AA25105C4FBD796C3D61EE163EC",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.48.2/yq_linux_arm64",
-      "checksum": "3C21630FDA217239A5B7D718D08F08E02503098230B3ABD49195D315A6DCFE45",
+      "id": "github_release/github.com/mikefarah/yq/v4.49.1/yq_linux_arm64",
+      "checksum": "48E09DE3F65CB5DE1CDF7AE9BA78676F147BE376DB2727BE5DCA8213AA898012",
       "algorithm": "sha256"
     },
     {
@@ -381,18 +381,18 @@
       "algorithm": "sha1"
     },
     {
-      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.32.2.pkg",
-      "checksum": "6E704121A93971E665961ACAF0EAABA5162F02A448DEE24CEF9FAA90E467F32D",
+      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.32.3.pkg",
+      "checksum": "B2ABCCD7EE73B6FA1A12D67ADA138B260FCAF7BC75C153C99748768280F2696F",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.32.2.zip",
-      "checksum": "572ACDF73EEC819A637DAE60D165AE30C0EFF1C94256E4B65A52033EE1D7C1F3",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.32.3.zip",
+      "checksum": "92ABFB4D10130B5971B3E92B7E106A15176F1D683175C261A41603FD2E26C29D",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.32.2.zip",
-      "checksum": "A3D68BB5FAD3D6E72CB853B7C535679AAF872FD559F317E1DD0607CF62532022",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.32.3.zip",
+      "checksum": "88726B85D0A333AC419CCBD22F3E1FC97B1365E6C81CFB38B676EF82F98B00C5",
       "algorithm": "sha256"
     },
     {
