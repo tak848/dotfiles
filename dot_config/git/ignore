@@ -9,3 +9,5 @@ z/
 .envrc-aliases
 .codex/
 .gemini/
+GEMINI.md
+AGENTS.override.md

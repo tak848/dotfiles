@@ -1,5 +1,5 @@
 notify = ["uv", "run", "~/.codex/notification.py"]
-model = "gpt-5.1-codex"
+model = "gpt-5.1-codex-max"
 model_reasoning_effort = "high"
 
 [features]
@@ -11,5 +11,21 @@ web_search_request = true
 # # approval_policy = "never"
 
 [profiles.fast]
+model = "gpt-5.1-codex-max"
+model_reasoning_effort = "medium"
+
+[profiles.xhigh]
+model = "gpt-5.1-codex-max"
+model_reasoning_effort = "xhigh"
+
+[profiles.normal]
 model = "gpt-5.1-codex"
-model_reasoning_effort = "low"
+model_reasoning_effort = "high"
+
+[profiles.normal-fast]
+model = "gpt-5.1-codex"
+model_reasoning_effort = "medium"
+
+[profiles.normal-xhigh]
+model = "gpt-5.1-codex"
+model_reasoning_effort = "xhigh"

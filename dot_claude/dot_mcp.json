@@ -1,45 +1,13 @@
 {
    "mcpServers": {
-      "gemini-cli": {
+      "gopls": {
          "args": [
-            "@choplin/mcp-gemini-cli",
-            "--allow-npx"
+            "mcp"
          ],
-         "command": "npx",
-         "env": { },
-         "type": "stdio"
-      },
-      "o3": {
-         "args": [
-            "o3-search-mcp"
-         ],
-         "command": "npx",
+         "command": "gopls",
          "env": {
-            "REASONING_EFFORT": "medium",
-            "SEARCH_CONTEXT_SIZE": "medium"
-         }
-      },
-      "playwright": {
-         "args": [
-            "@playwright/mcp@latest"
-         ],
-         "command": "npx",
-         "env": { },
-         "type": "stdio"
-      },
-      "serena-global": {
-         "args": [
-            "--from",
-            "git+https://github.com/oraios/serena",
-            "serena",
-            "start-mcp-server",
-            "--context",
-            "ide-assistant",
-            "--project",
-            "${PWD}"
-         ],
-         "command": "uvx",
-         "env": { },
+            "MCP_TIMEOUT": "120000"
+         },
          "type": "stdio"
       }
    }
