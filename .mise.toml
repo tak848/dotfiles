@@ -1,0 +1,6 @@
+[settings]
+idiomatic_version_file_enable_tools = ["node"]
+auto_install = true
+
+[tools]
+"npm:cc-sdd" = "2.0.3"

@@ -8,11 +8,13 @@
 #   supported_envs:
 #   - all
 registries:
-- type: standard
-  ref: v4.436.0
+  - type: standard
+    ref: v4.436.0
 checksum:
   enabled: true
   require_checksum: true
 packages:
-- name: google/go-jsonnet@v0.21.0
-- name: go-task/task@v3.45.5
+  - name: google/go-jsonnet@v0.21.0
+  - name: go-task/task@v3.45.5
+  - name: pnpm/pnpm@v10.23.0
+  - name: nodejs/node@v24.11.1

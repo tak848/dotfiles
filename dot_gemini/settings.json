@@ -9,6 +9,18 @@
    "ide": {
       "hasSeenNudge": true
    },
+   "mcpServers": {
+      "gopls": {
+         "args": [
+            "mcp"
+         ],
+         "command": "gopls",
+         "env": {
+            "MCP_TIMEOUT": "120000"
+         },
+         "type": "stdio"
+      }
+   },
    "security": {
       "auth": {
          "selectedType": "oauth-personal"
