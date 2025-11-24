@@ -1,3 +1,9 @@
+# Global Guidelines
+
+## Language
+
+Always respond in Japanese(常に日本語で答えること).
+
 # Repository Guidelines
 
 ## Project Structure & Module Organization

@@ -16,3 +16,7 @@ AGENTS.md
 Taskfile.yaml
 create_dot_zsh
 .kiro
+.claude
+.codex
+.cursor
+.gemini
