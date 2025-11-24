@@ -195,6 +195,11 @@ fkill() {
 export PATH="{{ .chezmoi.homeDir }}/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 {{- end }}
+{{- if stat (joinPath .chezmoi.homeDir ".antigravity/antigravity/bin") }}
+### MANAGED BY ANTIGRAVITY START (DO NOT EDIT)
+# Added by Antigravity
+export PATH="{{ .chezmoi.homeDir }}/.antigravity/antigravity/bin:$PATH"
+{{- end }}
 {{- end }}
 
 # MySQL clientの設定（Homebrewとmysql-clientが存在する場合のみ）
