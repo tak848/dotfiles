@@ -17,4 +17,11 @@
   gitIgnoredAuthors: [
     "github-actions[bot]@users.noreply.github.com",
   ],
+  packageRules: [
+    {
+      description: "Use node versioning for Node.js (LTS only)",
+      matchPackageNames: ["nodejs/node"],
+      versioning: "node",
+    },
+  ],
 }
