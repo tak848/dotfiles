@@ -1,6 +1,8 @@
 CLAUDE.local.md
 settings.local.json
+settings.local.jsonnet
 .mcp.json
+.mcp.jsonnet
 z/
 .envrc.local
 .DS_STORE
