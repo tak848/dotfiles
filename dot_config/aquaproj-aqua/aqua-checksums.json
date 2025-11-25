@@ -46,23 +46,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/astral-sh/uv/0.9.11/uv-aarch64-apple-darwin.tar.gz",
-      "checksum": "594D9F4CFBD21D5A2F34B0352BF423066A9DAB1733C90B5D40E3E227506DEB03",
+      "id": "github_release/github.com/astral-sh/uv/0.9.12/uv-aarch64-apple-darwin.tar.gz",
+      "checksum": "6BF1148AA48BC42853E8216982A89F6909E1932A51F4D8DCE27815E8954E4664",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/astral-sh/uv/0.9.11/uv-aarch64-unknown-linux-musl.tar.gz",
-      "checksum": "26B33BB65714247DD865216E71C5528030C85C6DE9CE06172152158ED7ADD70C",
+      "id": "github_release/github.com/astral-sh/uv/0.9.12/uv-aarch64-unknown-linux-musl.tar.gz",
+      "checksum": "E953307CAACDCF8A5BBAC510423B2E64840428244A542AE2D7A6CA79C2931C24",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/astral-sh/uv/0.9.11/uv-x86_64-apple-darwin.tar.gz",
-      "checksum": "14236594B4EDBD90929D845766A41A1D4E51D530C9EBBEDFB3D93688661F142C",
+      "id": "github_release/github.com/astral-sh/uv/0.9.12/uv-x86_64-apple-darwin.tar.gz",
+      "checksum": "B91852EA80E1C137F6246C8B01BC52D1C7213BFF8D82CCCD532CE2272C56D482",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/astral-sh/uv/0.9.11/uv-x86_64-unknown-linux-musl.tar.gz",
-      "checksum": "5CC06FE71374A8883AEB2C83A141A4B5FAC8584EE894BA31C5792254508B4E9A",
+      "id": "github_release/github.com/astral-sh/uv/0.9.12/uv-x86_64-unknown-linux-musl.tar.gz",
+      "checksum": "3621344419CEDB7625F0C07C54E876D0A6BB5576B39879B118ED96A6D104FD11",
       "algorithm": "sha256"
     },
     {
@@ -261,23 +261,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.49.1/yq_darwin_amd64",
-      "checksum": "9D55C8770BE6EFFDEBE26776E531867F9F5F1FE61DC2896A8E4903FAE626ADF2",
+      "id": "github_release/github.com/mikefarah/yq/v4.49.2/yq_darwin_amd64",
+      "checksum": "C14CD4AE68D42074E58463F5EBDBC3C49EC27C6DE6A23B4AF58A483BC3F15AA0",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.49.1/yq_darwin_arm64",
-      "checksum": "2798F0B76B78D8C2B6E3796D27145468C2AE094C76C9DFC0D6BB3C7031100714",
+      "id": "github_release/github.com/mikefarah/yq/v4.49.2/yq_darwin_arm64",
+      "checksum": "B0B70EDE2B392BA02091B8137B42DB819A7968CF232D595DD7394AC5668B4A0B",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.49.1/yq_linux_amd64",
-      "checksum": "897045E4A42933951EA8E143C44EA3F7F8005AA25105C4FBD796C3D61EE163EC",
+      "id": "github_release/github.com/mikefarah/yq/v4.49.2/yq_linux_amd64",
+      "checksum": "BE2C0DDCF426B6A231648610EC5D1666AE50E9F6473E82F6486F9F4CB6E3E2F7",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.49.1/yq_linux_arm64",
-      "checksum": "48E09DE3F65CB5DE1CDF7AE9BA78676F147BE376DB2727BE5DCA8213AA898012",
+      "id": "github_release/github.com/mikefarah/yq/v4.49.2/yq_linux_arm64",
+      "checksum": "783AA3C3BEEDCF2BF4AAF6262ECA38B92A16D3EA31E2218CA80BA8EC7226B248",
       "algorithm": "sha256"
     },
     {
@@ -381,18 +381,18 @@
       "algorithm": "sha1"
     },
     {
-      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.32.3.pkg",
-      "checksum": "B2ABCCD7EE73B6FA1A12D67ADA138B260FCAF7BC75C153C99748768280F2696F",
+      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.32.5.pkg",
+      "checksum": "480648E85503253DD3ED32167B0E9D1763D816D29C110E490674A29349AB691E",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.32.3.zip",
-      "checksum": "92ABFB4D10130B5971B3E92B7E106A15176F1D683175C261A41603FD2E26C29D",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.32.5.zip",
+      "checksum": "AE64B3ED640F23F7CC7A4B2CE00771BE76D60342E4F4A0264A34B5B971554738",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.32.3.zip",
-      "checksum": "88726B85D0A333AC419CCBD22F3E1FC97B1365E6C81CFB38B676EF82F98B00C5",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.32.5.zip",
+      "checksum": "F7381BCD079BC38F5A488785028822EF49AB2700D8491A92093EBB131AE69EDC",
       "algorithm": "sha256"
     },
     {
