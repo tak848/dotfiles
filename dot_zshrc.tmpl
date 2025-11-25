@@ -207,6 +207,8 @@ export PATH="{{ .chezmoi.homeDir }}/.antigravity/antigravity/bin:$PATH"
 export PATH="{{ .chezmoi.homeDir }}/.codeium/windsurf/bin:$PATH"
 ### MANAGED BY WINDSURF END (DO NOT EDIT)
 {{- end }}
+# NOTE: file descriptor limitを増やす
+ulimit -n 65536
 {{- end }}
 
 # MySQL clientの設定（Homebrewとmysql-clientが存在する場合のみ）

@@ -10,6 +10,29 @@
       "hasSeenNudge": true
    },
    "mcpServers": {
+      "context7": {
+         "args": [
+            "dlx",
+            "@upstash/context7-mcp"
+         ],
+         "command": "pnpm",
+         "env": {
+            "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}",
+            "MCP_TIMEOUT": "120000"
+         }
+      },
+      "deepwiki": {
+         "headers": {
+            "Authorization": "Bearer ${DEVIN_API_KEY}"
+         },
+         "url": "https://mcp.deepwiki.com/sse"
+      },
+      "devin": {
+         "headers": {
+            "Authorization": "Bearer ${DEVIN_API_KEY}"
+         },
+         "url": "https://mcp.devin.ai/sse"
+      },
       "gopls": {
          "args": [
             "mcp"
