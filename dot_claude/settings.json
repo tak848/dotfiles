@@ -53,7 +53,7 @@
          }
       ]
    },
-   "model": "opus",
+   "model": "claude-opus-4-5",
    "permissions": {
       "allow": [
          "List(*)",
