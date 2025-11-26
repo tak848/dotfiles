@@ -223,7 +223,11 @@ gwc() {
             local first=true
             for file in "${copy_files[@]}"; do
                 if ! $first; then find_name_args+=("-o"); fi
-                find_name_args+=("-name" "$file")
+                if [[ "$file" == */* ]]; then
+                    find_name_args+=("-path" "*/$file")
+                else
+                    find_name_args+=("-name" "$file")
+                fi
                 first=false
             done
         fi
@@ -236,8 +240,9 @@ gwc() {
                 local dest_path="${worktree_path}${rel_path}"
                 
                 if [ -d "$src_path" ]; then
-                    # ディレクトリの場合は再帰的にコピー
-                    if cp -r "$src_path" "$dest_path"; then
+                    # ディレクトリの場合は中身を再帰的にコピー（既存ディレクトリにも対応）
+                    mkdir -p "$dest_path"
+                    if cp -r "$src_path"/. "$dest_path"/; then
                         echo "  Copied directory .${rel_path}"
                     fi
                 else

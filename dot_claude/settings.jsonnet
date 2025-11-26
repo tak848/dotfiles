@@ -94,7 +94,8 @@
     deny: [],
   },
   // model: 'claude-opus-4-1-20250805',
-  model: 'opus',
+  model: 'claude-opus-4-5',
+  // model: 'opus',
 
   // 無効らしい
   // toolPermissions: {
