@@ -8,5 +8,5 @@ auto_install = true
 "npm:@google/gemini-cli" = "0.18.4"
 "npm:@openai/codex" = "0.63.0"
 "npm:ccusage" = "17.1.6"
-"npm:@typescript/native-preview" = "7.0.0-dev.20251129.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20251130.1"
 "npm:cc-sdd" = "2.0.3"
