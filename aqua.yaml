@@ -16,5 +16,5 @@ checksum:
 packages:
   - name: google/go-jsonnet@v0.21.0
   - name: go-task/task@v3.45.5
-  - name: pnpm/pnpm@v10.23.0
+  - name: pnpm/pnpm@v10.24.0
   - name: nodejs/node@v24.11.1
