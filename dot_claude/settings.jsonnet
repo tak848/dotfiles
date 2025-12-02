@@ -126,7 +126,9 @@
     MCP_TIMEOUT: '600000',
     MCP_TOOL_TIMEOUT: '600000',
     MAX_MCP_OUTPUT_TOKENS: '100000',  // default: 25000
+    MAX_THINKING_TOKENS: '31199',
   },
+  alwaysThinkingEnabled: true,  // https://github.com/anthropics/claude-code/issues/8780
   hooks: {
     PostToolUse: [
       {
