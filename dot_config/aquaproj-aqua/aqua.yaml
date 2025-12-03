@@ -9,7 +9,7 @@
 #   - all
 registries:
   - type: standard
-    ref: v4.436.0
+    ref: v4.442.1
 checksum:
   enabled: true
   require_checksum: true
@@ -19,14 +19,14 @@ checksum:
     # - windows
 packages:
   - name: pnpm/pnpm@v10.24.0
-  - name: golang/go@go1.25.4
+  - name: golang/go@go1.25.5
   - name: cli/cli@v2.83.1
   - name: nodejs/node@v24.11.1
   - name: junegunn/fzf@v0.67.0
   - name: junegunn/fzf/fzf-tmux@v0.67.0
   - name: starship/starship@v1.24.1
-  - name: astral-sh/uv@0.9.14
-  - name: aws/aws-cli@2.32.7
+  - name: astral-sh/uv@0.9.15
+  - name: aws/aws-cli@2.32.8
   - name: bufbuild/buf@v1.61.0
   - name: direnv/direnv@v2.37.1
   - name: neovim/neovim@v0.11.5
@@ -42,5 +42,6 @@ packages:
   - name: cloudflare/cloudflared@2025.11.1
   - name: BurntSushi/ripgrep@15.1.0
   - name: golang.org/x/tools/gopls@v0.20.0
-  - name: rust-lang/rust-analyzer@2025-11-17
+  - name: rust-lang/rust-analyzer@2025-12-01
   - name: 1password/cli@v2.32.0
+  - name: temporalio/cli@v1.5.1
