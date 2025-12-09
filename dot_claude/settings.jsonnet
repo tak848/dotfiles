@@ -133,6 +133,7 @@
     DISABLE_TELEMETRY: '1',
     DISABLE_ERROR_REPORTING: '1',
     DISABLE_NON_ESSENTIAL_MODEL_CALLS: '1',
+    CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR: '1',
   },
   alwaysThinkingEnabled: true,  // https://github.com/anthropics/claude-code/issues/8780
   hooks: {
