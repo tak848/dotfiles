@@ -128,6 +128,11 @@
     MCP_TOOL_TIMEOUT: '600000',
     MAX_MCP_OUTPUT_TOKENS: '100000',  // default: 25000
     MAX_THINKING_TOKENS: '31199',
+
+    CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY: '1',
+    DISABLE_TELEMETRY: '1',
+    DISABLE_ERROR_REPORTING: '1',
+    DISABLE_NON_ESSENTIAL_MODEL_CALLS: '1',
   },
   alwaysThinkingEnabled: true,  // https://github.com/anthropics/claude-code/issues/8780
   hooks: {
