@@ -61,28 +61,28 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.24.0/pnpm-linux-arm64",
-      "checksum": "1447737A6E8003386507FDCDAFA376289B4ABFFF5867C8BA6A189B2FDED13A4B",
+      "id": "github_release/github.com/pnpm/pnpm/v10.25.0/pnpm-linux-arm64",
+      "checksum": "2BBBC1BE51CA359E8CE36D5EA04CB6150D3FF91C869946E8A17120D8B4510A4D",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.24.0/pnpm-linux-x64",
-      "checksum": "985824AE016DB3C7BBD7B39DCB4E6F5740B11CCE79F5C43D5E5E640768FD4806",
+      "id": "github_release/github.com/pnpm/pnpm/v10.25.0/pnpm-linux-x64",
+      "checksum": "856B2D764A362D667F8B3FE28632C7FF1870557E5B92A9ED4BA1FDCA35924A1D",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.24.0/pnpm-macos-arm64",
-      "checksum": "E3978826FAA5FA7FDF63B752AFC7A1BC4585ECD591B899FB956EBDD4E49F5DB8",
+      "id": "github_release/github.com/pnpm/pnpm/v10.25.0/pnpm-macos-arm64",
+      "checksum": "81533F4A222939681EAAC5A5CB4673416A434C16EEEAA9441E699363173063C4",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.24.0/pnpm-macos-x64",
-      "checksum": "8694DABAA7D29ECE4DB8CFA62E0582637E6CE70138EE8E8C5DBD58A5D1C8513D",
+      "id": "github_release/github.com/pnpm/pnpm/v10.25.0/pnpm-macos-x64",
+      "checksum": "458ADB599DFF0E6B98BA1CD5C38B81D415ED132250B9C29D5532563B2A0F0C32",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.24.0/pnpm-win-x64.exe",
-      "checksum": "E966E249A55C5D56D5D1844D220861B801C892148E763C66E95DADB9BD257D3F",
+      "id": "github_release/github.com/pnpm/pnpm/v10.25.0/pnpm-win-x64.exe",
+      "checksum": "F028FE36E71DDEB034D113800221EA27934BB84717BACE0388069F896C55474F",
       "algorithm": "sha256"
     },
     {
@@ -111,8 +111,8 @@
       "algorithm": "sha256"
     },
     {
-      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.444.0/registry.yaml",
-      "checksum": "529A890C667CFC10A3F567D92D381DF66219ADD4BA587BE3EFFBA12D390A1B43AC8051BEBFCC6DCC0E7F84DC40A72F8897764E186F49C3D72B2059E9EE1B1A24",
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.444.2/registry.yaml",
+      "checksum": "3278676BF2A1DDBFE46EAA952F2D8DF226166CA799685328FA9E8E1B1B2FCAA0C422764A12306E0EB9BEC559E9CFB1031A2A5EAD4282B689A69D50B257B93510",
       "algorithm": "sha512"
     }
   ]
