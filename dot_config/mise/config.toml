@@ -4,9 +4,9 @@ auto_install = true
 
 [tools]
 # npmのglobalはmiseで管理する
-"npm:@anthropic-ai/claude-code" = "2.0.67"
-"npm:@google/gemini-cli" = "0.20.0"
-"npm:@openai/codex" = "0.71.0"
+"npm:@anthropic-ai/claude-code" = "2.0.69"
+"npm:@google/gemini-cli" = "0.20.2"
+"npm:@openai/codex" = "0.72.0"
 "npm:ccusage" = "17.2.0"
-"npm:@typescript/native-preview" = "7.0.0-dev.20251211.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20251212.1"
 "npm:cc-sdd" = "2.0.3"
