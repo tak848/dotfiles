@@ -201,23 +201,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.12.2/mise-v2025.12.2-linux-arm64-musl.tar.gz",
-      "checksum": "CF1D83B64FDC50D6FCE5753E5B04E6D9D141E0C5EACD120B4D3BE5F4F875E716",
+      "id": "github_release/github.com/jdx/mise/v2025.12.6/mise-v2025.12.6-linux-arm64-musl.tar.gz",
+      "checksum": "7BEE44B1AA116FB11555E7FED73CC4790E6F27B92635683F49ABC17746311D5C",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.12.2/mise-v2025.12.2-linux-x64-musl.tar.gz",
-      "checksum": "8A7C6A002D728A6CB5DC146E0198AD1A21F6FE18E601A3E3D5B5F690FF677633",
+      "id": "github_release/github.com/jdx/mise/v2025.12.6/mise-v2025.12.6-linux-x64-musl.tar.gz",
+      "checksum": "B3BD00F7BFAC2920CCA4A160AE969555AD56ACC43C86F55565092555E3A94789",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.12.2/mise-v2025.12.2-macos-arm64.tar.gz",
-      "checksum": "2FD25EF0AE8F2482B724B3D90EB6673BE522D6217A2C4FFF52BE5D718AB0E39A",
+      "id": "github_release/github.com/jdx/mise/v2025.12.6/mise-v2025.12.6-macos-arm64.tar.gz",
+      "checksum": "F865DB319B70E56E24C2013D22F34B0B3D5A97E6AC3B03F894A5850A3E5824BB",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.12.2/mise-v2025.12.2-macos-x64.tar.gz",
-      "checksum": "24BE9C2D65730CB4F8B6458942EA5EBC14A46EB1B8A106FB820A579997D9E41B",
+      "id": "github_release/github.com/jdx/mise/v2025.12.6/mise-v2025.12.6-macos-x64.tar.gz",
+      "checksum": "353E2572FA298E95398C258B8231187E6B3A179A9BD782E091D0FAA9AB1C966F",
       "algorithm": "sha256"
     },
     {
@@ -261,23 +261,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.49.2/yq_darwin_amd64",
-      "checksum": "C14CD4AE68D42074E58463F5EBDBC3C49EC27C6DE6A23B4AF58A483BC3F15AA0",
+      "id": "github_release/github.com/mikefarah/yq/v4.50.1/yq_darwin_amd64",
+      "checksum": "6C24724C203F8EF0AFAA4584D8B7BAA150FEC7F6D8A493EFA49B80F620174119",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.49.2/yq_darwin_arm64",
-      "checksum": "B0B70EDE2B392BA02091B8137B42DB819A7968CF232D595DD7394AC5668B4A0B",
+      "id": "github_release/github.com/mikefarah/yq/v4.50.1/yq_darwin_arm64",
+      "checksum": "589CD3E27B2A0AE62FC4513C7D18DB56203AAF88BF7C480F0CB3D4F4D0AC5514",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.49.2/yq_linux_amd64",
-      "checksum": "BE2C0DDCF426B6A231648610EC5D1666AE50E9F6473E82F6486F9F4CB6E3E2F7",
+      "id": "github_release/github.com/mikefarah/yq/v4.50.1/yq_linux_amd64",
+      "checksum": "C7A1278E6BBC4924F41B56DB838086C39D13EE25DCB22089E7FBF16AC901F0D4",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/mikefarah/yq/v4.49.2/yq_linux_arm64",
-      "checksum": "783AA3C3BEEDCF2BF4AAF6262ECA38B92A16D3EA31E2218CA80BA8EC7226B248",
+      "id": "github_release/github.com/mikefarah/yq/v4.50.1/yq_linux_arm64",
+      "checksum": "CF0A663D8E4E00BB61507C5237B95B45A6AAA1FBEDAC77F4DC8ABDADD5E2B745",
       "algorithm": "sha256"
     },
     {
@@ -496,8 +496,8 @@
       "algorithm": "sha256"
     },
     {
-      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.445.0/registry.yaml",
-      "checksum": "6CEAD4D5BEE5E940F6338BD83D0822E12C48B63A37FE632629C31842F3F74EE4",
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.446.0/registry.yaml",
+      "checksum": "27ABE175DB458AB6C05F214C25217462BA2AB11B7A68CD62F2354FE10BE494AF",
       "algorithm": "sha256"
     }
   ]
