@@ -1,33 +1,33 @@
 {
   "checksums": [
     {
-      "id": "github_release/github.com/go-task/task/v3.45.5/task_darwin_amd64.tar.gz",
-      "checksum": "5A06E2266B4C4A679C48582922EC06A25F81365B5F65298EF11DCAFB9D379C2B",
+      "id": "github_release/github.com/go-task/task/v3.46.3/task_darwin_amd64.tar.gz",
+      "checksum": "9EED0990B84788D314D5F3C98F0215624BE8421EABF8ACAA064405D30050FB62",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.45.5/task_darwin_arm64.tar.gz",
-      "checksum": "C76EC08AD1E64B012884F3BE0084B149882CB6D77741C2D94F2AEBF34805703C",
+      "id": "github_release/github.com/go-task/task/v3.46.3/task_darwin_arm64.tar.gz",
+      "checksum": "35BC981A7DC4C83F11ABCD33846BCD5AD80E873B67C9C9F794055FDB90AED71A",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.45.5/task_linux_amd64.tar.gz",
-      "checksum": "E547EA2A47F5240657FDC89EA776BAA90D628A1F2748242EAA7478FD92BFFD40",
+      "id": "github_release/github.com/go-task/task/v3.46.3/task_linux_amd64.tar.gz",
+      "checksum": "6F4F2038D2DA967D5A921A78F120E1E64D6338865459FFEAF82FB6888CBA4B73",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.45.5/task_linux_arm64.tar.gz",
-      "checksum": "F15170659A8F538B976967E281537031693643EE63FC41C2CFCAC63EFCDF25E7",
+      "id": "github_release/github.com/go-task/task/v3.46.3/task_linux_arm64.tar.gz",
+      "checksum": "B7C9CE48967BD7065CCD2D85F657500C092E21E7F664300A807461828F7D0878",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.45.5/task_windows_amd64.zip",
-      "checksum": "462687C285A07450DE17F2AF696D12C3C9536651E3D0085E483D56AB6CD0DB4F",
+      "id": "github_release/github.com/go-task/task/v3.46.3/task_windows_amd64.zip",
+      "checksum": "86DB2CFD7F6FF8ECAF6A64985A0AF16191838CA68EE426594029825B8F4EDA2F",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.45.5/task_windows_arm64.zip",
-      "checksum": "2A9B3BEC36C188ED0BAE5C1E65F7518CEA8CCA763B9C56268886C548EF5CECF4",
+      "id": "github_release/github.com/go-task/task/v3.46.3/task_windows_arm64.zip",
+      "checksum": "4872D30A999320E8DB7446437CA50F99568C33253A3E26D4BC0B1F75A82E95FF",
       "algorithm": "sha256"
     },
     {
@@ -61,28 +61,28 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.26.0/pnpm-linux-arm64",
-      "checksum": "57567A0CF9E7B3B8F067435B56651A0FB7AE9F44E1062764885D90AA79B09645",
+      "id": "github_release/github.com/pnpm/pnpm/v10.26.1/pnpm-linux-arm64",
+      "checksum": "D87DA2120C356A210FEA325E7333B5F8A22C3BAC652203CD4D2492FCC8CB49F3",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.26.0/pnpm-linux-x64",
-      "checksum": "9610A7389ED89C1BEA815E273A754FADB236D259F4FF7C7F3AC4D7F1922C2791",
+      "id": "github_release/github.com/pnpm/pnpm/v10.26.1/pnpm-linux-x64",
+      "checksum": "1E79584EC70E1B9A34E744AC53943F7DD9D83256AF0A1136D4C93FDCF5FB3BB3",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.26.0/pnpm-macos-arm64",
-      "checksum": "FEBF9AB1A687CE84A18F0151D5B15BE4BC52F0B130F8F3ED1A874BB00875A1B6",
+      "id": "github_release/github.com/pnpm/pnpm/v10.26.1/pnpm-macos-arm64",
+      "checksum": "EC940BCD51A34276CBF2176BCF0B1C77345D406898DC45B7E48BE7BE571454B3",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.26.0/pnpm-macos-x64",
-      "checksum": "67E07F68710E379172F902652273D197232B1860CA3821B1DBE05A097735DE3A",
+      "id": "github_release/github.com/pnpm/pnpm/v10.26.1/pnpm-macos-x64",
+      "checksum": "AA70E8AA32150AC449C52DCEBFF84335B51771B18A4BBA07B23B31D831A4ED65",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.26.0/pnpm-win-x64.exe",
-      "checksum": "1F513E9573C12A4DC7C50AE6B980F8C886575E47DA6C7AA519765A00BC4B54BD",
+      "id": "github_release/github.com/pnpm/pnpm/v10.26.1/pnpm-win-x64.exe",
+      "checksum": "A90A8A992B8C693E7C793C1F3211EB0C2F82162AF9A965E8AEFCAB69ACAAD259",
       "algorithm": "sha256"
     },
     {

@@ -141,23 +141,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.45.5/task_darwin_amd64.tar.gz",
-      "checksum": "5A06E2266B4C4A679C48582922EC06A25F81365B5F65298EF11DCAFB9D379C2B",
+      "id": "github_release/github.com/go-task/task/v3.46.3/task_darwin_amd64.tar.gz",
+      "checksum": "9EED0990B84788D314D5F3C98F0215624BE8421EABF8ACAA064405D30050FB62",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.45.5/task_darwin_arm64.tar.gz",
-      "checksum": "C76EC08AD1E64B012884F3BE0084B149882CB6D77741C2D94F2AEBF34805703C",
+      "id": "github_release/github.com/go-task/task/v3.46.3/task_darwin_arm64.tar.gz",
+      "checksum": "35BC981A7DC4C83F11ABCD33846BCD5AD80E873B67C9C9F794055FDB90AED71A",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.45.5/task_linux_amd64.tar.gz",
-      "checksum": "E547EA2A47F5240657FDC89EA776BAA90D628A1F2748242EAA7478FD92BFFD40",
+      "id": "github_release/github.com/go-task/task/v3.46.3/task_linux_amd64.tar.gz",
+      "checksum": "6F4F2038D2DA967D5A921A78F120E1E64D6338865459FFEAF82FB6888CBA4B73",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.45.5/task_linux_arm64.tar.gz",
-      "checksum": "F15170659A8F538B976967E281537031693643EE63FC41C2CFCAC63EFCDF25E7",
+      "id": "github_release/github.com/go-task/task/v3.46.3/task_linux_arm64.tar.gz",
+      "checksum": "B7C9CE48967BD7065CCD2D85F657500C092E21E7F664300A807461828F7D0878",
       "algorithm": "sha256"
     },
     {
@@ -201,23 +201,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.12.10/mise-v2025.12.10-linux-arm64-musl.tar.gz",
-      "checksum": "B9819B390904AF6EC33CAF069D8C7138FA3F4FA71143FD54B65B03CD85428E14",
+      "id": "github_release/github.com/jdx/mise/v2025.12.12/mise-v2025.12.12-linux-arm64-musl.tar.gz",
+      "checksum": "8875845EAF270E174D63C41C1FE629D893B7CC78BC9BE494B2F81F8F1B98217B",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.12.10/mise-v2025.12.10-linux-x64-musl.tar.gz",
-      "checksum": "FBC8CA275ECF98230E468C572B26B8588C30F1021C217ECFF086B95E76983D3D",
+      "id": "github_release/github.com/jdx/mise/v2025.12.12/mise-v2025.12.12-linux-x64-musl.tar.gz",
+      "checksum": "F4BAC31B7317690F421184B10FB7920AE43D71316889B0DF8A7A10FBB3E0B844",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.12.10/mise-v2025.12.10-macos-arm64.tar.gz",
-      "checksum": "10FEE704174C161EF2713DF996FC1AEE3382A566FC35E5C18CEDC7E783C7C414",
+      "id": "github_release/github.com/jdx/mise/v2025.12.12/mise-v2025.12.12-macos-arm64.tar.gz",
+      "checksum": "2A44DAD05D75A2D2539AA6B5B57F9A6DC68937A359EFBD312DD6A12997D6DF84",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/jdx/mise/v2025.12.10/mise-v2025.12.10-macos-x64.tar.gz",
-      "checksum": "2D96DA6543F37D0926E3351778393E660ED8384D2DA7D9916F683730F5AAC420",
+      "id": "github_release/github.com/jdx/mise/v2025.12.12/mise-v2025.12.12-macos-x64.tar.gz",
+      "checksum": "96EB9E0C05EDA0DD2520BD56425C0202C889C947BADFE8E9EFF54A5EEC71EE61",
       "algorithm": "sha256"
     },
     {
@@ -301,23 +301,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.26.0/pnpm-linux-arm64",
-      "checksum": "57567A0CF9E7B3B8F067435B56651A0FB7AE9F44E1062764885D90AA79B09645",
+      "id": "github_release/github.com/pnpm/pnpm/v10.26.1/pnpm-linux-arm64",
+      "checksum": "D87DA2120C356A210FEA325E7333B5F8A22C3BAC652203CD4D2492FCC8CB49F3",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.26.0/pnpm-linux-x64",
-      "checksum": "9610A7389ED89C1BEA815E273A754FADB236D259F4FF7C7F3AC4D7F1922C2791",
+      "id": "github_release/github.com/pnpm/pnpm/v10.26.1/pnpm-linux-x64",
+      "checksum": "1E79584EC70E1B9A34E744AC53943F7DD9D83256AF0A1136D4C93FDCF5FB3BB3",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.26.0/pnpm-macos-arm64",
-      "checksum": "FEBF9AB1A687CE84A18F0151D5B15BE4BC52F0B130F8F3ED1A874BB00875A1B6",
+      "id": "github_release/github.com/pnpm/pnpm/v10.26.1/pnpm-macos-arm64",
+      "checksum": "EC940BCD51A34276CBF2176BCF0B1C77345D406898DC45B7E48BE7BE571454B3",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.26.0/pnpm-macos-x64",
-      "checksum": "67E07F68710E379172F902652273D197232B1860CA3821B1DBE05A097735DE3A",
+      "id": "github_release/github.com/pnpm/pnpm/v10.26.1/pnpm-macos-x64",
+      "checksum": "AA70E8AA32150AC449C52DCEBFF84335B51771B18A4BBA07B23B31D831A4ED65",
       "algorithm": "sha256"
     },
     {
@@ -401,18 +401,18 @@
       "algorithm": "sha1"
     },
     {
-      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.32.18.pkg",
-      "checksum": "41C167E485D951DFFD4E187703DFEAE87CCB2A841F78756EC358EBA2F5428CC4",
+      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.32.21.pkg",
+      "checksum": "4E00C71BAE07943A30CDF212AE97D76D9CFB02147CCA3A760C5CE2563A42E25E",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.32.18.zip",
-      "checksum": "FA8451B265F1B69BEB232993CC7B2032F63F7ACED3580C049496DEB0CCEEFA3F",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.32.21.zip",
+      "checksum": "825F281F2DBB7B691E29A03E28B1E5687259FD36ABEF5E7A2C33C73815C3722E",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.32.18.zip",
-      "checksum": "16C61CF98D3FF5379A998900DB7EB3DCC6713D186BB59D959E8AF989F982CF4B",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.32.21.zip",
+      "checksum": "08B43B630E5AC1C77EF6ACA3D3A47E95E46EC5F1F06E94D2C130FD47FDB2D41A",
       "algorithm": "sha256"
     },
     {
@@ -436,23 +436,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "http/dl.k8s.io/v1.34.3/bin/darwin/amd64/kubectl",
-      "checksum": "657AFBD0E653C4CE3AF1B5A645A4EABA282CF8EB2BCDA7191FF60866E50E4D7F",
+      "id": "http/dl.k8s.io/v1.35.0/bin/darwin/amd64/kubectl",
+      "checksum": "2447CB78911B10A667202B078EEB30541EC78D1280C3682921DC81607E148D96",
       "algorithm": "sha256"
     },
     {
-      "id": "http/dl.k8s.io/v1.34.3/bin/darwin/arm64/kubectl",
-      "checksum": "E51367D2107D605F4EDD7C2FB25897B0C0695A7DE1A9F9D04CD6C9356B890B14",
+      "id": "http/dl.k8s.io/v1.35.0/bin/darwin/arm64/kubectl",
+      "checksum": "CF699C56340DC775230FDE4EF84237D27563EA6EF52164C7D078072B586C3918",
       "algorithm": "sha256"
     },
     {
-      "id": "http/dl.k8s.io/v1.34.3/bin/linux/amd64/kubectl",
-      "checksum": "AB60CA5F0FD60C1EB81B52909E67060E3BA0BD27E55A8AC147CBC2172FF14212",
+      "id": "http/dl.k8s.io/v1.35.0/bin/linux/amd64/kubectl",
+      "checksum": "A2E984A18A0C063279D692533031C1EFF93A262AFCC0AFDC517375432D060989",
       "algorithm": "sha256"
     },
     {
-      "id": "http/dl.k8s.io/v1.34.3/bin/linux/arm64/kubectl",
-      "checksum": "46913A7AA0327F6CC2E1CC2775D53C4A2AF5E52F7FD8DACBFBFD098E757F19E9",
+      "id": "http/dl.k8s.io/v1.35.0/bin/linux/arm64/kubectl",
+      "checksum": "58F82F9FE796C375C5C4B8439850B0F3F4D401A52434052F2DF46035A8789E25",
       "algorithm": "sha256"
     },
     {
