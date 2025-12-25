@@ -141,23 +141,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.46.3/task_darwin_amd64.tar.gz",
-      "checksum": "9EED0990B84788D314D5F3C98F0215624BE8421EABF8ACAA064405D30050FB62",
+      "id": "github_release/github.com/go-task/task/v3.46.4/task_darwin_amd64.tar.gz",
+      "checksum": "6E3D1BF5FCC03E50B2C02C92335923B715D3F61E27FEF5B3048B59ED97A18721",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.46.3/task_darwin_arm64.tar.gz",
-      "checksum": "35BC981A7DC4C83F11ABCD33846BCD5AD80E873B67C9C9F794055FDB90AED71A",
+      "id": "github_release/github.com/go-task/task/v3.46.4/task_darwin_arm64.tar.gz",
+      "checksum": "FFE2B4A3C54467172AB15734D0B451B1FC0472D0D48BB3538870B433C700BC96",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.46.3/task_linux_amd64.tar.gz",
-      "checksum": "6F4F2038D2DA967D5A921A78F120E1E64D6338865459FFEAF82FB6888CBA4B73",
+      "id": "github_release/github.com/go-task/task/v3.46.4/task_linux_amd64.tar.gz",
+      "checksum": "4B0098862292DE03D568C851B207BCE5FDB8A59CB533D6ED4132386151926C46",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/go-task/task/v3.46.3/task_linux_arm64.tar.gz",
-      "checksum": "B7C9CE48967BD7065CCD2D85F657500C092E21E7F664300A807461828F7D0878",
+      "id": "github_release/github.com/go-task/task/v3.46.4/task_linux_arm64.tar.gz",
+      "checksum": "9079BBDFD439F2168EE380D9167FD77F13F9FAB7AFB516205AC3A578F16BCB59",
       "algorithm": "sha256"
     },
     {
@@ -301,23 +301,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.26.1/pnpm-linux-arm64",
-      "checksum": "D87DA2120C356A210FEA325E7333B5F8A22C3BAC652203CD4D2492FCC8CB49F3",
+      "id": "github_release/github.com/pnpm/pnpm/v10.26.2/pnpm-linux-arm64",
+      "checksum": "F02390C4A63D13EF5E69135423BD24F1944F93122C4057A06EB500F671BFC3CB",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.26.1/pnpm-linux-x64",
-      "checksum": "1E79584EC70E1B9A34E744AC53943F7DD9D83256AF0A1136D4C93FDCF5FB3BB3",
+      "id": "github_release/github.com/pnpm/pnpm/v10.26.2/pnpm-linux-x64",
+      "checksum": "6B64F60B5CE00C6D8D6378D3C9E8A202415CB1F225C4175316EB09BBE877E622",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.26.1/pnpm-macos-arm64",
-      "checksum": "EC940BCD51A34276CBF2176BCF0B1C77345D406898DC45B7E48BE7BE571454B3",
+      "id": "github_release/github.com/pnpm/pnpm/v10.26.2/pnpm-macos-arm64",
+      "checksum": "3951F85E0DC46296F661320EF6F32C9773AEDC3251B8B32E98F7F7DF80065030",
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.26.1/pnpm-macos-x64",
-      "checksum": "AA70E8AA32150AC449C52DCEBFF84335B51771B18A4BBA07B23B31D831A4ED65",
+      "id": "github_release/github.com/pnpm/pnpm/v10.26.2/pnpm-macos-x64",
+      "checksum": "2E15701601B6745FE47E2FBF365562E0AEA7F6E2C73EA4818BE722AAA38A816E",
       "algorithm": "sha256"
     },
     {
@@ -401,18 +401,18 @@
       "algorithm": "sha1"
     },
     {
-      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.32.22.pkg",
-      "checksum": "94A4F8260540520F1FDE1D164548E55AB86B375493F34549EEBC53238BDDBD6C",
+      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.32.23.pkg",
+      "checksum": "9B89F1E31E2241B03542EE0AF3BBD465E27DC5C61AA3665A5C129E970A40500F",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.32.22.zip",
-      "checksum": "34964BE5B184C2BF6D39C6C013AA8EA4EE742DA6D5435203AA301AA9CEDF871A",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.32.23.zip",
+      "checksum": "25C19767DEAE70C91E06499BE40902647E5F56AC9D2FC78ECDECED53F9A1822C",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.32.22.zip",
-      "checksum": "6B8D55976CB44095E4CE89AC8723D200CA82EB9331057EF93CCD858CAB22216C",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.32.23.zip",
+      "checksum": "3AC42EB500059BB01060529F8850AFD7878487CE0F8F29F9AB4CF00FD7EBA358",
       "algorithm": "sha256"
     },
     {
@@ -496,8 +496,8 @@
       "algorithm": "sha256"
     },
     {
-      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.446.0/registry.yaml",
-      "checksum": "27ABE175DB458AB6C05F214C25217462BA2AB11B7A68CD62F2354FE10BE494AF",
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.447.1/registry.yaml",
+      "checksum": "B394F3971B5AA7E36ED53A5D7B7159C4597D398656CE133C7DDCA0E273EDB7E2",
       "algorithm": "sha256"
     }
   ]
