@@ -20,7 +20,7 @@
       'Bash(grep:*)',
       'Bash(rg:*)',
       'Fetch(https://*)',
-      'WebFetch(https://*)',
+      // 'WebFetch(https://*)',
       'Bash(pnpm:*)',
       'Bash(make:*)',
       'Bash(sed:*)',
