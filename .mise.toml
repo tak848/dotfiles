@@ -1,6 +1,10 @@
 [settings]
 idiomatic_version_file_enable_tools = ["node"]
 auto_install = true
+experimental = true
+lockfile = true
+locked = true
 
 [tools]
 "npm:cc-sdd" = "2.0.3"
+"aqua:go-task/task" = "3.45.5"

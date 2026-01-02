@@ -136,6 +136,7 @@ export MISE_GLOBAL_CONFIG_FILE=${XDG_CONFIG_HOME:-$HOME/.config}/mise/config.tom
 if command -v mise &> /dev/null; then
     eval "$(mise activate zsh)"
     mise install &> /dev/null
+    eval "$(mise completion zsh)"
 fi
 
 # neovimのエイリアス設定

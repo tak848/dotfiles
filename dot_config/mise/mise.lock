@@ -1,0 +1,23 @@
+[[tools."npm:@anthropic-ai/claude-code"]]
+version = "2.0.76"
+backend = "npm:@anthropic-ai/claude-code"
+
+[[tools."npm:@google/gemini-cli"]]
+version = "0.22.5"
+backend = "npm:@google/gemini-cli"
+
+[[tools."npm:@openai/codex"]]
+version = "0.77.0"
+backend = "npm:@openai/codex"
+
+[[tools."npm:@typescript/native-preview"]]
+version = "7.0.0-dev.20251230.1"
+backend = "npm:@typescript/native-preview"
+
+[[tools."npm:cc-sdd"]]
+version = "2.0.3"
+backend = "npm:cc-sdd"
+
+[[tools."npm:ccusage"]]
+version = "17.2.0"
+backend = "npm:ccusage"

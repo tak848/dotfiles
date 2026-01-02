@@ -1,0 +1,12 @@
+[[tools."aqua:go-task/task"]]
+version = "3.45.5"
+backend = "aqua:go-task/task"
+"platforms.linux-arm64" = { checksum = "sha256:f15170659a8f538b976967e281537031693643ee63fc41c2cfcac63efcdf25e7", url = "https://github.com/go-task/task/releases/download/v3.45.5/task_linux_arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:e547ea2a47f5240657fdc89ea776baa90d628a1f2748242eaa7478fd92bffd40", url = "https://github.com/go-task/task/releases/download/v3.45.5/task_linux_amd64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:c76ec08ad1e64b012884f3be0084b149882cb6d77741c2d94f2aebf34805703c", url = "https://github.com/go-task/task/releases/download/v3.45.5/task_darwin_arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:5a06e2266b4c4a679c48582922ec06a25f81365b5f65298ef11dcafb9d379c2b", url = "https://github.com/go-task/task/releases/download/v3.45.5/task_darwin_amd64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:462687c285a07450de17f2af696d12c3c9536651e3d0085e483d56ab6cd0db4f", url = "https://github.com/go-task/task/releases/download/v3.45.5/task_windows_amd64.zip"}
+
+[[tools."npm:cc-sdd"]]
+version = "2.0.3"
+backend = "npm:cc-sdd"
