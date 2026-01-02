@@ -1,15 +1,15 @@
 {
   mcpServers: {
-    gopls: {
-      type: 'stdio',
-      command: 'gopls',
-      args: [
-        'mcp',
-      ],
-      env: {
-        MCP_TIMEOUT: '120000',
-      },
-    },
+    // gopls: {
+    //   type: 'stdio',
+    //   command: 'gopls',
+    //   args: [
+    //     'mcp',
+    //   ],
+    //   env: {
+    //     MCP_TIMEOUT: '120000',
+    //   },
+    // },
     // playwright: {
     //   type: 'stdio',
     //   command: 'npx',

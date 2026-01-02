@@ -22,16 +22,16 @@
   },
   contextFileName: ['CLAUDE.md', 'GEMINI.md'],
   mcpServers: {
-    gopls: {
-      type: 'stdio',
-      command: 'gopls',
-      args: [
-        'mcp',
-      ],
-      env: {
-        MCP_TIMEOUT: '120000',
-      },
-    },
+    // gopls: {
+    //   type: 'stdio',
+    //   command: 'gopls',
+    //   args: [
+    //     'mcp',
+    //   ],
+    //   env: {
+    //     MCP_TIMEOUT: '120000',
+    //   },
+    // },
     context7: {
       command: 'pnpm',
       args: ['dlx', '@upstash/context7-mcp'],

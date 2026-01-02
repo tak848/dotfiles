@@ -32,16 +32,6 @@
             "Authorization": "Bearer ${DEVIN_API_KEY}"
          },
          "url": "https://mcp.devin.ai/sse"
-      },
-      "gopls": {
-         "args": [
-            "mcp"
-         ],
-         "command": "gopls",
-         "env": {
-            "MCP_TIMEOUT": "120000"
-         },
-         "type": "stdio"
       }
    },
    "security": {
