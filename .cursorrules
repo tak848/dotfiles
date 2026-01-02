@@ -1,0 +1,5 @@
+commit messageは日本語で作成すること。
+feat:
+chore:
+fix:
+などの適切なprefixをつけること。

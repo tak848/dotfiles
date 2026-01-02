@@ -1,6 +1,9 @@
 [settings]
 idiomatic_version_file_enable_tools = ["node"]
 auto_install = true
+experimental = true
+lockfile = true
+locked = true
 
 [tools]
 # npmのglobalはmiseで管理する
