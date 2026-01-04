@@ -3,7 +3,7 @@ idiomatic_version_file_enable_tools = ["node"]
 auto_install = true
 experimental = true
 lockfile = true
-locked = true
+locked = false  # npm backend が checksum 未対応のため
 
 [tools]
 "npm:cc-sdd" = "2.0.3"
