@@ -3,7 +3,9 @@ idiomatic_version_file_enable_tools = ["node"]
 auto_install = false
 experimental = true
 lockfile = true
-locked = true
+# npm backend が checksum/URL をサポートしていないため locked は無効化
+# checksum があるツール（aqua: 等）は lockfile=true で検証される
+locked = false
 
 [tools]
 # npmのglobalはmiseで管理する
