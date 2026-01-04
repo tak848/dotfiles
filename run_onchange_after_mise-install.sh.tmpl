@@ -2,6 +2,8 @@
 # {{ include "dot_config/mise/config.toml" | sha256sum }}
 # mise の config.toml が変更された時のみ mise install を実行する
 
+{{ template "path-setup.tmpl" . }}
+
 if command -v mise &> /dev/null; then
     echo "mise install を実行中..."
     mise install
