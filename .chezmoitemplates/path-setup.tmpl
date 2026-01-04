@@ -1,6 +1,7 @@
 # PATH 設定（bash スクリプト用、.zshenv が読み込まれないため）
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export PATH="$HOME/.local/bin:$PATH"
 {{- if eq .chezmoi.os "darwin" }}
 {{-   if eq .chezmoi.arch "arm64" }}
 export PATH="/opt/homebrew/bin:$PATH"
