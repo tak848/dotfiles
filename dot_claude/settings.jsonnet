@@ -1,7 +1,7 @@
 {
+  includeCoAuthoredBy: false,
   permissions: {
     defaultMode: 'plan',
-    includeCoAuthoredBy: false,
     allow: [
       'List(*)',
       'Bash(ls:*)',

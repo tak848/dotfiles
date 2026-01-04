@@ -1,141 +1,54 @@
-autoload -Uz compinit && compinit
+# compinit キャッシュ化（24時間に1回のみ再構築）
+autoload -Uz compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
 
 bindkey -d # キーバインドをリセット
 bindkey -e # emacsモードで使う
 
+# シェルオプション
 setopt auto_pushd
 setopt pushd_ignore_dups
 setopt auto_cd
 setopt hist_ignore_dups
 setopt share_history
 setopt inc_append_history
+setopt extended_history     # 実行時間も保存
+setopt hist_reduce_blanks   # 余分なスペースを削除してヒストリに保存
 
 set nrformats=hex,bin
 
-export HISTFILE=~/.zsh_history
-export HISTSIZE=100000
-export SAVEHIST=100000
-
-
-setopt extended_history   # 実行時間も保存
-setopt hist_ignore_dups   # 直前のコマンドと同じコマンドはヒストリに追加しない
-setopt share_history      # 他のシェルとリアルタイムで共有
-setopt hist_reduce_blanks # 余分なスペースを削除してヒストリに保存
-
+# zinit (クローン処理は run_once_before_ に移動済み)
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
-[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
 
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
+# zinit annexes
 zinit light-mode for \
     zdharma-continuum/zinit-annex-as-monitor \
     zdharma-continuum/zinit-annex-bin-gem-node \
     zdharma-continuum/zinit-annex-patch-dl \
     zdharma-continuum/zinit-annex-rust
 
-zinit light zsh-users/zsh-autosuggestions
-zinit light zsh-users/zsh-syntax-highlighting
-zinit load agkozak/zsh-z
+# zinit プラグイン (turbo mode で遅延ロード)
+zinit wait lucid light-mode for \
+  atinit"zicompinit; zicdreplay" \
+      zdharma-continuum/fast-syntax-highlighting \
+  atload"_zsh_autosuggest_start" \
+      zsh-users/zsh-autosuggestions
 
+zinit wait lucid for \
+    agkozak/zsh-z
+
+# エイリアス
 alias killQL='killall -9 -v QuickLookUIService'
-export PATH="/opt/homebrew/opt/tcl-tk/bin:$PATH"
-
 alias mkcd='(){mkdir $1;cd $1}'
-
-# alias ls="eza"
-# alias cat="bat"
-# alias grep="rg"
-# alias find="fd"
-
-chpwd() {
-    if [[ $(pwd) != $HOME ]]; then;
-        ls -la
-    fi
-}
-
-export PATH=$PATH:$HOME/bin
-
-
-# Homebrewのパス設定関数
-setup_homebrew_path() {
-{{- if eq .chezmoi.os "darwin" }}
-{{-   if eq .chezmoi.arch "arm64" }}
-  [[ -x "/opt/homebrew/bin/brew" ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
-{{-   else }}
-  [[ -x "/usr/local/bin/brew" ]] && eval "$(/usr/local/bin/brew shellenv)"
-{{-   end }}
-{{- else if eq .chezmoi.os "linux" }}
-  # Linux (Ubuntu等)の場合、複数の可能性があるパスをチェック
-  for brew_path in /home/linuxbrew/.linuxbrew/bin/brew $HOME/.linuxbrew/bin/brew /usr/local/bin/brew; do
-    if [[ -x "$brew_path" ]]; then
-      eval "$($brew_path shellenv)"
-      break
-    fi
-  done
-{{- end }}
-}
-
-# Homebrewのパスを設定
-setup_homebrew_path
-
-# 1. Homebrewのインストールチェック
-if ! command -v brew &> /dev/null; then
-  echo "Homebrewが見つかりません。インストール中..."
-{{- if eq .chezmoi.os "linux" }}
-  # Linuxの場合、ビルドツールが必要
-  {{- if or (eq .chezmoi.osRelease.id "ubuntu") (eq .chezmoi.osRelease.id "debian") }}
-  if ! command -v gcc &> /dev/null; then
-    echo "build-essentialをインストール中..."
-    sudo apt update && sudo apt install -y build-essential
-  fi
-  {{- else if or (eq .chezmoi.osRelease.id "fedora") (eq .chezmoi.osRelease.id "rhel") (eq .chezmoi.osRelease.id "centos") }}
-  if ! command -v gcc &> /dev/null; then
-    echo "開発ツールをインストール中..."
-    sudo dnf install -y gcc gcc-c++ make
-  fi
-  {{- else if eq .chezmoi.osRelease.id "arch" }}
-  if ! command -v gcc &> /dev/null; then
-    echo "base-develをインストール中..."
-    sudo pacman -S --needed base-devel
-  fi
-  {{- end }}
-{{- end }}
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  # インストール後、パスを再設定
-  setup_homebrew_path
-  echo "Homebrewのインストールが完了しました。"
-fi
-
-# Homebrewが使えることを確認してから次に進む
-if ! command -v brew &> /dev/null; then
-    echo "Brew command is still not available. Please check your Homebrew installation and PATH."
-    exit 1
-fi
-
-# direnvはaquaで管理されるため、Homebrewでのインストールは不要
-
-# 2. aquaのインストールチェック
-if ! command -v aqua &> /dev/null; then
-  echo "aqua not found. Installing aqua via Homebrew..."
-  brew install aquaproj/aqua/aqua
-  echo "aqua installed successfully."
-fi
-
-# aquaのPATHを設定（aquaでインストールしたツールを使えるようにする）
-export PATH="$(aqua root-dir)/bin:$PATH"
-export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml
-
-# aqua install は chezmoi apply 時のみ実行される (run_onchange_after_aqua-install.sh.tmpl)
-
-export MISE_GLOBAL_CONFIG_FILE=${XDG_CONFIG_HOME:-$HOME/.config}/mise/config.toml
-# miseのシェル連携を有効化
-if command -v mise &> /dev/null; then
-    eval "$(mise activate zsh)"
-    eval "$(mise completion zsh)"
-fi
+alias grep="rg"
 
 # neovimのエイリアス設定
 if command -v nvim &> /dev/null; then
@@ -144,25 +57,32 @@ if command -v nvim &> /dev/null; then
   alias view="nvim -R"
 fi
 
-# direnvの設定（aqua経由でインストール）
-if command -v direnv &> /dev/null; then
-    eval "$(direnv hook zsh)"
-fi
+# ディレクトリ移動時にls
+chpwd() {
+    if [[ $(pwd) != $HOME ]]; then;
+        ls -la
+    fi
+}
 
-# Starshipの初期化
-if command -v starship &> /dev/null; then
-  eval "$(starship init zsh)"
-fi
+# mise activate (インタラクティブ用)
+command -v mise &> /dev/null && eval "$(mise activate zsh)"
 
-# taskの設定
+# ツール連携（eval系）
+command -v direnv &> /dev/null && eval "$(direnv hook zsh)"
+command -v starship &> /dev/null && eval "$(starship init zsh)"
+command -v fzf &> /dev/null && source <(fzf --zsh)
+command -v zoxide &> /dev/null && eval "$(zoxide init zsh)"
+
+# task completion (遅延ロード)
 if command -v task &> /dev/null; then
   eval "$(task --completion zsh)"
 fi
 
-# fzfの設定 (aqua経由でインストールされるfzfを使用)
-if command -v fzf &> /dev/null; then
-  source <(fzf --zsh)
+# mise completion (遅延ロード)
+if command -v mise &> /dev/null; then
+  eval "$(mise completion zsh)"
 fi
+
 # fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
 fbr() {
   local branches branch
@@ -171,10 +91,6 @@ fbr() {
            fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
-
-if command -v zoxide &> /dev/null; then
-  eval "$(zoxide init zsh)"
-fi
 
 # プロセスをkill
 fkill() {
@@ -187,6 +103,7 @@ fkill() {
   fi
 }
 
+# macOS固有の設定
 {{- if eq .chezmoi.os "darwin" }}
 {{- if stat (joinPath .chezmoi.homeDir ".rd/bin") }}
 # Rancher Desktopの設定（存在する場合のみ）
@@ -208,6 +125,8 @@ export PATH="{{ .chezmoi.homeDir }}/.codeium/windsurf/bin:$PATH"
 {{- end }}
 # NOTE: file descriptor limitを増やす
 ulimit -n 65536
+
+export PATH="/opt/homebrew/opt/tcl-tk/bin:$PATH"
 {{- end }}
 
 # MySQL clientの設定（Homebrewとmysql-clientが存在する場合のみ）
@@ -219,22 +138,6 @@ export LDFLAGS="-L{{ $brewPrefix }}/opt/mysql-client/lib"
 export CPPFLAGS="-I{{ $brewPrefix }}/opt/mysql-client/include"
 {{-   end }}
 {{- end }}
-# # https://zenn.dev/shunsuke_suzuki/articles/aqua-nodejs-support#aqua-%E3%81%A7-node.js-%E3%82%92%E7%AE%A1%E7%90%86%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95
-# export NPM_CONFIG_PREFIX=${XDG_DATA_HOME:-$HOME/.local/share}/npm-global
-# export PATH=$NPM_CONFIG_PREFIX/bin:$PATH
-
-# pnpmの設定
-# {{- if eq .chezmoi.os "darwin" }}
-# export PNPM_HOME="{{ .chezmoi.homeDir }}/Library/pnpm"
-# {{- else }}
-# export PNPM_HOME="${XDG_DATA_HOME:-{{ .chezmoi.homeDir }}/.local/share}/pnpm"
-# {{- end }}
-# if [ -d "$PNPM_HOME" ]; then
-#     case ":$PATH:" in
-#         *":$PNPM_HOME:"*) ;;
-#         *) export PATH="$PNPM_HOME:$PATH" ;;
-#     esac
-# fi
 
 # ローカル設定の読み込み（最後に実行）
 # これらのファイルはGit管理されません
@@ -254,18 +157,3 @@ if [ -d ~/.zsh/functions ]; then
         source "$file"
     done
 fi
-
-# claudeのauto updaterを意地でも無効化したい。環境変数名がglobalすぎる...（勝手にnpm install -gしてくるの何...）
-# export DISABLE_AUTOUPDATER=1
-# alias cc=$HOME/.local/share/mise/installs/npm-anthropic-ai-claude-code/1.0.55/bin/claude
-# alias claude=$HOME/.local/share/mise/installs/npm-anthropic-ai-claude-code/1.0.55/bin/claude
-export CLAUDE_CODE_AUTO_UPDATE=false
-export DISABLE_AUTOUPDATER=1
-
-export PATH="$HOME/.local/bin:$PATH"
-# cursor-agentが無ければinstall
-if ! command -v cursor-agent &> /dev/null; then
-  curl https://cursor.com/install -fsS | bash
-fi
-
-alias grep="rg"
