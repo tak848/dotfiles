@@ -36,12 +36,12 @@ jobs:
           cache: true
 
       - name: Update root mise.lock
-        run: mise lock
+        run: rm -f mise.lock && mise lock
 
       - name: Update dot_config mise.lock
         run: |
           cd dot_config/mise
-          mise lock
+          rm -f mise.lock && mise lock
 
       - name: Check if lockfiles changed
         id: check-changes
