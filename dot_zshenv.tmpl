@@ -16,6 +16,9 @@ export PATH="/opt/homebrew/bin:$PATH"
 {{-   else }}
 export PATH="/usr/local/bin:$PATH"
 {{-   end }}
+{{- else if eq .chezmoi.os "linux" }}
+# Linux: Homebrew (非ログインシェルでも PATH に含める)
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 {{- end }}
 export PATH="${XDG_DATA_HOME}/aquaproj-aqua/bin:$PATH"
 

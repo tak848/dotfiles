@@ -7,6 +7,26 @@ export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 
 echo "=== chezmoi 初回セットアップ ==="
 
+# 0. zsh インストール（Linux の場合）
+{{- if eq .chezmoi.os "linux" }}
+if ! command -v zsh &> /dev/null; then
+  echo "Installing zsh..."
+  {{- if or (eq .chezmoi.osRelease.id "ubuntu") (eq .chezmoi.osRelease.id "debian") }}
+  sudo apt update && sudo apt install -y zsh
+  {{- else if or (eq .chezmoi.osRelease.id "fedora") (eq .chezmoi.osRelease.id "rhel") (eq .chezmoi.osRelease.id "centos") }}
+  sudo dnf install -y zsh
+  {{- else if eq .chezmoi.osRelease.id "arch" }}
+  sudo pacman -S --noconfirm zsh
+  {{- end }}
+fi
+
+# デフォルトシェルを zsh に変更
+if [ "$SHELL" != "$(which zsh)" ]; then
+  echo "Changing default shell to zsh..."
+  chsh -s "$(which zsh)"
+fi
+{{- end }}
+
 # 1. Homebrew インストール
 {{- if eq .chezmoi.os "darwin" }}
 {{-   if eq .chezmoi.arch "arm64" }}
@@ -54,3 +74,9 @@ fi
 {{- end }}
 
 echo "=== 初回セットアップ完了 ==="
+
+# zsh を起動（新しい設定を反映）
+if command -v zsh &> /dev/null; then
+  echo "zsh を起動します..."
+  exec zsh -l
+fi
