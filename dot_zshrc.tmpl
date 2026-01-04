@@ -128,14 +128,12 @@ fi
 export PATH="$(aqua root-dir)/bin:$PATH"
 export AQUA_GLOBAL_CONFIG=${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml
 
-# 毎回aqua installを実行（必要なツールがあればインストールされる）
-aqua i -a -l
+# aqua install は chezmoi apply 時のみ実行される (run_onchange_after_aqua-install.sh.tmpl)
 
 export MISE_GLOBAL_CONFIG_FILE=${XDG_CONFIG_HOME:-$HOME/.config}/mise/config.toml
 # miseのシェル連携を有効化
 if command -v mise &> /dev/null; then
     eval "$(mise activate zsh)"
-    mise install &> /dev/null
     eval "$(mise completion zsh)"
 fi
 
