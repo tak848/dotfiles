@@ -8,7 +8,11 @@ lockfile = true
 locked = false
 
 [tools]
-# npmのglobalはmiseで管理する
+# npm: backend が使う node/pnpm は mise で管理
+node = "24.12.0"
+pnpm = "10.27.0"
+
+# npm の global パッケージ
 "npm:@anthropic-ai/claude-code" = "2.0.76"
 "npm:@google/gemini-cli" = "0.22.5"
 "npm:@openai/codex" = "0.77.0"

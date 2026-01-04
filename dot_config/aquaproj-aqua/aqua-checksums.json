@@ -316,26 +316,6 @@
       "algorithm": "sha256"
     },
     {
-      "id": "github_release/github.com/pnpm/pnpm/v10.27.0/pnpm-linux-arm64",
-      "checksum": "61BDF073CD95154C0FBAB6349DCF8A77E5E4C159854363F21722756E3BA08A9F",
-      "algorithm": "sha256"
-    },
-    {
-      "id": "github_release/github.com/pnpm/pnpm/v10.27.0/pnpm-linux-x64",
-      "checksum": "0BBEA51C4FE9DC0B5B94F147A2B7441FBA3A75FE54F03A317149D738408E0496",
-      "algorithm": "sha256"
-    },
-    {
-      "id": "github_release/github.com/pnpm/pnpm/v10.27.0/pnpm-macos-arm64",
-      "checksum": "60A6E7B61A5CE34CE8C34E65BDCC0979A254362FF4AB73254FBCD3982DE49DA1",
-      "algorithm": "sha256"
-    },
-    {
-      "id": "github_release/github.com/pnpm/pnpm/v10.27.0/pnpm-macos-x64",
-      "checksum": "4E44FD0A841AB98F76EE73C9953CFFC5CA560B2651DC9C4EBEF4ECBE43A605CC",
-      "algorithm": "sha256"
-    },
-    {
       "id": "github_release/github.com/rust-lang/rust-analyzer/2025-12-01/rust-analyzer-aarch64-apple-darwin.gz",
       "checksum": "8C60788FA0143FC4CBE6FF101C1E6D146C6C5CE6FB2FBED3E5DA86F89FF81E17",
       "algorithm": "sha256"
@@ -488,26 +468,6 @@
     {
       "id": "http/golang.org/dl/go1.25.5.linux-arm64.tar.gz",
       "checksum": "B00B694903D126C588C378E72D3545549935D3982635BA3F7A964C9FA23FE3B9",
-      "algorithm": "sha256"
-    },
-    {
-      "id": "http/nodejs.org/dist/v24.12.0/node-v24.12.0-darwin-arm64.tar.gz",
-      "checksum": "319F221ADC5E44FF0ED57E8A441B2284F02B8DC6FC87B8EB92A6A93643FD8080",
-      "algorithm": "sha256"
-    },
-    {
-      "id": "http/nodejs.org/dist/v24.12.0/node-v24.12.0-darwin-x64.tar.gz",
-      "checksum": "B82EA4C62FD08E250CAB59D625E75D77CC5B0A3D60C6698EBEE4545C88A169C5",
-      "algorithm": "sha256"
-    },
-    {
-      "id": "http/nodejs.org/dist/v24.12.0/node-v24.12.0-linux-arm64.tar.gz",
-      "checksum": "9B2A2EEB98A8EB37361224E2A1D060300AD2DD143AF58DFDB16DE785DF0F1228",
-      "algorithm": "sha256"
-    },
-    {
-      "id": "http/nodejs.org/dist/v24.12.0/node-v24.12.0-linux-x64.tar.gz",
-      "checksum": "6159227E0AF7D7C3C6BB2FA900452B04A6CB8841A702A79ACC613209D70B04D0",
       "algorithm": "sha256"
     },
     {
