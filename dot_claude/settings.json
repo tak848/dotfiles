@@ -60,6 +60,7 @@
          }
       ]
    },
+   "includeCoAuthoredBy": false,
    "model": "claude-opus-4-5",
    "permissions": {
       "allow": [
@@ -132,7 +133,6 @@
          "mcp__serena-global__think_about_whether_you_are_done"
       ],
       "defaultMode": "plan",
-      "deny": [ ],
-      "includeCoAuthoredBy": false
+      "deny": [ ]
    }
 }
