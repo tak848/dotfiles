@@ -1,0 +1,56 @@
+#!/bin/bash
+set -e
+
+# XDG Base Directory
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+
+echo "=== chezmoi 初回セットアップ ==="
+
+# 1. Homebrew インストール
+{{- if eq .chezmoi.os "darwin" }}
+{{-   if eq .chezmoi.arch "arm64" }}
+BREW_PATH="/opt/homebrew/bin/brew"
+{{-   else }}
+BREW_PATH="/usr/local/bin/brew"
+{{-   end }}
+{{- else if eq .chezmoi.os "linux" }}
+BREW_PATH="/home/linuxbrew/.linuxbrew/bin/brew"
+{{- end }}
+
+if [ ! -x "$BREW_PATH" ]; then
+  echo "Installing Homebrew..."
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+# Homebrew を PATH に追加（この時点では zshenv 未展開）
+if [ -x "$BREW_PATH" ]; then
+  eval "$($BREW_PATH shellenv)"
+fi
+
+# 2. aqua インストール
+if ! command -v aqua &> /dev/null; then
+  echo "Installing aqua..."
+  brew install aquaproj/aqua/aqua
+fi
+
+# aqua を PATH に追加
+export PATH="$XDG_DATA_HOME/aquaproj-aqua/bin:$PATH"
+
+# 3. zinit インストール
+ZINIT_HOME="$XDG_DATA_HOME/zinit/zinit.git"
+if [ ! -d "$ZINIT_HOME/.git" ]; then
+  echo "Installing zinit..."
+  mkdir -p "$(dirname "$ZINIT_HOME")"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+# 4. cursor-agent インストール（macOS のみ）
+{{- if eq .chezmoi.os "darwin" }}
+if ! command -v cursor-agent &> /dev/null; then
+  echo "Installing cursor-agent..."
+  curl https://cursor.com/install -fsS | bash
+fi
+{{- end }}
+
+echo "=== 初回セットアップ完了 ==="

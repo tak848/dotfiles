@@ -1,0 +1,13 @@
+# Homebrew shellenv (ログイン時1回のみ)
+{{- if eq .chezmoi.os "darwin" }}
+{{-   if eq .chezmoi.arch "arm64" }}
+[[ -x "/opt/homebrew/bin/brew" ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+{{-   else }}
+[[ -x "/usr/local/bin/brew" ]] && eval "$(/usr/local/bin/brew shellenv)"
+{{-   end }}
+{{- else if eq .chezmoi.os "linux" }}
+[[ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+{{- end }}
+
+# mise shims (非インタラクティブセッション用、IDE連携)
+command -v mise &> /dev/null && eval "$(mise activate zsh --shims)"
