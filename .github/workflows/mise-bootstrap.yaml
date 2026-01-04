@@ -60,4 +60,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add dot_local/bin/executable_mise
           git commit -m "chore: update mise bootstrap to ${{ env.MISE_VERSION }}"
+          git pull --rebase
           git push

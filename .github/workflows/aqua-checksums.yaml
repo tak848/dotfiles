@@ -59,4 +59,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add aqua-checksums.json dot_config/aquaproj-aqua/aqua-checksums.json
           git commit -m "chore: update aqua checksums"
+          git pull --rebase
           git push

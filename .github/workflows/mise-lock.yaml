@@ -59,4 +59,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add mise.lock dot_config/mise/mise.lock
           git commit -m "chore: update mise lockfiles"
+          git pull --rebase
           git push
