@@ -1,0 +1,63 @@
+name: Update mise bootstrap
+
+on:
+  pull_request:
+    paths:
+      - ".mise-bootstrap-version"
+      - ".github/workflows/mise-bootstrap.yaml"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-bootstrap:
+    runs-on: ubuntu-latest
+    if: github.actor == 'renovate[bot]' || github.actor == 'dependabot[bot]'
+    steps:
+      - name: Generate GitHub App Token
+        uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2.2.1
+        id: app-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          ref: ${{ github.head_ref }}
+
+      - name: Read version
+        run: |
+          source .mise-bootstrap-version
+          echo "MISE_VERSION=$MISE_VERSION" >> $GITHUB_ENV
+
+      - name: Setup mise
+        uses: jdx/mise-action@v3
+        with:
+          version: ${{ env.MISE_VERSION }}
+          install: false
+          cache: true
+
+      # MISE_VERSION は v 付き（例: v2025.12.13）なので -V にそのまま渡す
+      - name: Generate bootstrap script
+        run: mise generate bootstrap -V "${{ env.MISE_VERSION }}" -w ./dot_local/bin/executable_mise
+
+      - name: Check if bootstrap changed
+        id: check-changes
+        run: |
+          if git diff --quiet dot_local/bin/executable_mise; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push
+        if: steps.check-changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dot_local/bin/executable_mise
+          git commit -m "chore: update mise bootstrap to ${{ env.MISE_VERSION }}"
+          git push

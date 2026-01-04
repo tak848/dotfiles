@@ -17,6 +17,15 @@
   gitIgnoredAuthors: [
     "github-actions[bot]@users.noreply.github.com",
   ],
+  customManagers: [
+    {
+      customType: "regex",
+      fileMatch: ["^\\.mise-bootstrap-version$"],
+      matchStrings: [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\nMISE_VERSION=(?<currentValue>\\S+)",
+      ],
+    },
+  ],
   packageRules: [
     {
       description: "Separate aqua-registry updates to avoid conflicts with other updates",
