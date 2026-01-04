@@ -81,9 +81,7 @@ fi
 {{- end }}
 
 echo "=== 初回セットアップ完了 ==="
-
-# zsh を起動（新しい設定を反映）
-if command -v zsh &> /dev/null; then
-  echo "zsh を起動します..."
-  exec zsh -l
-fi
+echo ""
+echo "新しい設定を反映するには、以下を実行してください:"
+echo "  exec zsh -l"
+echo "または新しいターミナルを開いてください。"

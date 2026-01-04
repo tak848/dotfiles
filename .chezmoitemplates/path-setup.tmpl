@@ -1,0 +1,12 @@
+# PATH 設定（bash スクリプト用、.zshenv が読み込まれないため）
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+{{- if eq .chezmoi.os "darwin" }}
+{{-   if eq .chezmoi.arch "arm64" }}
+export PATH="/opt/homebrew/bin:$PATH"
+{{-   else }}
+export PATH="/usr/local/bin:$PATH"
+{{-   end }}
+{{- else if eq .chezmoi.os "linux" }}
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+{{- end }}
+export PATH="${XDG_DATA_HOME}/aquaproj-aqua/bin:$PATH"
