@@ -221,6 +221,21 @@
       "algorithm": "sha256"
     },
     {
+      "id": "github_release/github.com/jdx/usage/v2.11.0/usage-aarch64-unknown-linux-musl.tar.gz",
+      "checksum": "850D04145EC52D859FCC5EFDCAB178A697155CF904FD8DDA24C127DE67AE0C69",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/jdx/usage/v2.11.0/usage-universal-apple-darwin.tar.gz",
+      "checksum": "FA1A8F1D8BE4D4D2D3F0C49FA95265C170546EFFB322B2C7BCA25E2BC3B8B916",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/jdx/usage/v2.11.0/usage-x86_64-unknown-linux-musl.tar.gz",
+      "checksum": "B8AB78820A5E07CE0A2413A1E86C653B4E0781E472EA47D09B07948BE1069055",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/jqlang/jq/jq-1.8.1/jq-linux-amd64",
       "checksum": "020468DE7539CE70EF1BCEAF7CDE2E8C4F2CA6C3AFB84642AABC5C97D9FC2A0D",
       "algorithm": "sha256"
