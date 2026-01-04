@@ -7,6 +7,13 @@ export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 
 echo "=== chezmoi 初回セットアップ ==="
 
+# sudo 権限を事前に要求（パスワード入力）
+echo "セットアップには管理者権限が必要です。"
+sudo -v
+
+# sudo 認証を維持（バックグラウンドで更新）
+while true; do sudo -n true; sleep 50; kill -0 "$$" || exit; done 2>/dev/null &
+
 # 0. zsh インストール（Linux の場合）
 {{- if eq .chezmoi.os "linux" }}
 if ! command -v zsh &> /dev/null; then
