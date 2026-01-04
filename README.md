@@ -1,133 +1,122 @@
 # dotfiles
 
-Chezmoi で管理している個人用 dotfiles リポジトリです。
+chezmoi で管理している個人用 dotfiles リポジトリです。macOS / Linux 対応。
 
 ## セットアップ
+
+### 事前条件（macOS）
+
+macOS では、Xcode Command Line Tools が必要です：
+
+```bash
+xcode-select --install
+```
+
+インストール完了を待ってから、次のステップに進んでください。
 
 ### 初回インストール
 
 ```bash
-# Chezmoiをインストールして、このリポジトリを適用
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply tak848
 ```
 
 ### 既存環境での更新
 
 ```bash
-# リポジトリの最新版を取得して適用
 chezmoi update
 ```
+
+## ツール管理
+
+### 構成
+
+```
+Homebrew
+  └─ aqua (CLI ツール管理)
+       └─ go, fzf, ripgrep, starship, direnv, etc.
+
+~/.local/bin/mise (bootstrap スクリプト)
+  └─ mise (ランタイム管理)
+       └─ node, pnpm, npm グローバルパッケージ
+```
+
+### 今後の予定
+
+- aqua → mise への統合（CLI ツールも mise で管理）
+- Homebrew の宣言的管理（Brewfile など）
 
 ## 主な機能
 
 ### 自動セットアップ
 
-初回起動時に以下のツールを自動インストール：
+初回起動時に以下を自動インストール：
 
-- Homebrew（macOS 用パッケージマネージャー）
-- direnv（環境変数管理）via aqua
+- Homebrew
 - aqua（CLI ツールバージョン管理）
-- fzf（インタラクティブフィルタ）via aqua
+- mise（ランタイム管理、bootstrap 方式）
+- zinit（zsh プラグインマネージャー）
 
 ### Git Worktree 管理関数
 
 - `gwt` - worktree 間の移動
-- `gwc` - 新規 worktree の作成（ブランチ選択/作成）
+- `gwc` - 新規 worktree の作成
 - `gwr` - worktree の削除
 
-### 環境別設定
-
-Chezmoi テンプレート機能により、環境に応じた設定を自動適用：
-
-- macOS/Linux 別のパス設定
-- インストール済みツールの検出と設定
-
-### ローカル設定
-
-Git 管理外のローカル設定をサポート：
+### ローカル設定（Git 管理外）
 
 - `~/.zshrc.local` - マシン固有の環境変数やエイリアス
-- `~/.zsh/local/*.zsh` - ローカル関数やスクリプト
-
-これらのファイルは初回のみテンプレートが作成され、以降は変更されません。
+- `~/.zsh/local/*.zsh` - ローカル関数
 
 ## ディレクトリ構造
 
 ```
 ~/
+├── .local/bin/
+│   └── mise              # mise bootstrap スクリプト
 ├── .config/
-│   └── aquaproj-aqua/    # aquaの設定
-│       ├── aqua.yaml     # パッケージリスト
-│       └── aqua-checksums.json
+│   ├── aquaproj-aqua/    # aqua 設定
+│   │   ├── aqua.yaml
+│   │   └── aqua-checksums.json
+│   └── mise/             # mise 設定
+│       ├── config.toml
+│       └── mise.lock
 ├── .zsh/
-│   ├── functions/        # 共有関数（Git管理）
-│   │   └── git-worktree.zsh
-│   └── local/           # ローカル関数（Git管理外）
-│       └── example.zsh
-├── .zshrc               # Chezmoiが生成
-└── .zshrc.local        # ローカル設定（Git管理外）
+│   ├── functions/        # 共有関数（Git 管理）
+│   └── local/            # ローカル関数（Git 管理外）
+├── .zshenv               # PATH, 環境変数
+├── .zprofile             # mise shims（IDE 連携）
+├── .zshrc                # インタラクティブ設定
+└── .zshrc.local          # マシン固有設定（Git 管理外）
 ```
 
 ## カスタマイズ
 
-### ローカル設定の追加
+### ツールの追加
 
-`~/.zshrc.local`や`~/.zsh/local/`に独自の設定を追加できます：
-
-```bash
-# ~/.zshrc.local の例
-export COMPANY_PROXY="http://proxy.company.com:8080"
-alias work="cd ~/work"
-
-# ~/.zsh/local/my-functions.zsh の例
-function deploy-staging() {
-    echo "Deploying to staging..."
-    # デプロイ処理
-}
-```
-
-### 新しいツールの追加
-
-`dot_config/aquaproj-aqua/aqua.yaml`に追加：
-
-```yaml
-- name: example/tool@v1.0.0
-```
-
-その後：
+**aqua（CLI ツール）:**
 
 ```bash
-# チェックサムを更新
-aqua update-checksum
-# 変更をコミット・プッシュ
-git add -A && git commit -m "Add example tool" && git push
+# dot_config/aquaproj-aqua/aqua.yaml に追加後
+aqua update-checksum --prune
+```
+
+**mise（ランタイム / npm パッケージ）:**
+
+```bash
+# dot_config/mise/config.toml に追加後
+mise lock
+mise install
 ```
 
 ## トラブルシューティング
 
-### Chezmoi で管理されているファイルを確認
-
 ```bash
+# 管理ファイル一覧
 chezmoi managed
-```
 
-### 変更内容を確認してから適用
-
-```bash
+# 変更差分を確認
 chezmoi diff
-chezmoi apply
-```
 
-### 設定をリセット
-
-```bash
+# 設定をリセット
 chezmoi init --apply tak848
-```
-
-## serena mcp
-
-for claude code
-
-```bash
-claude mcp add serena-global -- uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context ide-assistant --project '${PWD}'
 ```
