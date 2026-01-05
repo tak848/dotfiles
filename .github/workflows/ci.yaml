@@ -39,6 +39,7 @@ jobs:
       - name: Verify installed tools
         env:
           MISE_CONFIG_FILE: ${{ github.workspace }}/dot_config/mise/config.toml
+          AQUA_GLOBAL_CONFIG: ${{ github.workspace }}/dot_config/aquaproj-aqua/aqua.yaml
         run: |
           echo "=== Checking installed tools ==="
           mise --version
