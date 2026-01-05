@@ -6,5 +6,13 @@ lockfile = true
 locked = false  # npm backend が checksum 未対応のため
 
 [tools]
-"npm:cc-sdd" = "2.0.3"
+# このリポジトリで使うランタイム
+node = "24.12.0"
+pnpm = "10.27.0"
+
+# このリポジトリで使う CLI ツール
+"aqua:google/go-jsonnet" = "0.21.0"
 "aqua:go-task/task" = "3.45.5"
+
+# npm パッケージ
+"npm:cc-sdd" = "2.0.3"

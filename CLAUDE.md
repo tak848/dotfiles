@@ -18,12 +18,6 @@ chezmoi diff
 # 管理ファイル一覧
 chezmoi managed
 
-# aqua ツールをインストール
-aqua install
-
-# aqua checksum を更新（ツール追加/更新後）
-aqua update-checksum --prune
-
 # mise ツールをインストール
 mise install
 
@@ -33,19 +27,20 @@ mise lock
 
 ## Architecture
 
-### ツール管理の二層構造
+### ツール管理の構成
 
 ```
 Homebrew
-  └─ aqua (CLI ツール管理: go, fzf, ripgrep, starship, etc.)
-       └─ mise は bootstrap 方式で独立管理
+  └─ 基本パッケージ
 
 ~/.local/bin/mise (bootstrap スクリプト)
-  └─ mise (ランタイム管理: node, pnpm, npm グローバルパッケージ)
+  └─ mise (統合ツール管理)
+       ├─ ランタイム管理: go, node, pnpm (core backend)
+       ├─ CLI ツール管理: fzf, ripgrep, starship, etc. (aqua backend)
+       └─ npm グローバルパッケージ
 ```
 
-- **aqua** (`dot_config/aquaproj-aqua/`): CLI ツールのバージョン管理。checksum 必須
-- **mise** (`dot_config/mise/`, `dot_local/bin/executable_mise`): ランタイム管理。bootstrap 方式でインストール
+- **mise** (`dot_config/mise/`, `dot_local/bin/executable_mise`): ランタイム、CLI ツール、npm パッケージの統合管理。bootstrap 方式でインストール
 
 ### Chezmoi ファイル命名規則
 
@@ -54,15 +49,14 @@ Homebrew
 | `dot_` | `~/.` | `dot_zshrc.tmpl` → `~/.zshrc` |
 | `executable_` | 実行権限付与 | `executable_mise` → `mise` (+x) |
 | `.tmpl` | テンプレート展開 | OS/アーキテクチャ分岐 |
-| `run_once_before_*` | 初回のみ実行 | Homebrew, aqua インストール |
-| `run_onchange_after_*` | ファイル変更時実行 | aqua install, mise install |
+| `run_once_before_*` | 初回のみ実行 | Homebrew インストール |
+| `run_onchange_after_*` | ファイル変更時実行 | mise install |
 
 ### 自動更新ワークフロー（Renovate + GitHub Actions）
 
 | ワークフロー | トリガー | 処理 |
 |-------------|---------|------|
-| `aqua-checksums.yaml` | `aqua.yaml` 変更 | `aqua update-checksum --prune` |
-| `mise-lock.yaml` | `mise.toml` 変更 | `mise lock` |
+| `mise-lock.yaml` | `mise.toml` / `config.toml` 変更 | `mise lock` |
 | `mise-bootstrap.yaml` | `.mise-bootstrap-version` 変更 | `mise generate bootstrap` |
 
 ### zsh 設定の読み込み順序

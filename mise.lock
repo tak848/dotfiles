@@ -7,6 +7,33 @@ backend = "aqua:go-task/task"
 "platforms.macos-x64" = { checksum = "sha256:5a06e2266b4c4a679c48582922ec06a25f81365b5f65298ef11dcafb9d379c2b", url = "https://github.com/go-task/task/releases/download/v3.45.5/task_darwin_amd64.tar.gz"}
 "platforms.windows-x64" = { checksum = "sha256:462687c285a07450de17f2af696d12c3c9536651e3d0085e483d56ab6cd0db4f", url = "https://github.com/go-task/task/releases/download/v3.45.5/task_windows_amd64.zip"}
 
+[[tools."aqua:google/go-jsonnet"]]
+version = "0.21.0"
+backend = "aqua:google/go-jsonnet"
+"platforms.linux-arm64" = { checksum = "sha256:4a263da605dbe2edb99529f495266211062fac476789f2119408bc223338f1d6", url = "https://github.com/google/go-jsonnet/releases/download/v0.21.0/go-jsonnet_Linux_arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:ad3181fde77726b02d17eb4e72687020bf2cb35b9336cdeaaca4783c7ff104f7", url = "https://github.com/google/go-jsonnet/releases/download/v0.21.0/go-jsonnet_Linux_x86_64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:398189a264e31a2c1316eed8ee6308306a221fd10b72f405def0100d295efeac", url = "https://github.com/google/go-jsonnet/releases/download/v0.21.0/go-jsonnet_Darwin_arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:a6cee4b381d2319fa807d7a7bf8a4ecf2d0cca64e2bcd53eeaa575ce1f7689a4", url = "https://github.com/google/go-jsonnet/releases/download/v0.21.0/go-jsonnet_Darwin_x86_64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:81d71a287ee5dfd0860831eeac281a7327ce8876d5fe9a8b7e19726dbbc0ce4f", url = "https://github.com/google/go-jsonnet/releases/download/v0.21.0/go-jsonnet_Windows_x86_64.tar.gz"}
+
+[[tools.node]]
+version = "24.12.0"
+backend = "core:node"
+"platforms.linux-arm64" = { checksum = "sha256:9b2a2eeb98a8eb37361224e2a1d060300ad2dd143af58dfdb16de785df0f1228", url = "https://nodejs.org/dist/v24.12.0/node-v24.12.0-linux-arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:6159227e0af7d7c3c6bb2fa900452b04a6cb8841a702a79acc613209d70b04d0", url = "https://nodejs.org/dist/v24.12.0/node-v24.12.0-linux-x64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:319f221adc5e44ff0ed57e8a441b2284f02b8dc6fc87b8eb92a6a93643fd8080", url = "https://nodejs.org/dist/v24.12.0/node-v24.12.0-darwin-arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:b82ea4c62fd08e250cab59d625e75d77cc5b0a3d60c6698ebee4545c88a169c5", url = "https://nodejs.org/dist/v24.12.0/node-v24.12.0-darwin-x64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:9c125f61ae947b52e779095830f9cac267846a043ef7192183c84016aaad2812", url = "https://nodejs.org/dist/v24.12.0/node-v24.12.0-win-x64.zip"}
+
 [[tools."npm:cc-sdd"]]
 version = "2.0.3"
 backend = "npm:cc-sdd"
+
+[[tools.pnpm]]
+version = "10.27.0"
+backend = "aqua:pnpm/pnpm"
+"platforms.linux-arm64" = { checksum = "sha256:61bdf073cd95154c0fbab6349dcf8a77e5e4c159854363f21722756e3ba08a9f", url = "https://github.com/pnpm/pnpm/releases/download/v10.27.0/pnpm-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:0bbea51c4fe9dc0b5b94f147a2b7441fba3a75fe54f03a317149d738408e0496", url = "https://github.com/pnpm/pnpm/releases/download/v10.27.0/pnpm-linux-x64"}
+"platforms.macos-arm64" = { checksum = "sha256:60a6e7b61a5ce34ce8c34e65bdcc0979a254362ff4ab73254fbcd3982de49da1", url = "https://github.com/pnpm/pnpm/releases/download/v10.27.0/pnpm-macos-arm64"}
+"platforms.macos-x64" = { checksum = "sha256:4e44fd0a841ab98f76ee73c9953cffc5ca560b2651dc9c4ebef4ecbe43a605cc", url = "https://github.com/pnpm/pnpm/releases/download/v10.27.0/pnpm-macos-x64"}
+"platforms.windows-x64" = { checksum = "sha256:921af6e7fce0cf67d2b035c2d81bfa4d9ed774780aa32dd63162fa726fecd859", url = "https://github.com/pnpm/pnpm/releases/download/v10.27.0/pnpm-win-x64.exe"}

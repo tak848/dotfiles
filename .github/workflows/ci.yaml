@@ -19,31 +19,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
-      - name: Install aqua
-        uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
+      - name: Setup mise
+        uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3
         with:
-          aqua_version: v2.56.1
+          install: false
+          cache: true
 
-      - name: Verify aqua installation (root)
+      - name: Install mise tools
         run: |
-          aqua version
-          aqua install --test
+          cd dot_config/mise
+          mise install
 
-      - name: Verify aqua installation (dot_config)
+      - name: Verify installed tools
         run: |
-          cd dot_config/aquaproj-aqua
-          aqua install --test
-
-      - name: Verify installed tools from dot_config
-        run: |
-          cd dot_config/aquaproj-aqua
-          aqua install
-          PATH="$(aqua root-dir)/bin:$PATH"
           echo "=== Checking installed tools ==="
-          which pnpm && pnpm --version
-          which go && go version
-          which gh && gh --version
-          which node && node --version
+          mise --version
+          # ランタイム
+          node --version
+          pnpm --version
+          go version
+          # 主要 CLI ツール
+          gh --version
+          fzf --version
+          rg --version
+          jq --version
+          starship --version
+          direnv --version
+          nvim --version
 
       - name: Install chezmoi
         run: |

@@ -20,10 +20,8 @@ export PATH="/usr/local/bin:$PATH"
 # Linux: Homebrew (非ログインシェルでも PATH に含める)
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 {{- end }}
-export PATH="${XDG_DATA_HOME}/aquaproj-aqua/bin:$PATH"
 
-# aqua/mise 設定
-export AQUA_GLOBAL_CONFIG="${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME}/aquaproj-aqua/aqua.yaml"
+# mise 設定
 export MISE_GLOBAL_CONFIG_FILE="${XDG_CONFIG_HOME}/mise/config.toml"
 
 # Claude Code auto updater を無効化

@@ -3,7 +3,6 @@
   extends: [
     "config:recommended",
     "helpers:pinGitHubActionDigestsToSemver",
-    "github>aquaproj/aqua-renovate-config#2.9.0",
     "group:allNonMajor",
     ":separateMultipleMajorReleases",
     ":prConcurrentLimitNone",
@@ -27,11 +26,6 @@
     },
   ],
   packageRules: [
-    {
-      description: "Separate aqua-registry updates to avoid conflicts with other updates",
-      matchPackageNames: ["aquaproj/aqua-registry"],
-      groupName: null,
-    },
     {
       description: "Use node versioning for Node.js (LTS only)",
       matchPackageNames: ["nodejs/node"],
