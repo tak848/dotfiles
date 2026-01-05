@@ -5,6 +5,7 @@ method: checksum
 vars:
   MISE_CONFIG_DIR: dot_config/mise
   AQUA_CONFIG_DIR: dot_config/aquaproj-aqua
+  MISE_PLATFORMS: linux-x64,linux-arm64,macos-x64,macos-arm64,windows-x64
 
 tasks:
   # === Default: 全タスク実行 ===
@@ -39,7 +40,7 @@ tasks:
   mise:lock:root:
     desc: Update root mise.lock
     cmds:
-      - rm -f mise.lock && mise lock
+      - rm -f mise.lock && mise lock -p {{.MISE_PLATFORMS}}
     sources:
       - .mise.toml
     generates:
@@ -49,7 +50,7 @@ tasks:
     desc: Update dot_config/mise/mise.lock
     dir: "{{.MISE_CONFIG_DIR}}"
     cmds:
-      - rm -f mise.lock && mise lock
+      - rm -f mise.lock && mise lock -p {{.MISE_PLATFORMS}}
     sources:
       - config.toml
     generates:
