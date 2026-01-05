@@ -1,5 +1,6 @@
-
 [user]
-    name = TAK848
+    name = tak848
 [push]
-	autoSetupRemote = true
+    autoSetupRemote = true
+[ghq]
+    root = ~/repos
