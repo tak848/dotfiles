@@ -1,4 +1,5 @@
 version: "3"
+root: true
 method: checksum
 
 vars:
