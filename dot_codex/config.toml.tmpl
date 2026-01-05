@@ -1,0 +1,51 @@
+notify = ["uv", "run", "~/.codex/notification.py"]
+model = "gpt-5.1-codex-max"
+model_reasoning_effort = "high"
+
+[features]
+web_search_request = true
+
+# [profiles.pro]
+# model = "gpt-5.1-pro"
+# model_reasoning_effort = "high"
+# # approval_policy = "never"
+
+[profiles.fast]
+model = "gpt-5.1-codex-max"
+model_reasoning_effort = "medium"
+
+[profiles.xhigh]
+model = "gpt-5.1-codex-max"
+model_reasoning_effort = "xhigh"
+
+[profiles.normal]
+model = "gpt-5.1-codex"
+model_reasoning_effort = "high"
+
+[profiles.normal-fast]
+model = "gpt-5.1-codex"
+model_reasoning_effort = "medium"
+
+[profiles.normal-xhigh]
+model = "gpt-5.1-codex"
+model_reasoning_effort = "xhigh"
+{{- if ne .profile "public" }}
+{{-   /* profile (personal/work) に応じたディレクトリを選択 */ -}}
+{{-   $privateDir := joinPath .chezmoi.homeDir ".local/share/chezmoi-private" .profile }}
+
+{{-   /* Projects セクション */ -}}
+{{-   $projectsFile := joinPath $privateDir "codex-projects.toml" }}
+{{-   if stat $projectsFile }}
+
+# === Projects (from private/{{ .profile }}) ===
+{{ include $projectsFile }}
+{{-   end }}
+
+{{-   /* MCP Servers セクション */ -}}
+{{-   $mcpFile := joinPath $privateDir "codex-mcp-servers.toml" }}
+{{-   if stat $mcpFile }}
+
+# === MCP Servers (from private/{{ .profile }}) ===
+{{ include $mcpFile }}
+{{-   end }}
+{{- end }}

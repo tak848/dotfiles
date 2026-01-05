@@ -1,0 +1,13 @@
+{
+{{- if ne .profile "public" }}
+{{-   $privateDir := joinPath .chezmoi.homeDir ".local/share/chezmoi-private" .profile }}
+{{-   $mcpFile := joinPath $privateDir "claude-mcp-servers.json" }}
+{{-   if stat $mcpFile }}
+  "mcpServers": {{ include $mcpFile | fromJson | toJson }}
+{{-   else }}
+  "mcpServers": {}
+{{-   end }}
+{{- else }}
+  "mcpServers": {}
+{{- end }}
+}

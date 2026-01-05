@@ -1,0 +1,9 @@
+{{- /* profile が public 以外の場合、private リポジトリを取得 */ -}}
+{{- if ne .profile "public" }}
+[".local/share/chezmoi-private"]
+    type = "git-repo"
+    url = "https://github.com/tak848/dotfiles-private.git"
+    refreshPeriod = "168h"
+    [".local/share/chezmoi-private".clone]
+        args = ["--depth", "1"]
+{{- end }}

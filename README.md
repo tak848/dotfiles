@@ -18,6 +18,30 @@ xcode-select --install
 
 ```bash
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply tak848
+# プロンプトで profile を聞かれたら "public" を選択
+```
+
+CI では環境変数で指定：
+
+```bash
+CHEZMOI_PROFILE=public sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply tak848
+```
+
+### プライベート設定の有効化
+
+初回インストール後、プライベート設定（API キー、gitconfig 等）を有効にする場合：
+
+```bash
+# 1. GitHub 認証（gh は mise 経由でインストール済み）
+gh auth login
+gh auth setup-git
+
+# 2. プロファイルを変更
+chezmoi init --data=false
+# プロンプトで "personal" または "work" を選択
+
+# 3. 設定を適用（private リポジトリから取得）
+chezmoi apply
 ```
 
 ### 既存環境での更新

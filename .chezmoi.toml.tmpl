@@ -1,0 +1,15 @@
+{{- /* プロファイル: 環境変数 CHEZMOI_PROFILE があればそれを使用、なければプロンプト */ -}}
+{{- $profile := env "CHEZMOI_PROFILE" -}}
+{{- if not $profile -}}
+{{-   $profile = promptChoiceOnce . "profile" "プロファイルを選択してください" (list "public" "personal" "work") -}}
+{{- end -}}
+
+{{- /* public 以外の場合、1Password を使用するか確認 */ -}}
+{{- $useOnePassword := false -}}
+{{- if and (ne $profile "public") (not (env "CI")) -}}
+{{-   $useOnePassword = promptBoolOnce . "useOnePassword" "1Password を使用しますか" -}}
+{{- end -}}
+
+[data]
+    profile = {{ $profile | quote }}
+    useOnePassword = {{ $useOnePassword }}
