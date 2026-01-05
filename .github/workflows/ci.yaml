@@ -27,9 +27,19 @@ jobs:
         with:
           install: false
           cache: true
+          cache_key_prefix: mise-v1
+          experimental: true
 
       - name: Install mise tools
         run: mise install
+
+      - name: Cache aqua tools
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: ~/.local/share/aquaproj-aqua
+          key: aqua-v1-${{ runner.os }}-${{ hashFiles('dot_config/aquaproj-aqua/aqua.yaml', 'dot_config/aquaproj-aqua/aqua-checksums.json') }}
+          restore-keys: |
+            aqua-v1-${{ runner.os }}-
 
       - name: Install aqua tools
         run: aqua install --all
@@ -56,9 +66,11 @@ jobs:
           op --version
           zoxide --version
 
-      - name: Install chezmoi
+      - name: Setup chezmoi
         run: |
-          sh -c "$(curl -fsLS chezmoi.io/get)" -- -b /usr/local/bin
+          if ! command -v chezmoi &> /dev/null; then
+            sh -c "$(curl -fsLS chezmoi.io/get)" -- -b /usr/local/bin
+          fi
 
       - name: Verify chezmoi templates
         run: |
