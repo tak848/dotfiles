@@ -26,16 +26,9 @@ jobs:
         uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3
         with:
           install: false
-          # cache: false - dot_config/mise/ がデフォルトのパターン外なので手動キャッシュを使用
-          cache: false
-
-      - name: Cache mise tools
-        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
-        with:
-          path: ~/.local/share/mise
-          key: mise-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('dot_config/mise/config.toml', 'dot_config/mise/mise.lock') }}
-          restore-keys: |
-            mise-v1-${{ runner.os }}-${{ runner.arch }}-
+          cache: true
+          # カスタム cache_key: dot_config/mise/ は {{file_hash}} のパターン外なので明示指定
+          cache_key: "mise-v1-{{platform}}-${{ hashFiles('dot_config/mise/config.toml', 'dot_config/mise/mise.lock') }}"
 
       - name: Install mise tools
         run: mise install
