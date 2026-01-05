@@ -22,19 +22,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
-      - name: Cache mise tools
-        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
-        with:
-          path: ~/.local/share/mise
-          key: mise-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('dot_config/mise/config.toml', 'dot_config/mise/mise.lock') }}
-          restore-keys: |
-            mise-v1-${{ runner.os }}-${{ runner.arch }}-
-
       - name: Setup mise
         uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3
         with:
-          # cache: false - 上の actions/cache でキャッシュ済み
-          cache: false
+          cache: true
+          cache_key: "mise-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('dot_config/mise/config.toml', 'dot_config/mise/mise.lock') }}"
 
       - name: Cache aqua tools
         uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
