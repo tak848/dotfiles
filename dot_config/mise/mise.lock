@@ -204,6 +204,10 @@ backend = "core:go"
 "platforms.macos-x64" = { checksum = "sha256:b69d51bce599e5381a94ce15263ae644ec84667a5ce23d58dc2e63e2c12a9f56", url = "https://dl.google.com/go/go1.25.5.darwin-amd64.tar.gz"}
 "platforms.windows-x64" = { checksum = "sha256:ae756cce1cb80c819b4fe01b0353807178f532211b47f72d7fa77949de054ebb", url = "https://dl.google.com/go/go1.25.5.windows-amd64.zip"}
 
+[[tools."go:golang.org/x/tools/gopls"]]
+version = "0.21.0"
+backend = "go:golang.org/x/tools/gopls"
+
 [[tools.node]]
 version = "24.12.0"
 backend = "core:node"
@@ -245,3 +249,12 @@ backend = "aqua:pnpm/pnpm"
 "platforms.macos-arm64" = { checksum = "sha256:60a6e7b61a5ce34ce8c34e65bdcc0979a254362ff4ab73254fbcd3982de49da1", url = "https://github.com/pnpm/pnpm/releases/download/v10.27.0/pnpm-macos-arm64"}
 "platforms.macos-x64" = { checksum = "sha256:4e44fd0a841ab98f76ee73c9953cffc5ca560b2651dc9c4ebef4ecbe43a605cc", url = "https://github.com/pnpm/pnpm/releases/download/v10.27.0/pnpm-macos-x64"}
 "platforms.windows-x64" = { checksum = "sha256:921af6e7fce0cf67d2b035c2d81bfa4d9ed774780aa32dd63162fa726fecd859", url = "https://github.com/pnpm/pnpm/releases/download/v10.27.0/pnpm-win-x64.exe"}
+
+[[tools."ubi:aws/aws-cli"]]
+version = "2.32.26"
+backend = "ubi:aws/aws-cli"
+
+[[tools."vfox:mise-plugins/vfox-1password"]]
+version = "2.32.0"
+backend = "vfox:mise-plugins/vfox-1password"
+"platforms.linux-arm64" = { url = "https://cache.agilebits.com/dist/1P/op2/pkg/v2.32.0/op_darwin_arm64_v2.32.0.zip"}

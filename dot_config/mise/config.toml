@@ -40,7 +40,7 @@ go = "1.25.5"
 "aqua:astral-sh/uv" = "0.9.21"
 
 # クラウド・インフラ
-"aqua:aws/aws-cli" = "2.32.26"
+"ubi:aws/aws-cli" = "2.32.26"
 "aqua:kubernetes/kubectl" = "1.35.0"
 "aqua:cloudflare/cloudflared" = "2025.11.1"
 
@@ -53,11 +53,11 @@ go = "1.25.5"
 "aqua:grafana/jsonnet-language-server" = "0.16.0"
 
 # Language Server
-"aqua:golang.org/x/tools/gopls" = "0.21.0"
+"go:golang.org/x/tools/gopls" = "0.21.0"
 "aqua:rust-lang/rust-analyzer" = "2025-12-01"
 
 # その他
-"aqua:1password/cli" = "2.32.0"
+"vfox:mise-plugins/vfox-1password" = "2.32.0"
 "aqua:temporalio/cli" = "1.5.1"
 "aqua:jdx/usage" = "2.11.0"
 

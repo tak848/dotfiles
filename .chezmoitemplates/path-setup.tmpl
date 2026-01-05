@@ -11,6 +11,3 @@ export PATH="/usr/local/bin:$PATH"
 {{- else if eq .chezmoi.os "linux" }}
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 {{- end }}
-
-# mise グローバル設定
-export MISE_GLOBAL_CONFIG_FILE="${XDG_CONFIG_HOME}/mise/config.toml"
