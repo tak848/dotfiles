@@ -25,6 +25,7 @@ jobs:
       - name: Setup mise
         uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3
         with:
+          # install: false - MISE_CONFIG_FILE を設定してから手動で実行するため
           install: false
           cache: true
           cache_key_prefix: mise-v1
@@ -34,12 +35,12 @@ jobs:
         run: mise install
 
       - name: Cache aqua tools
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
         with:
           path: ~/.local/share/aquaproj-aqua
-          key: aqua-v1-${{ runner.os }}-${{ hashFiles('dot_config/aquaproj-aqua/aqua.yaml', 'dot_config/aquaproj-aqua/aqua-checksums.json') }}
+          key: aqua-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('dot_config/aquaproj-aqua/aqua.yaml', 'dot_config/aquaproj-aqua/aqua-checksums.json') }}
           restore-keys: |
-            aqua-v1-${{ runner.os }}-
+            aqua-v1-${{ runner.os }}-${{ runner.arch }}-
 
       - name: Install aqua tools
         run: aqua install --all
