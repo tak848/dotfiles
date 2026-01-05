@@ -93,15 +93,21 @@ tasks:
 
   # === CI用チェックタスク ===
   check:
-    desc: Check if all generated files are up-to-date
+    desc: Check if generated files (except mise.lock) are up-to-date
     cmds:
-      - task: default
+      - task: generate
+        vars: {}
+      - task: aqua:checksum
+        vars: {}
+      - task: mise:bootstrap
         vars: {}
       - |
-        if ! git diff --quiet; then
+        # mise.lock は実行環境によって差異が出るため除外
+        CHECK_FILES="dot_claude/*.json dot_gemini/*.json dot_config/aquaproj-aqua/aqua-checksums.json dot_local/bin/executable_mise"
+        if ! git diff --quiet -- $CHECK_FILES; then
           echo "Error: Generated files are out of date. Run 'task' locally and commit the changes."
-          git diff --name-only
-          git diff
+          git diff --name-only -- $CHECK_FILES
+          git diff -- $CHECK_FILES
           exit 1
         fi
         echo "All generated files are up-to-date."
