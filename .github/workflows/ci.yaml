@@ -26,17 +26,19 @@ jobs:
           cache: true
 
       - name: Install mise tools
-        run: |
-          cd dot_config/mise
-          mise install
+        env:
+          MISE_CONFIG_FILE: ${{ github.workspace }}/dot_config/mise/config.toml
+        run: mise install
 
       - name: Install aqua tools
-        run: |
-          # mise がインストールした aqua CLI で、問題のあるツールをインストール
-          export AQUA_GLOBAL_CONFIG="${PWD}/dot_config/aquaproj-aqua/aqua.yaml"
-          aqua install --all
+        env:
+          MISE_CONFIG_FILE: ${{ github.workspace }}/dot_config/mise/config.toml
+          AQUA_GLOBAL_CONFIG: ${{ github.workspace }}/dot_config/aquaproj-aqua/aqua.yaml
+        run: aqua install --all
 
       - name: Verify installed tools
+        env:
+          MISE_CONFIG_FILE: ${{ github.workspace }}/dot_config/mise/config.toml
         run: |
           echo "=== Checking installed tools ==="
           mise --version
