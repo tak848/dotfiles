@@ -32,17 +32,19 @@ chezmoi update
 
 ```
 Homebrew
-  └─ aqua (CLI ツール管理)
-       └─ go, fzf, ripgrep, starship, direnv, etc.
+  └─ 基本パッケージ
 
 ~/.local/bin/mise (bootstrap スクリプト)
-  └─ mise (ランタイム管理)
-       └─ node, pnpm, npm グローバルパッケージ
+  └─ mise (統合ツール管理)
+       ├─ ランタイム: go, node, pnpm
+       ├─ CLI ツール: fzf, ripgrep, starship, direnv, etc.
+       ├─ npm グローバルパッケージ
+       └─ aqua CLI
+            └─ mise lock で checksum 取得不可: aws-cli, 1password/cli, zoxide
 ```
 
 ### 今後の予定
 
-- aqua → mise への統合（CLI ツールも mise で管理）
 - Homebrew の宣言的管理（Brewfile など）
 
 ## 主な機能
@@ -52,8 +54,7 @@ Homebrew
 初回起動時に以下を自動インストール：
 
 - Homebrew
-- aqua（CLI ツールバージョン管理）
-- mise（ランタイム管理、bootstrap 方式）
+- mise（統合ツール管理、bootstrap 方式）
 - zinit（zsh プラグインマネージャー）
 
 ### Git Worktree 管理関数
@@ -74,12 +75,12 @@ Homebrew
 ├── .local/bin/
 │   └── mise              # mise bootstrap スクリプト
 ├── .config/
-│   ├── aquaproj-aqua/    # aqua 設定
-│   │   ├── aqua.yaml
-│   │   └── aqua-checksums.json
-│   └── mise/             # mise 設定
-│       ├── config.toml
-│       └── mise.lock
+│   ├── mise/             # mise 設定
+│   │   ├── config.toml
+│   │   └── mise.lock
+│   └── aquaproj-aqua/    # aqua 設定（mise 管理外ツール用）
+│       ├── aqua.yaml
+│       └── aqua-checksums.json
 ├── .zsh/
 │   ├── functions/        # 共有関数（Git 管理）
 │   └── local/            # ローカル関数（Git 管理外）
@@ -92,15 +93,6 @@ Homebrew
 ## カスタマイズ
 
 ### ツールの追加
-
-**aqua（CLI ツール）:**
-
-```bash
-# dot_config/aquaproj-aqua/aqua.yaml に追加後
-aqua update-checksum --prune
-```
-
-**mise（ランタイム / npm パッケージ）:**
 
 ```bash
 # dot_config/mise/config.toml に追加後

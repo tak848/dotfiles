@@ -15,39 +15,57 @@ jobs:
     # strategy:
     #   matrix:
     #     os: [ubuntu-latest, macos-latest]
+    env:
+      MISE_CONFIG_FILE: ${{ github.workspace }}/dot_config/mise/config.toml
+      AQUA_GLOBAL_CONFIG: ${{ github.workspace }}/dot_config/aquaproj-aqua/aqua.yaml
     steps:
       - name: Checkout
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
-      - name: Install aqua
-        uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
+      - name: Setup mise
+        uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3
         with:
-          aqua_version: v2.56.1
+          cache: true
+          cache_key: "mise-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('dot_config/mise/config.toml', 'dot_config/mise/mise.lock') }}"
 
-      - name: Verify aqua installation (root)
-        run: |
-          aqua version
-          aqua install --test
+      - name: Cache aqua tools
+        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1
+        with:
+          path: ~/.local/share/aquaproj-aqua
+          key: aqua-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('dot_config/aquaproj-aqua/aqua.yaml', 'dot_config/aquaproj-aqua/aqua-checksums.json') }}
+          restore-keys: |
+            aqua-v1-${{ runner.os }}-${{ runner.arch }}-
 
-      - name: Verify aqua installation (dot_config)
-        run: |
-          cd dot_config/aquaproj-aqua
-          aqua install --test
+      - name: Install aqua tools
+        run: aqua install --all
 
-      - name: Verify installed tools from dot_config
+      - name: Verify installed tools
         run: |
-          cd dot_config/aquaproj-aqua
-          aqua install
-          PATH="$(aqua root-dir)/bin:$PATH"
           echo "=== Checking installed tools ==="
-          which pnpm && pnpm --version
-          which go && go version
-          which gh && gh --version
-          which node && node --version
+          mise --version
+          # ランタイム
+          node --version
+          pnpm --version
+          go version
+          # 主要 CLI ツール（mise）
+          gh --version
+          fzf --version
+          rg --version
+          jq --version
+          starship --version
+          direnv --version
+          nvim --version
+          # CLI ツール（aqua）
+          export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua/bin:$PATH"
+          aws --version
+          op --version
+          zoxide --version
 
-      - name: Install chezmoi
+      - name: Setup chezmoi
         run: |
-          sh -c "$(curl -fsLS chezmoi.io/get)" -- -b /usr/local/bin
+          if ! command -v chezmoi &> /dev/null; then
+            sh -c "$(curl -fsLS chezmoi.io/get)" -- -b /usr/local/bin
+          fi
 
       - name: Verify chezmoi templates
         run: |

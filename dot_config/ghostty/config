@@ -69,3 +69,6 @@ palette = 13=#f2aede
 palette = 14=#6bd7ca
 palette = 15=#bac2de
 font-family = MesloLGM Nerd Font
+
+# Shift+Return を通常の改行として送信（Claude Code 等で必要）
+keybind = shift+enter=text:\x0d

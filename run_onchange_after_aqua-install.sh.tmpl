@@ -4,6 +4,7 @@
 
 {{ template "path-setup.tmpl" . }}
 
+# mise で aqua がインストールされている場合
 if command -v aqua &> /dev/null; then
     echo "aqua install を実行中..."
     aqua i -a -l

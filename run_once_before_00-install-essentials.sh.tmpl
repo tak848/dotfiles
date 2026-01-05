@@ -55,16 +55,7 @@ if [ -x "$BREW_PATH" ]; then
   eval "$($BREW_PATH shellenv)"
 fi
 
-# 2. aqua インストール
-if ! command -v aqua &> /dev/null; then
-  echo "Installing aqua..."
-  brew install aquaproj/aqua/aqua
-fi
-
-# aqua を PATH に追加
-export PATH="$XDG_DATA_HOME/aquaproj-aqua/bin:$PATH"
-
-# 3. zinit インストール
+# 2. zinit インストール
 ZINIT_HOME="$XDG_DATA_HOME/zinit/zinit.git"
 if [ ! -d "$ZINIT_HOME/.git" ]; then
   echo "Installing zinit..."
@@ -72,7 +63,7 @@ if [ ! -d "$ZINIT_HOME/.git" ]; then
   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
-# 4. cursor-agent インストール（macOS のみ）
+# 3. cursor-agent インストール（macOS のみ）
 {{- if eq .chezmoi.os "darwin" }}
 if ! command -v cursor-agent &> /dev/null; then
   echo "Installing cursor-agent..."

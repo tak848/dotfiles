@@ -78,7 +78,7 @@ gwc() {
     # 元のディレクトリを保存
     local original_dir=$(pwd)
     
-    local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json" ".serena" "config.toml", ".gemini/settings.json")
+    local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json" ".serena" "config.toml", ".gemini/settings.json", ".mise.local.toml")
     local extra_copy_files=()
 
     # 環境変数 GWC_COPY_FILES から追加のコピー対象ファイルを取得
@@ -265,7 +265,7 @@ gwc() {
         
         cd "$target_dir" && {
             if command -v direnv >/dev/null 2>&1 && [ -f ".envrc" ]; then direnv allow .; fi
-            if command -v aqua >/dev/null 2>&1 && [ -f "aqua.yaml" ]; then aqua policy allow; fi
+            if command -v mise >/dev/null 2>&1 && [ -f ".mise.toml" ]; then mise trust; fi
             if command -v pnpm >/dev/null 2>&1 && [ -f "package.json" ] && ! [ -f "package-lock.json" ] && ! [ -f "yarn.lock" ] && ! [ -f "bun.lockb" ]; then pnpm i; fi
         }
 

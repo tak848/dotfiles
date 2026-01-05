@@ -2,11 +2,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/aqua-yaml.json
 # aqua - Declarative CLI Version Manager
 # https://aquaproj.github.io/
-# checksum:
-#   enabled: true
-#   require_checksum: true
-#   supported_envs:
-#   - all
+#
+# mise lock で checksum が取得できないツールを管理
+# mise の将来のアップデートで対応されたら mise に移行する
 registries:
   - type: standard
     ref: v4.450.0 # renovate: depName=aquaproj/aqua-registry
@@ -16,30 +14,7 @@ checksum:
   supported_envs:
     - darwin
     - linux
-    # - windows
 packages:
-  - name: golang/go@go1.25.5
-  - name: cli/cli@v2.83.2
-  - name: junegunn/fzf@v0.67.0
-  - name: junegunn/fzf/fzf-tmux@v0.67.0
-  - name: starship/starship@v1.24.2
-  - name: astral-sh/uv@0.9.21
   - name: aws/aws-cli@2.32.26
-  - name: bufbuild/buf@v1.62.1
-  - name: direnv/direnv@v2.37.1
-  - name: neovim/neovim@v0.11.5
-  - name: kubernetes/kubernetes/kubectl@v1.35.0
-  - name: google/go-jsonnet@v0.21.0
-  - name: grafana/jsonnet-language-server@v0.16.0
-  - name: go-task/task@v3.46.4
-  - name: jqlang/jq@jq-1.8.1
-  - name: mikefarah/yq@v4.50.1
-  - name: x-motemen/ghq@v1.8.0
-  - name: ajeetdsouza/zoxide@v0.9.8
-  - name: cloudflare/cloudflared@2025.11.1
-  - name: BurntSushi/ripgrep@15.1.0
-  - name: golang.org/x/tools/gopls@v0.21.0
-  - name: rust-lang/rust-analyzer@2025-12-01
   - name: 1password/cli@v2.32.0
-  - name: temporalio/cli@v1.5.1
-  - name: jdx/usage@v2.11.0
+  - name: ajeetdsouza/zoxide@v0.9.8
