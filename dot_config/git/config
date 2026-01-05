@@ -2,5 +2,7 @@
     name = tak848
 [push]
     autoSetupRemote = true
+[init]
+    defaultBranch = main
 [ghq]
     root = ~/repos
