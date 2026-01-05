@@ -35,6 +35,7 @@ go = "1.25.5"
 # zoxide は aqua CLI で管理（mise lock で checksum 取得不可）
 
 # 検索・ファイル操作
+"aqua:twpayne/chezmoi" = "2.69.0"
 "aqua:BurntSushi/ripgrep" = "15.1.0"
 "aqua:jqlang/jq" = "1.8.1"
 "aqua:mikefarah/yq" = "4.50.1"

@@ -156,6 +156,15 @@ backend = "aqua:temporalio/cli"
 "platforms.macos-x64" = { checksum = "sha256:bbb73e2a31135abe50a1f1cdb35030c42961df618e8ce9c60ae89f201540c5d9", url = "https://github.com/temporalio/cli/releases/download/v1.5.1/temporal_cli_1.5.1_darwin_amd64.tar.gz"}
 "platforms.windows-x64" = { checksum = "sha256:7f9f65b588d4d9fd55733ad688e1ffb964ddbef18255a395ec8b551adbc30d80", url = "https://github.com/temporalio/cli/releases/download/v1.5.1/temporal_cli_1.5.1_windows_amd64.tar.gz"}
 
+[[tools."aqua:twpayne/chezmoi"]]
+version = "2.69.0"
+backend = "aqua:twpayne/chezmoi"
+"platforms.linux-arm64" = { checksum = "sha256:3b1d9b77b31672c8574d83690f5d8da85ee851039367d6a37cb6641a2224146e", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.0/chezmoi_2.69.0_linux_arm64.pkg.tar.zst"}
+"platforms.linux-x64" = { checksum = "sha256:31aa8af7a0f4763406c3277270a76c134516caf0c679bee7a492e1ee3b3e5c0f", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.0/chezmoi_2.69.0_linux-glibc_amd64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:8a306b47a03cf5f17fb78c4617b19ae75b5481b29391fc6ca310ab0b10fd3ed3", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.0/chezmoi_2.69.0_darwin_arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:55370eaeac082e4515b6f354ace53739bb3ad230117598b3a8fed81712e4b2db", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.0/chezmoi_2.69.0_darwin_amd64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:6d16b1bc62a26a3f59954700177dd13dc38f8596921eca57cce3bd45a511caba", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.0/chezmoi_2.69.0_windows_amd64.zip"}
+
 [[tools."aqua:x-motemen/ghq"]]
 version = "1.8.0"
 backend = "aqua:x-motemen/ghq"
