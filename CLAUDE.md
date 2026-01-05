@@ -23,6 +23,12 @@ mise install
 
 # mise lockfile を更新
 mise lock
+
+# aqua ツールをインストール（mise 管理外のツール用）
+aqua install
+
+# aqua checksum を更新（ツール追加/更新後）
+aqua update-checksum --prune
 ```
 
 ## Architecture
@@ -37,10 +43,14 @@ Homebrew
   └─ mise (統合ツール管理)
        ├─ ランタイム管理: go, node, pnpm (core backend)
        ├─ CLI ツール管理: fzf, ripgrep, starship, etc. (aqua backend)
-       └─ npm グローバルパッケージ
+       ├─ npm グローバルパッケージ
+       └─ aqua CLI (github backend)
+            └─ mise lock で checksum 取得不可のツール
+                 └─ aws-cli, 1password/cli, zoxide
 ```
 
 - **mise** (`dot_config/mise/`, `dot_local/bin/executable_mise`): ランタイム、CLI ツール、npm パッケージの統合管理。bootstrap 方式でインストール
+- **aqua** (`dot_config/aquaproj-aqua/`): mise lock で checksum が取得できないツールを管理。aqua CLI 自体は mise でインストール
 
 ### Chezmoi ファイル命名規則
 
@@ -58,6 +68,7 @@ Homebrew
 |-------------|---------|------|
 | `mise-lock.yaml` | `mise.toml` / `config.toml` 変更 | `mise lock` |
 | `mise-bootstrap.yaml` | `.mise-bootstrap-version` 変更 | `mise generate bootstrap` |
+| `aqua-checksums.yaml` | `aqua.yaml` 変更 | `aqua update-checksum --prune` |
 
 ### zsh 設定の読み込み順序
 

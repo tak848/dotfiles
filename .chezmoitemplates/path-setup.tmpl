@@ -11,3 +11,4 @@ export PATH="/usr/local/bin:$PATH"
 {{- else if eq .chezmoi.os "linux" }}
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 {{- end }}
+export PATH="${XDG_DATA_HOME}/aquaproj-aqua/bin:$PATH"

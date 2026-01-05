@@ -1,0 +1,11 @@
+#!/bin/bash
+# {{ include "dot_config/aquaproj-aqua/aqua.yaml" | sha256sum }}
+# aqua の aqua.yaml が変更された時のみ aqua install を実行する
+
+{{ template "path-setup.tmpl" . }}
+
+# mise で aqua がインストールされている場合
+if command -v aqua &> /dev/null; then
+    echo "aqua install を実行中..."
+    aqua i -a -l
+fi

@@ -30,6 +30,12 @@ jobs:
           cd dot_config/mise
           mise install
 
+      - name: Install aqua tools
+        run: |
+          # mise がインストールした aqua CLI で、問題のあるツールをインストール
+          export AQUA_GLOBAL_CONFIG="${PWD}/dot_config/aquaproj-aqua/aqua.yaml"
+          aqua install --all
+
       - name: Verify installed tools
         run: |
           echo "=== Checking installed tools ==="
@@ -38,7 +44,7 @@ jobs:
           node --version
           pnpm --version
           go version
-          # 主要 CLI ツール
+          # 主要 CLI ツール（mise）
           gh --version
           fzf --version
           rg --version
@@ -46,6 +52,11 @@ jobs:
           starship --version
           direnv --version
           nvim --version
+          # CLI ツール（aqua）
+          export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua/bin:$PATH"
+          aws --version
+          op --version
+          zoxide --version
 
       - name: Install chezmoi
         run: |

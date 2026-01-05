@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/aqua-yaml.json
+# aqua - Declarative CLI Version Manager
+# https://aquaproj.github.io/
+#
+# mise lock で checksum が取得できないツールを管理
+# mise の将来のアップデートで対応されたら mise に移行する
+registries:
+  - type: standard
+    ref: v4.450.0 # renovate: depName=aquaproj/aqua-registry
+checksum:
+  enabled: true
+  require_checksum: true
+  supported_envs:
+    - darwin
+    - linux
+packages:
+  - name: aws/aws-cli@2.32.26
+  - name: 1password/cli@v2.32.0
+  - name: ajeetdsouza/zoxide@v0.9.8
