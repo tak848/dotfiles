@@ -21,14 +21,23 @@ chezmoi managed
 # mise ツールをインストール
 mise install
 
-# mise lockfile を更新
-mise lock
-
 # aqua ツールをインストール（mise 管理外のツール用）
 aqua install
 
-# aqua checksum を更新（ツール追加/更新後）
-aqua update-checksum --prune
+# 自動生成を全て実行（jsonnet + lockfiles + checksums + bootstrap）
+task
+
+# lockfiles/checksums/bootstrap のみ更新
+task lock
+
+# 個別タスク
+task mise:lock      # mise lockfile のみ
+task aqua:checksum  # aqua checksum のみ
+task mise:bootstrap # bootstrap のみ
+task generate       # jsonnet のみ
+
+# CI用: 生成後に diff チェック
+task check
 ```
 
 ## Architecture
@@ -83,7 +92,7 @@ Homebrew
 
 - コミットメッセージは日本語、`feat:`, `fix:`, `chore:` などのプレフィックス必須
 - Renovate PR への push には GitHub App Token が必要（GITHUB_TOKEN では不可）
-- checksum/lockfile は手動編集しない（ワークフローで自動更新）
+- checksum/lockfile は手動編集しない（`task lock` または Renovate ワークフローで自動更新）
 
 ## AI-DLC / Spec-Driven Development
 

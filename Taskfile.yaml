@@ -1,6 +1,19 @@
 version: "3"
+method: checksum
+
+vars:
+  MISE_CONFIG_DIR: dot_config/mise
+  AQUA_CONFIG_DIR: dot_config/aquaproj-aqua
 
 tasks:
+  # === Default: 全タスク実行 ===
+  default:
+    desc: Run all generation tasks
+    deps:
+      - generate
+      - lock
+
+  # === jsonnet 生成 ===
   generate-claude-settings:
     desc: Generate claude settings.json from jsonnet
     cmds:
@@ -14,8 +27,79 @@ tasks:
     generates:
       - dot_claude/settings.json
       - dot_claude/dot_mcp.json
+      - dot_gemini/settings.json
 
   generate:
     desc: Generate all json files from jsonnet
     deps:
       - generate-claude-settings
+
+  # === mise.lock 生成 ===
+  mise:lock:root:
+    desc: Update root mise.lock
+    cmds:
+      - rm -f mise.lock && mise lock
+    sources:
+      - .mise.toml
+    generates:
+      - mise.lock
+
+  mise:lock:config:
+    desc: Update dot_config/mise/mise.lock
+    dir: "{{.MISE_CONFIG_DIR}}"
+    cmds:
+      - rm -f mise.lock && mise lock
+    sources:
+      - config.toml
+    generates:
+      - mise.lock
+
+  mise:lock:
+    desc: Update all mise lockfiles
+    deps:
+      - mise:lock:root
+      - mise:lock:config
+
+  # === aqua checksum 生成 ===
+  aqua:checksum:
+    desc: Update aqua checksums
+    dir: "{{.AQUA_CONFIG_DIR}}"
+    cmds:
+      - aqua update-checksum --prune
+    sources:
+      - aqua.yaml
+    generates:
+      - aqua-checksums.json
+
+  # === mise bootstrap 生成 ===
+  mise:bootstrap:
+    desc: Update mise bootstrap script
+    cmds:
+      - mise generate bootstrap -w ./dot_local/bin/executable_mise
+    sources:
+      - .mise-bootstrap-version
+    generates:
+      - dot_local/bin/executable_mise
+
+  # === 統合タスク ===
+  lock:
+    desc: Update all lockfiles, checksums, and bootstrap
+    deps:
+      - mise:lock
+      - aqua:checksum
+      - mise:bootstrap
+
+  # === CI用チェックタスク ===
+  check:
+    desc: Check if all generated files are up-to-date
+    cmds:
+      - task: default
+        vars: {}
+      - |
+        if ! git diff --quiet; then
+          echo "Error: Generated files are out of date. Run 'task' locally and commit the changes."
+          git diff --name-only
+          git diff
+          exit 1
+        fi
+        echo "All generated files are up-to-date."
