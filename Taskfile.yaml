@@ -1,21 +1,55 @@
+# Taskfile.yaml - 自動生成ファイルの一元管理
+#
+# 目的:
+#   - jsonnet, mise.lock, aqua-checksums, mise bootstrap などの自動生成ファイルを
+#     統一的なコマンドで管理できるようにする
+#   - ローカル開発と CI で同じタスクを使用し、一貫性を保つ
+#
+# 使い方:
+#   task              # 全ての自動生成を実行
+#   task lock         # lockfiles/checksums/bootstrap のみ
+#   task generate     # jsonnet のみ
+#   task check        # CI 用: 生成後に diff チェック（mise.lock 除外）
+#
+# 注意:
+#   - mise.lock は実行環境（macOS/Linux）によって結果が異なる既知の問題があるため、
+#     CI での diff チェックからは除外している
+#   - mise.lock の更新は Renovate ワークフロー（mise-lock.yaml）に任せる
+#
+# 参考:
+#   - https://taskfile.dev/
+#   - https://mise.jdx.dev/dev-tools/mise-lock.html
+
 version: "3"
+
+# root: true により、サブディレクトリからも task コマンドを実行可能
 root: true
+
+# checksum 方式でキャッシュ管理（ファイル内容が変わった時のみ再実行）
 method: checksum
 
 vars:
+  # 設定ファイルのディレクトリパス
   MISE_CONFIG_DIR: dot_config/mise
   AQUA_CONFIG_DIR: dot_config/aquaproj-aqua
+  # mise lock で対象とするプラットフォーム
+  # 全プラットフォームを明示的に指定することで、実行環境に関係なく同じ結果を得る
   MISE_PLATFORMS: linux-x64,linux-arm64,macos-x64,macos-arm64,windows-x64
 
 tasks:
-  # === Default: 全タスク実行 ===
+  #############################################################################
+  # Default: 全タスク実行
+  #############################################################################
   default:
     desc: Run all generation tasks
     deps:
       - generate
       - lock
 
-  # === jsonnet 生成 ===
+  #############################################################################
+  # jsonnet 生成
+  # Claude/Gemini の設定ファイルを jsonnet から生成
+  #############################################################################
   generate-claude-settings:
     desc: Generate claude settings.json from jsonnet
     cmds:
@@ -36,7 +70,12 @@ tasks:
     deps:
       - generate-claude-settings
 
-  # === mise.lock 生成 ===
+  #############################################################################
+  # mise.lock 生成
+  # ツールのバージョンと checksum を固定して再現性を確保
+  # -p オプションで全プラットフォームを指定（環境差異を防ぐ）
+  # rm -f で古い lockfile を削除してから再生成（古いエントリが残る問題を回避）
+  #############################################################################
   mise:lock:root:
     desc: Update root mise.lock
     cmds:
@@ -62,7 +101,11 @@ tasks:
       - mise:lock:root
       - mise:lock:config
 
-  # === aqua checksum 生成 ===
+  #############################################################################
+  # aqua checksum 生成
+  # mise lock で checksum が取得できないツール（aws-cli, 1password/cli, zoxide）用
+  # --prune で不要なエントリを削除
+  #############################################################################
   aqua:checksum:
     desc: Update aqua checksums
     dir: "{{.AQUA_CONFIG_DIR}}"
@@ -73,7 +116,11 @@ tasks:
     generates:
       - aqua-checksums.json
 
-  # === mise bootstrap 生成 ===
+  #############################################################################
+  # mise bootstrap 生成
+  # mise 自体をインストールするためのスクリプトを生成
+  # .mise-bootstrap-version のバージョンに基づいて生成される
+  #############################################################################
   mise:bootstrap:
     desc: Update mise bootstrap script
     cmds:
@@ -83,7 +130,10 @@ tasks:
     generates:
       - dot_local/bin/executable_mise
 
-  # === 統合タスク ===
+  #############################################################################
+  # 統合タスク
+  # lock 系のタスクをまとめて実行
+  #############################################################################
   lock:
     desc: Update all lockfiles, checksums, and bootstrap
     deps:
@@ -91,7 +141,14 @@ tasks:
       - aqua:checksum
       - mise:bootstrap
 
-  # === CI用チェックタスク ===
+  #############################################################################
+  # CI 用チェックタスク
+  # 自動生成ファイルが最新かどうかを検証
+  #
+  # 注意: mise.lock は実行環境（macOS/Linux）によって結果が異なる既知の問題があるため、
+  # diff チェックから除外している。mise.lock の更新は Renovate ワークフローに任せる。
+  # 参考: https://github.com/jdx/mise/discussions/6942
+  #############################################################################
   check:
     desc: Check if generated files (except mise.lock) are up-to-date
     cmds:
@@ -103,6 +160,7 @@ tasks:
         vars: {}
       - |
         # mise.lock は実行環境によって差異が出るため除外
+        # jsonnet, aqua-checksums, bootstrap のみチェック
         CHECK_FILES="dot_claude/*.json dot_gemini/*.json dot_config/aquaproj-aqua/aqua-checksums.json dot_local/bin/executable_mise"
         if ! git diff --quiet -- $CHECK_FILES; then
           echo "Error: Generated files are out of date. Run 'task' locally and commit the changes."

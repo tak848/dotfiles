@@ -10,12 +10,13 @@ on:
 
 jobs:
   test:
-    # runs-on: ubuntu-latest
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        # macOS と Ubuntu の両方でテスト
         os: [ubuntu-latest, macos-latest]
     env:
+      # mise/aqua の設定ファイルパスを指定
       MISE_CONFIG_FILE: ${{ github.workspace }}/dot_config/mise/config.toml
       AQUA_GLOBAL_CONFIG: ${{ github.workspace }}/dot_config/aquaproj-aqua/aqua.yaml
     steps:
@@ -61,6 +62,11 @@ jobs:
           op --version
           zoxide --version
 
+      # 自動生成ファイルの diff チェック
+      # - jsonnet, aqua-checksums, mise bootstrap が最新かどうかを検証
+      # - mise.lock は実行環境（macOS/Linux）で結果が異なる既知の問題があるため除外
+      #   参考: https://github.com/jdx/mise/discussions/6942
+      # - Ubuntu のみで実行（両 OS で実行しても同じ結果になるため）
       - name: Check generated files are up-to-date
         if: matrix.os == 'ubuntu-latest'
         run: task check

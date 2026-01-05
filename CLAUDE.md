@@ -23,22 +23,45 @@ mise install
 
 # aqua ツールをインストール（mise 管理外のツール用）
 aqua install
+```
 
-# 自動生成を全て実行（jsonnet + lockfiles + checksums + bootstrap）
+## Taskfile（自動生成ファイル管理）
+
+自動生成ファイル（jsonnet, mise.lock, aqua-checksums, mise bootstrap）を統一的に管理するための Task ランナー。
+
+### 基本コマンド
+
+```bash
+# 全ての自動生成を実行（jsonnet + lockfiles + checksums + bootstrap）
 task
 
 # lockfiles/checksums/bootstrap のみ更新
 task lock
 
 # 個別タスク
+task generate       # jsonnet のみ
 task mise:lock      # mise lockfile のみ
 task aqua:checksum  # aqua checksum のみ
 task mise:bootstrap # bootstrap のみ
-task generate       # jsonnet のみ
 
-# CI用: 生成後に diff チェック
+# CI用: 生成後に diff チェック（mise.lock 除外）
 task check
 ```
+
+### 設計方針
+
+| 項目 | 説明 |
+|------|------|
+| `root: true` | サブディレクトリからも task コマンドを実行可能 |
+| `method: checksum` | ファイル内容が変わった時のみ再実行（キャッシュ） |
+| `-p PLATFORMS` | mise lock で全プラットフォームを明示的に指定 |
+
+### mise.lock の既知の問題
+
+mise.lock は実行環境（macOS/Linux）によって結果が異なる[既知の問題](https://github.com/jdx/mise/discussions/6942)がある。そのため：
+
+- **CI の diff チェックからは除外**（`task check` は mise.lock を検証しない）
+- **mise.lock の更新は Renovate ワークフロー（mise-lock.yaml）に任せる**
 
 ## Architecture
 
@@ -61,6 +84,18 @@ Homebrew
 - **mise** (`dot_config/mise/`, `dot_local/bin/executable_mise`): ランタイム、CLI ツール、npm パッケージの統合管理。bootstrap 方式でインストール
 - **aqua** (`dot_config/aquaproj-aqua/`): mise lock で checksum が取得できないツールを管理。aqua CLI 自体は mise でインストール
 
+### 自動生成ファイル一覧
+
+| ファイル | 生成元 | 生成コマンド |
+|---------|--------|-------------|
+| `dot_claude/settings.json` | `dot_claude/settings.jsonnet` | `task generate` |
+| `dot_claude/dot_mcp.json` | `dot_claude/dot_mcp.jsonnet` | `task generate` |
+| `dot_gemini/settings.json` | `dot_gemini/settings.jsonnet` | `task generate` |
+| `mise.lock` | `.mise.toml` | `task mise:lock` |
+| `dot_config/mise/mise.lock` | `dot_config/mise/config.toml` | `task mise:lock` |
+| `dot_config/aquaproj-aqua/aqua-checksums.json` | `aqua.yaml` | `task aqua:checksum` |
+| `dot_local/bin/executable_mise` | `.mise-bootstrap-version` | `task mise:bootstrap` |
+
 ### Chezmoi ファイル命名規則
 
 | プレフィックス | 展開先 | 例 |
@@ -75,9 +110,10 @@ Homebrew
 
 | ワークフロー | トリガー | 処理 |
 |-------------|---------|------|
-| `mise-lock.yaml` | `mise.toml` / `config.toml` 変更 | `mise lock` |
-| `mise-bootstrap.yaml` | `.mise-bootstrap-version` 変更 | `mise generate bootstrap` |
-| `aqua-checksums.yaml` | `aqua.yaml` 変更 | `aqua update-checksum --prune` |
+| `ci.yaml` | push/PR | `task check` で自動生成ファイルの diff チェック |
+| `mise-lock.yaml` | `mise.toml` / `config.toml` 変更 | `mise lock`（Renovate PR 時のみ） |
+| `mise-bootstrap.yaml` | `.mise-bootstrap-version` 変更 | `mise generate bootstrap`（Renovate PR 時のみ） |
+| `aqua-checksums.yaml` | `aqua.yaml` 変更 | `aqua update-checksum --prune`（Renovate PR 時のみ） |
 
 ### zsh 設定の読み込み順序
 
@@ -92,7 +128,7 @@ Homebrew
 
 - コミットメッセージは日本語、`feat:`, `fix:`, `chore:` などのプレフィックス必須
 - Renovate PR への push には GitHub App Token が必要（GITHUB_TOKEN では不可）
-- checksum/lockfile は手動編集しない（`task lock` または Renovate ワークフローで自動更新）
+- 自動生成ファイルは手動編集しない（`task` または Renovate ワークフローで自動更新）
 
 ## AI-DLC / Spec-Driven Development
 
