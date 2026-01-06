@@ -34,7 +34,7 @@ jobs:
           echo "MISE_VERSION=$MISE_VERSION" >> $GITHUB_ENV
 
       - name: Setup mise
-        uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3
+        uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3.5.1
         with:
           version: ${{ env.MISE_VERSION }}
           install: false

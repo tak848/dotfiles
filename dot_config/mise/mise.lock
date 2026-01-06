@@ -8,20 +8,19 @@ backend = "aqua:BurntSushi/ripgrep"
 "platforms.windows-x64" = { checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d87493a", url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:astral-sh/uv"]]
-version = "0.9.21"
+version = "0.9.22"
 backend = "aqua:astral-sh/uv"
-"platforms.linux-arm64" = { checksum = "sha256:03a49fb609888032dbc3be9fd114b50fc9bce8b73b3df319746ae08d1fbdea83", url = "https://github.com/astral-sh/uv/releases/download/0.9.21/uv-aarch64-unknown-linux-musl.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:7abc29b3a06a99fb23564400fe884f5798a1786dc2ca05b6e0f70c53de748ab2", url = "https://github.com/astral-sh/uv/releases/download/0.9.21/uv-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:473977236ef8ac5937c80de08a3599cb6ed6021d0e015e10f88076767877a153", url = "https://github.com/astral-sh/uv/releases/download/0.9.21/uv-aarch64-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:26390da48bd55e21ab62451a80ad240ef6df10d4c48ec199cbb34c18b4288983", url = "https://github.com/astral-sh/uv/releases/download/0.9.21/uv-x86_64-apple-darwin.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:d27952e73183ef8f6ee8c2a50cf8b3f2e08e01b6a9279a00a85cb261ea8d8337", url = "https://github.com/astral-sh/uv/releases/download/0.9.21/uv-x86_64-pc-windows-msvc.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:a400eaede62557af86bed6c5252a101aa1efd596698bb10c9400334fcc2847ec", url = "https://github.com/astral-sh/uv/releases/download/0.9.22/uv-aarch64-unknown-linux-musl.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:84d087a8e77a223d80578919894f3103f46ca7c263250c3e0478ce7c38850349", url = "https://github.com/astral-sh/uv/releases/download/0.9.22/uv-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:4bfc6dacc9bcc9e433a9214a658495ca082b94fd607949b6745a955f34ccbc3c", url = "https://github.com/astral-sh/uv/releases/download/0.9.22/uv-aarch64-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:c0057ad78b475f343739b1bbe223361c1054524c9edf310ee1dc85a050207f86", url = "https://github.com/astral-sh/uv/releases/download/0.9.22/uv-x86_64-apple-darwin.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:93a0a244f26eec208d8ea8077e3de743d9687ad76c190342722f1f57fa629457", url = "https://github.com/astral-sh/uv/releases/download/0.9.22/uv-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:bufbuild/buf"]]
 version = "1.62.1"
 backend = "aqua:bufbuild/buf"
 "platforms.linux-arm64" = { checksum = "sha256:39caa9a5ace13f73378095bdb712225521bc808a704940188e0b77af76136010", url = "https://github.com/bufbuild/buf/releases/download/v1.62.1/buf-Linux-aarch64.tar.gz"}
 "platforms.linux-x64" = { checksum = "sha256:14790c22d69977db053b7d78660cc347c9547d374f034c726ab319f44ef7917f", url = "https://github.com/bufbuild/buf/releases/download/v1.62.1/buf-Linux-x86_64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:e976b4dc4a3447eb2196599f3a9c62db559316afdd7ea5b673ede16a67dee977", url = "https://github.com/bufbuild/buf/releases/download/v1.62.1/buf-Darwin-arm64.tar.gz"}
 "platforms.macos-x64" = { checksum = "sha256:cba4161d8276509d8f805bd4c6c89476b5801086de22c3d67f51067d5c30a6f4", url = "https://github.com/bufbuild/buf/releases/download/v1.62.1/buf-Darwin-x86_64.tar.gz"}
 "platforms.windows-x64" = { checksum = "sha256:69d823a686f5d2fb54186b041242a9f9030fb6e1944fa0dbc7831ca62a589939", url = "https://github.com/bufbuild/buf/releases/download/v1.62.1/buf-Windows-x86_64.zip"}
 
@@ -37,8 +36,11 @@ backend = "aqua:cli/cli"
 [[tools."aqua:cloudflare/cloudflared"]]
 version = "2025.11.1"
 backend = "aqua:cloudflare/cloudflared"
+"platforms.linux-arm64" = { checksum = "sha256:9979dc152097a29b6de4d1ef13e2f1821c67a6f096f88cc18f0fd25106305d3a", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:991dffd8889ee9f0147b6b48933da9e4407e68ea8c6d984f55fa2d3db4bb431d", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-linux-amd64"}
 "platforms.macos-arm64" = { checksum = "sha256:155a288fef19dba08f0c7145c16a207baf137462d8a1289a78bf8564f9e51244", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-darwin-amd64.tgz"}
 "platforms.macos-x64" = { checksum = "sha256:155a288fef19dba08f0c7145c16a207baf137462d8a1289a78bf8564f9e51244", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-darwin-amd64.tgz"}
+"platforms.windows-x64" = { checksum = "sha256:413f9b24dc6e61a455564651524f167b8ce29ac4ccd40703dea7af93cd37ed39", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-windows-amd64.exe"}
 
 [[tools."aqua:direnv/direnv"]]
 version = "2.37.1"
@@ -166,13 +168,13 @@ backend = "aqua:starship/starship"
 "platforms.windows-x64" = { checksum = "sha256:d38424c595320e9639a276666347d5e44cb004de3972f40b9a5a1a6b88537f29", url = "https://github.com/starship/starship/releases/download/v1.24.2/starship-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:tamasfe/taplo"]]
-version = "0.9.3"
+version = "0.10.0"
 backend = "aqua:tamasfe/taplo"
-"platforms.linux-arm64" = { url = "https://github.com/tamasfe/taplo/releases/download/0.9.3/taplo-linux-aarch64.gz"}
-"platforms.linux-x64" = { url = "https://github.com/tamasfe/taplo/releases/download/0.9.3/taplo-linux-x86_64.gz"}
-"platforms.macos-arm64" = { url = "https://github.com/tamasfe/taplo/releases/download/0.9.3/taplo-darwin-aarch64.gz"}
-"platforms.macos-x64" = { url = "https://github.com/tamasfe/taplo/releases/download/0.9.3/taplo-darwin-x86_64.gz"}
-"platforms.windows-x64" = { url = "https://github.com/tamasfe/taplo/releases/download/0.9.3/taplo-windows-x86_64.zip"}
+"platforms.linux-arm64" = { url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-aarch64.gz"}
+"platforms.linux-x64" = { url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-x86_64.gz"}
+"platforms.macos-arm64" = { url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-darwin-aarch64.gz"}
+"platforms.macos-x64" = { url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-darwin-x86_64.gz"}
+"platforms.windows-x64" = { url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-windows-x86_64.zip"}
 
 [[tools."aqua:temporalio/cli"]]
 version = "1.5.1"
@@ -245,7 +247,7 @@ version = "0.77.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20251230.1"
+version = "7.0.0-dev.20260106.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -253,7 +255,7 @@ version = "2.0.3"
 backend = "npm:cc-sdd"
 
 [[tools."npm:ccusage"]]
-version = "17.2.0"
+version = "17.2.1"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]

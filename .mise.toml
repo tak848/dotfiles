@@ -15,7 +15,7 @@ pnpm = "10.27.0"
 
 # このリポジトリで使う CLI ツール
 "aqua:google/go-jsonnet" = "0.21.0"
-"aqua:go-task/task" = "3.45.5"
+"aqua:go-task/task" = "3.46.4"
 
 # lazy-lock.yaml ワークフローで使用
 "aqua:neovim/neovim" = "0.11.5"
