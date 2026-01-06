@@ -1,0 +1,14 @@
+packages:
+  darwin:
+    brews:
+      base:
+        - macism # 日本語入力切替（im-select.nvim 用）
+    casks:
+      base:
+        - ghostty # ターミナル
+
+# im-select 設定（macOS のみ）
+im_select:
+  darwin:
+    default_im: "com.apple.keylayout.ABC"
+    command: "macism"

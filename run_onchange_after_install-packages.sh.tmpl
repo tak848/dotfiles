@@ -1,0 +1,24 @@
+#!/bin/bash
+set -euo pipefail
+
+# packages.yaml: {{ include ".chezmoidata/packages.yaml" | sha256sum }}
+# packages.yaml が変更された時のみ brew install を実行する
+
+{{ template "path-setup.tmpl" . }}
+
+{{- if eq .chezmoi.os "darwin" }}
+if command -v brew &> /dev/null; then
+    echo "brew パッケージをインストール中..."
+
+{{- range .packages.darwin.brews.base }}
+    if ! brew list "{{ . }}" &> /dev/null; then
+        brew install "{{ . }}"
+    fi
+{{- end }}
+{{- range .packages.darwin.casks.base }}
+    if ! brew list --cask "{{ . }}" &> /dev/null; then
+        brew install --cask "{{ . }}"
+    fi
+{{- end }}
+fi
+{{- end }}
