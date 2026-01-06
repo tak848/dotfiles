@@ -50,6 +50,9 @@ jobs:
 
       - name: Sync plugins and generate lockfile
         run: |
+          # 1回目: LazyVim 本体をインストール
+          nvim --headless "+Lazy! sync" +qa
+          # 2回目: LazyVim の依存プラグインをインストール
           nvim --headless "+Lazy! sync" +qa
           cp ~/.config/nvim/lazy-lock.json dot_config/nvim/
 
@@ -108,6 +111,9 @@ jobs:
 
       - name: Sync plugins and generate lockfile
         run: |
+          # 1回目: LazyVim 本体をインストール
+          nvim --headless "+Lazy! sync" +qa
+          # 2回目: LazyVim の依存プラグインをインストール
           nvim --headless "+Lazy! sync" +qa
           cp ~/.config/nvim/lazy-lock.json dot_config/nvim/
 
