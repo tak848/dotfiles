@@ -247,6 +247,10 @@ backend = "npm:cc-sdd"
 version = "17.2.0"
 backend = "npm:ccusage"
 
+[[tools."npm:difit"]]
+version = "2.2.7"
+backend = "npm:difit"
+
 [[tools.pnpm]]
 version = "10.27.0"
 backend = "aqua:pnpm/pnpm"
