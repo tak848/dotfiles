@@ -159,24 +159,33 @@ gwc() {
             return 1
         fi
 
-        # PR からブランチ名とリポジトリ情報を取得
+        # gh pr view で PR 情報を取得（URL でも PR 番号でも対応）
         local pr_info
-        pr_info=$(gh pr view "$pr_ref" --json headRefName,headRepository 2>/dev/null)
+        pr_info=$(gh pr view "$pr_ref" --json headRefName,headRepository,headRepositoryOwner 2>/dev/null)
         if [ $? -ne 0 ] || [ -z "$pr_info" ]; then
             echo "エラー: PR '$pr_ref' から情報を取得できませんでした。" >&2
             return 1
         fi
 
-        local pr_branch
-        pr_branch=$(echo "$pr_info" | jq -r '.headRefName')
-        local pr_repo
-        pr_repo=$(echo "$pr_info" | jq -r '.headRepository.owner.login + "/" + .headRepository.name')
+        # PR の head リポジトリを取得して比較（大文字小文字を無視）
+        # 注: headRepository.owner は存在しない。headRepositoryOwner が別フィールドとして存在
+        local pr_repo_owner pr_repo_name pr_repo
+        pr_repo_owner=$(echo "$pr_info" | jq -r '.headRepositoryOwner.login // empty')
+        pr_repo_name=$(echo "$pr_info" | jq -r '.headRepository.name // empty')
+        if [ -z "$pr_repo_owner" ] || [ -z "$pr_repo_name" ]; then
+            echo "エラー: PR のリポジトリ情報を取得できませんでした。" >&2
+            return 1
+        fi
+        pr_repo="${pr_repo_owner}/${pr_repo_name}"
 
-        # リポジトリの一致確認
-        if [ "$current_repo" != "$pr_repo" ]; then
+        # 大文字小文字を無視して比較
+        if [ "${current_repo:l}" != "${pr_repo:l}" ]; then
             echo "エラー: PR のリポジトリ ($pr_repo) が現在のリポジトリ ($current_repo) と一致しません。" >&2
             return 1
         fi
+
+        local pr_branch
+        pr_branch=$(echo "$pr_info" | jq -r '.headRefName')
 
         echo "PR からブランチ '$pr_branch' を取得しました。"
 
