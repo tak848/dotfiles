@@ -1,0 +1,58 @@
+name: Update lazy-lock.json
+
+on:
+  schedule:
+    - cron: "0 0 * * 0" # 毎週日曜 0:00 UTC
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Setup mise
+        uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3
+        with:
+          cache: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install chezmoi
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          if ! command -v chezmoi &> /dev/null; then
+            sh -c "$(curl -fsLS chezmoi.io/get)" -- -b "$HOME/.local/bin"
+          fi
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Setup nvim config (chezmoi でテンプレート展開)
+        run: |
+          # source 全体を参照してテンプレートをレンダリング（.chezmoidata を確実に読み込む）
+          chezmoi apply \
+            --source "$GITHUB_WORKSPACE" \
+            --exclude=scripts \
+            --force \
+            --interactive=false
+
+      - name: Sync plugins and generate lockfile
+        run: |
+          nvim --headless "+Lazy! sync" +qa
+          cp ~/.config/nvim/lazy-lock.json dot_config/nvim/
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676 # v7.0.11
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(nvim): update lazy-lock.json"
+          title: "chore(nvim): update lazy-lock.json"
+          branch: lazy-lock-update
+          add-paths: dot_config/nvim/lazy-lock.json
+          labels: dependencies
