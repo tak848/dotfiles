@@ -84,6 +84,24 @@ backend = "aqua:jdx/usage"
 "platforms.macos-arm64" = { checksum = "sha256:fa1a8f1d8be4d4d2d3f0c49fa95265c170546effb322b2c7bca25e2bc3b8b916", url = "https://github.com/jdx/usage/releases/download/v2.11.0/usage-universal-apple-darwin.tar.gz"}
 "platforms.macos-x64" = { checksum = "sha256:fa1a8f1d8be4d4d2d3f0c49fa95265c170546effb322b2c7bca25e2bc3b8b916", url = "https://github.com/jdx/usage/releases/download/v2.11.0/usage-universal-apple-darwin.tar.gz"}
 
+[[tools."aqua:jesseduffield/lazydocker"]]
+version = "0.24.3"
+backend = "aqua:jesseduffield/lazydocker"
+"platforms.linux-arm64" = { checksum = "sha256:fa233d7303f34bf2c71a8a53afd761852ad97c0dbeac4dbf806f8f06ef6e4c9e", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.3/lazydocker_0.24.3_Linux_arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:39f81a138fbd3290b5b78fa22d73793f856a2323b39241644c4fcc197718cdb4", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.3/lazydocker_0.24.3_Linux_x86_64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:685d1b24048f9958fbc7f5a7efea9c26d81a6164f432883079993253460e4879", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.3/lazydocker_0.24.3_Darwin_arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:3f5f0c3127cdf94c91c62e001ef16b510711ef022c26fe4db2a392dfec88b9b7", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.3/lazydocker_0.24.3_Darwin_x86_64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:88009c4a3f783fb72b6fcd6b7f9dffc0b4c7db2498b1d4212139d22b9f29e2cd", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.3/lazydocker_0.24.3_Windows_x86_64.zip"}
+
+[[tools."aqua:jesseduffield/lazygit"]]
+version = "0.58.0"
+backend = "aqua:jesseduffield/lazygit"
+"platforms.linux-arm64" = { checksum = "sha256:0e3bf5ae9688763198a63e4bc3d0306fa0199e74a28c7ccb42a8b316cd69529c", url = "https://github.com/jesseduffield/lazygit/releases/download/v0.58.0/lazygit_0.58.0_linux_arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:6161fa717cd07d133f7f1c53fe6e49de97d718dbb4b9e1481604dca6f3b8c647", url = "https://github.com/jesseduffield/lazygit/releases/download/v0.58.0/lazygit_0.58.0_linux_x86_64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:7e6c4794f18fbae11ccb75131a71f0216846847a772f702e4f78d26eb2137d35", url = "https://github.com/jesseduffield/lazygit/releases/download/v0.58.0/lazygit_0.58.0_darwin_arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:22a16c6a6db258a448ede340d81e32b56ab3a6d51ffdfa763f5c9af27188b4ee", url = "https://github.com/jesseduffield/lazygit/releases/download/v0.58.0/lazygit_0.58.0_darwin_x86_64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:dd7c87030d4e4e7d1d1a5f72b6193be6bbe5d03d4409eec32de85b9f57dee5bb", url = "https://github.com/jesseduffield/lazygit/releases/download/v0.58.0/lazygit_0.58.0_windows_x86_64.zip"}
+
 [[tools."aqua:jqlang/jq"]]
 version = "1.8.1"
 backend = "aqua:jqlang/jq"
