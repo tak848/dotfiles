@@ -2,10 +2,10 @@ packages:
   darwin:
     taps:
       base:
-        - laishulu/macism
+        - laishulu/homebrew
     brews:
       base:
-        - laishulu/macism/macism # 日本語入力切替（im-select.nvim 用）
+        - macism # 日本語入力切替（im-select.nvim 用）
     casks:
       base:
         - ghostty # ターミナル
