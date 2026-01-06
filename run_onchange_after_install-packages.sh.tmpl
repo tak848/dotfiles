@@ -8,8 +8,12 @@ set -euo pipefail
 
 {{- if eq .chezmoi.os "darwin" }}
 if command -v brew &> /dev/null; then
-    echo "brew パッケージをインストール中..."
+    echo "brew tap を追加中..."
+{{- range .packages.darwin.taps.base }}
+    brew tap "{{ . }}" 2>/dev/null || true
+{{- end }}
 
+    echo "brew パッケージをインストール中..."
 {{- range .packages.darwin.brews.base }}
     if ! brew list "{{ . }}" &> /dev/null; then
         brew install "{{ . }}"

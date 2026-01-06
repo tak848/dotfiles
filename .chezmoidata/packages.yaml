@@ -1,8 +1,11 @@
 packages:
   darwin:
+    taps:
+      base:
+        - laishulu/macism
     brews:
       base:
-        - macism # 日本語入力切替（im-select.nvim 用）
+        - laishulu/macism/macism # 日本語入力切替（im-select.nvim 用）
     casks:
       base:
         - ghostty # ターミナル
