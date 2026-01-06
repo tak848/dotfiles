@@ -1,0 +1,17 @@
+return {
+    "keaising/im-select.nvim",
+    opts = {
+{{- if eq .chezmoi.os "darwin" }}
+        default_im_select = "{{ .im_select.darwin.default_im }}",
+        default_command = "{{ .im_select.darwin.command }}",
+        set_default_events = { "InsertLeave", "CmdlineLeave" },
+        set_previous_events = { "InsertEnter" },
+{{- else }}
+        -- 非 macOS（CI/Linux）: no-op 設定（プラグインは lockfile に残す）
+        keep_quiet_on_no_binary = true,
+        set_default_events = {},
+        set_previous_events = {},
+        default_command = "true",
+{{- end }}
+    },
+}
