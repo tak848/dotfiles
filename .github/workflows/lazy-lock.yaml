@@ -1,0 +1,131 @@
+name: Update lazy-lock.json
+
+on:
+  schedule:
+    - cron: "0 0 * * 0" # 毎週日曜 0:00 UTC
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "dot_config/nvim/**"
+      - ".chezmoidata/packages.yaml"
+      - ".github/workflows/lazy-lock.yaml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 週次更新: PR を作成
+  update-scheduled:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Setup mise
+        uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3
+        with:
+          cache: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install chezmoi
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          if ! command -v chezmoi &> /dev/null; then
+            sh -c "$(curl -fsLS chezmoi.io/get)" -- -b "$HOME/.local/bin"
+          fi
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Setup nvim config
+        run: |
+          chezmoi apply \
+            --source "$GITHUB_WORKSPACE" \
+            --exclude=scripts \
+            --force \
+            --interactive=false
+
+      - name: Sync plugins and generate lockfile
+        run: |
+          nvim --headless "+Lazy! sync" +qa
+          cp ~/.config/nvim/lazy-lock.json dot_config/nvim/
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676 # v7.0.11
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(nvim): update lazy-lock.json"
+          title: "chore(nvim): update lazy-lock.json"
+          branch: lazy-lock-update
+          add-paths: dot_config/nvim/lazy-lock.json
+          labels: dependencies
+
+  # PR 時: lockfile を PR に直接コミット
+  update-on-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Generate GitHub App Token
+        uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2.2.1
+        id: app-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          ref: ${{ github.head_ref }}
+
+      - name: Setup mise
+        uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3
+        with:
+          cache: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install chezmoi
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          if ! command -v chezmoi &> /dev/null; then
+            sh -c "$(curl -fsLS chezmoi.io/get)" -- -b "$HOME/.local/bin"
+          fi
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Setup nvim config
+        run: |
+          chezmoi apply \
+            --source "$GITHUB_WORKSPACE" \
+            --exclude=scripts \
+            --force \
+            --interactive=false
+
+      - name: Sync plugins and generate lockfile
+        run: |
+          nvim --headless "+Lazy! sync" +qa
+          cp ~/.config/nvim/lazy-lock.json dot_config/nvim/
+
+      - name: Check if lockfile changed
+        id: check-changes
+        run: |
+          if git status --porcelain dot_config/nvim/lazy-lock.json | grep -q .; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push
+        if: steps.check-changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dot_config/nvim/lazy-lock.json
+          git commit -m "chore(nvim): update lazy-lock.json"
+          git pull --rebase
+          git push
