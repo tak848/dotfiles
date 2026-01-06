@@ -114,10 +114,10 @@ jobs:
       - name: Check if lockfile changed
         id: check-changes
         run: |
-          if git diff --quiet dot_config/nvim/lazy-lock.json 2>/dev/null; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-          else
+          if git status --porcelain dot_config/nvim/lazy-lock.json | grep -q .; then
             echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Commit and push
