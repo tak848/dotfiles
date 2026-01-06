@@ -60,7 +60,7 @@ Homebrew
 ### Git Worktree 管理関数
 
 - `gwt` - worktree 間の移動
-- `gwc` - 新規 worktree の作成
+- `gwc` - 新規 worktree の作成（`--pr <URL|番号>` で PR から作成可能）
 - `gwr` - worktree の削除
 
 ### ローカル設定（Git 管理外）

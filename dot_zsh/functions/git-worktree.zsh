@@ -68,18 +68,23 @@ gwr() {
 }
 
 # gwc: 既存ブランチ選択と新規ブランチ作成を兼ねる万能版
-# 
+#
 # 使用例:
 #   gwc                              # 通常の使用
 #   gwc --copy data.local.json       # 追加ファイルを指定
+#   gwc --pr https://github.com/owner/repo/pull/123  # PR URL から worktree 作成
+#   gwc --pr 123                     # PR 番号から worktree 作成（同じリポジトリ内）
+#   gwc --pr 123 --copy data.json    # PR と追加ファイルを指定
 #   export GWC_COPY_FILES=".env.test,config.local.json"  # 環境変数で事前設定
 #
 gwc() {
     # 元のディレクトリを保存
     local original_dir=$(pwd)
-    
+
     local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json" ".serena" "config.toml", ".gemini/settings.json", ".mise.local.toml")
     local extra_copy_files=()
+    local pr_ref=""
+    local pr_mode=false
 
     # 環境変数 GWC_COPY_FILES から追加のコピー対象ファイルを取得
     if [ -n "$GWC_COPY_FILES" ]; then
@@ -97,6 +102,16 @@ gwc() {
                 shift # ファイル名を消費
             else
                 echo "エラー: --copy オプションにはファイル名が必要です。" >&2
+                return 1
+            fi
+            ;;
+        --pr)
+            if [ -n "$2" ]; then
+                pr_ref="$2"
+                shift # --pr を消費
+                shift # PR URL/番号を消費
+            else
+                echo "エラー: --pr オプションには PR の URL または番号が必要です。" >&2
                 return 1
             fi
             ;;
@@ -125,6 +140,63 @@ gwc() {
     fi
     # ★★★ ここまで ★★★
 
+    local project_name=$(basename "$root_dir")
+    local worktree_path
+
+    # --- PR モード: gh pr view でブランチ情報を取得 ---
+    if [ -n "$pr_ref" ]; then
+        # gh コマンドの存在確認
+        if ! command -v gh >/dev/null 2>&1; then
+            echo "エラー: --pr オプションには gh (GitHub CLI) が必要です。" >&2
+            return 1
+        fi
+
+        # 現在のリポジトリの owner/repo を取得
+        local current_repo
+        current_repo=$(gh repo view --json nameWithOwner -q .nameWithOwner 2>/dev/null)
+        if [ $? -ne 0 ] || [ -z "$current_repo" ]; then
+            echo "エラー: 現在のリポジトリ情報を取得できませんでした。" >&2
+            return 1
+        fi
+
+        # PR からブランチ名とリポジトリ情報を取得
+        local pr_info
+        pr_info=$(gh pr view "$pr_ref" --json headRefName,headRepository 2>/dev/null)
+        if [ $? -ne 0 ] || [ -z "$pr_info" ]; then
+            echo "エラー: PR '$pr_ref' から情報を取得できませんでした。" >&2
+            return 1
+        fi
+
+        local pr_branch
+        pr_branch=$(echo "$pr_info" | jq -r '.headRefName')
+        local pr_repo
+        pr_repo=$(echo "$pr_info" | jq -r '.headRepository.owner.login + "/" + .headRepository.name')
+
+        # リポジトリの一致確認
+        if [ "$current_repo" != "$pr_repo" ]; then
+            echo "エラー: PR のリポジトリ ($pr_repo) が現在のリポジトリ ($current_repo) と一致しません。" >&2
+            return 1
+        fi
+
+        echo "PR からブランチ '$pr_branch' を取得しました。"
+
+        # リモートを fetch して最新状態に
+        echo "リモートからブランチを取得中..."
+        git fetch origin "$pr_branch"
+
+        # worktree を作成
+        local dir_name="${project_name}-$(echo "$pr_branch" | sed 's/\//-/g')"
+        worktree_path="${root_dir}/../${dir_name}"
+
+        echo "ブランチ '$pr_branch' の worktree を作成中..."
+        git worktree add -b "$pr_branch" "$worktree_path" "origin/$pr_branch"
+
+        pr_mode=true
+    fi
+
+    # --- PR モードでない場合は通常の fzf 選択 ---
+    if [ "$pr_mode" = "false" ]; then
+
     # --- 1. 構造化されたブランチ情報を生成 ---
     local all_branches_meta=$(
         (git for-each-ref --format='[L] %(refname:short)%09%(refname)%09local' 'refs/heads') &&
@@ -148,9 +220,6 @@ gwc() {
         echo "Selection was empty. Canceled."
         return 1
     fi
-
-    local project_name=$(basename "$root_dir")
-    local worktree_path
 
     # --- 3. ユーザーの選択に応じて処理を分岐 ---
     if echo "$selection" | grep -q -F $'\t'; then
@@ -202,6 +271,8 @@ gwc() {
         local base_ref=$(echo "$all_branches_meta" | grep -F "$base_selection" | head -n 1 | awk -F$'\t' '{print $2}')
         git worktree add -b "$branch" "$worktree_path" "$base_ref"
     fi
+
+    fi  # PR モードでない場合の終了
 
     # Cursor で開くかどうかのフラグ
     local open_with_cursor=false
