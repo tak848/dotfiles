@@ -64,6 +64,7 @@ go = "1.25.5"
 # Language Server
 "go:golang.org/x/tools/gopls" = "0.21.0"
 "aqua:rust-lang/rust-analyzer" = "2025-12-01"
+"aqua:tamasfe/taplo" = "0.9.3"
 
 # その他（1password/cli は aqua CLI で管理）
 "aqua:temporalio/cli" = "1.5.1"
