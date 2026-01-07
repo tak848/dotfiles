@@ -1,0 +1,79 @@
+#!/bin/bash
+# Google Cloud Text-to-Speech wrapper with caching
+# Usage: gtts "読み上げたいテキスト"
+
+set -e
+
+# パイプ入力または引数から取得
+if [[ -t 0 ]]; then
+    TEXT="$1"
+else
+    TEXT=$(cat)
+fi
+
+CACHE_DIR="${HOME}/.cache/gtts"
+VOICE="${GTTS_VOICE:-ja-JP-Neural2-B}"  # デフォルト: 日本語男性
+SPEED="${GTTS_SPEED:-1.0}"
+LANG_CODE=$(echo "$VOICE" | grep -oE '^[a-z]{2}-[A-Z]{2}')
+
+if [[ -z "$TEXT" ]]; then
+    echo "Usage: gtts \"テキスト\"" >&2
+    echo "Environment variables:" >&2
+    echo "  GTTS_VOICE  - Voice name (default: ja-JP-Neural2-B)" >&2
+    echo "  GTTS_SPEED  - Speaking rate 0.25-4.0 (default: 1.0)" >&2
+    echo "" >&2
+    echo "Japanese voices:" >&2
+    echo "  ja-JP-Neural2-B (男性), ja-JP-Neural2-C (女性)" >&2
+    echo "  ja-JP-Neural2-D (男性), ja-JP-Wavenet-A/B/C/D" >&2
+    exit 1
+fi
+
+mkdir -p "$CACHE_DIR"
+
+# テキスト+設定のハッシュをキャッシュキーに
+HASH=$(echo -n "${TEXT}|${VOICE}|${SPEED}" | md5sum | cut -d' ' -f1)
+CACHE_FILE="${CACHE_DIR}/${HASH}.mp3"
+
+# キャッシュがあれば即再生
+if [[ -f "$CACHE_FILE" ]]; then
+    if command -v mpv &>/dev/null; then
+        mpv --no-terminal --no-video "$CACHE_FILE" 2>/dev/null
+    elif command -v afplay &>/dev/null; then
+        afplay "$CACHE_FILE"
+    elif command -v play &>/dev/null; then
+        play -q "$CACHE_FILE"
+    else
+        echo "Error: No audio player found (mpv, afplay, or sox)" >&2
+        exit 1
+    fi
+    exit 0
+fi
+
+# API リクエスト
+RESPONSE=$(curl -s -X POST \
+    -H "X-Goog-Api-Key: ${GOOGLE_API_KEY}" \
+    -H "Content-Type: application/json" \
+    "https://texttospeech.googleapis.com/v1/text:synthesize" \
+    -d "{
+        \"input\": {\"text\": \"${TEXT}\"},
+        \"voice\": {\"languageCode\": \"${LANG_CODE}\", \"name\": \"${VOICE}\"},
+        \"audioConfig\": {\"audioEncoding\": \"MP3\", \"speakingRate\": ${SPEED}}
+    }")
+
+# エラーチェック
+if echo "$RESPONSE" | grep -q '"error"'; then
+    echo "API Error: $RESPONSE" >&2
+    exit 1
+fi
+
+# Base64デコードして保存
+echo "$RESPONSE" | jq -r '.audioContent' | base64 -d > "$CACHE_FILE"
+
+# 再生
+if command -v mpv &>/dev/null; then
+    mpv --no-terminal --no-video "$CACHE_FILE" 2>/dev/null
+elif command -v afplay &>/dev/null; then
+    afplay "$CACHE_FILE"
+elif command -v play &>/dev/null; then
+    play -q "$CACHE_FILE"
+fi
