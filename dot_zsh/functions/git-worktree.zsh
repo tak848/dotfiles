@@ -342,10 +342,14 @@ gwc() {
         fi
 
         echo "\nChanging to target directory and running setup..."
-        
+
+        # cd する前に mise trust を実行（direnv ロード前に trust を完了させる）
+        if command -v mise >/dev/null 2>&1; then
+            mise trust "$worktree_path" 2>/dev/null || true
+        fi
+
         cd "$target_dir" && {
             if command -v direnv >/dev/null 2>&1 && [ -f ".envrc" ]; then direnv allow .; fi
-            if command -v mise >/dev/null 2>&1 && [ -f ".mise.toml" ]; then mise trust; fi
             if command -v pnpm >/dev/null 2>&1 && [ -f "package.json" ] && ! [ -f "package-lock.json" ] && ! [ -f "yarn.lock" ] && ! [ -f "bun.lockb" ]; then pnpm i; fi
         }
 
