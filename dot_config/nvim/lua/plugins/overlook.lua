@@ -2,6 +2,7 @@ return {
     "WilliamHsieh/overlook.nvim",
     opts = {},
     keys = {
+        { "gd", function() require("overlook.api").peek_definition() end, desc = "Go to definition" },
         { "<leader>pd", function() require("overlook.api").peek_definition() end, desc = "Peek definition" },
         { "<leader>pc", function() require("overlook.api").close_all() end, desc = "Close all popup" },
         { "<leader>pu", function() require("overlook.api").restore_popup() end, desc = "Restore popup" },
