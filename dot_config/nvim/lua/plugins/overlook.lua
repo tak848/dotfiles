@@ -12,12 +12,15 @@ return {
     },
     init = function()
         -- gd を overlook の peek_definition に置き換え（LspAttach 時に設定）
+        -- vim.schedule で LazyVim の LspAttach より後に設定
         vim.api.nvim_create_autocmd("LspAttach", {
             group = vim.api.nvim_create_augroup("overlook_gd_keymap", { clear = true }),
             callback = function(args)
-                vim.keymap.set("n", "gd", function()
-                    require("overlook.api").peek_definition()
-                end, { buffer = args.buf, desc = "Goto Definition" })
+                vim.schedule(function()
+                    vim.keymap.set("n", "gd", function()
+                        require("overlook.api").peek_definition()
+                    end, { buffer = args.buf, desc = "Goto Definition" })
+                end)
             end,
         })
 
