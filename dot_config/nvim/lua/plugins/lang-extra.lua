@@ -1,9 +1,19 @@
+local go_to_definition = function()
+    require("overlook.api").peek_definition()
+end
+
 return {
     -- mise でインストール済みの LSP は mason = false で直接使用
+    -- gd を overlook の peek_definition に置き換え
     {
         "neovim/nvim-lspconfig",
         opts = {
             servers = {
+                ["*"] = {
+                    keys = {
+                        { "gd", go_to_definition, desc = "Go to Definitions" },
+                    },
+                },
                 -- mise: go:golang.org/x/tools/gopls
                 gopls = { mason = false },
                 -- mise: aqua:rust-lang/rust-analyzer
