@@ -17,12 +17,12 @@ backend = "aqua:astral-sh/uv"
 "platforms.windows-x64" = { checksum = "sha256:93a0a244f26eec208d8ea8077e3de743d9687ad76c190342722f1f57fa629457", url = "https://github.com/astral-sh/uv/releases/download/0.9.22/uv-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:bufbuild/buf"]]
-version = "1.62.1"
+version = "1.63.0"
 backend = "aqua:bufbuild/buf"
-"platforms.linux-arm64" = { checksum = "sha256:39caa9a5ace13f73378095bdb712225521bc808a704940188e0b77af76136010", url = "https://github.com/bufbuild/buf/releases/download/v1.62.1/buf-Linux-aarch64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:14790c22d69977db053b7d78660cc347c9547d374f034c726ab319f44ef7917f", url = "https://github.com/bufbuild/buf/releases/download/v1.62.1/buf-Linux-x86_64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:cba4161d8276509d8f805bd4c6c89476b5801086de22c3d67f51067d5c30a6f4", url = "https://github.com/bufbuild/buf/releases/download/v1.62.1/buf-Darwin-x86_64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:69d823a686f5d2fb54186b041242a9f9030fb6e1944fa0dbc7831ca62a589939", url = "https://github.com/bufbuild/buf/releases/download/v1.62.1/buf-Windows-x86_64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:50dadf9687749ecb3cbe1920a2dcdb3b8ae2a857467f5814c9089d691819f614", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Linux-aarch64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:51f34d89b9dc392bd715a2b15677d5762951a5d1e41fbb658d274e6e568e6775", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Linux-x86_64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:34e47789099de8dfccf29eac6af31384a6c0ed9094d848dc6b22641396f11b2a", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Darwin-x86_64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:a21c0e0b820fa0810b8b585ccb1658f530a02648dfb68cebb734aa132ed75e3f", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Windows-x86_64.zip"}
 
 [[tools."aqua:cli/cli"]]
 version = "2.83.2"
@@ -243,7 +243,7 @@ version = "0.22.5"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@openai/codex"]]
-version = "0.77.0"
+version = "0.78.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
@@ -251,7 +251,7 @@ version = "7.0.0-dev.20260106.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
-version = "2.0.3"
+version = "2.0.4"
 backend = "npm:cc-sdd"
 
 [[tools."npm:ccusage"]]

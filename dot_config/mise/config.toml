@@ -54,7 +54,7 @@ go = "1.25.5"
 "aqua:cloudflare/cloudflared" = "2025.11.1"
 
 # 開発ツール
-"aqua:bufbuild/buf" = "1.62.1"
+"aqua:bufbuild/buf" = "1.63.0"
 "aqua:go-task/task" = "3.46.4"
 
 # Jsonnet
@@ -75,8 +75,8 @@ go = "1.25.5"
 # ============================================
 "npm:@anthropic-ai/claude-code" = "2.0.76"
 "npm:@google/gemini-cli" = "0.22.5"
-"npm:@openai/codex" = "0.77.0"
+"npm:@openai/codex" = "0.78.0"
 "npm:ccusage" = "17.2.1"
 "npm:@typescript/native-preview" = "7.0.0-dev.20260106.1"
-"npm:cc-sdd" = "2.0.3"
+"npm:cc-sdd" = "2.0.4"
 "npm:difit" = "2.2.7"
