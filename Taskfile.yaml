@@ -126,7 +126,8 @@ tasks:
     cmds:
       - |
         source .mise-bootstrap-version
-        mise generate bootstrap -V "$MISE_VERSION" -w ./dot_local/bin/executable_mise
+        VERSION="${MISE_VERSION#v}"
+        mise generate bootstrap -V "$VERSION" -w ./dot_local/bin/executable_mise
     sources:
       - .mise-bootstrap-version
     generates:
