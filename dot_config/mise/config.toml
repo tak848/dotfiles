@@ -37,6 +37,7 @@ go = "1.25.5"
 # 検索・ファイル操作
 "aqua:twpayne/chezmoi" = "2.69.0"
 "aqua:BurntSushi/ripgrep" = "15.1.0"
+"aqua:phiresky/ripgrep-all" = "0.10.10"
 "aqua:jqlang/jq" = "1.8.1"
 "aqua:mikefarah/yq" = "4.50.1"
 "aqua:x-motemen/ghq" = "1.8.0"

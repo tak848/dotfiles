@@ -1,11 +1,6 @@
 [[tools."aqua:BurntSushi/ripgrep"]]
 version = "15.1.0"
 backend = "aqua:BurntSushi/ripgrep"
-"platforms.linux-arm64" = { checksum = "sha256:2b661c6ef508e902f388e9098d9c4c5aca72c87b55922d94abdba830b4dc885e", url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-aarch64-unknown-linux-gnu.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:1c9297be4a084eea7ecaedf93eb03d058d6faae29bbc57ecdaf5063921491599", url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:378e973289176ca0c6054054ee7f631a065874a352bf43f0fa60ef079b6ba715", url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-aarch64-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:64811cb24e77cac3057d6c40b63ac9becf9082eedd54ca411b475b755d334882", url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-apple-darwin.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d87493a", url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:astral-sh/uv"]]
 version = "0.9.22"
@@ -21,6 +16,7 @@ version = "1.63.0"
 backend = "aqua:bufbuild/buf"
 "platforms.linux-arm64" = { checksum = "sha256:50dadf9687749ecb3cbe1920a2dcdb3b8ae2a857467f5814c9089d691819f614", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Linux-aarch64.tar.gz"}
 "platforms.linux-x64" = { checksum = "sha256:51f34d89b9dc392bd715a2b15677d5762951a5d1e41fbb658d274e6e568e6775", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Linux-x86_64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:14db4d30190da484cfd1817c443117edcf8d70a54c3d45bc4c85c925e051bf76", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Darwin-arm64.tar.gz"}
 "platforms.macos-x64" = { checksum = "sha256:34e47789099de8dfccf29eac6af31384a6c0ed9094d848dc6b22641396f11b2a", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Darwin-x86_64.tar.gz"}
 "platforms.windows-x64" = { checksum = "sha256:a21c0e0b820fa0810b8b585ccb1658f530a02648dfb68cebb734aa132ed75e3f", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Windows-x86_64.zip"}
 
@@ -36,20 +32,12 @@ backend = "aqua:cli/cli"
 [[tools."aqua:cloudflare/cloudflared"]]
 version = "2025.11.1"
 backend = "aqua:cloudflare/cloudflared"
-"platforms.linux-arm64" = { checksum = "sha256:9979dc152097a29b6de4d1ef13e2f1821c67a6f096f88cc18f0fd25106305d3a", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-linux-arm64"}
-"platforms.linux-x64" = { checksum = "sha256:991dffd8889ee9f0147b6b48933da9e4407e68ea8c6d984f55fa2d3db4bb431d", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-linux-amd64"}
 "platforms.macos-arm64" = { checksum = "sha256:155a288fef19dba08f0c7145c16a207baf137462d8a1289a78bf8564f9e51244", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-darwin-amd64.tgz"}
 "platforms.macos-x64" = { checksum = "sha256:155a288fef19dba08f0c7145c16a207baf137462d8a1289a78bf8564f9e51244", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-darwin-amd64.tgz"}
-"platforms.windows-x64" = { checksum = "sha256:413f9b24dc6e61a455564651524f167b8ce29ac4ccd40703dea7af93cd37ed39", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-windows-amd64.exe"}
 
 [[tools."aqua:direnv/direnv"]]
 version = "2.37.1"
 backend = "aqua:direnv/direnv"
-"platforms.linux-arm64" = { checksum = "sha256:2a9cef8d73521d6a3ec3f2871c4b747b8c4cc038628c1b57a7efa42b393a2d82", url = "https://github.com/direnv/direnv/releases/download/v2.37.1/direnv.linux-arm64"}
-"platforms.linux-x64" = { checksum = "sha256:1f1b93dd6f38523fde26dfac96151ef9d31a374e3005cd3345fb93555ae0c9b5", url = "https://github.com/direnv/direnv/releases/download/v2.37.1/direnv.linux-amd64"}
-"platforms.macos-arm64" = { checksum = "sha256:4f569f3a36732bfd8b8fea7bfcc6ad87a59745c109022164d0ca4832451d5369", url = "https://github.com/direnv/direnv/releases/download/v2.37.1/direnv.darwin-arm64"}
-"platforms.macos-x64" = { checksum = "sha256:24fb9ce48b563d7e9fbdd3a4e3e836941654a31ce3e67eba9eaafc3dcd8ae73b", url = "https://github.com/direnv/direnv/releases/download/v2.37.1/direnv.darwin-amd64"}
-"platforms.windows-x64" = { checksum = "sha256:d96fc8b7cf020c2d4c1dbbc2ccec5fd1cab05b51c491f02c8527a7fa6c50a1cd", url = "https://github.com/direnv/direnv/releases/download/v2.37.1/direnv.windows-amd64"}
 
 [[tools."aqua:go-task/task"]]
 version = "3.46.4"
@@ -81,10 +69,6 @@ backend = "aqua:grafana/jsonnet-language-server"
 [[tools."aqua:jdx/usage"]]
 version = "2.11.0"
 backend = "aqua:jdx/usage"
-"platforms.linux-arm64" = { checksum = "sha256:850d04145ec52d859fcc5efdcab178a697155cf904fd8dda24c127de67ae0c69", url = "https://github.com/jdx/usage/releases/download/v2.11.0/usage-aarch64-unknown-linux-musl.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:b8ab78820a5e07ce0a2413a1e86c653b4e0781e472ea47d09b07948be1069055", url = "https://github.com/jdx/usage/releases/download/v2.11.0/usage-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:fa1a8f1d8be4d4d2d3f0c49fa95265c170546effb322b2c7bca25e2bc3b8b916", url = "https://github.com/jdx/usage/releases/download/v2.11.0/usage-universal-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:fa1a8f1d8be4d4d2d3f0c49fa95265c170546effb322b2c7bca25e2bc3b8b916", url = "https://github.com/jdx/usage/releases/download/v2.11.0/usage-universal-apple-darwin.tar.gz"}
 
 [[tools."aqua:jesseduffield/lazydocker"]]
 version = "0.24.3"
@@ -107,20 +91,10 @@ backend = "aqua:jesseduffield/lazygit"
 [[tools."aqua:jqlang/jq"]]
 version = "1.8.1"
 backend = "aqua:jqlang/jq"
-"platforms.linux-arm64" = { checksum = "sha256:6bc62f25981328edd3cfcfe6fe51b073f2d7e7710d7ef7fcdac28d4e384fc3d4", url = "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-arm64"}
-"platforms.linux-x64" = { checksum = "sha256:020468de7539ce70ef1bceaf7cde2e8c4f2ca6c3afb84642aabc5c97d9fc2a0d", url = "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-amd64"}
-"platforms.macos-arm64" = { checksum = "sha256:a9fe3ea2f86dfc72f6728417521ec9067b343277152b114f4e98d8cb0e263603", url = "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-macos-arm64"}
-"platforms.macos-x64" = { checksum = "sha256:e80dbe0d2a2597e3c11c404f03337b981d74b4a8504b70586c354b7697a7c27f", url = "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-macos-amd64"}
-"platforms.windows-x64" = { checksum = "sha256:23cb60a1354eed6bcc8d9b9735e8c7b388cd1fdcb75726b93bc299ef22dd9334", url = "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-windows-amd64.exe"}
 
 [[tools."aqua:junegunn/fzf"]]
 version = "0.67.0"
 backend = "aqua:junegunn/fzf"
-"platforms.linux-arm64" = { checksum = "sha256:7071f48c2ac0f2bc992d6d33cc36fd675a579a98cc976dda699eea07dd5e9c58", url = "https://github.com/junegunn/fzf/releases/download/v0.67.0/fzf-0.67.0-linux_arm64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:4be08018ca37b32518c608741933ea335a406de3558242b60619e98f25be2be1", url = "https://github.com/junegunn/fzf/releases/download/v0.67.0/fzf-0.67.0-linux_amd64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:b7f34c964d8e52c471c933cef8ec43dc71997c266cafafd1b013bed10fc229a1", url = "https://github.com/junegunn/fzf/releases/download/v0.67.0/fzf-0.67.0-darwin_arm64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:88dc853e0914793a2e7be0d1acfe6c922d9ccad08e3302df092399775b0279ff", url = "https://github.com/junegunn/fzf/releases/download/v0.67.0/fzf-0.67.0-darwin_amd64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:cad95326ed416d14226a03425513b049f5bc9a41f30a355e5fe204a29e666867", url = "https://github.com/junegunn/fzf/releases/download/v0.67.0/fzf-0.67.0-windows_amd64.zip"}
 
 [[tools."aqua:kubernetes/kubectl"]]
 version = "1.35.0"
@@ -148,6 +122,14 @@ backend = "aqua:neovim/neovim"
 "platforms.macos-arm64" = { checksum = "sha256:79143d3b408f7034f90b7cf59af2276de09ef8a4c2f1a28e4c99581b249d3107", url = "https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-macos-arm64.tar.gz"}
 "platforms.macos-x64" = { checksum = "sha256:6612760a7037ca2518e456908baf5e43101fa79819d18979fc4d4e8441d9dfa5", url = "https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-macos-x86_64.tar.gz"}
 "platforms.windows-x64" = { checksum = "sha256:718e731326e7759cf17bbbb33f38975707a2ac85642614686b818ef5fde38f48", url = "https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-win64.zip"}
+
+[[tools."aqua:phiresky/ripgrep-all"]]
+version = "0.10.10"
+backend = "aqua:phiresky/ripgrep-all"
+"platforms.linux-arm64" = { checksum = "sha256:2cd875ab6c78b27e4830b5bca92c570a8a8dcfb368bc71b189b65ac01fbc3020", url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgrep_all-v0.10.10-aarch64-unknown-linux-gnu.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:a969c25b182ac84aa672518313b5f741091decf7d93d03a020bcfe517b9ff4e8", url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgrep_all-v0.10.10-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:9deeaa927779078568832b5b69ae57986ca917f24974bb4976c062f632846856", url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgrep_all-v0.10.10-aarch64-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:3d9fe75878ddab6a8e7abb66ab13af1bdea2844a02c479fb293b7bfb258ab353", url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgrep_all-v0.10.10-x86_64-apple-darwin.tar.gz"}
 
 [[tools."aqua:rust-lang/rust-analyzer"]]
 version = "2025-12-01"
