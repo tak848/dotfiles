@@ -119,12 +119,14 @@ tasks:
   #############################################################################
   # mise bootstrap 生成
   # mise 自体をインストールするためのスクリプトを生成
-  # .mise-bootstrap-version のバージョンに基づいて生成される
+  # .mise-bootstrap-version のバージョンを -V オプションで明示的に指定
   #############################################################################
   mise:bootstrap:
     desc: Update mise bootstrap script
     cmds:
-      - mise generate bootstrap -w ./dot_local/bin/executable_mise
+      - |
+        source .mise-bootstrap-version
+        mise generate bootstrap -V "$MISE_VERSION" -w ./dot_local/bin/executable_mise
     sources:
       - .mise-bootstrap-version
     generates:
