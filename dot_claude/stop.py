@@ -23,7 +23,44 @@ from pathlib import Path
 CACHE_DIR = Path.home() / ".cache" / "gtts"
 VOICE_JA = "ja-JP-Neural2-B"
 VOICE_EN = "en-US-Neural2-D"
-SPEED = 1.0
+SPEED = 1.3
+
+
+def get_git_context() -> str:
+    """現在の Git リポジトリ名、ブランチ名、worktree情報を取得"""
+    try:
+        # リポジトリのルートディレクトリ名を取得
+        repo_path = subprocess.run(
+            ["git", "rev-parse", "--show-toplevel"],
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.strip()
+        repo_name = Path(repo_path).name
+
+        # ブランチ名を取得
+        branch = subprocess.run(
+            ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.strip()
+
+        # worktree かどうかを判定
+        git_dir = subprocess.run(
+            ["git", "rev-parse", "--git-dir"],
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.strip()
+
+        is_worktree = ".git/worktrees/" in git_dir
+
+        if is_worktree:
+            return f"from {repo_name}/{branch} (worktree)"
+        return f"from {repo_name}/{branch}"
+    except subprocess.CalledProcessError:
+        return ""
 
 
 def get_audio_player() -> list[str] | None:
@@ -122,7 +159,9 @@ def main():
     # macOS/Linuxの場合、セッション終了を音声で通知
     if platform.system() in ("Darwin", "Linux"):
         try:
-            speak_gtts("Claudeセッション終了！")
+            git_context = get_git_context()
+            message = f"Claudeセッション終了！{git_context}"
+            speak_gtts(message)
         except Exception as e:
             print(f"Warning: Failed to play audio notification: {e}", file=sys.stderr)
 

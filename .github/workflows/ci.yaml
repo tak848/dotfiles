@@ -23,11 +23,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
+      # mise bootstrap と同じバージョンを使用することで、task check の結果を一致させる
+      - name: Read mise version from .mise-bootstrap-version
+        run: |
+          source .mise-bootstrap-version
+          echo "MISE_VERSION=$MISE_VERSION" >> $GITHUB_ENV
+
       - name: Setup mise
         uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3.5.1
         with:
+          version: ${{ env.MISE_VERSION }}
           cache: true
-          cache_key: "mise-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('dot_config/mise/config.toml', 'dot_config/mise/mise.lock') }}"
+          cache_key: "mise-v1-${{ runner.os }}-${{ runner.arch }}-${{ env.MISE_VERSION }}-${{ hashFiles('dot_config/mise/config.toml', 'dot_config/mise/mise.lock') }}"
 
       - name: Cache aqua tools
         uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5.0.1

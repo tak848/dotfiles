@@ -31,7 +31,8 @@ jobs:
       - name: Read version
         run: |
           source .mise-bootstrap-version
-          echo "MISE_VERSION=$MISE_VERSION" >> $GITHUB_ENV
+          # v プレフィックスを除去（mise generate bootstrap -V は v なしのバージョンを期待）
+          echo "MISE_VERSION=${MISE_VERSION#v}" >> $GITHUB_ENV
 
       - name: Setup mise
         uses: jdx/mise-action@146a28175021df8ca24f8ee1828cc2a60f980bd5 # v3.5.1
@@ -40,9 +41,9 @@ jobs:
           install: false
           cache: true
 
-      # インストール済み mise のバージョンで bootstrap を生成
+      # .mise-bootstrap-version のバージョンで bootstrap を生成
       - name: Generate bootstrap script
-        run: mise generate bootstrap -w ./dot_local/bin/executable_mise
+        run: mise generate bootstrap -V "$MISE_VERSION" -w ./dot_local/bin/executable_mise
 
       - name: Check if bootstrap changed
         id: check-changes
