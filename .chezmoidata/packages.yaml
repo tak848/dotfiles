@@ -3,14 +3,16 @@ packages:
     taps:
       base:
         - laishulu/homebrew
+        - nikitabobko/tap
     brews:
       base:
-        - macism # 日本語入力切替（im-select.nvim 用）
+        - laishulu/homebrew/macism # 日本語入力切替（im-select.nvim 用）
         - poppler # rga依存: PDF検索用（pdftotext）
         - ffmpeg # rga依存: メディアファイル検索用
     casks:
       base:
         - ghostty # ターミナル
+        - nikitabobko/tap/aerospace # タイリングウィンドウマネージャ
 
 # im-select 設定（macOS のみ）
 im_select:
