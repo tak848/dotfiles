@@ -7,7 +7,7 @@
 # mise の将来のアップデートで対応されたら mise に移行する
 registries:
   - type: standard
-    ref: v4.452.0 # renovate: depName=aquaproj/aqua-registry
+    ref: v4.453.0 # renovate: depName=aquaproj/aqua-registry
 checksum:
   enabled: true
   require_checksum: true

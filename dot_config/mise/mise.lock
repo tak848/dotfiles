@@ -21,7 +21,6 @@ version = "1.63.0"
 backend = "aqua:bufbuild/buf"
 "platforms.linux-arm64" = { checksum = "sha256:50dadf9687749ecb3cbe1920a2dcdb3b8ae2a857467f5814c9089d691819f614", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Linux-aarch64.tar.gz"}
 "platforms.linux-x64" = { checksum = "sha256:51f34d89b9dc392bd715a2b15677d5762951a5d1e41fbb658d274e6e568e6775", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Linux-x86_64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:14db4d30190da484cfd1817c443117edcf8d70a54c3d45bc4c85c925e051bf76", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Darwin-arm64.tar.gz"}
 "platforms.macos-x64" = { checksum = "sha256:34e47789099de8dfccf29eac6af31384a6c0ed9094d848dc6b22641396f11b2a", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Darwin-x86_64.tar.gz"}
 "platforms.windows-x64" = { checksum = "sha256:a21c0e0b820fa0810b8b585ccb1658f530a02648dfb68cebb734aa132ed75e3f", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Windows-x86_64.zip"}
 
@@ -37,8 +36,11 @@ backend = "aqua:cli/cli"
 [[tools."aqua:cloudflare/cloudflared"]]
 version = "2025.11.1"
 backend = "aqua:cloudflare/cloudflared"
+"platforms.linux-arm64" = { checksum = "sha256:9979dc152097a29b6de4d1ef13e2f1821c67a6f096f88cc18f0fd25106305d3a", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:991dffd8889ee9f0147b6b48933da9e4407e68ea8c6d984f55fa2d3db4bb431d", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-linux-amd64"}
 "platforms.macos-arm64" = { checksum = "sha256:155a288fef19dba08f0c7145c16a207baf137462d8a1289a78bf8564f9e51244", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-darwin-amd64.tgz"}
 "platforms.macos-x64" = { checksum = "sha256:155a288fef19dba08f0c7145c16a207baf137462d8a1289a78bf8564f9e51244", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-darwin-amd64.tgz"}
+"platforms.windows-x64" = { checksum = "sha256:413f9b24dc6e61a455564651524f167b8ce29ac4ccd40703dea7af93cd37ed39", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-windows-amd64.exe"}
 
 [[tools."aqua:direnv/direnv"]]
 version = "2.37.1"
@@ -250,7 +252,7 @@ backend = "core:node"
 "platforms.windows-x64" = { checksum = "sha256:9c125f61ae947b52e779095830f9cac267846a043ef7192183c84016aaad2812", url = "https://nodejs.org/dist/v24.12.0/node-v24.12.0-win-x64.zip"}
 
 [[tools."npm:@anthropic-ai/claude-code"]]
-version = "2.1.1"
+version = "2.1.2"
 backend = "npm:@anthropic-ai/claude-code"
 
 [[tools."npm:@google/gemini-cli"]]
@@ -262,7 +264,7 @@ version = "0.79.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260107.1"
+version = "7.0.0-dev.20260108.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]

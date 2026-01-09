@@ -76,10 +76,10 @@ go = "1.25.5"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"npm:@anthropic-ai/claude-code" = "2.1.1"
+"npm:@anthropic-ai/claude-code" = "2.1.2"
 "npm:@google/gemini-cli" = "0.23.0"
 "npm:@openai/codex" = "0.79.0"
 "npm:ccusage" = "17.2.1"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260107.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260108.1"
 "npm:cc-sdd" = "2.0.5"
 "npm:difit" = "2.2.7"
