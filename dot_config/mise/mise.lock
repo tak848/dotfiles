@@ -272,7 +272,7 @@ version = "2.0.5"
 backend = "npm:cc-sdd"
 
 [[tools."npm:ccusage"]]
-version = "17.2.1"
+version = "18.0.5"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
