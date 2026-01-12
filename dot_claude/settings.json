@@ -61,6 +61,7 @@
       ]
    },
    "includeCoAuthoredBy": false,
+   "language": "japanese",
    "model": "claude-opus-4-5",
    "permissions": {
       "allow": [

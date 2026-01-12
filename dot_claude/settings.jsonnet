@@ -1,4 +1,5 @@
 {
+  language: 'japanese',
   includeCoAuthoredBy: false,
   permissions: {
     defaultMode: 'plan',
