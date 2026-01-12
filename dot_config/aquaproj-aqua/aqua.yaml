@@ -7,7 +7,7 @@
 # mise の将来のアップデートで対応されたら mise に移行する
 registries:
   - type: standard
-    ref: v4.453.0 # renovate: depName=aquaproj/aqua-registry
+    ref: v4.454.0 # renovate: depName=aquaproj/aqua-registry
 checksum:
   enabled: true
   require_checksum: true
@@ -15,6 +15,6 @@ checksum:
     - darwin
     - linux
 packages:
-  - name: aws/aws-cli@2.32.31
+  - name: aws/aws-cli@2.32.33
   - name: 1password/cli@v2.32.0
   - name: ajeetdsouza/zoxide@v0.9.8
