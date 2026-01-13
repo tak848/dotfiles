@@ -22,8 +22,8 @@ from pathlib import Path
 # }
 
 CACHE_DIR = Path.home() / ".cache" / "gtts"
-VOICE_JA = "ja-JP-Neural2-B"
-VOICE_EN = "en-US-Neural2-D"
+VOICE_JA = "ja-JP-Chirp3-HD-Aoede"
+VOICE_EN = "en-US-Chirp3-HD-Aoede"
 SPEED = 1.3
 
 
