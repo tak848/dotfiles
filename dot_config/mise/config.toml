@@ -11,7 +11,7 @@ locked = false
 # ============================================
 # ランタイム（core backend）
 # ============================================
-node = "24.12.0"
+node = "24.13.0"
 pnpm = "10.28.0"
 go = "1.25.5"
 
@@ -50,7 +50,7 @@ go = "1.25.5"
 "aqua:neovim/neovim" = "0.11.5"
 
 # Python ツール
-"aqua:astral-sh/uv" = "0.9.24"
+"aqua:astral-sh/uv" = "0.9.25"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
@@ -76,7 +76,7 @@ go = "1.25.5"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"npm:@anthropic-ai/claude-code" = "2.1.6"
+"npm:@anthropic-ai/claude-code" = "2.1.7"
 "npm:@google/gemini-cli" = "0.23.0"
 "npm:@openai/codex" = "0.80.0"
 "npm:ccusage" = "18.0.5"
