@@ -25,13 +25,13 @@ backend = "aqua:bufbuild/buf"
 "platforms.windows-x64" = { checksum = "sha256:a21c0e0b820fa0810b8b585ccb1658f530a02648dfb68cebb734aa132ed75e3f", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Windows-x86_64.zip"}
 
 [[tools."aqua:cli/cli"]]
-version = "2.83.2"
+version = "2.85.0"
 backend = "aqua:cli/cli"
-"platforms.linux-arm64" = { checksum = "sha256:b1a0c0a0fcf18524e36996caddc92a062355ed014defc836203fe20fba75a38e", url = "https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_linux_arm64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:ca6e7641214fbd0e21429cec4b64a7ba626fd946d8f9d6d191467545b092015e", url = "https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_linux_amd64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:ba3e0396ebbc8da17256144ddda503e4e79c8b502166335569f8390d6b75fa8d", url = "https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_macOS_arm64.zip"}
-"platforms.macos-x64" = { checksum = "sha256:6f1712519ccc768946791dc97da407bf188582345b73fef3d604d050ebf6f614", url = "https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_macOS_amd64.zip"}
-"platforms.windows-x64" = { checksum = "sha256:b95bf2d953e3bf497bb2c0aed97ffcc5ed8471b80f0920d663a92a6111f05135", url = "https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_windows_amd64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:c554878f62506c88464ef94474322d899dfb30468bb234f23e2355e8e1613cb2", url = "https://github.com/cli/cli/releases/download/v2.85.0/gh_2.85.0_linux_arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:5dcc4e282b9c22c0d31c217805976448c966cfc56c20157c78385a8a62c93cf0", url = "https://github.com/cli/cli/releases/download/v2.85.0/gh_2.85.0_linux_amd64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:3d6999b85fa1e63aadec49b65986280578e8094c394a3776c24c789f0cc73cef", url = "https://github.com/cli/cli/releases/download/v2.85.0/gh_2.85.0_macOS_arm64.zip"}
+"platforms.macos-x64" = { checksum = "sha256:e58bdb7da9cf4c5254f6b847198d18af7c07c486c2a3af94ad957a48c1051c1c", url = "https://github.com/cli/cli/releases/download/v2.85.0/gh_2.85.0_macOS_amd64.zip"}
+"platforms.windows-x64" = { checksum = "sha256:def347c8bbb22c79109dc546d1c083753512e54fd48deca41aad73b9beef9277", url = "https://github.com/cli/cli/releases/download/v2.85.0/gh_2.85.0_windows_amd64.zip"}
 
 [[tools."aqua:cloudflare/cloudflared"]]
 version = "2025.11.1"
@@ -79,12 +79,12 @@ backend = "aqua:grafana/jsonnet-language-server"
 "platforms.windows-x64" = { checksum = "sha256:53d233a1927afa52f39a2ae5396dc7ffeb13283b5f13edfa6dfdc1f41e71199b", url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.16.0/jsonnet-language-server_0.16.0_windows_amd64.exe"}
 
 [[tools."aqua:jdx/usage"]]
-version = "2.11.0"
+version = "2.12.0"
 backend = "aqua:jdx/usage"
-"platforms.linux-arm64" = { checksum = "sha256:850d04145ec52d859fcc5efdcab178a697155cf904fd8dda24c127de67ae0c69", url = "https://github.com/jdx/usage/releases/download/v2.11.0/usage-aarch64-unknown-linux-musl.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:b8ab78820a5e07ce0a2413a1e86c653b4e0781e472ea47d09b07948be1069055", url = "https://github.com/jdx/usage/releases/download/v2.11.0/usage-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:fa1a8f1d8be4d4d2d3f0c49fa95265c170546effb322b2c7bca25e2bc3b8b916", url = "https://github.com/jdx/usage/releases/download/v2.11.0/usage-universal-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:fa1a8f1d8be4d4d2d3f0c49fa95265c170546effb322b2c7bca25e2bc3b8b916", url = "https://github.com/jdx/usage/releases/download/v2.11.0/usage-universal-apple-darwin.tar.gz"}
+"platforms.linux-arm64" = { checksum = "sha256:497188afd45955e0b1253fb7f02b1cbae03f73cb3a0b0539572aaae22509e4a3", url = "https://github.com/jdx/usage/releases/download/v2.12.0/usage-aarch64-unknown-linux-musl.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:a8a7f4318f7e2dad95ecb3591847a999a11d1c959746fb5bc72dfbc8e2961055", url = "https://github.com/jdx/usage/releases/download/v2.12.0/usage-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:5a9ae96cd700fce9de129c91e4e816698dfee854189cc3a180b3986746bcd1d4", url = "https://github.com/jdx/usage/releases/download/v2.12.0/usage-universal-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:5a9ae96cd700fce9de129c91e4e816698dfee854189cc3a180b3986746bcd1d4", url = "https://github.com/jdx/usage/releases/download/v2.12.0/usage-universal-apple-darwin.tar.gz"}
 
 [[tools."aqua:jesseduffield/lazydocker"]]
 version = "0.24.3"
@@ -256,15 +256,15 @@ version = "2.1.7"
 backend = "npm:@anthropic-ai/claude-code"
 
 [[tools."npm:@google/gemini-cli"]]
-version = "0.23.0"
+version = "0.24.0"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@openai/codex"]]
-version = "0.80.0"
+version = "0.81.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260113.1"
+version = "7.0.0-dev.20260114.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
