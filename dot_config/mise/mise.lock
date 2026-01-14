@@ -8,13 +8,13 @@ backend = "aqua:BurntSushi/ripgrep"
 "platforms.windows-x64" = { checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d87493a", url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:astral-sh/uv"]]
-version = "0.9.24"
+version = "0.9.25"
 backend = "aqua:astral-sh/uv"
-"platforms.linux-arm64" = { checksum = "sha256:b16359904ede857b90b68168f10b0f6bf500858df9bed4e7156dbc59fd3f0747", url = "https://github.com/astral-sh/uv/releases/download/0.9.24/uv-aarch64-unknown-linux-musl.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:cf307aa4271038daa334ca64e75aa40c0c085ce6fa0c0e6f21e41a2b62c7904d", url = "https://github.com/astral-sh/uv/releases/download/0.9.24/uv-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:89661d9a16682197086df54bb43d0b03e58e23d4d9360fc8c6c0166f2828fd71", url = "https://github.com/astral-sh/uv/releases/download/0.9.24/uv-aarch64-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:fda9b3203cce6ec3a37177440c33c4c1963c4957fff17e2820c60ab6ccd625da", url = "https://github.com/astral-sh/uv/releases/download/0.9.24/uv-x86_64-apple-darwin.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:cf9d6fa12017199d19c6f9a8f7f55811c8c04d70681b8cb6d89ffb179f08cf1f", url = "https://github.com/astral-sh/uv/releases/download/0.9.24/uv-x86_64-pc-windows-msvc.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:11cddffc61826e3b7af02db37bc3ed8e9e6747dad328d45c8b02f89408afbf75", url = "https://github.com/astral-sh/uv/releases/download/0.9.25/uv-aarch64-unknown-linux-musl.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:700776c376ce36ed5b731fcd699e141d897551f5111907987b63897e0c1ad797", url = "https://github.com/astral-sh/uv/releases/download/0.9.25/uv-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:606b3c6949d971709f2526fa0d9f0fd23ccf60e09f117999b406b424af18a6a6", url = "https://github.com/astral-sh/uv/releases/download/0.9.25/uv-aarch64-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:4982dfff14b3548bc85d0fa0abec6ab8ae62836b218bf1223741ba1392ef93bf", url = "https://github.com/astral-sh/uv/releases/download/0.9.25/uv-x86_64-apple-darwin.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:d63f8e59cf76bcce9cb8a3eac6c1a89adce0f89a29bacca978c9bf842f419277", url = "https://github.com/astral-sh/uv/releases/download/0.9.25/uv-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:bufbuild/buf"]]
 version = "1.63.0"
@@ -243,16 +243,16 @@ version = "0.21.0"
 backend = "go:golang.org/x/tools/gopls"
 
 [[tools.node]]
-version = "24.12.0"
+version = "24.13.0"
 backend = "core:node"
-"platforms.linux-arm64" = { checksum = "sha256:9b2a2eeb98a8eb37361224e2a1d060300ad2dd143af58dfdb16de785df0f1228", url = "https://nodejs.org/dist/v24.12.0/node-v24.12.0-linux-arm64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:6159227e0af7d7c3c6bb2fa900452b04a6cb8841a702a79acc613209d70b04d0", url = "https://nodejs.org/dist/v24.12.0/node-v24.12.0-linux-x64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:319f221adc5e44ff0ed57e8a441b2284f02b8dc6fc87b8eb92a6a93643fd8080", url = "https://nodejs.org/dist/v24.12.0/node-v24.12.0-darwin-arm64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:b82ea4c62fd08e250cab59d625e75d77cc5b0a3d60c6698ebee4545c88a169c5", url = "https://nodejs.org/dist/v24.12.0/node-v24.12.0-darwin-x64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:9c125f61ae947b52e779095830f9cac267846a043ef7192183c84016aaad2812", url = "https://nodejs.org/dist/v24.12.0/node-v24.12.0-win-x64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:0f6d40b94c6a2eb6b4c240ffc8b9fd3ada7ab044c177dd413c06e1ef9a63f081", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-linux-arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:6223aad1a81f9d1e7b682c59d12e2de233f7b4c37475cd40d1c89c42b737ffa8", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-linux-x64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:d595961e563fcae057d4a0fb992f175a54d97fcc4a14dc2d474d92ddeea3b9f8", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-darwin-arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:6f03c1b48ddbe1b129a6f8038be08e0899f05f17185b4d3e4350180ab669a7f3", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-darwin-x64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:ca2742695be8de44027d71b3f53a4bdb36009b95575fe1ae6f7f0b5ce091cb88", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-win-x64.zip"}
 
 [[tools."npm:@anthropic-ai/claude-code"]]
-version = "2.1.6"
+version = "2.1.7"
 backend = "npm:@anthropic-ai/claude-code"
 
 [[tools."npm:@google/gemini-cli"]]
