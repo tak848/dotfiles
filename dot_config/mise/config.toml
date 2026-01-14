@@ -26,7 +26,7 @@ go = "1.25.5"
 # CLI ツール（aqua backend）
 # ============================================
 # GitHub CLI
-"aqua:cli/cli" = "2.83.2"
+"aqua:cli/cli" = "2.85.0"
 
 # シェル関連
 "aqua:junegunn/fzf" = "0.67.0"
@@ -71,15 +71,15 @@ go = "1.25.5"
 
 # その他（1password/cli は aqua CLI で管理）
 "aqua:temporalio/cli" = "1.5.1"
-"aqua:jdx/usage" = "2.11.0"
+"aqua:jdx/usage" = "2.12.0"
 
 # ============================================
 # npm グローバルパッケージ
 # ============================================
 "npm:@anthropic-ai/claude-code" = "2.1.7"
-"npm:@google/gemini-cli" = "0.23.0"
-"npm:@openai/codex" = "0.80.0"
+"npm:@google/gemini-cli" = "0.24.0"
+"npm:@openai/codex" = "0.81.0"
 "npm:ccusage" = "18.0.5"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260113.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260114.1"
 "npm:cc-sdd" = "2.0.5"
 "npm:difit" = "2.2.7"
