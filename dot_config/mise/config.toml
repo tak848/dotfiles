@@ -13,7 +13,7 @@ locked = false
 # ============================================
 node = "24.13.0"
 pnpm = "10.28.0"
-go = "1.25.5"
+go = "1.25.6"
 
 # ============================================
 # aqua CLI（github backend）
@@ -50,7 +50,7 @@ go = "1.25.5"
 "aqua:neovim/neovim" = "0.11.5"
 
 # Python ツール
-"aqua:astral-sh/uv" = "0.9.25"
+"aqua:astral-sh/uv" = "0.9.26"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
@@ -78,8 +78,8 @@ go = "1.25.5"
 # ============================================
 "npm:@anthropic-ai/claude-code" = "2.1.7"
 "npm:@google/gemini-cli" = "0.24.0"
-"npm:@openai/codex" = "0.84.0"
+"npm:@openai/codex" = "0.85.0"
 "npm:ccusage" = "18.0.5"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260114.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260115.1"
 "npm:cc-sdd" = "2.0.5"
 "npm:difit" = "2.2.7"
