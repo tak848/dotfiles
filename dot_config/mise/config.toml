@@ -78,7 +78,7 @@ go = "1.25.5"
 # ============================================
 "npm:@anthropic-ai/claude-code" = "2.1.7"
 "npm:@google/gemini-cli" = "0.24.0"
-"npm:@openai/codex" = "0.81.0"
+"npm:@openai/codex" = "0.84.0"
 "npm:ccusage" = "18.0.5"
 "npm:@typescript/native-preview" = "7.0.0-dev.20260114.1"
 "npm:cc-sdd" = "2.0.5"
