@@ -39,19 +39,17 @@
       'Bash(gh pr diff:*)',
       'Bash(gh issue create:*)',
       'Bash(gh issue edit:*)',
-      'Bash(git checkout:*)',
+      'Bash(git switch:*)',
+      'Bash(git restore:*)',
       'Bash(git add:*)',
+      'Bash(git commit:*)',
       'Bash(git push:*)',
       // checkoutは都度確認
       // "Bash(git checkout:*)",
-      // switchは都度確認
-      // "Bash(git switch:*)",
       'Bash(git remote set-url:*)',
       'Bash(git pull:*)',
       'Bash(git reset:*)',
       'Bash(git cherry-pick:*)',
-      // commitは都度確認
-      // "Bash(git commit:*)",
       // docker composeは都度確認
       // "Bash(docker compose:*)",
       'Bash(docker compose ps:*)',
@@ -93,7 +91,12 @@
       'mcp__serena-global__think_about_task_adherence',
       'mcp__serena-global__think_about_whether_you_are_done',
     ],
-    deny: [],
+    deny: [
+      'Bash(git commit*--amend*)',
+      'Bash(git commit*--no-gpg-sign*)',
+      'Bash(git commit*-S false*)',
+      'Bash(git reset*--hard*)',
+    ],
   },
   // model: 'claude-opus-4-1-20250805',
   model: 'claude-opus-4-5',
