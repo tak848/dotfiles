@@ -48,6 +48,7 @@
       // "Bash(git checkout:*)",
       'Bash(git remote set-url:*)',
       'Bash(git pull:*)',
+      'Bash(git fetch:*)',
       'Bash(git reset:*)',
       'Bash(git cherry-pick:*)',
       // docker composeは都度確認
