@@ -1,3 +1,12 @@
+# ヒストリーの自動バックアップ（週1回、.local/share に保存）
+_zsh_history_backup="${XDG_DATA_HOME:-$HOME/.local/share}/zsh_history_backup"
+if [[ -f ~/.zsh_history ]]; then
+  if [[ ! -f "$_zsh_history_backup" ]] || [[ $(find "$_zsh_history_backup" -mtime +7 2>/dev/null) ]]; then
+    cp ~/.zsh_history "$_zsh_history_backup"
+  fi
+fi
+unset _zsh_history_backup
+
 # compinit キャッシュ化（24時間に1回のみ再構築）
 autoload -Uz compinit
 if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
