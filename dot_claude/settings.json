@@ -97,11 +97,14 @@
          "Bash(gh pr diff:*)",
          "Bash(gh issue create:*)",
          "Bash(gh issue edit:*)",
-         "Bash(git checkout:*)",
+         "Bash(git switch:*)",
+         "Bash(git restore:*)",
          "Bash(git add:*)",
+         "Bash(git commit:*)",
          "Bash(git push:*)",
          "Bash(git remote set-url:*)",
          "Bash(git pull:*)",
+         "Bash(git fetch:*)",
          "Bash(git reset:*)",
          "Bash(git cherry-pick:*)",
          "Bash(docker compose ps:*)",
@@ -134,6 +137,11 @@
          "mcp__serena-global__think_about_whether_you_are_done"
       ],
       "defaultMode": "plan",
-      "deny": [ ]
+      "deny": [
+         "Bash(git commit*--amend*)",
+         "Bash(git commit*--no-gpg-sign*)",
+         "Bash(git commit*-S false*)",
+         "Bash(git reset*--hard*)"
+      ]
    }
 }

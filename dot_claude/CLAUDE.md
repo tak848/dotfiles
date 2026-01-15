@@ -38,3 +38,8 @@ z ディレクトリは、ユーザーの `.config/git/ignore` により ignore 
 
 ファイルを編集する際は、必ず最終行に空行を入れてください。
 これにより、Git での差分表示が見やすくなり、POSIX 準拠のテキストファイルとなります。
+
+## Git 許可設定
+
+- 自動許可: `git switch`, `git restore`, `git commit`（amend除く）
+- 禁止: `--amend`, `--no-gpg-sign`, `reset --hard`
