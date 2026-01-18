@@ -276,7 +276,7 @@ version = "18.0.5"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
-version = "2.2.7"
+version = "3.0.2"
 backend = "npm:difit"
 
 [[tools.pnpm]]
