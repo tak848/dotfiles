@@ -87,13 +87,13 @@ backend = "aqua:jdx/usage"
 "platforms.macos-x64" = { checksum = "sha256:5a9ae96cd700fce9de129c91e4e816698dfee854189cc3a180b3986746bcd1d4", url = "https://github.com/jdx/usage/releases/download/v2.12.0/usage-universal-apple-darwin.tar.gz"}
 
 [[tools."aqua:jesseduffield/lazydocker"]]
-version = "0.24.3"
+version = "0.24.4"
 backend = "aqua:jesseduffield/lazydocker"
-"platforms.linux-arm64" = { checksum = "sha256:fa233d7303f34bf2c71a8a53afd761852ad97c0dbeac4dbf806f8f06ef6e4c9e", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.3/lazydocker_0.24.3_Linux_arm64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:39f81a138fbd3290b5b78fa22d73793f856a2323b39241644c4fcc197718cdb4", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.3/lazydocker_0.24.3_Linux_x86_64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:685d1b24048f9958fbc7f5a7efea9c26d81a6164f432883079993253460e4879", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.3/lazydocker_0.24.3_Darwin_arm64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:3f5f0c3127cdf94c91c62e001ef16b510711ef022c26fe4db2a392dfec88b9b7", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.3/lazydocker_0.24.3_Darwin_x86_64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:88009c4a3f783fb72b6fcd6b7f9dffc0b4c7db2498b1d4212139d22b9f29e2cd", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.3/lazydocker_0.24.3_Windows_x86_64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:0fcf85b736895f46daa38eec5871ef1ca3d1e38b20201b2811b26258faccf1c7", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.4/lazydocker_0.24.4_Linux_arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:c47e6f4b61debde5422183c7eb446a704a92c58b4c35bbd128c722d8bf269a86", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.4/lazydocker_0.24.4_Linux_x86_64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:4d0e6c42b34962713c0a22c5a841901c58b54a8d0791ba2ae8e4906985bac7f3", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.4/lazydocker_0.24.4_Darwin_arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:9e6bb0c2ec758114e14d5fa5f6aa6342cc026d5f7458ad0b125f728e24e3c0dc", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.4/lazydocker_0.24.4_Darwin_x86_64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:ca316f4f994a0af5c71525398a34192d01bbf6ac05097b39d96db1842855f349", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.4/lazydocker_0.24.4_Windows_x86_64.zip"}
 
 [[tools."aqua:jesseduffield/lazygit"]]
 version = "0.58.1"
@@ -194,13 +194,13 @@ backend = "aqua:temporalio/cli"
 "platforms.windows-x64" = { checksum = "sha256:7f9f65b588d4d9fd55733ad688e1ffb964ddbef18255a395ec8b551adbc30d80", url = "https://github.com/temporalio/cli/releases/download/v1.5.1/temporal_cli_1.5.1_windows_amd64.tar.gz"}
 
 [[tools."aqua:twpayne/chezmoi"]]
-version = "2.69.1"
+version = "2.69.3"
 backend = "aqua:twpayne/chezmoi"
-"platforms.linux-arm64" = { checksum = "sha256:aa267b9e759c6fb368dcbf1b03679e42700f8b916a52c369c3e962072a88ffe0", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.1/chezmoi_2.69.1_linux_arm64.pkg.tar.zst"}
-"platforms.linux-x64" = { checksum = "sha256:897e078203da4d52da1e62e7227526bf83439cbb848931e96b869fe3a5fb3619", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.1/chezmoi_2.69.1_linux-glibc_amd64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:9d844ca82edd2e7323ca088a46cb191bbb0ba820b965791dbe709be525ec9a4a", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.1/chezmoi_2.69.1_darwin_arm64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:323cc490e684f3ec7ba23ceaaf33a3688f306c8e83c152da0f27801f66dfff81", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.1/chezmoi_2.69.1_darwin_amd64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:433d45d2c186e7e2cd6aa639bb58c8e27abcbc20b6f47b6650dd2f8fd5d794a4", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.1/chezmoi_2.69.1_windows_amd64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:0aef9ef75ee33cffb483a82c474b495d428e0f7941ab7898263c3519006e0662", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.3/chezmoi_2.69.3_linux_arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:9b9bf911efed8aba28bd6f5df1e780a6123dc3fb177004c1ca36ec2b9eca7628", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.3/chezmoi_2.69.3_linux_amd64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:c5717b0d4d84d2941c2582fec26854d316ee5d7c27ec73903f7840554f1baeda", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.3/chezmoi_2.69.3_darwin_arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:9dd51eccb801d3557f61c8559f4f31e5ebb21c4a1d983940141383b9b5069458", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.3/chezmoi_2.69.3_darwin_amd64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:6504c72d9e11c57217a6c62586b588bc506f604618d7660a86b848165584af45", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.3/chezmoi_2.69.3_windows_amd64.zip"}
 
 [[tools."aqua:x-motemen/ghq"]]
 version = "1.8.0"
@@ -252,7 +252,7 @@ backend = "core:node"
 "platforms.windows-x64" = { checksum = "sha256:ca2742695be8de44027d71b3f53a4bdb36009b95575fe1ae6f7f0b5ce091cb88", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-win-x64.zip"}
 
 [[tools."npm:@anthropic-ai/claude-code"]]
-version = "2.1.7"
+version = "2.1.12"
 backend = "npm:@anthropic-ai/claude-code"
 
 [[tools."npm:@google/gemini-cli"]]
@@ -260,11 +260,11 @@ version = "0.24.0"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@openai/codex"]]
-version = "0.85.0"
+version = "0.87.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260115.1"
+version = "7.0.0-dev.20260118.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
