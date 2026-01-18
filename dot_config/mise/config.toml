@@ -35,7 +35,7 @@ go = "1.25.6"
 # zoxide は aqua CLI で管理（mise lock で checksum 取得不可）
 
 # 検索・ファイル操作
-"aqua:twpayne/chezmoi" = "2.69.1"
+"aqua:twpayne/chezmoi" = "2.69.3"
 "aqua:BurntSushi/ripgrep" = "15.1.0"
 "aqua:phiresky/ripgrep-all" = "0.10.10"
 # rga依存: ドキュメント変換（docx, epub, odt等）
@@ -44,7 +44,7 @@ go = "1.25.6"
 "aqua:mikefarah/yq" = "4.50.1"
 "aqua:x-motemen/ghq" = "1.8.0"
 "aqua:jesseduffield/lazygit" = "0.58.1"
-"aqua:jesseduffield/lazydocker" = "0.24.3"
+"aqua:jesseduffield/lazydocker" = "0.24.4"
 
 # エディタ
 "aqua:neovim/neovim" = "0.11.5"
@@ -76,10 +76,10 @@ go = "1.25.6"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"npm:@anthropic-ai/claude-code" = "2.1.7"
+"npm:@anthropic-ai/claude-code" = "2.1.12"
 "npm:@google/gemini-cli" = "0.24.0"
-"npm:@openai/codex" = "0.85.0"
+"npm:@openai/codex" = "0.87.0"
 "npm:ccusage" = "18.0.5"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260115.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260118.1"
 "npm:cc-sdd" = "2.0.5"
 "npm:difit" = "2.2.7"
