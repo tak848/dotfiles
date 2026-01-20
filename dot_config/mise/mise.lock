@@ -34,13 +34,13 @@ backend = "aqua:cli/cli"
 "platforms.windows-x64" = { checksum = "sha256:def347c8bbb22c79109dc546d1c083753512e54fd48deca41aad73b9beef9277", url = "https://github.com/cli/cli/releases/download/v2.85.0/gh_2.85.0_windows_amd64.zip"}
 
 [[tools."aqua:cloudflare/cloudflared"]]
-version = "2025.11.1"
+version = "2026.1.1"
 backend = "aqua:cloudflare/cloudflared"
-"platforms.linux-arm64" = { checksum = "sha256:9979dc152097a29b6de4d1ef13e2f1821c67a6f096f88cc18f0fd25106305d3a", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-linux-arm64"}
-"platforms.linux-x64" = { checksum = "sha256:991dffd8889ee9f0147b6b48933da9e4407e68ea8c6d984f55fa2d3db4bb431d", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-linux-amd64"}
-"platforms.macos-arm64" = { checksum = "sha256:155a288fef19dba08f0c7145c16a207baf137462d8a1289a78bf8564f9e51244", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-darwin-amd64.tgz"}
-"platforms.macos-x64" = { checksum = "sha256:155a288fef19dba08f0c7145c16a207baf137462d8a1289a78bf8564f9e51244", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-darwin-amd64.tgz"}
-"platforms.windows-x64" = { checksum = "sha256:413f9b24dc6e61a455564651524f167b8ce29ac4ccd40703dea7af93cd37ed39", url = "https://github.com/cloudflare/cloudflared/releases/download/2025.11.1/cloudflared-windows-amd64.exe"}
+"platforms.linux-arm64" = { checksum = "sha256:2b32a615f2611c4b4eec6eae8910863794b363b9da4e89f023b2356a1d9e60b2", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.1.1/cloudflared-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:0c3de409287cc60264cd59a285c434a243ec6d1d79ff39dc8d36b716f9dda7ef", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.1.1/cloudflared-linux-amd64"}
+"platforms.macos-arm64" = { checksum = "sha256:b45077ca6eaea2a1987c58ac6a4a1e03531451b4ae51e3e5046155be57985e11", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.1.1/cloudflared-darwin-amd64.tgz"}
+"platforms.macos-x64" = { checksum = "sha256:b45077ca6eaea2a1987c58ac6a4a1e03531451b4ae51e3e5046155be57985e11", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.1.1/cloudflared-darwin-amd64.tgz"}
+"platforms.windows-x64" = { checksum = "sha256:75b28989df6a4ed3805732c5c3245c2058481a56cf9f11693e067e1339a6d0aa", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.1.1/cloudflared-windows-amd64.exe"}
 
 [[tools."aqua:direnv/direnv"]]
 version = "2.37.1"
