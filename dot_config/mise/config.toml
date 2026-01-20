@@ -54,7 +54,7 @@ go = "1.25.6"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
-"aqua:cloudflare/cloudflared" = "2025.11.1"
+"aqua:cloudflare/cloudflared" = "2026.1.1"
 
 # 開発ツール
 "aqua:bufbuild/buf" = "1.63.0"
