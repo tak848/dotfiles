@@ -17,12 +17,12 @@ backend = "aqua:astral-sh/uv"
 "platforms.windows-x64" = { checksum = "sha256:eb02fd95d8e0eed462b4a67ecdd320d865b38c560bffcda9a0b87ec944bdf036", url = "https://github.com/astral-sh/uv/releases/download/0.9.26/uv-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:bufbuild/buf"]]
-version = "1.63.0"
+version = "1.64.0"
 backend = "aqua:bufbuild/buf"
-"platforms.linux-arm64" = { checksum = "sha256:50dadf9687749ecb3cbe1920a2dcdb3b8ae2a857467f5814c9089d691819f614", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Linux-aarch64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:51f34d89b9dc392bd715a2b15677d5762951a5d1e41fbb658d274e6e568e6775", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Linux-x86_64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:34e47789099de8dfccf29eac6af31384a6c0ed9094d848dc6b22641396f11b2a", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Darwin-x86_64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:a21c0e0b820fa0810b8b585ccb1658f530a02648dfb68cebb734aa132ed75e3f", url = "https://github.com/bufbuild/buf/releases/download/v1.63.0/buf-Windows-x86_64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:209897ab67512d1053d9edd23c28f4698406c376c2bea04e235df1e088bc573a", url = "https://github.com/bufbuild/buf/releases/download/v1.64.0/buf-Linux-aarch64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:e4d2aa7f83e00678a5d7a84949a566a477e9249df35fade57c61feafe3766fa4", url = "https://github.com/bufbuild/buf/releases/download/v1.64.0/buf-Linux-x86_64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:7262a948a4c6fa4f4a9b685556e3f9f0b3e0fc5f6982016d91a36a6d59b12b9c", url = "https://github.com/bufbuild/buf/releases/download/v1.64.0/buf-Darwin-x86_64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:097b0ba51f424fc6811ea30ba3a0a70a75c457126ca09fa45cc5da4cfefcb26e", url = "https://github.com/bufbuild/buf/releases/download/v1.64.0/buf-Windows-x86_64.zip"}
 
 [[tools."aqua:cli/cli"]]
 version = "2.85.0"
@@ -79,12 +79,12 @@ backend = "aqua:grafana/jsonnet-language-server"
 "platforms.windows-x64" = { checksum = "sha256:53d233a1927afa52f39a2ae5396dc7ffeb13283b5f13edfa6dfdc1f41e71199b", url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.16.0/jsonnet-language-server_0.16.0_windows_amd64.exe"}
 
 [[tools."aqua:jdx/usage"]]
-version = "2.12.0"
+version = "2.13.1"
 backend = "aqua:jdx/usage"
-"platforms.linux-arm64" = { checksum = "sha256:497188afd45955e0b1253fb7f02b1cbae03f73cb3a0b0539572aaae22509e4a3", url = "https://github.com/jdx/usage/releases/download/v2.12.0/usage-aarch64-unknown-linux-musl.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:a8a7f4318f7e2dad95ecb3591847a999a11d1c959746fb5bc72dfbc8e2961055", url = "https://github.com/jdx/usage/releases/download/v2.12.0/usage-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:5a9ae96cd700fce9de129c91e4e816698dfee854189cc3a180b3986746bcd1d4", url = "https://github.com/jdx/usage/releases/download/v2.12.0/usage-universal-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:5a9ae96cd700fce9de129c91e4e816698dfee854189cc3a180b3986746bcd1d4", url = "https://github.com/jdx/usage/releases/download/v2.12.0/usage-universal-apple-darwin.tar.gz"}
+"platforms.linux-arm64" = { checksum = "sha256:7fa8a8aefe2564384b0c60cd3072bd190cb429b0506ad8c3e0d96b5ab07e3bb0", url = "https://github.com/jdx/usage/releases/download/v2.13.1/usage-aarch64-unknown-linux-musl.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:6c0a17eaee4f6fad5aba79c3151678f92dd493854fc4be78fe58902abc101b40", url = "https://github.com/jdx/usage/releases/download/v2.13.1/usage-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:5c9a1b72fb87907da5bb8e829c00090485ef08b99579a6008bb685dc3414318d", url = "https://github.com/jdx/usage/releases/download/v2.13.1/usage-universal-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:5c9a1b72fb87907da5bb8e829c00090485ef08b99579a6008bb685dc3414318d", url = "https://github.com/jdx/usage/releases/download/v2.13.1/usage-universal-apple-darwin.tar.gz"}
 
 [[tools."aqua:jesseduffield/lazydocker"]]
 version = "0.24.4"
@@ -252,11 +252,11 @@ backend = "core:node"
 "platforms.windows-x64" = { checksum = "sha256:ca2742695be8de44027d71b3f53a4bdb36009b95575fe1ae6f7f0b5ce091cb88", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-win-x64.zip"}
 
 [[tools."npm:@anthropic-ai/claude-code"]]
-version = "2.1.12"
+version = "2.1.14"
 backend = "npm:@anthropic-ai/claude-code"
 
 [[tools."npm:@google/gemini-cli"]]
-version = "0.24.0"
+version = "0.24.5"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@openai/codex"]]
@@ -264,7 +264,7 @@ version = "0.87.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260118.1"
+version = "7.0.0-dev.20260120.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -276,14 +276,14 @@ version = "18.0.5"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
-version = "3.0.2"
+version = "3.0.3"
 backend = "npm:difit"
 
 [[tools.pnpm]]
-version = "10.28.0"
+version = "10.28.1"
 backend = "aqua:pnpm/pnpm"
-"platforms.linux-arm64" = { checksum = "sha256:5bf35f1927d5ea0aa76408504f834e3089679d9e18342ab19502a28fb0116391", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.0/pnpm-linux-arm64"}
-"platforms.linux-x64" = { checksum = "sha256:348e863d17a62411a65f900e8d91395acabae9e9237653ccc3c36cb385965f28", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.0/pnpm-linux-x64"}
-"platforms.macos-arm64" = { checksum = "sha256:b6cfee40fcb09e68a874ffbf300eb1ef9dec11302fd03637a4bc605f3f9405cb", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.0/pnpm-macos-arm64"}
-"platforms.macos-x64" = { checksum = "sha256:99431e91d721169c2050d5e46abefc6f0d23c49e635a5964dcb573d9fe89975a", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.0/pnpm-macos-x64"}
-"platforms.windows-x64" = { checksum = "sha256:daed0979c3754cdc2e467ca6a298d48fedbc0fad92f14f4396f44a0a3dd2b730", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.0/pnpm-win-x64.exe"}
+"platforms.linux-arm64" = { checksum = "sha256:bbc6860d6c7eb33bcafe670874323cd6617b03e46f8b34163bb0691eac8156f3", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.1/pnpm-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:e1a90745bbab7aad1de6886e5c6da978463fe8382953d1406e0e30661d0613a1", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.1/pnpm-linux-x64"}
+"platforms.macos-arm64" = { checksum = "sha256:6c123dcd8c7eab530f51f0544e7c893a5249cabda5a9469db63262cc7a738fcb", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.1/pnpm-macos-arm64"}
+"platforms.macos-x64" = { checksum = "sha256:11cc2b5c9e6f0e1d6e2bfb414e0db3d26f07378a76c2c045ec9dbecc91050bd4", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.1/pnpm-macos-x64"}
+"platforms.windows-x64" = { checksum = "sha256:6205534c0e8acd0cc3a2da48ee8a3ece33e7e170ab84880f888edca51a795312", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.1/pnpm-win-x64.exe"}
