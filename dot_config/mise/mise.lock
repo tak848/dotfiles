@@ -25,13 +25,13 @@ backend = "aqua:bufbuild/buf"
 "platforms.windows-x64" = { checksum = "sha256:097b0ba51f424fc6811ea30ba3a0a70a75c457126ca09fa45cc5da4cfefcb26e", url = "https://github.com/bufbuild/buf/releases/download/v1.64.0/buf-Windows-x86_64.zip"}
 
 [[tools."aqua:cli/cli"]]
-version = "2.85.0"
+version = "2.86.0"
 backend = "aqua:cli/cli"
-"platforms.linux-arm64" = { checksum = "sha256:c554878f62506c88464ef94474322d899dfb30468bb234f23e2355e8e1613cb2", url = "https://github.com/cli/cli/releases/download/v2.85.0/gh_2.85.0_linux_arm64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:5dcc4e282b9c22c0d31c217805976448c966cfc56c20157c78385a8a62c93cf0", url = "https://github.com/cli/cli/releases/download/v2.85.0/gh_2.85.0_linux_amd64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:3d6999b85fa1e63aadec49b65986280578e8094c394a3776c24c789f0cc73cef", url = "https://github.com/cli/cli/releases/download/v2.85.0/gh_2.85.0_macOS_arm64.zip"}
-"platforms.macos-x64" = { checksum = "sha256:e58bdb7da9cf4c5254f6b847198d18af7c07c486c2a3af94ad957a48c1051c1c", url = "https://github.com/cli/cli/releases/download/v2.85.0/gh_2.85.0_macOS_amd64.zip"}
-"platforms.windows-x64" = { checksum = "sha256:def347c8bbb22c79109dc546d1c083753512e54fd48deca41aad73b9beef9277", url = "https://github.com/cli/cli/releases/download/v2.85.0/gh_2.85.0_windows_amd64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:83cf7a7962ea9dfcc2c123666695792916a87af32cba5f1f6e585db08fa57547", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_linux_arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:f3b08bd6a28420cc2229b0a1a687fa25f2b838d3f04b297414c1041ca68103c7", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_linux_amd64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:bde753978a352c5ae6c4abec47334d516e82807af20c9dbbd45507a5a0aedaaa", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_macOS_arm64.zip"}
+"platforms.macos-x64" = { checksum = "sha256:ced7094d05702eb54a63542abd8a1dc570b7e5ae94951844eb1626ba74bc2c60", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_macOS_amd64.zip"}
+"platforms.windows-x64" = { checksum = "sha256:983c74a8c594366b198485187cd6d4d07638f0bf9a9948d51a2a81a5164d8bfd", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_windows_amd64.zip"}
 
 [[tools."aqua:cloudflare/cloudflared"]]
 version = "2025.11.1"
@@ -252,19 +252,19 @@ backend = "core:node"
 "platforms.windows-x64" = { checksum = "sha256:ca2742695be8de44027d71b3f53a4bdb36009b95575fe1ae6f7f0b5ce091cb88", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-win-x64.zip"}
 
 [[tools."npm:@anthropic-ai/claude-code"]]
-version = "2.1.14"
+version = "2.1.17"
 backend = "npm:@anthropic-ai/claude-code"
 
 [[tools."npm:@google/gemini-cli"]]
-version = "0.24.5"
+version = "0.25.1"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@openai/codex"]]
-version = "0.87.0"
+version = "0.89.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260120.1"
+version = "7.0.0-dev.20260122.4"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -276,7 +276,7 @@ version = "18.0.5"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
-version = "3.0.3"
+version = "3.0.5"
 backend = "npm:difit"
 
 [[tools.pnpm]]
