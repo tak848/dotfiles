@@ -58,7 +58,7 @@ go = "1.25.6"
 
 # 開発ツール
 "aqua:bufbuild/buf" = "1.64.0"
-"aqua:go-task/task" = "3.46.4"
+"aqua:go-task/task" = "3.47.0"
 
 # Jsonnet
 "aqua:google/go-jsonnet" = "0.21.0"
@@ -78,7 +78,7 @@ go = "1.25.6"
 # ============================================
 "npm:@anthropic-ai/claude-code" = "2.1.19"
 "npm:@google/gemini-cli" = "0.25.2"
-"npm:@openai/codex" = "0.89.0"
+"npm:@openai/codex" = "0.91.0"
 "npm:ccusage" = "18.0.5"
 "npm:@typescript/native-preview" = "7.0.0-dev.20260124.1"
 "npm:cc-sdd" = "2.0.5"
