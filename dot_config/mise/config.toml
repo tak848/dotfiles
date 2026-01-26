@@ -12,7 +12,7 @@ locked = false
 # ランタイム（core backend）
 # ============================================
 node = "24.13.0"
-pnpm = "10.28.1"
+pnpm = "10.28.2"
 go = "1.25.6"
 
 # ============================================
@@ -47,7 +47,7 @@ go = "1.25.6"
 "aqua:jesseduffield/lazydocker" = "0.24.4"
 
 # エディタ
-"aqua:neovim/neovim" = "0.11.5"
+"aqua:neovim/neovim" = "0.11.6"
 
 # Python ツール
 "aqua:astral-sh/uv" = "0.9.26"
@@ -58,7 +58,7 @@ go = "1.25.6"
 
 # 開発ツール
 "aqua:bufbuild/buf" = "1.64.0"
-"aqua:go-task/task" = "3.47.0"
+"aqua:go-task/task" = "3.48.0"
 
 # Jsonnet
 "aqua:google/go-jsonnet" = "0.21.0"
@@ -71,7 +71,7 @@ go = "1.25.6"
 
 # その他（1password/cli は aqua CLI で管理）
 "aqua:temporalio/cli" = "1.5.1"
-"aqua:jdx/usage" = "2.13.1"
+"aqua:jdx/usage" = "2.15.0"
 
 # ============================================
 # npm グローバルパッケージ
@@ -80,6 +80,6 @@ go = "1.25.6"
 "npm:@google/gemini-cli" = "0.25.2"
 "npm:@openai/codex" = "0.91.0"
 "npm:ccusage" = "18.0.5"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260124.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260126.1"
 "npm:cc-sdd" = "2.0.5"
 "npm:difit" = "3.0.5"

@@ -8,17 +8,17 @@ locked = false  # npm backend が checksum 未対応のため
 [tools]
 # このリポジトリで使うランタイム
 node = "24.13.0"
-pnpm = "10.28.1"
+pnpm = "10.28.2"
 
 # aqua CLI（dot_config/aquaproj-aqua の管理用）
 "github:aquaproj/aqua" = "2.51.2"
 
 # このリポジトリで使う CLI ツール
 "aqua:google/go-jsonnet" = "0.21.0"
-"aqua:go-task/task" = "3.47.0"
+"aqua:go-task/task" = "3.48.0"
 
 # lazy-lock.yaml ワークフローで使用
-"aqua:neovim/neovim" = "0.11.5"
+"aqua:neovim/neovim" = "0.11.6"
 
 # npm パッケージ
 "npm:cc-sdd" = "2.0.5"
