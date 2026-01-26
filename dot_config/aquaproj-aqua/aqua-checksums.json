@@ -21,18 +21,18 @@
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.33.6.pkg",
-      "checksum": "4E8432AE18E1A29235CBCE5A2D6DF9344F720022C2D9D2DB0E8826699F66F306",
+      "id": "http/awscli.amazonaws.com/AWSCLIV2-2.33.7.pkg",
+      "checksum": "23ABD5C7C54C8D56DABF754AF7B01484B7204B7F6AE4CBDDA574E2152E4DF3F0",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.33.6.zip",
-      "checksum": "C0BF3FFB5FD42E03C1D4AB16F940AAD482A2F159273D343E5C879061DD55B6D5",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-aarch64-2.33.7.zip",
+      "checksum": "49D804DE96ECBCB7F9E3887CC499B485F5E17B7A52A3B358BD7FB4DE5CC39B18",
       "algorithm": "sha256"
     },
     {
-      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.33.6.zip",
-      "checksum": "E27A9D9B07429099DD641ED2B3B6664B41FF9471C426E8323C076BA87D215210",
+      "id": "http/awscli.amazonaws.com/awscli-exe-linux-x86_64-2.33.7.zip",
+      "checksum": "4C6FF8EB9E459011A09CDE02E2AFCC5400C2FD08EEA6E22BF9855844355F4405",
       "algorithm": "sha256"
     },
     {
@@ -56,8 +56,8 @@
       "algorithm": "sha256"
     },
     {
-      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.463.0/registry.yaml",
-      "checksum": "EB6F8685A5C55106C93C2C9AB81EDFDF0C3C7022894AF973E8F0D3349EAD87725EE2A892D6F942FF80DD02E33D19EC3F247C2F1AE171F7460294608532661EEA",
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.464.0/registry.yaml",
+      "checksum": "3A808B88889B888ACBB573B97BF3EAB39E0BCE0BD69D423FD6DE4AF5130600C4E9ADCBFE19B5343FDFC437FA5669313AC30A200A7818B0FF3D4ACF9EA3C2B42A",
       "algorithm": "sha512"
     }
   ]
