@@ -76,7 +76,7 @@ go = "1.25.6"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"npm:@anthropic-ai/claude-code" = "2.1.22"
+"npm:@anthropic-ai/claude-code" = "2.1.23"
 "npm:@google/gemini-cli" = "0.26.0"
 "npm:@openai/codex" = "0.92.0"
 "npm:ccusage" = "18.0.5"
