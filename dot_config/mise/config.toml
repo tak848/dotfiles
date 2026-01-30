@@ -50,7 +50,7 @@ go = "1.25.6"
 "aqua:neovim/neovim" = "0.11.6"
 
 # Python ツール
-"aqua:astral-sh/uv" = "0.9.27"
+"aqua:astral-sh/uv" = "0.9.28"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
@@ -76,10 +76,10 @@ go = "1.25.6"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"npm:@anthropic-ai/claude-code" = "2.1.23"
+"npm:@anthropic-ai/claude-code" = "2.1.27"
 "npm:@google/gemini-cli" = "0.26.0"
 "npm:@openai/codex" = "0.92.0"
 "npm:ccusage" = "18.0.5"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260129.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260130.1"
 "npm:cc-sdd" = "2.0.5"
-"npm:difit" = "3.0.7"
+"npm:difit" = "3.0.9"
