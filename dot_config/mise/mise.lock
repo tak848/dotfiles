@@ -8,13 +8,13 @@ backend = "aqua:BurntSushi/ripgrep"
 "platforms.windows-x64" = { checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d87493a", url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:astral-sh/uv"]]
-version = "0.9.27"
+version = "0.9.28"
 backend = "aqua:astral-sh/uv"
-"platforms.linux-arm64" = { checksum = "sha256:f80e97e1154a06e42143a173831289336ca9e34a67096ab070346958153e8e52", url = "https://github.com/astral-sh/uv/releases/download/0.9.27/uv-aarch64-unknown-linux-musl.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:9f269bfb9c2e80808c373902af6a4af6cd5f4b4668b28c44aa09639cfed925c5", url = "https://github.com/astral-sh/uv/releases/download/0.9.27/uv-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:1359538ed8664d172692cf4719ee0933a4a3bfb22fc91b0be1e19e7bdd8f5ef3", url = "https://github.com/astral-sh/uv/releases/download/0.9.27/uv-aarch64-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:3977309c5c79984c13c55d2d1cd7aa114a718eb29436c5bdb4bdfa08bf243438", url = "https://github.com/astral-sh/uv/releases/download/0.9.27/uv-x86_64-apple-darwin.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:c3bf465d5f2b93c836f369aec9f3fa8350843f24abd5f710bb74e72440b82898", url = "https://github.com/astral-sh/uv/releases/download/0.9.27/uv-x86_64-pc-windows-msvc.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:eec3249254efac972d2555ff858f8ed20f05b40fbb38ac83b15cf0a2ccc86749", url = "https://github.com/astral-sh/uv/releases/download/0.9.28/uv-aarch64-unknown-linux-musl.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:83cd032167b6b97ac94830608efe11159b3d485654e39fdb0bf84718ef236afe", url = "https://github.com/astral-sh/uv/releases/download/0.9.28/uv-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:12163fe09eb292d3ad1ea0f132a84485c902e2ff360d57562bf676e6615fcba0", url = "https://github.com/astral-sh/uv/releases/download/0.9.28/uv-aarch64-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:3a8030881d13b824e5168f5e4d060e715e40753249766bda3d52d6771d93b169", url = "https://github.com/astral-sh/uv/releases/download/0.9.28/uv-x86_64-apple-darwin.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:9cb567fcd92f31431220ce620787043b946c30b9bb46ca213780e5ef471453be", url = "https://github.com/astral-sh/uv/releases/download/0.9.28/uv-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:bufbuild/buf"]]
 version = "1.64.0"
@@ -252,7 +252,7 @@ backend = "core:node"
 "platforms.windows-x64" = { checksum = "sha256:ca2742695be8de44027d71b3f53a4bdb36009b95575fe1ae6f7f0b5ce091cb88", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-win-x64.zip"}
 
 [[tools."npm:@anthropic-ai/claude-code"]]
-version = "2.1.23"
+version = "2.1.27"
 backend = "npm:@anthropic-ai/claude-code"
 
 [[tools."npm:@google/gemini-cli"]]
@@ -264,7 +264,7 @@ version = "0.92.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260129.1"
+version = "7.0.0-dev.20260130.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -276,7 +276,7 @@ version = "18.0.5"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
-version = "3.0.7"
+version = "3.0.9"
 backend = "npm:difit"
 
 [[tools.pnpm]]
