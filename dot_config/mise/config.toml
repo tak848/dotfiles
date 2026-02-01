@@ -41,7 +41,7 @@ go = "1.25.6"
 # rga依存: ドキュメント変換（docx, epub, odt等）
 "github:jgm/pandoc" = "3.8.3"
 "aqua:jqlang/jq" = "1.8.1"
-"aqua:mikefarah/yq" = "4.50.1"
+"aqua:mikefarah/yq" = "4.52.2"
 "aqua:x-motemen/ghq" = "1.8.0"
 "aqua:jesseduffield/lazygit" = "0.58.1"
 "aqua:jesseduffield/lazydocker" = "0.24.4"
@@ -71,15 +71,15 @@ go = "1.25.6"
 
 # その他（1password/cli は aqua CLI で管理）
 "aqua:temporalio/cli" = "1.5.1"
-"aqua:jdx/usage" = "2.16.0"
+"aqua:jdx/usage" = "2.16.1"
 
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"npm:@anthropic-ai/claude-code" = "2.1.27"
+"npm:@anthropic-ai/claude-code" = "2.1.29"
 "npm:@google/gemini-cli" = "0.26.0"
-"npm:@openai/codex" = "0.92.0"
+"npm:@openai/codex" = "0.93.0"
 "npm:ccusage" = "18.0.5"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260130.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260131.1"
 "npm:cc-sdd" = "2.0.5"
-"npm:difit" = "3.0.9"
+"npm:difit" = "3.1.1"
