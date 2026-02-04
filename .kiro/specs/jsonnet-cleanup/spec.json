@@ -10,11 +10,11 @@
       "approved": true
     },
     "design": {
-      "generated": true,
-      "approved": true
+      "generated": false,
+      "approved": false
     },
     "tasks": {
-      "generated": true,
+      "generated": false,
       "approved": false
     }
   },
