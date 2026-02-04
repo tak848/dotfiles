@@ -8,21 +8,21 @@ backend = "aqua:BurntSushi/ripgrep"
 "platforms.windows-x64" = { checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d87493a", url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:astral-sh/uv"]]
-version = "0.9.28"
+version = "0.9.29"
 backend = "aqua:astral-sh/uv"
-"platforms.linux-arm64" = { checksum = "sha256:eec3249254efac972d2555ff858f8ed20f05b40fbb38ac83b15cf0a2ccc86749", url = "https://github.com/astral-sh/uv/releases/download/0.9.28/uv-aarch64-unknown-linux-musl.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:83cd032167b6b97ac94830608efe11159b3d485654e39fdb0bf84718ef236afe", url = "https://github.com/astral-sh/uv/releases/download/0.9.28/uv-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:12163fe09eb292d3ad1ea0f132a84485c902e2ff360d57562bf676e6615fcba0", url = "https://github.com/astral-sh/uv/releases/download/0.9.28/uv-aarch64-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:3a8030881d13b824e5168f5e4d060e715e40753249766bda3d52d6771d93b169", url = "https://github.com/astral-sh/uv/releases/download/0.9.28/uv-x86_64-apple-darwin.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:9cb567fcd92f31431220ce620787043b946c30b9bb46ca213780e5ef471453be", url = "https://github.com/astral-sh/uv/releases/download/0.9.28/uv-x86_64-pc-windows-msvc.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:b1edc94f5d6c36bb28a20f8c8afb400e55a428fcf396b03bf78cb7394f75077c", url = "https://github.com/astral-sh/uv/releases/download/0.9.29/uv-aarch64-unknown-linux-musl.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:44c93c73e8870e003bda17ab50d433e27d201d0cb28d2bb75351ef1497ffa9db", url = "https://github.com/astral-sh/uv/releases/download/0.9.29/uv-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:0729ddd5c02df33669b03627aa5d9ac7cde4421657f808d54585e3cda944bb55", url = "https://github.com/astral-sh/uv/releases/download/0.9.29/uv-aarch64-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:d251e48db2a962272a2efeb2771c82c02e40f473193a255e8e5c05eb61112139", url = "https://github.com/astral-sh/uv/releases/download/0.9.29/uv-x86_64-apple-darwin.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:9825b1a5955d8a432b664e56660641aac8886ed30cd9c59a94aacc68ae9116ce", url = "https://github.com/astral-sh/uv/releases/download/0.9.29/uv-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:bufbuild/buf"]]
-version = "1.64.0"
+version = "1.65.0"
 backend = "aqua:bufbuild/buf"
-"platforms.linux-arm64" = { checksum = "sha256:209897ab67512d1053d9edd23c28f4698406c376c2bea04e235df1e088bc573a", url = "https://github.com/bufbuild/buf/releases/download/v1.64.0/buf-Linux-aarch64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:e4d2aa7f83e00678a5d7a84949a566a477e9249df35fade57c61feafe3766fa4", url = "https://github.com/bufbuild/buf/releases/download/v1.64.0/buf-Linux-x86_64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:7262a948a4c6fa4f4a9b685556e3f9f0b3e0fc5f6982016d91a36a6d59b12b9c", url = "https://github.com/bufbuild/buf/releases/download/v1.64.0/buf-Darwin-x86_64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:097b0ba51f424fc6811ea30ba3a0a70a75c457126ca09fa45cc5da4cfefcb26e", url = "https://github.com/bufbuild/buf/releases/download/v1.64.0/buf-Windows-x86_64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:53b4854a5ce61e02915e134370ad9c85f85cc3c906cbc464dddba5c450dee1ff", url = "https://github.com/bufbuild/buf/releases/download/v1.65.0/buf-Linux-aarch64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:15dfd76f882f6648aa3b9fcd23eaa149826cc9000a35bc89ced50ddca689e890", url = "https://github.com/bufbuild/buf/releases/download/v1.65.0/buf-Linux-x86_64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:c70d364478f61cd444455f03cfc44b503afd4cb0a47be045bad4553f117fbf7c", url = "https://github.com/bufbuild/buf/releases/download/v1.65.0/buf-Darwin-x86_64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:ca122b8ca406140e2f795d9fbb578e124773d50094df26e4a337f3735b7cf753", url = "https://github.com/bufbuild/buf/releases/download/v1.65.0/buf-Windows-x86_64.zip"}
 
 [[tools."aqua:cli/cli"]]
 version = "2.86.0"
@@ -203,13 +203,13 @@ backend = "aqua:twpayne/chezmoi"
 "platforms.windows-x64" = { checksum = "sha256:6504c72d9e11c57217a6c62586b588bc506f604618d7660a86b848165584af45", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.3/chezmoi_2.69.3_windows_amd64.zip"}
 
 [[tools."aqua:x-motemen/ghq"]]
-version = "1.8.0"
+version = "1.8.1"
 backend = "aqua:x-motemen/ghq"
-"platforms.linux-arm64" = { checksum = "sha1:e5a73c5f4785d798a66b10419ab7b43b8525a7e4", url = "https://github.com/x-motemen/ghq/releases/download/v1.8.0/ghq_linux_arm64.zip"}
-"platforms.linux-x64" = { checksum = "sha1:f38219ddbc6ef6febd75556902eee4759bad07c3", url = "https://github.com/x-motemen/ghq/releases/download/v1.8.0/ghq_linux_amd64.zip"}
-"platforms.macos-arm64" = { checksum = "sha1:6fd6333348fdaf78dfbbe36cec168f3e656a63c8", url = "https://github.com/x-motemen/ghq/releases/download/v1.8.0/ghq_darwin_arm64.zip"}
-"platforms.macos-x64" = { checksum = "sha1:f50a794201bac18df1ac8d00e863e9635576aa94", url = "https://github.com/x-motemen/ghq/releases/download/v1.8.0/ghq_darwin_amd64.zip"}
-"platforms.windows-x64" = { checksum = "sha1:008a7afb65de5490506b2786926aca77e2cf53bc", url = "https://github.com/x-motemen/ghq/releases/download/v1.8.0/ghq_windows_amd64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:7b6bacd8dca3c3489b0cafe6b10655d16d753c0a3c676e1680d687ec4cdbda0b", url = "https://github.com/x-motemen/ghq/releases/download/v1.8.1/ghq_linux_arm64.zip"}
+"platforms.linux-x64" = { checksum = "sha256:61ef8582d3dfe3e8d6ce9c16d7293c704ed881c59b5a12ddcf6ed579ecb6bfaf", url = "https://github.com/x-motemen/ghq/releases/download/v1.8.1/ghq_linux_amd64.zip"}
+"platforms.macos-arm64" = { checksum = "sha256:7e2acc04d5993eb88e343cb9403d8052e0e68aa91f21e802326dca8578b14185", url = "https://github.com/x-motemen/ghq/releases/download/v1.8.1/ghq_darwin_arm64.zip"}
+"platforms.macos-x64" = { checksum = "sha256:0ca9e21136ffb19c3bf92689ef4e5a6c6c9d32e90fe3efdd8737ff6b8da5a112", url = "https://github.com/x-motemen/ghq/releases/download/v1.8.1/ghq_darwin_amd64.zip"}
+"platforms.windows-x64" = { checksum = "sha256:6d9e1728990b110abf4ce7778567085954301f389bd813afb28b155c9947302f", url = "https://github.com/x-motemen/ghq/releases/download/v1.8.1/ghq_windows_amd64.zip"}
 
 [[tools."github:aquaproj/aqua"]]
 version = "2.51.2"
@@ -252,23 +252,23 @@ backend = "core:node"
 "platforms.windows-x64" = { checksum = "sha256:ca2742695be8de44027d71b3f53a4bdb36009b95575fe1ae6f7f0b5ce091cb88", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-win-x64.zip"}
 
 [[tools."npm:@anthropic-ai/claude-code"]]
-version = "2.1.29"
+version = "2.1.31"
 backend = "npm:@anthropic-ai/claude-code"
 
 [[tools."npm:@google/gemini-cli"]]
-version = "0.26.0"
+version = "0.27.0"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@openai/codex"]]
-version = "0.93.0"
+version = "0.94.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260131.1"
+version = "7.0.0-dev.20260203.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
-version = "2.0.5"
+version = "2.1.1"
 backend = "npm:cc-sdd"
 
 [[tools."npm:ccusage"]]
@@ -276,7 +276,7 @@ version = "18.0.5"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
-version = "3.1.1"
+version = "3.1.2"
 backend = "npm:difit"
 
 [[tools.pnpm]]
