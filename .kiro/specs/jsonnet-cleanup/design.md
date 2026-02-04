@@ -243,8 +243,9 @@ sequenceDiagram
 - 生成 JSON の存在を前提としない
 
 **Implementation Notes**
-- Integration: `jsonnet --check` または `jsonnetfmt --test` で構文検証
+- Integration: `jsonnetfmt --test` で構文検証（フォーマット一貫性も同時に検証）
 - Validation: Jsonnet 構文エラー時に CI 失敗
+- Command: `jsonnetfmt --test dot_claude/*.jsonnet dot_gemini/*.jsonnet`
 
 ## Data Models
 
@@ -322,6 +323,7 @@ graph TD
     B --> C[Phase 3: Git から JSON 削除]
     C --> D[Phase 4: Taskfile 更新]
     D --> E[Phase 5: CI 更新]
+    E --> F[Phase 6: Steering 更新]
 ```
 
 ### Phase 1: テンプレートファイル追加
@@ -343,6 +345,11 @@ graph TD
 ### Phase 5: CI 更新
 - Jsonnet 構文チェックを追加
 - `task check` の変更に追従
+
+### Phase 6: ステアリング文書更新
+- `.kiro/steering/structure.md` の更新
+- 旧記述: `Task ランナーで自動変換: task generate`
+- 新記述: `chezmoi テンプレート（settings.json.tmpl）による動的生成`
 
 ### Rollback Triggers
 - chezmoi apply が失敗する場合
