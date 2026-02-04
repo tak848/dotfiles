@@ -260,7 +260,7 @@ version = "0.27.0"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@openai/codex"]]
-version = "0.94.0"
+version = "0.95.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
