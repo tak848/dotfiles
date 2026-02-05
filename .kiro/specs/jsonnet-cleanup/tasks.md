@@ -16,7 +16,7 @@
   - `git status` で JSON ファイルが表示されないことを確認
   - _Requirements: 1.1, 1.2, 1.3_
 
-- [ ] 3. (P) Taskfile 更新
+- [x] 3. (P) Taskfile 更新
   - `generate-claude-settings` タスクを削除
   - `generate` タスクを no-op に変更（`default` との依存関係は維持）
   - `check` タスクから JSON diff チェックを除外
