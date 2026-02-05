@@ -9,7 +9,7 @@
   - 生成結果が現在の `task generate` 出力と一致することを検証
   - _Requirements: 2.1, 2.2, 2.3, 2.4_
 
-- [ ] 2. Git 管理変更
+- [x] 2. Git 管理変更
   - `.gitignore` に `dot_claude/settings.json`, `dot_claude/dot_mcp.json`, `dot_gemini/settings.json` を追加
   - `git rm --cached` で JSON ファイルを Git インデックスから削除
   - `dot_claude/*.json`, `dot_gemini/*.json` のファイル自体を削除

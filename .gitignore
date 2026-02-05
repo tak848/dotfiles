@@ -13,3 +13,8 @@
 
 ./task
 .task
+
+# Jsonnet から生成される JSON（chezmoi apply 時に直接生成）
+dot_claude/settings.json
+dot_claude/dot_mcp.json
+dot_gemini/settings.json
