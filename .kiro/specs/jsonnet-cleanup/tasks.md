@@ -2,7 +2,7 @@
 
 ## Tasks
 
-- [ ] 1. chezmoi スクリプト作成
+- [x] 1. chezmoi スクリプト作成
   - `run_onchange_after_generate-jsonnet.sh.tmpl` を作成し、Jsonnet ソース変更時に JSON を直接ホームディレクトリへ生成する
   - 各 Jsonnet ファイルの sha256sum をコメントに含め、変更検知を有効化
   - `chezmoi apply` で `~/.claude/settings.json`, `~/.claude/.mcp.json`, `~/.gemini/settings.json` が正しく生成されることを確認
