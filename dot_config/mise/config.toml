@@ -70,16 +70,16 @@ go = "1.25.7"
 "aqua:tamasfe/taplo" = "0.10.0"
 
 # その他（1password/cli は aqua CLI で管理）
-"aqua:temporalio/cli" = "1.5.1"
+"aqua:temporalio/cli" = "1.6.0"
 "aqua:jdx/usage" = "2.16.1"
 
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"npm:@anthropic-ai/claude-code" = "2.1.31"
-"npm:@google/gemini-cli" = "0.27.0"
-"npm:@openai/codex" = "0.96.0"
+"npm:@anthropic-ai/claude-code" = "2.1.32"
+"npm:@google/gemini-cli" = "0.27.1"
+"npm:@openai/codex" = "0.98.0"
 "npm:ccusage" = "18.0.5"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260204.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260205.1"
 "npm:cc-sdd" = "2.1.1"
 "npm:difit" = "3.1.5"
