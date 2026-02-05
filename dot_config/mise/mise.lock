@@ -185,13 +185,13 @@ backend = "aqua:tamasfe/taplo"
 "platforms.windows-x64" = { url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-windows-x86_64.zip"}
 
 [[tools."aqua:temporalio/cli"]]
-version = "1.5.1"
+version = "1.6.0"
 backend = "aqua:temporalio/cli"
-"platforms.linux-arm64" = { checksum = "sha256:bd1b0db9f18b051026de8bf6cc1505f2510f14bbb7a8b9a4a91fff46c77454f5", url = "https://github.com/temporalio/cli/releases/download/v1.5.1/temporal_cli_1.5.1_linux_arm64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:ddc95e08b0b076efd4ea9733a3f488eb7d2be875f8834e616cd2a37358b4852d", url = "https://github.com/temporalio/cli/releases/download/v1.5.1/temporal_cli_1.5.1_linux_amd64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:cca01b7ea35ad56e2a328d9ae596bf716bd22313ef63c7a761c88354457c2415", url = "https://github.com/temporalio/cli/releases/download/v1.5.1/temporal_cli_1.5.1_darwin_arm64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:bbb73e2a31135abe50a1f1cdb35030c42961df618e8ce9c60ae89f201540c5d9", url = "https://github.com/temporalio/cli/releases/download/v1.5.1/temporal_cli_1.5.1_darwin_amd64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:7f9f65b588d4d9fd55733ad688e1ffb964ddbef18255a395ec8b551adbc30d80", url = "https://github.com/temporalio/cli/releases/download/v1.5.1/temporal_cli_1.5.1_windows_amd64.tar.gz"}
+"platforms.linux-arm64" = { checksum = "sha256:824f54e9025536cbc6c5f07eabcdd9880a09e9e3d9f57ac0a2616350e7c5f503", url = "https://github.com/temporalio/cli/releases/download/v1.6.0/temporal_cli_1.6.0_linux_arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:055cc2d8cb91f91730448544fe2643a89fd5d9ebaae1d431811c62ccd9ca422b", url = "https://github.com/temporalio/cli/releases/download/v1.6.0/temporal_cli_1.6.0_linux_amd64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:e992bfaad4de0ca33407b241cef2a595cf650e58ea32a90787bfbb99cd8a1b26", url = "https://github.com/temporalio/cli/releases/download/v1.6.0/temporal_cli_1.6.0_darwin_arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:ea9845485b1092e8ae7dbe6c4170143c7b3ea3098927a4fe52691c4627bcbec7", url = "https://github.com/temporalio/cli/releases/download/v1.6.0/temporal_cli_1.6.0_darwin_amd64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:c9634de011336b93fdb5a20cf7bac142cf610db0994eb13f52339e10b7d98d42", url = "https://github.com/temporalio/cli/releases/download/v1.6.0/temporal_cli_1.6.0_windows_amd64.tar.gz"}
 
 [[tools."aqua:twpayne/chezmoi"]]
 version = "2.69.3"
@@ -252,19 +252,19 @@ backend = "core:node"
 "platforms.windows-x64" = { checksum = "sha256:ca2742695be8de44027d71b3f53a4bdb36009b95575fe1ae6f7f0b5ce091cb88", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-win-x64.zip"}
 
 [[tools."npm:@anthropic-ai/claude-code"]]
-version = "2.1.31"
+version = "2.1.32"
 backend = "npm:@anthropic-ai/claude-code"
 
 [[tools."npm:@google/gemini-cli"]]
-version = "0.27.0"
+version = "0.27.1"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@openai/codex"]]
-version = "0.96.0"
+version = "0.98.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260204.1"
+version = "7.0.0-dev.20260205.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
