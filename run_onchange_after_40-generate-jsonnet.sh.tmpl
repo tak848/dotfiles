@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+# {{ include "dot_claude/settings.jsonnet" | sha256sum }}
+# {{ include "dot_claude/dot_mcp.jsonnet" | sha256sum }}
+# {{ include "dot_gemini/settings.jsonnet" | sha256sum }}
+# jsonnet ファイルが変更された時のみ JSON を生成する
+
+{{ template "path-setup.tmpl" . }}
+
+if command -v jsonnet &> /dev/null; then
+    echo "Jsonnet から JSON を生成中..."
+
+    # ディレクトリが存在しない場合は作成
+    mkdir -p ~/.claude ~/.gemini
+
+    # Jsonnet から JSON を生成
+    jsonnet "{{ .chezmoi.sourceDir }}/dot_claude/settings.jsonnet" > ~/.claude/settings.json
+    jsonnet "{{ .chezmoi.sourceDir }}/dot_claude/dot_mcp.jsonnet" > ~/.claude/.mcp.json
+    jsonnet "{{ .chezmoi.sourceDir }}/dot_gemini/settings.jsonnet" > ~/.gemini/settings.json
+
+    echo "JSON 生成完了"
+else
+    echo "警告: jsonnet コマンドが見つかりません。JSON ファイルは生成されません。"
+fi

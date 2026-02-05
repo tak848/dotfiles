@@ -1,20 +1,21 @@
 # Taskfile.yaml - 自動生成ファイルの一元管理
 #
 # 目的:
-#   - jsonnet, mise.lock, aqua-checksums, mise bootstrap などの自動生成ファイルを
+#   - mise.lock, aqua-checksums, mise bootstrap などの自動生成ファイルを
 #     統一的なコマンドで管理できるようにする
 #   - ローカル開発と CI で同じタスクを使用し、一貫性を保つ
 #
 # 使い方:
 #   task              # 全ての自動生成を実行
 #   task lock         # lockfiles/checksums/bootstrap のみ
-#   task generate     # jsonnet のみ
-#   task check        # CI 用: 生成後に diff チェック（mise.lock 除外）
+#   task generate     # (No-op) JSON 生成は chezmoi に移行
+#   task check        # CI 用: 生成後に diff チェック（mise.lock, JSON 除外）
 #
 # 注意:
 #   - mise.lock は実行環境（macOS/Linux）によって結果が異なる既知の問題があるため、
 #     CI での diff チェックからは除外している
 #   - mise.lock の更新は Renovate ワークフロー（mise-lock.yaml）に任せる
+#   - JSON 生成は chezmoi apply 時に run_onchange スクリプトで実行される
 #
 # 参考:
 #   - https://taskfile.dev/
@@ -47,28 +48,14 @@ tasks:
       - lock
 
   #############################################################################
-  # jsonnet 生成
-  # Claude/Gemini の設定ファイルを jsonnet から生成
+  # jsonnet 生成 (No-op)
+  # JSON 生成は chezmoi apply 時に run_onchange_after_generate-jsonnet.sh.tmpl で実行
+  # default タスクとの依存関係を維持するために残している
   #############################################################################
-  generate-claude-settings:
-    desc: Generate claude settings.json from jsonnet
-    cmds:
-      - jsonnet dot_claude/settings.jsonnet > dot_claude/settings.json
-      - jsonnet dot_claude/dot_mcp.jsonnet > dot_claude/dot_mcp.json
-      - jsonnet dot_gemini/settings.jsonnet > dot_gemini/settings.json
-    sources:
-      - dot_claude/settings.jsonnet
-      - dot_claude/dot_mcp.jsonnet
-      - dot_gemini/settings.jsonnet
-    generates:
-      - dot_claude/settings.json
-      - dot_claude/dot_mcp.json
-      - dot_gemini/settings.json
-
   generate:
-    desc: Generate all json files from jsonnet
-    deps:
-      - generate-claude-settings
+    desc: (No-op) JSON generation moved to chezmoi
+    cmds:
+      - echo "JSON generation is now handled by chezmoi apply"
 
   #############################################################################
   # mise.lock 生成
@@ -155,16 +142,15 @@ tasks:
   check:
     desc: Check if generated files (except mise.lock) are up-to-date
     cmds:
-      - task: generate
-        vars: {}
       - task: aqua:checksum
         vars: {}
       - task: mise:bootstrap
         vars: {}
       - |
         # mise.lock は実行環境によって差異が出るため除外
-        # jsonnet, aqua-checksums, bootstrap のみチェック
-        CHECK_FILES="dot_claude/*.json dot_gemini/*.json dot_config/aquaproj-aqua/aqua-checksums.json dot_local/bin/executable_mise"
+        # JSON 生成は chezmoi に移行したため除外
+        # aqua-checksums, bootstrap のみチェック
+        CHECK_FILES="dot_config/aquaproj-aqua/aqua-checksums.json dot_local/bin/executable_mise"
         if ! git diff --quiet -- $CHECK_FILES; then
           echo "Error: Generated files are out of date. Run 'task' locally and commit the changes."
           git diff --name-only -- $CHECK_FILES
