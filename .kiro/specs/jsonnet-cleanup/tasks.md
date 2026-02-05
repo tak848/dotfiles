@@ -22,8 +22,8 @@
   - `check` タスクから JSON diff チェックを除外
   - _Requirements: 3.1, 3.2, 3.3_
 
-- [ ] 4. (P) CI 更新
-  - Jsonnet 構文チェックステップを追加（`jsonnet --check` で各ファイルを検証）
+- [x] 4. (P) CI 更新
+  - Jsonnet 構文チェックステップを追加（`jsonnet "$f" > /dev/null` で各ファイルを検証）
   - `task check` が JSON ファイルの存在を前提としないことを確認
   - 構文エラー時にビルドが失敗することを検証
   - _Requirements: 4.1, 4.2, 4.3_

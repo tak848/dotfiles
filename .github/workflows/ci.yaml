@@ -69,6 +69,17 @@ jobs:
           op --version
           zoxide --version
 
+      # Jsonnet ソースファイルの構文チェック
+      # 構文エラーがあればビルドを失敗させる（Requirement 4.2, 4.3）
+      - name: Check Jsonnet syntax
+        run: |
+          echo "=== Checking Jsonnet syntax ==="
+          for f in dot_claude/*.jsonnet dot_gemini/*.jsonnet; do
+            echo "Checking $f..."
+            jsonnet "$f" > /dev/null || exit 1
+          done
+          echo "All Jsonnet files are valid."
+
       # 自動生成ファイルの diff チェック
       # - jsonnet, aqua-checksums, mise bootstrap が最新かどうかを検証
       # - mise.lock は実行環境（macOS/Linux）で結果が異なる既知の問題があるため除外
