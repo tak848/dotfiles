@@ -5,6 +5,14 @@
 {{ template "path-setup.tmpl" . }}
 
 if command -v mise &> /dev/null; then
+    # gh auth token があれば MISE_GITHUB_TOKEN を設定（レート制限回避）
+    if command -v gh &> /dev/null; then
+        token=$(gh auth token 2>/dev/null)
+        if [[ -n "$token" ]]; then
+            export MISE_GITHUB_TOKEN="$token"
+        fi
+    fi
+
     echo "mise install を実行中..."
     mise install
 fi
