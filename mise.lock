@@ -48,10 +48,10 @@ version = "2.1.1"
 backend = "npm:cc-sdd"
 
 [[tools.pnpm]]
-version = "10.28.2"
+version = "10.29.1"
 backend = "aqua:pnpm/pnpm"
-"platforms.linux-arm64" = { checksum = "sha256:6f265c811d1aef8e817e0017cd700d0d345a1100bd8a90358db64eaab2fbff85", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.2/pnpm-linux-arm64"}
-"platforms.linux-x64" = { checksum = "sha256:9f38396f660cd3b1f71e0b0af0b7ba22dd1fd446dc37840a1b6a025868557390", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.2/pnpm-linux-x64"}
-"platforms.macos-arm64" = { checksum = "sha256:38a23bf53d918b5192f71ed58e6df9609da478790f89b20ca5f45c3cd46d1d2c", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.2/pnpm-macos-arm64"}
-"platforms.macos-x64" = { checksum = "sha256:2b86ff518aa100701aecb1b37b84e9ba2aaf0b7c1803dcc9b3a0f7d0681bd27d", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.2/pnpm-macos-x64"}
-"platforms.windows-x64" = { checksum = "sha256:cc3ee9c282e72b02d7eeb2de6bf232697e3aeddb047ef0822cbcaaf33ee8c01c", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.2/pnpm-win-x64.exe"}
+"platforms.linux-arm64" = { checksum = "sha256:09d3821bc2f1ed882885429b25652df8b2f1e25f95b5588ca4664bc9b1096e31", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.1/pnpm-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:df728857c759d9d355b245ae889aee1c54a634d51486e76d1ecaaaead26569b2", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.1/pnpm-linux-x64"}
+"platforms.macos-arm64" = { checksum = "sha256:8d2ea78407abea669c15d1dc28dddd2888040b88319ad7d54bb455f033047bfe", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.1/pnpm-macos-arm64"}
+"platforms.macos-x64" = { checksum = "sha256:c19ff1f2869e7ccd74845a8198ed41478b14d1f2410057adf6468a39adcd75b2", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.1/pnpm-macos-x64"}
+"platforms.windows-x64" = { checksum = "sha256:c2e20df7e15ed446f5f3e33abe013ae861dab2c2dd32bd62065fd43645973e5c", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.1/pnpm-win-x64.exe"}
