@@ -34,13 +34,13 @@ backend = "aqua:cli/cli"
 "platforms.windows-x64" = { checksum = "sha256:983c74a8c594366b198485187cd6d4d07638f0bf9a9948d51a2a81a5164d8bfd", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_windows_amd64.zip"}
 
 [[tools."aqua:cloudflare/cloudflared"]]
-version = "2026.1.2"
+version = "2026.2.0"
 backend = "aqua:cloudflare/cloudflared"
-"platforms.linux-arm64" = { checksum = "sha256:1362498b9975e018f290cc4412af61391cca65cccbc06f2d8b128324ae9a18ef", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.1.2/cloudflared-linux-arm64"}
-"platforms.linux-x64" = { checksum = "sha256:e157c54e929cc289cbd53860453168c2fe3439eb55e2e965a56579252585d9c1", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.1.2/cloudflared-linux-amd64"}
-"platforms.macos-arm64" = { checksum = "sha256:70c30348b7e91858b60bae9a94604393dfc4b64fd552ac48be3ed4f5086525a9", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.1.2/cloudflared-darwin-amd64.tgz"}
-"platforms.macos-x64" = { checksum = "sha256:70c30348b7e91858b60bae9a94604393dfc4b64fd552ac48be3ed4f5086525a9", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.1.2/cloudflared-darwin-amd64.tgz"}
-"platforms.windows-x64" = { checksum = "sha256:6304f5e1c017c038fb74a02c0157b2b63d4bc1f15709c639fcc08cb6dbe4c126", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.1.2/cloudflared-windows-amd64.exe"}
+"platforms.linux-arm64" = { checksum = "sha256:03c5d58e283f521d752dc4436014eb341092edf076eb1095953ab82debe54a8e", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.2.0/cloudflared-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:176746db3be7dc7bd48f3dd287c8930a4645ebb6e6700f883fddda5a4c307c16", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.2.0/cloudflared-linux-amd64"}
+"platforms.macos-arm64" = { checksum = "sha256:685688a260c324eb8d9c9434ca22f0ce4f504fd6acd0706787c4833de8d6eb17", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.2.0/cloudflared-darwin-amd64.tgz"}
+"platforms.macos-x64" = { checksum = "sha256:685688a260c324eb8d9c9434ca22f0ce4f504fd6acd0706787c4833de8d6eb17", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.2.0/cloudflared-darwin-amd64.tgz"}
+"platforms.windows-x64" = { checksum = "sha256:b3279f2186a1c3c438ad5865e802bbbec26090c5d3fdb4ac1113f1143a94837a", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.2.0/cloudflared-windows-amd64.exe"}
 
 [[tools."aqua:direnv/direnv"]]
 version = "2.37.1"
@@ -96,13 +96,13 @@ backend = "aqua:jesseduffield/lazydocker"
 "platforms.windows-x64" = { checksum = "sha256:ca316f4f994a0af5c71525398a34192d01bbf6ac05097b39d96db1842855f349", url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.4/lazydocker_0.24.4_Windows_x86_64.zip"}
 
 [[tools."aqua:jesseduffield/lazygit"]]
-version = "0.58.1"
+version = "0.59.0"
 backend = "aqua:jesseduffield/lazygit"
-"platforms.linux-arm64" = { checksum = "sha256:c0571542a3df894748afc8820fcd2ac16df0970df2ddb429280dfef47b1f2d1e", url = "https://github.com/jesseduffield/lazygit/releases/download/v0.58.1/lazygit_0.58.1_linux_arm64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:61b6b839390c193466fb692f75df4e75ef5e9ced2bf5e0ca8b3848902f0adea9", url = "https://github.com/jesseduffield/lazygit/releases/download/v0.58.1/lazygit_0.58.1_linux_x86_64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:d93a8a217a51f26d0a643a97bd31e3fabcb2e3a78cdbf1f1e533b9cd8bc881ce", url = "https://github.com/jesseduffield/lazygit/releases/download/v0.58.1/lazygit_0.58.1_darwin_arm64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:9f824298c8dbb3efaf6bf93a2e3be8a31fd53213bd3e759b7bd49d7bc7f8e3d0", url = "https://github.com/jesseduffield/lazygit/releases/download/v0.58.1/lazygit_0.58.1_darwin_x86_64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:81f6f925e7eb97b32f89dd9c3597fed245f26fe81c7162a2470d501051f996dd", url = "https://github.com/jesseduffield/lazygit/releases/download/v0.58.1/lazygit_0.58.1_windows_x86_64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:a334a6c125169f21942f1a8b02043932575547a6250a1a734d62111efd92aa8f", url = "https://github.com/jesseduffield/lazygit/releases/download/v0.59.0/lazygit_0.59.0_linux_arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:264283f40a40c899d702a338b20622f690221f753f03bac827c1f34e91f516c2", url = "https://github.com/jesseduffield/lazygit/releases/download/v0.59.0/lazygit_0.59.0_linux_x86_64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:cdd42e86b16b3bc21ec5cbe4be92d688e39f3806b53b63c54d1af4f498302ed8", url = "https://github.com/jesseduffield/lazygit/releases/download/v0.59.0/lazygit_0.59.0_darwin_arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:365db34a92d017f7e77fe03aa461a921c6a31832fa9d427a7b06c86732821f55", url = "https://github.com/jesseduffield/lazygit/releases/download/v0.59.0/lazygit_0.59.0_darwin_x86_64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:3f2c43d4596498ca4e1c31c0430e4a2e015624d82ea25bb306c8695e6613d912", url = "https://github.com/jesseduffield/lazygit/releases/download/v0.59.0/lazygit_0.59.0_windows_x86_64.zip"}
 
 [[tools."aqua:jqlang/jq"]]
 version = "1.8.1"
@@ -252,11 +252,11 @@ backend = "core:node"
 "platforms.windows-x64" = { checksum = "sha256:ca2742695be8de44027d71b3f53a4bdb36009b95575fe1ae6f7f0b5ce091cb88", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-win-x64.zip"}
 
 [[tools."npm:@anthropic-ai/claude-code"]]
-version = "2.1.33"
+version = "2.1.37"
 backend = "npm:@anthropic-ai/claude-code"
 
 [[tools."npm:@google/gemini-cli"]]
-version = "0.27.2"
+version = "0.27.3"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@openai/codex"]]
@@ -264,7 +264,7 @@ version = "0.98.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260205.1"
+version = "7.0.0-dev.20260208.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -280,10 +280,10 @@ version = "3.1.5"
 backend = "npm:difit"
 
 [[tools.pnpm]]
-version = "10.28.2"
+version = "10.29.1"
 backend = "aqua:pnpm/pnpm"
-"platforms.linux-arm64" = { checksum = "sha256:6f265c811d1aef8e817e0017cd700d0d345a1100bd8a90358db64eaab2fbff85", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.2/pnpm-linux-arm64"}
-"platforms.linux-x64" = { checksum = "sha256:9f38396f660cd3b1f71e0b0af0b7ba22dd1fd446dc37840a1b6a025868557390", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.2/pnpm-linux-x64"}
-"platforms.macos-arm64" = { checksum = "sha256:38a23bf53d918b5192f71ed58e6df9609da478790f89b20ca5f45c3cd46d1d2c", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.2/pnpm-macos-arm64"}
-"platforms.macos-x64" = { checksum = "sha256:2b86ff518aa100701aecb1b37b84e9ba2aaf0b7c1803dcc9b3a0f7d0681bd27d", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.2/pnpm-macos-x64"}
-"platforms.windows-x64" = { checksum = "sha256:cc3ee9c282e72b02d7eeb2de6bf232697e3aeddb047ef0822cbcaaf33ee8c01c", url = "https://github.com/pnpm/pnpm/releases/download/v10.28.2/pnpm-win-x64.exe"}
+"platforms.linux-arm64" = { checksum = "sha256:09d3821bc2f1ed882885429b25652df8b2f1e25f95b5588ca4664bc9b1096e31", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.1/pnpm-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:df728857c759d9d355b245ae889aee1c54a634d51486e76d1ecaaaead26569b2", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.1/pnpm-linux-x64"}
+"platforms.macos-arm64" = { checksum = "sha256:8d2ea78407abea669c15d1dc28dddd2888040b88319ad7d54bb455f033047bfe", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.1/pnpm-macos-arm64"}
+"platforms.macos-x64" = { checksum = "sha256:c19ff1f2869e7ccd74845a8198ed41478b14d1f2410057adf6468a39adcd75b2", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.1/pnpm-macos-x64"}
+"platforms.windows-x64" = { checksum = "sha256:c2e20df7e15ed446f5f3e33abe013ae861dab2c2dd32bd62065fd43645973e5c", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.1/pnpm-win-x64.exe"}
