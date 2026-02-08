@@ -12,7 +12,7 @@ locked = false
 # ランタイム（core backend）
 # ============================================
 node = "24.13.0"
-pnpm = "10.28.2"
+pnpm = "10.29.1"
 go = "1.25.7"
 
 # ============================================
@@ -43,7 +43,7 @@ go = "1.25.7"
 "aqua:jqlang/jq" = "1.8.1"
 "aqua:mikefarah/yq" = "4.52.2"
 "aqua:x-motemen/ghq" = "1.8.1"
-"aqua:jesseduffield/lazygit" = "0.58.1"
+"aqua:jesseduffield/lazygit" = "0.59.0"
 "aqua:jesseduffield/lazydocker" = "0.24.4"
 
 # エディタ
@@ -54,7 +54,7 @@ go = "1.25.7"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
-"aqua:cloudflare/cloudflared" = "2026.1.2"
+"aqua:cloudflare/cloudflared" = "2026.2.0"
 
 # 開発ツール
 "aqua:bufbuild/buf" = "1.65.0"
@@ -76,10 +76,10 @@ go = "1.25.7"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"npm:@anthropic-ai/claude-code" = "2.1.33"
-"npm:@google/gemini-cli" = "0.27.2"
+"npm:@anthropic-ai/claude-code" = "2.1.37"
+"npm:@google/gemini-cli" = "0.27.3"
 "npm:@openai/codex" = "0.98.0"
 "npm:ccusage" = "18.0.5"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260205.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260208.1"
 "npm:cc-sdd" = "2.1.1"
 "npm:difit" = "3.1.5"
