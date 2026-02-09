@@ -39,6 +39,8 @@
       'Bash(gh pr diff:*)',
       'Bash(gh issue create:*)',
       'Bash(gh issue edit:*)',
+      'Bash(gh pr checks:*)',
+      'Bash(gh run view:*)',
       'Bash(git switch:*)',
       'Bash(git restore:*)',
       'Bash(git add:*)',
