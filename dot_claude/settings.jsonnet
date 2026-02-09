@@ -93,6 +93,14 @@
       'mcp__serena-global__think_about_collected_information',
       'mcp__serena-global__think_about_task_adherence',
       'mcp__serena-global__think_about_whether_you_are_done',
+
+      'WebSearch',
+      'mcp__context7__resolve-library-id',
+      'mcp__context7__get-library-docs',
+      'mcp__context7__query-docs',
+      'mcp__deepwiki__read_wiki_structure',
+      'mcp__deepwiki__read_wiki_contents',
+      'mcp__deepwiki__ask_question',
     ],
     deny: [
       'Bash(git -C*)',
