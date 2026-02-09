@@ -101,6 +101,7 @@
       'mcp__deepwiki__read_wiki_structure',
       'mcp__deepwiki__read_wiki_contents',
       'mcp__deepwiki__ask_question',
+      'mcp__devin__ask_question',
     ],
     deny: [
       'Bash(git -C*)',
