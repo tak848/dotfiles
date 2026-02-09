@@ -111,6 +111,7 @@
       'Bash(go generate*)',
       'Read(.envrc.local)',
       'Read(npx*)',
+      'Bash(npx:*)',
     ],
   },
   // model: 'claude-opus-4-1-20250805',
