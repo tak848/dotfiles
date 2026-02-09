@@ -110,7 +110,6 @@
       'Bash(git reset*--hard*)',
       'Bash(go generate*)',
       'Read(.envrc.local)',
-      'Read(npx*)',
       'Bash(npx:*)',
     ],
   },
