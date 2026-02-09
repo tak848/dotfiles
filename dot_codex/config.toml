@@ -1,31 +1,38 @@
-notify = ["uv", "run", "~/.codex/notification.py"]
-model = "gpt-5.1-codex-max"
+model = "gpt-5.3-codex"
 model_reasoning_effort = "high"
+sandbox_mode = "workspace-write"
+personality = "pragmatic"
+web_search = "live"
 
 [features]
-web_search_request = true
+unified_exec = true
+shell_snapshot = true
 
-# [profiles.pro]
-# model = "gpt-5.1-pro"
-# model_reasoning_effort = "high"
-# # approval_policy = "never"
+[mcp_servers.context7]
+url = "https://mcp.context7.com/mcp/oauth"
+
+[mcp_servers.notion]
+url = "https://mcp.notion.com/mcp"
+
+[mcp_servers.figma]
+url = "https://mcp.figma.com/mcp"
 
 [profiles.fast]
-model = "gpt-5.1-codex-max"
+model = "gpt-5.2"
 model_reasoning_effort = "medium"
 
 [profiles.xhigh]
-model = "gpt-5.1-codex-max"
+model = "gpt-5.2"
 model_reasoning_effort = "xhigh"
 
-[profiles.normal]
-model = "gpt-5.1-codex"
+[profiles.codex]
+model = "gpt-5.3-codex"
 model_reasoning_effort = "high"
 
-[profiles.normal-fast]
-model = "gpt-5.1-codex"
+[profiles.codex-fast]
+model = "gpt-5.3-codex"
 model_reasoning_effort = "medium"
 
-[profiles.normal-xhigh]
-model = "gpt-5.1-codex"
+[profiles.codex-xhigh]
+model = "gpt-5.3-codex"
 model_reasoning_effort = "xhigh"
