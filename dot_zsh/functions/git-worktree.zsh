@@ -52,19 +52,37 @@ gwt() {
 # git worktree remove
 gwr() {
     # メインのワークツリーは削除対象外にする
-    local worktree_to_remove=$(git worktree list | awk 'NR>1 {print $1 " " $3}' | fzf --prompt="Select worktree to REMOVE: " | awk '{print $1}')
-
-    if [ -n "$worktree_to_remove" ]; then
-        # 最終確認
-        read -q "REPLY?Really remove worktree at '$worktree_to_remove'? [y/N] "
-        echo
-        if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-            echo "Removing worktree: $worktree_to_remove"
-            git worktree remove "$worktree_to_remove"
-        else
-            echo "Canceled."
+    # 各 worktree の最終コミット日時を表示
+    local worktrees_to_remove=$(git worktree list | awk 'NR>1 {print $1 " " $3}' | while read -r wt_path wt_branch; do
+        local last_commit=""
+        if [ -d "$wt_path" ]; then
+            last_commit=$(git -C "$wt_path" log -1 --format="%ci" 2>/dev/null | cut -d' ' -f1,2 | cut -d':' -f1,2)
         fi
+        echo "${last_commit:-unknown}  ${wt_path}  ${wt_branch}"
+    done | fzf --multi --prompt="Select worktree(s) to REMOVE (Tab to multi-select): ")
+
+    if [ -z "$worktrees_to_remove" ]; then
+        return
     fi
+
+    local use_force=false
+    echo "$worktrees_to_remove" | while read -r line; do
+        local wt_path=$(echo "$line" | awk '{print $2}')
+        echo "Removing worktree: $wt_path"
+        if $use_force; then
+            git worktree remove --force "$wt_path"
+        elif ! git worktree remove "$wt_path" 2>/dev/null; then
+            echo "Remove failed (uncommitted changes etc.)."
+            read -q "REPLY?--force for this and all remaining? [y/N] "
+            echo
+            if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+                use_force=true
+                git worktree remove --force "$wt_path"
+            else
+                echo "Skipped."
+            fi
+        fi
+    done
 }
 
 # gwc: 既存ブランチ選択と新規ブランチ作成を兼ねる万能版
@@ -283,6 +301,8 @@ gwc() {
 
     fi  # PR モードでない場合の終了
 
+    local worktree_add_status=$?
+
     # Cursor で開くかどうかのフラグ
     local open_with_cursor=false
 
@@ -297,7 +317,7 @@ gwc() {
     fi
 
     # --- 4. セットアップコマンドの実行 ---
-    if [ $? -eq 0 ]; then
+    if [ $worktree_add_status -eq 0 ]; then
         local find_name_args=()
         if [ ${#copy_files[@]} -gt 0 ]; then
             local first=true
@@ -350,7 +370,7 @@ gwc() {
 
         cd "$target_dir" && {
             if command -v direnv >/dev/null 2>&1 && [ -f ".envrc" ]; then direnv allow .; fi
-            if command -v pnpm >/dev/null 2>&1 && [ -f "package.json" ] && ! [ -f "package-lock.json" ] && ! [ -f "yarn.lock" ] && ! [ -f "bun.lockb" ]; then pnpm i; fi
+            if command -v pnpm >/dev/null 2>&1 && [ -f "package.json" ] && ! [ -f "package-lock.json" ] && ! [ -f "yarn.lock" ] && ! [ -f "bun.lockb" ]; then pnpm install --frozen-lockfile; fi
         }
 
         # 最後に Cursor で開く（最初に選択していた場合）
