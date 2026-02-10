@@ -12,7 +12,7 @@ locked = false
 # ランタイム（core backend）
 # ============================================
 node = "24.13.0"
-pnpm = "10.29.1"
+pnpm = "10.29.2"
 go = "1.25.7"
 
 # ============================================
@@ -76,10 +76,10 @@ go = "1.25.7"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"aqua:anthropics/claude-code" = "2.1.37"
+"aqua:anthropics/claude-code" = "2.1.38"
 "npm:@google/gemini-cli" = "0.27.3"
 "npm:@openai/codex" = "0.98.0"
 "npm:ccusage" = "18.0.5"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260208.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260209.1"
 "npm:cc-sdd" = "2.1.1"
-"npm:difit" = "3.1.5"
+"npm:difit" = "3.1.6"
