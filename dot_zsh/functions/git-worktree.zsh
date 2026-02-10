@@ -53,27 +53,36 @@ gwt() {
 gwr() {
     # メインのワークツリーは削除対象外にする
     # 各 worktree の最終コミット日時を表示
-    local worktree_to_remove=$(git worktree list | awk 'NR>1 {print $1 " " $3}' | while read -r wt_path wt_branch; do
+    local worktrees_to_remove=$(git worktree list | awk 'NR>1 {print $1 " " $3}' | while read -r wt_path wt_branch; do
         local last_commit=""
         if [ -d "$wt_path" ]; then
             last_commit=$(git -C "$wt_path" log -1 --format="%ci" 2>/dev/null | cut -d' ' -f1,2 | cut -d':' -f1,2)
         fi
         echo "${last_commit:-unknown}  ${wt_path}  ${wt_branch}"
-    done | fzf --prompt="Select worktree to REMOVE: " | awk '{print $2}')
+    done | fzf --multi --prompt="Select worktree(s) to REMOVE (Tab to multi-select): ")
 
-    if [ -n "$worktree_to_remove" ]; then
-        echo "Removing worktree: $worktree_to_remove"
-        if ! git worktree remove "$worktree_to_remove" 2>/dev/null; then
+    if [ -z "$worktrees_to_remove" ]; then
+        return
+    fi
+
+    local use_force=false
+    echo "$worktrees_to_remove" | while read -r line; do
+        local wt_path=$(echo "$line" | awk '{print $2}')
+        echo "Removing worktree: $wt_path"
+        if $use_force; then
+            git worktree remove --force "$wt_path"
+        elif ! git worktree remove "$wt_path" 2>/dev/null; then
             echo "Remove failed (uncommitted changes etc.)."
-            read -q "REPLY?Retry with --force? [y/N] "
+            read -q "REPLY?--force for this and all remaining? [y/N] "
             echo
             if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-                git worktree remove --force "$worktree_to_remove"
+                use_force=true
+                git worktree remove --force "$wt_path"
             else
-                echo "Canceled."
+                echo "Skipped."
             fi
         fi
-    fi
+    done
 }
 
 # gwc: 既存ブランチ選択と新規ブランチ作成を兼ねる万能版
