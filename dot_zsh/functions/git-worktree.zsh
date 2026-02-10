@@ -361,7 +361,7 @@ gwc() {
 
         cd "$target_dir" && {
             if command -v direnv >/dev/null 2>&1 && [ -f ".envrc" ]; then direnv allow .; fi
-            if command -v pnpm >/dev/null 2>&1 && [ -f "package.json" ] && ! [ -f "package-lock.json" ] && ! [ -f "yarn.lock" ] && ! [ -f "bun.lockb" ]; then pnpm i; fi
+            if command -v pnpm >/dev/null 2>&1 && [ -f "package.json" ] && ! [ -f "package-lock.json" ] && ! [ -f "yarn.lock" ] && ! [ -f "bun.lockb" ]; then pnpm install --frozen-lockfile; fi
         }
 
         # 最後に Cursor で開く（最初に選択していた場合）
