@@ -52,17 +52,26 @@ gwt() {
 # git worktree remove
 gwr() {
     # メインのワークツリーは削除対象外にする
-    local worktree_to_remove=$(git worktree list | awk 'NR>1 {print $1 " " $3}' | fzf --prompt="Select worktree to REMOVE: " | awk '{print $1}')
+    # 各 worktree の最終コミット日時を表示
+    local worktree_to_remove=$(git worktree list | awk 'NR>1 {print $1 " " $3}' | while read -r wt_path wt_branch; do
+        local last_commit=""
+        if [ -d "$wt_path" ]; then
+            last_commit=$(git -C "$wt_path" log -1 --format="%ci" 2>/dev/null | cut -d' ' -f1,2 | cut -d':' -f1,2)
+        fi
+        echo "${last_commit:-unknown}  ${wt_path}  ${wt_branch}"
+    done | fzf --prompt="Select worktree to REMOVE: " | awk '{print $2}')
 
     if [ -n "$worktree_to_remove" ]; then
-        # 最終確認
-        read -q "REPLY?Really remove worktree at '$worktree_to_remove'? [y/N] "
-        echo
-        if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-            echo "Removing worktree: $worktree_to_remove"
-            git worktree remove "$worktree_to_remove"
-        else
-            echo "Canceled."
+        echo "Removing worktree: $worktree_to_remove"
+        if ! git worktree remove "$worktree_to_remove" 2>/dev/null; then
+            echo "Remove failed (uncommitted changes etc.)."
+            read -q "REPLY?Retry with --force? [y/N] "
+            echo
+            if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+                git worktree remove --force "$worktree_to_remove"
+            else
+                echo "Canceled."
+            fi
         fi
     fi
 }
@@ -283,6 +292,8 @@ gwc() {
 
     fi  # PR モードでない場合の終了
 
+    local worktree_add_status=$?
+
     # Cursor で開くかどうかのフラグ
     local open_with_cursor=false
 
@@ -297,7 +308,7 @@ gwc() {
     fi
 
     # --- 4. セットアップコマンドの実行 ---
-    if [ $? -eq 0 ]; then
+    if [ $worktree_add_status -eq 0 ]; then
         local find_name_args=()
         if [ ${#copy_files[@]} -gt 0 ]; then
             local first=true
