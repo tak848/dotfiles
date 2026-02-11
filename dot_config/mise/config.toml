@@ -11,9 +11,9 @@ locked = false
 # ============================================
 # ランタイム（core backend）
 # ============================================
-node = "24.13.0"
+node = "24.13.1"
 pnpm = "10.29.2"
-go = "1.25.7"
+go = "1.26.0"
 
 # ============================================
 # aqua CLI（github backend）
@@ -35,7 +35,7 @@ go = "1.25.7"
 # zoxide は aqua CLI で管理（mise lock で checksum 取得不可）
 
 # 検索・ファイル操作
-"aqua:twpayne/chezmoi" = "2.69.3"
+"aqua:twpayne/chezmoi" = "2.69.4"
 "aqua:BurntSushi/ripgrep" = "15.1.0"
 "aqua:phiresky/ripgrep-all" = "0.10.10"
 # rga依存: ドキュメント変換（docx, epub, odt等）
@@ -50,7 +50,7 @@ go = "1.25.7"
 "aqua:neovim/neovim" = "0.11.6"
 
 # Python ツール
-"aqua:astral-sh/uv" = "0.10.0"
+"aqua:astral-sh/uv" = "0.10.2"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
@@ -76,10 +76,10 @@ go = "1.25.7"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"aqua:anthropics/claude-code" = "2.1.38"
-"npm:@google/gemini-cli" = "0.27.3"
+"aqua:anthropics/claude-code" = "2.1.39"
+"npm:@google/gemini-cli" = "0.28.0"
 "npm:@openai/codex" = "0.98.0"
 "npm:ccusage" = "18.0.5"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260209.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260211.1"
 "npm:cc-sdd" = "2.1.1"
 "npm:difit" = "3.1.6"
