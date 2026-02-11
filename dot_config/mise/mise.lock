@@ -8,21 +8,21 @@ backend = "aqua:BurntSushi/ripgrep"
 "platforms.windows-x64" = { checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d87493a", url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:anthropics/claude-code"]]
-version = "2.1.38"
+version = "2.1.39"
 backend = "aqua:anthropics/claude-code"
-"platforms.linux-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.38/linux-arm64/claude"}
-"platforms.linux-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.38/linux-x64/claude"}
-"platforms.macos-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.38/darwin-arm64/claude"}
-"platforms.macos-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.38/darwin-x64/claude"}
+"platforms.linux-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.39/linux-arm64/claude"}
+"platforms.linux-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.39/linux-x64/claude"}
+"platforms.macos-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.39/darwin-arm64/claude"}
+"platforms.macos-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.39/darwin-x64/claude"}
 
 [[tools."aqua:astral-sh/uv"]]
-version = "0.10.0"
+version = "0.10.2"
 backend = "aqua:astral-sh/uv"
-"platforms.linux-arm64" = { checksum = "sha256:edf1adb1d183730302f87eef9b71bc4e47b4b8058832c3393b0fbcd86f270510", url = "https://github.com/astral-sh/uv/releases/download/0.10.0/uv-aarch64-unknown-linux-musl.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:312d37f31b6f2c3bfc65668ba0efea9f1f9eaf7bc3209fe1a109e5cf861b95fa", url = "https://github.com/astral-sh/uv/releases/download/0.10.0/uv-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:82d4b99dc6ea686695b5ee142ceba03dd3e3eda2b414e94215ab7bce94972fbb", url = "https://github.com/astral-sh/uv/releases/download/0.10.0/uv-aarch64-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:664aed584c276f8d79cdc3b7685cd48f5d64657bd6840b06b4b2b0db731b9c99", url = "https://github.com/astral-sh/uv/releases/download/0.10.0/uv-x86_64-apple-darwin.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:4037b444541f695cd2eb93188a9346de3e334af562381411deade0a31c7bf898", url = "https://github.com/astral-sh/uv/releases/download/0.10.0/uv-x86_64-pc-windows-msvc.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:685e47f8f88b6845a9fc2ca27c3d246c0f53af8c017daf8e98ac0a97fe20365b", url = "https://github.com/astral-sh/uv/releases/download/0.10.2/uv-aarch64-unknown-linux-musl.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:c162182ba7dd692794362d76dd183990d6e51553217954106da19bdb6ced211b", url = "https://github.com/astral-sh/uv/releases/download/0.10.2/uv-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:3828b2de196687f60e9d199aea8b504299629300831eea0935ff3fe339903d0a", url = "https://github.com/astral-sh/uv/releases/download/0.10.2/uv-aarch64-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:3cdbd038333cfe861ce04f3d91678547bf2e726224acf5f42d3f0affa6740e19", url = "https://github.com/astral-sh/uv/releases/download/0.10.2/uv-x86_64-apple-darwin.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:493ebbe0e06128d6ee4905e1ed5e2a433fb0f7cfc08b0eaca9fab4ca76778ae1", url = "https://github.com/astral-sh/uv/releases/download/0.10.2/uv-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:bufbuild/buf"]]
 version = "1.65.0"
@@ -202,13 +202,13 @@ backend = "aqua:temporalio/cli"
 "platforms.windows-x64" = { checksum = "sha256:c9634de011336b93fdb5a20cf7bac142cf610db0994eb13f52339e10b7d98d42", url = "https://github.com/temporalio/cli/releases/download/v1.6.0/temporal_cli_1.6.0_windows_amd64.tar.gz"}
 
 [[tools."aqua:twpayne/chezmoi"]]
-version = "2.69.3"
+version = "2.69.4"
 backend = "aqua:twpayne/chezmoi"
-"platforms.linux-arm64" = { checksum = "sha256:0aef9ef75ee33cffb483a82c474b495d428e0f7941ab7898263c3519006e0662", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.3/chezmoi_2.69.3_linux_arm64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:9b9bf911efed8aba28bd6f5df1e780a6123dc3fb177004c1ca36ec2b9eca7628", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.3/chezmoi_2.69.3_linux_amd64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:c5717b0d4d84d2941c2582fec26854d316ee5d7c27ec73903f7840554f1baeda", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.3/chezmoi_2.69.3_darwin_arm64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:9dd51eccb801d3557f61c8559f4f31e5ebb21c4a1d983940141383b9b5069458", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.3/chezmoi_2.69.3_darwin_amd64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:6504c72d9e11c57217a6c62586b588bc506f604618d7660a86b848165584af45", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.3/chezmoi_2.69.3_windows_amd64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:560fb76182a3da7db7d445953cfa82fefbdc59284c8c673bb22363db9122ee4e", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.4/chezmoi_2.69.4_linux_arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:5054cf09cb2993725f525c8bb6ec3ff8625489ecfc061e019c17e737e7c7057b", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.4/chezmoi_2.69.4_linux_amd64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:690ab2618e44e7a78b0ba2e541951ce3bde59c1cf9bc2d491850e8700607b9d4", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.4/chezmoi_2.69.4_darwin_arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:bb4954fe9272663a35a313b0b7f0aa58eed35ef0ef8ea1d698fce40670cc28b2", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.4/chezmoi_2.69.4_darwin_amd64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:3c6f541f140eabb1a6818ee87c94e806193d2980bfbde94832055a49a7bba573", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.4/chezmoi_2.69.4_windows_amd64.zip"}
 
 [[tools."aqua:x-motemen/ghq"]]
 version = "1.8.1"
@@ -238,29 +238,29 @@ backend = "github:jgm/pandoc"
 "platforms.windows-x64" = { checksum = "sha256:a77c14078a5c4c6e396d5f5c03f4849eff4a858414bb9e69560bb35528cbf57a", url = "https://github.com/jgm/pandoc/releases/download/3.8.3/pandoc-3.8.3-windows-x86_64.zip", url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/322858053"}
 
 [[tools.go]]
-version = "1.25.7"
+version = "1.26.0"
 backend = "core:go"
-"platforms.linux-arm64" = { checksum = "sha256:ba611a53534135a81067240eff9508cd7e256c560edd5d8c2fef54f083c07129", url = "https://dl.google.com/go/go1.25.7.linux-arm64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:12e6d6a191091ae27dc31f6efc630e3a3b8ba409baf3573d955b196fdf086005", url = "https://dl.google.com/go/go1.25.7.linux-amd64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:ff18369ffad05c57d5bed888b660b31385f3c913670a83ef557cdfd98ea9ae1b", url = "https://dl.google.com/go/go1.25.7.darwin-arm64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:bf5050a2152f4053837b886e8d9640c829dbacbc3370f913351eb0904cb706f5", url = "https://dl.google.com/go/go1.25.7.darwin-amd64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:c75e5f4ff62d085cc0017be3ad19d5536f46825fa05db06ec468941f847e3228", url = "https://dl.google.com/go/go1.25.7.windows-amd64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:bd03b743eb6eb4193ea3c3fd3956546bf0e3ca5b7076c8226334afe6b75704cd", url = "https://dl.google.com/go/go1.26.0.linux-arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:aac1b08a0fb0c4e0a7c1555beb7b59180b05dfc5a3d62e40e9de90cd42f88235", url = "https://dl.google.com/go/go1.26.0.linux-amd64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:b1640525dfe68f066d56f200bef7bf4dce955a1a893bd061de6754c211431023", url = "https://dl.google.com/go/go1.26.0.darwin-arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:1ca28b7703cbea05a65b2a1d92d6b308610ef92f8824578a0874f2e60c9d5a22", url = "https://dl.google.com/go/go1.26.0.darwin-amd64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:9bbe0fc64236b2b51f6255c05c4232532b8ecc0e6d2e00950bd3021d8a4d07d4", url = "https://dl.google.com/go/go1.26.0.windows-amd64.zip"}
 
 [[tools."go:golang.org/x/tools/gopls"]]
 version = "0.21.0"
 backend = "go:golang.org/x/tools/gopls"
 
 [[tools.node]]
-version = "24.13.0"
+version = "24.13.1"
 backend = "core:node"
-"platforms.linux-arm64" = { checksum = "sha256:0f6d40b94c6a2eb6b4c240ffc8b9fd3ada7ab044c177dd413c06e1ef9a63f081", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-linux-arm64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:6223aad1a81f9d1e7b682c59d12e2de233f7b4c37475cd40d1c89c42b737ffa8", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-linux-x64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:d595961e563fcae057d4a0fb992f175a54d97fcc4a14dc2d474d92ddeea3b9f8", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-darwin-arm64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:6f03c1b48ddbe1b129a6f8038be08e0899f05f17185b4d3e4350180ab669a7f3", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-darwin-x64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:ca2742695be8de44027d71b3f53a4bdb36009b95575fe1ae6f7f0b5ce091cb88", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-win-x64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:4873459d7c9b28feaa1f0fade9bb9c81cb702670991ff80a51d805325c5e3456", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-linux-arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:7ad28fb172a9ab0593f86c1a39e5c268d0d8fc3d6cb0167f455b5655a7a6e2fd", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-linux-x64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:8c039d59f2fec6195e4281ad5b0d02b9a940897b4df7b849c6fb48be6787bba6", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-darwin-arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:527f0578d9812e7dfa225121bda0b1546a6a0e4b5f556295fc8299c272de5fbf", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-darwin-x64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:fba577c4bb87df04d54dd87bbdaa5a2272f1f99a2acbf9152e1a91b8b5f0b279", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-win-x64.zip"}
 
 [[tools."npm:@google/gemini-cli"]]
-version = "0.27.3"
+version = "0.28.0"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@openai/codex"]]
@@ -268,7 +268,7 @@ version = "0.98.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260209.1"
+version = "7.0.0-dev.20260211.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
