@@ -27,24 +27,24 @@ aqua install
 
 ## Taskfile（自動生成ファイル管理）
 
-自動生成ファイル（jsonnet, mise.lock, aqua-checksums, mise bootstrap）を統一的に管理するための Task ランナー。
+自動生成ファイル（mise.lock, aqua-checksums, mise bootstrap）を統一的に管理するための Task ランナー。
+jsonnet からの JSON 生成は `chezmoi apply` 時に run_onchange スクリプトで実行される。
 
 ### 基本コマンド
 
 ```bash
-# 全ての自動生成を実行（jsonnet + lockfiles + checksums + bootstrap）
+# 全ての自動生成を実行（lockfiles + checksums + bootstrap）
 task
 
 # lockfiles/checksums/bootstrap のみ更新
 task lock
 
 # 個別タスク
-task generate       # jsonnet のみ
 task mise:lock      # mise lockfile のみ
 task aqua:checksum  # aqua checksum のみ
 task mise:bootstrap # bootstrap のみ
 
-# CI用: 生成後に diff チェック（mise.lock 除外）
+# CI用: 生成後に diff チェック（mise.lock, JSON 除外）
 task check
 ```
 
@@ -88,12 +88,12 @@ Homebrew
 
 | ファイル | 生成元 | 生成コマンド |
 |---------|--------|-------------|
-| `dot_claude/settings.json` | `dot_claude/settings.jsonnet` | `task generate` |
-| `dot_claude/dot_mcp.json` | `dot_claude/dot_mcp.jsonnet` | `task generate` |
-| `dot_gemini/settings.json` | `dot_gemini/settings.jsonnet` | `task generate` |
+| `~/.claude/settings.json` | `dot_claude/settings.jsonnet` | `chezmoi apply`（run_onchange） |
+| `~/.claude/.mcp.json` | `dot_claude/dot_mcp.jsonnet` | `chezmoi apply`（run_onchange） |
+| `~/.gemini/settings.json` | `dot_gemini/settings.jsonnet` | `chezmoi apply`（run_onchange） |
 | `mise.lock` | `.mise.toml` | `task mise:lock` |
 | `dot_config/mise/mise.lock` | `dot_config/mise/config.toml` | `task mise:lock` |
-| `dot_config/aquaproj-aqua/aqua-checksums.json` | `aqua.yaml` | `task aqua:checksum` |
+| `dot_config/aquaproj-aqua/aqua-checksums.json` | `dot_config/aquaproj-aqua/aqua.yaml` | `task aqua:checksum` |
 | `dot_local/bin/executable_mise` | `.mise-bootstrap-version` | `task mise:bootstrap` |
 
 ### Chezmoi ファイル命名規則
@@ -114,6 +114,7 @@ Homebrew
 | `mise-lock.yaml` | `mise.toml` / `config.toml` 変更 | `mise lock`（Renovate PR 時のみ） |
 | `mise-bootstrap.yaml` | `.mise-bootstrap-version` 変更 | `mise generate bootstrap`（Renovate PR 時のみ） |
 | `aqua-checksums.yaml` | `aqua.yaml` 変更 | `aqua update-checksum --prune`（Renovate PR 時のみ） |
+| `lazy-lock.yaml` | nvim 設定変更 / 週次 cron | Lazy.nvim lockfile 更新（PR 作成 or Renovate PR へコミット） |
 
 ### zsh 設定の読み込み順序
 
