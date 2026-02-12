@@ -78,21 +78,21 @@ backend = "aqua:google/go-jsonnet"
 "platforms.windows-x64" = { checksum = "sha256:81d71a287ee5dfd0860831eeac281a7327ce8876d5fe9a8b7e19726dbbc0ce4f", url = "https://github.com/google/go-jsonnet/releases/download/v0.21.0/go-jsonnet_Windows_x86_64.tar.gz"}
 
 [[tools."aqua:grafana/jsonnet-language-server"]]
-version = "0.16.0"
+version = "0.17.0"
 backend = "aqua:grafana/jsonnet-language-server"
-"platforms.linux-arm64" = { checksum = "sha256:155933cbbda25e9d89b6e14f1c2c52089cdfe82700fda60d8ebaabad2c409f18", url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.16.0/jsonnet-language-server_0.16.0_linux_arm64"}
-"platforms.linux-x64" = { checksum = "sha256:42c7d38515e5a2008de26d678140e2d7fd1825eb977d78023fe997913e3dc2be", url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.16.0/jsonnet-language-server_0.16.0_linux_amd64"}
-"platforms.macos-arm64" = { checksum = "sha256:8b6e642374d3004c3ac35254874ed1d14203a85c979f6684fc6218f58a8072d4", url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.16.0/jsonnet-language-server_0.16.0_darwin_arm64"}
-"platforms.macos-x64" = { checksum = "sha256:f37d57fcf851e18fecc3b3867a8e06305ee315e01a9430bf5448438eff86736c", url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.16.0/jsonnet-language-server_0.16.0_darwin_amd64"}
-"platforms.windows-x64" = { checksum = "sha256:53d233a1927afa52f39a2ae5396dc7ffeb13283b5f13edfa6dfdc1f41e71199b", url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.16.0/jsonnet-language-server_0.16.0_windows_amd64.exe"}
+"platforms.linux-arm64" = { checksum = "sha256:6cfc48e9bcea7ebfaf85fcd51b4c09d8e26f93978bc352eef6b3aea4fb844440", url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.17.0/jsonnet-language-server_0.17.0_linux_arm64"}
+"platforms.linux-x64" = { checksum = "sha256:1d4327c93505570d9e5bfe43c3b14da669c2e929c4ada3fcd6b4bf97c7cff34e", url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.17.0/jsonnet-language-server_0.17.0_linux_amd64"}
+"platforms.macos-arm64" = { checksum = "sha256:c9637366323551ed149afbc1c3be72c7b82bcf0da57a786046080109294a7fa5", url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.17.0/jsonnet-language-server_0.17.0_darwin_arm64"}
+"platforms.macos-x64" = { checksum = "sha256:2afe97da19e829e07debf4d6ba24b2e5ddc4cce837d80ecc6365a51201cb814b", url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.17.0/jsonnet-language-server_0.17.0_darwin_amd64"}
+"platforms.windows-x64" = { checksum = "sha256:805b70884d202ed6f8568607d4d94a3bfe0318ea6902e904c673be0c43d3cd41", url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.17.0/jsonnet-language-server_0.17.0_windows_amd64.exe"}
 
 [[tools."aqua:jdx/usage"]]
-version = "2.16.1"
+version = "2.16.2"
 backend = "aqua:jdx/usage"
-"platforms.linux-arm64" = { checksum = "sha256:29ab8f0cf07d94f4f852007413594714561de9d613fe4dbf12b287dfa1bee0ac", url = "https://github.com/jdx/usage/releases/download/v2.16.1/usage-aarch64-unknown-linux-musl.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:9ff23ebae8b3fc049b4ed4fec29c417063597c79739bab094c390ddfe56e9623", url = "https://github.com/jdx/usage/releases/download/v2.16.1/usage-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:3bba8d4916da22dbd4afe4ab6c59c988765d7e0374e1121b43ce8b1a282cfc78", url = "https://github.com/jdx/usage/releases/download/v2.16.1/usage-universal-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:3bba8d4916da22dbd4afe4ab6c59c988765d7e0374e1121b43ce8b1a282cfc78", url = "https://github.com/jdx/usage/releases/download/v2.16.1/usage-universal-apple-darwin.tar.gz"}
+"platforms.linux-arm64" = { checksum = "sha256:25316ed99b94799581c9b4e8aa72e424449e62d40cab96fc8ba972c86b6fef9d", url = "https://github.com/jdx/usage/releases/download/v2.16.2/usage-aarch64-unknown-linux-musl.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:517020bfde6d29a9c7b1fd9096ea62a3394e4763f1c4cb880522c58205aa20c6", url = "https://github.com/jdx/usage/releases/download/v2.16.2/usage-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:755140f1ffe41a58ca43fb5d96a06de8e5215b15f0f7b957a8033f91bedf7383", url = "https://github.com/jdx/usage/releases/download/v2.16.2/usage-universal-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:755140f1ffe41a58ca43fb5d96a06de8e5215b15f0f7b957a8033f91bedf7383", url = "https://github.com/jdx/usage/releases/download/v2.16.2/usage-universal-apple-darwin.tar.gz"}
 
 [[tools."aqua:jesseduffield/lazydocker"]]
 version = "0.24.4"
@@ -247,7 +247,7 @@ backend = "core:go"
 "platforms.windows-x64" = { checksum = "sha256:9bbe0fc64236b2b51f6255c05c4232532b8ecc0e6d2e00950bd3021d8a4d07d4", url = "https://dl.google.com/go/go1.26.0.windows-amd64.zip"}
 
 [[tools."go:golang.org/x/tools/gopls"]]
-version = "0.21.0"
+version = "0.21.1"
 backend = "go:golang.org/x/tools/gopls"
 
 [[tools.node]]
@@ -260,15 +260,15 @@ backend = "core:node"
 "platforms.windows-x64" = { checksum = "sha256:fba577c4bb87df04d54dd87bbdaa5a2272f1f99a2acbf9152e1a91b8b5f0b279", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-win-x64.zip"}
 
 [[tools."npm:@google/gemini-cli"]]
-version = "0.28.0"
+version = "0.28.2"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@openai/codex"]]
-version = "0.98.0"
+version = "0.101.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260211.1"
+version = "7.0.0-dev.20260212.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -280,14 +280,14 @@ version = "18.0.5"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
-version = "3.1.6"
+version = "3.1.7"
 backend = "npm:difit"
 
 [[tools.pnpm]]
-version = "10.29.2"
+version = "10.29.3"
 backend = "aqua:pnpm/pnpm"
-"platforms.linux-arm64" = { checksum = "sha256:8bbbbf60e08b72df246e70c18ef2a515d4f7ce999c172e85f0b6972c3cd61a8c", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.2/pnpm-linux-arm64"}
-"platforms.linux-x64" = { checksum = "sha256:f9a8e1652b83884da6a3c174f504220015001144cee8733c07df68c598d4c43a", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.2/pnpm-linux-x64"}
-"platforms.macos-arm64" = { checksum = "sha256:3f9ef4f665186181473db6e483d905e339259db30a33ee4f2093f04cf8e55991", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.2/pnpm-macos-arm64"}
-"platforms.macos-x64" = { checksum = "sha256:e2fd88f4681624d52f3830a95a777a71bde8808db5f485f5b96b0ab0a4aa982a", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.2/pnpm-macos-x64"}
-"platforms.windows-x64" = { checksum = "sha256:99db93e9741adee51a9fc8288476477b47ea2adb68f30058ed0c6c9d25fb0049", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.2/pnpm-win-x64.exe"}
+"platforms.linux-arm64" = { checksum = "sha256:ae70208882b2c5229e143de2454fc4f778b2d2ae959a2e48ec76a6c26e8b3127", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.3/pnpm-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:2fc98db127c611be0c110af11b5b72759f7d736893dddc81df73b7b59b30f15a", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.3/pnpm-linux-x64"}
+"platforms.macos-arm64" = { checksum = "sha256:a248c56b0ab20443e18d0c8ee3207c6c564ee342bd3fc8694b3569a060cecece", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.3/pnpm-macos-arm64"}
+"platforms.macos-x64" = { checksum = "sha256:569877025e8894d88b1756fdbc0675330dfcd9c01ece4ab26685baafffa8e303", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.3/pnpm-macos-x64"}
+"platforms.windows-x64" = { checksum = "sha256:51a217ad98e138a346da4a43c81bbc64a8ba6df7e2afa7bf5456a163f9105635", url = "https://github.com/pnpm/pnpm/releases/download/v10.29.3/pnpm-win-x64.exe"}
