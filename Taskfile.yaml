@@ -66,7 +66,15 @@ tasks:
   mise:lock:root:
     desc: Update root mise.lock
     cmds:
-      - rm -f mise.lock && mise lock -p {{.MISE_PLATFORMS}}
+      - |
+        # gh auth token があれば MISE_GITHUB_TOKEN を設定（レート制限回避）
+        if command -v gh &> /dev/null; then
+          token=$(gh auth token 2>/dev/null)
+          if [[ -n "$token" ]]; then
+            export MISE_GITHUB_TOKEN="$token"
+          fi
+        fi
+        rm -f mise.lock && mise lock -p {{.MISE_PLATFORMS}}
     sources:
       - .mise.toml
     generates:
@@ -76,7 +84,15 @@ tasks:
     desc: Update dot_config/mise/mise.lock
     dir: "{{.MISE_CONFIG_DIR}}"
     cmds:
-      - rm -f mise.lock && mise lock -p {{.MISE_PLATFORMS}}
+      - |
+        # gh auth token があれば MISE_GITHUB_TOKEN を設定（レート制限回避）
+        if command -v gh &> /dev/null; then
+          token=$(gh auth token 2>/dev/null)
+          if [[ -n "$token" ]]; then
+            export MISE_GITHUB_TOKEN="$token"
+          fi
+        fi
+        rm -f mise.lock && mise lock -p {{.MISE_PLATFORMS}}
     sources:
       - config.toml
     generates:
