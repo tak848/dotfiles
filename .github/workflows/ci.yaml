@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - lazy-lock-update
   pull_request:
     branches:
       - main

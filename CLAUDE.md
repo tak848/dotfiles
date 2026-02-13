@@ -27,24 +27,24 @@ aqua install
 
 ## Taskfile（自動生成ファイル管理）
 
-自動生成ファイル（jsonnet, mise.lock, aqua-checksums, mise bootstrap）を統一的に管理するための Task ランナー。
+自動生成ファイル（mise.lock, aqua-checksums, mise bootstrap）を統一的に管理するための Task ランナー。
+jsonnet からの JSON 生成は `chezmoi apply` 時に run_onchange スクリプトで実行される。
 
 ### 基本コマンド
 
 ```bash
-# 全ての自動生成を実行（jsonnet + lockfiles + checksums + bootstrap）
+# 全ての自動生成を実行（lockfiles + checksums + bootstrap）
 task
 
 # lockfiles/checksums/bootstrap のみ更新
 task lock
 
 # 個別タスク
-task generate       # jsonnet のみ
 task mise:lock      # mise lockfile のみ
 task aqua:checksum  # aqua checksum のみ
 task mise:bootstrap # bootstrap のみ
 
-# CI用: 生成後に diff チェック（mise.lock 除外）
+# CI用: 生成後に diff チェック（mise.lock, JSON 除外）
 task check
 ```
 
@@ -88,13 +88,22 @@ Homebrew
 
 | ファイル | 生成元 | 生成コマンド |
 |---------|--------|-------------|
-| `dot_claude/settings.json` | `dot_claude/settings.jsonnet` | `task generate` |
-| `dot_claude/dot_mcp.json` | `dot_claude/dot_mcp.jsonnet` | `task generate` |
-| `dot_gemini/settings.json` | `dot_gemini/settings.jsonnet` | `task generate` |
 | `mise.lock` | `.mise.toml` | `task mise:lock` |
 | `dot_config/mise/mise.lock` | `dot_config/mise/config.toml` | `task mise:lock` |
-| `dot_config/aquaproj-aqua/aqua-checksums.json` | `aqua.yaml` | `task aqua:checksum` |
+| `dot_config/aquaproj-aqua/aqua-checksums.json` | `dot_config/aquaproj-aqua/aqua.yaml` | `task aqua:checksum` |
 | `dot_local/bin/executable_mise` | `.mise-bootstrap-version` | `task mise:bootstrap` |
+
+### chezmoi apply 時の自動実行スクリプト
+
+`chezmoi apply` 時にターゲットディレクトリで実行されるスクリプト。リポジトリ内にはファイルを生成しない。
+
+| スクリプト | トリガー | 処理 |
+|-----------|---------|------|
+| `run_once_before_00-install-essentials.sh.tmpl` | 初回のみ | Homebrew, zinit, cursor-agent インストール |
+| `run_onchange_after_10-mise-install.sh.tmpl` | `config.toml` 変更時 | `mise install` |
+| `run_onchange_after_20-aqua-install.sh.tmpl` | `aqua.yaml` 変更時 | `aqua install` |
+| `run_onchange_after_30-install-packages.sh.tmpl` | `packages.yaml` 変更時 | `brew install`（macOS） |
+| `run_onchange_after_40-generate-jsonnet.sh.tmpl` | jsonnet ファイル変更時 | jsonnet → JSON 生成（`~/.claude/`, `~/.gemini/`） |
 
 ### Chezmoi ファイル命名規則
 
@@ -114,6 +123,7 @@ Homebrew
 | `mise-lock.yaml` | `mise.toml` / `config.toml` 変更 | `mise lock`（Renovate PR 時のみ） |
 | `mise-bootstrap.yaml` | `.mise-bootstrap-version` 変更 | `mise generate bootstrap`（Renovate PR 時のみ） |
 | `aqua-checksums.yaml` | `aqua.yaml` 変更 | `aqua update-checksum --prune`（Renovate PR 時のみ） |
+| `lazy-lock.yaml` | nvim 設定変更 / 週次 cron | Lazy.nvim lockfile 更新（PR 作成 or Renovate PR へコミット） |
 
 ### zsh 設定の読み込み順序
 

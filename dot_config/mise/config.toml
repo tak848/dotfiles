@@ -46,8 +46,9 @@ go = "1.26.0"
 "aqua:jesseduffield/lazygit" = "0.59.0"
 "aqua:jesseduffield/lazydocker" = "0.24.4"
 
-# エディタ
+# エディタ・ターミナル
 "aqua:neovim/neovim" = "0.11.6"
+"github:tmux/tmux-builds" = "v3.6a"
 
 # Python ツール
 "aqua:astral-sh/uv" = "0.10.2"
