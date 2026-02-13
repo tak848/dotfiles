@@ -88,9 +88,9 @@ Homebrew
 
 | ファイル | 生成元 | 生成コマンド |
 |---------|--------|-------------|
-| `~/.claude/settings.json` | `dot_claude/settings.jsonnet` | `chezmoi apply`（run_onchange） |
-| `~/.claude/.mcp.json` | `dot_claude/dot_mcp.jsonnet` | `chezmoi apply`（run_onchange） |
-| `~/.gemini/settings.json` | `dot_gemini/settings.jsonnet` | `chezmoi apply`（run_onchange） |
+| `dot_claude/settings.json` | `dot_claude/settings.jsonnet` | `chezmoi apply`（run_onchange） |
+| `dot_claude/dot_mcp.json` | `dot_claude/dot_mcp.jsonnet` | `chezmoi apply`（run_onchange） |
+| `dot_gemini/settings.json` | `dot_gemini/settings.jsonnet` | `chezmoi apply`（run_onchange） |
 | `mise.lock` | `.mise.toml` | `task mise:lock` |
 | `dot_config/mise/mise.lock` | `dot_config/mise/config.toml` | `task mise:lock` |
 | `dot_config/aquaproj-aqua/aqua-checksums.json` | `dot_config/aquaproj-aqua/aqua.yaml` | `task aqua:checksum` |
