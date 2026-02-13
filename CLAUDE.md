@@ -93,6 +93,18 @@ Homebrew
 | `dot_config/aquaproj-aqua/aqua-checksums.json` | `dot_config/aquaproj-aqua/aqua.yaml` | `task aqua:checksum` |
 | `dot_local/bin/executable_mise` | `.mise-bootstrap-version` | `task mise:bootstrap` |
 
+### chezmoi apply 時の自動実行スクリプト
+
+`chezmoi apply` 時にターゲットディレクトリで実行されるスクリプト。リポジトリ内にはファイルを生成しない。
+
+| スクリプト | トリガー | 処理 |
+|-----------|---------|------|
+| `run_once_before_00-install-essentials.sh.tmpl` | 初回のみ | Homebrew, zinit, cursor-agent インストール |
+| `run_onchange_after_10-mise-install.sh.tmpl` | `config.toml` 変更時 | `mise install` |
+| `run_onchange_after_20-aqua-install.sh.tmpl` | `aqua.yaml` 変更時 | `aqua install` |
+| `run_onchange_after_30-install-packages.sh.tmpl` | `packages.yaml` 変更時 | `brew install`（macOS） |
+| `run_onchange_after_40-generate-jsonnet.sh.tmpl` | jsonnet ファイル変更時 | jsonnet → JSON 生成（`~/.claude/`, `~/.gemini/`） |
+
 ### Chezmoi ファイル命名規則
 
 | プレフィックス | 展開先 | 例 |
