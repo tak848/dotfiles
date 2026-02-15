@@ -23,6 +23,8 @@ require("lazy").setup({
         { "LazyVim/LazyVim", import = "lazyvim.plugins" },
         -- VSCode Neovim 用 extra（明示 import 方針、新バージョンでは自動有効化＋dedup の可能性あり）
         { import = "lazyvim.plugins.extras.vscode" },
+        -- エディタ
+        { import = "lazyvim.plugins.extras.editor.neo-tree" },
         -- プログラミング言語
         { import = "lazyvim.plugins.extras.lang.go" },
         { import = "lazyvim.plugins.extras.lang.typescript" },
