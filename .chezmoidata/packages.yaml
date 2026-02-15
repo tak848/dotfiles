@@ -13,6 +13,9 @@ packages:
       base:
         - ghostty # ターミナル
         - nikitabobko/tap/aerospace # タイリングウィンドウマネージャ
+        - obsidian
+        - claude
+        - codex-app
 
 # im-select 設定（macOS のみ）
 im_select:
