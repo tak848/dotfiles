@@ -27,6 +27,7 @@
       'Bash(sed:*)',
       'Bash(true)',
       'Bash(echo:*)',
+      'Bash(printf:*)',
       // rmは都度確認
       // "Bash(rm:*)",
       'Bash(go test:*)',
