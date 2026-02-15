@@ -6,18 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Chezmoi で管理している個人用 dotfiles リポジトリ。macOS/Linux 対応。
 
+**重要: このリポジトリの remote main が single source of truth。** ターゲットマシンでは `chezmoi update` でリモートから pull & apply する運用のみ。ローカルの chezmoi source directory とこのリポジトリは直接リンクしていないため、このリポジトリ内で `chezmoi cat` / `chezmoi diff` / `chezmoi apply` 等を実行しても意味がない。
+
 ## Commands
 
 ```bash
-# 設定を適用
-chezmoi apply
-
-# 変更差分を確認
-chezmoi diff
-
-# 管理ファイル一覧
-chezmoi managed
-
 # mise ツールをインストール
 mise install
 

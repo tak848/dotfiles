@@ -1,3 +1,6 @@
+{{- /* chezmoi:modify-template */ -}}
+#:schema https://developers.openai.com/codex/config-schema.json
+
 model = "gpt-5.3-codex"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
@@ -36,3 +39,14 @@ model_reasoning_effort = "medium"
 [profiles.codex-xhigh]
 model = "gpt-5.3-codex"
 model_reasoning_effort = "xhigh"
+{{- if ne .chezmoi.stdin "" }}
+{{-   $existing := fromToml .chezmoi.stdin }}
+{{-   if hasKey $existing "projects" }}
+
+{{ dict "projects" (index $existing "projects") | toToml -}}
+{{-   end }}
+{{-   if hasKey $existing "notice" }}
+
+{{ dict "notice" (index $existing "notice") | toToml -}}
+{{-   end }}
+{{- end }}

@@ -1,5 +1,6 @@
 {
   language: 'japanese',
+  teammateMode: 'tmux',
   includeCoAuthoredBy: false,
   permissions: {
     defaultMode: 'plan',
@@ -27,6 +28,7 @@
       'Bash(sed:*)',
       'Bash(true)',
       'Bash(echo:*)',
+      'Bash(printf:*)',
       // rmは都度確認
       // "Bash(rm:*)",
       'Bash(go test:*)',
