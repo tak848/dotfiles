@@ -1,5 +1,6 @@
 {
   language: 'japanese',
+  teammateMode: 'tmux',
   includeCoAuthoredBy: false,
   permissions: {
     defaultMode: 'plan',
