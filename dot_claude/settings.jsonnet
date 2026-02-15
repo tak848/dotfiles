@@ -49,6 +49,7 @@
       'Bash(git commit:*)',
       'Bash(git push:*)',
       'Bash(git log:*)',
+      'Bash(git show:*)',
       // checkoutは都度確認
       // "Bash(git checkout:*)",
       'Bash(git remote set-url:*)',
