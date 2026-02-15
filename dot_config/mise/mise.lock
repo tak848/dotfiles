@@ -8,12 +8,12 @@ backend = "aqua:BurntSushi/ripgrep"
 "platforms.windows-x64" = { checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d87493a", url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:anthropics/claude-code"]]
-version = "2.1.39"
+version = "2.1.42"
 backend = "aqua:anthropics/claude-code"
-"platforms.linux-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.39/linux-arm64/claude"}
-"platforms.linux-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.39/linux-x64/claude"}
-"platforms.macos-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.39/darwin-arm64/claude"}
-"platforms.macos-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.39/darwin-x64/claude"}
+"platforms.linux-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.42/linux-arm64/claude"}
+"platforms.linux-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.42/linux-x64/claude"}
+"platforms.macos-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.42/darwin-arm64/claude"}
+"platforms.macos-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.42/darwin-x64/claude"}
 
 [[tools."aqua:astral-sh/uv"]]
 version = "0.10.2"
@@ -29,7 +29,6 @@ version = "1.65.0"
 backend = "aqua:bufbuild/buf"
 "platforms.linux-arm64" = { checksum = "sha256:53b4854a5ce61e02915e134370ad9c85f85cc3c906cbc464dddba5c450dee1ff", url = "https://github.com/bufbuild/buf/releases/download/v1.65.0/buf-Linux-aarch64.tar.gz"}
 "platforms.linux-x64" = { checksum = "sha256:15dfd76f882f6648aa3b9fcd23eaa149826cc9000a35bc89ced50ddca689e890", url = "https://github.com/bufbuild/buf/releases/download/v1.65.0/buf-Linux-x86_64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:86e233aa35a1763dd00fd7651c0b0cb0067395260c337bb064b68c4c85a46e38", url = "https://github.com/bufbuild/buf/releases/download/v1.65.0/buf-Darwin-arm64.tar.gz"}
 "platforms.macos-x64" = { checksum = "sha256:c70d364478f61cd444455f03cfc44b503afd4cb0a47be045bad4553f117fbf7c", url = "https://github.com/bufbuild/buf/releases/download/v1.65.0/buf-Darwin-x86_64.tar.gz"}
 "platforms.windows-x64" = { checksum = "sha256:ca122b8ca406140e2f795d9fbb578e124773d50094df26e4a337f3735b7cf753", url = "https://github.com/bufbuild/buf/releases/download/v1.65.0/buf-Windows-x86_64.zip"}
 
@@ -45,8 +44,11 @@ backend = "aqua:cli/cli"
 [[tools."aqua:cloudflare/cloudflared"]]
 version = "2026.2.0"
 backend = "aqua:cloudflare/cloudflared"
+"platforms.linux-arm64" = { checksum = "sha256:03c5d58e283f521d752dc4436014eb341092edf076eb1095953ab82debe54a8e", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.2.0/cloudflared-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:176746db3be7dc7bd48f3dd287c8930a4645ebb6e6700f883fddda5a4c307c16", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.2.0/cloudflared-linux-amd64"}
 "platforms.macos-arm64" = { checksum = "sha256:685688a260c324eb8d9c9434ca22f0ce4f504fd6acd0706787c4833de8d6eb17", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.2.0/cloudflared-darwin-amd64.tgz"}
 "platforms.macos-x64" = { checksum = "sha256:685688a260c324eb8d9c9434ca22f0ce4f504fd6acd0706787c4833de8d6eb17", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.2.0/cloudflared-darwin-amd64.tgz"}
+"platforms.windows-x64" = { checksum = "sha256:b3279f2186a1c3c438ad5865e802bbbec26090c5d3fdb4ac1113f1143a94837a", url = "https://github.com/cloudflare/cloudflared/releases/download/2026.2.0/cloudflared-windows-amd64.exe"}
 
 [[tools."aqua:direnv/direnv"]]
 version = "2.37.1"
@@ -91,6 +93,7 @@ backend = "aqua:jdx/usage"
 "platforms.linux-x64" = { checksum = "sha256:517020bfde6d29a9c7b1fd9096ea62a3394e4763f1c4cb880522c58205aa20c6", url = "https://github.com/jdx/usage/releases/download/v2.16.2/usage-x86_64-unknown-linux-musl.tar.gz"}
 "platforms.macos-arm64" = { checksum = "sha256:755140f1ffe41a58ca43fb5d96a06de8e5215b15f0f7b957a8033f91bedf7383", url = "https://github.com/jdx/usage/releases/download/v2.16.2/usage-universal-apple-darwin.tar.gz"}
 "platforms.macos-x64" = { checksum = "sha256:755140f1ffe41a58ca43fb5d96a06de8e5215b15f0f7b957a8033f91bedf7383", url = "https://github.com/jdx/usage/releases/download/v2.16.2/usage-universal-apple-darwin.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:aad90add7c4de23d70383844b158efbcdd38093c4f8b6f85153b1d0cdc8aeb6d", url = "https://github.com/jdx/usage/releases/download/v2.16.2/usage-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:jesseduffield/lazydocker"]]
 version = "0.24.4"
@@ -138,13 +141,13 @@ backend = "aqua:kubernetes/kubectl"
 "platforms.windows-x64" = { checksum = "sha256:4c5d14b8673bd55f813a8965ad70d5150e3960ee5f274025e2286aea3a0fa8b6", url = "https://dl.k8s.io/v1.35.0/bin/windows/amd64/kubectl.exe"}
 
 [[tools."aqua:mikefarah/yq"]]
-version = "4.52.2"
+version = "4.52.4"
 backend = "aqua:mikefarah/yq"
-"platforms.linux-arm64" = { checksum = "sha256:c82856ac30da522f50dcdd4f53065487b5a2927e9b87ff637956900986f1f7c2", url = "https://github.com/mikefarah/yq/releases/download/v4.52.2/yq_linux_arm64"}
-"platforms.linux-x64" = { checksum = "sha256:a74bd266990339e0c48a2103534aef692abf99f19390d12c2b0ce6830385c459", url = "https://github.com/mikefarah/yq/releases/download/v4.52.2/yq_linux_amd64"}
-"platforms.macos-arm64" = { checksum = "sha256:34613ea97c4c77e1894a8978dbf72588d187a69a6292c10dab396c767a1ecde7", url = "https://github.com/mikefarah/yq/releases/download/v4.52.2/yq_darwin_arm64"}
-"platforms.macos-x64" = { checksum = "sha256:54a63555210e73abed09108097072e28bf82a6bb20439a72b55509c4dd42378d", url = "https://github.com/mikefarah/yq/releases/download/v4.52.2/yq_darwin_amd64"}
-"platforms.windows-x64" = { checksum = "sha256:2b6cd8974004fa0511f6b6b359d2698214fadeb4599f0b00e8d85ae62b3922d4", url = "https://github.com/mikefarah/yq/releases/download/v4.52.2/yq_windows_amd64.exe"}
+"platforms.linux-arm64" = { checksum = "sha256:4c2cc022a129be5cc1187959bb4b09bebc7fb543c5837b93001c68f97ce39a5d", url = "https://github.com/mikefarah/yq/releases/download/v4.52.4/yq_linux_arm64"}
+"platforms.linux-x64" = { checksum = "sha256:0c4d965ea944b64b8fddaf7f27779ee3034e5693263786506ccd1c120f184e8c", url = "https://github.com/mikefarah/yq/releases/download/v4.52.4/yq_linux_amd64"}
+"platforms.macos-arm64" = { checksum = "sha256:6bfa43a439936644d63c70308832390c8838290d064970eaada216219c218a13", url = "https://github.com/mikefarah/yq/releases/download/v4.52.4/yq_darwin_arm64"}
+"platforms.macos-x64" = { checksum = "sha256:d72a75fe9953c707d395f653d90095b133675ddd61aa738e1ac9a73c6c05e8be", url = "https://github.com/mikefarah/yq/releases/download/v4.52.4/yq_darwin_amd64"}
+"platforms.windows-x64" = { checksum = "sha256:b7c4186f8a3e32879ddf99389bf59a4b2861f0f1b41ef58647d903b0a11e8151", url = "https://github.com/mikefarah/yq/releases/download/v4.52.4/yq_windows_amd64.exe"}
 
 [[tools."aqua:neovim/neovim"]]
 version = "0.11.6"
@@ -209,13 +212,13 @@ backend = "aqua:twpayne/chezmoi"
 "platforms.windows-x64" = { checksum = "sha256:3c6f541f140eabb1a6818ee87c94e806193d2980bfbde94832055a49a7bba573", url = "https://github.com/twpayne/chezmoi/releases/download/v2.69.4/chezmoi_2.69.4_windows_amd64.zip"}
 
 [[tools."aqua:x-motemen/ghq"]]
-version = "1.8.1"
+version = "1.9.3"
 backend = "aqua:x-motemen/ghq"
-"platforms.linux-arm64" = { checksum = "sha256:7b6bacd8dca3c3489b0cafe6b10655d16d753c0a3c676e1680d687ec4cdbda0b", url = "https://github.com/x-motemen/ghq/releases/download/v1.8.1/ghq_linux_arm64.zip"}
-"platforms.linux-x64" = { checksum = "sha256:61ef8582d3dfe3e8d6ce9c16d7293c704ed881c59b5a12ddcf6ed579ecb6bfaf", url = "https://github.com/x-motemen/ghq/releases/download/v1.8.1/ghq_linux_amd64.zip"}
-"platforms.macos-arm64" = { checksum = "sha256:7e2acc04d5993eb88e343cb9403d8052e0e68aa91f21e802326dca8578b14185", url = "https://github.com/x-motemen/ghq/releases/download/v1.8.1/ghq_darwin_arm64.zip"}
-"platforms.macos-x64" = { checksum = "sha256:0ca9e21136ffb19c3bf92689ef4e5a6c6c9d32e90fe3efdd8737ff6b8da5a112", url = "https://github.com/x-motemen/ghq/releases/download/v1.8.1/ghq_darwin_amd64.zip"}
-"platforms.windows-x64" = { checksum = "sha256:6d9e1728990b110abf4ce7778567085954301f389bd813afb28b155c9947302f", url = "https://github.com/x-motemen/ghq/releases/download/v1.8.1/ghq_windows_amd64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:cd3e7e56122036f3c2983e7ccef9e5a045085f10656ccd261f77d1c3fa43fc6a", url = "https://github.com/x-motemen/ghq/releases/download/v1.9.3/ghq_linux_arm64.zip"}
+"platforms.linux-x64" = { checksum = "sha256:59ed10b09c911b1bf1382172d966d67eb7dac731c4af114f8ad34df2f15f5e43", url = "https://github.com/x-motemen/ghq/releases/download/v1.9.3/ghq_linux_amd64.zip"}
+"platforms.macos-arm64" = { checksum = "sha256:1a5e4a305b565928c1d03f60aae0bd1d331a7a4a5cd56410b05148a17c2e6274", url = "https://github.com/x-motemen/ghq/releases/download/v1.9.3/ghq_darwin_arm64.zip"}
+"platforms.macos-x64" = { checksum = "sha256:8f0e7fc802a3f3b8ea4f4d72ae0956ec233a754e01750c4c0a9612baa6ef19b9", url = "https://github.com/x-motemen/ghq/releases/download/v1.9.3/ghq_darwin_amd64.zip"}
+"platforms.windows-x64" = { checksum = "sha256:f7104ad96fd7481e093b90278ef1be9498816dac1bbcaa8cd5aae934fbf56fdd", url = "https://github.com/x-motemen/ghq/releases/download/v1.9.3/ghq_windows_amd64.zip"}
 
 [[tools."github:aquaproj/aqua"]]
 version = "2.51.2"
@@ -275,7 +278,7 @@ version = "0.101.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260212.1"
+version = "7.0.0-dev.20260215.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -287,7 +290,7 @@ version = "18.0.5"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
-version = "3.1.7"
+version = "3.1.8"
 backend = "npm:difit"
 
 [[tools.pnpm]]
