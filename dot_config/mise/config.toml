@@ -41,8 +41,8 @@ go = "1.26.0"
 # rga依存: ドキュメント変換（docx, epub, odt等）
 "github:jgm/pandoc" = "3.8.3"
 "aqua:jqlang/jq" = "1.8.1"
-"aqua:mikefarah/yq" = "4.52.2"
-"aqua:x-motemen/ghq" = "1.8.1"
+"aqua:mikefarah/yq" = "4.52.4"
+"aqua:x-motemen/ghq" = "1.9.3"
 "aqua:jesseduffield/lazygit" = "0.59.0"
 "aqua:jesseduffield/lazydocker" = "0.24.4"
 
@@ -77,10 +77,10 @@ go = "1.26.0"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"aqua:anthropics/claude-code" = "2.1.39"
+"aqua:anthropics/claude-code" = "2.1.42"
 "npm:@google/gemini-cli" = "0.28.2"
 "npm:@openai/codex" = "0.101.0"
 "npm:ccusage" = "18.0.5"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260212.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260215.1"
 "npm:cc-sdd" = "2.1.1"
-"npm:difit" = "3.1.7"
+"npm:difit" = "3.1.8"
