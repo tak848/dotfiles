@@ -29,6 +29,11 @@
       'Bash(true)',
       'Bash(echo:*)',
       'Bash(printf:*)',
+      'Bash(head:*)',
+      'Bash(mise where:*)',
+      'Bash(mise registry:*)',
+      'Bash(mise settings:*)',
+      'Bash(mise doctor:*)',
       // rmは都度確認
       // "Bash(rm:*)",
       'Bash(go test:*)',
