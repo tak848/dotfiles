@@ -88,13 +88,13 @@ backend = "aqua:grafana/jsonnet-language-server"
 "platforms.windows-x64" = { checksum = "sha256:805b70884d202ed6f8568607d4d94a3bfe0318ea6902e904c673be0c43d3cd41", url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.17.0/jsonnet-language-server_0.17.0_windows_amd64.exe"}
 
 [[tools."aqua:jdx/usage"]]
-version = "2.17.0"
+version = "2.17.4"
 backend = "aqua:jdx/usage"
-"platforms.linux-arm64" = { checksum = "sha256:b1b92c5a9fca0d6df95d8c84c391a72177dc4caf703bafcb6bb2f3eb25d71753", url = "https://github.com/jdx/usage/releases/download/v2.17.0/usage-aarch64-unknown-linux-musl.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:3df10eb333b335b3a26775838208d3efca47700fc7f323023280019d3ccff772", url = "https://github.com/jdx/usage/releases/download/v2.17.0/usage-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:06cfda068d7b9115e321be246e76847bfad22958881b63e33bdd2065a97416d9", url = "https://github.com/jdx/usage/releases/download/v2.17.0/usage-universal-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:06cfda068d7b9115e321be246e76847bfad22958881b63e33bdd2065a97416d9", url = "https://github.com/jdx/usage/releases/download/v2.17.0/usage-universal-apple-darwin.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:4aedaa3f827e3c8612c0c6d98dd08c63701b669bfbd68f3d8edebe673234e4c6", url = "https://github.com/jdx/usage/releases/download/v2.17.0/usage-x86_64-pc-windows-msvc.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:135a830878e0356ff85a85d9cf834109795dc7cc6244c3efc109f5df9f68a583", url = "https://github.com/jdx/usage/releases/download/v2.17.4/usage-aarch64-unknown-linux-musl.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:2a670692a614f2da571c66b6502f51b4565acda332ba0afcb217f73b09f3174a", url = "https://github.com/jdx/usage/releases/download/v2.17.4/usage-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:3e56078c06cb7a3b4a23763a74a78b6743ea3dd93995f3f843a9684956afee98", url = "https://github.com/jdx/usage/releases/download/v2.17.4/usage-universal-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:3e56078c06cb7a3b4a23763a74a78b6743ea3dd93995f3f843a9684956afee98", url = "https://github.com/jdx/usage/releases/download/v2.17.4/usage-universal-apple-darwin.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:276f11135be93eaa2574b588862c26aa86529bae6745debd35a024fc4a72c735", url = "https://github.com/jdx/usage/releases/download/v2.17.4/usage-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:jesseduffield/lazydocker"]]
 version = "0.24.4"
@@ -275,11 +275,11 @@ version = "0.29.0"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@openai/codex"]]
-version = "0.103.0"
+version = "0.104.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260217.1"
+version = "7.0.0-dev.20260218.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
