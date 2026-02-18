@@ -1,5 +1,5 @@
 # tm: ghq リポジトリ → tmux session を作成/切り替え
-#   tm       → カレントディレクトリが ghq 管理下ならそのセッション、そうでなければ fzf 選択
+#   tm       → ghq list + fzf でリポジトリ選択してセッション作成/切り替え
 #   tm .     → カレントディレクトリでセッション作成（ghq 管理外でも可）
 #   tm <name> → 指定名でカレントディレクトリにセッション作成/切り替え
 tm() {
@@ -58,18 +58,8 @@ tm() {
     return
   fi
 
-  # tm (引数なし) → カレントディレクトリが ghq 管理下ならそのセッション
+  # tm (引数なし) → ghq list + fzf でリポジトリ選択
   local repo_path
-  repo_path=$(_tm_ghq_relpath)
-  if [[ -n "$repo_path" ]]; then
-    local session
-    session=$(_tm_session_name "$repo_path")
-    _tm_create_if_needed "$session" "$PWD"
-    tmux $change -t "$session"
-    return
-  fi
-
-  # ghq 管理外 → fzf でリポジトリ選択
   repo_path=$(command ghq list | fzf --tmux center,80% --reverse --prompt="tmux session> ")
   [[ -z "$repo_path" ]] && return
 
