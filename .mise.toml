@@ -8,10 +8,10 @@ locked = false  # npm backend が checksum 未対応のため
 [tools]
 # このリポジトリで使うランタイム
 node = "24.13.1"
-pnpm = "10.29.3"
+pnpm = "10.30.0"
 
 # aqua CLI（dot_config/aquaproj-aqua の管理用）
-"github:aquaproj/aqua" = "2.51.2"
+"github:aquaproj/aqua" = "2.56.6"
 
 # このリポジトリで使う CLI ツール
 "aqua:google/go-jsonnet" = "0.21.0"
