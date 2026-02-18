@@ -70,5 +70,8 @@ palette = 14=#6bd7ca
 palette = 15=#bac2de
 font-family = MesloLGM Nerd Font
 
+# macOS で option キーを Alt として扱う（tmux 等で必要）
+macos-option-as-alt = true
+
 # Shift+Return を通常の改行として送信（Claude Code 等で必要）
 keybind = shift+enter=text:\n
