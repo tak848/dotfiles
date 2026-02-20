@@ -13,6 +13,7 @@
       'Bash(touch:*)',
       'Bash(mktemp:*)',
       'Bash(codex exec:*)',
+      'Bash(codex-review-exec:*)',
       'Read(/tmp/*)',
       'Bash(lsof:*)',
       'Bash(awk:*)',
