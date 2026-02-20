@@ -58,7 +58,7 @@ Bash で `which codex` と `which codex-review-exec` を実行し、両方の CL
    ```
    codex-review-exec /tmp/codex-review-prompt-<uuidgen出力>.txt
    ```
-   - タイムアウト: 300000ms（5分）
+   - タイムアウト: 600000ms（10分）
 
 5. Bash 出力（JSONL + stderr 混在）から `{"type":"thread.started"` を含む行を探して `thread_id` を取得する。
    また、末尾の `OUTPUT_FILE=<path>` 行から出力ファイルパスを取得する。
