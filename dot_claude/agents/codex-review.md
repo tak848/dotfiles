@@ -5,6 +5,12 @@ description: >
   codex を実行し、レビュー結果と session ID を返す。
   修正は行わない。ステートレス。
   呼び出し元は目的・制約・対象ファイルパス・必読資料パス・前回未解決事項を全て渡すこと。
+tools:
+  - Bash(which:*)
+  - Bash(uuidgen)
+  - Bash(codex-review-exec:*)
+  - Read
+  - Write(/tmp/codex-review-*)
 ---
 
 # Codex CLI Code Review Agent
@@ -18,8 +24,8 @@ codex exec を実行してレビュー結果を返すステートレスなラッ
 
 ## 前提チェック
 
-Bash で `which codex` を実行し、CLI の存在を確認する。
-失敗した場合は「codex がインストールされていません」と案内する。
+Bash で `which codex` と `which codex-review-exec` を実行し、両方の CLI の存在を確認する。
+失敗した場合はインストールされていない旨を案内する。
 
 ## 初回レビュー（thread_id が渡されていない場合）
 
@@ -52,7 +58,7 @@ Bash で `which codex` を実行し、CLI の存在を確認する。
    ```
    codex-review-exec /tmp/codex-review-prompt-<uuidgen出力>.txt
    ```
-   - タイムアウト: 300000ms（5分）
+   - タイムアウト: 600000ms（10分）
 
 5. Bash 出力（JSONL + stderr 混在）から `{"type":"thread.started"` を含む行を探して `thread_id` を取得する。
    また、末尾の `OUTPUT_FILE=<path>` 行から出力ファイルパスを取得する。
@@ -98,4 +104,3 @@ Bash で `which codex` を実行し、CLI の存在を確認する。
 | thread.started 未検出 | fail-close。新規セッションでの再試行を案内 |
 | resume 時 thread_id 不一致 | fail-close。新規セッションでの再試行を案内 |
 | codex 未認証 | `codex login` を案内 |
-| レビュー後に git diff で差分あり | 警告: 「Codex がコードを変更した可能性があります」 |
