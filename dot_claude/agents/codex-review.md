@@ -44,24 +44,19 @@ Bash で `which codex` を実行し、CLI の存在を確認する。
      ```
    - **レビュー対象**: 対象ファイルパスとユーザーの依頼内容
 
-2. Bash で一時ファイルを作成し、出力されたパスを記録する:
+2. Bash で codex を実行:
    ```
-   mktemp
-   ```
-
-3. ステップ 2 で出力されたパスを `-o` に指定して、Bash で codex を実行:
-   ```
-   codex exec --json --full-auto -o "(ステップ2の出力パス)" "構成したプロンプト"
+   codex exec --json --full-auto -o /tmp/codex-review-output.txt "構成したプロンプト"
    ```
    - タイムアウト: 300000ms（5分）
 
-4. Bash 出力（JSONL + stderr 混在）から `{"type":"thread.started"` を含む行を探して `thread_id` を取得する。
+3. Bash 出力（JSONL + stderr 混在）から `{"type":"thread.started"` を含む行を探して `thread_id` を取得する。
    - 1行目固定ではなく走査する。
    - 未検出の場合は fail-close: 「thread_id が取得できませんでした」とエラーを返す。
 
-5. Read で一時ファイルパス（ステップ 2 で作成）からレビューテキストを取得する。
+4. Read で `/tmp/codex-review-output.txt` からレビューテキストを取得する。
 
-6. 以下を全て返す（省略しない）:
+5. 以下を全て返す（省略しない）:
    - **結論**（1-3行の要約）
    - **レビュー結果全文**（Codex の出力をそのまま。要約・省略しない）
    - **セッション ID**: `<thread_id>`
@@ -72,24 +67,19 @@ Bash で `which codex` を実行し、CLI の存在を確認する。
 
 1. 同様にプロンプトを構成する。前回未解決事項があれば含める。
 
-2. Bash で一時ファイルを作成し、出力されたパスを記録する:
+2. Bash で codex を実行:
    ```
-   mktemp
-   ```
-
-3. ステップ 2 で出力されたパスを `-o` に指定して、Bash で codex を実行:
-   ```
-   codex exec --json --full-auto -o "(ステップ2の出力パス)" resume <THREAD_ID> "構成したプロンプト"
+   codex exec --json --full-auto -o /tmp/codex-review-output.txt resume <THREAD_ID> "構成したプロンプト"
    ```
    注意: `-o` は `exec` の引数。`resume` の前に置く。
 
-4. JSONL の `thread_id` が渡された値と一致するか検証する。
+3. JSONL の `thread_id` が渡された値と一致するか検証する。
    - 不一致 = resume 失敗（Codex が新規スレッドを開始した）。
    - fail-close: 「resume に失敗しました（セッション ID 不一致: 期待値 `<指定ID>`, 実際 `<取得ID>`）。新規セッションでレビューし直してください」とエラーを返す。
 
-5. Read で結果取得。
+4. Read で `/tmp/codex-review-output.txt` から結果取得。
 
-6. 初回と同様に全て返す。
+5. 初回と同様に全て返す。
 
 ## エラーハンドリング
 
