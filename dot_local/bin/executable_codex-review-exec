@@ -1,0 +1,11 @@
+#!/bin/bash
+set -euo pipefail
+
+# codex exec ラッパー: mktemp で一意な出力ファイルを作成し codex exec に渡す
+# Usage:
+#   codex-review-exec "prompt"
+#   codex-review-exec resume <THREAD_ID> "prompt"
+
+TMPFILE=$(mktemp /tmp/codex-review.XXXXXXXXXX)
+trap 'echo "OUTPUT_FILE=$TMPFILE"' EXIT
+codex exec --json --full-auto -o "$TMPFILE" "$@"
