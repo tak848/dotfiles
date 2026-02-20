@@ -8,7 +8,6 @@ set -euo pipefail
 
 PROMPT_FILE="$1"
 shift
-PROMPT=$(cat "$PROMPT_FILE")
 TMPFILE=$(mktemp /tmp/codex-review.XXXXXXXXXX)
 trap 'echo "OUTPUT_FILE=$TMPFILE"' EXIT
-codex exec --json --full-auto -o "$TMPFILE" "$@" "$PROMPT"
+codex exec --json --full-auto -o "$TMPFILE" "$@" - < "$PROMPT_FILE"
