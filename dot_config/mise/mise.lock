@@ -15,6 +15,14 @@ backend = "aqua:anthropics/claude-code"
 "platforms.macos-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.47/darwin-arm64/claude"}
 "platforms.macos-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.47/darwin-x64/claude"}
 
+[[tools."aqua:arl/gitmux"]]
+version = "0.11.5"
+backend = "aqua:arl/gitmux"
+"platforms.linux-arm64" = { checksum = "sha256:89a03a76828267927d57904f0f716a9b9aad627d1697d5c0c883d60c09bb4ff6", url = "https://github.com/arl/gitmux/releases/download/v0.11.5/gitmux_v0.11.5_linux_arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:d46a10f5fe07ab5b8a902ac29c937e4d3c8d7f33ea30fa335d682601697b5a71", url = "https://github.com/arl/gitmux/releases/download/v0.11.5/gitmux_v0.11.5_linux_amd64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:89f0a88e1fbbd74d13dfbb92a5ccb2c3d5bc397546b8a4fb5372d98bacf79c0e", url = "https://github.com/arl/gitmux/releases/download/v0.11.5/gitmux_v0.11.5_macOS_arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:0ff0b4c4e30ca0615fc0cd966b7bc3f10b6c02b8a3164802b94e621aa5aee698", url = "https://github.com/arl/gitmux/releases/download/v0.11.5/gitmux_v0.11.5_macOS_amd64.tar.gz"}
+
 [[tools."aqua:astral-sh/uv"]]
 version = "0.10.4"
 backend = "aqua:astral-sh/uv"

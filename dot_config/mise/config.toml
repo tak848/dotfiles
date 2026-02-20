@@ -49,6 +49,7 @@ go = "1.26.0"
 # エディタ・ターミナル
 "aqua:neovim/neovim" = "0.11.6"
 "github:tmux/tmux-builds" = "v3.6a"
+"aqua:arl/gitmux" = "0.11.5"
 
 # Python ツール
 "aqua:astral-sh/uv" = "0.10.4"
