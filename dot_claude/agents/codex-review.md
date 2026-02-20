@@ -44,20 +44,24 @@ Bash で `which codex` を実行し、CLI の存在を確認する。
      ```
    - **レビュー対象**: 対象ファイルパスとユーザーの依頼内容
 
-2. Bash で実行:
+2. Bash で `uuidgen` を実行し、一意な ID を取得する。
+
+3. Write ツールでプロンプトを `/tmp/codex-review-prompt-<uuidgen出力>.txt` に書き出す。
+
+4. Bash で実行:
    ```
-   codex-review-exec "構成したプロンプト"
+   codex-review-exec /tmp/codex-review-prompt-<uuidgen出力>.txt
    ```
    - タイムアウト: 300000ms（5分）
 
-3. Bash 出力（JSONL + stderr 混在）から `{"type":"thread.started"` を含む行を探して `thread_id` を取得する。
+5. Bash 出力（JSONL + stderr 混在）から `{"type":"thread.started"` を含む行を探して `thread_id` を取得する。
    また、末尾の `OUTPUT_FILE=<path>` 行から出力ファイルパスを取得する。
    - 1行目固定ではなく走査する。
    - thread_id 未検出の場合は fail-close: 「thread_id が取得できませんでした」とエラーを返す。
 
-4. Read で出力ファイルパスからレビューテキストを取得する。
+6. Read で出力ファイルパスからレビューテキストを取得する。
 
-5. 以下を全て返す（省略しない）:
+7. 以下を全て返す（省略しない）:
    - **結論**（1-3行の要約）
    - **レビュー結果全文**（Codex の出力をそのまま。要約・省略しない）
    - **セッション ID**: `<thread_id>`
@@ -68,19 +72,23 @@ Bash で `which codex` を実行し、CLI の存在を確認する。
 
 1. 同様にプロンプトを構成する。前回未解決事項があれば含める。
 
-2. Bash で実行:
+2. Bash で `uuidgen` を実行し、一意な ID を取得する。
+
+3. Write ツールでプロンプトを `/tmp/codex-review-prompt-<uuidgen出力>.txt` に書き出す。
+
+4. Bash で実行:
    ```
-   codex-review-exec resume <THREAD_ID> "構成したプロンプト"
+   codex-review-exec /tmp/codex-review-prompt-<uuidgen出力>.txt resume <THREAD_ID>
    ```
 
-3. Bash 出力から `thread_id` と `OUTPUT_FILE=<path>` を取得する。
+5. Bash 出力から `thread_id` と `OUTPUT_FILE=<path>` を取得する。
    thread_id が渡された値と一致するか検証する。
    - 不一致 = resume 失敗（Codex が新規スレッドを開始した）。
    - fail-close: 「resume に失敗しました（セッション ID 不一致: 期待値 `<指定ID>`, 実際 `<取得ID>`）。新規セッションでレビューし直してください」とエラーを返す。
 
-4. Read で結果取得。
+6. Read で結果取得。
 
-5. 初回と同様に全て返す。
+7. 初回と同様に全て返す。
 
 ## エラーハンドリング
 

@@ -22,6 +22,7 @@
       'Bash(ps:*)',
       'Bash(top:*)',
       'Bash(which:*)',
+      'Bash(uuidgen)',
       'Bash(find:*)',
       'Bash(grep:*)',
       'Bash(rg:*)',
