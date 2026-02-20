@@ -11,6 +11,8 @@
       'Bash(mkdir:*)',
       'Bash(curl:*)',
       'Bash(touch:*)',
+      'Bash(mktemp:*)',
+      'Read(/tmp/*)',
       'Bash(lsof:*)',
       'Bash(awk:*)',
       'Bash(sed:*)',
