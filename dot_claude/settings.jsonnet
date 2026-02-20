@@ -12,6 +12,7 @@
       'Bash(curl:*)',
       'Bash(touch:*)',
       'Bash(mktemp:*)',
+      'Bash(codex exec:*)',
       'Read(/tmp/*)',
       'Bash(lsof:*)',
       'Bash(awk:*)',
