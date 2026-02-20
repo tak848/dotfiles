@@ -7,5 +7,5 @@ set -euo pipefail
 #   codex-review-exec resume <THREAD_ID> "prompt"
 
 TMPFILE=$(mktemp /tmp/codex-review.XXXXXXXXXX)
+trap 'echo "OUTPUT_FILE=$TMPFILE"' EXIT
 codex exec --json --full-auto -o "$TMPFILE" "$@"
-echo "OUTPUT_FILE=$TMPFILE"

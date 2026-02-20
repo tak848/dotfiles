@@ -29,7 +29,6 @@
       // 'WebFetch(https://*)',
       'Bash(pnpm:*)',
       'Bash(make:*)',
-      'Bash(sed:*)',
       'Bash(true)',
       'Bash(echo:*)',
       'Bash(printf:*)',
