@@ -15,6 +15,7 @@
       'Bash(codex exec:*)',
       'Bash(codex-review-exec:*)',
       'Read(/tmp/*)',
+      'Write(/tmp/*)',
       'Bash(lsof:*)',
       'Bash(awk:*)',
       'Bash(sed:*)',
