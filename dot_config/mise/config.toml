@@ -12,7 +12,7 @@ locked = false
 # ランタイム（core backend）
 # ============================================
 node = "24.13.1"
-pnpm = "10.30.0"
+pnpm = "10.30.1"
 go = "1.26.0"
 
 # ============================================
@@ -26,10 +26,10 @@ go = "1.26.0"
 # CLI ツール（aqua backend）
 # ============================================
 # GitHub CLI
-"aqua:cli/cli" = "2.87.0"
+"aqua:cli/cli" = "2.87.2"
 
 # シェル関連
-"aqua:junegunn/fzf" = "0.67.0"
+"aqua:junegunn/fzf" = "0.68.0"
 "aqua:starship/starship" = "1.24.2"
 "aqua:direnv/direnv" = "2.37.1"
 # zoxide は aqua CLI で管理（mise lock で checksum 取得不可）
@@ -78,10 +78,10 @@ go = "1.26.0"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"aqua:anthropics/claude-code" = "2.1.49"
+"aqua:anthropics/claude-code" = "2.1.50"
 "npm:@google/gemini-cli" = "0.29.5"
 "npm:@openai/codex" = "0.104.0"
 "npm:ccusage" = "18.0.5"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260219.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260221.1"
 "npm:cc-sdd" = "2.1.1"
-"npm:difit" = "3.1.9"
+"npm:difit" = "3.1.10"
