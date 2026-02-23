@@ -10,6 +10,7 @@ z/
 .lsmcp
 .envrc-aliases
 .codex/
+.codex-reviews/
 .gemini/
 GEMINI.md
 AGENTS.override.md

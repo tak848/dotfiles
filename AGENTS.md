@@ -37,6 +37,9 @@ Always respond in Japanese(常に日本語で答えること).
 - Commit style: Conventional Commits (e.g., `feat:`, `fix:`, `chore(deps):`, `docs:`). Example: `chore(deps): update neovim to v0.11.4`.
 - Include generated artifacts when relevant (e.g., `mise.lock`, `aqua-checksums.json`) and run `task` after changing tool configs.
 - PRs: explain What/Why, note impacted paths (e.g., `dot_zsh/`, `dot_config/aquaproj-aqua/`), and paste a `chezmoi diff` snippet if user-facing.
+- **PR 作成時の注意**: GitHub MCP の `body` パラメータに改行を含める際、リテラル `\n` ではなく実際の改行文字を使うこと（リテラル `\n` はエスケープされて壊れる）。
+- レビューコメントの指摘に対して修正を行った場合は、必ず該当コメントに reply すること。修正した commit へのリンク（`https://github.com/{owner}/{repo}/commit/{sha}` 形式）を含めること。
+- issue/PR にコメント・返信する際は、本文末尾に `(by <agent name>)` を付与すること（例: `(by Codex)`, `(by Claude Code)`）。
 
 ## Security & Configuration Tips
 - Do not commit secrets. Use local overrides: `~/.zshrc.local`, `~/.zsh/local/*.zsh`, `.envrc.local` (these are git-ignored).
