@@ -10,7 +10,7 @@ tools:
   - Bash(uuidgen)
   - Bash(codex-review-exec:*)
   - Read
-  - Write(/tmp/codex-review-*)
+  - Write(.codex-reviews/*)
 ---
 
 # Codex CLI Code Review Agent
@@ -52,11 +52,11 @@ Bash で `which codex` と `which codex-review-exec` を実行し、両方の CL
 
 2. Bash で `uuidgen` を実行し、一意な ID を取得する。
 
-3. Write ツールでプロンプトを `/tmp/codex-review-prompt-<uuidgen出力>.txt` に書き出す。
+3. Write ツールでプロンプトを `.codex-reviews/codex-review-prompt-<uuidgen出力>.txt` に書き出す。
 
 4. Bash で実行:
    ```
-   codex-review-exec /tmp/codex-review-prompt-<uuidgen出力>.txt
+   codex-review-exec .codex-reviews/codex-review-prompt-<uuidgen出力>.txt
    ```
    - タイムアウト: 600000ms（10分）
 
@@ -80,11 +80,11 @@ Bash で `which codex` と `which codex-review-exec` を実行し、両方の CL
 
 2. Bash で `uuidgen` を実行し、一意な ID を取得する。
 
-3. Write ツールでプロンプトを `/tmp/codex-review-prompt-<uuidgen出力>.txt` に書き出す。
+3. Write ツールでプロンプトを `.codex-reviews/codex-review-prompt-<uuidgen出力>.txt` に書き出す。
 
 4. Bash で実行:
    ```
-   codex-review-exec /tmp/codex-review-prompt-<uuidgen出力>.txt resume <THREAD_ID>
+   codex-review-exec .codex-reviews/codex-review-prompt-<uuidgen出力>.txt resume <THREAD_ID>
    ```
 
 5. Bash 出力から `thread_id` と `OUTPUT_FILE=<path>` を取得する。
