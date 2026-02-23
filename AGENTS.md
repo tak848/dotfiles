@@ -37,6 +37,7 @@ Always respond in Japanese(常に日本語で答えること).
 - Commit style: Conventional Commits (e.g., `feat:`, `fix:`, `chore(deps):`, `docs:`). Example: `chore(deps): update neovim to v0.11.4`.
 - Include generated artifacts when relevant (e.g., `mise.lock`, `aqua-checksums.json`) and run `task` after changing tool configs.
 - PRs: explain What/Why, note impacted paths (e.g., `dot_zsh/`, `dot_config/aquaproj-aqua/`), and paste a `chezmoi diff` snippet if user-facing.
+- **PR 作成時の注意**: `mcp__github__create_pull_request` の `body` パラメータに `\n` を含む文字列を渡すとリテラルエスケープされ改行が壊れる。PR 作成は `gh pr create` コマンドを HEREDOC で使うこと。PR の更新（`update_pull_request`）は MCP で問題ない。
 
 ## Security & Configuration Tips
 - Do not commit secrets. Use local overrides: `~/.zshrc.local`, `~/.zsh/local/*.zsh`, `.envrc.local` (these are git-ignored).

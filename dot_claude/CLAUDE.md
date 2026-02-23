@@ -28,6 +28,7 @@
 
 - `gh` コマンドの直接利用ではなく、**GitHub MCP (`mcp__github__*`) を優先して使用すること**
 - PR のコメント確認時は、**issue comment (`get_comments`) と review comment (`get_review_comments`) の両方を確認すること**。review comment は `get_comments` では取得できない
+- `mcp__github__create_pull_request` の `body` に `\n` を含む文字列を渡すとリテラルエスケープされ改行が壊れる。**PR 作成は `gh pr create` コマンドを HEREDOC で使うこと**
 
 **禁止事項:**
 - MCP で確認せずに「〜だと思います」「おそらく〜」と回答すること
