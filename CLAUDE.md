@@ -79,12 +79,23 @@ Homebrew
 
 ### 自動生成ファイル一覧
 
-| ファイル | 生成元 | 生成コマンド |
-|---------|--------|-------------|
+| ファイル | 生成元 | 生成方法 |
+|---------|--------|---------|
 | `mise.lock` | `.mise.toml` | `task mise:lock` |
 | `dot_config/mise/mise.lock` | `dot_config/mise/config.toml` | `task mise:lock` |
 | `dot_config/aquaproj-aqua/aqua-checksums.json` | `dot_config/aquaproj-aqua/aqua.yaml` | `task aqua:checksum` |
 | `dot_local/bin/executable_mise` | `.mise-bootstrap-version` | `task mise:bootstrap` |
+
+### chezmoi apply 時の自動管理ファイル
+
+| ターゲットファイル | 生成元 | 方式 |
+|------------------|--------|------|
+| `~/.claude/settings.json` | `dot_claude/settings.jsonnet` | jsonnet 全体生成（run_onchange） |
+| `~/.gemini/settings.json` | `dot_gemini/settings.jsonnet` | jsonnet 全体生成（run_onchange） |
+| `~/.claude.json` | `modify_dot_claude.json` | chezmoi modify テンプレート（差分適用） |
+| `~/.codex/config.toml` | `dot_codex/modify_config.toml` | chezmoi modify テンプレート（差分適用） |
+
+`~/.claude.json` と `~/.codex/config.toml` はツールが自動的に書き込むため、jsonnet で全体生成せず modify テンプレートで管理対象キーのみ差分適用する。
 
 ### chezmoi apply 時の自動実行スクリプト
 
@@ -96,7 +107,7 @@ Homebrew
 | `run_onchange_after_10-mise-install.sh.tmpl` | `config.toml` 変更時 | `mise install` |
 | `run_onchange_after_20-aqua-install.sh.tmpl` | `aqua.yaml` 変更時 | `aqua install` |
 | `run_onchange_after_30-install-packages.sh.tmpl` | `packages.yaml` 変更時 | `brew install`（macOS） |
-| `run_onchange_after_40-generate-jsonnet.sh.tmpl` | jsonnet ファイル変更時 | jsonnet → JSON 生成（`~/.claude/`, `~/.gemini/`） |
+| `run_onchange_after_40-generate-jsonnet.sh.tmpl` | jsonnet ファイル変更時 | jsonnet → JSON 生成（`~/.claude/settings.json`, `~/.gemini/settings.json`） |
 
 ### Chezmoi ファイル命名規則
 
@@ -105,6 +116,7 @@ Homebrew
 | `dot_` | `~/.` | `dot_zshrc.tmpl` → `~/.zshrc` |
 | `executable_` | 実行権限付与 | `executable_mise` → `mise` (+x) |
 | `.tmpl` | テンプレート展開 | OS/アーキテクチャ分岐 |
+| `modify_` | 既存ファイルを差分適用 | `modify_dot_claude.json` → `~/.claude.json` |
 | `run_once_before_*` | 初回のみ実行 | Homebrew インストール |
 | `run_onchange_after_*` | ファイル変更時実行 | mise install |
 
