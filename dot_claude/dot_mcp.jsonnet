@@ -1,5 +1,9 @@
 {
   mcpServers: {
+    github: {
+      type: 'http',
+      url: 'https://api.githubcopilot.com/mcp/',
+    },
     // gopls: {
     //   type: 'stdio',
     //   command: 'gopls',

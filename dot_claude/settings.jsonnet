@@ -118,6 +118,29 @@
       'mcp__deepwiki__read_wiki_contents',
       'mcp__deepwiki__ask_question',
       'mcp__devin__ask_question',
+      // GitHub MCP - read 系
+      'mcp__github__get_me',
+      'mcp__github__list_issues',
+      'mcp__github__search_issues',
+      'mcp__github__issue_read',
+      'mcp__github__list_pull_requests',
+      'mcp__github__search_pull_requests',
+      'mcp__github__pull_request_read',
+      'mcp__github__get_file_contents',
+      'mcp__github__list_commits',
+      'mcp__github__get_commit',
+      'mcp__github__list_branches',
+      'mcp__github__search_code',
+      'mcp__github__get_repository_tree',
+      'mcp__github__list_notifications',
+      'mcp__github__get_notification_details',
+      // GitHub MCP - write 系（コメント・Issue のみ自動許可）
+      'mcp__github__add_issue_comment',
+      'mcp__github__issue_write',
+      'mcp__github__add_reply_to_pull_request_comment',
+      // GitHub MCP - PR write 系（都度確認のためコメントアウト）
+      // 'mcp__github__create_pull_request',
+      // 'mcp__github__update_pull_request',
     ],
     deny: [
       'Bash(git -C*)',
@@ -131,7 +154,7 @@
     ],
   },
   // model: 'claude-opus-4-1-20250805',
-  model: 'claude-opus-4-6',
+  model: 'claude-opus-4-6[1m]',
   // model: 'opus',
 
   // 無効らしい
