@@ -2,7 +2,7 @@
 {{- /* ~/.claude.json の mcpServers.github のみ差分適用する。 */ -}}
 {{- /* Claude Code が自動書き込みするキー（projects, tipsHistory 等）は既存値を保持する。 */ -}}
 {{- $data := dict -}}
-{{- if ne .chezmoi.stdin "" -}}
+{{- if ne (.chezmoi.stdin | trim) "" -}}
 {{-   $data = fromJson .chezmoi.stdin -}}
 {{- end -}}
 {{- $mcpServers := index $data "mcpServers" | default dict -}}
