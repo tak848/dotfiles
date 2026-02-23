@@ -24,6 +24,11 @@
    - context7 で見つからない場合、または自然言語での解説が必要な場合に使用
    - GitHub リポジトリの構造理解に有効
 
+### GitHub 操作
+
+- `gh` コマンドの直接利用ではなく、**GitHub MCP (`mcp__github__*`) を優先して使用すること**
+- PR のコメント確認時は、**issue comment (`get_comments`) と review comment (`get_review_comments`) の両方を確認すること**。review comment は `get_comments` では取得できない
+
 **禁止事項:**
 - MCP で確認せずに「〜だと思います」「おそらく〜」と回答すること
 - 古いバージョンの情報を最新と偽ること
