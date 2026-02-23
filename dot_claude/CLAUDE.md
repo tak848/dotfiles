@@ -33,7 +33,7 @@
 - `gh` コマンドの直接利用ではなく、**GitHub MCP (`mcp__github__*`) を優先して使用すること**
 - PR のコメント確認時は、**issue comment (`get_comments`) と review comment (`get_review_comments`) の両方を確認すること**。review comment は `get_comments` では取得できない
 - GitHub MCP の `body` パラメータに改行を含める際、リテラル `\n` ではなく実際の改行文字を使うこと（リテラル `\n` はエスケープされて壊れる）
-- レビューコメントの指摘に対して修正を行った場合は、必ず該当コメントに reply すること。修正した commit SHA を含めること
+- レビューコメントの指摘に対して修正を行った場合は、必ず該当コメントに reply すること。修正した commit へのリンク（`https://github.com/{owner}/{repo}/commit/{sha}` 形式）を含めること
 - issue/PR にコメント・返信する際は、本文末尾に `(by Claude Code)` を付与すること
 
 ### 自分の知識を過信しない
