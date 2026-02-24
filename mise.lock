@@ -26,32 +26,32 @@ backend = "aqua:neovim/neovim"
 "platforms.windows-x64" = { checksum = "sha256:90fc6d7cdf3d3388737caab1e2c554aa24b468f3a5cc38ef63857ddf1103513c", url = "https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-win64.zip"}
 
 [[tools."github:aquaproj/aqua"]]
-version = "2.56.6"
+version = "2.56.7"
 backend = "github:aquaproj/aqua"
-"platforms.linux-arm64" = { checksum = "sha256:47e098b62d1794956026ba4bd56be3fa0772074576747463b03ccea4825952d6", url = "https://github.com/aquaproj/aqua/releases/download/v2.56.6/aqua_linux_arm64.tar.gz", url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/349528228"}
-"platforms.linux-x64" = { checksum = "sha256:f6ffd22e02e6d454ab2699a03b70b7f9b8ae5aaa0d84405592db3c6a3c48c19a", url = "https://github.com/aquaproj/aqua/releases/download/v2.56.6/aqua_linux_amd64.tar.gz", url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/349528223"}
-"platforms.macos-arm64" = { checksum = "sha256:32b2796f81d88d24525a2344b25d9561c8405c327be9b67392bf611ad1a9809f", url = "https://github.com/aquaproj/aqua/releases/download/v2.56.6/aqua_darwin_arm64.tar.gz", url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/349528221"}
-"platforms.macos-x64" = { checksum = "sha256:515a39314104417b2fd1d92196a319f05031c20e876e215d4d631ee195925108", url = "https://github.com/aquaproj/aqua/releases/download/v2.56.6/aqua_darwin_amd64.tar.gz", url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/349528215"}
-"platforms.windows-x64" = { checksum = "sha256:8a2bcd8de4546d0ef508c7a92a83cc28efd8fc4144740bea7d92ca653423a54c", url = "https://github.com/aquaproj/aqua/releases/download/v2.56.6/aqua_windows_amd64.zip", url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/349528230"}
+"platforms.linux-arm64" = { checksum = "sha256:32cdbac0802c9ec6d6faed81509774559290b4a1caf9de41810134d07aaebf4a", url = "https://github.com/aquaproj/aqua/releases/download/v2.56.7/aqua_linux_arm64.tar.gz", url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/361518758"}
+"platforms.linux-x64" = { checksum = "sha256:28c66335265451ac0d34a364e57836e6d73ef55cbb9698265ce3ee2b97f1c7c0", url = "https://github.com/aquaproj/aqua/releases/download/v2.56.7/aqua_linux_amd64.tar.gz", url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/361518751"}
+"platforms.macos-arm64" = { checksum = "sha256:8d6b37e86448debc0dfabf3b103f11bea8d7ad9b0c0b9bb3163b6075bbd87aba", url = "https://github.com/aquaproj/aqua/releases/download/v2.56.7/aqua_darwin_arm64.tar.gz", url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/361518742"}
+"platforms.macos-x64" = { checksum = "sha256:18a8a8697be058aa66451e981cb98d5e5b9772b01e7c70a51318c860e1c0b96b", url = "https://github.com/aquaproj/aqua/releases/download/v2.56.7/aqua_darwin_amd64.tar.gz", url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/361518733"}
+"platforms.windows-x64" = { checksum = "sha256:a5a5c4c494c14c8ef79c79187e15b11b91ddf0772c2f31ed3a85b56554f1a06b", url = "https://github.com/aquaproj/aqua/releases/download/v2.56.7/aqua_windows_amd64.zip", url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/361518761"}
 
 [[tools.node]]
-version = "24.13.1"
+version = "24.14.0"
 backend = "core:node"
-"platforms.linux-arm64" = { checksum = "sha256:4873459d7c9b28feaa1f0fade9bb9c81cb702670991ff80a51d805325c5e3456", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-linux-arm64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:7ad28fb172a9ab0593f86c1a39e5c268d0d8fc3d6cb0167f455b5655a7a6e2fd", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-linux-x64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:8c039d59f2fec6195e4281ad5b0d02b9a940897b4df7b849c6fb48be6787bba6", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-darwin-arm64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:527f0578d9812e7dfa225121bda0b1546a6a0e4b5f556295fc8299c272de5fbf", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-darwin-x64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:fba577c4bb87df04d54dd87bbdaa5a2272f1f99a2acbf9152e1a91b8b5f0b279", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-win-x64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:f44740cd218de8127f1c44c41510a3a740fa5c9c8d1cdce1c3bedada79f3cde7", url = "https://nodejs.org/dist/v24.14.0/node-v24.14.0-linux-arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:dbf5b8665dec15e59e6359a517fefb47b23fdb9152d8def975b9bca3dfc6d355", url = "https://nodejs.org/dist/v24.14.0/node-v24.14.0-linux-x64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:a1a54f46a750d2523d628d924aab61758a51c9dad3e0238beb14141be9615dd3", url = "https://nodejs.org/dist/v24.14.0/node-v24.14.0-darwin-arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:f2879eb810e25993a0578e5d878930266fd2eafcffe9f2839b3d8db354d4879e", url = "https://nodejs.org/dist/v24.14.0/node-v24.14.0-darwin-x64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:313fa40c0d7b18575821de8cb17483031fe07d95de5994f6f435f3b345f85c66", url = "https://nodejs.org/dist/v24.14.0/node-v24.14.0-win-x64.zip"}
 
 [[tools."npm:cc-sdd"]]
 version = "2.1.1"
 backend = "npm:cc-sdd"
 
 [[tools.pnpm]]
-version = "10.30.1"
+version = "10.30.2"
 backend = "aqua:pnpm/pnpm"
-"platforms.linux-arm64" = { checksum = "sha256:f6bd5a8b99543511421a0e77935c93b744feaa2e65fdd91969f966460f6b6f5a", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.1/pnpm-linux-arm64"}
-"platforms.linux-x64" = { checksum = "sha256:44584d1bf4964eab9117484bbac165279f5584d743b98dfddb72f2cde5caff92", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.1/pnpm-linux-x64"}
-"platforms.macos-arm64" = { checksum = "sha256:7e57b4360219735b3a62542cb508ba5b1759a604c74eab75748da4c1eaf567e9", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.1/pnpm-macos-arm64"}
-"platforms.macos-x64" = { checksum = "sha256:14e3f5fc6117cbcaf6ee8852e616b6a5a63136583b749163d524ded0d4a29751", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.1/pnpm-macos-x64"}
-"platforms.windows-x64" = { checksum = "sha256:aca8d8a4adbceeb11aa63af84d12203850b282677fd5babb09dd15ac194d948f", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.1/pnpm-win-x64.exe"}
+"platforms.linux-arm64" = { checksum = "sha256:bc25fcce6c05ea551d78d2b72c85b8068df569f93fdc15f7f6acc00288024eff", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.2/pnpm-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:8e0953608faa1df32187e7a8ff73e2c148b28b52c3860e9bde0c13d08da38bc9", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.2/pnpm-linux-x64"}
+"platforms.macos-arm64" = { checksum = "sha256:96f7968c82559ba7ecd279171491fd505d57a39f87d23cd0fe3d3e0781bae311", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.2/pnpm-macos-arm64"}
+"platforms.macos-x64" = { checksum = "sha256:1b849e6504b39c2b5a88280830ba59458e892650202dd145d8355394d4df9532", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.2/pnpm-macos-x64"}
+"platforms.windows-x64" = { checksum = "sha256:221539af99803423bca5b53e3e1276ab1b23fed35c2c4cdd55501ebe5991a1be", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.2/pnpm-win-x64.exe"}
