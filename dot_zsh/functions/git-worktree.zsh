@@ -56,7 +56,7 @@ gwr() {
     local worktrees_to_remove=$(git worktree list | awk 'NR>1 {print $1 " " $3}' | while read -r wt_path wt_branch; do
         local last_commit=""
         if [ -d "$wt_path" ]; then
-            last_commit=$(git -C "$wt_path" log -1 --format="%ci" 2>/dev/null | cut -d' ' -f1,2 | cut -d':' -f1,2)
+            last_commit=$(git -C "$wt_path" log -1 --format="%ci" 2>/dev/null | cut -d' ' -f1,2 | cut -d':' -f1,2 | tr ' ' 'T')
         fi
         echo "${last_commit:-unknown}  ${wt_path}  ${wt_branch}"
     done | fzf --multi --prompt="Select worktree(s) to REMOVE (Tab to multi-select): ")
