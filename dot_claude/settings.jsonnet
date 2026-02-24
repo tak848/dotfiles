@@ -144,6 +144,7 @@
     ],
     deny: [
       'Bash(git -C*)',
+      'Bash(git -c commit.gpgsign=false*)',
       'Bash(git commit*--amend*)',
       'Bash(git commit*--no-gpg-sign*)',
       'Bash(git commit*-S false*)',
