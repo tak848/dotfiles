@@ -55,6 +55,11 @@ z ディレクトリは、ユーザーの `.config/git/ignore` により ignore 
 ファイルを編集する際は、必ず最終行に空行を入れてください。
 これにより、Git での差分表示が見やすくなり、POSIX 準拠のテキストファイルとなります。
 
+## Python 実行ポリシー
+
+- `python` / `python3` の直接実行は禁止。代わりに `uv run` を使用すること
+- `uv run` は都度許可が必要なため、許可済みのツール（`awk`, `jq`, シェルスクリプト等）で実現できる場合はそちらを優先する
+
 ## Git 許可設定
 
 - 自動許可: `git switch`, `git restore`, `git commit`（amend除く）
