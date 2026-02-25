@@ -41,6 +41,10 @@ Always respond in Japanese(常に日本語で答えること).
 - レビューコメントの指摘に対して修正を行った場合は、必ず該当コメントに reply すること。修正した commit へのリンク（`https://github.com/{owner}/{repo}/commit/{sha}` 形式）を含めること。
 - issue/PR にコメント・返信する際は、本文末尾に `(by <agent name>)` を付与すること（例: `(by Codex)`, `(by Claude Code)`）。
 
+## Python 実行ポリシー
+- `python` / `python3` の直接実行は禁止。代わりに `uv run` を使用すること。
+- `uv run` は都度許可が必要なため、`awk`, `jq`, シェルスクリプト等の許可済みツールで実現できる場合はそちらを優先する。
+
 ## Security & Configuration Tips
 - Do not commit secrets. Use local overrides: `~/.zshrc.local`, `~/.zsh/local/*.zsh`, `.envrc.local` (these are git-ignored).
 - On new worktrees, run `direnv allow .` (if using direnv) and `aqua policy allow` when prompted.
