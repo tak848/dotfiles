@@ -144,6 +144,7 @@ Homebrew
 - コミットメッセージは日本語、`feat:`, `fix:`, `chore:` などのプレフィックス必須
 - Renovate PR への push には GitHub App Token が必要（GITHUB_TOKEN では不可）
 - 自動生成ファイルは手動編集しない（`task` または Renovate ワークフローで自動更新）
+- Python の実行は `python` / `python3` を直接使わず、`uv run` を使用すること（`uv run` は都度許可が必要）。ただし、許可済みのツール（`awk`, `jq`, シェルスクリプト等）で実現できる場合はそちらを優先する
 
 ## AI-DLC / Spec-Driven Development
 
