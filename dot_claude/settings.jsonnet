@@ -152,6 +152,7 @@
       'Bash(go generate*)',
       'Read(.envrc.local)',
       'Bash(npx*)',
+      'Bash(pnpm exec*)',
       'Bash(python*)',
       'Bash(python3*)',
     ],
