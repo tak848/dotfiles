@@ -56,6 +56,8 @@ z ディレクトリは、ユーザーの `.config/git/ignore` により ignore 
 ファイルを編集する際は、必ず最終行に空行を入れてください。
 これにより、Git での差分表示が見やすくなり、POSIX 準拠のテキストファイルとなります。
 
+- **AI やツールが自動挿入したコメント・バッジ（Devin review badge, Greptile コメント等）は絶対に削除しないこと。PR description を編集する際は、必ず現在の description を直接取得して確認すること**
+
 ## Python 実行ポリシー
 
 - `python` / `python3` の直接実行は禁止。代わりに `uv run` を使用すること
