@@ -158,7 +158,7 @@
     ],
   },
   // model: 'claude-opus-4-1-20250805',
-  model: 'claude-opus-4-6[1m]',
+  model: 'claude-opus-4-6',
   // model: 'opus',
 
   // 無効らしい
