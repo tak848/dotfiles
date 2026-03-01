@@ -3,7 +3,7 @@ set -eu
 
 __mise_bootstrap() {
     local cache_home="${XDG_CACHE_HOME:-$HOME/.cache}/mise"
-    export MISE_INSTALL_PATH="$cache_home/mise-2026.2.20"
+    export MISE_INSTALL_PATH="$cache_home/mise-2026.2.23"
     install() {
         local initial_working_dir="$PWD"
         #!/bin/sh
@@ -120,23 +120,23 @@ __mise_bootstrap() {
 
           # For current version use static checksum otherwise
           # use checksum from releases
-          if [ "$version" = "v2026.2.20" ]; then
-            checksum_linux_x86_64="2acdb2e25e29df12478c03e52a72d18778375c34c251598c13194e45696cee62  ./mise-v2026.2.20-linux-x64.tar.gz"
-            checksum_linux_x86_64_musl="f266693a4a90e536e566fc507dd764c6b322b221a4b151015de10899bb7caf10  ./mise-v2026.2.20-linux-x64-musl.tar.gz"
-            checksum_linux_arm64="6eba60115483755920bbb45ecbef591b1b5237166fbf0559d01d51ca90d044c5  ./mise-v2026.2.20-linux-arm64.tar.gz"
-            checksum_linux_arm64_musl="e7ca46a5247a1de265b7c3e32924136abeb6b0059d562efea6b17b1d6d0e4496  ./mise-v2026.2.20-linux-arm64-musl.tar.gz"
-            checksum_linux_armv7="6ef7a672daee8a9ba05c8a77130db5082bf09ccaf000a24786d4fcfe4406002c  ./mise-v2026.2.20-linux-armv7.tar.gz"
-            checksum_linux_armv7_musl="53291d6fefd0396490d9cc6ef9ff83fec9cc115fb01eda81bb7f4a93fa2b9ac4  ./mise-v2026.2.20-linux-armv7-musl.tar.gz"
-            checksum_macos_x86_64="4e244d8380fcb82c6326d203ff61b68eaafae682632722fc82bc72879d808881  ./mise-v2026.2.20-macos-x64.tar.gz"
-            checksum_macos_arm64="d4b93a4b03bb1e37f11eec2770a1f7fc103a0d41c6908b962cf1036c81a183d9  ./mise-v2026.2.20-macos-arm64.tar.gz"
-            checksum_linux_x86_64_zstd="29e976f0c2c771aa713fa7fb3b13f0bb3d67e5c3f881a5dbb0ceea103ed84271  ./mise-v2026.2.20-linux-x64.tar.zst"
-            checksum_linux_x86_64_musl_zstd="0d832f1ca1101aed7019d97d9998a45bee5372959c8a12b9158ea704ec317d30  ./mise-v2026.2.20-linux-x64-musl.tar.zst"
-            checksum_linux_arm64_zstd="3fd0c145d81e88d2af558c93a117cac623cf99f058ef0e0315f5dae70a68ee1c  ./mise-v2026.2.20-linux-arm64.tar.zst"
-            checksum_linux_arm64_musl_zstd="5554893fe5b59d8cb86c5212eb9a27d124c5fb568ba98cbce6e5ccaf59c6dc4f  ./mise-v2026.2.20-linux-arm64-musl.tar.zst"
-            checksum_linux_armv7_zstd="b938a676b4c9a3b02bff3f0e9ee96d8fa0ba367a1c36758676d050c30b7fdf4c  ./mise-v2026.2.20-linux-armv7.tar.zst"
-            checksum_linux_armv7_musl_zstd="c1b4c500b3562b651aa9d542089f6fbaaeeb037f6bf8471c1a06ba2e26ddf741  ./mise-v2026.2.20-linux-armv7-musl.tar.zst"
-            checksum_macos_x86_64_zstd="c0237157d56ca6af7868bd47adba438bc8d5c91d225d7d06c6728ac1b7acc55e  ./mise-v2026.2.20-macos-x64.tar.zst"
-            checksum_macos_arm64_zstd="ca6e272ce8e2d056c6d08f1968518c469c7f3786cfbbd7a0e98241856c6f6bb5  ./mise-v2026.2.20-macos-arm64.tar.zst"
+          if [ "$version" = "v2026.2.23" ]; then
+            checksum_linux_x86_64="51b96116e4b26f134235c792fc7a627c0fc39bf91ad3e99ac05770157d841464  ./mise-v2026.2.23-linux-x64.tar.gz"
+            checksum_linux_x86_64_musl="4dd826ad4cb69ec98939669bcdbc4c28db7677e974703d4372f40e96aa1d5e6f  ./mise-v2026.2.23-linux-x64-musl.tar.gz"
+            checksum_linux_arm64="fc131c144d31da258f0923de6479c3a1d299afdc8955661a0748249f35b15fed  ./mise-v2026.2.23-linux-arm64.tar.gz"
+            checksum_linux_arm64_musl="75551959cba7030168d890d9da1a2c68fd50d9e253b52f3a853f7245df8873e6  ./mise-v2026.2.23-linux-arm64-musl.tar.gz"
+            checksum_linux_armv7="efed151c1c2194b07ce597b2abb683a31b14a82b5b9c32348eaee75bbc996540  ./mise-v2026.2.23-linux-armv7.tar.gz"
+            checksum_linux_armv7_musl="eae978a426db41ebb9793501f18870e6ec6fd7aa57c54e25dc9fede12e93d0fc  ./mise-v2026.2.23-linux-armv7-musl.tar.gz"
+            checksum_macos_x86_64="500fb6c6d22b0ff206630f2b477ee73f34a3be7ed214211b910a687b7b80ac53  ./mise-v2026.2.23-macos-x64.tar.gz"
+            checksum_macos_arm64="324900fb35b37311e3cb0cd5a53cacbe87bc62f59648f39a01e22a48519cd40a  ./mise-v2026.2.23-macos-arm64.tar.gz"
+            checksum_linux_x86_64_zstd="b447c0c3b67a45c13a63582b14a00f775bfeb1c2f8284e0033cb7fd37a419042  ./mise-v2026.2.23-linux-x64.tar.zst"
+            checksum_linux_x86_64_musl_zstd="f14b3376319cfbd60e31e559d03832128a97e00aa4abd5ea926bda6fdca7db73  ./mise-v2026.2.23-linux-x64-musl.tar.zst"
+            checksum_linux_arm64_zstd="5c428f72b8f58a622eaec005b098cd13254a7cd93ef1772c1392b3d393ff80e2  ./mise-v2026.2.23-linux-arm64.tar.zst"
+            checksum_linux_arm64_musl_zstd="e56fd17849da983806c2ecec8b21557fe49ef85e871557cafe748557855c3591  ./mise-v2026.2.23-linux-arm64-musl.tar.zst"
+            checksum_linux_armv7_zstd="69444255cb29c29ad41c51c027422dd7a8b3427bb977ab2d55f919138d23dfbf  ./mise-v2026.2.23-linux-armv7.tar.zst"
+            checksum_linux_armv7_musl_zstd="70afa112218fc3661e4532713a9488b388fe56942ec0959cd1fe3c9dd9b9bfa7  ./mise-v2026.2.23-linux-armv7-musl.tar.zst"
+            checksum_macos_x86_64_zstd="5fc1ebcd373c79dc888b6a0fcdefa798ff2ee024852669cec8ad953f0b2f4d13  ./mise-v2026.2.23-macos-x64.tar.zst"
+            checksum_macos_arm64_zstd="7adad48ca1c8201b5fb3a97bc5dd99214e0547ed4cd3daf01d9d0a1d4ccebdc2  ./mise-v2026.2.23-macos-arm64.tar.zst"
 
             # TODO: refactor this, it's a bit messy
             if [ "$ext" = "tar.zst" ]; then
@@ -247,7 +247,7 @@ __mise_bootstrap() {
         }
 
         install_mise() {
-          version="${MISE_VERSION:-v2026.2.20}"
+          version="${MISE_VERSION:-v2026.2.23}"
           version="${version#v}"
           os="${MISE_INSTALL_OS:-$(get_os)}"
           arch="${MISE_INSTALL_ARCH:-$(get_arch)}"
@@ -255,7 +255,7 @@ __mise_bootstrap() {
           install_path="${MISE_INSTALL_PATH:-$HOME/.local/bin/mise}"
           install_dir="$(dirname "$install_path")"
           install_from_github="${MISE_INSTALL_FROM_GITHUB:-}"
-          if [ "$version" != "v2026.2.20" ] || [ "$install_from_github" = "1" ] || [ "$install_from_github" = "true" ]; then
+          if [ "$version" != "v2026.2.23" ] || [ "$install_from_github" = "1" ] || [ "$install_from_github" = "true" ]; then
             tarball_url="https://github.com/jdx/mise/releases/download/v${version}/mise-v${version}-${os}-${arch}.${ext}"
           elif [ -n "${MISE_TARBALL_URL-}" ]; then
             tarball_url="$MISE_TARBALL_URL"
