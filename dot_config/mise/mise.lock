@@ -8,12 +8,12 @@ backend = "aqua:BurntSushi/ripgrep"
 "platforms.windows-x64" = { checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d87493a", url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:anthropics/claude-code"]]
-version = "2.1.59"
+version = "2.1.63"
 backend = "aqua:anthropics/claude-code"
-"platforms.linux-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.59/linux-arm64/claude"}
-"platforms.linux-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.59/linux-x64/claude"}
-"platforms.macos-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.59/darwin-arm64/claude"}
-"platforms.macos-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.59/darwin-x64/claude"}
+"platforms.linux-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.63/linux-arm64/claude"}
+"platforms.linux-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.63/linux-x64/claude"}
+"platforms.macos-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.63/darwin-arm64/claude"}
+"platforms.macos-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.63/darwin-x64/claude"}
 
 [[tools."aqua:arl/gitmux"]]
 version = "0.11.5"
@@ -24,13 +24,13 @@ backend = "aqua:arl/gitmux"
 "platforms.macos-x64" = { checksum = "sha256:0ff0b4c4e30ca0615fc0cd966b7bc3f10b6c02b8a3164802b94e621aa5aee698", url = "https://github.com/arl/gitmux/releases/download/v0.11.5/gitmux_v0.11.5_macOS_amd64.tar.gz"}
 
 [[tools."aqua:astral-sh/uv"]]
-version = "0.10.6"
+version = "0.10.7"
 backend = "aqua:astral-sh/uv"
-"platforms.linux-arm64" = { checksum = "sha256:7de7aa836fd54ff930fa5e63bc04da35e2fbd72889d6258e153479c44d08b863", url = "https://github.com/astral-sh/uv/releases/download/0.10.6/uv-aarch64-unknown-linux-musl.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:01d6ce770da88ce6445acb0a8764c8b1634c9f69c728dca68b19fc7a893f72b9", url = "https://github.com/astral-sh/uv/releases/download/0.10.6/uv-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:3993249d8f51deaf34cfce037e57e294e82267ff1f9dc45b7983a17afaf065b4", url = "https://github.com/astral-sh/uv/releases/download/0.10.6/uv-aarch64-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:d7647571fb17a5107d4d23cc190418039c157fd7361ddb59bc6f8127a49e3eac", url = "https://github.com/astral-sh/uv/releases/download/0.10.6/uv-x86_64-apple-darwin.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:b27eb789f281e398a82197477de727fc8faf08605152115686da2c3cba0d25f7", url = "https://github.com/astral-sh/uv/releases/download/0.10.6/uv-x86_64-pc-windows-msvc.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:115291f9943531a3b63db3a2eabda8b74b8da4831551679382cb309c9debd9f7", url = "https://github.com/astral-sh/uv/releases/download/0.10.7/uv-aarch64-unknown-linux-musl.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:992529add6024e67135b1c80617abd2eca7be2cf0b99b3911f923de815bd8dc1", url = "https://github.com/astral-sh/uv/releases/download/0.10.7/uv-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:1eb4dcc5e0fc8669fa0b33cf1151b64ba3b8c26b60dceff4f7a686129e2af22b", url = "https://github.com/astral-sh/uv/releases/download/0.10.7/uv-aarch64-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:4fed9d4f4608fb3850db714ee37244436f850a2b6e485bc510795679c2d08866", url = "https://github.com/astral-sh/uv/releases/download/0.10.7/uv-x86_64-apple-darwin.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:8881afb877996a1373a12e816395122a8d39a3ac06cd066272acdb49510cf0fe", url = "https://github.com/astral-sh/uv/releases/download/0.10.7/uv-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:bufbuild/buf"]]
 version = "1.66.0"
@@ -279,15 +279,15 @@ backend = "core:node"
 "platforms.windows-x64" = { checksum = "sha256:313fa40c0d7b18575821de8cb17483031fe07d95de5994f6f435f3b345f85c66", url = "https://nodejs.org/dist/v24.14.0/node-v24.14.0-win-x64.zip"}
 
 [[tools."npm:@google/gemini-cli"]]
-version = "0.30.0"
+version = "0.31.0"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@openai/codex"]]
-version = "0.105.0"
+version = "0.106.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260225.1"
+version = "7.0.0-dev.20260301.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -299,14 +299,14 @@ version = "18.0.8"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
-version = "3.1.11"
+version = "3.1.12"
 backend = "npm:difit"
 
 [[tools.pnpm]]
-version = "10.30.2"
+version = "10.30.3"
 backend = "aqua:pnpm/pnpm"
-"platforms.linux-arm64" = { checksum = "sha256:bc25fcce6c05ea551d78d2b72c85b8068df569f93fdc15f7f6acc00288024eff", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.2/pnpm-linux-arm64"}
-"platforms.linux-x64" = { checksum = "sha256:8e0953608faa1df32187e7a8ff73e2c148b28b52c3860e9bde0c13d08da38bc9", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.2/pnpm-linux-x64"}
-"platforms.macos-arm64" = { checksum = "sha256:96f7968c82559ba7ecd279171491fd505d57a39f87d23cd0fe3d3e0781bae311", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.2/pnpm-macos-arm64"}
-"platforms.macos-x64" = { checksum = "sha256:1b849e6504b39c2b5a88280830ba59458e892650202dd145d8355394d4df9532", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.2/pnpm-macos-x64"}
-"platforms.windows-x64" = { checksum = "sha256:221539af99803423bca5b53e3e1276ab1b23fed35c2c4cdd55501ebe5991a1be", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.2/pnpm-win-x64.exe"}
+"platforms.linux-arm64" = { checksum = "sha256:9488f48d6967bfa8f5ebc5c077aae297d2fe25287697b4c8edf991ff945d8af7", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.3/pnpm-linux-arm64"}
+"platforms.linux-x64" = { checksum = "sha256:5dc971e801610471b5cd6729ba289531be6695bd50d5e833fe22b18896b13a06", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.3/pnpm-linux-x64"}
+"platforms.macos-arm64" = { checksum = "sha256:ccfb6e54fe29d13715e2fe418ef0374cde5a7f68b95f5ed5da5f564886af9d17", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.3/pnpm-macos-arm64"}
+"platforms.macos-x64" = { checksum = "sha256:d9be0fd3989c09f5abf7e52f10d8d0294f757af61bbbd59727d607c85205a788", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.3/pnpm-macos-x64"}
+"platforms.windows-x64" = { checksum = "sha256:de8337a864056472542b951ab23ad54149cc63127bb2faf3175b7902b764f188", url = "https://github.com/pnpm/pnpm/releases/download/v10.30.3/pnpm-win-x64.exe"}
