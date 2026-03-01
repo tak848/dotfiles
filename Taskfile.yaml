@@ -131,6 +131,9 @@ tasks:
         source .mise-bootstrap-version
         VERSION="${MISE_VERSION#v}"
         mise generate bootstrap -V "$VERSION" -w ./dot_local/bin/executable_mise
+        # shim symlink 経由で呼ばれた際に argv[0] を保持する（upstream 未対応）
+        sed -i.bak 's/^exec "$MISE_INSTALL_PATH" "$@"$/exec -a "$0" "$MISE_INSTALL_PATH" "$@"/' ./dot_local/bin/executable_mise && rm -f ./dot_local/bin/executable_mise.bak
+        grep -q '^exec -a "\$0" "\$MISE_INSTALL_PATH" "\$@"$' ./dot_local/bin/executable_mise || { echo "ERROR: sed replacement for exec -a failed"; exit 1; }
     sources:
       - .mise-bootstrap-version
     generates:
