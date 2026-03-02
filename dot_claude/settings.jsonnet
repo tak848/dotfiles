@@ -1,5 +1,6 @@
 {
   language: 'japanese',
+  plansDirectory: '.claude/plans',
   teammateMode: 'tmux',
   includeCoAuthoredBy: false,
   permissions: {

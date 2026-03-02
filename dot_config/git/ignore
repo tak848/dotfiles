@@ -11,6 +11,7 @@ z/
 .envrc-aliases
 .codex/
 .codex-reviews/
+.claude/plans/
 .gemini/
 GEMINI.md
 AGENTS.override.md
