@@ -16,6 +16,7 @@ packages:
         - obsidian
         - claude
         - codex-app
+        - thebrowsercompany-dia
 
 # im-select 設定（macOS のみ）
 im_select:
