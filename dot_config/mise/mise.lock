@@ -8,12 +8,12 @@ backend = "aqua:BurntSushi/ripgrep"
 "platforms.windows-x64" = { checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d87493a", url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:anthropics/claude-code"]]
-version = "2.1.63"
+version = "2.1.68"
 backend = "aqua:anthropics/claude-code"
-"platforms.linux-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.63/linux-arm64/claude"}
-"platforms.linux-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.63/linux-x64/claude"}
-"platforms.macos-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.63/darwin-arm64/claude"}
-"platforms.macos-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.63/darwin-x64/claude"}
+"platforms.linux-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.68/linux-arm64/claude"}
+"platforms.linux-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.68/linux-x64/claude"}
+"platforms.macos-arm64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.68/darwin-arm64/claude"}
+"platforms.macos-x64" = { url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.68/darwin-x64/claude"}
 
 [[tools."aqua:arl/gitmux"]]
 version = "0.11.5"
@@ -24,13 +24,13 @@ backend = "aqua:arl/gitmux"
 "platforms.macos-x64" = { checksum = "sha256:0ff0b4c4e30ca0615fc0cd966b7bc3f10b6c02b8a3164802b94e621aa5aee698", url = "https://github.com/arl/gitmux/releases/download/v0.11.5/gitmux_v0.11.5_macOS_amd64.tar.gz"}
 
 [[tools."aqua:astral-sh/uv"]]
-version = "0.10.7"
+version = "0.10.8"
 backend = "aqua:astral-sh/uv"
-"platforms.linux-arm64" = { checksum = "sha256:115291f9943531a3b63db3a2eabda8b74b8da4831551679382cb309c9debd9f7", url = "https://github.com/astral-sh/uv/releases/download/0.10.7/uv-aarch64-unknown-linux-musl.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:992529add6024e67135b1c80617abd2eca7be2cf0b99b3911f923de815bd8dc1", url = "https://github.com/astral-sh/uv/releases/download/0.10.7/uv-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:1eb4dcc5e0fc8669fa0b33cf1151b64ba3b8c26b60dceff4f7a686129e2af22b", url = "https://github.com/astral-sh/uv/releases/download/0.10.7/uv-aarch64-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:4fed9d4f4608fb3850db714ee37244436f850a2b6e485bc510795679c2d08866", url = "https://github.com/astral-sh/uv/releases/download/0.10.7/uv-x86_64-apple-darwin.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:8881afb877996a1373a12e816395122a8d39a3ac06cd066272acdb49510cf0fe", url = "https://github.com/astral-sh/uv/releases/download/0.10.7/uv-x86_64-pc-windows-msvc.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:2ef0d0489e9e2a32f134ca80097fa36be4b486c4ab004706a1d6d0d57980ff07", url = "https://github.com/astral-sh/uv/releases/download/0.10.8/uv-aarch64-unknown-linux-musl.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:a4e6ad1aecac61077de548d2cc9ccf2c2f1848863312b3b59fb0d2eb8d8a043c", url = "https://github.com/astral-sh/uv/releases/download/0.10.8/uv-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:c3a6fff5b6b4abddff863117878194e35dbc6b0267d61ad259ab9896f9b8dcbb", url = "https://github.com/astral-sh/uv/releases/download/0.10.8/uv-aarch64-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:e0a1b22b039f8155765f5bc8c13df03a5f994a901901179791572e8e5f053281", url = "https://github.com/astral-sh/uv/releases/download/0.10.8/uv-x86_64-apple-darwin.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:2e70ecd22196cbd9d14eefb700814bcafc5b75a0d8275b52e8402e5fe256d928", url = "https://github.com/astral-sh/uv/releases/download/0.10.8/uv-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:bufbuild/buf"]]
 version = "1.66.0"
@@ -96,13 +96,13 @@ backend = "aqua:grafana/jsonnet-language-server"
 "platforms.windows-x64" = { checksum = "sha256:805b70884d202ed6f8568607d4d94a3bfe0318ea6902e904c673be0c43d3cd41", url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.17.0/jsonnet-language-server_0.17.0_windows_amd64.exe"}
 
 [[tools."aqua:jdx/usage"]]
-version = "2.18.1"
+version = "2.18.2"
 backend = "aqua:jdx/usage"
-"platforms.linux-arm64" = { checksum = "sha256:f2d4f64223eb828628876c3be487be1c1d10bafbe7c929b3fcbd512f582764ce", url = "https://github.com/jdx/usage/releases/download/v2.18.1/usage-aarch64-unknown-linux-musl.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:a9ee73e19ed9ff5dfdb965bb8cd9563733edd391d583c626ef95f394cd7fdc52", url = "https://github.com/jdx/usage/releases/download/v2.18.1/usage-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:081a9c7cb6328a281c5088a8d43527c2b9331dc01fccabbccdd3fe8f6fc92aaa", url = "https://github.com/jdx/usage/releases/download/v2.18.1/usage-universal-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:081a9c7cb6328a281c5088a8d43527c2b9331dc01fccabbccdd3fe8f6fc92aaa", url = "https://github.com/jdx/usage/releases/download/v2.18.1/usage-universal-apple-darwin.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:b095821eb3299e8a7a639557d49b5cd52dbf0c03cc4316c961ff70973906823d", url = "https://github.com/jdx/usage/releases/download/v2.18.1/usage-x86_64-pc-windows-msvc.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:7476160b4ad9cc04885b3ffbe3500d0763acd0b20e49cc75142786f175e8c5f0", url = "https://github.com/jdx/usage/releases/download/v2.18.2/usage-aarch64-unknown-linux-musl.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:0aee30563efbca157ec6cd8ae2c6f33c5caee6b51e0ddbf66b3b0c3fb9e4c17b", url = "https://github.com/jdx/usage/releases/download/v2.18.2/usage-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:6e316f2f5d821e10a6c3dbe6c02dbacb1f0079474a308b9e854912b9cca29d3f", url = "https://github.com/jdx/usage/releases/download/v2.18.2/usage-universal-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:6e316f2f5d821e10a6c3dbe6c02dbacb1f0079474a308b9e854912b9cca29d3f", url = "https://github.com/jdx/usage/releases/download/v2.18.2/usage-universal-apple-darwin.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:a98a55a60d536758d6372e4813dc21698afb7c562eb3c78b0769f232b2bcc9b3", url = "https://github.com/jdx/usage/releases/download/v2.18.2/usage-x86_64-pc-windows-msvc.zip"}
 
 [[tools."aqua:jesseduffield/lazydocker"]]
 version = "0.24.4"
@@ -132,13 +132,13 @@ backend = "aqua:jqlang/jq"
 "platforms.windows-x64" = { checksum = "sha256:23cb60a1354eed6bcc8d9b9735e8c7b388cd1fdcb75726b93bc299ef22dd9334", url = "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-windows-amd64.exe"}
 
 [[tools."aqua:junegunn/fzf"]]
-version = "0.68.0"
+version = "0.70.0"
 backend = "aqua:junegunn/fzf"
-"platforms.linux-arm64" = { checksum = "sha256:dad9cc3b617305d504dbbf8812c4c9970a6dc7efdce9b5eacbd130d1f1dbc05d", url = "https://github.com/junegunn/fzf/releases/download/v0.68.0/fzf-0.68.0-linux_arm64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:545004a69eb65bb9adf32000971105ac21aea54bbecb618c55414d21b823fe95", url = "https://github.com/junegunn/fzf/releases/download/v0.68.0/fzf-0.68.0-linux_amd64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:1817524989b3987ebc67d16acbc5526cb51dfbc52ca62babe37c96d9d09a227b", url = "https://github.com/junegunn/fzf/releases/download/v0.68.0/fzf-0.68.0-darwin_arm64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:da3aafc569bdd38c7cb30f992c54c4899c935d8b86b88c2a6831b0733b862caf", url = "https://github.com/junegunn/fzf/releases/download/v0.68.0/fzf-0.68.0-darwin_amd64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:4939ed89f3a75258ea47c55c34422b6b3f28e38b85dbd1e27dc4cf5839d5d310", url = "https://github.com/junegunn/fzf/releases/download/v0.68.0/fzf-0.68.0-windows_amd64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:90a07a13b61f56dd59ccfd0f0bf05070e9cec067713d313fa2607aab2dc0e422", url = "https://github.com/junegunn/fzf/releases/download/v0.70.0/fzf-0.70.0-linux_arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:8fd0e0b93bdf64ba90081ffb6658d77ea5a024c122b36852b1de30f9d2733754", url = "https://github.com/junegunn/fzf/releases/download/v0.70.0/fzf-0.70.0-linux_amd64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:75f4905c2e3d00666d81dffdd001bb2a9a8e0ad4e4ac8cecfc17a7401b99e6e4", url = "https://github.com/junegunn/fzf/releases/download/v0.70.0/fzf-0.70.0-darwin_arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:46af74cfeb171c5e2eb936096a653061a0de0f5aeb70319bf9935d8d193e078f", url = "https://github.com/junegunn/fzf/releases/download/v0.70.0/fzf-0.70.0-darwin_amd64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:7465a6738e2c844742df973459c7509aed2d10d7a72bfd6de201b867b4eda4cd", url = "https://github.com/junegunn/fzf/releases/download/v0.70.0/fzf-0.70.0-windows_amd64.zip"}
 
 [[tools."aqua:kubernetes/kubectl"]]
 version = "1.35.0"
@@ -203,13 +203,13 @@ backend = "aqua:tamasfe/taplo"
 "platforms.windows-x64" = { url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-windows-x86_64.zip"}
 
 [[tools."aqua:temporalio/cli"]]
-version = "1.6.0"
+version = "1.6.1"
 backend = "aqua:temporalio/cli"
-"platforms.linux-arm64" = { checksum = "sha256:824f54e9025536cbc6c5f07eabcdd9880a09e9e3d9f57ac0a2616350e7c5f503", url = "https://github.com/temporalio/cli/releases/download/v1.6.0/temporal_cli_1.6.0_linux_arm64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:055cc2d8cb91f91730448544fe2643a89fd5d9ebaae1d431811c62ccd9ca422b", url = "https://github.com/temporalio/cli/releases/download/v1.6.0/temporal_cli_1.6.0_linux_amd64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:e992bfaad4de0ca33407b241cef2a595cf650e58ea32a90787bfbb99cd8a1b26", url = "https://github.com/temporalio/cli/releases/download/v1.6.0/temporal_cli_1.6.0_darwin_arm64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:ea9845485b1092e8ae7dbe6c4170143c7b3ea3098927a4fe52691c4627bcbec7", url = "https://github.com/temporalio/cli/releases/download/v1.6.0/temporal_cli_1.6.0_darwin_amd64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:c9634de011336b93fdb5a20cf7bac142cf610db0994eb13f52339e10b7d98d42", url = "https://github.com/temporalio/cli/releases/download/v1.6.0/temporal_cli_1.6.0_windows_amd64.tar.gz"}
+"platforms.linux-arm64" = { checksum = "sha256:b771abeb421fcb722bd0c0005a05d476712f08df887e596410734636f8e9399f", url = "https://github.com/temporalio/cli/releases/download/v1.6.1/temporal_cli_1.6.1_linux_arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:85cfd2134eff7408e9e363f71a50f6d91f5df5f72eafa9eb87102d3793904faf", url = "https://github.com/temporalio/cli/releases/download/v1.6.1/temporal_cli_1.6.1_linux_amd64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:94cf24e616808414c9acf861af58d098270307dfeb2a143f1b7cfd0c0841add2", url = "https://github.com/temporalio/cli/releases/download/v1.6.1/temporal_cli_1.6.1_darwin_arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:4f079baa51e8cd24926af892cb9885a4c5eb446024d8719a4115ec1f5a3646d6", url = "https://github.com/temporalio/cli/releases/download/v1.6.1/temporal_cli_1.6.1_darwin_amd64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:ba73bb432fdc8c8c07083f9df1aa9e6de887f8c3af5f190a016e70e022c0277c", url = "https://github.com/temporalio/cli/releases/download/v1.6.1/temporal_cli_1.6.1_windows_amd64.tar.gz"}
 
 [[tools."aqua:twpayne/chezmoi"]]
 version = "2.69.4"
@@ -279,15 +279,15 @@ backend = "core:node"
 "platforms.windows-x64" = { checksum = "sha256:313fa40c0d7b18575821de8cb17483031fe07d95de5994f6f435f3b345f85c66", url = "https://nodejs.org/dist/v24.14.0/node-v24.14.0-win-x64.zip"}
 
 [[tools."npm:@google/gemini-cli"]]
-version = "0.31.0"
+version = "0.32.1"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@openai/codex"]]
-version = "0.106.0"
+version = "0.107.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260301.1"
+version = "7.0.0-dev.20260304.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -299,7 +299,7 @@ version = "18.0.8"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
-version = "3.1.12"
+version = "3.1.14"
 backend = "npm:difit"
 
 [[tools.pnpm]]
