@@ -66,7 +66,7 @@ z ディレクトリは、ユーザーの `.config/git/ignore` により ignore 
 ## Agent / Team 使用時のモデル制約
 
 - `haiku` は使用禁止
-- 基本は model 無指定（opus がそのまま使われる）
+- 基本は model 無指定（opus がそのまま使われる）。model パラメータは基本的に指定しないこと
 - 本当に軽微なタスクに限り `sonnet` を指定してもよい
 
 ## Git 許可設定
