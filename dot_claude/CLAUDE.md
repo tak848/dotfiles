@@ -63,6 +63,11 @@ z ディレクトリは、ユーザーの `.config/git/ignore` により ignore 
 - `python` / `python3` の直接実行は禁止。代わりに `uv run` を使用すること
 - `uv run` は都度許可が必要なため、許可済みのツール（`awk`, `jq`, シェルスクリプト等）で実現できる場合はそちらを優先する
 
+## Agent / Team 使用時のモデル制約
+
+- サブエージェント（Agent tool）や Team で model を指定する際、`haiku` は使用禁止
+- 品質が不十分なため、`sonnet` または `opus` を使用すること
+
 ## Git 許可設定
 
 - 自動許可: `git switch`, `git restore`, `git commit`（amend除く）
