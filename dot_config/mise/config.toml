@@ -61,6 +61,7 @@ go = "1.26.0"
 # 開発ツール
 "aqua:bufbuild/buf" = "1.66.0"
 "aqua:go-task/task" = "3.48.0"
+"aqua:golangci/golangci-lint" = "2.10.1"
 
 # Jsonnet
 "aqua:google/go-jsonnet" = "0.21.0"
