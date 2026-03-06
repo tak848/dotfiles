@@ -1,7 +1,7 @@
 {{- /* chezmoi:modify-template */ -}}
 #:schema https://developers.openai.com/codex/config-schema.json
 
-model = "gpt-5.3-codex"
+model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 personality = "pragmatic"
