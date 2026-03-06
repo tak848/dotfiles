@@ -11,6 +11,15 @@ web_search = "live"
 unified_exec = true
 shell_snapshot = true
 
+[sandbox_workspace_write]
+network_access = true
+writable_roots = [
+  "{{ .chezmoi.homeDir }}/.local/share/aquaproj-aqua",
+{{- if eq .chezmoi.os "darwin" }}
+  "{{ .chezmoi.homeDir }}/Library/Caches",
+{{- end }}
+]
+
 [mcp_servers.context7]
 url = "https://mcp.context7.com/mcp/oauth"
 
