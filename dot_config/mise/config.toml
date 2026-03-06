@@ -13,7 +13,7 @@ locked = false
 # ============================================
 node = "24.14.0"
 pnpm = "10.30.3"
-go = "1.26.0"
+go = "1.26.1"
 
 # ============================================
 # aqua CLI（github backend）
@@ -79,10 +79,10 @@ go = "1.26.0"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"aqua:anthropics/claude-code" = "2.1.69"
+"aqua:anthropics/claude-code" = "2.1.70"
 "npm:@google/gemini-cli" = "0.32.1"
 "aqua:openai/codex" = "0.111.0"
-"npm:ccusage" = "18.0.8"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260305.1"
+"npm:ccusage" = "18.0.9"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260306.1"
 "npm:cc-sdd" = "2.1.1"
 "npm:difit" = "3.1.14"
