@@ -24,18 +24,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      # mise bootstrap と同じバージョンを使用することで、task check の結果を一致させる
-      - name: Read mise version from .mise-bootstrap-version
-        run: |
-          source .mise-bootstrap-version
-          echo "MISE_VERSION=$MISE_VERSION" >> $GITHUB_ENV
-
       - name: Setup mise
         uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3.6.3
         with:
-          version: ${{ env.MISE_VERSION }}
+          # v2026.3.6 では chezmoi 2.70.0 の provenance 検証で Setup mise が失敗するため、
+          # CI 実行用の mise は last green の v2026.3.3 に固定する
+          version: v2026.3.3
           cache: true
-          cache_key: "mise-v1-${{ runner.os }}-${{ runner.arch }}-${{ env.MISE_VERSION }}-${{ hashFiles('dot_config/mise/config.toml', 'dot_config/mise/mise.lock') }}"
+          cache_key: "mise-v1-${{ runner.os }}-${{ runner.arch }}-v2026.3.3-${{ hashFiles('dot_config/mise/config.toml', 'dot_config/mise/mise.lock') }}"
 
       - name: Cache aqua tools
         uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
