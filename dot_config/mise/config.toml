@@ -7,6 +7,11 @@ lockfile = true
 # checksum があるツール（aqua: 等）は lockfile=true で検証される
 locked = false
 
+[settings.aqua]
+# mise v2026.3.6 の native cosign verification が CI 上で Rekor key parse に失敗するため、
+# dotfiles 用の aqua backend では checksum verification のみに寄せる
+cosign = false
+
 [tools]
 # ============================================
 # ランタイム（core backend）
