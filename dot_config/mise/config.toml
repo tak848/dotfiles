@@ -12,7 +12,7 @@ locked = false
 # ランタイム（core backend）
 # ============================================
 node = "24.14.0"
-pnpm = "10.30.3"
+pnpm = "10.32.0"
 go = "1.26.1"
 
 # ============================================
@@ -35,7 +35,7 @@ go = "1.26.1"
 # zoxide は aqua CLI で管理（mise lock で checksum 取得不可）
 
 # 検索・ファイル操作
-"aqua:twpayne/chezmoi" = "2.69.4"
+"aqua:twpayne/chezmoi" = "2.70.0"
 "aqua:BurntSushi/ripgrep" = "15.1.0"
 "aqua:phiresky/ripgrep-all" = "0.10.10"
 # rga依存: ドキュメント変換（docx, epub, odt等）
@@ -43,7 +43,7 @@ go = "1.26.1"
 "aqua:jqlang/jq" = "1.8.1"
 "aqua:mikefarah/yq" = "4.52.4"
 "aqua:x-motemen/ghq" = "1.9.4"
-"aqua:jesseduffield/lazygit" = "0.59.0"
+"aqua:jesseduffield/lazygit" = "0.60.0"
 "aqua:jesseduffield/lazydocker" = "0.24.4"
 
 # エディタ・ターミナル
@@ -52,16 +52,16 @@ go = "1.26.1"
 "aqua:arl/gitmux" = "0.11.5"
 
 # Python ツール
-"aqua:astral-sh/uv" = "0.10.8"
+"aqua:astral-sh/uv" = "0.10.9"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
-"aqua:cloudflare/cloudflared" = "2026.2.0"
+"aqua:cloudflare/cloudflared" = "2026.3.0"
 
 # 開発ツール
-"aqua:bufbuild/buf" = "1.66.0"
-"aqua:go-task/task" = "3.48.0"
-"aqua:golangci/golangci-lint" = "2.10.1"
+"aqua:bufbuild/buf" = "1.66.1"
+"aqua:go-task/task" = "3.49.1"
+"aqua:golangci/golangci-lint" = "2.11.2"
 
 # Jsonnet
 "aqua:google/go-jsonnet" = "0.21.0"
@@ -79,10 +79,10 @@ go = "1.26.1"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"aqua:anthropics/claude-code" = "2.1.70"
+"aqua:anthropics/claude-code" = "2.1.72"
 "npm:@google/gemini-cli" = "0.32.1"
 "aqua:openai/codex" = "0.111.0"
 "npm:ccusage" = "18.0.9"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260306.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260309.1"
 "npm:cc-sdd" = "2.1.1"
-"npm:difit" = "3.1.14"
+"npm:difit" = "3.1.15"
