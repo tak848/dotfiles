@@ -20,6 +20,7 @@ jobs:
       # mise/aqua の設定ファイルパスを指定
       MISE_CONFIG_FILE: ${{ github.workspace }}/dot_config/mise/config.toml
       AQUA_GLOBAL_CONFIG: ${{ github.workspace }}/dot_config/aquaproj-aqua/aqua.yaml
+      MISE_AQUA_COSIGN: "false"
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
