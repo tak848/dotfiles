@@ -1,155 +1,101 @@
-# CLAUDE.md
+# Global Guidelines
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## Language
 
-## Project Overview
+Always respond in Japanese(常に日本語で答えること).
 
-Chezmoi で管理している個人用 dotfiles リポジトリ。macOS/Linux 対応。
+# Repository Guidelines
 
-**重要: このリポジトリの remote main が single source of truth。** ターゲットマシンでは `chezmoi update` でリモートから pull & apply する運用のみ。ローカルの chezmoi source directory とこのリポジトリは直接リンクしていないため、このリポジトリ内で `chezmoi cat` / `chezmoi diff` / `chezmoi apply` 等を実行しても意味がない。
+## Project Structure & Module Organization
+- `dot_zsh/`: Zsh functions and helpers. Files use kebab-case (e.g., `git-worktree.zsh`).
+- `dot_config/`: App configs managed via chezmoi (e.g., `aquaproj-aqua/`, `nvim/`, `mise/`).
+- `dot_zshrc.tmpl`, `*.tmpl`: Chezmoi templates rendered per host.
+- `aqua.yaml`, `dot_config/aquaproj-aqua/aqua.yaml`: Tool versions via aqua; checksums alongside.
+- `dot_claude/`: Jsonnet sources and generated settings for local AI tooling.
+- `.github/workflows/`: CI to validate aqua tools and chezmoi templates.
+- `Taskfile.yaml`: Tasks to generate lockfiles, checksums, and bootstrap script.
 
-## Commands
+## Build, Test, and Development Commands
+- `aqua install`: Install pinned CLI tools (run at repo root; many tasks assume PATH contains `$(aqua root-dir)/bin`).
+- `task`: Generate lockfiles, checksums, and bootstrap script.
+- `chezmoi diff` / `chezmoi apply`: Review and apply changes to your home directory.
+- `chezmoi --source . --dry-run --verbose apply`: Full local validation without mutating files.
+- `aqua update-checksum --prune`: Refresh checksums after editing any `aqua.yaml`.
 
-```bash
-# mise ツールをインストール
-mise install
+## Coding Style & Naming Conventions
+- Shell/Zsh: 4-space indent, safe `set -euo pipefail` where appropriate, quote variables.
+- Function names: short lowercase (e.g., `gwt`, `gwr`, `gwc`).
+- File names: kebab-case under `dot_zsh/functions/` (e.g., `git-commit-ai.zsh`).
+- Templates: keep logic minimal in `*.tmpl` (Go templates); prefer readable conditionals over cleverness.
 
-# aqua ツールをインストール（mise 管理外のツール用）
-aqua install
-```
+## Testing Guidelines
+- Validate templates: `chezmoi --source . --dry-run --verbose apply` and `chezmoi diff` before pushing.
+- Tooling sanity: `cd dot_config/aquaproj-aqua && aqua install --test`.
+- No unit test framework here; keep changes small and reversible.
 
-## Taskfile（自動生成ファイル管理）
+## Commit & Pull Request Guidelines
+- Commit style: Conventional Commits (e.g., `feat:`, `fix:`, `chore(deps):`, `docs:`). Example: `chore(deps): update neovim to v0.11.4`.
+- Include generated artifacts when relevant (e.g., `mise.lock`, `aqua-checksums.json`) and run `task` after changing tool configs.
+- PRs: explain What/Why, note impacted paths (e.g., `dot_zsh/`, `dot_config/aquaproj-aqua/`), and paste a `chezmoi diff` snippet if user-facing.
+- **PR 作成時の注意**: GitHub MCP の `body` パラメータに改行を含める際、リテラル `\n` ではなく実際の改行文字を使うこと（リテラル `\n` はエスケープされて壊れる）。
+- レビューコメントの指摘に対して修正を行った場合は、必ず該当コメントに reply すること。修正した commit へのリンク（`https://github.com/{owner}/{repo}/commit/{sha}` 形式）を含めること。
+- issue/PR にコメント・返信する際は、本文末尾に `(by <agent name>)` を付与すること（例: `(by Codex)`, `(by Claude Code)`）。
 
-自動生成ファイル（mise.lock, aqua-checksums, mise bootstrap）を統一的に管理するための Task ランナー。
-jsonnet からの JSON 生成は `chezmoi apply` 時に run_onchange スクリプトで実行される。
+## Security & Configuration Tips
+- Do not commit secrets. Use local overrides: `~/.zshrc.local`, `~/.zsh/local/*.zsh`, `.envrc.local` (these are git-ignored).
+- On new worktrees, run `direnv allow .` (if using direnv) and `aqua policy allow` when prompted.
 
-### 基本コマンド
 
-```bash
-# 全ての自動生成を実行（lockfiles + checksums + bootstrap）
-task
 
-# lockfiles/checksums/bootstrap のみ更新
-task lock
+# AI-DLC and Spec-Driven Development
 
-# 個別タスク
-task mise:lock      # mise lockfile のみ
-task aqua:checksum  # aqua checksum のみ
-task mise:bootstrap # bootstrap のみ
+Kiro-style Spec Driven Development implementation on AI-DLC (AI Development Life Cycle)
 
-# CI用: 生成後に diff チェック（mise.lock, JSON 除外）
-task check
-```
+## Project Memory
+Project memory keeps persistent guidance (steering, specs notes, component docs) so Codex honors your standards each run. Treat it as the long-lived source of truth for patterns, conventions, and decisions.
 
-### 設計方針
+- Use `.kiro/steering/` for project-wide policies: architecture principles, naming schemes, security constraints, tech stack decisions, api standards, etc.
+- Use local `AGENTS.md` files for feature or library context (e.g. `src/lib/payments/AGENTS.md`): describe domain assumptions, API contracts, or testing conventions specific to that folder. Codex auto-loads these when working in the matching path.
+- Specs notes stay with each spec (under `.kiro/specs/`) to guide specification-level workflows.
 
-| 項目 | 説明 |
-|------|------|
-| `root: true` | サブディレクトリからも task コマンドを実行可能 |
-| `method: checksum` | ファイル内容が変わった時のみ再実行（キャッシュ） |
-| `-p PLATFORMS` | mise lock で全プラットフォームを明示的に指定 |
+## Project Context
 
-### mise.lock の既知の問題
+### Paths
+- Steering: `.kiro/steering/`
+- Specs: `.kiro/specs/`
 
-mise.lock は実行環境（macOS/Linux）によって結果が異なる[既知の問題](https://github.com/jdx/mise/discussions/6942)がある。そのため：
+### Steering vs Specification
 
-- **CI の diff チェックからは除外**（`task check` は mise.lock を検証しない）
-- **mise.lock の更新は Renovate ワークフロー（mise-lock.yaml）に任せる**
+**Steering** (`.kiro/steering/`) - Guide AI with project-wide rules and context
+**Specs** (`.kiro/specs/`) - Formalize development process for individual features
 
-## Architecture
+### Active Specifications
+- Check `.kiro/specs/` for active specifications
+- Use `/prompts:kiro-spec-status [feature-name]` to check progress
 
-### ツール管理の構成
+## Development Guidelines
+- Think in English, generate responses in Japanese. All Markdown content written to project files (e.g., requirements.md, design.md, tasks.md, research.md, validation reports) MUST be written in the target language configured for this specification (see spec.json.language).
 
-```
-Homebrew
-  └─ 基本パッケージ
+## Minimal Workflow
+- Phase 0 (optional): `/prompts:kiro-steering`, `/prompts:kiro-steering-custom`
+- Phase 1 (Specification):
+  - `/prompts:kiro-spec-init "description"`
+  - `/prompts:kiro-spec-requirements {feature}`
+  - `/prompts:kiro-validate-gap {feature}` (optional: for existing codebase)
+  - `/prompts:kiro-spec-design {feature} [-y]`
+  - `/prompts:kiro-validate-design {feature}` (optional: design review)
+  - `/prompts:kiro-spec-tasks {feature} [-y]`
+- Phase 2 (Implementation): `/prompts:kiro-spec-impl {feature} [tasks]`
+  - `/prompts:kiro-validate-impl {feature}` (optional: after implementation)
+- Progress check: `/prompts:kiro-spec-status {feature}` (use anytime)
 
-~/.local/bin/mise (bootstrap スクリプト)
-  └─ mise (統合ツール管理)
-       ├─ ランタイム管理: go, node, pnpm (core backend)
-       ├─ CLI ツール管理: fzf, ripgrep, starship, etc. (aqua backend)
-       ├─ npm グローバルパッケージ
-       └─ aqua CLI (github backend)
-            └─ mise lock で checksum 取得不可のツール
-                 └─ aws-cli, 1password/cli, zoxide
-```
+## Development Rules
+- 3-phase approval workflow: Requirements → Design → Tasks → Implementation
+- Human review required each phase; use `-y` only for intentional fast-track
+- Keep steering current and verify alignment with `/prompts:kiro-spec-status`
+- Follow the user's instructions precisely, and within that scope act autonomously: gather the necessary context and complete the requested work end-to-end in this run, asking questions only when essential information is missing or the instructions are critically ambiguous.
 
-- **mise** (`dot_config/mise/`, `dot_local/bin/executable_mise`): ランタイム、CLI ツール、npm パッケージの統合管理。bootstrap 方式でインストール
-- **aqua** (`dot_config/aquaproj-aqua/`): mise lock で checksum が取得できないツールを管理。aqua CLI 自体は mise でインストール
-
-### 自動生成ファイル一覧
-
-| ファイル | 生成元 | 生成方法 |
-|---------|--------|---------|
-| `mise.lock` | `.mise.toml` | `task mise:lock` |
-| `dot_config/mise/mise.lock` | `dot_config/mise/config.toml` | `task mise:lock` |
-| `dot_config/aquaproj-aqua/aqua-checksums.json` | `dot_config/aquaproj-aqua/aqua.yaml` | `task aqua:checksum` |
-| `dot_local/bin/executable_mise` | `.mise-bootstrap-version` | `task mise:bootstrap` |
-
-### chezmoi apply 時の自動管理ファイル
-
-| ターゲットファイル | 生成元 | 方式 |
-|------------------|--------|------|
-| `~/.claude/settings.json` | `dot_claude/settings.jsonnet` | jsonnet 全体生成（run_onchange） |
-| `~/.gemini/settings.json` | `dot_gemini/settings.jsonnet` | jsonnet 全体生成（run_onchange） |
-| `~/.claude.json` | `modify_dot_claude.json` | chezmoi modify テンプレート（差分適用） |
-| `~/.codex/config.toml` | `dot_codex/modify_config.toml` | chezmoi modify テンプレート（差分適用） |
-
-`~/.claude.json` と `~/.codex/config.toml` はツールが自動的に書き込むため、jsonnet で全体生成せず modify テンプレートで管理対象キーのみ差分適用する。
-
-### chezmoi apply 時の自動実行スクリプト
-
-`chezmoi apply` 時にターゲットディレクトリで実行されるスクリプト。リポジトリ内にはファイルを生成しない。
-
-| スクリプト | トリガー | 処理 |
-|-----------|---------|------|
-| `run_once_before_00-install-essentials.sh.tmpl` | 初回のみ | Homebrew, zinit, cursor-agent インストール |
-| `run_onchange_after_10-mise-install.sh.tmpl` | `config.toml` 変更時 | `mise install` |
-| `run_onchange_after_20-aqua-install.sh.tmpl` | `aqua.yaml` 変更時 | `aqua install` |
-| `run_onchange_after_30-install-packages.sh.tmpl` | `packages.yaml` 変更時 | `brew install`（macOS） |
-| `run_onchange_after_40-generate-jsonnet.sh.tmpl` | jsonnet ファイル変更時 | jsonnet → JSON 生成（`~/.claude/settings.json`, `~/.gemini/settings.json`） |
-
-### Chezmoi ファイル命名規則
-
-| プレフィックス | 展開先 | 例 |
-|--------------|--------|-----|
-| `dot_` | `~/.` | `dot_zshrc.tmpl` → `~/.zshrc` |
-| `executable_` | 実行権限付与 | `executable_mise` → `mise` (+x) |
-| `.tmpl` | テンプレート展開 | OS/アーキテクチャ分岐 |
-| `modify_` | 既存ファイルを差分適用 | `modify_dot_claude.json` → `~/.claude.json` |
-| `run_once_before_*` | 初回のみ実行 | Homebrew インストール |
-| `run_onchange_after_*` | ファイル変更時実行 | mise install |
-
-### 自動更新ワークフロー（Renovate + GitHub Actions）
-
-| ワークフロー | トリガー | 処理 |
-|-------------|---------|------|
-| `ci.yaml` | push/PR | `task check` で自動生成ファイルの diff チェック |
-| `mise-lock.yaml` | `mise.toml` / `config.toml` 変更 | `mise lock`（Renovate PR 時のみ） |
-| `mise-bootstrap.yaml` | `.mise-bootstrap-version` 変更 | `mise generate bootstrap`（Renovate PR 時のみ） |
-| `aqua-checksums.yaml` | `aqua.yaml` 変更 | `aqua update-checksum --prune`（Renovate PR 時のみ） |
-| `lazy-lock.yaml` | nvim 設定変更 / 週次 cron | Lazy.nvim lockfile 更新（PR 作成 or Renovate PR へコミット） |
-
-### zsh 設定の読み込み順序
-
-```
-~/.zshenv      # PATH, 環境変数（非インタラクティブ含む）
-~/.zprofile    # mise shims（IDE 連携用）
-~/.zshrc       # インタラクティブ設定、プラグイン、エイリアス
-~/.zshrc.local # マシン固有設定（Git 管理外）
-```
-
-## Conventions
-
-- コミットメッセージは日本語、`feat:`, `fix:`, `chore:` などのプレフィックス必須
-- Renovate PR への push には GitHub App Token が必要（GITHUB_TOKEN では不可）
-- 自動生成ファイルは手動編集しない（`task` または Renovate ワークフローで自動更新）
-
-## AI-DLC / Spec-Driven Development
-
-Kiro-style Spec Driven Development を使用可能。
-
-- **Steering** (`.kiro/steering/`): プロジェクト全体のルールとコンテキスト
-- **Specs** (`.kiro/specs/`): 個別機能の仕様策定
-
-ワークフロー: `/kiro:spec-init` → `/kiro:spec-requirements` → `/kiro:spec-design` → `/kiro:spec-tasks` → `/kiro:spec-impl`
+## Steering Configuration
+- Load entire `.kiro/steering/` as project memory
+- Default files: `product.md`, `tech.md`, `structure.md`
+- Custom files are supported (managed via `/prompts:kiro-steering-custom`)
