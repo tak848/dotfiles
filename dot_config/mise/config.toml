@@ -17,7 +17,7 @@ cosign = false
 # ランタイム（core backend）
 # ============================================
 node = "24.14.0"
-pnpm = "10.32.0"
+pnpm = "10.32.1"
 go = "1.26.1"
 
 # ============================================
@@ -31,7 +31,7 @@ go = "1.26.1"
 # CLI ツール（aqua backend）
 # ============================================
 # GitHub CLI
-"aqua:cli/cli" = "2.87.3"
+"aqua:cli/cli" = "2.88.0"
 
 # シェル関連
 "aqua:junegunn/fzf" = "0.70.0"
@@ -66,7 +66,7 @@ go = "1.26.1"
 # 開発ツール
 "aqua:bufbuild/buf" = "1.66.1"
 "aqua:go-task/task" = "3.49.1"
-"aqua:golangci/golangci-lint" = "2.11.2"
+"aqua:golangci/golangci-lint" = "2.11.3"
 
 # Jsonnet
 "aqua:google/go-jsonnet" = "0.21.0"
@@ -84,10 +84,10 @@ go = "1.26.1"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"aqua:anthropics/claude-code" = "2.1.72"
-"npm:@google/gemini-cli" = "0.32.1"
+"aqua:anthropics/claude-code" = "2.1.73"
+"npm:@google/gemini-cli" = "0.33.0"
 "aqua:openai/codex" = "0.111.0"
-"npm:ccusage" = "18.0.9"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260309.1"
+"npm:ccusage" = "18.0.10"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260311.1"
 "npm:cc-sdd" = "2.1.1"
 "npm:difit" = "3.1.15"
