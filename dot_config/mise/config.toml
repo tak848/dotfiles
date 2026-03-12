@@ -25,7 +25,7 @@ go = "1.26.1"
 # ============================================
 # mise の aqua backend で問題のあるツール（aws-cli, 1password/cli, gopls）は
 # aqua CLI で直接管理する
-"github:aquaproj/aqua" = "2.56.7"
+"github:aquaproj/aqua" = "2.57.0"
 
 # ============================================
 # CLI ツール（aqua backend）
@@ -84,7 +84,7 @@ go = "1.26.1"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"aqua:anthropics/claude-code" = "2.1.73"
+"aqua:anthropics/claude-code" = "2.1.74"
 "npm:@google/gemini-cli" = "0.33.0"
 "aqua:openai/codex" = "0.111.0"
 "npm:ccusage" = "18.0.10"
