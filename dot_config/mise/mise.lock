@@ -33,26 +33,26 @@ checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d874
 url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"
 
 [[tools."aqua:anthropics/claude-code"]]
-version = "2.1.73"
+version = "2.1.74"
 backend = "aqua:anthropics/claude-code"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.73/linux-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.74/linux-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64-musl"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.73/linux-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.74/linux-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.73/linux-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.74/linux-x64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64-musl"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.73/linux-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.74/linux-x64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-arm64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.73/darwin-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.74/darwin-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-x64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.73/darwin-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.74/darwin-x64/claude"
 
 [[tools."aqua:arl/gitmux"]]
 version = "0.11.5"
@@ -872,49 +872,49 @@ checksum = "sha256:4b7adbbfd2c3b74ef01739aad053aa4952cd5f1b0520450c2dcd2dccc502c
 url = "https://github.com/x-motemen/ghq/releases/download/v1.9.4/ghq_windows_amd64.zip"
 
 [[tools."github:aquaproj/aqua"]]
-version = "2.56.7"
+version = "2.57.0"
 backend = "github:aquaproj/aqua"
 
 [tools."github:aquaproj/aqua"."platforms.linux-arm64"]
-checksum = "sha256:32cdbac0802c9ec6d6faed81509774559290b4a1caf9de41810134d07aaebf4a"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.56.7/aqua_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/361518758"
+checksum = "sha256:6c08feaa1f2605f50aee945e7a3b7846d827ba2b2af2d520cacd5fb14f60a66d"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.57.0/aqua_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/371922607"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.linux-arm64-musl"]
-checksum = "sha256:32cdbac0802c9ec6d6faed81509774559290b4a1caf9de41810134d07aaebf4a"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.56.7/aqua_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/361518758"
+checksum = "sha256:6c08feaa1f2605f50aee945e7a3b7846d827ba2b2af2d520cacd5fb14f60a66d"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.57.0/aqua_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/371922607"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.linux-x64"]
-checksum = "sha256:28c66335265451ac0d34a364e57836e6d73ef55cbb9698265ce3ee2b97f1c7c0"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.56.7/aqua_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/361518751"
+checksum = "sha256:042146fec6b7aae6ed6123fd5033144744acaa9afa476dd9a47e2aad50d5d5c6"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.57.0/aqua_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/371922605"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.linux-x64-musl"]
-checksum = "sha256:28c66335265451ac0d34a364e57836e6d73ef55cbb9698265ce3ee2b97f1c7c0"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.56.7/aqua_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/361518751"
+checksum = "sha256:042146fec6b7aae6ed6123fd5033144744acaa9afa476dd9a47e2aad50d5d5c6"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.57.0/aqua_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/371922605"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.macos-arm64"]
-checksum = "sha256:8d6b37e86448debc0dfabf3b103f11bea8d7ad9b0c0b9bb3163b6075bbd87aba"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.56.7/aqua_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/361518742"
+checksum = "sha256:5c87b75c8f270cfdca3fe942a205f5c88376e369ab65f079d6dbc9b8483f3c60"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.57.0/aqua_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/371922602"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.macos-x64"]
-checksum = "sha256:18a8a8697be058aa66451e981cb98d5e5b9772b01e7c70a51318c860e1c0b96b"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.56.7/aqua_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/361518733"
+checksum = "sha256:3327bb5e4d20aab0ade4e2bfa14c6729448cc678fc8920714baa20533288e039"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.57.0/aqua_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/371922599"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.windows-x64"]
-checksum = "sha256:a5a5c4c494c14c8ef79c79187e15b11b91ddf0772c2f31ed3a85b56554f1a06b"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.56.7/aqua_windows_amd64.zip"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/361518761"
+checksum = "sha256:806fa5a25b2399be619f7cf7a1e409d15c8d3498dabd9e09108905a58be6b40d"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.57.0/aqua_windows_amd64.zip"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/371922609"
 provenance = "github-attestations"
 
 [[tools."github:jgm/pandoc"]]
