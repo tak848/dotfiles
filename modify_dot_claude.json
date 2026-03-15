@@ -6,12 +6,7 @@
 {{-   $data = fromJson .chezmoi.stdin -}}
 {{- end -}}
 {{- $mcpServers := index $data "mcpServers" | default dict -}}
-{{- /* GitHub MCP: Bearer token (GH_TOKEN from .envrc.local) */ -}}
-{{- $github := dict "type" "http" "url" "https://api.githubcopilot.com/mcp/" "headers" (dict "Authorization" "Bearer ${GH_TOKEN}") -}}
-{{- $mcpServers = set $mcpServers "github" $github -}}
-{{- /* context7 MCP: OAuth */ -}}
-{{- $context7 := dict "type" "http" "url" "https://mcp.context7.com/mcp/oauth" -}}
-{{- $mcpServers = set $mcpServers "context7" $context7 -}}
+{{- /* github, context7 は Plugin に移行済み (claude-plugins-official) */ -}}
 {{- /* Devin MCP: Bearer token (DEVIN_API_KEY from .envrc.local) */ -}}
 {{- $devin := dict "type" "http" "url" "https://mcp.devin.ai/mcp" "headers" (dict "Authorization" "Bearer ${DEVIN_API_KEY}") -}}
 {{- $mcpServers = set $mcpServers "devin" $devin -}}
