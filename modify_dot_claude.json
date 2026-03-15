@@ -6,7 +6,9 @@
 {{-   $data = fromJson .chezmoi.stdin -}}
 {{- end -}}
 {{- $mcpServers := index $data "mcpServers" | default dict -}}
-{{- /* github, context7 は Plugin に移行済み (claude-plugins-official) */ -}}
+{{- /* github, context7 は Plugin に移行済み — 旧エントリを削除 */ -}}
+{{- $_ := unset $mcpServers "github" -}}
+{{- $_ := unset $mcpServers "context7" -}}
 {{- /* Devin MCP: Bearer token (DEVIN_API_KEY from .envrc.local) */ -}}
 {{- $devin := dict "type" "http" "url" "https://mcp.devin.ai/mcp" "headers" (dict "Authorization" "Bearer ${DEVIN_API_KEY}") -}}
 {{- $mcpServers = set $mcpServers "devin" $devin -}}
