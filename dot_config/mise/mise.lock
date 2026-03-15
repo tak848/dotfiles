@@ -33,26 +33,26 @@ checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d874
 url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"
 
 [[tools."aqua:anthropics/claude-code"]]
-version = "2.1.74"
+version = "2.1.76"
 backend = "aqua:anthropics/claude-code"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.74/linux-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.76/linux-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64-musl"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.74/linux-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.76/linux-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.74/linux-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.76/linux-x64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64-musl"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.74/linux-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.76/linux-x64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-arm64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.74/darwin-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.76/darwin-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-x64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.74/darwin-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.76/darwin-x64/claude"
 
 [[tools."aqua:arl/gitmux"]]
 version = "0.11.5"
@@ -83,36 +83,36 @@ checksum = "sha256:0ff0b4c4e30ca0615fc0cd966b7bc3f10b6c02b8a3164802b94e621aa5aee
 url = "https://github.com/arl/gitmux/releases/download/v0.11.5/gitmux_v0.11.5_macOS_amd64.tar.gz"
 
 [[tools."aqua:astral-sh/uv"]]
-version = "0.10.9"
+version = "0.10.10"
 backend = "aqua:astral-sh/uv"
 
 [tools."aqua:astral-sh/uv"."platforms.linux-arm64"]
-checksum = "sha256:05b0d3087e913ebe11756365a90dd47c05d6728752fdbe129ad4c3ccd769826d"
-url = "https://github.com/astral-sh/uv/releases/download/0.10.9/uv-aarch64-unknown-linux-musl.tar.gz"
+checksum = "sha256:d08c08b82cdcaf2bd3d928ffe844d3558dda53f90066db6ef9174157cc763252"
+url = "https://github.com/astral-sh/uv/releases/download/0.10.10/uv-aarch64-unknown-linux-musl.tar.gz"
 
 [tools."aqua:astral-sh/uv"."platforms.linux-arm64-musl"]
-checksum = "sha256:05b0d3087e913ebe11756365a90dd47c05d6728752fdbe129ad4c3ccd769826d"
-url = "https://github.com/astral-sh/uv/releases/download/0.10.9/uv-aarch64-unknown-linux-musl.tar.gz"
+checksum = "sha256:d08c08b82cdcaf2bd3d928ffe844d3558dda53f90066db6ef9174157cc763252"
+url = "https://github.com/astral-sh/uv/releases/download/0.10.10/uv-aarch64-unknown-linux-musl.tar.gz"
 
 [tools."aqua:astral-sh/uv"."platforms.linux-x64"]
-checksum = "sha256:433e56874739e92c7cfd661ba9e5f287b376ca612c08c8194a41a98a13158aea"
-url = "https://github.com/astral-sh/uv/releases/download/0.10.9/uv-x86_64-unknown-linux-musl.tar.gz"
+checksum = "sha256:74544e8755fbc27559e22e29fd561bdc48f91b8bd8323e760a1130f32433bea4"
+url = "https://github.com/astral-sh/uv/releases/download/0.10.10/uv-x86_64-unknown-linux-musl.tar.gz"
 
 [tools."aqua:astral-sh/uv"."platforms.linux-x64-musl"]
-checksum = "sha256:433e56874739e92c7cfd661ba9e5f287b376ca612c08c8194a41a98a13158aea"
-url = "https://github.com/astral-sh/uv/releases/download/0.10.9/uv-x86_64-unknown-linux-musl.tar.gz"
+checksum = "sha256:74544e8755fbc27559e22e29fd561bdc48f91b8bd8323e760a1130f32433bea4"
+url = "https://github.com/astral-sh/uv/releases/download/0.10.10/uv-x86_64-unknown-linux-musl.tar.gz"
 
 [tools."aqua:astral-sh/uv"."platforms.macos-arm64"]
-checksum = "sha256:a92f61e9ac9b0f29668c15f56152e4a60143fca148ff5bfadb86718472c3f376"
-url = "https://github.com/astral-sh/uv/releases/download/0.10.9/uv-aarch64-apple-darwin.tar.gz"
+checksum = "sha256:8a09f0ef51ee7f7170731b4cb8bde5bf9ba6da5304f49a7df6cdab42a1f37b5d"
+url = "https://github.com/astral-sh/uv/releases/download/0.10.10/uv-aarch64-apple-darwin.tar.gz"
 
 [tools."aqua:astral-sh/uv"."platforms.macos-x64"]
-checksum = "sha256:9cc2de7d195fa157f98b306a8a1cb151ded93f488939b93363cebc8b9d598c28"
-url = "https://github.com/astral-sh/uv/releases/download/0.10.9/uv-x86_64-apple-darwin.tar.gz"
+checksum = "sha256:dd18420591d625f9b4ca2b57a7a6fe3cce43910f02e02d90e47a4101428de14a"
+url = "https://github.com/astral-sh/uv/releases/download/0.10.10/uv-x86_64-apple-darwin.tar.gz"
 
 [tools."aqua:astral-sh/uv"."platforms.windows-x64"]
-checksum = "sha256:f58dc40896000229db7c52b8bdd931394040ef2ad59abd1eda841f6d70b13d7a"
-url = "https://github.com/astral-sh/uv/releases/download/0.10.9/uv-x86_64-pc-windows-msvc.zip"
+checksum = "sha256:d31a30f1dfb96e630a08d5a9b3f3f551254b7ed6e9b7e495f46a4232661c7252"
+url = "https://github.com/astral-sh/uv/releases/download/0.10.10/uv-x86_64-pc-windows-msvc.zip"
 
 [[tools."aqua:bufbuild/buf"]]
 version = "1.66.1"
@@ -147,36 +147,36 @@ checksum = "sha256:b4671213dd37e17fb574ccca7c82bef2b84f9df2c1bc933be0ce14aacf56d
 url = "https://github.com/bufbuild/buf/releases/download/v1.66.1/buf-Windows-x86_64.zip"
 
 [[tools."aqua:cli/cli"]]
-version = "2.88.0"
+version = "2.88.1"
 backend = "aqua:cli/cli"
 
 [tools."aqua:cli/cli"."platforms.linux-arm64"]
-checksum = "sha256:d9bffed5c9bb65fca9d6097eaa3ebd6edb7438c8bfd641f8595a39c7dc69042f"
-url = "https://github.com/cli/cli/releases/download/v2.88.0/gh_2.88.0_linux_arm64.tar.gz"
+checksum = "sha256:039ce25aab0cfa0ea5160e3db75ed44699bde4b20ff63ec5991f82201f1b33b8"
+url = "https://github.com/cli/cli/releases/download/v2.88.1/gh_2.88.1_linux_arm64.tar.gz"
 
 [tools."aqua:cli/cli"."platforms.linux-arm64-musl"]
-checksum = "sha256:d9bffed5c9bb65fca9d6097eaa3ebd6edb7438c8bfd641f8595a39c7dc69042f"
-url = "https://github.com/cli/cli/releases/download/v2.88.0/gh_2.88.0_linux_arm64.tar.gz"
+checksum = "sha256:039ce25aab0cfa0ea5160e3db75ed44699bde4b20ff63ec5991f82201f1b33b8"
+url = "https://github.com/cli/cli/releases/download/v2.88.1/gh_2.88.1_linux_arm64.tar.gz"
 
 [tools."aqua:cli/cli"."platforms.linux-x64"]
-checksum = "sha256:4d268420ad31846a807e3012ac4b6547df662777e7776fa7f4c55ce062e15b15"
-url = "https://github.com/cli/cli/releases/download/v2.88.0/gh_2.88.0_linux_amd64.tar.gz"
+checksum = "sha256:36352a993b97e9758793cdb87f9ba674bd6d88c914488e122be78a1962203803"
+url = "https://github.com/cli/cli/releases/download/v2.88.1/gh_2.88.1_linux_amd64.tar.gz"
 
 [tools."aqua:cli/cli"."platforms.linux-x64-musl"]
-checksum = "sha256:4d268420ad31846a807e3012ac4b6547df662777e7776fa7f4c55ce062e15b15"
-url = "https://github.com/cli/cli/releases/download/v2.88.0/gh_2.88.0_linux_amd64.tar.gz"
+checksum = "sha256:36352a993b97e9758793cdb87f9ba674bd6d88c914488e122be78a1962203803"
+url = "https://github.com/cli/cli/releases/download/v2.88.1/gh_2.88.1_linux_amd64.tar.gz"
 
 [tools."aqua:cli/cli"."platforms.macos-arm64"]
-checksum = "sha256:0ea4edb4b1be0ffa2b4c53bcce81691dd58647bb03bfb5b9fdb01ee5b2afc581"
-url = "https://github.com/cli/cli/releases/download/v2.88.0/gh_2.88.0_macOS_arm64.zip"
+checksum = "sha256:bdbeed4821d450ef0d14821d856c05b308ab449fbf60527f298d96fbf5d2447b"
+url = "https://github.com/cli/cli/releases/download/v2.88.1/gh_2.88.1_macOS_arm64.zip"
 
 [tools."aqua:cli/cli"."platforms.macos-x64"]
-checksum = "sha256:49d309a6b2152807fb0a70d6db02d14a2d9264b01f52c852938aadb331f4cf70"
-url = "https://github.com/cli/cli/releases/download/v2.88.0/gh_2.88.0_macOS_amd64.zip"
+checksum = "sha256:ff0fc4bdb9699f0c02e5bcdcbd09d0f8e4c4659aa5d30bcd39a3557ed7379b2e"
+url = "https://github.com/cli/cli/releases/download/v2.88.1/gh_2.88.1_macOS_amd64.zip"
 
 [tools."aqua:cli/cli"."platforms.windows-x64"]
-checksum = "sha256:0cbf0abde47cd873edbf937e30665d665c07145ff14199f81358d0188affae57"
-url = "https://github.com/cli/cli/releases/download/v2.88.0/gh_2.88.0_windows_amd64.zip"
+checksum = "sha256:8fdaac525d8919f9f8c265f99ffa26189e5f1fd3a35636adad4fd890a141a555"
+url = "https://github.com/cli/cli/releases/download/v2.88.1/gh_2.88.1_windows_amd64.zip"
 
 [[tools."aqua:cloudflare/cloudflared"]]
 version = "2026.3.0"
@@ -403,36 +403,36 @@ checksum = "sha256:b0a8cb81f4a259f8eaee134d9d427ed8284177141d615669dce2bde184ab0
 url = "https://github.com/jdx/usage/releases/download/v3.0.0/usage-x86_64-pc-windows-msvc.zip"
 
 [[tools."aqua:jesseduffield/lazydocker"]]
-version = "0.24.4"
+version = "0.25.0"
 backend = "aqua:jesseduffield/lazydocker"
 
 [tools."aqua:jesseduffield/lazydocker"."platforms.linux-arm64"]
-checksum = "sha256:0fcf85b736895f46daa38eec5871ef1ca3d1e38b20201b2811b26258faccf1c7"
-url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.4/lazydocker_0.24.4_Linux_arm64.tar.gz"
+checksum = "sha256:75bf3df5ee3bfd8f20a98c009d6f6787d009f03385d0d56b2a2aea26bdb7c287"
+url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.25.0/lazydocker_0.25.0_Linux_arm64.tar.gz"
 
 [tools."aqua:jesseduffield/lazydocker"."platforms.linux-arm64-musl"]
-checksum = "sha256:0fcf85b736895f46daa38eec5871ef1ca3d1e38b20201b2811b26258faccf1c7"
-url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.4/lazydocker_0.24.4_Linux_arm64.tar.gz"
+checksum = "sha256:75bf3df5ee3bfd8f20a98c009d6f6787d009f03385d0d56b2a2aea26bdb7c287"
+url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.25.0/lazydocker_0.25.0_Linux_arm64.tar.gz"
 
 [tools."aqua:jesseduffield/lazydocker"."platforms.linux-x64"]
-checksum = "sha256:c47e6f4b61debde5422183c7eb446a704a92c58b4c35bbd128c722d8bf269a86"
-url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.4/lazydocker_0.24.4_Linux_x86_64.tar.gz"
+checksum = "sha256:9c17b1458b214af50168f5f5e981f1f9c4b34d13a22734b7318bf9a05132ff3d"
+url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.25.0/lazydocker_0.25.0_Linux_x86_64.tar.gz"
 
 [tools."aqua:jesseduffield/lazydocker"."platforms.linux-x64-musl"]
-checksum = "sha256:c47e6f4b61debde5422183c7eb446a704a92c58b4c35bbd128c722d8bf269a86"
-url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.4/lazydocker_0.24.4_Linux_x86_64.tar.gz"
+checksum = "sha256:9c17b1458b214af50168f5f5e981f1f9c4b34d13a22734b7318bf9a05132ff3d"
+url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.25.0/lazydocker_0.25.0_Linux_x86_64.tar.gz"
 
 [tools."aqua:jesseduffield/lazydocker"."platforms.macos-arm64"]
-checksum = "sha256:4d0e6c42b34962713c0a22c5a841901c58b54a8d0791ba2ae8e4906985bac7f3"
-url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.4/lazydocker_0.24.4_Darwin_arm64.tar.gz"
+checksum = "sha256:55f0573847bbfa68b0129e7e6922f5766f300ea3411f8b41e34044f86111fa1a"
+url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.25.0/lazydocker_0.25.0_Darwin_arm64.tar.gz"
 
 [tools."aqua:jesseduffield/lazydocker"."platforms.macos-x64"]
-checksum = "sha256:9e6bb0c2ec758114e14d5fa5f6aa6342cc026d5f7458ad0b125f728e24e3c0dc"
-url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.4/lazydocker_0.24.4_Darwin_x86_64.tar.gz"
+checksum = "sha256:0209a85adc5a6530e452ddfba6f4ddc735bbe953e2a7de76f555684933b01d65"
+url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.25.0/lazydocker_0.25.0_Darwin_x86_64.tar.gz"
 
 [tools."aqua:jesseduffield/lazydocker"."platforms.windows-x64"]
-checksum = "sha256:ca316f4f994a0af5c71525398a34192d01bbf6ac05097b39d96db1842855f349"
-url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.24.4/lazydocker_0.24.4_Windows_x86_64.zip"
+checksum = "sha256:2af0b2516cd006b1849f2cdae4cd82abbf5d1c2d49b88563daffaa1fb4ac46bb"
+url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.25.0/lazydocker_0.25.0_Windows_x86_64.zip"
 
 [[tools."aqua:jesseduffield/lazygit"]]
 version = "0.60.0"
@@ -1036,11 +1036,11 @@ checksum = "sha256:313fa40c0d7b18575821de8cb17483031fe07d95de5994f6f435f3b345f85
 url = "https://nodejs.org/dist/v24.14.0/node-v24.14.0-win-x64.zip"
 
 [[tools."npm:@google/gemini-cli"]]
-version = "0.33.0"
+version = "0.33.1"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260311.1"
+version = "7.0.0-dev.20260314.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -1052,7 +1052,7 @@ version = "18.0.10"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
-version = "3.1.15"
+version = "3.1.16"
 backend = "npm:difit"
 
 [[tools.pnpm]]
