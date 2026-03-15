@@ -31,7 +31,7 @@ go = "1.26.1"
 # CLI ツール（aqua backend）
 # ============================================
 # GitHub CLI
-"aqua:cli/cli" = "2.88.0"
+"aqua:cli/cli" = "2.88.1"
 
 # シェル関連
 "aqua:junegunn/fzf" = "0.70.0"
@@ -49,7 +49,7 @@ go = "1.26.1"
 "aqua:mikefarah/yq" = "4.52.4"
 "aqua:x-motemen/ghq" = "1.9.4"
 "aqua:jesseduffield/lazygit" = "0.60.0"
-"aqua:jesseduffield/lazydocker" = "0.24.4"
+"aqua:jesseduffield/lazydocker" = "0.25.0"
 
 # エディタ・ターミナル
 "aqua:neovim/neovim" = "0.11.6"
@@ -57,7 +57,7 @@ go = "1.26.1"
 "aqua:arl/gitmux" = "0.11.5"
 
 # Python ツール
-"aqua:astral-sh/uv" = "0.10.9"
+"aqua:astral-sh/uv" = "0.10.10"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
@@ -84,10 +84,10 @@ go = "1.26.1"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"aqua:anthropics/claude-code" = "2.1.74"
-"npm:@google/gemini-cli" = "0.33.0"
+"aqua:anthropics/claude-code" = "2.1.76"
+"npm:@google/gemini-cli" = "0.33.1"
 "aqua:openai/codex" = "0.111.0"
 "npm:ccusage" = "18.0.10"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260311.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260314.1"
 "npm:cc-sdd" = "2.1.1"
-"npm:difit" = "3.1.15"
+"npm:difit" = "3.1.16"
