@@ -1040,7 +1040,7 @@ version = "0.33.1"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260314.1"
+version = "7.0.0-dev.20260315.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
