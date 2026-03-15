@@ -7,6 +7,7 @@
     'github@claude-plugins-official': true,
     'context7@claude-plugins-official': true,
   },
+  remoteControlAtStartup: true,
   permissions: {
     defaultMode: 'plan',
     allow: [
