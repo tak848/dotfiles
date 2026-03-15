@@ -3,6 +3,10 @@
   plansDirectory: '.claude/plans',
   teammateMode: 'tmux',
   includeCoAuthoredBy: false,
+  enabledPlugins: {
+    'github@claude-plugins-official': true,
+    'context7@claude-plugins-official': true,
+  },
   permissions: {
     defaultMode: 'plan',
     allow: [
