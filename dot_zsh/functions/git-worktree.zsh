@@ -373,7 +373,7 @@ gwc() {
 
         cd "$target_dir" && {
             if command -v direnv >/dev/null 2>&1 && [ -f ".envrc" ]; then direnv allow .; fi
-            if command -v pnpm >/dev/null 2>&1 && [ -f "$worktree_path/pnpm-lock.yaml" ] && [ -f "package.json" ]; then pnpm install --frozen-lockfile; fi
+            if command -v pnpm >/dev/null 2>&1 && [ -f "$worktree_path/pnpm-lock.yaml" ]; then pnpm install --frozen-lockfile; fi
         }
 
         # 最後に Cursor で開く（最初に選択していた場合）
