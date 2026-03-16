@@ -6,6 +6,7 @@
   enabledPlugins: {
     'github@claude-plugins-official': true,
     'context7@claude-plugins-official': true,
+    'gopls-lsp@claude-plugins-official': true,
   },
   remoteControlAtStartup: true,
   statusLine: {
