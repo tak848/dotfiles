@@ -8,7 +8,7 @@ set -e
 
 if command -v go &> /dev/null; then
     echo "Claude Code statusline をビルド中..."
-    go build -C ~/.claude/statusline -o ~/.claude/cc-statusline .
+    go build -C "{{ .chezmoi.sourceDir }}/dot_claude/statusline" -o ~/.claude/cc-statusline .
     echo "statusline ビルド完了: ~/.claude/cc-statusline"
 else
     echo "警告: go コマンドが見つかりません。statusline はビルドされません。"
