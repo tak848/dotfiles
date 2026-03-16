@@ -159,7 +159,8 @@
     ],
   },
   // model: 'claude-opus-4-1-20250805',
-  model: 'claude-opus-4-6',
+  // model: 'claude-opus-4-6',
+  model: 'claude-opus-4-6[1m]',
   // model: 'opus',
 
   // 無効らしい
@@ -191,7 +192,10 @@
     MCP_TIMEOUT: '600000',
     MCP_TOOL_TIMEOUT: '600000',
     MAX_MCP_OUTPUT_TOKENS: '100000',  // default: 25000
-    MAX_THINKING_TOKENS: '31199',
+    CLAUDE_CODE_AUTO_COMPACT_WINDOW: '400000',
+    // adaptive thinking (effortLevel) が有効な場合、以下は不要
+    // MAX_THINKING_TOKENS: '31199',
+    // CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING: '1',  // これを設定すると MAX_THINKING_TOKENS に戻る
 
     CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY: '1',
     DISABLE_TELEMETRY: '1',
@@ -200,7 +204,9 @@
     CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR: '1',
     CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: '1',
   },
-  alwaysThinkingEnabled: true,  // https://github.com/anthropics/claude-code/issues/8780
+  effortLevel: 'high',
+  // alwaysThinkingEnabled は adaptive thinking (effortLevel) により不要
+  // alwaysThinkingEnabled: true,  // https://github.com/anthropics/claude-code/issues/8780
   hooks: {
     PostToolUse: [
       {
