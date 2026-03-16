@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+# {{ include "dot_claude/statusline/main.go" | sha256sum }}
+# {{ include "dot_claude/statusline/go.mod" | sha256sum }}
+# statusline の Go ソースが変更された時のみビルドする
+
+{{ template "path-setup.tmpl" . }}
+
+if command -v go &> /dev/null; then
+    echo "Claude Code statusline をビルド中..."
+    go build -C "{{ .chezmoi.sourceDir }}/dot_claude/statusline" -o ~/.claude/cc-statusline .
+    echo "statusline ビルド完了: ~/.claude/cc-statusline"
+else
+    echo "警告: go コマンドが見つかりません。statusline はビルドされません。"
+fi

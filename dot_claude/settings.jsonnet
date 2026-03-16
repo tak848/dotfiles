@@ -8,6 +8,11 @@
     'context7@claude-plugins-official': true,
   },
   remoteControlAtStartup: true,
+  statusLine: {
+    type: 'command',
+    command: '~/.claude/cc-statusline',
+    padding: 2,
+  },
   permissions: {
     defaultMode: 'plan',
     allow: [
