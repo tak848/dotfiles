@@ -98,8 +98,9 @@ gwr() {
 gwc() {
     # 元のディレクトリを保存
     local original_dir=$(pwd)
+    local worktree_add_status=1
 
-    local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json" ".serena" "config.toml", ".gemini/settings.json", ".mise.local.toml")
+    local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json" ".serena" "config.toml" ".gemini/settings.json" ".mise.local.toml")
     local extra_copy_files=()
     local pr_ref=""
     local pr_mode=false
@@ -217,6 +218,7 @@ gwc() {
 
         echo "ブランチ '$pr_branch' の worktree を作成中..."
         git worktree add -b "$pr_branch" "$worktree_path" "origin/$pr_branch"
+        worktree_add_status=$?
 
         pr_mode=true
     fi
@@ -260,12 +262,14 @@ gwc() {
             local dir_name="${project_name}-$(echo "$local_branch_name" | sed 's/\//-/g')"
             worktree_path="${root_dir}/../${dir_name}"
             git worktree add "$worktree_path" "$local_branch_name"
+            worktree_add_status=$?
         elif [ "$branch_type" = "remote" ]; then
             local_branch_name=$(echo "$full_ref" | sed 's:^refs/remotes/[^/]\+/::')
             local dir_name="${project_name}-$(echo "$local_branch_name" | sed 's/\//-/g')"
             worktree_path="${root_dir}/../${dir_name}"
             echo "Creating new local branch '$local_branch_name' to track '$display_name'..."
             git worktree add -b "$local_branch_name" "$worktree_path" "$full_ref"
+            worktree_add_status=$?
         fi
     else
         local branch="$selection"
@@ -297,11 +301,10 @@ gwc() {
         fi
         local base_ref=$(echo "$all_branches_meta" | grep -F "$base_selection" | head -n 1 | awk -F$'\t' '{print $2}')
         git worktree add -b "$branch" "$worktree_path" "$base_ref"
+        worktree_add_status=$?
     fi
 
     fi  # PR モードでない場合の終了
-
-    local worktree_add_status=$?
 
     # Cursor で開くかどうかのフラグ
     local open_with_cursor=false
@@ -370,7 +373,7 @@ gwc() {
 
         cd "$target_dir" && {
             if command -v direnv >/dev/null 2>&1 && [ -f ".envrc" ]; then direnv allow .; fi
-            if command -v pnpm >/dev/null 2>&1 && [ -f "package.json" ] && ! [ -f "package-lock.json" ] && ! [ -f "yarn.lock" ] && ! [ -f "bun.lockb" ]; then pnpm install --frozen-lockfile; fi
+            if command -v pnpm >/dev/null 2>&1 && { [ -f "$worktree_path/pnpm-lock.yaml" ] || [ -f "package.json" ]; }; then pnpm install --frozen-lockfile; fi
         }
 
         # 最後に Cursor で開く（最初に選択していた場合）
