@@ -2,6 +2,8 @@
 #:schema https://developers.openai.com/codex/config-schema.json
 
 model = "gpt-5.4"
+model_context_window = 1000000
+model_auto_compact_token_limit = 500000
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 personality = "pragmatic"
