@@ -16,6 +16,7 @@ status_line = [
   "fast-mode",
   "git-branch",
   "context-remaining",
+  "context-used",
   "used-tokens",
   "context-window-size",
   "total-input-tokens",
