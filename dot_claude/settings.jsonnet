@@ -68,7 +68,6 @@
       'Bash(gh pr checks *)',
       'Bash(gh run view *)',
       'Bash(git status *)',
-      'Bash(git status)',
       'Bash(git switch *)',
       'Bash(git restore *)',
       'Bash(git add *)',
