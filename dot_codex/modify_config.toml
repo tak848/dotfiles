@@ -25,6 +25,7 @@ status_line = [
   "weekly-limit",
   "session-id",
   "codex-version",
+  "project-root",
   "current-dir",
 ]
 
