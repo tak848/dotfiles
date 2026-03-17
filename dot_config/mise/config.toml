@@ -57,7 +57,7 @@ go = "1.26.1"
 "aqua:arl/gitmux" = "0.11.5"
 
 # Python ツール
-"aqua:astral-sh/uv" = "0.10.10"
+"aqua:astral-sh/uv" = "0.10.11"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
@@ -84,11 +84,11 @@ go = "1.26.1"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"aqua:anthropics/claude-code" = "2.1.76"
-"npm:@google/gemini-cli" = "0.33.1"
+"aqua:anthropics/claude-code" = "2.1.77"
+"npm:@google/gemini-cli" = "0.33.2"
 "aqua:openai/codex" = "0.111.0"
 "npm:ccusage" = "18.0.10"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260315.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260316.1"
 "npm:cc-sdd" = "2.1.1"
 "npm:difit" = "3.1.16"
-"npm:freee-mcp" = "0.12.0"
+"npm:freee-mcp" = "0.12.1"
