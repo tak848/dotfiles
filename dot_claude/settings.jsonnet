@@ -141,6 +141,8 @@
       'mcp__plugin_github_github__list_commits',
       'mcp__plugin_github_github__get_commit',
       'mcp__plugin_github_github__list_branches',
+      'mcp__plugin_github_github__list_releases',
+      'mcp__plugin_github_github__list_tags',
       'mcp__plugin_github_github__search_code',
       'mcp__plugin_github_github__get_repository_tree',
       'mcp__plugin_github_github__list_notifications',
