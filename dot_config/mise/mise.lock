@@ -627,8 +627,36 @@ checksum = "sha256:90fc6d7cdf3d3388737caab1e2c554aa24b468f3a5cc38ef63857ddf11035
 url = "https://github.com/neovim/neovim/releases/download/v0.11.6/nvim-win64.zip"
 
 [[tools."aqua:openai/codex"]]
-version = "0.111.0"
+version = "0.115.0"
 backend = "aqua:openai/codex"
+
+[tools."aqua:openai/codex"."platforms.linux-arm64"]
+checksum = "sha256:048a55cc09cdcc6d0bf5c5eb2d526452f3d6725135f1b07340bf29d8e7787266"
+url = "https://github.com/openai/codex/releases/download/rust-v0.115.0/codex-aarch64-unknown-linux-musl.zst"
+
+[tools."aqua:openai/codex"."platforms.linux-arm64-musl"]
+checksum = "sha256:048a55cc09cdcc6d0bf5c5eb2d526452f3d6725135f1b07340bf29d8e7787266"
+url = "https://github.com/openai/codex/releases/download/rust-v0.115.0/codex-aarch64-unknown-linux-musl.zst"
+
+[tools."aqua:openai/codex"."platforms.linux-x64"]
+checksum = "sha256:8aedf14e762568e6bbb60b1617a38a34a74f2e497870b85820bbe3807ee39105"
+url = "https://github.com/openai/codex/releases/download/rust-v0.115.0/codex-x86_64-unknown-linux-musl.zst"
+
+[tools."aqua:openai/codex"."platforms.linux-x64-musl"]
+checksum = "sha256:8aedf14e762568e6bbb60b1617a38a34a74f2e497870b85820bbe3807ee39105"
+url = "https://github.com/openai/codex/releases/download/rust-v0.115.0/codex-x86_64-unknown-linux-musl.zst"
+
+[tools."aqua:openai/codex"."platforms.macos-arm64"]
+checksum = "sha256:bb714e68b8c6b1b8393bbc7bbe7a1a2449fba1c3e6ce93721be47f85446c1627"
+url = "https://github.com/openai/codex/releases/download/rust-v0.115.0/codex-aarch64-apple-darwin.zst"
+
+[tools."aqua:openai/codex"."platforms.macos-x64"]
+checksum = "sha256:48a9cb710e8d70790854f78829f67711033c112df41e8adc0d678966cddae340"
+url = "https://github.com/openai/codex/releases/download/rust-v0.115.0/codex-x86_64-apple-darwin.zst"
+
+[tools."aqua:openai/codex"."platforms.windows-x64"]
+checksum = "sha256:3a948e30610fd64f9ed2df748e3b9a20370041ebb1abe919ba85f0bc67127000"
+url = "https://github.com/openai/codex/releases/download/rust-v0.115.0/codex-x86_64-pc-windows-msvc.exe.zst"
 
 [[tools."aqua:phiresky/ripgrep-all"]]
 version = "0.10.10"
@@ -1036,11 +1064,11 @@ checksum = "sha256:313fa40c0d7b18575821de8cb17483031fe07d95de5994f6f435f3b345f85
 url = "https://nodejs.org/dist/v24.14.0/node-v24.14.0-win-x64.zip"
 
 [[tools."npm:@google/gemini-cli"]]
-version = "0.33.2"
+version = "0.34.0"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260316.1"
+version = "7.0.0-dev.20260317.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
