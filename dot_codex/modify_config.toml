@@ -9,6 +9,26 @@ sandbox_mode = "workspace-write"
 personality = "pragmatic"
 web_search = "live"
 
+[tui]
+# Claude Code の statusline で見ている運用情報に寄せて、Codex の組み込み項目を広めに表示する。
+status_line = [
+  "model-with-reasoning",
+  "fast-mode",
+  "git-branch",
+  "context-remaining",
+  "context-used",
+  "used-tokens",
+  "context-window-size",
+  "total-input-tokens",
+  "total-output-tokens",
+  "five-hour-limit",
+  "weekly-limit",
+  "session-id",
+  "codex-version",
+  "project-root",
+  "current-dir",
+]
+
 [features]
 unified_exec = true
 shell_snapshot = true
