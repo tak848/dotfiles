@@ -32,5 +32,11 @@
       matchPackageNames: ["nodejs/node"],
       versioning: "node",
     },
+    {
+      description: "aqua:openai/codex uses rust-v prefix on GitHub tags",
+      matchPackageNames: ["openai/codex"],
+      matchManagers: ["mise"],
+      extractVersion: "^rust-v(?<version>.+)$",
+    },
   ],
 }
