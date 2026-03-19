@@ -8,7 +8,6 @@
     'context7@claude-plugins-official': true,
     'gopls-lsp@claude-plugins-official': true,
   },
-  remoteControlAtStartup: true,
   statusLine: {
     type: 'command',
     command: '~/.claude/cc-statusline',
