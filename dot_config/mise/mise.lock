@@ -33,26 +33,26 @@ checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d874
 url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"
 
 [[tools."aqua:anthropics/claude-code"]]
-version = "2.1.78"
+version = "2.1.79"
 backend = "aqua:anthropics/claude-code"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.78/linux-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.79/linux-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64-musl"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.78/linux-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.79/linux-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.78/linux-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.79/linux-x64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64-musl"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.78/linux-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.79/linux-x64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-arm64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.78/darwin-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.79/darwin-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-x64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.78/darwin-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.79/darwin-x64/claude"
 
 [[tools."aqua:arl/gitmux"]]
 version = "0.11.5"
@@ -1068,7 +1068,7 @@ version = "0.34.0"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260317.1"
+version = "7.0.0-dev.20260318.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -1080,7 +1080,7 @@ version = "18.0.10"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
-version = "3.1.16"
+version = "3.1.17"
 backend = "npm:difit"
 
 [[tools."npm:freee-mcp"]]
