@@ -13,4 +13,6 @@
 {{- $devin := dict "type" "http" "url" "https://mcp.devin.ai/mcp" "headers" (dict "Authorization" "Bearer ${DEVIN_API_KEY}") -}}
 {{- $mcpServers = set $mcpServers "devin" $devin -}}
 {{- $data = set $data "mcpServers" $mcpServers -}}
+{{- /* remote-control を常時有効化 */ -}}
+{{- $data = set $data "remoteControlAtStartup" true -}}
 {{ $data | toPrettyJson }}
