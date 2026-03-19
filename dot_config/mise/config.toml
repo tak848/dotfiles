@@ -84,11 +84,11 @@ go = "1.26.1"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"aqua:anthropics/claude-code" = "2.1.78"
+"aqua:anthropics/claude-code" = "2.1.79"
 "npm:@google/gemini-cli" = "0.34.0"
 "aqua:openai/codex" = "0.115.0"
 "npm:ccusage" = "18.0.10"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260317.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260318.1"
 "npm:cc-sdd" = "2.1.1"
-"npm:difit" = "3.1.16"
+"npm:difit" = "3.1.17"
 "npm:freee-mcp" = "0.12.1"
