@@ -66,7 +66,7 @@ go = "1.26.1"
 # 開発ツール
 "aqua:bufbuild/buf" = "1.66.1"
 "aqua:go-task/task" = "3.49.1"
-"aqua:golangci/golangci-lint" = "2.11.3"
+"aqua:golangci/golangci-lint" = "2.11.4"
 
 # Jsonnet
 "aqua:google/go-jsonnet" = "0.21.0"
@@ -79,7 +79,7 @@ go = "1.26.1"
 
 # その他（1password/cli は aqua CLI で管理）
 "aqua:temporalio/cli" = "1.6.1"
-"aqua:jdx/usage" = "3.0.0"
+"aqua:jdx/usage" = "3.1.0"
 
 # ============================================
 # npm グローバルパッケージ
@@ -88,7 +88,7 @@ go = "1.26.1"
 "npm:@google/gemini-cli" = "0.34.0"
 "aqua:openai/codex" = "0.116.0"
 "npm:ccusage" = "18.0.10"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260321.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260322.1"
 "npm:cc-sdd" = "2.1.1"
 "npm:difit" = "3.1.17"
-"npm:freee-mcp" = "0.13.0"
+"npm:freee-mcp" = "0.14.0"
