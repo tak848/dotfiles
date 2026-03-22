@@ -13,9 +13,9 @@ web_search = "live"
 # Claude Code の statusline で見ている運用情報に寄せて、Codex の組み込み項目を広めに表示する。
 status_line = [
   "model-with-reasoning",
-  "fast-mode",
-  "git-branch",
-  "context-remaining",
+  # "fast-mode",
+  # "git-branch",
+  # "context-remaining",
   "context-used",
   "used-tokens",
   "context-window-size",
