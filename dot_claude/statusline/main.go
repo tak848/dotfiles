@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 )
 
 // Catppuccin Mocha colors
@@ -40,9 +41,11 @@ type Data struct {
 	RateLimits *struct {
 		FiveHour *struct {
 			UsedPercentage float64 `json:"used_percentage"`
+			ResetsAt       int64   `json:"resets_at"`
 		} `json:"five_hour"`
 		SevenDay *struct {
 			UsedPercentage float64 `json:"used_percentage"`
+			ResetsAt       int64   `json:"resets_at"`
 		} `json:"seven_day"`
 	} `json:"rate_limits"`
 	SessionID string `json:"session_id"`
@@ -60,11 +63,27 @@ func contextColor(pct int) string {
 	}
 }
 
+func formatResetTime(epoch int64, now time.Time, weekly bool) string {
+	if epoch <= 0 {
+		return ""
+	}
+	t := time.Unix(epoch, 0)
+	if !t.After(now) {
+		return ""
+	}
+	if weekly {
+		return fmt.Sprintf("(~%d/%d)", int(t.Month()), t.Day())
+	}
+	return fmt.Sprintf("(~%d:%02d)", t.Hour(), t.Minute())
+}
+
 func main() {
 	var d Data
 	if err := json.NewDecoder(os.Stdin).Decode(&d); err != nil {
 		return
 	}
+
+	now := time.Now()
 
 	pct := min(int(d.ContextWindow.UsedPercentage), 100)
 	filled := min(pct/5, 20)
@@ -98,11 +117,13 @@ func main() {
 		var parts []string
 		if d.RateLimits.FiveHour != nil {
 			clr := contextColor(int(d.RateLimits.FiveHour.UsedPercentage))
-			parts = append(parts, fmt.Sprintf("5h:%s%.0f%%%s", clr, d.RateLimits.FiveHour.UsedPercentage, reset))
+			rt := formatResetTime(d.RateLimits.FiveHour.ResetsAt, now, false)
+			parts = append(parts, fmt.Sprintf("5h:%s%.0f%%%s%s", clr, d.RateLimits.FiveHour.UsedPercentage, reset, rt))
 		}
 		if d.RateLimits.SevenDay != nil {
 			clr := contextColor(int(d.RateLimits.SevenDay.UsedPercentage))
-			parts = append(parts, fmt.Sprintf("7d:%s%.0f%%%s", clr, d.RateLimits.SevenDay.UsedPercentage, reset))
+			rt := formatResetTime(d.RateLimits.SevenDay.ResetsAt, now, true)
+			parts = append(parts, fmt.Sprintf("7d:%s%.0f%%%s%s", clr, d.RateLimits.SevenDay.UsedPercentage, reset, rt))
 		}
 		if len(parts) > 0 {
 			ratePart = sep + strings.Join(parts, " ")

@@ -10,6 +10,10 @@ permissions:
   contents: write
   pull-requests: write
 
+concurrency:
+  group: auto-update-${{ github.head_ref }}
+  cancel-in-progress: false
+
 jobs:
   update-bootstrap:
     runs-on: ubuntu-latest
