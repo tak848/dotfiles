@@ -37,6 +37,14 @@ type Data struct {
 		TotalLinesAdded   int     `json:"total_lines_added"`
 		TotalLinesRemoved int     `json:"total_lines_removed"`
 	} `json:"cost"`
+	RateLimits *struct {
+		FiveHour *struct {
+			UsedPercentage float64 `json:"used_percentage"`
+		} `json:"five_hour"`
+		SevenDay *struct {
+			UsedPercentage float64 `json:"used_percentage"`
+		} `json:"seven_day"`
+	} `json:"rate_limits"`
 	SessionID string `json:"session_id"`
 	Version   string `json:"version"`
 }
@@ -84,12 +92,30 @@ func main() {
 		ctxClr, pct, reset,
 		usedK, maxK)
 
-	// Line 2: cost | duration | lines | session | version
-	fmt.Printf("%s$%.2f%s%s%d:%02d%s%s+%d%s %s-%d%s%s%s%s%s%s%sv%s%s\n",
+	// Rate limit info (Pro/Max subscribers only)
+	var ratePart string
+	if d.RateLimits != nil {
+		var parts []string
+		if d.RateLimits.FiveHour != nil {
+			clr := contextColor(int(d.RateLimits.FiveHour.UsedPercentage))
+			parts = append(parts, fmt.Sprintf("5h:%s%.0f%%%s", clr, d.RateLimits.FiveHour.UsedPercentage, reset))
+		}
+		if d.RateLimits.SevenDay != nil {
+			clr := contextColor(int(d.RateLimits.SevenDay.UsedPercentage))
+			parts = append(parts, fmt.Sprintf("7d:%s%.0f%%%s", clr, d.RateLimits.SevenDay.UsedPercentage, reset))
+		}
+		if len(parts) > 0 {
+			ratePart = sep + strings.Join(parts, " ")
+		}
+	}
+
+	// Line 2: cost | duration | lines | rate limit | session | version
+	fmt.Printf("%s$%.2f%s%s%d:%02d%s%s+%d%s %s-%d%s%s%s%s%s%s%s%sv%s%s\n",
 		green, d.Cost.TotalCostUSD, reset,
 		sep, mins, secs,
 		sep, green, d.Cost.TotalLinesAdded, reset,
 		red, d.Cost.TotalLinesRemoved, reset,
+		ratePart,
 		sep, blue, sid, reset,
 		sep, lavender, d.Version, reset)
 }
