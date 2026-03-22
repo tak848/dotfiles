@@ -45,9 +45,6 @@ jobs:
       - name: Generate bootstrap script
         run: |
           mise generate bootstrap -V "$MISE_VERSION" -w ./dot_local/bin/executable_mise
-          # shim symlink 経由で呼ばれた際に argv[0] を保持する（upstream 未対応）
-          sed -i 's/^exec "$MISE_INSTALL_PATH" "$@"$/exec -a "$0" "$MISE_INSTALL_PATH" "$@"/' ./dot_local/bin/executable_mise
-          grep -q '^exec -a "\$0" "\$MISE_INSTALL_PATH" "\$@"$' ./dot_local/bin/executable_mise || { echo "ERROR: sed replacement for exec -a failed"; exit 1; }
 
       - name: Check if bootstrap changed
         id: check-changes
