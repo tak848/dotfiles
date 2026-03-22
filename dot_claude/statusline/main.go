@@ -72,7 +72,8 @@ func formatResetTime(epoch int64, now time.Time, weekly bool) string {
 		return ""
 	}
 	if weekly {
-		return fmt.Sprintf("(~%d/%d)", int(t.Month()), t.Day())
+		weekdays := [...]string{"日", "月", "火", "水", "木", "金", "土"}
+		return fmt.Sprintf("(~%d/%d%s)", int(t.Month()), t.Day(), weekdays[t.Weekday()])
 	}
 	return fmt.Sprintf("(~%d:%02d)", t.Hour(), t.Minute())
 }
