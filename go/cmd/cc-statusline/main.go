@@ -6,19 +6,13 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/tak848/dotfiles/go/internal/colors"
 )
 
-// Catppuccin Mocha colors
-const (
-	teal     = "\033[38;2;148;226;213m"
-	green    = "\033[38;2;166;227;161m"
-	yellow   = "\033[38;2;249;226;175m"
-	red      = "\033[38;2;243;139;168m"
-	blue     = "\033[38;2;137;180;250m"
-	lavender = "\033[38;2;180;190;254m"
-	surface  = "\033[38;2;88;91;112m"
-	reset    = "\033[0m"
-)
+const barWidth = 25
+
+var blocks = [...]rune{' ', '▏', '▎', '▍', '▌', '▋', '▊', '▉', '█'}
 
 type Data struct {
 	Model struct {
@@ -55,12 +49,37 @@ type Data struct {
 func contextColor(pct int) string {
 	switch {
 	case pct >= 80:
-		return red
+		return colors.Red
 	case pct >= 50:
-		return yellow
+		return colors.Yellow
 	default:
-		return green
+		return colors.Green
 	}
+}
+
+func buildBar(pct int) string {
+	pct = max(0, min(pct, 100))
+	ctxClr := contextColor(pct)
+
+	filledChars := pct * barWidth / 100
+	remainder := (pct * barWidth % 100) * 8 / 100
+	emptyChars := barWidth - filledChars
+	if remainder > 0 {
+		emptyChars--
+	}
+
+	var b strings.Builder
+	b.WriteString(ctxClr)
+	b.WriteString(strings.Repeat("█", filledChars))
+	if remainder > 0 {
+		b.WriteRune(blocks[remainder])
+	}
+	b.WriteString(colors.Reset)
+	b.WriteString(strings.Repeat(" ", emptyChars))
+	b.WriteString(colors.Surface)
+	b.WriteRune('▏')
+	b.WriteString(colors.Reset)
+	return b.String()
 }
 
 func formatResetTime(epoch int64, now time.Time, weekly bool) string {
@@ -86,10 +105,9 @@ func main() {
 
 	now := time.Now()
 
-	pct := min(int(d.ContextWindow.UsedPercentage), 100)
-	filled := min(pct/5, 20)
+	pct := max(0, min(int(d.ContextWindow.UsedPercentage), 100))
+	bar := buildBar(pct)
 	ctxClr := contextColor(pct)
-	bar := ctxClr + strings.Repeat("▓", filled) + strings.Repeat("░", 20-filled) + reset
 
 	usedK := (d.ContextWindow.CurrentUsage.InputTokens + d.ContextWindow.CurrentUsage.CacheReadInputTokens) / 1000
 	maxK := d.ContextWindow.ContextWindowSize / 1000
@@ -103,13 +121,13 @@ func main() {
 		sid = sid[:8]
 	}
 
-	sep := surface + " | " + reset
+	sep := colors.Surface + " | " + colors.Reset
 
 	// Line 1: model + progress bar + percentage + tokens
 	fmt.Printf("%s[%s]%s %s %s%d%%%s (%dk/%dk)\n",
-		teal, d.Model.DisplayName, reset,
+		colors.Teal, d.Model.DisplayName, colors.Reset,
 		bar,
-		ctxClr, pct, reset,
+		ctxClr, pct, colors.Reset,
 		usedK, maxK)
 
 	// Rate limit info (Pro/Max subscribers only)
@@ -119,12 +137,12 @@ func main() {
 		if d.RateLimits.FiveHour != nil {
 			clr := contextColor(int(d.RateLimits.FiveHour.UsedPercentage))
 			rt := formatResetTime(d.RateLimits.FiveHour.ResetsAt, now, false)
-			parts = append(parts, fmt.Sprintf("5h:%s%.0f%%%s%s", clr, d.RateLimits.FiveHour.UsedPercentage, reset, rt))
+			parts = append(parts, fmt.Sprintf("5h:%s%.0f%%%s%s", clr, d.RateLimits.FiveHour.UsedPercentage, colors.Reset, rt))
 		}
 		if d.RateLimits.SevenDay != nil {
 			clr := contextColor(int(d.RateLimits.SevenDay.UsedPercentage))
 			rt := formatResetTime(d.RateLimits.SevenDay.ResetsAt, now, true)
-			parts = append(parts, fmt.Sprintf("7d:%s%.0f%%%s%s", clr, d.RateLimits.SevenDay.UsedPercentage, reset, rt))
+			parts = append(parts, fmt.Sprintf("7d:%s%.0f%%%s%s", clr, d.RateLimits.SevenDay.UsedPercentage, colors.Reset, rt))
 		}
 		if len(parts) > 0 {
 			ratePart = sep + strings.Join(parts, " ")
@@ -133,11 +151,11 @@ func main() {
 
 	// Line 2: cost | duration | lines | rate limit | session | version
 	fmt.Printf("%s$%.2f%s%s%d:%02d%s%s+%d%s %s-%d%s%s%s%s%s%s%s%sv%s%s\n",
-		green, d.Cost.TotalCostUSD, reset,
+		colors.Green, d.Cost.TotalCostUSD, colors.Reset,
 		sep, mins, secs,
-		sep, green, d.Cost.TotalLinesAdded, reset,
-		red, d.Cost.TotalLinesRemoved, reset,
+		sep, colors.Green, d.Cost.TotalLinesAdded, colors.Reset,
+		colors.Red, d.Cost.TotalLinesRemoved, colors.Reset,
 		ratePart,
-		sep, blue, sid, reset,
-		sep, lavender, d.Version, reset)
+		sep, colors.Blue, sid, colors.Reset,
+		sep, colors.Lavender, d.Version, colors.Reset)
 }

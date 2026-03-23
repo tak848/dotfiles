@@ -1,15 +1,32 @@
 #!/bin/bash
 set -e
-# {{ include "dot_claude/statusline/main.go" | sha256sum }}
-# {{ include "dot_claude/statusline/go.mod" | sha256sum }}
-# statusline の Go ソースが変更された時のみビルドする
+# {{ include "go/cmd/cc-statusline/main.go" | sha256sum }}
+# {{ include "go/cmd/cc-post-tool-use/main.go" | sha256sum }}
+# {{ include "go/cmd/cc-notification/main.go" | sha256sum }}
+# {{ include "go/cmd/cc-stop/main.go" | sha256sum }}
+# {{ include "go/cmd/codex-notification/main.go" | sha256sum }}
+# {{ include "go/internal/colors/colors.go" | sha256sum }}
+# {{ include "go/internal/tts/tts.go" | sha256sum }}
+# {{ include "go.mod" | sha256sum }}
+# Go ソースが変更された時のみビルドする
 
 {{ template "path-setup.tmpl" . }}
 
-if command -v go &> /dev/null; then
-    echo "Claude Code statusline をビルド中..."
-    go build -C "{{ .chezmoi.sourceDir }}/dot_claude/statusline" -o ~/.claude/cc-statusline .
-    echo "statusline ビルド完了: ~/.claude/cc-statusline"
-else
-    echo "警告: go コマンドが見つかりません。statusline はビルドされません。"
+if ! command -v go &> /dev/null; then
+    echo "警告: go コマンドが見つかりません。Go バイナリはビルドされません。"
+    exit 0
 fi
+
+SOURCE_DIR="{{ .chezmoi.sourceDir }}"
+
+mkdir -p ~/.claude/bin ~/.codex/bin
+
+echo "Go バイナリをビルド中..."
+
+go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-statusline ./go/cmd/cc-statusline
+go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-post-tool-use ./go/cmd/cc-post-tool-use
+go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-notification ./go/cmd/cc-notification
+go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-stop ./go/cmd/cc-stop
+go build -C "$SOURCE_DIR" -o ~/.codex/bin/notification ./go/cmd/codex-notification
+
+echo "Go バイナリのビルド完了"

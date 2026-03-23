@@ -10,7 +10,7 @@
   },
   statusLine: {
     type: 'command',
-    command: '~/.claude/cc-statusline',
+    command: '~/.claude/bin/cc-statusline',
     padding: 2,
   },
   permissions: {
@@ -261,7 +261,7 @@
         hooks: [
           {
             type: 'command',
-            command: 'uv run ~/.claude/post_tool_use.py',
+            command: '~/.claude/bin/cc-post-tool-use',
           },
         ],
       },
@@ -283,7 +283,7 @@
         hooks: [
           {
             type: 'command',
-            command: 'uv run ~/.claude/notification.py',
+            command: '~/.claude/bin/cc-notification',
           },
         ],
       },
@@ -294,7 +294,7 @@
         hooks: [
           {
             type: 'command',
-            command: 'uv run ~/.claude/stop.py',
+            command: '~/.claude/bin/cc-stop',
           },
         ],
       },
