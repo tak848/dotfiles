@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 	"os/exec"
 	"runtime"
@@ -24,10 +23,14 @@ func main() {
 		return
 	}
 
+	// Codex passes notification payload as the last CLI argument, not stdin
+	if len(os.Args) < 2 {
+		return
+	}
+
 	var input Input
-	if err := json.NewDecoder(os.Stdin).Decode(&input); err != nil {
-		fmt.Fprintf(os.Stderr, "Error: Invalid JSON input: %v\n", err)
-		os.Exit(1)
+	if err := json.Unmarshal([]byte(os.Args[len(os.Args)-1]), &input); err != nil {
+		return
 	}
 
 	if input.Type != "agent-turn-complete" {
