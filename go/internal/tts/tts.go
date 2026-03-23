@@ -69,7 +69,7 @@ func SpeakInBackground(message string, voices VoicePair) {
 	if err != nil {
 		return // can't fork; skip notification rather than blocking
 	}
-	devnull, err := os.Open(os.DevNull)
+	devnull, err := os.OpenFile(os.DevNull, os.O_RDWR, 0)
 	if err != nil {
 		return
 	}

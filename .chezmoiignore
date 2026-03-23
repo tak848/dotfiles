@@ -24,7 +24,5 @@ create_dot_zsh
 /.cursorrules
 go.mod
 go/
-.claude/statusline
-.claude/cc-statusline
 .claude/bin
 .codex/bin
