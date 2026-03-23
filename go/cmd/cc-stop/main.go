@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 	"runtime"
 
@@ -16,8 +15,7 @@ func main() {
 
 	var input map[string]any
 	if err := json.NewDecoder(os.Stdin).Decode(&input); err != nil {
-		fmt.Fprintf(os.Stderr, "Error: Invalid JSON input: %v\n", err)
-		os.Exit(1)
+		return
 	}
 
 	if runtime.GOOS != "darwin" && runtime.GOOS != "linux" {
