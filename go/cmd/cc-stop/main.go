@@ -10,6 +10,10 @@ import (
 )
 
 func main() {
+	if tts.HandleBackground() {
+		return
+	}
+
 	var input map[string]any
 	if err := json.NewDecoder(os.Stdin).Decode(&input); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: Invalid JSON input: %v\n", err)
@@ -21,6 +25,5 @@ func main() {
 	}
 
 	gitCtx := tts.GitContext()
-	message := "Claudeセッション終了！" + gitCtx
-	tts.Speak(message, tts.Neural2Voices)
+	tts.SpeakInBackground("Claudeセッション終了！"+gitCtx, tts.Neural2Voices)
 }

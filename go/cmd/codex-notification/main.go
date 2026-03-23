@@ -14,6 +14,16 @@ type Input struct {
 }
 
 func main() {
+	// background child: say command was started by parent
+	if os.Getenv("_SAY_BG") == "1" {
+		msg := os.Getenv("_SAY_MSG")
+		if msg != "" {
+			cmd := exec.Command("say", msg)
+			_ = cmd.Run()
+		}
+		return
+	}
+
 	var input Input
 	if err := json.NewDecoder(os.Stdin).Decode(&input); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: Invalid JSON input: %v\n", err)
@@ -28,6 +38,14 @@ func main() {
 		return
 	}
 
-	cmd := exec.Command("say", input.LastAssistantMessage)
-	_ = cmd.Start() // non-blocking
+	// fork self as background process for say
+	exe, err := os.Executable()
+	if err != nil {
+		cmd := exec.Command("say", input.LastAssistantMessage)
+		_ = cmd.Run()
+		return
+	}
+	cmd := exec.Command(exe)
+	cmd.Env = append(os.Environ(), "_SAY_BG=1", "_SAY_MSG="+input.LastAssistantMessage)
+	_ = cmd.Start()
 }

@@ -37,8 +37,51 @@ var Neural2Voices = VoicePair{
 	EN: "en-US-Neural2-D",
 }
 
+const (
+	envBG      = "_TTS_BG"
+	envMsg     = "_TTS_MSG"
+	envVoiceJA = "_TTS_VOICE_JA"
+	envVoiceEN = "_TTS_VOICE_EN"
+)
+
+// HandleBackground checks if running as a background TTS child process.
+// If so, speaks the message from env vars and returns true (caller should exit).
+// If not, returns false (caller should use SpeakInBackground).
+func HandleBackground() bool {
+	if os.Getenv(envBG) != "1" {
+		return false
+	}
+	msg := os.Getenv(envMsg)
+	voices := VoicePair{
+		JA: os.Getenv(envVoiceJA),
+		EN: os.Getenv(envVoiceEN),
+	}
+	Speak(msg, voices)
+	return true
+}
+
+// SpeakInBackground re-execs the calling binary as a detached process with
+// the message and voice config in env vars, then returns immediately.
+// The parent process can exit right after this call.
+func SpeakInBackground(message string, voices VoicePair) {
+	exe, err := os.Executable()
+	if err != nil {
+		Speak(message, voices) // fallback: inline
+		return
+	}
+	cmd := exec.Command(exe)
+	cmd.Env = append(os.Environ(),
+		envBG+"=1",
+		envMsg+"="+message,
+		envVoiceJA+"="+voices.JA,
+		envVoiceEN+"="+voices.EN,
+	)
+	_ = cmd.Start()
+}
+
 // Speak synthesizes and plays the message via Google Cloud TTS.
 // Falls back to the macOS say command if GOOGLE_API_KEY is unset or API fails.
+// This blocks until completion.
 func Speak(message string, voices VoicePair) {
 	if runtime.GOOS != "darwin" && runtime.GOOS != "linux" {
 		return
@@ -158,7 +201,6 @@ func synthesize(apiKey, text, langCode, voice string) ([]byte, error) {
 	return base64.StdEncoding.DecodeString(result.AudioContent)
 }
 
-// playAudio starts the audio player as a detached background process and returns immediately.
 func playAudio(path string) {
 	players := [][]string{
 		{"mpv", "--no-terminal", "--no-video"},
@@ -168,19 +210,18 @@ func playAudio(path string) {
 	for _, p := range players {
 		if _, err := exec.LookPath(p[0]); err == nil {
 			cmd := exec.Command(p[0], append(p[1:], path)...)
-			_ = cmd.Start() // non-blocking: subprocess continues after parent exits
+			_ = cmd.Run()
 			return
 		}
 	}
 }
 
-// sayFallback starts macOS say command as a background process and returns immediately.
 func sayFallback(message string) {
 	if _, err := exec.LookPath("say"); err != nil {
 		return
 	}
 	cmd := exec.Command("say", message)
-	_ = cmd.Start() // non-blocking
+	_ = cmd.Run()
 }
 
 func gitOutput(args ...string) (string, error) {
