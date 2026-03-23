@@ -23,9 +23,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	switch input.ToolName {
-	case "Write", "Edit", "MultiEdit":
-	default:
+	editTools := map[string]struct{}{
+		"Write":     {},
+		"Edit":      {},
+		"MultiEdit": {},
+	}
+	if _, ok := editTools[input.ToolName]; !ok {
 		return
 	}
 
