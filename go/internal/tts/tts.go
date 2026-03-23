@@ -53,11 +53,12 @@ func HandleBackground() bool {
 		return false
 	}
 	msg := os.Getenv(envMsg)
-	voices := VoicePair{
-		JA: os.Getenv(envVoiceJA),
-		EN: os.Getenv(envVoiceEN),
+	ja := os.Getenv(envVoiceJA)
+	en := os.Getenv(envVoiceEN)
+	if msg == "" || len(ja) < 5 || len(en) < 5 {
+		return true // invalid env; skip silently
 	}
-	Speak(msg, voices)
+	Speak(msg, VoicePair{JA: ja, EN: en})
 	return true
 }
 

@@ -58,6 +58,7 @@ func contextColor(pct int) string {
 }
 
 func buildBar(pct int) string {
+	pct = max(0, min(pct, 100))
 	ctxClr := contextColor(pct)
 
 	filledChars := pct * barWidth / 100
@@ -104,7 +105,7 @@ func main() {
 
 	now := time.Now()
 
-	pct := min(int(d.ContextWindow.UsedPercentage), 100)
+	pct := max(0, min(int(d.ContextWindow.UsedPercentage), 100))
 	bar := buildBar(pct)
 	ctxClr := contextColor(pct)
 

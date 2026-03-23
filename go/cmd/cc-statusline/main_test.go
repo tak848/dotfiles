@@ -36,8 +36,10 @@ func TestBuildBar(t *testing.T) {
 		pct      int
 		wantFull int
 	}{
+		"negative": {pct: -10, wantFull: 0},
 		"empty":    {pct: 0, wantFull: 0},
 		"full":     {pct: 100, wantFull: 25},
+		"over_100": {pct: 150, wantFull: 25},
 		"half":     {pct: 50, wantFull: 12},
 		"one_cell": {pct: 4, wantFull: 1},
 	}
