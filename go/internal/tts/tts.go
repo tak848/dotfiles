@@ -12,7 +12,6 @@ import (
 	"runtime"
 	"strings"
 	"time"
-	"unicode"
 )
 
 const (
@@ -70,7 +69,14 @@ func SpeakInBackground(message string, voices VoicePair) {
 	if err != nil {
 		return // can't fork; skip notification rather than blocking
 	}
+	devnull, err := os.Open(os.DevNull)
+	if err != nil {
+		return
+	}
 	cmd := exec.Command(exe)
+	cmd.Stdin = devnull
+	cmd.Stdout = devnull
+	cmd.Stderr = devnull
 	cmd.Env = append(os.Environ(),
 		envBG+"=1",
 		envMsg+"="+message,
@@ -78,6 +84,7 @@ func SpeakInBackground(message string, voices VoicePair) {
 		envVoiceEN+"="+voices.EN,
 	)
 	_ = cmd.Start()
+	devnull.Close()
 }
 
 // Speak synthesizes and plays the message via Google Cloud TTS.
@@ -157,16 +164,6 @@ func GitContext() string {
 		return fmt.Sprintf("from %s/%s (worktree)", repoName, branch)
 	}
 	return fmt.Sprintf("from %s/%s", repoName, branch)
-}
-
-// IsJapanese returns true if the string contains any Japanese characters.
-func IsJapanese(s string) bool {
-	for _, r := range s {
-		if unicode.In(r, unicode.Hiragana, unicode.Katakana, unicode.Han) {
-			return true
-		}
-	}
-	return false
 }
 
 func synthesize(apiKey, text, langCode, voice string) ([]byte, error) {
