@@ -8,6 +8,7 @@ model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 personality = "pragmatic"
 web_search = "live"
+notify = ["{{ .chezmoi.homeDir }}/.codex/bin/notification"]
 
 [tui]
 # Claude Code の statusline で見ている運用情報に寄せて、Codex の組み込み項目を広めに表示する。
@@ -28,8 +29,6 @@ status_line = [
   "project-root",
   "current-dir",
 ]
-
-notify = ["{{ .chezmoi.homeDir }}/.codex/bin/notification"]
 
 [features]
 unified_exec = true
