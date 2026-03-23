@@ -3,8 +3,9 @@ package main
 import (
 	"encoding/json"
 	"os"
-	"os/exec"
 	"runtime"
+
+	"github.com/tak848/dotfiles/go/internal/tts"
 )
 
 type Input struct {
@@ -13,17 +14,11 @@ type Input struct {
 }
 
 func main() {
-	// background child: say command was started by parent
-	if os.Getenv("_SAY_BG") == "1" {
-		msg := os.Getenv("_SAY_MSG")
-		if msg != "" {
-			cmd := exec.Command("say", msg)
-			_ = cmd.Run()
-		}
+	if tts.HandleBackground() {
 		return
 	}
 
-	// Codex passes notification payload as the last CLI argument, not stdin
+	// Codex passes notification payload as the last CLI argument
 	if len(os.Args) < 2 {
 		return
 	}
@@ -37,16 +32,9 @@ func main() {
 		return
 	}
 
-	if input.LastAssistantMessage == "" || runtime.GOOS != "darwin" {
+	if input.LastAssistantMessage == "" || (runtime.GOOS != "darwin" && runtime.GOOS != "linux") {
 		return
 	}
 
-	// fork self as background process for say
-	exe, err := os.Executable()
-	if err != nil {
-		return // can't fork; skip notification rather than blocking
-	}
-	cmd := exec.Command(exe)
-	cmd.Env = append(os.Environ(), "_SAY_BG=1", "_SAY_MSG="+input.LastAssistantMessage)
-	_ = cmd.Start()
+	tts.SpeakInBackground(input.LastAssistantMessage, tts.DefaultVoices)
 }
