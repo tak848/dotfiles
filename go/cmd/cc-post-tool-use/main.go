@@ -19,8 +19,7 @@ type Input struct {
 func main() {
 	var input Input
 	if err := json.NewDecoder(os.Stdin).Decode(&input); err != nil {
-		fmt.Fprintf(os.Stderr, "Error: Invalid JSON input: %v\n", err)
-		os.Exit(1)
+		return // gracefully ignore invalid/empty input (e.g. MCP tools)
 	}
 
 	editTools := map[string]struct{}{
