@@ -10,7 +10,7 @@
   },
   statusLine: {
     type: 'command',
-    command: '~/.claude/cc-statusline',
+    command: '~/.claude/bin/cc-statusline',
     padding: 2,
   },
   permissions: {
@@ -261,7 +261,7 @@
         hooks: [
           {
             type: 'command',
-            command: '~/.claude/cc-post-tool-use',
+            command: '~/.claude/bin/cc-post-tool-use',
           },
         ],
       },
@@ -283,7 +283,7 @@
         hooks: [
           {
             type: 'command',
-            command: '~/.claude/cc-notification',
+            command: '~/.claude/bin/cc-notification',
           },
         ],
       },
@@ -294,7 +294,7 @@
         hooks: [
           {
             type: 'command',
-            command: '~/.claude/cc-stop',
+            command: '~/.claude/bin/cc-stop',
           },
         ],
       },

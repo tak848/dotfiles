@@ -26,3 +26,5 @@ go.mod
 go/
 .claude/statusline
 .claude/cc-statusline
+.claude/bin
+.codex/bin

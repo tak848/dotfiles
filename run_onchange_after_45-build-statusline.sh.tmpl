@@ -19,12 +19,14 @@ fi
 
 SOURCE_DIR="{{ .chezmoi.sourceDir }}"
 
+mkdir -p ~/.claude/bin ~/.codex/bin
+
 echo "Go バイナリをビルド中..."
 
-go build -C "$SOURCE_DIR" -o ~/.claude/cc-statusline ./go/cmd/cc-statusline
-go build -C "$SOURCE_DIR" -o ~/.claude/cc-post-tool-use ./go/cmd/cc-post-tool-use
-go build -C "$SOURCE_DIR" -o ~/.claude/cc-notification ./go/cmd/cc-notification
-go build -C "$SOURCE_DIR" -o ~/.claude/cc-stop ./go/cmd/cc-stop
-go build -C "$SOURCE_DIR" -o ~/.codex/notification ./go/cmd/codex-notification
+go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-statusline ./go/cmd/cc-statusline
+go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-post-tool-use ./go/cmd/cc-post-tool-use
+go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-notification ./go/cmd/cc-notification
+go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-stop ./go/cmd/cc-stop
+go build -C "$SOURCE_DIR" -o ~/.codex/bin/notification ./go/cmd/codex-notification
 
 echo "Go バイナリのビルド完了"
