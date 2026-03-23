@@ -29,12 +29,12 @@ status_line = [
   "current-dir",
 ]
 
+notify = ["{{ .chezmoi.homeDir }}/.codex/bin/notification"]
+
 [features]
 unified_exec = true
 shell_snapshot = true
 prevent_idle_sleep = true
-
-notify = ["{{ .chezmoi.homeDir }}/.codex/bin/notification"]
 
 [sandbox_workspace_write]
 network_access = true
