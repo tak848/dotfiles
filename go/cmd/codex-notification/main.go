@@ -29,5 +29,5 @@ func main() {
 	}
 
 	cmd := exec.Command("say", input.LastAssistantMessage)
-	_ = cmd.Run()
+	_ = cmd.Start() // non-blocking
 }

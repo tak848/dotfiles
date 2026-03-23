@@ -158,6 +158,7 @@ func synthesize(apiKey, text, langCode, voice string) ([]byte, error) {
 	return base64.StdEncoding.DecodeString(result.AudioContent)
 }
 
+// playAudio starts the audio player as a detached background process and returns immediately.
 func playAudio(path string) {
 	players := [][]string{
 		{"mpv", "--no-terminal", "--no-video"},
@@ -167,18 +168,19 @@ func playAudio(path string) {
 	for _, p := range players {
 		if _, err := exec.LookPath(p[0]); err == nil {
 			cmd := exec.Command(p[0], append(p[1:], path)...)
-			_ = cmd.Run()
+			_ = cmd.Start() // non-blocking: subprocess continues after parent exits
 			return
 		}
 	}
 }
 
+// sayFallback starts macOS say command as a background process and returns immediately.
 func sayFallback(message string) {
 	if _, err := exec.LookPath("say"); err != nil {
 		return
 	}
 	cmd := exec.Command("say", message)
-	_ = cmd.Run()
+	_ = cmd.Start() // non-blocking
 }
 
 func gitOutput(args ...string) (string, error) {
