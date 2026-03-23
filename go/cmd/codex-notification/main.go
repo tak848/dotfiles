@@ -41,9 +41,7 @@ func main() {
 	// fork self as background process for say
 	exe, err := os.Executable()
 	if err != nil {
-		cmd := exec.Command("say", input.LastAssistantMessage)
-		_ = cmd.Run()
-		return
+		return // can't fork; skip notification rather than blocking
 	}
 	cmd := exec.Command(exe)
 	cmd.Env = append(os.Environ(), "_SAY_BG=1", "_SAY_MSG="+input.LastAssistantMessage)

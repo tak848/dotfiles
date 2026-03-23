@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"time"
 	"unicode"
 )
 
@@ -66,8 +67,7 @@ func HandleBackground() bool {
 func SpeakInBackground(message string, voices VoicePair) {
 	exe, err := os.Executable()
 	if err != nil {
-		Speak(message, voices) // fallback: inline
-		return
+		return // can't fork; skip notification rather than blocking
 	}
 	cmd := exec.Command(exe)
 	cmd.Env = append(os.Environ(),
@@ -128,6 +128,8 @@ func Speak(message string, voices VoicePair) {
 
 	if err := os.WriteFile(cacheFile, audio, 0o644); err != nil {
 		fmt.Fprintf(os.Stderr, "Warning: cache write failed: %v\n", err)
+		sayFallback(message)
+		return
 	}
 	playAudio(cacheFile)
 }
@@ -181,7 +183,7 @@ func synthesize(apiKey, text, langCode, voice string) ([]byte, error) {
 	req.Header.Set("X-Goog-Api-Key", apiKey)
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
+	client := &http.Client{Timeout: 10 * time.Second}
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
