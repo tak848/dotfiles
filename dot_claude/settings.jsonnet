@@ -261,7 +261,7 @@
         hooks: [
           {
             type: 'command',
-            command: 'uv run ~/.claude/post_tool_use.py',
+            command: '~/.claude/cc-post-tool-use',
           },
         ],
       },
@@ -283,7 +283,7 @@
         hooks: [
           {
             type: 'command',
-            command: 'uv run ~/.claude/notification.py',
+            command: '~/.claude/cc-notification',
           },
         ],
       },
@@ -294,7 +294,7 @@
         hooks: [
           {
             type: 'command',
-            command: 'uv run ~/.claude/stop.py',
+            command: '~/.claude/cc-stop',
           },
         ],
       },

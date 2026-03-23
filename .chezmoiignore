@@ -22,5 +22,7 @@ create_dot_zsh
 .gemini/commands/kiro
 /mise.lock
 /.cursorrules
+go.mod
+go/
 .claude/statusline
 .claude/cc-statusline
