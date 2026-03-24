@@ -3,12 +3,12 @@ idiomatic_version_file_enable_tools = ["node"]
 auto_install = false
 experimental = true
 lockfile = true
-locked = false  # npm backend が checksum 未対応のため
+locked = false                                 # npm backend が checksum 未対応のため
 
 [tools]
 # このリポジトリで使うランタイム
-node = "24.14.0"
-pnpm = "10.32.1"
+node = "24.14.1"
+pnpm = "10.33.0"
 
 # aqua CLI（dot_config/aquaproj-aqua の管理用）
 "github:aquaproj/aqua" = "2.57.1"
