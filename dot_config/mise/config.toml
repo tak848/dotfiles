@@ -16,8 +16,8 @@ cosign = false
 # ============================================
 # ランタイム（core backend）
 # ============================================
-node = "24.14.0"
-pnpm = "10.32.1"
+node = "24.14.1"
+pnpm = "10.33.0"
 go = "1.26.1"
 
 # ============================================
@@ -69,7 +69,7 @@ go = "1.26.1"
 "aqua:golangci/golangci-lint" = "2.11.4"
 
 # Jsonnet
-"aqua:google/go-jsonnet" = "0.21.0"
+"aqua:google/go-jsonnet" = "0.22.0"
 "aqua:grafana/jsonnet-language-server" = "0.17.0"
 
 # Language Server
@@ -85,11 +85,11 @@ go = "1.26.1"
 # npm グローバルパッケージ
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.81"
-"npm:@google/gemini-cli" = "0.34.0"
+"npm:@google/gemini-cli" = "0.35.0"
 "aqua:openai/codex" = "0.116.0"
 "npm:ccusage" = "18.0.10"
 "npm:@ccusage/codex" = "18.0.10"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260323.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260324.1"
 "npm:cc-sdd" = "2.1.1"
 "npm:difit" = "3.1.17"
 "npm:freee-mcp" = "0.15.0"
