@@ -148,6 +148,10 @@
       'mcp__deepwiki__ask_question',
       'mcp__devin__ask_question',
       'mcp__devin__read_wiki_contents',
+      // AWS Knowledge MCP - read 系
+      'mcp__aws-knowledge__search_documentation',
+      'mcp__aws-knowledge__read_documentation',
+      'mcp__aws-knowledge__recommend',
       // GitHub Plugin - read 系
       'mcp__plugin_github_github__get_me',
       'mcp__plugin_github_github__list_issues',
