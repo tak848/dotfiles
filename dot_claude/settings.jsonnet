@@ -149,12 +149,12 @@
       'mcp__devin__ask_question',
       'mcp__devin__read_wiki_contents',
       // AWS Knowledge MCP
-      'mcp__aws-knowledge__search_documentation',
-      'mcp__aws-knowledge__read_documentation',
-      'mcp__aws-knowledge__recommend',
-      'mcp__aws-knowledge__list_regions',
-      'mcp__aws-knowledge__get_regional_availability',
-      'mcp__aws-knowledge__retrieve_agent_sops',
+      'mcp__aws-knowledge__aws___search_documentation',
+      'mcp__aws-knowledge__aws___read_documentation',
+      'mcp__aws-knowledge__aws___recommend',
+      'mcp__aws-knowledge__aws___list_regions',
+      'mcp__aws-knowledge__aws___get_regional_availability',
+      'mcp__aws-knowledge__aws___retrieve_agent_sop',
       // GitHub Plugin - read 系
       'mcp__plugin_github_github__get_me',
       'mcp__plugin_github_github__list_issues',
