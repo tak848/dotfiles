@@ -2,13 +2,6 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
-      - lazy-lock-update
-      - 'renovate/**'
-  pull_request:
-    branches:
-      - main
 
 jobs:
   test:
