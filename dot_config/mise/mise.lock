@@ -1063,6 +1063,10 @@ url = "https://nodejs.org/dist/v24.14.0/node-v24.14.0-darwin-x64.tar.gz"
 checksum = "sha256:313fa40c0d7b18575821de8cb17483031fe07d95de5994f6f435f3b345f85c66"
 url = "https://nodejs.org/dist/v24.14.0/node-v24.14.0-win-x64.zip"
 
+[[tools."npm:@ccusage/codex"]]
+version = "18.0.10"
+backend = "npm:@ccusage/codex"
+
 [[tools."npm:@google/gemini-cli"]]
 version = "0.34.0"
 backend = "npm:@google/gemini-cli"
