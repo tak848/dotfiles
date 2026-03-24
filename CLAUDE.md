@@ -124,10 +124,10 @@ Homebrew
 
 | ワークフロー | トリガー | 処理 |
 |-------------|---------|------|
-| `ci.yaml` | push/PR | `task check` で自動生成ファイルの diff チェック |
-| `mise-lock.yaml` | `mise.toml` / `config.toml` 変更 | `mise lock`（Renovate PR 時のみ） |
-| `mise-bootstrap.yaml` | `.mise-bootstrap-version` 変更 | `mise generate bootstrap`（Renovate PR 時のみ） |
-| `aqua-checksums.yaml` | `aqua.yaml` 変更 | `aqua update-checksum --prune`（Renovate PR 時のみ） |
+| `ci.yaml` | push | `task check` で自動生成ファイルの diff チェック |
+| `mise-lock.yaml` | push（`mise.toml` / `config.toml` 変更時） | `mise lock` |
+| `mise-bootstrap.yaml` | push（`.mise-bootstrap-version` 変更時） | `mise generate bootstrap` |
+| `aqua-checksums.yaml` | push（`aqua.yaml` 変更時） | `aqua update-checksum --prune` |
 | `lazy-lock.yaml` | nvim 設定変更 / 週次 cron | Lazy.nvim lockfile 更新（PR 作成 or Renovate PR へコミット） |
 
 ### zsh 設定の読み込み順序
