@@ -93,6 +93,9 @@ func mergeConfigFile(path string, cfg *Config) error {
 	}
 
 	cfg.TrustedPaths = append(cfg.TrustedPaths, override.TrustedPaths...)
+	if len(override.TrustedPaths) > 0 {
+		cfg.TrustedPaths = append([]string{}, override.TrustedPaths...)
+	}
 	cfg.PreToolDeny = append(cfg.PreToolDeny, override.PreToolDeny...)
 	cfg.Allow = append(cfg.Allow, override.Allow...)
 	cfg.SoftDeny = append(cfg.SoftDeny, override.SoftDeny...)

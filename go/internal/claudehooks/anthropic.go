@@ -60,42 +60,95 @@ func localPermissionDecision(input HookInput) (PermissionDecision, bool) {
 		return PermissionDecision{}, false
 	}
 
+	if containsShellMeta(command) {
+		return PermissionDecision{}, false
+	}
+
+	tokens := shellSplit(command)
+	if len(tokens) == 0 {
+		return PermissionDecision{}, false
+	}
+
 	lowered := strings.ToLower(command)
-	if strings.Contains(lowered, "git push --force") || strings.Contains(lowered, "git reset --hard") {
+	if isDangerousGitCommand(tokens, lowered) {
 		return PermissionDecision{
 			Behavior: "deny",
 			Message:  "破壊的な Git 操作は自動許可しません。",
 		}, true
 	}
 
-	readOnlyPrefixes := []string{
-		"ls ",
-		"pwd",
-		"cat ",
-		"head ",
-		"tail ",
-		"wc ",
-		"file ",
-		"date ",
-		"which ",
-		"rg ",
-		"grep ",
-		"git status",
-		"git diff",
-		"git log",
-		"git show",
-		"gh pr view",
-		"gh pr diff",
-		"gh pr checks",
-		"gh run view",
-	}
-	for _, prefix := range readOnlyPrefixes {
-		if strings.HasPrefix(command, prefix) {
-			return PermissionDecision{Behavior: "allow"}, true
-		}
+	if isReadOnlyCommand(tokens) {
+		return PermissionDecision{Behavior: "allow"}, true
 	}
 
 	return PermissionDecision{}, false
+}
+
+func containsShellMeta(command string) bool {
+	metaTokens := []string{"&&", "||", ";", "|", "`", "$(", ">", "<"}
+	for _, token := range metaTokens {
+		if strings.Contains(command, token) {
+			return true
+		}
+	}
+	return false
+}
+
+func isDangerousGitCommand(tokens []string, lowered string) bool {
+	if len(tokens) < 2 || tokens[0] != "git" {
+		return false
+	}
+
+	if tokens[1] == "push" {
+		for _, token := range tokens[2:] {
+			if token == "-f" || token == "--force" || token == "--force-with-lease" {
+				return true
+			}
+		}
+	}
+
+	if tokens[1] == "reset" {
+		for _, token := range tokens[2:] {
+			if token == "--hard" {
+				return true
+			}
+		}
+	}
+
+	return strings.Contains(lowered, "git push --force") || strings.Contains(lowered, "git reset --hard")
+}
+
+func isReadOnlyCommand(tokens []string) bool {
+	if len(tokens) == 0 {
+		return false
+	}
+
+	switch tokens[0] {
+	case "pwd", "date":
+		return len(tokens) == 1
+	case "ls", "cat", "head", "tail", "wc", "file", "which", "rg", "grep":
+		return true
+	case "git":
+		if len(tokens) < 2 {
+			return false
+		}
+		switch tokens[1] {
+		case "status", "diff", "log", "show":
+			return true
+		}
+	case "gh":
+		if len(tokens) < 3 {
+			return false
+		}
+		if tokens[1] == "pr" && (tokens[2] == "view" || tokens[2] == "diff" || tokens[2] == "checks") {
+			return true
+		}
+		if tokens[1] == "run" && tokens[2] == "view" {
+			return true
+		}
+	}
+
+	return false
 }
 
 func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey string) (PermissionDecision, error) {

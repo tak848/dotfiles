@@ -152,13 +152,30 @@ func extractBashPaths(cwd string, command string) []string {
 	var candidates []string
 	for i := 0; i < len(tokens); i++ {
 		token := tokens[i]
-		if token == "" || strings.HasPrefix(token, "-") {
+		if token == "" {
 			continue
 		}
 
 		if token == "git" && i+2 < len(tokens) && tokens[i+1] == "-C" {
 			candidates = append(candidates, tokens[i+2])
 			i += 2
+			continue
+		}
+		if token == "git" && i+1 < len(tokens) && strings.HasPrefix(tokens[i+1], "-C") && len(tokens[i+1]) > 2 {
+			candidates = append(candidates, strings.TrimPrefix(tokens[i+1], "-C"))
+			i++
+			continue
+		}
+
+		if strings.HasPrefix(token, "--") && strings.Contains(token, "=") {
+			_, rhs, found := strings.Cut(token, "=")
+			if found && looksLikePathToken(rhs) {
+				candidates = append(candidates, rhs)
+				continue
+			}
+		}
+
+		if strings.HasPrefix(token, "-") {
 			continue
 		}
 

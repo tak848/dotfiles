@@ -1,6 +1,10 @@
 package claudehooks
 
-import "testing"
+import (
+	"os"
+	"path/filepath"
+	"testing"
+)
 
 func TestExpandPath(t *testing.T) {
 	t.Parallel()
@@ -40,6 +44,20 @@ func TestLocalPermissionDecision(t *testing.T) {
 	}
 }
 
+func TestLocalPermissionDecisionRejectsCompoundCommands(t *testing.T) {
+	t.Parallel()
+
+	_, ok := localPermissionDecision(HookInput{
+		ToolName: "Bash",
+		ToolInput: map[string]any{
+			"command": "git diff; rm -rf /tmp/x",
+		},
+	})
+	if ok {
+		t.Fatal("expected fallthrough for compound command")
+	}
+}
+
 func TestEvaluatePreToolOutsideTrustedPath(t *testing.T) {
 	t.Parallel()
 
@@ -58,5 +76,32 @@ func TestEvaluatePreToolOutsideTrustedPath(t *testing.T) {
 	}
 	if decision.Reason == "" {
 		t.Fatal("expected deny reason")
+	}
+}
+
+func TestExtractBashPathsSupportsInlineFlags(t *testing.T) {
+	t.Parallel()
+
+	got := extractBashPaths("/tmp/repo/worktree", `git -C../other status --file=/tmp/x`)
+	if len(got) < 2 {
+		t.Fatalf("expected multiple extracted paths, got %v", got)
+	}
+}
+
+func TestMergeConfigFileReplacesTrustedPaths(t *testing.T) {
+	t.Parallel()
+
+	dir := t.TempDir()
+	path := filepath.Join(dir, "permission-gate.json")
+	if err := os.WriteFile(path, []byte(`{"trusted_paths":["~/override"]}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	cfg := DefaultConfig()
+	if err := mergeConfigFile(path, &cfg); err != nil {
+		t.Fatal(err)
+	}
+	if len(cfg.TrustedPaths) != 1 || cfg.TrustedPaths[0] != "~/override" {
+		t.Fatalf("unexpected trusted_paths: %#v", cfg.TrustedPaths)
 	}
 }

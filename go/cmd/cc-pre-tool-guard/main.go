@@ -28,7 +28,7 @@ func main() {
 			"hookEventName":            "PreToolUse",
 			"permissionDecision":       "deny",
 			"permissionDecisionReason": decision.Reason,
+			"additionalContext":        decision.AdditionalContext,
 		},
-		"additionalContext": decision.AdditionalContext,
 	})
 }
