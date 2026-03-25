@@ -13,8 +13,33 @@
     command: '~/.claude/bin/cc-statusline',
     padding: 2,
   },
+  sandbox: {
+    enabled: true,
+    autoAllowBashIfSandboxed: true,
+    excludedCommands: [
+      'git',
+      'gh',
+      'go',
+      'mise',
+      'docker',
+    ],
+    filesystem: {
+      allowWrite: [
+        '~/.claude',
+        '~/.codex',
+      ],
+      allowRead: [
+        '~/.claude',
+        '~/.codex',
+      ],
+    },
+  },
   permissions: {
     defaultMode: 'plan',
+    additionalDirectories: [
+      '~/.claude',
+      '~/.codex',
+    ],
     allow: [
       'List(*)',
       'Bash(ls *)',
@@ -276,23 +301,35 @@
       },
     ],
     PreToolUse: [
-      //   {
-      //     matcher: '',
-      //     hooks: [
-      //       {
-      //         type: 'command',
-      //         command: 'uv run ~/.claude/pre_tool_use.py',
-      //       },
-      //     ],
-      //   },
+      {
+        matcher: 'Bash|Read|Write|Edit|MultiEdit|Glob|Grep',
+        hooks: [
+          {
+            type: 'command',
+            command: '~/.claude/bin/cc-pre-tool-guard',
+          },
+        ],
+      },
+    ],
+    PermissionRequest: [
+      {
+        matcher: 'Bash|Read|Write|Edit|MultiEdit|Glob|Grep|mcp__.*',
+        hooks: [
+          {
+            type: 'command',
+            command: '~/.claude/bin/cc-permission-gate',
+          },
+        ],
+      },
     ],
     Notification: [
       {
-        matcher: '',
+        matcher: 'permission_prompt|idle_prompt',
         hooks: [
           {
             type: 'command',
             command: '~/.claude/bin/cc-notification',
+            async: true,
           },
         ],
       },
@@ -304,6 +341,7 @@
           {
             type: 'command',
             command: '~/.claude/bin/cc-stop',
+            async: true,
           },
         ],
       },

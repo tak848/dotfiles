@@ -3,8 +3,13 @@ set -e
 # {{ include "go/cmd/cc-statusline/main.go" | sha256sum }}
 # {{ include "go/cmd/cc-post-tool-use/main.go" | sha256sum }}
 # {{ include "go/cmd/cc-notification/main.go" | sha256sum }}
+# {{ include "go/cmd/cc-permission-gate/main.go" | sha256sum }}
+# {{ include "go/cmd/cc-pre-tool-guard/main.go" | sha256sum }}
 # {{ include "go/cmd/cc-stop/main.go" | sha256sum }}
 # {{ include "go/cmd/codex-notification/main.go" | sha256sum }}
+# {{ include "go/internal/claudehooks/config.go" | sha256sum }}
+# {{ include "go/internal/claudehooks/path_guard.go" | sha256sum }}
+# {{ include "go/internal/claudehooks/anthropic.go" | sha256sum }}
 # {{ include "go/internal/colors/colors.go" | sha256sum }}
 # {{ include "go/internal/tts/tts.go" | sha256sum }}
 # {{ include "go.mod" | sha256sum }}
@@ -26,6 +31,8 @@ echo "Go バイナリをビルド中..."
 go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-statusline ./go/cmd/cc-statusline
 go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-post-tool-use ./go/cmd/cc-post-tool-use
 go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-notification ./go/cmd/cc-notification
+go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-pre-tool-guard ./go/cmd/cc-pre-tool-guard
+go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-permission-gate ./go/cmd/cc-permission-gate
 go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-stop ./go/cmd/cc-stop
 go build -C "$SOURCE_DIR" -o ~/.codex/bin/notification ./go/cmd/codex-notification
 
