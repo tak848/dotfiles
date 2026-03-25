@@ -129,13 +129,11 @@ func Speak(message string, voices VoicePair) {
 
 	audio, err := synthesize(apiKey, message, langCode, voice)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Warning: TTS API failed: %v\n", err)
 		sayFallback(message)
 		return
 	}
 
 	if err := os.WriteFile(cacheFile, audio, 0o644); err != nil {
-		fmt.Fprintf(os.Stderr, "Warning: cache write failed: %v\n", err)
 		sayFallback(message)
 		return
 	}
