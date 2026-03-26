@@ -28,18 +28,18 @@ func main() {
 			HookEventName:            "PreToolUse",
 			PermissionDecision:       "deny",
 			PermissionDecisionReason: decision.Reason,
-			AdditionalContext:        decision.AdditionalContext,
 		},
+		SystemMessage: decision.SystemMessage,
 	})
 }
 
 type preToolResponse struct {
 	HookSpecificOutput preToolOutput `json:"hookSpecificOutput"`
+	SystemMessage      string        `json:"systemMessage,omitempty"`
 }
 
 type preToolOutput struct {
 	HookEventName            string `json:"hookEventName"`
 	PermissionDecision       string `json:"permissionDecision"`
 	PermissionDecisionReason string `json:"permissionDecisionReason"`
-	AdditionalContext        string `json:"additionalContext,omitempty"`
 }

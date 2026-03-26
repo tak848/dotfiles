@@ -5,7 +5,8 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
-	"strings"
+
+	anthropic "github.com/anthropics/anthropic-sdk-go"
 )
 
 const (
@@ -14,12 +15,11 @@ const (
 )
 
 type Config struct {
-	Provider     ProviderConfig `json:"provider"`
-	TrustedPaths []string       `json:"trusted_paths"`
-	PreToolDeny  []PreToolRule  `json:"pre_tool_deny"`
-	Allow        []string       `json:"allow"`
-	SoftDeny     []string       `json:"soft_deny"`
-	Environment  []string       `json:"environment"`
+	Provider    ProviderConfig `json:"provider"`
+	PreToolDeny []PreToolRule  `json:"pre_tool_deny"`
+	Allow       []string       `json:"allow"`
+	SoftDeny    []string       `json:"soft_deny"`
+	Environment []string       `json:"environment"`
 }
 
 type ProviderConfig struct {
@@ -29,20 +29,19 @@ type ProviderConfig struct {
 }
 
 type PreToolRule struct {
-	Matcher           string `json:"matcher"`
-	Pattern           string `json:"pattern"`
-	Reason            string `json:"reason"`
-	AdditionalContext string `json:"additional_context"`
+	Matcher       string `json:"matcher"`
+	Pattern       string `json:"pattern"`
+	Reason        string `json:"reason"`
+	SystemMessage string `json:"system_message"`
 }
 
 func DefaultConfig() Config {
 	return Config{
 		Provider: ProviderConfig{
 			Name:      "anthropic",
-			Model:     "claude-opus-4-6",
+			Model:     string(anthropic.ModelClaudeHaiku4_5),
 			TimeoutMS: 4000,
 		},
-		TrustedPaths: []string{"~/.claude", "~/.codex"},
 	}
 }
 
@@ -92,41 +91,10 @@ func mergeConfigFile(path string, cfg *Config) error {
 		cfg.Provider.TimeoutMS = override.Provider.TimeoutMS
 	}
 
-	cfg.TrustedPaths = append(cfg.TrustedPaths, override.TrustedPaths...)
-	if len(override.TrustedPaths) > 0 {
-		cfg.TrustedPaths = append([]string{}, override.TrustedPaths...)
-	}
 	cfg.PreToolDeny = append(cfg.PreToolDeny, override.PreToolDeny...)
 	cfg.Allow = append(cfg.Allow, override.Allow...)
 	cfg.SoftDeny = append(cfg.SoftDeny, override.SoftDeny...)
 	cfg.Environment = append(cfg.Environment, override.Environment...)
 
 	return nil
-}
-
-func ExpandPath(path string, cwd string) string {
-	if path == "" {
-		return ""
-	}
-
-	if strings.HasPrefix(path, "~/") {
-		home, err := os.UserHomeDir()
-		if err == nil {
-			path = filepath.Join(home, strings.TrimPrefix(path, "~/"))
-		}
-	}
-
-	if filepath.IsAbs(path) {
-		return filepath.Clean(path)
-	}
-
-	if cwd == "" {
-		abs, err := filepath.Abs(path)
-		if err == nil {
-			return filepath.Clean(abs)
-		}
-		return filepath.Clean(path)
-	}
-
-	return filepath.Clean(filepath.Join(cwd, path))
 }

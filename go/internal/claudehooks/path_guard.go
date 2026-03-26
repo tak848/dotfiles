@@ -18,135 +18,165 @@ type HookInput struct {
 	PermissionMode        string            `json:"permission_mode"`
 	HookEventName         string            `json:"hook_event_name"`
 	ToolName              string            `json:"tool_name"`
-	ToolInput             HookToolInput     `json:"tool_input"`
+	ToolInput             HookToolInput     `json:"-"`
+	ToolInputRaw          json.RawMessage   `json:"tool_input"`
 	PermissionSuggestions []json.RawMessage `json:"permission_suggestions"`
 }
 
 type HookToolInput struct {
-	Command  string `json:"command"`
-	FilePath string `json:"file_path"`
-	Path     string `json:"path"`
+	Command        string              `json:"command"`
+	FilePath       string              `json:"file_path"`
+	Path           string              `json:"path"`
+	Content        string              `json:"content"`
+	ContentUpdates []HookContentUpdate `json:"content_updates"`
+}
+
+type HookContentUpdate struct {
+	OldString string `json:"old_str"`
+	NewString string `json:"new_str"`
 }
 
 type PreToolDecision struct {
-	Reason            string
-	AdditionalContext string
+	Reason        string
+	SystemMessage string
 }
 
-func EvaluatePreTool(cfg Config, input HookInput) *PreToolDecision {
-	if decision := matchPreToolRules(cfg.PreToolDeny, input); decision != nil {
-		return decision
+type PermissionContext struct {
+	Cwd             string   `json:"cwd"`
+	RepoRoot        string   `json:"repo_root,omitempty"`
+	GitDir          string   `json:"git_dir,omitempty"`
+	IsWorktree      bool     `json:"is_worktree"`
+	ReferencedPaths []string `json:"referenced_paths,omitempty"`
+}
+
+func (h *HookInput) UnmarshalJSON(data []byte) error {
+	type alias HookInput
+	var raw struct {
+		alias
+		ToolInput json.RawMessage `json:"tool_input"`
+	}
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
 	}
 
-	candidates := CandidatePaths(input)
-	if len(candidates) == 0 {
-		return nil
-	}
-
-	roots := TrustedRoots(cfg, input.Cwd)
-	for _, candidate := range candidates {
-		if !isTrusted(candidate, roots, input.Cwd) {
-			return &PreToolDecision{
-				Reason:            "trusted path 外へのアクセスは拒否",
-				AdditionalContext: "現在の作業ディレクトリと信頼済みローカル設定ディレクトリの外にある path へアクセスしようとしました。必要なら対象 path を明示してユーザー確認を取ってください。",
-			}
+	*h = HookInput(raw.alias)
+	h.ToolInputRaw = raw.ToolInput
+	if len(raw.ToolInput) > 0 {
+		if err := json.Unmarshal(raw.ToolInput, &h.ToolInput); err != nil {
+			return err
 		}
 	}
-
 	return nil
 }
 
-func TrustedRoots(cfg Config, cwd string) []string {
-	var roots []string
-	if cwd != "" {
-		roots = append(roots, canonicalPath(cwd, cwd))
-		if repoRoot, err := gitOutput(cwd, "rev-parse", "--show-toplevel"); err == nil && repoRoot != "" {
-			roots = append(roots, canonicalPath(repoRoot, cwd))
-		}
-	}
-
-	for _, configured := range cfg.TrustedPaths {
-		roots = append(roots, canonicalPath(configured, cwd))
-	}
-
-	return uniqueNonEmpty(roots)
-}
-
-func CandidatePaths(input HookInput) []string {
-	switch input.ToolName {
-	case "Read", "Write", "Edit", "MultiEdit":
-		return stringsToPaths(input.Cwd, input.ToolInput.FilePath)
-	case "Glob", "Grep":
-		return stringsToPaths(input.Cwd, input.ToolInput.Path)
-	case "Bash":
-		return extractBashPaths(input.Cwd, input.ToolInput.Command)
-	default:
-		return nil
-	}
-}
-
-func matchPreToolRules(rules []PreToolRule, input HookInput) *PreToolDecision {
-	command := input.ToolInput.Command
-	for _, rule := range rules {
+func EvaluatePreTool(cfg Config, input HookInput) *PreToolDecision {
+	toolText := input.ToolInputText()
+	for _, rule := range cfg.PreToolDeny {
 		if rule.Matcher != "" && rule.Matcher != "*" {
 			matched, err := regexp.MatchString(rule.Matcher, input.ToolName)
 			if err != nil || !matched {
 				continue
 			}
 		}
-		if command == "" || rule.Pattern == "" {
+		if rule.Pattern == "" {
 			continue
 		}
-		matched, err := regexp.MatchString(rule.Pattern, command)
+		matched, err := regexp.MatchString(rule.Pattern, toolText)
 		if err != nil || !matched {
 			continue
 		}
 		return &PreToolDecision{
-			Reason:            rule.Reason,
-			AdditionalContext: rule.AdditionalContext,
+			Reason:        rule.Reason,
+			SystemMessage: rule.SystemMessage,
 		}
 	}
 	return nil
 }
 
-func isTrusted(path string, roots []string, cwd string) bool {
-	resolved := canonicalPath(path, cwd)
-	for _, root := range roots {
-		if root == "" {
-			continue
+func (h HookInput) ToolInputText() string {
+	var parts []string
+	if len(h.ToolInputRaw) > 0 {
+		parts = append(parts, string(h.ToolInputRaw))
+	}
+	if h.ToolInput.Command != "" {
+		parts = append(parts, h.ToolInput.Command)
+	}
+	if h.ToolInput.FilePath != "" {
+		parts = append(parts, h.ToolInput.FilePath)
+	}
+	if h.ToolInput.Path != "" {
+		parts = append(parts, h.ToolInput.Path)
+	}
+	if h.ToolInput.Content != "" {
+		parts = append(parts, h.ToolInput.Content)
+	}
+	for _, update := range h.ToolInput.ContentUpdates {
+		if update.OldString != "" {
+			parts = append(parts, update.OldString)
 		}
-		if resolved == root || strings.HasPrefix(resolved, root+string(os.PathSeparator)) {
-			return true
+		if update.NewString != "" {
+			parts = append(parts, update.NewString)
 		}
 	}
-	return false
+	return strings.Join(parts, "\n")
 }
 
-func canonicalPath(path string, cwd string) string {
-	expanded := ExpandPath(path, cwd)
-	if expanded == "" {
-		return ""
+func BuildPermissionContext(input HookInput) PermissionContext {
+	ctx := PermissionContext{
+		Cwd:             input.Cwd,
+		ReferencedPaths: referencedPaths(input),
 	}
 
-	if resolved, err := filepath.EvalSymlinks(expanded); err == nil {
-		return filepath.Clean(resolved)
+	if input.Cwd == "" {
+		return ctx
 	}
 
-	current := expanded
-	for {
-		parent := filepath.Dir(current)
-		if parent == current {
-			return filepath.Clean(expanded)
+	if repoRoot, err := gitOutput(input.Cwd, "rev-parse", "--show-toplevel"); err == nil {
+		ctx.RepoRoot = repoRoot
+	}
+	if gitDir, err := gitOutput(input.Cwd, "rev-parse", "--git-dir"); err == nil {
+		ctx.GitDir = gitDir
+		ctx.IsWorktree = strings.Contains(gitDir, ".git/worktrees/")
+	}
+
+	return ctx
+}
+
+func referencedPaths(input HookInput) []string {
+	switch input.ToolName {
+	case "Read", "Write", "Edit", "MultiEdit":
+		return uniqueNonEmpty(expandPaths(input.Cwd, input.ToolInput.FilePath))
+	case "Glob", "Grep":
+		return uniqueNonEmpty(expandPaths(input.Cwd, input.ToolInput.Path))
+	case "Bash":
+		return uniqueNonEmpty(extractBashPaths(input.Cwd, input.ToolInput.Command))
+	default:
+		return nil
+	}
+}
+
+func expandPaths(cwd string, values ...string) []string {
+	var out []string
+	for _, value := range values {
+		if value == "" {
+			continue
 		}
-		if resolved, err := filepath.EvalSymlinks(parent); err == nil {
-			rel, relErr := filepath.Rel(parent, expanded)
-			if relErr != nil {
-				return filepath.Clean(expanded)
+		if strings.HasPrefix(value, "~/") {
+			if home, err := os.UserHomeDir(); err == nil {
+				value = filepath.Join(home, strings.TrimPrefix(value, "~/"))
 			}
-			return filepath.Clean(filepath.Join(resolved, rel))
 		}
-		current = parent
+		if filepath.IsAbs(value) {
+			out = append(out, filepath.Clean(value))
+			continue
+		}
+		if cwd != "" {
+			out = append(out, filepath.Clean(filepath.Join(cwd, value)))
+			continue
+		}
+		out = append(out, filepath.Clean(value))
 	}
+	return out
 }
 
 func extractBashPaths(cwd string, command string) []string {
@@ -172,7 +202,6 @@ func extractBashPaths(cwd string, command string) []string {
 			i++
 			continue
 		}
-
 		if strings.HasPrefix(token, "--") && strings.Contains(token, "=") {
 			_, rhs, found := strings.Cut(token, "=")
 			if found && looksLikePathToken(rhs) {
@@ -180,44 +209,22 @@ func extractBashPaths(cwd string, command string) []string {
 				continue
 			}
 		}
-
-		if strings.HasPrefix(token, "-") {
-			continue
-		}
-
-		if token == "cd" && i+1 < len(tokens) {
-			candidates = append(candidates, tokens[i+1])
-			i++
-			continue
-		}
-
 		if looksLikePathToken(token) {
 			candidates = append(candidates, token)
 		}
 	}
 
-	return stringsToPaths(cwd, candidates...)
+	return expandPaths(cwd, candidates...)
 }
 
 func looksLikePathToken(token string) bool {
 	if token == "." || token == ".." {
 		return true
 	}
-	if strings.HasPrefix(token, "/") || strings.HasPrefix(token, "./") || strings.HasPrefix(token, "../") || strings.HasPrefix(token, "~/") {
-		return true
-	}
-	return false
-}
-
-func stringsToPaths(cwd string, values ...string) []string {
-	var paths []string
-	for _, value := range values {
-		if value == "" {
-			continue
-		}
-		paths = append(paths, canonicalPath(value, cwd))
-	}
-	return uniqueNonEmpty(paths)
+	return strings.HasPrefix(token, "/") ||
+		strings.HasPrefix(token, "./") ||
+		strings.HasPrefix(token, "../") ||
+		strings.HasPrefix(token, "~/")
 }
 
 func uniqueNonEmpty(values []string) []string {

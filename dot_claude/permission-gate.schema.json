@@ -22,12 +22,6 @@
         }
       }
     },
-    "trusted_paths": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
     "pre_tool_deny": {
       "type": "array",
       "items": {
@@ -48,7 +42,7 @@
           "reason": {
             "type": "string"
           },
-          "additional_context": {
+          "system_message": {
             "type": "string"
           }
         }

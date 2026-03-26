@@ -6,15 +6,6 @@ import (
 	"testing"
 )
 
-func TestExpandPath(t *testing.T) {
-	t.Parallel()
-
-	got := ExpandPath("../x", "/tmp/repo/worktree")
-	if got != "/tmp/repo/x" {
-		t.Fatalf("unexpected expanded path: %s", got)
-	}
-}
-
 func TestShellSplit(t *testing.T) {
 	t.Parallel()
 
@@ -27,46 +18,23 @@ func TestShellSplit(t *testing.T) {
 	}
 }
 
-func TestLocalPermissionDecision(t *testing.T) {
+func TestEvaluatePreToolRule(t *testing.T) {
 	t.Parallel()
 
-	decision, ok := localPermissionDecision(HookInput{
-		ToolName: "Bash",
-		ToolInput: HookToolInput{
-			Command: "git push --force origin branch",
+	cfg := Config{
+		PreToolDeny: []PreToolRule{
+			{
+				Matcher:       "Bash",
+				Pattern:       `(^|\s)python3?(\s|$)`,
+				Reason:        "python/python3 の直接実行は禁止",
+				SystemMessage: "uv run を使ってください。",
+			},
 		},
-	})
-	if !ok {
-		t.Fatal("expected local decision")
 	}
-	if decision.Behavior != "deny" {
-		t.Fatalf("unexpected behavior: %s", decision.Behavior)
-	}
-}
-
-func TestLocalPermissionDecisionRejectsCompoundCommands(t *testing.T) {
-	t.Parallel()
-
-	_, ok := localPermissionDecision(HookInput{
-		ToolName: "Bash",
-		ToolInput: HookToolInput{
-			Command: "git diff; rm -rf /tmp/x",
-		},
-	})
-	if ok {
-		t.Fatal("expected fallthrough for compound command")
-	}
-}
-
-func TestEvaluatePreToolOutsideTrustedPath(t *testing.T) {
-	t.Parallel()
-
-	cfg := DefaultConfig()
 	input := HookInput{
-		Cwd:      "/tmp/repo/worktree",
-		ToolName: "Read",
+		ToolName: "Bash",
 		ToolInput: HookToolInput{
-			FilePath: "../other/file.txt",
+			Command: "python script.py",
 		},
 	}
 
@@ -74,8 +42,8 @@ func TestEvaluatePreToolOutsideTrustedPath(t *testing.T) {
 	if decision == nil {
 		t.Fatal("expected deny decision")
 	}
-	if decision.Reason == "" {
-		t.Fatal("expected deny reason")
+	if decision.SystemMessage == "" {
+		t.Fatal("expected system message")
 	}
 }
 
@@ -88,12 +56,12 @@ func TestExtractBashPathsSupportsInlineFlags(t *testing.T) {
 	}
 }
 
-func TestMergeConfigFileReplacesTrustedPaths(t *testing.T) {
+func TestMergeConfigFileAppendsRules(t *testing.T) {
 	t.Parallel()
 
 	dir := t.TempDir()
 	path := filepath.Join(dir, "permission-gate.json")
-	if err := os.WriteFile(path, []byte(`{"trusted_paths":["~/override"]}`), 0o644); err != nil {
+	if err := os.WriteFile(path, []byte(`{"pre_tool_deny":[{"matcher":"Bash","pattern":"npx","reason":"npx 禁止"}]}`), 0o644); err != nil {
 		t.Fatal(err)
 	}
 
@@ -101,7 +69,7 @@ func TestMergeConfigFileReplacesTrustedPaths(t *testing.T) {
 	if err := mergeConfigFile(path, &cfg); err != nil {
 		t.Fatal(err)
 	}
-	if len(cfg.TrustedPaths) != 1 || cfg.TrustedPaths[0] != "~/override" {
-		t.Fatalf("unexpected trusted_paths: %#v", cfg.TrustedPaths)
+	if len(cfg.PreToolDeny) != 1 {
+		t.Fatalf("unexpected rule count: %d", len(cfg.PreToolDeny))
 	}
 }

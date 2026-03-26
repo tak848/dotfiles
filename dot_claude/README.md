@@ -19,4 +19,4 @@ GitHub MCP の Bearer token は環境変数 `GH_TOKEN` で供給する。
 - 個人用 override: `~/.claude/permission-gate.local.json`
 - API key: 環境変数 `CC_AUTOMODE_ANTHROPIC_API_KEY`
 
-`permission-gate.local.json` は Git 管理しない。必要な場合だけ `provider.model` や `trusted_paths` を上書きする。
+`permission-gate.local.json` は Git 管理しない。必要な場合だけ `provider.model` や `allow` / `soft_deny` / `environment` / `pre_tool_deny` を追加する。
