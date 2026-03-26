@@ -3,7 +3,6 @@ package claudehooks
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"os"
 	"strings"
 	"time"
@@ -28,6 +27,7 @@ type PermissionLLMOutput struct {
 type PermissionPromptInput struct {
 	ToolName              string            `json:"tool_name"`
 	ToolInput             HookToolInput     `json:"tool_input"`
+	ToolInputRaw          json.RawMessage   `json:"tool_input_raw,omitempty"`
 	PermissionMode        string            `json:"permission_mode"`
 	PermissionSuggestions []json.RawMessage `json:"permission_suggestions,omitempty"`
 	Context               PermissionContext `json:"context"`
@@ -89,6 +89,7 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 			anthropic.NewUserMessage(anthropic.NewTextBlock(mustJSON(PermissionPromptInput{
 				ToolName:              input.ToolName,
 				ToolInput:             input.ToolInput,
+				ToolInputRaw:          input.ToolInputRaw,
 				PermissionMode:        input.PermissionMode,
 				PermissionSuggestions: input.PermissionSuggestions,
 				Context:               BuildPermissionContext(input),
@@ -116,7 +117,7 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 		return PermissionLLMOutput{}, err
 	}
 	if output.Behavior == "deny" && strings.TrimSpace(output.DenyMessage) == "" {
-		return PermissionLLMOutput{}, fmt.Errorf("deny behavior requires deny_message")
+		output.DenyMessage = "危険な可能性が高いため、自動許可しません。"
 	}
 
 	return output, nil

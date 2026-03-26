@@ -27,6 +27,7 @@ type HookToolInput struct {
 	Command        string              `json:"command"`
 	FilePath       string              `json:"file_path"`
 	Path           string              `json:"path"`
+	Pattern        string              `json:"pattern"`
 	Content        string              `json:"content"`
 	ContentUpdates []HookContentUpdate `json:"content_updates"`
 }
@@ -110,6 +111,9 @@ func (h HookInput) ToolInputText() string {
 	if h.ToolInput.Path != "" {
 		parts = append(parts, h.ToolInput.Path)
 	}
+	if h.ToolInput.Pattern != "" {
+		parts = append(parts, h.ToolInput.Pattern)
+	}
 	if h.ToolInput.Content != "" {
 		parts = append(parts, h.ToolInput.Content)
 	}
@@ -159,7 +163,7 @@ func referencedPaths(input HookInput) []string {
 	case "Read", "Write", "Edit", "MultiEdit":
 		return uniqueNonEmpty(expandPaths(input.Cwd, input.ToolInput.FilePath))
 	case "Glob", "Grep":
-		return uniqueNonEmpty(expandPaths(input.Cwd, input.ToolInput.Path))
+		return uniqueNonEmpty(expandPaths(input.Cwd, input.ToolInput.Path, input.ToolInput.Pattern))
 	case "Bash":
 		return uniqueNonEmpty(extractBashPaths(input.Cwd, input.ToolInput.Command))
 	default:
