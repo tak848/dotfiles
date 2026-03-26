@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 # {{ include "dot_claude/settings.jsonnet" | sha256sum }}
-# {{ include "dot_claude/permission-gate.jsonnet" | sha256sum }}
-# {{ include "dot_claude/permission-gate.schema.json" | sha256sum }}
 # {{ include "dot_gemini/settings.jsonnet" | sha256sum }}
 # jsonnet ファイルが変更された時のみ JSON を生成する
 
@@ -16,8 +14,6 @@ if command -v jsonnet &> /dev/null; then
 
     # Jsonnet から JSON を生成
     jsonnet "{{ .chezmoi.sourceDir }}/dot_claude/settings.jsonnet" > ~/.claude/settings.json
-    jsonnet "{{ .chezmoi.sourceDir }}/dot_claude/permission-gate.jsonnet" > ~/.claude/permission-gate.json
-    cp "{{ .chezmoi.sourceDir }}/dot_claude/permission-gate.schema.json" ~/.claude/permission-gate.schema.json
     jsonnet "{{ .chezmoi.sourceDir }}/dot_gemini/settings.jsonnet" > ~/.gemini/settings.json
 
     echo "JSON 生成完了"

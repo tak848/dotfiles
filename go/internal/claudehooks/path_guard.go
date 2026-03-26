@@ -161,9 +161,9 @@ func expandPaths(cwd string, values ...string) []string {
 		if value == "" {
 			continue
 		}
-		if strings.HasPrefix(value, "~/") {
+		if after, ok := strings.CutPrefix(value, "~/"); ok {
 			if home, err := os.UserHomeDir(); err == nil {
-				value = filepath.Join(home, strings.TrimPrefix(value, "~/"))
+				value = filepath.Join(home, after)
 			}
 		}
 		if filepath.IsAbs(value) {

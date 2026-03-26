@@ -7,11 +7,12 @@ import (
 	"path/filepath"
 
 	anthropic "github.com/anthropics/anthropic-sdk-go"
+	jsonnet "github.com/google/go-jsonnet"
 )
 
 const (
-	baseConfigName  = "permission-gate.json"
-	localConfigName = "permission-gate.local.json"
+	baseConfigName  = "permission-gate.jsonnet"
+	localConfigName = "permission-gate.local.jsonnet"
 )
 
 type Config struct {
@@ -71,13 +72,18 @@ func LoadConfig() (Config, error) {
 }
 
 func mergeConfigFile(path string, cfg *Config) error {
-	data, err := os.ReadFile(path)
+	if _, err := os.Stat(path); err != nil {
+		return err
+	}
+
+	vm := jsonnet.MakeVM()
+	data, err := vm.EvaluateFile(path)
 	if err != nil {
 		return err
 	}
 
 	var override Config
-	if err := json.Unmarshal(data, &override); err != nil {
+	if err := json.Unmarshal([]byte(data), &override); err != nil {
 		return err
 	}
 
