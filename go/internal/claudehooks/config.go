@@ -46,7 +46,7 @@ func DefaultConfig() Config {
 	}
 }
 
-func LoadConfig() (Config, error) {
+func LoadConfig(cwd string) (Config, error) {
 	cfg := DefaultConfig()
 
 	home, err := os.UserHomeDir()
@@ -55,13 +55,14 @@ func LoadConfig() (Config, error) {
 	}
 
 	basePath := filepath.Join(home, ".claude", baseConfigName)
-	localPath := filepath.Join(home, ".claude", localConfigName)
-
 	if err := mergeConfigFile(basePath, &cfg); err != nil && !errors.Is(err, os.ErrNotExist) {
 		return cfg, err
 	}
-	if err := mergeConfigFile(localPath, &cfg); err != nil && !errors.Is(err, os.ErrNotExist) {
-		return cfg, err
+
+	for _, path := range projectLocalConfigPaths(cwd) {
+		if err := mergeConfigFile(path, &cfg); err != nil && !errors.Is(err, os.ErrNotExist) {
+			return cfg, err
+		}
 	}
 
 	if cfg.Provider.TimeoutMS <= 0 {
@@ -69,6 +70,25 @@ func LoadConfig() (Config, error) {
 	}
 
 	return cfg, nil
+}
+
+func projectLocalConfigPaths(cwd string) []string {
+	var paths []string
+	if cwd == "" {
+		return paths
+	}
+
+	root := cwd
+	if repoRoot, err := gitOutput(cwd, "rev-parse", "--show-toplevel"); err == nil && repoRoot != "" {
+		root = repoRoot
+	}
+
+	paths = append(paths,
+		filepath.Join(root, localConfigName),
+		filepath.Join(root, ".claude", localConfigName),
+	)
+
+	return paths
 }
 
 func mergeConfigFile(path string, cfg *Config) error {

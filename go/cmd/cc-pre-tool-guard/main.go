@@ -13,7 +13,7 @@ func main() {
 		return
 	}
 
-	cfg, err := claudehooks.LoadConfig()
+	cfg, err := claudehooks.LoadConfig(input.Cwd)
 	if err != nil {
 		return
 	}

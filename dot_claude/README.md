@@ -16,7 +16,7 @@ GitHub MCP の Bearer token は環境変数 `GH_TOKEN` で供給する。
 - 共有既定値: `dot_claude/permission-gate.jsonnet`
 - JSON Schema: `dot_claude/permission-gate.schema.json`
 - 配置先: `~/.claude/permission-gate.jsonnet`
-- 個人用 override: `~/.claude/permission-gate.local.jsonnet`
+- プロジェクト単位 override: `permission-gate.local.jsonnet` または `.claude/permission-gate.local.jsonnet`
 - API key: 環境変数 `CC_AUTOMODE_ANTHROPIC_API_KEY`
 
-`permission-gate.local.jsonnet` は Git 管理しない。必要な場合だけ `provider.model` や `allow` / `soft_deny` / `environment` / `pre_tool_deny` を追加する。
+`permission-gate.local.jsonnet` は Git 管理しない。必要な場合だけ `provider.model` や `allow` / `soft_deny` / `environment` / `pre_tool_deny` を追加する。読み込み順は `~/.claude/permission-gate.jsonnet` → プロジェクト local override。

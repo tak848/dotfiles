@@ -60,8 +60,8 @@ func TestMergeConfigFileAppendsRules(t *testing.T) {
 	t.Parallel()
 
 	dir := t.TempDir()
-	path := filepath.Join(dir, "permission-gate.json")
-	if err := os.WriteFile(path, []byte(`{"pre_tool_deny":[{"matcher":"Bash","pattern":"npx","reason":"npx 禁止"}]}`), 0o644); err != nil {
+	path := filepath.Join(dir, "permission-gate.local.jsonnet")
+	if err := os.WriteFile(path, []byte(`{ pre_tool_deny: [{ matcher: 'Bash', pattern: 'npx', reason: 'npx 禁止' }] }`), 0o644); err != nil {
 		t.Fatal(err)
 	}
 
@@ -71,5 +71,20 @@ func TestMergeConfigFileAppendsRules(t *testing.T) {
 	}
 	if len(cfg.PreToolDeny) != 1 {
 		t.Fatalf("unexpected rule count: %d", len(cfg.PreToolDeny))
+	}
+}
+
+func TestProjectLocalConfigPaths(t *testing.T) {
+	t.Parallel()
+
+	got := projectLocalConfigPaths("/tmp/repo/subdir")
+	if len(got) != 2 {
+		t.Fatalf("unexpected path count: %d", len(got))
+	}
+	if got[0] != "/tmp/repo/subdir/permission-gate.local.jsonnet" {
+		t.Fatalf("unexpected first path: %s", got[0])
+	}
+	if got[1] != "/tmp/repo/subdir/.claude/permission-gate.local.jsonnet" {
+		t.Fatalf("unexpected second path: %s", got[1])
 	}
 }
