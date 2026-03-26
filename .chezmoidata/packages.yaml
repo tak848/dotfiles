@@ -13,6 +13,7 @@ packages:
       base:
         - ghostty # ターミナル
         - nikitabobko/tap/aerospace # タイリングウィンドウマネージャ
+        - macvim
         - obsidian
         - claude
         - codex-app
