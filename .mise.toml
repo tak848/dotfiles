@@ -14,7 +14,7 @@ pnpm = "10.33.0"
 "github:aquaproj/aqua" = "2.57.1"
 
 # このリポジトリで使う CLI ツール
-"aqua:google/go-jsonnet" = "0.22.0"
+"aqua:google/go-jsonnet" = "0.21.0"
 "aqua:go-task/task" = "3.49.1"
 
 # lazy-lock.yaml ワークフローで使用

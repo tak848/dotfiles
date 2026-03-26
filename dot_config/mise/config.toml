@@ -69,7 +69,7 @@ go = "1.26.1"
 "aqua:golangci/golangci-lint" = "2.11.4"
 
 # Jsonnet
-"aqua:google/go-jsonnet" = "0.22.0"
+"aqua:google/go-jsonnet" = "0.21.0"
 "aqua:grafana/jsonnet-language-server" = "0.17.0"
 
 # Language Server
