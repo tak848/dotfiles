@@ -49,6 +49,7 @@ prevent_idle_sleep = true
 network_access = true
 writable_roots = [
   "{{ .chezmoi.homeDir }}/.local/share/aquaproj-aqua",
+  "{{ .chezmoi.homeDir }}/go/pkg/mod",
 {{- if eq .chezmoi.os "darwin" }}
   "{{ .chezmoi.homeDir }}/Library/Caches",
 {{- end }}
