@@ -42,11 +42,14 @@ type PreToolDecision struct {
 }
 
 type PermissionContext struct {
-	Cwd             string   `json:"cwd"`
-	RepoRoot        string   `json:"repo_root,omitempty"`
-	GitDir          string   `json:"git_dir,omitempty"`
-	IsWorktree      bool     `json:"is_worktree"`
-	ReferencedPaths []string `json:"referenced_paths,omitempty"`
+	Cwd                 string   `json:"cwd"`
+	RepoRoot            string   `json:"repo_root,omitempty"`
+	GitDir              string   `json:"git_dir,omitempty"`
+	GitCommonDir        string   `json:"git_common_dir,omitempty"`
+	PrimaryCheckoutRoot string   `json:"primary_checkout_root,omitempty"`
+	BranchName          string   `json:"branch_name,omitempty"`
+	IsWorktree          bool     `json:"is_worktree"`
+	ReferencedPaths     []string `json:"referenced_paths,omitempty"`
 }
 
 func (h *HookInput) UnmarshalJSON(data []byte) error {
@@ -137,6 +140,15 @@ func BuildPermissionContext(input HookInput) PermissionContext {
 	if gitDir, err := gitOutput(input.Cwd, "rev-parse", "--git-dir"); err == nil {
 		ctx.GitDir = gitDir
 		ctx.IsWorktree = strings.Contains(gitDir, ".git/worktrees/")
+	}
+	if gitCommonDir, err := gitOutput(input.Cwd, "rev-parse", "--git-common-dir"); err == nil {
+		ctx.GitCommonDir = gitCommonDir
+		if strings.HasSuffix(gitCommonDir, "/.git") || strings.HasSuffix(gitCommonDir, string(filepath.Separator)+".git") {
+			ctx.PrimaryCheckoutRoot = filepath.Dir(gitCommonDir)
+		}
+	}
+	if branchName, err := gitOutput(input.Cwd, "rev-parse", "--abbrev-ref", "HEAD"); err == nil {
+		ctx.BranchName = branchName
 	}
 
 	return ctx
