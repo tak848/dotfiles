@@ -33,36 +33,8 @@ checksum = "sha256:725c551f699d4d6c0dc57bd8148f72bef8d5b2fb650d9c985f271a61522fd
 url = "https://github.com/go-task/task/releases/download/v3.49.1/task_windows_amd64.zip"
 
 [[tools."aqua:google/go-jsonnet"]]
-version = "0.21.0"
+version = "0.22.0"
 backend = "aqua:google/go-jsonnet"
-
-[tools."aqua:google/go-jsonnet"."platforms.linux-arm64"]
-checksum = "sha256:4a263da605dbe2edb99529f495266211062fac476789f2119408bc223338f1d6"
-url = "https://github.com/google/go-jsonnet/releases/download/v0.21.0/go-jsonnet_Linux_arm64.tar.gz"
-
-[tools."aqua:google/go-jsonnet"."platforms.linux-arm64-musl"]
-checksum = "sha256:4a263da605dbe2edb99529f495266211062fac476789f2119408bc223338f1d6"
-url = "https://github.com/google/go-jsonnet/releases/download/v0.21.0/go-jsonnet_Linux_arm64.tar.gz"
-
-[tools."aqua:google/go-jsonnet"."platforms.linux-x64"]
-checksum = "sha256:ad3181fde77726b02d17eb4e72687020bf2cb35b9336cdeaaca4783c7ff104f7"
-url = "https://github.com/google/go-jsonnet/releases/download/v0.21.0/go-jsonnet_Linux_x86_64.tar.gz"
-
-[tools."aqua:google/go-jsonnet"."platforms.linux-x64-musl"]
-checksum = "sha256:ad3181fde77726b02d17eb4e72687020bf2cb35b9336cdeaaca4783c7ff104f7"
-url = "https://github.com/google/go-jsonnet/releases/download/v0.21.0/go-jsonnet_Linux_x86_64.tar.gz"
-
-[tools."aqua:google/go-jsonnet"."platforms.macos-arm64"]
-checksum = "sha256:398189a264e31a2c1316eed8ee6308306a221fd10b72f405def0100d295efeac"
-url = "https://github.com/google/go-jsonnet/releases/download/v0.21.0/go-jsonnet_Darwin_arm64.tar.gz"
-
-[tools."aqua:google/go-jsonnet"."platforms.macos-x64"]
-checksum = "sha256:a6cee4b381d2319fa807d7a7bf8a4ecf2d0cca64e2bcd53eeaa575ce1f7689a4"
-url = "https://github.com/google/go-jsonnet/releases/download/v0.21.0/go-jsonnet_Darwin_x86_64.tar.gz"
-
-[tools."aqua:google/go-jsonnet"."platforms.windows-x64"]
-checksum = "sha256:81d71a287ee5dfd0860831eeac281a7327ce8876d5fe9a8b7e19726dbbc0ce4f"
-url = "https://github.com/google/go-jsonnet/releases/download/v0.21.0/go-jsonnet_Windows_x86_64.tar.gz"
 
 [[tools."aqua:neovim/neovim"]]
 version = "0.11.6"
