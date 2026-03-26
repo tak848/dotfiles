@@ -14,8 +14,9 @@ GitHub MCP の Bearer token は環境変数 `GH_TOKEN` で供給する（direnv 
 ## Hook 補助判定の設定
 
 - 共有既定値: `dot_claude/permission-gate.jsonnet`
+- JSON Schema: `dot_claude/permission-gate.schema.json`
 - 生成先: `~/.claude/permission-gate.json`
 - 個人用 override: `~/.claude/permission-gate.local.json`
-- API key: `.envrc.local` の `CC_AUTOMODE_ANTHROPIC_API_KEY`
+- API key: 環境変数 `CC_AUTOMODE_ANTHROPIC_API_KEY`（例: direnv の `.envrc.local`）
 
 `permission-gate.local.json` は Git 管理しない。必要な場合だけ `provider.model` や `trusted_paths` を上書きする。

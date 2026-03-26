@@ -1,4 +1,5 @@
 {
+  ['$schema']: './permission-gate.schema.json',
   provider: {
     name: 'anthropic',
     model: 'claude-opus-4-6',

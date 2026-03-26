@@ -13,33 +13,8 @@
     command: '~/.claude/bin/cc-statusline',
     padding: 2,
   },
-  sandbox: {
-    enabled: true,
-    autoAllowBashIfSandboxed: true,
-    excludedCommands: [
-      'git',
-      'gh',
-      'go',
-      'mise',
-      'docker',
-    ],
-    filesystem: {
-      allowWrite: [
-        '~/.claude',
-        '~/.codex',
-      ],
-      allowRead: [
-        '~/.claude',
-        '~/.codex',
-      ],
-    },
-  },
   permissions: {
     defaultMode: 'plan',
-    additionalDirectories: [
-      '~/.claude',
-      '~/.codex',
-    ],
     allow: [
       'List(*)',
       'Bash(ls *)',
