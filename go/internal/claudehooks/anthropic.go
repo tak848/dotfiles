@@ -55,7 +55,7 @@ func localPermissionDecision(input HookInput) (PermissionDecision, bool) {
 		return PermissionDecision{}, false
 	}
 
-	command := stringValue(input.ToolInput, "command")
+	command := input.ToolInput.Command
 	if command == "" {
 		return PermissionDecision{}, false
 	}
@@ -170,28 +170,39 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 		strings.Join(cfg.Environment, "\n- "),
 	))
 
-	userPayload, err := json.Marshal(map[string]any{
-		"tool_name":              input.ToolName,
-		"tool_input":             input.ToolInput,
-		"cwd":                    input.Cwd,
-		"permission_mode":        input.PermissionMode,
-		"permission_suggestions": input.PermissionSuggestions,
+	userPayload, err := json.Marshal(struct {
+		ToolName              string            `json:"tool_name"`
+		ToolInput             HookToolInput     `json:"tool_input"`
+		Cwd                   string            `json:"cwd"`
+		PermissionMode        string            `json:"permission_mode"`
+		PermissionSuggestions []json.RawMessage `json:"permission_suggestions"`
+	}{
+		ToolName:              input.ToolName,
+		ToolInput:             input.ToolInput,
+		Cwd:                   input.Cwd,
+		PermissionMode:        input.PermissionMode,
+		PermissionSuggestions: input.PermissionSuggestions,
 	})
 	if err != nil {
 		return PermissionDecision{}, err
 	}
 
-	requestBody := map[string]any{
-		"model":      cfg.Provider.Model,
-		"max_tokens": 128,
-		"system":     systemPrompt,
-		"messages": []map[string]any{
+	requestBody := struct {
+		Model     string                `json:"model"`
+		MaxTokens int                   `json:"max_tokens"`
+		System    string                `json:"system"`
+		Messages  []anthropicMessageReq `json:"messages"`
+	}{
+		Model:     cfg.Provider.Model,
+		MaxTokens: 128,
+		System:    systemPrompt,
+		Messages: []anthropicMessageReq{
 			{
-				"role": "user",
-				"content": []map[string]string{
+				Role: "user",
+				Content: []anthropicTextBlockReq{
 					{
-						"type": "text",
-						"text": string(userPayload),
+						Type: "text",
+						Text: string(userPayload),
 					},
 				},
 			},
@@ -263,4 +274,14 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 	default:
 		return PermissionDecision{}, nil
 	}
+}
+
+type anthropicMessageReq struct {
+	Role    string                  `json:"role"`
+	Content []anthropicTextBlockReq `json:"content"`
+}
+
+type anthropicTextBlockReq struct {
+	Type string `json:"type"`
+	Text string `json:"text"`
 }

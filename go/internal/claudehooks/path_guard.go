@@ -18,8 +18,14 @@ type HookInput struct {
 	PermissionMode        string            `json:"permission_mode"`
 	HookEventName         string            `json:"hook_event_name"`
 	ToolName              string            `json:"tool_name"`
-	ToolInput             map[string]any    `json:"tool_input"`
+	ToolInput             HookToolInput     `json:"tool_input"`
 	PermissionSuggestions []json.RawMessage `json:"permission_suggestions"`
+}
+
+type HookToolInput struct {
+	Command  string `json:"command"`
+	FilePath string `json:"file_path"`
+	Path     string `json:"path"`
 }
 
 type PreToolDecision struct {
@@ -69,18 +75,18 @@ func TrustedRoots(cfg Config, cwd string) []string {
 func CandidatePaths(input HookInput) []string {
 	switch input.ToolName {
 	case "Read", "Write", "Edit", "MultiEdit":
-		return stringsToPaths(input.Cwd, stringValue(input.ToolInput, "file_path"))
+		return stringsToPaths(input.Cwd, input.ToolInput.FilePath)
 	case "Glob", "Grep":
-		return stringsToPaths(input.Cwd, stringValue(input.ToolInput, "path"))
+		return stringsToPaths(input.Cwd, input.ToolInput.Path)
 	case "Bash":
-		return extractBashPaths(input.Cwd, stringValue(input.ToolInput, "command"))
+		return extractBashPaths(input.Cwd, input.ToolInput.Command)
 	default:
 		return nil
 	}
 }
 
 func matchPreToolRules(rules []PreToolRule, input HookInput) *PreToolDecision {
-	command := stringValue(input.ToolInput, "command")
+	command := input.ToolInput.Command
 	for _, rule := range rules {
 		if rule.Matcher != "" && rule.Matcher != "*" {
 			matched, err := regexp.MatchString(rule.Matcher, input.ToolName)
@@ -223,18 +229,6 @@ func uniqueNonEmpty(values []string) []string {
 		out = append(out, value)
 	}
 	return out
-}
-
-func stringValue(m map[string]any, key string) string {
-	if m == nil {
-		return ""
-	}
-	value, ok := m[key]
-	if !ok {
-		return ""
-	}
-	s, _ := value.(string)
-	return s
 }
 
 func shellSplit(input string) []string {

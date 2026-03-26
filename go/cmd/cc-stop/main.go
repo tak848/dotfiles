@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	var input map[string]any
+	var input struct{}
 	if err := json.NewDecoder(os.Stdin).Decode(&input); err != nil {
 		return
 	}

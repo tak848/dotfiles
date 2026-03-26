@@ -165,10 +165,10 @@ func GitContext() string {
 }
 
 func synthesize(apiKey, text, langCode, voice string) ([]byte, error) {
-	payload := map[string]any{
-		"input":       map[string]string{"text": text},
-		"voice":       map[string]string{"languageCode": langCode, "name": voice},
-		"audioConfig": map[string]any{"audioEncoding": "MP3", "speakingRate": speed},
+	payload := ttsRequest{
+		Input:       ttsInput{Text: text},
+		Voice:       ttsVoice{LanguageCode: langCode, Name: voice},
+		AudioConfig: ttsAudioConfig{AudioEncoding: "MP3", SpeakingRate: speed},
 	}
 	body, _ := json.Marshal(payload)
 
@@ -197,6 +197,26 @@ func synthesize(apiKey, text, langCode, voice string) ([]byte, error) {
 		return nil, err
 	}
 	return base64.StdEncoding.DecodeString(result.AudioContent)
+}
+
+type ttsRequest struct {
+	Input       ttsInput       `json:"input"`
+	Voice       ttsVoice       `json:"voice"`
+	AudioConfig ttsAudioConfig `json:"audioConfig"`
+}
+
+type ttsInput struct {
+	Text string `json:"text"`
+}
+
+type ttsVoice struct {
+	LanguageCode string `json:"languageCode"`
+	Name         string `json:"name"`
+}
+
+type ttsAudioConfig struct {
+	AudioEncoding string  `json:"audioEncoding"`
+	SpeakingRate  float64 `json:"speakingRate"`
 }
 
 func playAudio(path string) {

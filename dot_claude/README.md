@@ -9,7 +9,7 @@ chezmoi の modify テンプレート（`modify_dot_claude.json`）で `mcpServe
 - `settings.jsonnet` → `~/.claude/settings.json` を全体生成（Claude Code は書き込まない）
 - `permission-gate.jsonnet` → `~/.claude/permission-gate.json` の hook 補助判定ルールを管理
 
-GitHub MCP の Bearer token は環境変数 `GH_TOKEN` で供給する（direnv の `.envrc.local` で設定）。
+GitHub MCP の Bearer token は環境変数 `GH_TOKEN` で供給する。
 
 ## Hook 補助判定の設定
 
@@ -17,6 +17,6 @@ GitHub MCP の Bearer token は環境変数 `GH_TOKEN` で供給する（direnv 
 - JSON Schema: `dot_claude/permission-gate.schema.json`
 - 生成先: `~/.claude/permission-gate.json`
 - 個人用 override: `~/.claude/permission-gate.local.json`
-- API key: 環境変数 `CC_AUTOMODE_ANTHROPIC_API_KEY`（例: direnv の `.envrc.local`）
+- API key: 環境変数 `CC_AUTOMODE_ANTHROPIC_API_KEY`
 
 `permission-gate.local.json` は Git 管理しない。必要な場合だけ `provider.model` や `trusted_paths` を上書きする。

@@ -32,8 +32,8 @@ func TestLocalPermissionDecision(t *testing.T) {
 
 	decision, ok := localPermissionDecision(HookInput{
 		ToolName: "Bash",
-		ToolInput: map[string]any{
-			"command": "git push --force origin branch",
+		ToolInput: HookToolInput{
+			Command: "git push --force origin branch",
 		},
 	})
 	if !ok {
@@ -49,8 +49,8 @@ func TestLocalPermissionDecisionRejectsCompoundCommands(t *testing.T) {
 
 	_, ok := localPermissionDecision(HookInput{
 		ToolName: "Bash",
-		ToolInput: map[string]any{
-			"command": "git diff; rm -rf /tmp/x",
+		ToolInput: HookToolInput{
+			Command: "git diff; rm -rf /tmp/x",
 		},
 	})
 	if ok {
@@ -65,8 +65,8 @@ func TestEvaluatePreToolOutsideTrustedPath(t *testing.T) {
 	input := HookInput{
 		Cwd:      "/tmp/repo/worktree",
 		ToolName: "Read",
-		ToolInput: map[string]any{
-			"file_path": "../other/file.txt",
+		ToolInput: HookToolInput{
+			FilePath: "../other/file.txt",
 		},
 	}
 

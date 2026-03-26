@@ -24,18 +24,29 @@ func main() {
 		return
 	}
 
-	output := map[string]any{
-		"hookSpecificOutput": map[string]any{
-			"hookEventName": "PermissionRequest",
-			"decision": map[string]any{
-				"behavior": decision.Behavior,
+	output := permissionRequestResponse{
+		HookSpecificOutput: permissionRequestOutput{
+			HookEventName: "PermissionRequest",
+			Decision: permissionDecisionOutput{
+				Behavior: decision.Behavior,
+				Message:  decision.Message,
 			},
 		},
 	}
 
-	if decision.Behavior == "deny" && decision.Message != "" {
-		output["hookSpecificOutput"].(map[string]any)["decision"].(map[string]any)["message"] = decision.Message
-	}
-
 	_ = json.NewEncoder(os.Stdout).Encode(output)
+}
+
+type permissionRequestResponse struct {
+	HookSpecificOutput permissionRequestOutput `json:"hookSpecificOutput"`
+}
+
+type permissionRequestOutput struct {
+	HookEventName string                   `json:"hookEventName"`
+	Decision      permissionDecisionOutput `json:"decision"`
+}
+
+type permissionDecisionOutput struct {
+	Behavior string `json:"behavior"`
+	Message  string `json:"message,omitempty"`
 }

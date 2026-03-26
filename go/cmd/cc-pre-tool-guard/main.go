@@ -23,12 +23,23 @@ func main() {
 		return
 	}
 
-	_ = json.NewEncoder(os.Stdout).Encode(map[string]any{
-		"hookSpecificOutput": map[string]any{
-			"hookEventName":            "PreToolUse",
-			"permissionDecision":       "deny",
-			"permissionDecisionReason": decision.Reason,
-			"additionalContext":        decision.AdditionalContext,
+	_ = json.NewEncoder(os.Stdout).Encode(preToolResponse{
+		HookSpecificOutput: preToolOutput{
+			HookEventName:            "PreToolUse",
+			PermissionDecision:       "deny",
+			PermissionDecisionReason: decision.Reason,
+			AdditionalContext:        decision.AdditionalContext,
 		},
 	})
+}
+
+type preToolResponse struct {
+	HookSpecificOutput preToolOutput `json:"hookSpecificOutput"`
+}
+
+type preToolOutput struct {
+	HookEventName            string `json:"hookEventName"`
+	PermissionDecision       string `json:"permissionDecision"`
+	PermissionDecisionReason string `json:"permissionDecisionReason"`
+	AdditionalContext        string `json:"additionalContext,omitempty"`
 }
