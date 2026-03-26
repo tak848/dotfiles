@@ -148,6 +148,8 @@
       'mcp__deepwiki__ask_question',
       'mcp__devin__ask_question',
       'mcp__devin__read_wiki_contents',
+      // Temporal (kapa.ai hosted MCP)
+      'mcp__temporal__*',
       // AWS Knowledge MCP
       'mcp__aws-knowledge__aws___search_documentation',
       'mcp__aws-knowledge__aws___read_documentation',
