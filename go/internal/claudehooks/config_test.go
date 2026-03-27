@@ -1,6 +1,7 @@
 package claudehooks
 
 import (
+	"encoding/json"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -26,17 +27,18 @@ func TestEvaluatePreToolRule(t *testing.T) {
 		PreToolDeny: []PreToolRule{
 			{
 				Matcher:       "Bash",
-				Pattern:       `(^|\s)python3?(\s|$)`,
+				Pattern:       `^([A-Za-z_][A-Za-z0-9_]*=\S+\s+)*python3?(\s|$)`,
 				Reason:        "python/python3 の直接実行は禁止",
 				SystemMessage: "uv run を使ってください。",
 			},
 		},
 	}
-	input := HookInput{
-		ToolName: "Bash",
-		ToolInput: HookToolInput{
-			Command: "python script.py",
-		},
+	var input HookInput
+	if err := json.Unmarshal([]byte(`{
+		"tool_name":"Bash",
+		"tool_input":{"command":"python script.py"}
+	}`), &input); err != nil {
+		t.Fatal(err)
 	}
 
 	decision := EvaluatePreTool(cfg, input)
@@ -45,6 +47,32 @@ func TestEvaluatePreToolRule(t *testing.T) {
 	}
 	if decision.SystemMessage == "" {
 		t.Fatal("expected system message")
+	}
+}
+
+func TestEvaluatePreToolRuleDoesNotBlockUvRunPython(t *testing.T) {
+	t.Parallel()
+
+	cfg := Config{
+		PreToolDeny: []PreToolRule{
+			{
+				Matcher:       "Bash",
+				Pattern:       `^([A-Za-z_][A-Za-z0-9_]*=\S+\s+)*python3?(\s|$)`,
+				Reason:        "python/python3 の直接実行は禁止",
+				SystemMessage: "uv run を使ってください。",
+			},
+		},
+	}
+	var input HookInput
+	if err := json.Unmarshal([]byte(`{
+		"tool_name":"Bash",
+		"tool_input":{"command":"uv run python script.py"}
+	}`), &input); err != nil {
+		t.Fatal(err)
+	}
+
+	if decision := EvaluatePreTool(cfg, input); decision != nil {
+		t.Fatalf("expected uv run python to pass, got %+v", *decision)
 	}
 }
 

@@ -74,7 +74,7 @@ func (h *HookInput) UnmarshalJSON(data []byte) error {
 }
 
 func EvaluatePreTool(cfg Config, input HookInput) *PreToolDecision {
-	toolText := input.ToolInputText()
+	toolText := input.PreToolMatchText()
 	for _, rule := range cfg.PreToolDeny {
 		if rule.Matcher != "" && rule.Matcher != "*" {
 			matched, err := regexp.MatchString(rule.Matcher, input.ToolName)
@@ -97,11 +97,21 @@ func EvaluatePreTool(cfg Config, input HookInput) *PreToolDecision {
 	return nil
 }
 
+func (h HookInput) PreToolMatchText() string {
+	switch h.ToolName {
+	case "Bash":
+		return h.ToolInput.Command
+	case "Read", "Write", "Edit", "MultiEdit":
+		return h.ToolInput.FilePath
+	case "Glob", "Grep":
+		return strings.Join(uniqueNonEmpty([]string{h.ToolInput.Path, h.ToolInput.Pattern}), "\n")
+	default:
+		return h.ToolInputText()
+	}
+}
+
 func (h HookInput) ToolInputText() string {
 	var parts []string
-	if len(h.ToolInputRaw) > 0 {
-		parts = append(parts, string(h.ToolInputRaw))
-	}
 	if h.ToolInput.Command != "" {
 		parts = append(parts, h.ToolInput.Command)
 	}
@@ -124,6 +134,9 @@ func (h HookInput) ToolInputText() string {
 		if update.NewString != "" {
 			parts = append(parts, update.NewString)
 		}
+	}
+	if len(h.ToolInputRaw) > 0 {
+		parts = append(parts, string(h.ToolInputRaw))
 	}
 	return strings.Join(parts, "\n")
 }
