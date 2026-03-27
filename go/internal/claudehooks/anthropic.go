@@ -40,6 +40,9 @@ func DecidePermission(ctx context.Context, cfg Config, input HookInput) (Permiss
 
 	apiKey := strings.TrimSpace(os.Getenv("CC_AUTOMODE_ANTHROPIC_API_KEY"))
 	if apiKey == "" {
+		apiKey = strings.TrimSpace(os.Getenv("ANTHROPIC_API_KEY"))
+	}
+	if apiKey == "" {
 		return PermissionDecision{}, false, nil
 	}
 
@@ -96,7 +99,6 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 			}))),
 		},
 		OutputConfig: anthropic.OutputConfigParam{
-			Effort: anthropic.OutputConfigEffortLow,
 			Format: anthropic.JSONOutputFormatParam{
 				Schema: permissionOutputSchema(),
 			},
