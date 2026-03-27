@@ -118,3 +118,21 @@ func TestSafeProjectLocalConfigPathsSkipsTrackedFile(t *testing.T) {
 		t.Fatalf("expected tracked project override to be skipped, got %v", got)
 	}
 }
+
+func TestIsTrackedProjectFileFailsClosedOnGitError(t *testing.T) {
+	t.Parallel()
+
+	dir := t.TempDir()
+	path := filepath.Join(dir, "permission-gate.local.jsonnet")
+	if err := os.WriteFile(path, []byte("{}"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	tracked, err := isTrackedProjectFile(dir, path)
+	if err == nil {
+		t.Fatal("expected git error")
+	}
+	if tracked {
+		t.Fatal("expected non-tracked result on git error")
+	}
+}

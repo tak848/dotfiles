@@ -4,6 +4,7 @@ LICENSE
 .git
 .gitignore
 *.jsonnet
+!.claude/permission-gate.jsonnet
 aqua.yaml
 aqua-checksums.json
 !dot_config/aquaproj-aqua/aqua.yaml

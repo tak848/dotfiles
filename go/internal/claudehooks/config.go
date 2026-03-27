@@ -130,8 +130,13 @@ func isTrackedProjectFile(root string, path string) (bool, error) {
 	cmd := exec.Command("git", "-C", root, "ls-files", "--error-unmatch", "--", rel)
 	if err := cmd.Run(); err == nil {
 		return true, nil
+	} else {
+		var exitErr *exec.ExitError
+		if errors.As(err, &exitErr) && exitErr.ExitCode() == 1 {
+			return false, nil
+		}
+		return false, err
 	}
-	return false, nil
 }
 
 func mergeConfigFile(path string, cfg *Config) error {

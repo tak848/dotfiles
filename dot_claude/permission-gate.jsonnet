@@ -8,7 +8,7 @@
   pre_tool_deny: [
     {
       matcher: 'Bash',
-      pattern: '(^|\\s)git commit\\b.*\\s--amend(\\s|$)',
+      pattern: '^git(\\s+[^;&|]+)*\\s+commit\\b.*\\s--amend(\\s|$)',
       reason: 'git commit --amend は禁止',
       system_message: 'amend で履歴を潰さず、新しい commit を積んでください。',
     },
@@ -20,13 +20,13 @@
     },
     {
       matcher: 'Bash',
-      pattern: '(^|\\s)python3?(\\s|$)',
+      pattern: '^([A-Za-z_][A-Za-z0-9_]*=\\S+\\s+)*python3?(\\s|$)',
       reason: 'python/python3 の直接実行は禁止',
       system_message: 'system の python を直接呼ばず、せめて uv run を使ってください。',
     },
     {
       matcher: 'Bash',
-      pattern: '(^|\\s)npx(\\s|$)',
+      pattern: '^([A-Za-z_][A-Za-z0-9_]*=\\S+\\s+)*npx(\\s|$)',
       reason: 'npx の直接実行は禁止',
       system_message: 'npx は許可していないので、既存のツールか別の安全な経路を使ってください。',
     },
