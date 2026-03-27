@@ -299,7 +299,7 @@
     ],
     Notification: [
       {
-        matcher: 'permission_prompt|idle_prompt',
+        matcher: '',
         hooks: [
           {
             type: 'command',
