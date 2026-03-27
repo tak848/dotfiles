@@ -14,6 +14,12 @@
     },
     {
       matcher: 'Bash',
+      pattern: '(^|\\s)git\\s+-c\\s+commit\\.gpgsign=false(\\s|$)',
+      reason: 'git -c commit.gpgsign=false は禁止',
+      system_message: '署名を勝手に無効化しないでください。gpg 署名に失敗したら、1Password のロック解除や pinentry の状態を確認し、必要ならユーザーに確認してください。',
+    },
+    {
+      matcher: 'Bash',
       pattern: '(^|\\s)python3?(\\s|$)',
       reason: 'python/python3 の直接実行は禁止',
       system_message: 'system の python を直接呼ばず、せめて uv run を使ってください。',
