@@ -162,8 +162,10 @@ func referencedPaths(input HookInput) []string {
 	switch input.ToolName {
 	case "Read", "Write", "Edit", "MultiEdit":
 		return uniqueNonEmpty(expandPaths(input.Cwd, input.ToolInput.FilePath))
-	case "Glob", "Grep":
+	case "Glob":
 		return uniqueNonEmpty(expandPaths(input.Cwd, input.ToolInput.Path, input.ToolInput.Pattern))
+	case "Grep":
+		return uniqueNonEmpty(expandPaths(input.Cwd, input.ToolInput.Path))
 	case "Bash":
 		return uniqueNonEmpty(extractBashPaths(input.Cwd, input.ToolInput.Command))
 	default:

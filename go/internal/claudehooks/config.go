@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"os"
+	"os/exec"
 	"path/filepath"
 
 	anthropic "github.com/anthropics/anthropic-sdk-go"
@@ -59,7 +60,7 @@ func LoadConfig(cwd string) (Config, error) {
 		return cfg, err
 	}
 
-	for _, path := range projectLocalConfigPaths(cwd) {
+	for _, path := range safeProjectLocalConfigPaths(cwd) {
 		if err := mergeConfigFile(path, &cfg); err != nil && !errors.Is(err, os.ErrNotExist) {
 			return cfg, err
 		}
@@ -89,6 +90,48 @@ func projectLocalConfigPaths(cwd string) []string {
 	)
 
 	return paths
+}
+
+func safeProjectLocalConfigPaths(cwd string) []string {
+	root := cwd
+	if repoRoot, err := gitOutput(cwd, "rev-parse", "--show-toplevel"); err == nil && repoRoot != "" {
+		root = repoRoot
+	}
+
+	var safe []string
+	for _, path := range projectLocalConfigPaths(cwd) {
+		tracked, err := isTrackedProjectFile(root, path)
+		if err != nil || tracked {
+			continue
+		}
+		safe = append(safe, path)
+	}
+	return safe
+}
+
+func isTrackedProjectFile(root string, path string) (bool, error) {
+	if root == "" {
+		return false, nil
+	}
+
+	info, err := os.Stat(path)
+	if err != nil {
+		return false, err
+	}
+	if info.IsDir() {
+		return false, nil
+	}
+
+	rel, err := filepath.Rel(root, path)
+	if err != nil {
+		return false, err
+	}
+
+	cmd := exec.Command("git", "-C", root, "ls-files", "--error-unmatch", "--", rel)
+	if err := cmd.Run(); err == nil {
+		return true, nil
+	}
+	return false, nil
 }
 
 func mergeConfigFile(path string, cfg *Config) error {

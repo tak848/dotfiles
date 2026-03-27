@@ -2,6 +2,7 @@ package claudehooks
 
 import (
 	"os"
+	"os/exec"
 	"path/filepath"
 	"testing"
 )
@@ -86,5 +87,34 @@ func TestProjectLocalConfigPaths(t *testing.T) {
 	}
 	if got[1] != "/tmp/repo/subdir/.claude/permission-gate.local.jsonnet" {
 		t.Fatalf("unexpected second path: %s", got[1])
+	}
+}
+
+func TestSafeProjectLocalConfigPathsSkipsTrackedFile(t *testing.T) {
+	t.Parallel()
+
+	dir := t.TempDir()
+	if err := os.WriteFile(filepath.Join(dir, "permission-gate.local.jsonnet"), []byte("{}"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := os.Stat(filepath.Join(dir, ".git")); err == nil {
+		t.Fatal("unexpected git directory")
+	}
+
+	run := func(args ...string) {
+		t.Helper()
+		cmd := exec.Command("git", args...)
+		cmd.Dir = dir
+		if out, err := cmd.CombinedOutput(); err != nil {
+			t.Fatalf("git %v failed: %v\n%s", args, err, out)
+		}
+	}
+
+	run("init")
+	run("add", "permission-gate.local.jsonnet")
+
+	got := safeProjectLocalConfigPaths(dir)
+	if len(got) != 0 {
+		t.Fatalf("expected tracked project override to be skipped, got %v", got)
 	}
 }
