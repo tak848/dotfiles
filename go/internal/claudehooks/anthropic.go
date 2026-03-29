@@ -167,9 +167,9 @@ func permissionSystemPrompt(cfg Config) string {
 		b.WriteString(strings.Join(cfg.Allow, "\n- "))
 		b.WriteString("\n\n")
 	}
-	if len(cfg.SoftDeny) > 0 {
-		b.WriteString("Soft deny guidance:\n- ")
-		b.WriteString(strings.Join(cfg.SoftDeny, "\n- "))
+	if len(cfg.Deny) > 0 {
+		b.WriteString("Deny guidance (mandatory):\n- ")
+		b.WriteString(strings.Join(cfg.Deny, "\n- "))
 		b.WriteString("\n\n")
 	}
 	if len(cfg.Environment) > 0 {

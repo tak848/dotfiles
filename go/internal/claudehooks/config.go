@@ -19,7 +19,7 @@ const (
 type Config struct {
 	Provider    ProviderConfig `json:"provider"`
 	Allow       []string       `json:"allow"`
-	SoftDeny    []string       `json:"soft_deny"`
+	Deny        []string       `json:"deny"`
 	Environment []string       `json:"environment"`
 }
 
@@ -158,7 +158,7 @@ func mergeConfigFile(path string, cfg *Config) error {
 	}
 
 	cfg.Allow = append(cfg.Allow, override.Allow...)
-	cfg.SoftDeny = append(cfg.SoftDeny, override.SoftDeny...)
+	cfg.Deny = append(cfg.Deny, override.Deny...)
 	cfg.Environment = append(cfg.Environment, override.Environment...)
 
 	return nil
