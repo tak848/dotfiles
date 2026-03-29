@@ -100,18 +100,19 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 	)
 
 	systemPrompt := permissionSystemPrompt(cfg)
-	userMessage := mustJSON(PermissionPromptInput{
+	promptInput := PermissionPromptInput{
 		ToolName:              input.ToolName,
 		ToolInput:             input.ToolInput,
 		ToolInputRaw:          input.ToolInputRaw,
 		PermissionMode:        input.PermissionMode,
 		PermissionSuggestions: input.PermissionSuggestions,
 		Context:               BuildPermissionContext(input),
-	})
+	}
+	userMessage := mustJSON(promptInput)
 
 	slog.Info("anthropic request",
 		"system_prompt", systemPrompt,
-		"user_message", userMessage,
+		"user_message", mustJSON(redactPromptInput(promptInput)),
 	)
 
 	message, err := client.Messages.New(ctx, anthropic.MessageNewParams{
@@ -211,6 +212,20 @@ func extractMessageText(message *anthropic.Message) string {
 		}
 	}
 	return strings.TrimSpace(text.String())
+}
+
+func redactPromptInput(p PermissionPromptInput) PermissionPromptInput {
+	const mask = "[REDACTED]"
+	r := p
+	if r.ToolInput.Content != "" {
+		r.ToolInput.Content = mask
+	}
+	if len(r.ToolInput.ContentUpdates) > 0 {
+		r.ToolInput.ContentUpdates = nil
+	}
+	r.ToolInputRaw = nil
+	r.PermissionSuggestions = nil
+	return r
 }
 
 func mustJSON(v any) string {
