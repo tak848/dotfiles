@@ -99,23 +99,32 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 		option.WithRequestTimeout(timeout),
 	)
 
+	systemPrompt := permissionSystemPrompt(cfg)
+	promptInput := PermissionPromptInput{
+		ToolName:              input.ToolName,
+		ToolInput:             input.ToolInput,
+		ToolInputRaw:          input.ToolInputRaw,
+		PermissionMode:        input.PermissionMode,
+		PermissionSuggestions: input.PermissionSuggestions,
+		Context:               BuildPermissionContext(input),
+	}
+	userMessage := mustJSON(promptInput)
+
+	slog.Info("anthropic request",
+		"system_prompt", systemPrompt,
+		"user_message", mustJSON(redactPromptInput(promptInput)),
+	)
+
 	message, err := client.Messages.New(ctx, anthropic.MessageNewParams{
 		Model:     anthropic.Model(cfg.Provider.Model),
 		MaxTokens: 256,
 		System: []anthropic.TextBlockParam{
 			{
-				Text: permissionSystemPrompt(cfg),
+				Text: systemPrompt,
 			},
 		},
 		Messages: []anthropic.MessageParam{
-			anthropic.NewUserMessage(anthropic.NewTextBlock(mustJSON(PermissionPromptInput{
-				ToolName:              input.ToolName,
-				ToolInput:             input.ToolInput,
-				ToolInputRaw:          input.ToolInputRaw,
-				PermissionMode:        input.PermissionMode,
-				PermissionSuggestions: input.PermissionSuggestions,
-				Context:               BuildPermissionContext(input),
-			}))),
+			anthropic.NewUserMessage(anthropic.NewTextBlock(userMessage)),
 		},
 		OutputConfig: anthropic.OutputConfigParam{
 			Format: anthropic.JSONOutputFormatParam{
@@ -129,6 +138,7 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 	}
 
 	text := extractMessageText(message)
+	slog.Info("anthropic response", "raw", text)
 	if text == "" {
 		return PermissionLLMOutput{}, nil
 	}
@@ -202,6 +212,20 @@ func extractMessageText(message *anthropic.Message) string {
 		}
 	}
 	return strings.TrimSpace(text.String())
+}
+
+func redactPromptInput(p PermissionPromptInput) PermissionPromptInput {
+	const mask = "[REDACTED]"
+	r := p
+	if r.ToolInput.Content != "" {
+		r.ToolInput.Content = mask
+	}
+	if len(r.ToolInput.ContentUpdates) > 0 {
+		r.ToolInput.ContentUpdates = nil
+	}
+	r.ToolInputRaw = nil
+	r.PermissionSuggestions = nil
+	return r
 }
 
 func mustJSON(v any) string {
