@@ -19,10 +19,9 @@ type PermissionDecision struct {
 }
 
 type PermissionLLMOutput struct {
-	Behavior    string   `json:"behavior" jsonschema_description:"One of allow, deny, fallthrough."`
-	DenyMessage string   `json:"deny_message,omitempty" jsonschema_description:"Required when behavior is deny. A short Japanese explanation shown to Claude Code."`
-	Reasoning   string   `json:"reasoning" jsonschema_description:"Short explanation of why this decision was chosen."`
-	Signals     []string `json:"signals,omitempty" jsonschema_description:"Optional matched signals or rules."`
+	Behavior    string `json:"behavior" jsonschema_description:"One of allow, deny, fallthrough."`
+	DenyMessage string `json:"deny_message,omitempty" jsonschema_description:"Required when behavior is deny. A short Japanese explanation shown to Claude Code."`
+	Reasoning   string `json:"reasoning" jsonschema_description:"Short explanation of why this decision was chosen."`
 }
 
 type PermissionPromptInput struct {
@@ -64,7 +63,6 @@ func DecidePermission(ctx context.Context, cfg Config, input HookInput) (Permiss
 	slog.Info("LLM decision",
 		"behavior", output.Behavior,
 		"reasoning", output.Reasoning,
-		"signals", output.Signals,
 		"deny_message", output.DenyMessage,
 		"tool", input.ToolName,
 	)
