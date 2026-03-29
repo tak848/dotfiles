@@ -267,7 +267,7 @@ local permissionRules = import 'permission-rules.libsonnet';
     PreToolUse: permissionRules.preToolUseHooks,
     PermissionRequest: [
       {
-        matcher: 'Bash|Read|Write|Edit|MultiEdit|Glob|Grep|mcp__.*',
+        matcher: '',
         hooks: [
           {
             type: 'command',
