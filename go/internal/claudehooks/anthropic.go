@@ -90,13 +90,11 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 	if timeout <= 0 {
 		timeout = 20 * time.Second
 	}
-	perRetryTimeout := timeout / 3
 	ctx, cancel := context.WithTimeout(parent, timeout)
 	defer cancel()
 
 	client := anthropic.NewClient(
 		option.WithAPIKey(apiKey),
-		option.WithRequestTimeout(perRetryTimeout),
 		option.WithMaxRetries(5),
 	)
 
