@@ -18,7 +18,6 @@ const (
 
 type Config struct {
 	Provider    ProviderConfig `json:"provider"`
-	PreToolDeny []PreToolRule  `json:"pre_tool_deny"`
 	Allow       []string       `json:"allow"`
 	SoftDeny    []string       `json:"soft_deny"`
 	Environment []string       `json:"environment"`
@@ -28,13 +27,6 @@ type ProviderConfig struct {
 	Name      string `json:"name"`
 	Model     string `json:"model"`
 	TimeoutMS int    `json:"timeout_ms"`
-}
-
-type PreToolRule struct {
-	Matcher       string `json:"matcher"`
-	Pattern       string `json:"pattern"`
-	Reason        string `json:"reason"`
-	SystemMessage string `json:"system_message"`
 }
 
 func DefaultConfig() Config {
@@ -165,7 +157,6 @@ func mergeConfigFile(path string, cfg *Config) error {
 		cfg.Provider.TimeoutMS = override.Provider.TimeoutMS
 	}
 
-	cfg.PreToolDeny = append(cfg.PreToolDeny, override.PreToolDeny...)
 	cfg.Allow = append(cfg.Allow, override.Allow...)
 	cfg.SoftDeny = append(cfg.SoftDeny, override.SoftDeny...)
 	cfg.Environment = append(cfg.Environment, override.Environment...)

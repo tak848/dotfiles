@@ -1,7 +1,6 @@
 package claudehooks
 
 import (
-	"encoding/json"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -20,62 +19,6 @@ func TestShellSplit(t *testing.T) {
 	}
 }
 
-func TestEvaluatePreToolRule(t *testing.T) {
-	t.Parallel()
-
-	cfg := Config{
-		PreToolDeny: []PreToolRule{
-			{
-				Matcher:       "Bash",
-				Pattern:       `^([A-Za-z_][A-Za-z0-9_]*=\S+\s+)*python3?(\s|$)`,
-				Reason:        "python/python3 の直接実行は禁止",
-				SystemMessage: "uv run を使ってください。",
-			},
-		},
-	}
-	var input HookInput
-	if err := json.Unmarshal([]byte(`{
-		"tool_name":"Bash",
-		"tool_input":{"command":"python script.py"}
-	}`), &input); err != nil {
-		t.Fatal(err)
-	}
-
-	decision := EvaluatePreTool(cfg, input)
-	if decision == nil {
-		t.Fatal("expected deny decision")
-	}
-	if decision.SystemMessage == "" {
-		t.Fatal("expected system message")
-	}
-}
-
-func TestEvaluatePreToolRuleDoesNotBlockUvRunPython(t *testing.T) {
-	t.Parallel()
-
-	cfg := Config{
-		PreToolDeny: []PreToolRule{
-			{
-				Matcher:       "Bash",
-				Pattern:       `^([A-Za-z_][A-Za-z0-9_]*=\S+\s+)*python3?(\s|$)`,
-				Reason:        "python/python3 の直接実行は禁止",
-				SystemMessage: "uv run を使ってください。",
-			},
-		},
-	}
-	var input HookInput
-	if err := json.Unmarshal([]byte(`{
-		"tool_name":"Bash",
-		"tool_input":{"command":"uv run python script.py"}
-	}`), &input); err != nil {
-		t.Fatal(err)
-	}
-
-	if decision := EvaluatePreTool(cfg, input); decision != nil {
-		t.Fatalf("expected uv run python to pass, got %+v", *decision)
-	}
-}
-
 func TestExtractBashPathsSupportsInlineFlags(t *testing.T) {
 	t.Parallel()
 
@@ -85,12 +28,12 @@ func TestExtractBashPathsSupportsInlineFlags(t *testing.T) {
 	}
 }
 
-func TestMergeConfigFileAppendsRules(t *testing.T) {
+func TestMergeConfigFileAppendsGuidance(t *testing.T) {
 	t.Parallel()
 
 	dir := t.TempDir()
 	path := filepath.Join(dir, "permission-gate.local.jsonnet")
-	if err := os.WriteFile(path, []byte(`{ pre_tool_deny: [{ matcher: 'Bash', pattern: 'npx', reason: 'npx 禁止' }] }`), 0o644); err != nil {
+	if err := os.WriteFile(path, []byte(`{ allow: ['Read-only test guidance'] }`), 0o644); err != nil {
 		t.Fatal(err)
 	}
 
@@ -98,8 +41,8 @@ func TestMergeConfigFileAppendsRules(t *testing.T) {
 	if err := mergeConfigFile(path, &cfg); err != nil {
 		t.Fatal(err)
 	}
-	if len(cfg.PreToolDeny) != 1 {
-		t.Fatalf("unexpected rule count: %d", len(cfg.PreToolDeny))
+	if len(cfg.Allow) != 1 {
+		t.Fatalf("unexpected allow count: %d", len(cfg.Allow))
 	}
 }
 

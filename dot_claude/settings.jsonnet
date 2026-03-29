@@ -1,3 +1,5 @@
+local permissionRules = import 'permission-rules.libsonnet';
+
 {
   language: 'japanese',
   plansDirectory: '.claude/plans',
@@ -183,20 +185,7 @@
       // 'mcp__plugin_github_github__create_pull_request',
       // 'mcp__plugin_github_github__update_pull_request',
     ],
-    deny: [
-      'Bash(git -C*)',
-      'Bash(git -c commit.gpgsign=false*)',
-      'Bash(git commit*--amend*)',
-      'Bash(git commit*--no-gpg-sign*)',
-      'Bash(git commit*-S false*)',
-      'Bash(git reset*--hard*)',
-      'Bash(go generate*)',
-      'Read(.envrc.local)',
-      'Bash(npx*)',
-      'Bash(pnpm exec*)',
-      'Bash(python*)',
-      'Bash(python3*)',
-    ],
+    deny: permissionRules.permissionsDeny,
   },
   // model: 'claude-opus-4-1-20250805',
   // model: 'claude-opus-4-6',
@@ -275,17 +264,7 @@
         ],
       },
     ],
-    PreToolUse: [
-      {
-        matcher: 'Bash|Read|Write|Edit|MultiEdit|Glob|Grep',
-        hooks: [
-          {
-            type: 'command',
-            command: '~/.claude/bin/cc-pre-tool-guard',
-          },
-        ],
-      },
-    ],
+    PreToolUse: permissionRules.preToolUseHooks,
     PermissionRequest: [
       {
         matcher: 'Bash|Read|Write|Edit|MultiEdit|Glob|Grep|mcp__.*',

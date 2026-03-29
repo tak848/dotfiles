@@ -6,7 +6,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"regexp"
 	"slices"
 	"strings"
 )
@@ -35,11 +34,6 @@ type HookToolInput struct {
 type HookContentUpdate struct {
 	OldString string `json:"old_str"`
 	NewString string `json:"new_str"`
-}
-
-type PreToolDecision struct {
-	Reason        string
-	SystemMessage string
 }
 
 type PermissionContext struct {
@@ -71,43 +65,6 @@ func (h *HookInput) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
-}
-
-func EvaluatePreTool(cfg Config, input HookInput) *PreToolDecision {
-	toolText := input.PreToolMatchText()
-	for _, rule := range cfg.PreToolDeny {
-		if rule.Matcher != "" && rule.Matcher != "*" {
-			matched, err := regexp.MatchString(rule.Matcher, input.ToolName)
-			if err != nil || !matched {
-				continue
-			}
-		}
-		if rule.Pattern == "" {
-			continue
-		}
-		matched, err := regexp.MatchString(rule.Pattern, toolText)
-		if err != nil || !matched {
-			continue
-		}
-		return &PreToolDecision{
-			Reason:        rule.Reason,
-			SystemMessage: rule.SystemMessage,
-		}
-	}
-	return nil
-}
-
-func (h HookInput) PreToolMatchText() string {
-	switch h.ToolName {
-	case "Bash":
-		return h.ToolInput.Command
-	case "Read", "Write", "Edit", "MultiEdit":
-		return h.ToolInput.FilePath
-	case "Glob", "Grep":
-		return strings.Join(uniqueNonEmpty([]string{h.ToolInput.Path, h.ToolInput.Pattern}), "\n")
-	default:
-		return h.ToolInputText()
-	}
 }
 
 func (h HookInput) ToolInputText() string {
