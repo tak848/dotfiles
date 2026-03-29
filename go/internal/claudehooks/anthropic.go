@@ -3,6 +3,7 @@ package claudehooks
 import (
 	"context"
 	"encoding/json"
+	"log/slog"
 	"os"
 	"strings"
 	"time"
@@ -35,6 +36,7 @@ type PermissionPromptInput struct {
 
 func DecidePermission(ctx context.Context, cfg Config, input HookInput) (PermissionDecision, bool, error) {
 	if strings.ToLower(cfg.Provider.Name) != "anthropic" {
+		slog.Info("provider not anthropic, skipping", "provider", cfg.Provider.Name)
 		return PermissionDecision{}, false, nil
 	}
 
@@ -43,13 +45,29 @@ func DecidePermission(ctx context.Context, cfg Config, input HookInput) (Permiss
 		apiKey = strings.TrimSpace(os.Getenv("ANTHROPIC_API_KEY"))
 	}
 	if apiKey == "" {
+		slog.Warn("no API key found (CC_AUTOMODE_ANTHROPIC_API_KEY / ANTHROPIC_API_KEY)")
 		return PermissionDecision{}, false, nil
 	}
 
+	slog.Info("calling anthropic",
+		"model", cfg.Provider.Model,
+		"timeout_ms", cfg.Provider.TimeoutMS,
+		"tool", input.ToolName,
+	)
+
 	output, err := callAnthropic(ctx, cfg, input, apiKey)
 	if err != nil {
+		slog.Error("anthropic API call failed", "error", err, "tool", input.ToolName)
 		return PermissionDecision{}, false, err
 	}
+
+	slog.Info("LLM decision",
+		"behavior", output.Behavior,
+		"reasoning", output.Reasoning,
+		"signals", output.Signals,
+		"deny_message", output.DenyMessage,
+		"tool", input.ToolName,
+	)
 
 	switch output.Behavior {
 	case "allow":
@@ -63,6 +81,7 @@ func DecidePermission(ctx context.Context, cfg Config, input HookInput) (Permiss
 	case "fallthrough", "":
 		return PermissionDecision{}, false, nil
 	default:
+		slog.Warn("unexpected LLM behavior", "behavior", output.Behavior)
 		return PermissionDecision{}, false, nil
 	}
 }
