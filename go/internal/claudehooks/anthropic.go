@@ -3,6 +3,7 @@ package claudehooks
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log/slog"
 	"os"
 	"strings"
@@ -89,12 +90,14 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 	if timeout <= 0 {
 		timeout = 20 * time.Second
 	}
+	perRetryTimeout := timeout / 3
 	ctx, cancel := context.WithTimeout(parent, timeout)
 	defer cancel()
 
 	client := anthropic.NewClient(
 		option.WithAPIKey(apiKey),
-		option.WithRequestTimeout(timeout),
+		option.WithRequestTimeout(perRetryTimeout),
+		option.WithMaxRetries(5),
 	)
 
 	systemPrompt := permissionSystemPrompt(cfg)
@@ -143,7 +146,7 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 
 	var output PermissionLLMOutput
 	if err := json.Unmarshal([]byte(text), &output); err != nil {
-		return PermissionLLMOutput{}, err
+		return PermissionLLMOutput{}, fmt.Errorf("JSON parse error: %w (raw: %.200s)", err, text)
 	}
 	if output.Behavior == "deny" && strings.TrimSpace(output.DenyMessage) == "" {
 		output.DenyMessage = "危険な可能性が高いため、自動許可しません。"

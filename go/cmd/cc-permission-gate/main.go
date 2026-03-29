@@ -1,11 +1,13 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"log/slog"
 	"os"
 	"path/filepath"
+	"sync"
 	"time"
 
 	"github.com/tak848/dotfiles/go/internal/claudehooks"
@@ -92,7 +94,21 @@ func initLogger() (*slog.Logger, func()) {
 		return slog.New(slog.NewTextHandler(os.Stderr, nil)), func() {}
 	}
 
-	return slog.New(slog.NewTextHandler(f, nil)), func() { f.Close() }
+	w := &atomicWriter{f: f}
+	return slog.New(slog.NewTextHandler(w, nil)), func() { f.Close() }
+}
+
+type atomicWriter struct {
+	f  *os.File
+	mu sync.Mutex
+}
+
+func (w *atomicWriter) Write(p []byte) (int, error) {
+	w.mu.Lock()
+	defer w.mu.Unlock()
+	var buf bytes.Buffer
+	buf.Write(p)
+	return w.f.Write(buf.Bytes())
 }
 
 func rotateLog(path string) {
