@@ -36,6 +36,46 @@ type HookContentUpdate struct {
 	NewString string `json:"new_str"`
 }
 
+type SettingsPermissions struct {
+	Allow []string `json:"allow,omitempty"`
+	Deny  []string `json:"deny,omitempty"`
+}
+
+func LoadSettingsPermissions(cwd string) SettingsPermissions {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return SettingsPermissions{}
+	}
+
+	repoRoot := cwd
+	if root, err := gitOutput(cwd, "rev-parse", "--show-toplevel"); err == nil && root != "" {
+		repoRoot = root
+	}
+
+	paths := []string{
+		filepath.Join(home, ".claude", "settings.json"),
+		filepath.Join(repoRoot, ".claude", "settings.json"),
+		filepath.Join(repoRoot, ".claude", "settings.local.json"),
+	}
+
+	var merged SettingsPermissions
+	for _, path := range paths {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			continue
+		}
+		var s struct {
+			Permissions SettingsPermissions `json:"permissions"`
+		}
+		if err := json.Unmarshal(data, &s); err != nil {
+			continue
+		}
+		merged.Allow = append(merged.Allow, s.Permissions.Allow...)
+		merged.Deny = append(merged.Deny, s.Permissions.Deny...)
+	}
+	return merged
+}
+
 type PermissionContext struct {
 	Cwd                 string   `json:"cwd"`
 	RepoRoot            string   `json:"repo_root,omitempty"`
