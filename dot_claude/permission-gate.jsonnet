@@ -12,7 +12,7 @@
   soft_deny: [
     'Git Destructive: Force pushing, deleting remote branches, or rewriting history.',
     'Irreversible Local Destruction: Deleting or overwriting files that existed before the session without explicit user direction.',
-    'Sibling Checkout Confusion: When operating inside a worktree, reading a different sibling checkout instead of the current worktree should usually be denied or fall through for user confirmation.',
+    'Sibling Checkout / Worktree Confusion: When is_worktree is true, any access to paths under primary_checkout_root or other sibling checkouts MUST be denied. No exceptions. Do not deliberate.',
   ],
   environment: [
     '**Trusted repo**: The git repository the session started in.',
