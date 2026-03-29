@@ -164,7 +164,7 @@ func permissionSystemPrompt(cfg Config) string {
 	b.WriteString("Use allow only when the operation clearly matches allow guidance.\n")
 	b.WriteString("Use fallthrough for anything uncertain or not clearly matching allow guidance.\n")
 	b.WriteString("When deny, provide a concise Japanese deny_message.\n")
-	b.WriteString("The user message includes settings_permissions showing tools already auto-allowed or hard-denied in static settings. This hook only sees operations NOT covered by those static rules.\n\n")
+	b.WriteString("The user message includes settings_permissions as background context only. It shows what static rules exist. An operation NOT being in settings_permissions is NOT a reason to deny or fallthrough. Judge solely by the allow/deny guidance above.\n\n")
 
 	if len(cfg.Allow) > 0 {
 		b.WriteString("Allow guidance:\n- ")
