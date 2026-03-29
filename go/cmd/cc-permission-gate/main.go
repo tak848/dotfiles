@@ -73,6 +73,8 @@ func main() {
 	_ = json.NewEncoder(os.Stdout).Encode(output)
 }
 
+const maxLogSize = 5 * 1024 * 1024 // 5 MB
+
 func initLogger() (*slog.Logger, func()) {
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -83,12 +85,24 @@ func initLogger() (*slog.Logger, func()) {
 	_ = os.MkdirAll(logDir, 0o755)
 
 	logPath := filepath.Join(logDir, "permission-gate.log")
+	rotateLog(logPath)
+
 	f, err := os.OpenFile(logPath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
 	if err != nil {
 		return slog.New(slog.NewTextHandler(os.Stderr, nil)), func() {}
 	}
 
 	return slog.New(slog.NewTextHandler(f, nil)), func() { f.Close() }
+}
+
+func rotateLog(path string) {
+	info, err := os.Stat(path)
+	if err != nil || info.Size() < maxLogSize {
+		return
+	}
+	prev := path + ".1"
+	_ = os.Remove(prev)
+	_ = os.Rename(path, prev)
 }
 
 type permissionRequestResponse struct {
