@@ -22,7 +22,6 @@ type PermissionDecision struct {
 type PermissionLLMOutput struct {
 	Behavior    string `json:"behavior" jsonschema_description:"One of allow, deny, fallthrough."`
 	DenyMessage string `json:"deny_message" jsonschema_description:"When behavior is deny, a concise Japanese explanation of why. Must not be empty when denying."`
-	Reasoning   string `json:"reasoning" jsonschema_description:"Short explanation of why this decision was chosen."`
 }
 
 type PermissionPromptInput struct {
@@ -64,7 +63,6 @@ func DecidePermission(ctx context.Context, cfg Config, input HookInput) (Permiss
 
 	slog.Info("LLM decision",
 		"behavior", output.Behavior,
-		"reasoning", output.Reasoning,
 		"deny_message", output.DenyMessage,
 		"tool", input.ToolName,
 	)
@@ -159,7 +157,7 @@ func permissionSystemPrompt(cfg Config) string {
 	var b strings.Builder
 	b.WriteString("You are a PermissionRequest hook classifier for Claude Code.\n")
 	b.WriteString("Return one of: allow, deny, fallthrough.\n")
-	b.WriteString("Decide quickly. Do not deliberate or reconsider. Keep reasoning under 2 sentences.\n")
+	b.WriteString("Decide quickly. Do not deliberate or reconsider.\n")
 	b.WriteString("Deny guidance rules are mandatory. If a rule matches, deny immediately.\n")
 	b.WriteString("Use allow only when the operation clearly matches allow guidance.\n")
 	b.WriteString("Use fallthrough for anything uncertain or not clearly matching allow guidance.\n")
