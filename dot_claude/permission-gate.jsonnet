@@ -8,6 +8,7 @@
   allow: [
     'Read-Only Operations: GET requests, read-only API calls, or queries that do not modify state.',
     'Local Operations: Read-only work inside the current repository or current worktree.',
+    'Draft PR Creation: If the operation creates a pull request AND draft is true in tool_input_raw, allow immediately. If draft is false or absent, fallthrough.',
   ],
   deny: [
     'Git Destructive: Force pushing, deleting remote branches, or rewriting history. deny_message: git の破壊的操作（force push、リモートブランチ削除、履歴書き換え）は自動許可できません。',
