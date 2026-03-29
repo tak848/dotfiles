@@ -26,12 +26,13 @@ type PermissionLLMOutput struct {
 }
 
 type PermissionPromptInput struct {
-	ToolName              string            `json:"tool_name"`
-	ToolInput             HookToolInput     `json:"tool_input"`
-	ToolInputRaw          json.RawMessage   `json:"tool_input_raw,omitempty"`
-	PermissionMode        string            `json:"permission_mode"`
-	PermissionSuggestions []json.RawMessage `json:"permission_suggestions,omitempty"`
-	Context               PermissionContext `json:"context"`
+	ToolName              string              `json:"tool_name"`
+	ToolInput             HookToolInput       `json:"tool_input"`
+	ToolInputRaw          json.RawMessage     `json:"tool_input_raw,omitempty"`
+	PermissionMode        string              `json:"permission_mode"`
+	PermissionSuggestions []json.RawMessage   `json:"permission_suggestions,omitempty"`
+	Context               PermissionContext   `json:"context"`
+	SettingsPermissions   SettingsPermissions `json:"settings_permissions"`
 }
 
 func DecidePermission(ctx context.Context, cfg Config, input HookInput) (PermissionDecision, bool, error) {
@@ -106,6 +107,7 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 		PermissionMode:        input.PermissionMode,
 		PermissionSuggestions: input.PermissionSuggestions,
 		Context:               BuildPermissionContext(input),
+		SettingsPermissions:   LoadSettingsPermissions(input.Cwd),
 	}
 	userMessage := mustJSON(promptInput)
 
@@ -161,7 +163,8 @@ func permissionSystemPrompt(cfg Config) string {
 	b.WriteString("Deny guidance rules are mandatory. If a rule matches, deny immediately.\n")
 	b.WriteString("Use allow only when the operation clearly matches allow guidance.\n")
 	b.WriteString("Use fallthrough for anything uncertain or not clearly matching allow guidance.\n")
-	b.WriteString("When deny, provide a concise Japanese deny_message.\n\n")
+	b.WriteString("When deny, provide a concise Japanese deny_message.\n")
+	b.WriteString("The user message includes settings_permissions showing tools already auto-allowed or hard-denied in static settings. This hook only sees operations NOT covered by those static rules.\n\n")
 
 	if len(cfg.Allow) > 0 {
 		b.WriteString("Allow guidance:\n- ")
