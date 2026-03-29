@@ -13,6 +13,7 @@ import (
 
 func main() {
 	logger := initLogger()
+	slog.SetDefault(logger)
 
 	var input claudehooks.HookInput
 	if err := json.NewDecoder(os.Stdin).Decode(&input); err != nil {
