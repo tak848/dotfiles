@@ -14,10 +14,6 @@ type Input struct {
 }
 
 func main() {
-	if tts.HandleBackground() {
-		return
-	}
-
 	var input Input
 	if err := json.NewDecoder(os.Stdin).Decode(&input); err != nil {
 		return
@@ -36,5 +32,5 @@ func main() {
 	}
 
 	gitCtx := tts.GitContext()
-	tts.SpeakInBackground(message+" "+gitCtx, tts.DefaultVoices)
+	tts.Speak(message+" "+gitCtx, tts.DefaultVoices)
 }

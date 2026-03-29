@@ -18,7 +18,8 @@ developer_instructions = """\
 plan はリスクと不確実性を十分に潰した上で、実行可能な作業計画として出せ。\n\
 コードコメントは単体で意味が通る局所説明のみ。PR 説明や調査メモをコードコメントに混ぜるな。\n\
 PR・issue・doc への参照は、その場で飛べるリンクを必ず貼れ。\n\
-推測を断定するな。未確認なら「未確認」と明記しろ。"""
+推測を断定するな。未確認なら「未確認」と明記しろ。\n\
+`git -c commit.gpgsign=false` は禁止。署名が必要な commit で失敗したら、1Password のロック解除や pinentry の状態を確認し、必要ならユーザーに確認しろ。"""
 
 [tui]
 # Claude Code の statusline で見ている運用情報に寄せて、Codex の組み込み項目を広めに表示する。
@@ -49,6 +50,7 @@ prevent_idle_sleep = true
 network_access = true
 writable_roots = [
   "{{ .chezmoi.homeDir }}/.local/share/aquaproj-aqua",
+  "{{ .chezmoi.homeDir }}/go/pkg/mod",
 {{- if eq .chezmoi.os "darwin" }}
   "{{ .chezmoi.homeDir }}/Library/Caches",
 {{- end }}

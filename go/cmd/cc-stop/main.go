@@ -9,11 +9,7 @@ import (
 )
 
 func main() {
-	if tts.HandleBackground() {
-		return
-	}
-
-	var input map[string]any
+	var input struct{}
 	if err := json.NewDecoder(os.Stdin).Decode(&input); err != nil {
 		return
 	}
@@ -23,5 +19,5 @@ func main() {
 	}
 
 	gitCtx := tts.GitContext()
-	tts.SpeakInBackground("Claudeセッション終了！"+gitCtx, tts.Neural2Voices)
+	tts.Speak("Claudeセッション終了！"+gitCtx, tts.Neural2Voices)
 }
