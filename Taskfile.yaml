@@ -14,7 +14,7 @@
 # 注意:
 #   - mise.lock は実行環境（macOS/Linux）によって結果が異なる既知の問題があるため、
 #     CI での diff チェックからは除外している
-#   - mise.lock の更新は Renovate ワークフロー（mise-lock.yaml）に任せる
+#   - mise.lock / aqua-checksums の更新は Renovate ワークフロー（lockfiles-and-checksums.yaml）に任せる
 #   - JSON 生成は chezmoi apply 時に run_onchange スクリプトで実行される
 #
 # 参考:
@@ -152,7 +152,7 @@ tasks:
   # 自動生成ファイルが最新かどうかを検証
   #
   # 注意: mise.lock は実行環境（macOS/Linux）によって結果が異なる既知の問題があるため、
-  # diff チェックから除外している。mise.lock の更新は Renovate ワークフローに任せる。
+  # diff チェックから除外している。mise.lock / aqua-checksums の更新は Renovate ワークフローに任せる。
   # 参考: https://github.com/jdx/mise/discussions/6942
   #############################################################################
   check:

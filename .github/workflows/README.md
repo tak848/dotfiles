@@ -14,11 +14,12 @@
   - `task check` で自動生成ファイルの diff チェック（Ubuntu のみ、mise.lock 除外）
   - chezmoiテンプレートの検証
 
-### mise-lock.yaml
-- **目的**: Renovate/Dependabot が mise 設定を更新した際に、自動的に mise.lock を更新
-- **トリガー**: `.mise.toml` / `dot_config/mise/config.toml` への変更を含む Pull Request（bot のみ）
+### lockfiles-and-checksums.yaml
+- **目的**: Renovate/Dependabot が mise / aqua 設定を更新した際に、自動的に mise.lock と aqua-checksums.json を更新
+- **トリガー**: `.mise.toml` / `dot_config/mise/config.toml` / `dot_config/aquaproj-aqua/aqua.yaml` への変更を含む Push（bot ブランチ含む）
 - **動作**:
-  - mise lock で全プラットフォームの lockfile を再生成
+  - mise lock で lockfile を再生成（root / dot_config/mise）
+  - `aqua update-checksum --prune` で checksum を更新
   - 変更があればコミットしてプッシュ
 
 ### mise-bootstrap.yaml
@@ -26,13 +27,6 @@
 - **トリガー**: `.mise-bootstrap-version` への変更を含む Pull Request（bot のみ）
 - **動作**:
   - `mise generate bootstrap` で bootstrap スクリプトを再生成
-  - 変更があればコミットしてプッシュ
-
-### aqua-checksums.yaml
-- **目的**: Renovate/Dependabot が aqua.yaml を更新した際に、自動的に aqua-checksums.json を更新
-- **トリガー**: `dot_config/aquaproj-aqua/aqua.yaml` への変更を含む Pull Request（bot のみ）
-- **動作**:
-  - `aqua update-checksum --prune` で checksum を更新
   - 変更があればコミットしてプッシュ
 
 ### lazy-lock.yaml
