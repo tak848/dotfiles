@@ -34,7 +34,7 @@ func DefaultConfig() Config {
 		Provider: ProviderConfig{
 			Name:      "anthropic",
 			Model:     string(anthropic.ModelClaudeHaiku4_5),
-			TimeoutMS: 4000,
+			TimeoutMS: 20000,
 		},
 	}
 }
