@@ -117,7 +117,7 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 
 	message, err := client.Messages.New(ctx, anthropic.MessageNewParams{
 		Model:     anthropic.Model(cfg.Provider.Model),
-		MaxTokens: 256,
+		MaxTokens: 4096,
 		System: []anthropic.TextBlockParam{
 			{
 				Text: systemPrompt,
