@@ -100,7 +100,7 @@ gwc() {
     local original_dir=$(pwd)
     local worktree_add_status=1
 
-    local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json" ".serena" "config.toml" ".gemini/settings.json" ".mise.local.toml")
+    local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json" ".serena" "config.toml" ".gemini/settings.json" ".mise.local.toml" "permission-gate.local.jsonnet")
     local extra_copy_files=()
     local pr_ref=""
     local pr_mode=false

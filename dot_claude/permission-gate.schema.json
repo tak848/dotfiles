@@ -28,7 +28,7 @@
         "type": "string"
       }
     },
-    "soft_deny": {
+    "deny": {
       "type": "array",
       "items": {
         "type": "string"

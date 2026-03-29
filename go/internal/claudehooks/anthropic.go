@@ -155,22 +155,21 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 func permissionSystemPrompt(cfg Config) string {
 	var b strings.Builder
 	b.WriteString("You are a PermissionRequest hook classifier for Claude Code.\n")
-	b.WriteString("This hook only sees operations that Claude Code still wants to ask a human about.\n")
-	b.WriteString("Mirror the spirit of Claude Code Auto Mode defaults.\n")
 	b.WriteString("Return one of: allow, deny, fallthrough.\n")
-	b.WriteString("Use fallthrough when uncertain.\n")
-	b.WriteString("Use deny only when the action looks genuinely risky.\n")
-	b.WriteString("When deny, provide a concise Japanese deny_message.\n")
-	b.WriteString("Pay attention to sibling checkout / worktree confusion: if the current repo is a worktree and referenced paths point at a different sibling checkout, that is usually risky unless the user clearly asked for it.\n\n")
+	b.WriteString("Decide quickly. Do not deliberate or reconsider. Keep reasoning under 2 sentences.\n")
+	b.WriteString("Deny guidance rules are mandatory. If a rule matches, deny immediately.\n")
+	b.WriteString("Use allow only when the operation clearly matches allow guidance.\n")
+	b.WriteString("Use fallthrough for anything uncertain or not clearly matching allow guidance.\n")
+	b.WriteString("When deny, provide a concise Japanese deny_message.\n\n")
 
 	if len(cfg.Allow) > 0 {
 		b.WriteString("Allow guidance:\n- ")
 		b.WriteString(strings.Join(cfg.Allow, "\n- "))
 		b.WriteString("\n\n")
 	}
-	if len(cfg.SoftDeny) > 0 {
-		b.WriteString("Soft deny guidance:\n- ")
-		b.WriteString(strings.Join(cfg.SoftDeny, "\n- "))
+	if len(cfg.Deny) > 0 {
+		b.WriteString("Deny guidance (mandatory):\n- ")
+		b.WriteString(strings.Join(cfg.Deny, "\n- "))
 		b.WriteString("\n\n")
 	}
 	if len(cfg.Environment) > 0 {
