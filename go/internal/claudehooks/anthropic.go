@@ -57,12 +57,8 @@ func DecidePermission(ctx context.Context, cfg Config, input HookInput) (Permiss
 
 	output, err := callAnthropic(ctx, cfg, input, apiKey)
 	if err != nil {
-		slog.Warn("anthropic API call failed, retrying", "error", err, "tool", input.ToolName)
-		output, err = callAnthropic(ctx, cfg, input, apiKey)
-		if err != nil {
-			slog.Error("anthropic API call failed after retry", "error", err, "tool", input.ToolName)
-			return PermissionDecision{}, false, err
-		}
+		slog.Error("anthropic API call failed", "error", err, "tool", input.ToolName)
+		return PermissionDecision{}, false, err
 	}
 
 	slog.Info("LLM decision",
@@ -94,12 +90,14 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 	if timeout <= 0 {
 		timeout = 20 * time.Second
 	}
+	perRetryTimeout := timeout / 3
 	ctx, cancel := context.WithTimeout(parent, timeout)
 	defer cancel()
 
 	client := anthropic.NewClient(
 		option.WithAPIKey(apiKey),
-		option.WithRequestTimeout(timeout),
+		option.WithRequestTimeout(perRetryTimeout),
+		option.WithMaxRetries(5),
 	)
 
 	systemPrompt := permissionSystemPrompt(cfg)
