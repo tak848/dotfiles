@@ -89,7 +89,7 @@ func DecidePermission(ctx context.Context, cfg Config, input HookInput) (Permiss
 func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey string) (PermissionLLMOutput, error) {
 	timeout := time.Duration(cfg.Provider.TimeoutMS) * time.Millisecond
 	if timeout <= 0 {
-		timeout = 4 * time.Second
+		timeout = 20 * time.Second
 	}
 	ctx, cancel := context.WithTimeout(parent, timeout)
 	defer cancel()
