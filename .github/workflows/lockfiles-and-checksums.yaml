@@ -1,4 +1,4 @@
-name: Update mise lockfiles
+name: Update mise lockfiles and aqua checksums
 
 on:
   push:
@@ -8,7 +8,8 @@ on:
     paths:
       - ".mise.toml"
       - "dot_config/mise/config.toml"
-      - ".github/workflows/mise-lock.yaml"
+      - "dot_config/aquaproj-aqua/aqua.yaml"
+      - ".github/workflows/lockfiles-and-checksums.yaml"
 
 permissions:
   contents: write
@@ -19,7 +20,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  update-lockfiles:
+  update-lockfiles-and-checksums:
     runs-on: ubuntu-latest
     steps:
       - name: Generate GitHub App Token
@@ -40,6 +41,11 @@ jobs:
           install: false
           cache: true
 
+      - name: Install aqua
+        uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
+        with:
+          aqua_version: v2.57.1
+
       - name: Update root mise.lock
         run: rm -f mise.lock && mise lock
 
@@ -48,10 +54,16 @@ jobs:
           cd dot_config/mise
           rm -f mise.lock && mise lock
 
-      - name: Check if lockfiles changed
+      - name: Update aqua checksums
+        run: |
+          cd dot_config/aquaproj-aqua
+          aqua update-checksum --prune
+
+      - name: Check if generated files changed
         id: check-changes
         run: |
-          if git diff --quiet mise.lock dot_config/mise/mise.lock; then
+          CHECK_FILES=(mise.lock dot_config/mise/mise.lock dot_config/aquaproj-aqua/aqua-checksums.json)
+          if git diff --quiet -- "${CHECK_FILES[@]}"; then
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
@@ -62,7 +74,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add mise.lock dot_config/mise/mise.lock
-          git commit -m "chore: update mise lockfiles"
+          git add mise.lock dot_config/mise/mise.lock dot_config/aquaproj-aqua/aqua-checksums.json
+          git commit -m "chore: update mise lockfiles and aqua checksums"
           git pull --rebase
           git push
