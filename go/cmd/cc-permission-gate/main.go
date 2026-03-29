@@ -12,7 +12,8 @@ import (
 )
 
 func main() {
-	logger := initLogger()
+	logger, cleanup := initLogger()
+	defer cleanup()
 	slog.SetDefault(logger)
 
 	var input claudehooks.HookInput
@@ -72,10 +73,10 @@ func main() {
 	_ = json.NewEncoder(os.Stdout).Encode(output)
 }
 
-func initLogger() *slog.Logger {
+func initLogger() (*slog.Logger, func()) {
 	home, err := os.UserHomeDir()
 	if err != nil {
-		return slog.New(slog.NewTextHandler(os.Stderr, nil))
+		return slog.New(slog.NewTextHandler(os.Stderr, nil)), func() {}
 	}
 
 	logDir := filepath.Join(home, ".claude", "logs")
@@ -84,10 +85,10 @@ func initLogger() *slog.Logger {
 	logPath := filepath.Join(logDir, "permission-gate.log")
 	f, err := os.OpenFile(logPath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
 	if err != nil {
-		return slog.New(slog.NewTextHandler(os.Stderr, nil))
+		return slog.New(slog.NewTextHandler(os.Stderr, nil)), func() {}
 	}
 
-	return slog.New(slog.NewTextHandler(f, nil))
+	return slog.New(slog.NewTextHandler(f, nil)), func() { f.Close() }
 }
 
 type permissionRequestResponse struct {
