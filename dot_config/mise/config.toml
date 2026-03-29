@@ -31,7 +31,7 @@ go = "1.26.1"
 # CLI ツール（aqua backend）
 # ============================================
 # GitHub CLI
-"aqua:cli/cli" = "2.88.1"
+"aqua:cli/cli" = "2.89.0"
 
 # シェル関連
 "aqua:junegunn/fzf" = "0.70.0"
@@ -52,12 +52,12 @@ go = "1.26.1"
 "aqua:jesseduffield/lazydocker" = "0.25.0"
 
 # エディタ・ターミナル
-"aqua:neovim/neovim" = "0.11.6"
+"aqua:neovim/neovim" = "0.11.7"
 "github:tmux/tmux-builds" = "v3.6a"
 "aqua:arl/gitmux" = "0.11.5"
 
 # Python ツール
-"aqua:astral-sh/uv" = "0.11.1"
+"aqua:astral-sh/uv" = "0.11.2"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
@@ -69,7 +69,7 @@ go = "1.26.1"
 "aqua:golangci/golangci-lint" = "2.11.4"
 
 # Jsonnet
-"aqua:google/go-jsonnet" = "0.21.0"
+"aqua:google/go-jsonnet" = "0.22.0"
 "aqua:grafana/jsonnet-language-server" = "0.17.0"
 
 # Language Server
@@ -84,12 +84,12 @@ go = "1.26.1"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"aqua:anthropics/claude-code" = "2.1.84"
-"npm:@google/gemini-cli" = "0.35.1"
-"aqua:openai/codex" = "0.116.0"
+"aqua:anthropics/claude-code" = "2.1.87"
+"npm:@google/gemini-cli" = "0.35.3"
+"aqua:openai/codex" = "0.117.0"
 "npm:ccusage" = "18.0.10"
 "npm:@ccusage/codex" = "18.0.10"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260325.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260329.1"
 "npm:cc-sdd" = "2.1.1"
 "npm:difit" = "4.0.1"
-"npm:freee-mcp" = "0.15.0"
+"npm:freee-mcp" = "0.17.0"
