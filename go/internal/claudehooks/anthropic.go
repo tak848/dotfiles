@@ -21,7 +21,7 @@ type PermissionDecision struct {
 
 type PermissionLLMOutput struct {
 	Behavior    string `json:"behavior" jsonschema_description:"One of allow, deny, fallthrough."`
-	DenyMessage string `json:"deny_message,omitempty" jsonschema_description:"Required when behavior is deny. A short Japanese explanation shown to Claude Code."`
+	DenyMessage string `json:"deny_message" jsonschema_description:"When behavior is deny, a concise Japanese explanation of why. Must not be empty when denying."`
 	Reasoning   string `json:"reasoning" jsonschema_description:"Short explanation of why this decision was chosen."`
 }
 
