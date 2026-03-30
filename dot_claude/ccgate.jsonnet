@@ -1,5 +1,5 @@
 {
-  ['$schema']: './permission-gate.schema.json',
+  ['$schema']: 'https://raw.githubusercontent.com/tak848/ccgate/main/example/ccgate.schema.json',
   provider: {
     name: 'anthropic',
     model: 'claude-haiku-4-5',

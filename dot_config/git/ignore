@@ -1,10 +1,10 @@
 CLAUDE.local.md
 settings.local.json
 settings.local.jsonnet
-permission-gate.local.json
-permission-gate.local.jsonnet
-.claude/permission-gate.local.json
-.claude/permission-gate.local.jsonnet
+ccgate.local.json
+ccgate.local.jsonnet
+.claude/ccgate.local.json
+.claude/ccgate.local.jsonnet
 .mcp.json
 .mcp.jsonnet
 z/
