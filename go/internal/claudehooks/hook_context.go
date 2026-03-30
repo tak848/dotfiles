@@ -1,6 +1,7 @@
 package claudehooks
 
 import (
+	"bufio"
 	"bytes"
 	"encoding/json"
 	"os"
@@ -34,6 +35,79 @@ type HookToolInput struct {
 type HookContentUpdate struct {
 	OldString string `json:"old_str"`
 	NewString string `json:"new_str"`
+}
+
+// RecentTranscript holds recent user messages and tool operations from the session transcript.
+type RecentTranscript struct {
+	UserMessages    []string `json:"user_messages,omitempty"`
+	RecentToolCalls []string `json:"recent_tool_calls,omitempty"`
+}
+
+const maxTranscriptLines = 200
+
+// LoadRecentTranscript reads the tail of the transcript JSONL and extracts
+// recent user messages and tool call summaries.
+func LoadRecentTranscript(path string) RecentTranscript {
+	if path == "" {
+		return RecentTranscript{}
+	}
+
+	f, err := os.Open(path)
+	if err != nil {
+		return RecentTranscript{}
+	}
+	defer f.Close()
+
+	// Read all lines, keep last maxTranscriptLines
+	var lines []string
+	scanner := bufio.NewScanner(f)
+	scanner.Buffer(make([]byte, 1024*1024), 1024*1024) // 1MB buffer per line
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	if len(lines) > maxTranscriptLines {
+		lines = lines[len(lines)-maxTranscriptLines:]
+	}
+
+	var result RecentTranscript
+	for _, line := range lines {
+		var entry struct {
+			Type    string `json:"type"`
+			Message struct {
+				Role    string `json:"role"`
+				Content any    `json:"content"`
+			} `json:"message"`
+			ToolName string `json:"tool_name"`
+		}
+		if err := json.Unmarshal([]byte(line), &entry); err != nil {
+			continue
+		}
+
+		switch {
+		case entry.Type == "user" || (entry.Message.Role == "user"):
+			if s, ok := entry.Message.Content.(string); ok && s != "" {
+				// Keep last 5 user messages
+				result.UserMessages = append(result.UserMessages, truncate(s, 200))
+				if len(result.UserMessages) > 5 {
+					result.UserMessages = result.UserMessages[len(result.UserMessages)-5:]
+				}
+			}
+		case entry.ToolName != "":
+			summary := entry.ToolName
+			result.RecentToolCalls = append(result.RecentToolCalls, summary)
+			if len(result.RecentToolCalls) > 10 {
+				result.RecentToolCalls = result.RecentToolCalls[len(result.RecentToolCalls)-10:]
+			}
+		}
+	}
+	return result
+}
+
+func truncate(s string, maxLen int) string {
+	if len(s) <= maxLen {
+		return s
+	}
+	return s[:maxLen] + "..."
 }
 
 type SettingsPermissions struct {
