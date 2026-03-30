@@ -1028,7 +1028,7 @@ checksum = "sha256:9b68112c913f45b7aebbf13c036721264bbba7e03a642f8f7490c561eebd1
 url = "https://dl.google.com/go/go1.26.1.windows-amd64.zip"
 
 [[tools."go:github.com/tak848/ccgate"]]
-version = "0.2.2"
+version = "0.2.3"
 backend = "go:github.com/tak848/ccgate"
 
 [[tools."go:golang.org/x/tools/gopls"]]
