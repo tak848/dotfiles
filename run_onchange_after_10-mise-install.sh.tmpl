@@ -15,4 +15,11 @@ if command -v mise &> /dev/null; then
 
     echo "mise install を実行中..."
     mise install
+
+    # ccgate を ~/.claude/bin/ にシンボリックリンク
+    ccgate_bin="$(mise where go:github.com/tak848/ccgate 2>/dev/null)/bin/ccgate"
+    if [[ -x "$ccgate_bin" ]]; then
+        mkdir -p ~/.claude/bin
+        ln -sf "$ccgate_bin" ~/.claude/bin/ccgate
+    fi
 fi
