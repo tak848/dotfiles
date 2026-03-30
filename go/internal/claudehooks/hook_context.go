@@ -43,34 +43,28 @@ type RecentTranscript struct {
 	RecentToolCalls []string `json:"recent_tool_calls,omitempty"`
 }
 
-const maxTranscriptLines = 200
+const (
+	maxUserMessages = 3
+	maxToolCalls    = 5
+	tailBytes       = 64 * 1024 // 末尾 64KB だけ読む
+)
 
 // LoadRecentTranscript reads the tail of the transcript JSONL and extracts
-// recent user messages and tool call summaries.
+// the most recent user messages and tool call summaries.
 func LoadRecentTranscript(path string) RecentTranscript {
 	if path == "" {
 		return RecentTranscript{}
 	}
 
-	f, err := os.Open(path)
+	data, err := readTail(path, tailBytes)
 	if err != nil {
 		return RecentTranscript{}
 	}
-	defer f.Close()
-
-	// Read all lines, keep last maxTranscriptLines
-	var lines []string
-	scanner := bufio.NewScanner(f)
-	scanner.Buffer(make([]byte, 1024*1024), 1024*1024) // 1MB buffer per line
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-	if len(lines) > maxTranscriptLines {
-		lines = lines[len(lines)-maxTranscriptLines:]
-	}
 
 	var result RecentTranscript
-	for _, line := range lines {
+	scanner := bufio.NewScanner(bytes.NewReader(data))
+	scanner.Buffer(make([]byte, 256*1024), 256*1024)
+	for scanner.Scan() {
 		var entry struct {
 			Type    string `json:"type"`
 			Message struct {
@@ -79,28 +73,63 @@ func LoadRecentTranscript(path string) RecentTranscript {
 			} `json:"message"`
 			ToolName string `json:"tool_name"`
 		}
-		if err := json.Unmarshal([]byte(line), &entry); err != nil {
+		if err := json.Unmarshal(scanner.Bytes(), &entry); err != nil {
 			continue
 		}
 
 		switch {
-		case entry.Type == "user" || (entry.Message.Role == "user"):
+		case entry.Type == "user" || entry.Message.Role == "user":
 			if s, ok := entry.Message.Content.(string); ok && s != "" {
-				// Keep last 5 user messages
 				result.UserMessages = append(result.UserMessages, truncate(s, 200))
-				if len(result.UserMessages) > 5 {
-					result.UserMessages = result.UserMessages[len(result.UserMessages)-5:]
+				if len(result.UserMessages) > maxUserMessages {
+					result.UserMessages = result.UserMessages[1:]
 				}
 			}
 		case entry.ToolName != "":
-			summary := entry.ToolName
-			result.RecentToolCalls = append(result.RecentToolCalls, summary)
-			if len(result.RecentToolCalls) > 10 {
-				result.RecentToolCalls = result.RecentToolCalls[len(result.RecentToolCalls)-10:]
+			result.RecentToolCalls = append(result.RecentToolCalls, entry.ToolName)
+			if len(result.RecentToolCalls) > maxToolCalls {
+				result.RecentToolCalls = result.RecentToolCalls[1:]
 			}
 		}
 	}
 	return result
+}
+
+func readTail(path string, n int64) ([]byte, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	info, err := f.Stat()
+	if err != nil {
+		return nil, err
+	}
+
+	size := info.Size()
+	offset := size - n
+	if offset < 0 {
+		offset = 0
+	}
+	if _, err := f.Seek(offset, 0); err != nil {
+		return nil, err
+	}
+
+	buf := make([]byte, size-offset)
+	nr, err := f.Read(buf)
+	if err != nil {
+		return nil, err
+	}
+	data := buf[:nr]
+
+	// offset > 0 の場合、最初の行は途中から始まっている可能性がある
+	if offset > 0 {
+		if idx := bytes.IndexByte(data, '\n'); idx >= 0 {
+			data = data[idx+1:]
+		}
+	}
+	return data, nil
 }
 
 func truncate(s string, maxLen int) string {
