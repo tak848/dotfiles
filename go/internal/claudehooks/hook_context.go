@@ -25,6 +25,7 @@ type HookInput struct {
 
 type HookToolInput struct {
 	Command        string              `json:"command"`
+	Description    string              `json:"description"`
 	FilePath       string              `json:"file_path"`
 	Path           string              `json:"path"`
 	Pattern        string              `json:"pattern"`
