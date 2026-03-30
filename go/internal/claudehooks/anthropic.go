@@ -32,6 +32,7 @@ type PermissionPromptInput struct {
 	PermissionSuggestions []json.RawMessage   `json:"permission_suggestions,omitempty"`
 	Context               PermissionContext   `json:"context"`
 	SettingsPermissions   SettingsPermissions `json:"settings_permissions"`
+	RecentTranscript      RecentTranscript    `json:"recent_transcript"`
 }
 
 func DecidePermission(ctx context.Context, cfg Config, input HookInput) (PermissionDecision, bool, error) {
@@ -106,6 +107,7 @@ func callAnthropic(parent context.Context, cfg Config, input HookInput, apiKey s
 		PermissionSuggestions: input.PermissionSuggestions,
 		Context:               BuildPermissionContext(input),
 		SettingsPermissions:   LoadSettingsPermissions(input.Cwd),
+		RecentTranscript:      LoadRecentTranscript(input.TranscriptPath),
 	}
 	userMessage := mustJSON(promptInput)
 
@@ -162,7 +164,9 @@ func permissionSystemPrompt(cfg Config) string {
 	b.WriteString("Use allow only when the operation clearly matches allow guidance.\n")
 	b.WriteString("Use fallthrough for anything uncertain or not clearly matching allow guidance.\n")
 	b.WriteString("When deny, provide a concise Japanese deny_message.\n")
-	b.WriteString("The user message includes settings_permissions as background context only. It shows what static rules exist. An operation NOT being in settings_permissions is NOT a reason to deny or fallthrough. Judge solely by the allow/deny guidance above.\n\n")
+	b.WriteString("The user message includes settings_permissions and recent_transcript as background context.\n")
+	b.WriteString("settings_permissions shows static rules. An operation NOT being there is NOT a reason to deny or fallthrough.\n")
+	b.WriteString("recent_transcript shows recent user messages and tool calls. Use it to understand what the user asked for. If the user explicitly requested the operation, prefer allow or fallthrough over deny.\n\n")
 
 	if len(cfg.Allow) > 0 {
 		b.WriteString("Allow guidance:\n- ")
