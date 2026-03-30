@@ -271,7 +271,7 @@ local permissionRules = import 'permission-rules.libsonnet';
         hooks: [
           {
             type: 'command',
-            command: '~/.claude/bin/cc-permission-gate',
+            command: 'ccgate',
           },
         ],
       },
