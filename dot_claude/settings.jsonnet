@@ -91,6 +91,7 @@ local permissionRules = import 'permission-rules.libsonnet';
       'Bash(git push *)',
       'Bash(git log *)',
       'Bash(git show *)',
+      'Bash(git describe *)',
       // checkoutは都度確認
       // "Bash(git checkout *)",
       'Bash(git remote set-url *)',
