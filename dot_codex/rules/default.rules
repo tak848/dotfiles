@@ -24,15 +24,27 @@ prefix_rule(
 )
 
 prefix_rule(
-    pattern=["git", "commit", "--no-gpg-sign"],
+    pattern=["git", "-c", "commit.gpgsign=0"],
     decision="forbidden",
-    justification="--no-gpg-sign による GPG サインのスキップは禁止です。",
+    justification="commit.gpgsign=0 による GPG サインのスキップは禁止です。",
 )
 
 prefix_rule(
-    pattern=["git", "commit", "-S", "false"],
+    pattern=["git", "-c", "commit.gpgsign=no"],
     decision="forbidden",
-    justification="-S false による GPG サインのスキップは禁止です。",
+    justification="commit.gpgsign=no による GPG サインのスキップは禁止です。",
+)
+
+prefix_rule(
+    pattern=["git", "-c", "commit.gpgsign=off"],
+    decision="forbidden",
+    justification="commit.gpgsign=off による GPG サインのスキップは禁止です。",
+)
+
+prefix_rule(
+    pattern=["git", "commit", "--no-gpg-sign"],
+    decision="forbidden",
+    justification="--no-gpg-sign による GPG サインのスキップは禁止です。",
 )
 
 # git reset --hard は禁止

@@ -31,11 +31,6 @@ local rules = [
   },
   {
     matcher: 'Bash',
-    spec: 'Bash(git commit*-S false*)',
-    reason: 'GPGサインのスキップは禁止です。ユーザーが離席しているだけかもしれません。サインなしで commit する必要があるなら、必ずユーザーに確認を取ってから実行してください。',
-  },
-  {
-    matcher: 'Bash',
     spec: 'Bash(git reset*--hard*)',
   },
   {
