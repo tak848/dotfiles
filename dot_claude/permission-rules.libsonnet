@@ -56,6 +56,16 @@ local rules = [
   },
   {
     matcher: 'Bash',
+    spec: 'Bash(pnpm --dir*)',
+    reason: 'pnpm --dir は禁止です。--filter を使用してください。',
+  },
+  {
+    matcher: 'Bash',
+    spec: 'Bash(pnpm -C*)',
+    reason: 'pnpm -C は禁止です。--filter を使用してください。',
+  },
+  {
+    matcher: 'Bash',
     spec: 'Bash(python*)',
     reason: 'システムの python を直接使用することは禁止です。最低限 uv run または uvx を使ってください。',
   },
