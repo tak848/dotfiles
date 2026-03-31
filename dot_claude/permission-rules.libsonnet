@@ -31,11 +31,6 @@ local rules = [
   },
   {
     matcher: 'Bash',
-    spec: 'Bash(git commit*-S false*)',
-    reason: 'GPGサインのスキップは禁止です。ユーザーが離席しているだけかもしれません。サインなしで commit する必要があるなら、必ずユーザーに確認を取ってから実行してください。',
-  },
-  {
-    matcher: 'Bash',
     spec: 'Bash(git reset*--hard*)',
   },
   {
@@ -53,6 +48,16 @@ local rules = [
   {
     matcher: 'Bash',
     spec: 'Bash(pnpm exec*)',
+  },
+  {
+    matcher: 'Bash',
+    spec: 'Bash(pnpm --dir*)',
+    reason: 'pnpm --dir は禁止です。--filter を使用してください。',
+  },
+  {
+    matcher: 'Bash',
+    spec: 'Bash(pnpm -C*)',
+    reason: 'pnpm -C は禁止です。--filter を使用してください。',
   },
   {
     matcher: 'Bash',
