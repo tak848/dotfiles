@@ -26,25 +26,25 @@ prefix_rule(
 prefix_rule(
     pattern=["git", "-c", "commit.gpgsign=0"],
     decision="forbidden",
-    justification="commit.gpgsign=0 による GPG サインのスキップは禁止です。",
+    justification="commit.gpgsign=0 による GPG サインのスキップは禁止です。署名に失敗する場合は 1Password のロック解除や pinentry の状態を確認してください。",
 )
 
 prefix_rule(
     pattern=["git", "-c", "commit.gpgsign=no"],
     decision="forbidden",
-    justification="commit.gpgsign=no による GPG サインのスキップは禁止です。",
+    justification="commit.gpgsign=no による GPG サインのスキップは禁止です。署名に失敗する場合は 1Password のロック解除や pinentry の状態を確認してください。",
 )
 
 prefix_rule(
     pattern=["git", "-c", "commit.gpgsign=off"],
     decision="forbidden",
-    justification="commit.gpgsign=off による GPG サインのスキップは禁止です。",
+    justification="commit.gpgsign=off による GPG サインのスキップは禁止です。署名に失敗する場合は 1Password のロック解除や pinentry の状態を確認してください。",
 )
 
 prefix_rule(
     pattern=["git", "commit", "--no-gpg-sign"],
     decision="forbidden",
-    justification="--no-gpg-sign による GPG サインのスキップは禁止です。",
+    justification="--no-gpg-sign による GPG サインのスキップは禁止です。署名に失敗する場合は 1Password のロック解除や pinentry の状態を確認してください。",
 )
 
 # git reset --hard は禁止
