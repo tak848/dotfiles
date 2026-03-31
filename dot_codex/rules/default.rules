@@ -116,7 +116,7 @@ prefix_rule(
 )
 
 # =============================================================================
-# Python: 直接実行禁止
+# Python / Perl: 直接実行禁止
 # =============================================================================
 
 prefix_rule(
@@ -129,4 +129,11 @@ prefix_rule(
     pattern=["python3"],
     decision="forbidden",
     justification="python3 の直接実行は禁止です。uv run または uvx を使用してください。",
+)
+
+# perl は代替手段を検討させる
+prefix_rule(
+    pattern=["perl"],
+    decision="forbidden",
+    justification="perl が最適なのはよく分かるけど、awk, sed, jq, シェルスクリプト等で代替できないか考えてみてください。",
 )
