@@ -73,7 +73,7 @@ go = "1.26.1"
 "aqua:grafana/jsonnet-language-server" = "0.17.0"
 
 # Claude Code permission gate
-"go:github.com/tak848/ccgate" = "0.2.5"
+"go:github.com/tak848/ccgate" = "0.2.6"
 
 # Language Server
 "go:golang.org/x/tools/gopls" = "0.21.1"
