@@ -1,0 +1,120 @@
+# =============================================================================
+# Git: 破壊的・危険な操作
+# =============================================================================
+
+# git -C は別リポジトリへの越境操作。禁止。
+prefix_rule(
+    pattern=["git", "-C"],
+    decision="forbidden",
+    justification="git -C による別リポジトリへの越境操作は禁止です。対象リポジトリに cd してから実行してください。",
+)
+
+# git commit --amend は禁止（プレフィックス位置のみ捕捉）
+prefix_rule(
+    pattern=["git", "commit", "--amend"],
+    decision="forbidden",
+    justification="git commit --amend は禁止です。新しい commit を作成してください。",
+)
+
+# GPG サイン無効化の禁止
+prefix_rule(
+    pattern=["git", "-c", "commit.gpgsign=false"],
+    decision="forbidden",
+    justification="commit.gpgsign=false による GPG サインのスキップは禁止です。署名に失敗する場合は 1Password のロック解除や pinentry の状態を確認してください。",
+)
+
+prefix_rule(
+    pattern=["git", "commit", "--no-gpg-sign"],
+    decision="forbidden",
+    justification="--no-gpg-sign による GPG サインのスキップは禁止です。",
+)
+
+prefix_rule(
+    pattern=["git", "commit", "-S", "false"],
+    decision="forbidden",
+    justification="-S false による GPG サインのスキップは禁止です。",
+)
+
+# git reset --hard は禁止
+prefix_rule(
+    pattern=["git", "reset", "--hard"],
+    decision="forbidden",
+    justification="git reset --hard は禁止です。git restore や git revert を使用してください。",
+)
+
+# git push --force は要確認
+prefix_rule(
+    pattern=["git", "push", "--force"],
+    decision="prompt",
+    justification="force push はリモート履歴を破壊します。本当に必要か確認してください。",
+)
+
+prefix_rule(
+    pattern=["git", "push", "-f"],
+    decision="prompt",
+    justification="force push はリモート履歴を破壊します。本当に必要か確認してください。",
+)
+
+# git push --delete は要確認
+prefix_rule(
+    pattern=["git", "push", "--delete"],
+    decision="prompt",
+    justification="リモートブランチの削除です。本当に必要か確認してください。",
+)
+
+# =============================================================================
+# Go
+# =============================================================================
+
+prefix_rule(
+    pattern=["go", "generate"],
+    decision="forbidden",
+    justification="go generate は禁止です。",
+)
+
+# =============================================================================
+# Node.js / パッケージマネージャ
+# =============================================================================
+
+# npx は禁止
+prefix_rule(
+    pattern=["npx"],
+    decision="forbidden",
+    justification="npx は禁止です。pnpm を使用してください。",
+)
+
+# pnpm exec は禁止
+prefix_rule(
+    pattern=["pnpm", "exec"],
+    decision="forbidden",
+    justification="pnpm exec は禁止です。",
+)
+
+# pnpm --dir は禁止、--filter を使え
+prefix_rule(
+    pattern=["pnpm", "--dir"],
+    decision="forbidden",
+    justification="pnpm --dir は禁止です。--filter を使用してください。",
+)
+
+prefix_rule(
+    pattern=["pnpm", "-C"],
+    decision="forbidden",
+    justification="pnpm -C は禁止です。--filter を使用してください。",
+)
+
+# =============================================================================
+# Python: 直接実行禁止
+# =============================================================================
+
+prefix_rule(
+    pattern=["python"],
+    decision="forbidden",
+    justification="python の直接実行は禁止です。uv run または uvx を使用してください。",
+)
+
+prefix_rule(
+    pattern=["python3"],
+    decision="forbidden",
+    justification="python3 の直接実行は禁止です。uv run または uvx を使用してください。",
+)
