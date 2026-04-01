@@ -76,25 +76,21 @@ local rules = [
   },
 ];
 
-local preToolHooks = [
-  {
-    type: 'command',
-    ['if']: rule.spec,
-    command: "printf '%s' " + shellSingleQuote(std.manifestJsonEx(preToolResponse(rule.reason), '')),
-  }
-  for rule in rules
-  if std.objectHas(rule, 'reason')
-];
-
 {
   rules: rules,
   permissionsDeny: [rule.spec for rule in rules],
-  preToolUseHooks:
-    if std.length(preToolHooks) == 0 then []
-    else [
-      {
-        matcher: '',
-        hooks: preToolHooks,
-      },
-    ],
+  preToolUseHooks: [
+    {
+      matcher: rule.matcher,
+      hooks: [
+        {
+          type: 'command',
+          ['if']: rule.spec,
+          command: "printf '%s' " + shellSingleQuote(std.manifestJsonEx(preToolResponse(rule.reason), '')),
+        },
+      ],
+    }
+    for rule in rules
+    if std.objectHas(rule, 'reason')
+  ],
 }
