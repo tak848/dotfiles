@@ -33,26 +33,26 @@ checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d874
 url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"
 
 [[tools."aqua:anthropics/claude-code"]]
-version = "2.1.88"
+version = "2.1.89"
 backend = "aqua:anthropics/claude-code"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.88/linux-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.89/linux-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64-musl"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.88/linux-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.89/linux-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.88/linux-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.89/linux-x64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64-musl"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.88/linux-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.89/linux-x64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-arm64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.88/darwin-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.89/darwin-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-x64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.88/darwin-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.89/darwin-x64/claude"
 
 [[tools."aqua:arl/gitmux"]]
 version = "0.11.5"
@@ -627,36 +627,36 @@ checksum = "sha256:7e6d4ac6b22a46e89b0da3ac560635ee39c00081f14093a8851154fb260b7
 url = "https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-win64.zip"
 
 [[tools."aqua:openai/codex"]]
-version = "0.117.0"
+version = "0.118.0"
 backend = "aqua:openai/codex"
 
 [tools."aqua:openai/codex"."platforms.linux-arm64"]
-checksum = "sha256:c7b151984eb073af7f3bf74a97f41f31ea4422edd7d897739fe25a7de0d2e4fe"
-url = "https://github.com/openai/codex/releases/download/rust-v0.117.0/codex-aarch64-unknown-linux-musl.zst"
+checksum = "sha256:03a5e09423ac2587a22b0759f65fde8f29f785f08fcf251eed5aecda2a22f6f3"
+url = "https://github.com/openai/codex/releases/download/rust-v0.118.0/codex-aarch64-unknown-linux-musl.zst"
 
 [tools."aqua:openai/codex"."platforms.linux-arm64-musl"]
-checksum = "sha256:c7b151984eb073af7f3bf74a97f41f31ea4422edd7d897739fe25a7de0d2e4fe"
-url = "https://github.com/openai/codex/releases/download/rust-v0.117.0/codex-aarch64-unknown-linux-musl.zst"
+checksum = "sha256:03a5e09423ac2587a22b0759f65fde8f29f785f08fcf251eed5aecda2a22f6f3"
+url = "https://github.com/openai/codex/releases/download/rust-v0.118.0/codex-aarch64-unknown-linux-musl.zst"
 
 [tools."aqua:openai/codex"."platforms.linux-x64"]
-checksum = "sha256:b0561a2dd0f12b5c981efe7a422b3065e1d9b43945d7d89e1342edfe0f2e2fc0"
-url = "https://github.com/openai/codex/releases/download/rust-v0.117.0/codex-x86_64-unknown-linux-musl.zst"
+checksum = "sha256:add27a73df075cdd689102453eba9b40493aa7ffff0ca88170ee249ebc04da7e"
+url = "https://github.com/openai/codex/releases/download/rust-v0.118.0/codex-x86_64-unknown-linux-musl.zst"
 
 [tools."aqua:openai/codex"."platforms.linux-x64-musl"]
-checksum = "sha256:b0561a2dd0f12b5c981efe7a422b3065e1d9b43945d7d89e1342edfe0f2e2fc0"
-url = "https://github.com/openai/codex/releases/download/rust-v0.117.0/codex-x86_64-unknown-linux-musl.zst"
+checksum = "sha256:add27a73df075cdd689102453eba9b40493aa7ffff0ca88170ee249ebc04da7e"
+url = "https://github.com/openai/codex/releases/download/rust-v0.118.0/codex-x86_64-unknown-linux-musl.zst"
 
 [tools."aqua:openai/codex"."platforms.macos-arm64"]
-checksum = "sha256:ad10cd790a94d363f7d6e10c81f9f77d0ad36238a43112edcb958e15f8a0842f"
-url = "https://github.com/openai/codex/releases/download/rust-v0.117.0/codex-aarch64-apple-darwin.zst"
+checksum = "sha256:089099f62f3f6e344abb21d85322a622245bb989abd334ce49ac25d24b5ba599"
+url = "https://github.com/openai/codex/releases/download/rust-v0.118.0/codex-aarch64-apple-darwin.zst"
 
 [tools."aqua:openai/codex"."platforms.macos-x64"]
-checksum = "sha256:a374ffbb1c697e4c901087e5dfc3229a50bd60d3c27be13cb6702418ff15bbf9"
-url = "https://github.com/openai/codex/releases/download/rust-v0.117.0/codex-x86_64-apple-darwin.zst"
+checksum = "sha256:70933bd7c8519151ec2cac25bdd82f4d7fa70797be8deaa5be8ecfbd5d886d0d"
+url = "https://github.com/openai/codex/releases/download/rust-v0.118.0/codex-x86_64-apple-darwin.zst"
 
 [tools."aqua:openai/codex"."platforms.windows-x64"]
-checksum = "sha256:91e64b55895b3b87954549a9bb03163f79cbf7adcfe7b592876307189d80fcde"
-url = "https://github.com/openai/codex/releases/download/rust-v0.117.0/codex-x86_64-pc-windows-msvc.exe.zst"
+checksum = "sha256:1fbf44491f2f2ca12090db0ed14ce0b18e2c34b68cccffebc2d9af367c6468ba"
+url = "https://github.com/openai/codex/releases/download/rust-v0.118.0/codex-x86_64-pc-windows-msvc.exe.zst"
 
 [[tools."aqua:phiresky/ripgrep-all"]]
 version = "0.10.10"
@@ -1076,7 +1076,7 @@ version = "0.35.3"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260330.1"
+version = "7.0.0-dev.20260331.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -1092,7 +1092,7 @@ version = "4.0.1"
 backend = "npm:difit"
 
 [[tools."npm:freee-mcp"]]
-version = "0.17.0"
+version = "0.17.1"
 backend = "npm:freee-mcp"
 
 [[tools.pnpm]]
