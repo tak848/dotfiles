@@ -5,7 +5,7 @@ local preToolResponse(reason) = {
   hookSpecificOutput: {
     hookEventName: 'PreToolUse',
     permissionDecision: 'deny',
-    permissionDecisionReason: reason,
+    permissionDecisionReason: '[auto-rejected: pattern matched] ' + reason,
   },
 };
 
@@ -69,27 +69,28 @@ local rules = [
     spec: 'Bash(python3*)',
     reason: 'システムの python3 を直接使用することは禁止です。最低限 uv run または uvx を使ってください。',
   },
-];
-
-local preToolHooks = [
   {
-    type: 'command',
-    ['if']: rule.spec,
-    command: "printf '%s' " + shellSingleQuote(std.manifestJsonEx(preToolResponse(rule.reason), '')),
-  }
-  for rule in rules
-  if std.objectHas(rule, 'reason')
+    matcher: 'Bash',
+    spec: 'Bash(perl*)',
+    reason: 'perl が最適なのはよく分かるけど、awk, sed, jq, シェルスクリプト等で代替できないか考えてみてください。',
+  },
 ];
 
 {
   rules: rules,
   permissionsDeny: [rule.spec for rule in rules],
-  preToolUseHooks:
-    if std.length(preToolHooks) == 0 then []
-    else [
-      {
-        matcher: '',
-        hooks: preToolHooks,
-      },
-    ],
+  preToolUseHooks: [
+    {
+      matcher: rule.matcher,
+      hooks: [
+        {
+          type: 'command',
+          ['if']: rule.spec,
+          command: "printf '%s' " + shellSingleQuote(std.manifestJsonEx(preToolResponse(rule.reason), '')),
+        },
+      ],
+    }
+    for rule in rules
+    if std.objectHas(rule, 'reason')
+  ],
 }
