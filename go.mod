@@ -3,7 +3,7 @@ module github.com/tak848/dotfiles
 go 1.26.1
 
 require (
-	github.com/anthropics/anthropic-sdk-go v1.28.0
+	github.com/anthropics/anthropic-sdk-go v1.29.0
 	github.com/google/go-jsonnet v0.22.0
 	github.com/invopop/jsonschema v0.13.0
 )
