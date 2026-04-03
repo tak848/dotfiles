@@ -38,6 +38,11 @@ local rules = [
     spec: 'Bash(go generate*)',
   },
   {
+    matcher: 'Bash',
+    spec: 'Bash(go install*)',
+    reason: 'go install は禁止です。ツール管理は mise または aqua で行ってください。',
+  },
+  {
     matcher: 'Read',
     spec: 'Read(.envrc.local)',
   },

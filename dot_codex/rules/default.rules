@@ -79,6 +79,12 @@ prefix_rule(
 # =============================================================================
 
 prefix_rule(
+    pattern=["go", "install"],
+    decision="forbidden",
+    justification="go install は禁止です。ツール管理は mise または aqua で行ってください。",
+)
+
+prefix_rule(
     pattern=["go", "generate"],
     decision="forbidden",
     justification="go generate は禁止です。",
