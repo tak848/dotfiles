@@ -35,6 +35,11 @@ local rules = [
   },
   {
     matcher: 'Bash',
+    spec: 'Bash(git worktree*)',
+    reason: 'git worktree の操作は禁止です。worktree の管理はユーザーが行います。',
+  },
+  {
+    matcher: 'Bash',
     spec: 'Bash(go generate*)',
   },
   {
