@@ -68,12 +68,6 @@ prefix_rule(
     justification="git merge --squash は禁止です。",
 )
 
-prefix_rule(
-    pattern=["git", "rebase", "--squash"],
-    decision="forbidden",
-    justification="squash は禁止です。",
-)
-
 # git push --force は要確認
 prefix_rule(
     pattern=["git", "push", "--force"],

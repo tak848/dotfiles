@@ -45,11 +45,6 @@ local rules = [
   },
   {
     matcher: 'Bash',
-    spec: 'Bash(git rebase*--squash*)',
-    reason: 'squash は禁止です。',
-  },
-  {
-    matcher: 'Bash',
     spec: 'Bash(go generate*)',
   },
   {
