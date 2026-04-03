@@ -40,7 +40,7 @@ local rules = [
   {
     matcher: 'Bash',
     spec: 'Bash(go install*)',
-    reason: 'go install は禁止です。ツール管理は mise または aqua で行ってください。',
+    reason: 'go install は禁止です。ツール管理はプロジェクトの環境管理に従ってください。',
   },
   {
     matcher: 'Read',
