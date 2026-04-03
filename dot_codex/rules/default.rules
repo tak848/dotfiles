@@ -54,6 +54,26 @@ prefix_rule(
     justification="git reset --hard は禁止です。git restore や git revert を使用してください。",
 )
 
+# git worktree は禁止
+prefix_rule(
+    pattern=["git", "worktree"],
+    decision="forbidden",
+    justification="git worktree の操作は禁止です。worktree の管理はユーザーが行います。",
+)
+
+# git squash は禁止
+prefix_rule(
+    pattern=["git", "merge", "--squash"],
+    decision="forbidden",
+    justification="git merge --squash は禁止です。",
+)
+
+prefix_rule(
+    pattern=["git", "rebase", "--squash"],
+    decision="forbidden",
+    justification="squash は禁止です。",
+)
+
 # git push --force は要確認
 prefix_rule(
     pattern=["git", "push", "--force"],
