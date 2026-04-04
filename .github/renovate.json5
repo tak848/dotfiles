@@ -39,7 +39,7 @@
       minimumReleaseAge: "0 hours",
     },
     {
-      description: "Codex CLI: independent PR, no age gate",
+      description: "Codex CLI: independent PR, no age gate. Uses rust-v prefix on GitHub tags.",
       matchPackageNames: ["openai/codex"],
       matchManagers: ["mise"],
       groupName: "codex",
