@@ -29,7 +29,7 @@
   packageRules: [
     {
       description: "Default: 24h minimum age for stability",
-      matchPackagePatterns: ["*"],
+      matchPackageNames: ["**"],
       minimumReleaseAge: "24 hours",
     },
     {
@@ -41,6 +41,7 @@
     {
       description: "Codex CLI: independent PR, no age gate",
       matchPackageNames: ["openai/codex"],
+      matchManagers: ["mise"],
       groupName: "codex",
       minimumReleaseAge: "0 hours",
       extractVersion: "^rust-v(?<version>.+)$",
