@@ -1,55 +1,74 @@
 {
-  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
   extends: [
-    "config:recommended",
-    "helpers:pinGitHubActionDigestsToSemver",
-    "group:allNonMajor",
-    ":separateMultipleMajorReleases",
-    ":prConcurrentLimitNone",
-    ":prHourlyLimitNone",
-    "github>aquaproj/aqua-renovate-config#2.12.0",
+    'config:recommended',
+    'helpers:pinGitHubActionDigestsToSemver',
+    'group:allNonMajor',
+    ':separateMultipleMajorReleases',
+    ':prConcurrentLimitNone',
+    ':prHourlyLimitNone',
+    'github>aquaproj/aqua-renovate-config#2.12.0',
   ],
-  rangeStrategy: "bump",
-  labels: ["renovate"],
+  rangeStrategy: 'bump',
+  labels: [
+    'renovate',
+  ],
   prConcurrentLimit: 0,
   prHourlyLimit: 0,
-  major: { labels: ["renovate", "update_major"] },
+  major: {
+    labels: [
+      'renovate',
+      'update_major',
+    ],
+  },
   gitIgnoredAuthors: [
-    "github-actions[bot]@users.noreply.github.com",
+    'github-actions[bot]@users.noreply.github.com',
   ],
   customManagers: [
     {
-      customType: "regex",
-      fileMatch: ["^\\.mise-bootstrap-version$"],
+      customType: 'regex',
+      managerFilePatterns: [
+        '/^\\.mise-bootstrap-version$/',
+      ],
       matchStrings: [
-        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\nMISE_VERSION=(?<currentValue>\\S+)",
+        '# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\nMISE_VERSION=(?<currentValue>\\S+)',
       ],
     },
   ],
   packageRules: [
     {
-      description: "Default: 24h minimum age for stability",
-      matchPackageNames: ["**"],
-      minimumReleaseAge: "24 hours",
+      description: 'Default: 24h minimum age for stability',
+      matchPackageNames: [
+        '**',
+      ],
+      minimumReleaseAge: '24 hours',
     },
     {
-      description: "Claude Code: independent PR, no age gate",
-      matchPackageNames: ["anthropics/claude-code"],
-      groupName: "claude-code",
-      minimumReleaseAge: "0 hours",
+      description: 'Claude Code: independent PR, no age gate',
+      matchPackageNames: [
+        'anthropics/claude-code',
+      ],
+      groupName: 'claude-code',
+      minimumReleaseAge: '0 hours',
     },
     {
-      description: "Codex CLI: independent PR, no age gate. Uses rust-v prefix on GitHub tags.",
-      matchPackageNames: ["openai/codex"],
-      matchManagers: ["mise"],
-      groupName: "codex",
-      minimumReleaseAge: "0 hours",
-      extractVersion: "^rust-v(?<version>.+)$",
+      description: 'Codex CLI: independent PR, no age gate. Uses rust-v prefix on GitHub tags.',
+      matchPackageNames: [
+        'openai/codex',
+      ],
+      matchManagers: [
+        'mise',
+      ],
+      groupName: 'codex',
+      minimumReleaseAge: '0 hours',
+      extractVersion: '^rust-v(?<version>.+)$',
     },
     {
-      description: "Use node versioning for Node.js (LTS only)",
-      matchPackageNames: ["nodejs/node"],
-      versioning: "node",
+      description: 'Use node versioning for Node.js (LTS only)',
+      matchPackageNames: [
+        'nodejs/node',
+      ],
+      versioning: 'node',
     },
   ],
 }
