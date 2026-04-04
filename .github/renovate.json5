@@ -28,15 +28,28 @@
   ],
   packageRules: [
     {
+      description: "Default: 24h minimum age for stability",
+      matchPackageNames: ["**"],
+      minimumReleaseAge: "24 hours",
+    },
+    {
+      description: "Claude Code: independent PR, no age gate",
+      matchPackageNames: ["anthropics/claude-code"],
+      groupName: "claude-code",
+      minimumReleaseAge: "0 hours",
+    },
+    {
+      description: "Codex CLI: independent PR, no age gate. Uses rust-v prefix on GitHub tags.",
+      matchPackageNames: ["openai/codex"],
+      matchManagers: ["mise"],
+      groupName: "codex",
+      minimumReleaseAge: "0 hours",
+      extractVersion: "^rust-v(?<version>.+)$",
+    },
+    {
       description: "Use node versioning for Node.js (LTS only)",
       matchPackageNames: ["nodejs/node"],
       versioning: "node",
-    },
-    {
-      description: "aqua:openai/codex uses rust-v prefix on GitHub tags",
-      matchPackageNames: ["openai/codex"],
-      matchManagers: ["mise"],
-      extractVersion: "^rust-v(?<version>.+)$",
     },
   ],
 }
