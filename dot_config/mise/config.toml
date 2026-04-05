@@ -34,7 +34,7 @@ go = "1.26.1"
 "aqua:cli/cli" = "2.89.0"
 
 # シェル関連
-"aqua:junegunn/fzf" = "0.70.0"
+"aqua:junegunn/fzf" = "0.71.0"
 "aqua:starship/starship" = "1.24.2"
 "aqua:direnv/direnv" = "2.37.1"
 # zoxide は aqua CLI で管理（mise lock で checksum 取得不可）
@@ -92,7 +92,7 @@ go = "1.26.1"
 "aqua:openai/codex" = "0.118.0"
 "npm:ccusage" = "18.0.10"
 "npm:@ccusage/codex" = "18.0.10"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260403.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260404.1"
 "npm:cc-sdd" = "2.1.1"
 "npm:difit" = "4.0.2"
 "npm:freee-mcp" = "0.18.0"
