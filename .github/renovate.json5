@@ -20,7 +20,7 @@
   customManagers: [
     {
       customType: "regex",
-      fileMatch: ["^\\.mise-bootstrap-version$"],
+      managerFilePatterns: ["/^\\.mise-bootstrap-version$/"],
       matchStrings: [
         "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\nMISE_VERSION=(?<currentValue>\\S+)",
       ],
