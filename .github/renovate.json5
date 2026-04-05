@@ -10,6 +10,7 @@
     "github>aquaproj/aqua-renovate-config#2.12.0",
   ],
   rangeStrategy: "bump",
+  postUpdateOptions: ["gomodTidy"],
   labels: ["renovate"],
   prConcurrentLimit: 0,
   prHourlyLimit: 0,
