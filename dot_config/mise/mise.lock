@@ -1076,7 +1076,7 @@ version = "0.36.0"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260401.1"
+version = "7.0.0-dev.20260403.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -1092,7 +1092,7 @@ version = "4.0.2"
 backend = "npm:difit"
 
 [[tools."npm:freee-mcp"]]
-version = "0.17.1"
+version = "0.18.0"
 backend = "npm:freee-mcp"
 
 [[tools.pnpm]]
