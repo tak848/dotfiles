@@ -124,7 +124,7 @@ Homebrew
 
 | ワークフロー | トリガー | 処理 |
 |-------------|---------|------|
-| `ci.yaml` | push | `task check` で自動生成ファイルの diff チェック |
+| `ci.yaml` | push (`renovate/**`) / PR | `task check` で自動生成ファイルの diff チェック |
 | `mise-lock.yaml` | push（`mise.toml` / `config.toml` 変更時） | `mise lock` |
 | `mise-bootstrap.yaml` | push（`.mise-bootstrap-version` 変更時） | `mise generate bootstrap` |
 | `aqua-checksums.yaml` | push（`aqua.yaml` 変更時） | `aqua update-checksum --prune` |
