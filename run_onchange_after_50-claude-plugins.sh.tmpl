@@ -1,7 +1,10 @@
 #!/bin/bash
 # {{ include ".claude-plugin/marketplace.json" | sha256sum }}
+# {{ include "claude-plugins/devin/.claude-plugin/plugin.json" | sha256sum }}
 # {{ include "claude-plugins/devin/.mcp.json" | sha256sum }}
+# {{ include "claude-plugins/aws-knowledge/.claude-plugin/plugin.json" | sha256sum }}
 # {{ include "claude-plugins/aws-knowledge/.mcp.json" | sha256sum }}
+# {{ include "claude-plugins/temporal/.claude-plugin/plugin.json" | sha256sum }}
 # {{ include "claude-plugins/temporal/.mcp.json" | sha256sum }}
 # プラグイン定義が変更された時に marketplace update + plugin install を実行する
 
