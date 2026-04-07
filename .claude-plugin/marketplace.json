@@ -1,8 +1,10 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "tak848-plugins",
-  "description": "個人用 Claude Code プラグイン集",
   "owner": { "name": "tak848" },
+  "metadata": {
+    "description": "個人用 Claude Code プラグイン集"
+  },
   "plugins": [
     {
       "name": "devin",
