@@ -8,8 +8,20 @@ import (
 )
 
 type input struct {
-	ToolName  string         `json:"tool_name"`
-	ToolInput map[string]any `json:"tool_input"`
+	ToolName  string          `json:"tool_name"`
+	ToolInput json.RawMessage `json:"tool_input"`
+}
+
+type writeInput struct {
+	Content string `json:"content"`
+}
+
+type editInput struct {
+	NewString string `json:"new_string"`
+}
+
+type multiEditInput struct {
+	Edits []editInput `json:"edits"`
 }
 
 type hookOutput struct {
@@ -28,17 +40,38 @@ func main() {
 		return
 	}
 
-	editTools := map[string]struct{}{
-		"Write":     {},
-		"Edit":      {},
-		"MultiEdit": {},
-	}
-	if _, ok := editTools[in.ToolName]; !ok {
+	var found []string
+
+	switch in.ToolName {
+	case "Write":
+		var ti writeInput
+		if err := json.Unmarshal(in.ToolInput, &ti); err != nil {
+			return
+		}
+		if strings.ContainsRune(ti.Content, '\uFFFD') {
+			found = append(found, "content")
+		}
+	case "Edit":
+		var ti editInput
+		if err := json.Unmarshal(in.ToolInput, &ti); err != nil {
+			return
+		}
+		if strings.ContainsRune(ti.NewString, '\uFFFD') {
+			found = append(found, "new_string")
+		}
+	case "MultiEdit":
+		var ti multiEditInput
+		if err := json.Unmarshal(in.ToolInput, &ti); err != nil {
+			return
+		}
+		for i, e := range ti.Edits {
+			if strings.ContainsRune(e.NewString, '\uFFFD') {
+				found = append(found, fmt.Sprintf("edits[%d].new_string", i))
+			}
+		}
+	default:
 		return
 	}
-
-	var found []string
-	checkValue(in.ToolInput, "", &found)
 
 	if len(found) == 0 {
 		return
@@ -59,26 +92,4 @@ func main() {
 		},
 	}
 	json.NewEncoder(os.Stdout).Encode(out)
-}
-
-func checkValue(v any, path string, found *[]string) {
-	switch val := v.(type) {
-	case string:
-		if strings.ContainsRune(val, '\uFFFD') {
-			*found = append(*found, path)
-		}
-	case map[string]any:
-		for k, child := range val {
-			p := k
-			if path != "" {
-				p = path + "." + k
-			}
-			checkValue(child, p, found)
-		}
-	case []any:
-		for i, child := range val {
-			p := fmt.Sprintf("%s[%d]", path, i)
-			checkValue(child, p, found)
-		}
-	}
 }
