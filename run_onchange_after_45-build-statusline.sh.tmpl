@@ -5,6 +5,7 @@ set -e
 # {{ include "go/cmd/cc-notification/main.go" | sha256sum }}
 # {{ include "go/cmd/cc-stop/main.go" | sha256sum }}
 # {{ include "go/cmd/codex-notification/main.go" | sha256sum }}
+# {{ include "go/cmd/cc-check-mojibake/main.go" | sha256sum }}
 # {{ include "go/internal/colors/colors.go" | sha256sum }}
 # {{ include "go/internal/tts/tts.go" | sha256sum }}
 # {{ include "go.mod" | sha256sum }}
@@ -27,6 +28,7 @@ go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-statusline ./go/cmd/cc-statusline
 go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-post-tool-use ./go/cmd/cc-post-tool-use
 go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-notification ./go/cmd/cc-notification
 go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-stop ./go/cmd/cc-stop
+go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-check-mojibake ./go/cmd/cc-check-mojibake
 go build -C "$SOURCE_DIR" -o ~/.codex/bin/notification ./go/cmd/codex-notification
 
 echo "Go バイナリのビルド完了"

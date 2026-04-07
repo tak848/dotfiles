@@ -7,6 +7,9 @@ if [[ -f ~/.zsh_history ]]; then
 fi
 unset _zsh_history_backup
 
+# カスタム completions (openspec 等)
+fpath=("$HOME/.zsh/completions" $fpath)
+
 # compinit キャッシュ化（24時間に1回のみ再構築）
 autoload -Uz compinit
 if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
