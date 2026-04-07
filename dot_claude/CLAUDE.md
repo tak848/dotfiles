@@ -36,6 +36,7 @@
 - レビューコメントの指摘に対して修正を行った場合は、必ず該当コメントに reply すること。修正した commit へのリンク（`https://github.com/{owner}/{repo}/commit/{sha}` 形式）を含めること
 - issue/PR にコメント・返信する際は、本文末尾に `(by Claude Code)` を付与すること
 - **PR 作成時は、リポジトリ内の PULL REQUEST テンプレートを探索し（ルート、`.github/`、`docs/`、各 `PULL_REQUEST_TEMPLATE/` サブディレクトリ）、必ず従うこと。テンプレートを無視した PR は禁止**
+- **PR 作成完了後は、必ず full URL（`https://github.com/{owner}/{repo}/pull/{number}` 形式）を提示すること**
 
 ### 自分の知識を過信しない
 

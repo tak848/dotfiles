@@ -265,7 +265,17 @@ local permissionRules = import 'permission-rules.libsonnet';
         ],
       },
     ],
-    PreToolUse: permissionRules.preToolUseHooks,
+    PreToolUse: permissionRules.preToolUseHooks + [
+      {
+        matcher: 'Write|Edit|MultiEdit',
+        hooks: [
+          {
+            type: 'command',
+            command: '~/.claude/bin/cc-check-mojibake',
+          },
+        ],
+      },
+    ],
     PermissionRequest: [
       {
         matcher: '',
