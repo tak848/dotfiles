@@ -1,0 +1,6 @@
+{
+  "aws-knowledge": {
+    "type": "http",
+    "url": "https://knowledge-mcp.global.api.aws"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "tak848-plugins",
+  "description": "個人用 Claude Code プラグイン集",
+  "owner": { "name": "tak848" },
+  "plugins": [
+    {
+      "name": "devin",
+      "description": "Devin MCP for AI session management and DeepWiki documentation",
+      "version": "1.0.0",
+      "source": "./claude-plugins/devin",
+      "category": "productivity"
+    },
+    {
+      "name": "aws-knowledge",
+      "description": "AWS Knowledge MCP for documentation search and recommendations",
+      "version": "1.0.0",
+      "source": "./claude-plugins/aws-knowledge",
+      "category": "development"
+    },
+    {
+      "name": "temporal",
+      "description": "Temporal Docs MCP (kapa.ai hosted) for framework documentation",
+      "version": "1.0.0",
+      "source": "./claude-plugins/temporal",
+      "category": "development"
+    }
+  ]
+}
