@@ -1,3 +1,10 @@
+# OPENSPEC:START
+# OpenSpec shell completions configuration
+fpath=("{{ .chezmoi.homeDir }}/.zsh/completions" $fpath)
+autoload -Uz compinit
+compinit
+# OPENSPEC:END
+
 # ヒストリーの自動バックアップ（週1回、.local/share に保存）
 _zsh_history_backup="${XDG_DATA_HOME:-$HOME/.local/share}/zsh_history_backup"
 if [[ -f ~/.zsh_history ]]; then
@@ -6,17 +13,6 @@ if [[ -f ~/.zsh_history ]]; then
   fi
 fi
 unset _zsh_history_backup
-
-# カスタム completions (openspec 等)
-fpath=("$HOME/.zsh/completions" $fpath)
-
-# compinit キャッシュ化（24時間に1回のみ再構築）
-autoload -Uz compinit
-if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
-  compinit
-else
-  compinit -C
-fi
 
 bindkey -d # キーバインドをリセット
 bindkey -e # emacsモードで使う
