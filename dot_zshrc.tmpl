@@ -1,8 +1,14 @@
+# ヒストリーの自動バックアップ（週1回、.local/share に保存）
+_zsh_history_backup="${XDG_DATA_HOME:-$HOME/.local/share}/zsh_history_backup"
+if [[ -f ~/.zsh_history ]]; then
+  if [[ ! -f "$_zsh_history_backup" ]] || [[ $(find "$_zsh_history_backup" -mtime +7 2>/dev/null) ]]; then
+    cp ~/.zsh_history "$_zsh_history_backup"
+  fi
+fi
+unset _zsh_history_backup
+
 # OPENSPEC:START
-# OpenSpec shell completions configuration
-fpath=("{{ .chezmoi.homeDir }}/.zsh/completions" $fpath)
-autoload -Uz compinit
-compinit
+fpath=("$HOME/.zsh/completions" $fpath)
 # OPENSPEC:END
 
 # compinit キャッシュ化（24時間に1回のみ再構築）
@@ -12,15 +18,6 @@ if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C
 fi
-
-# ヒストリーの自動バックアップ（週1回、.local/share に保存）
-_zsh_history_backup="${XDG_DATA_HOME:-$HOME/.local/share}/zsh_history_backup"
-if [[ -f ~/.zsh_history ]]; then
-  if [[ ! -f "$_zsh_history_backup" ]] || [[ $(find "$_zsh_history_backup" -mtime +7 2>/dev/null) ]]; then
-    cp ~/.zsh_history "$_zsh_history_backup"
-  fi
-fi
-unset _zsh_history_backup
 
 bindkey -d # キーバインドをリセット
 bindkey -e # emacsモードで使う
