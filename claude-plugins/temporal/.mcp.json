@@ -1,0 +1,6 @@
+{
+  "temporal": {
+    "type": "http",
+    "url": "https://temporal.mcp.kapa.ai"
+  }
+}

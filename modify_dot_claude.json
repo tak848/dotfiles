@@ -1,23 +1,18 @@
 {{- /* chezmoi:modify-template */ -}}
-{{- /* ~/.claude.json の mcpServers を差分適用する。 */ -}}
+{{- /* ~/.claude.json を差分適用する。 */ -}}
 {{- /* Claude Code が自動書き込みするキー（projects, tipsHistory 等）は既存値を保持する。 */ -}}
+{{- /* MCP サーバーは Plugin に移行済み — 旧エントリを削除 */ -}}
 {{- $data := dict -}}
 {{- if ne (.chezmoi.stdin | trim) "" -}}
 {{-   $data = fromJson .chezmoi.stdin -}}
 {{- end -}}
 {{- $mcpServers := index $data "mcpServers" | default dict -}}
-{{- /* github, context7 は Plugin に移行済み — 旧エントリを削除 */ -}}
+{{- /* 全ての旧 MCP エントリを削除（Plugin 移行済み） */ -}}
 {{- $_ := unset $mcpServers "github" -}}
 {{- $_ := unset $mcpServers "context7" -}}
-{{- /* Devin MCP: Bearer token (DEVIN_API_KEY from .envrc.local) */ -}}
-{{- $devin := dict "type" "http" "url" "https://mcp.devin.ai/mcp" "headers" (dict "Authorization" "Bearer ${DEVIN_API_KEY}") -}}
-{{- $mcpServers = set $mcpServers "devin" $devin -}}
-{{- /* AWS Knowledge MCP: 認証不要 */ -}}
-{{- $awsKnowledge := dict "type" "http" "url" "https://knowledge-mcp.global.api.aws" -}}
-{{- $mcpServers = set $mcpServers "aws-knowledge" $awsKnowledge -}}
-{{- /* Temporal Docs MCP (kapa.ai hosted): 認証不要 */ -}}
-{{- $temporal := dict "type" "http" "url" "https://temporal.mcp.kapa.ai" -}}
-{{- $mcpServers = set $mcpServers "temporal" $temporal -}}
+{{- $_ := unset $mcpServers "devin" -}}
+{{- $_ := unset $mcpServers "aws-knowledge" -}}
+{{- $_ := unset $mcpServers "temporal" -}}
 {{- $data = set $data "mcpServers" $mcpServers -}}
 {{- /* remote-control を常時有効化 */ -}}
 {{- $data = set $data "remoteControlAtStartup" true -}}

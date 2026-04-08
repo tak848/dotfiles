@@ -1,0 +1,22 @@
+#!/bin/bash
+# {{ include ".claude-plugin/marketplace.json" | sha256sum }}
+# {{ include "claude-plugins/devin/.claude-plugin/plugin.json" | sha256sum }}
+# {{ include "claude-plugins/devin/.mcp.json" | sha256sum }}
+# {{ include "claude-plugins/aws-knowledge/.claude-plugin/plugin.json" | sha256sum }}
+# {{ include "claude-plugins/aws-knowledge/.mcp.json" | sha256sum }}
+# {{ include "claude-plugins/temporal/.claude-plugin/plugin.json" | sha256sum }}
+# {{ include "claude-plugins/temporal/.mcp.json" | sha256sum }}
+# プラグイン定義が変更された時に marketplace update + plugin install を実行する
+
+{{ template "path-setup.tmpl" . }}
+
+if ! command -v claude &> /dev/null; then
+    echo "WARN: claude CLI not found, skipping plugin setup" >&2
+    exit 0
+fi
+
+echo "Claude Code プラグインを更新中..."
+claude plugin marketplace update tak848-plugins || echo "WARN: marketplace update failed" >&2
+for plugin in devin aws-knowledge temporal; do
+    claude plugin install "${plugin}@tak848-plugins" || echo "WARN: plugin install failed: ${plugin}" >&2
+done

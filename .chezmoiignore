@@ -27,3 +27,7 @@ go.mod
 go/
 .claude/bin
 .codex/bin
+/.claude-plugin
+/.claude-plugin/**
+/claude-plugins
+/claude-plugins/**

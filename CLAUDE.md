@@ -97,6 +97,18 @@ Homebrew
 
 `~/.claude.json` と `~/.codex/config.toml` はツールが自動的に書き込むため、jsonnet で全体生成せず modify テンプレートで管理対象キーのみ差分適用する。
 
+### Claude Code カスタムマーケットプレイス
+
+dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak848-plugins`) として機能する。MCP サーバーは `claude-plugins/` 配下にプラグインとして定義。
+
+| ファイル | 役割 |
+|---------|------|
+| `.claude-plugin/marketplace.json` | マーケットプレイス定義 |
+| `claude-plugins/{name}/.claude-plugin/plugin.json` | プラグインメタデータ |
+| `claude-plugins/{name}/.mcp.json` | MCP サーバー設定 |
+| `dot_claude/settings.jsonnet` の `extraKnownMarketplaces` | マーケットプレイス登録 |
+| `dot_claude/settings.jsonnet` の `enabledPlugins` | プラグイン有効化 |
+
 ### chezmoi apply 時の自動実行スクリプト
 
 `chezmoi apply` 時にターゲットディレクトリで実行されるスクリプト。リポジトリ内にはファイルを生成しない。
@@ -108,6 +120,7 @@ Homebrew
 | `run_onchange_after_20-aqua-install.sh.tmpl` | `aqua.yaml` 変更時 | `aqua install` |
 | `run_onchange_after_30-install-packages.sh.tmpl` | `packages.yaml` 変更時 | `brew install`（macOS） |
 | `run_onchange_after_40-generate-jsonnet.sh.tmpl` | jsonnet ファイル変更時 | jsonnet → JSON 生成（`~/.claude/settings.json`, `~/.gemini/settings.json`） |
+| `run_onchange_after_50-claude-plugins.sh.tmpl` | プラグイン定義変更時 | `claude plugin marketplace update` + `install` |
 
 ### Chezmoi ファイル命名規則
 

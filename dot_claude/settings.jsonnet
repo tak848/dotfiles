@@ -5,10 +5,21 @@ local permissionRules = import 'permission-rules.libsonnet';
   plansDirectory: '.claude/plans',
   teammateMode: 'tmux',
   includeCoAuthoredBy: false,
+  extraKnownMarketplaces: {
+    'tak848-plugins': {
+      source: {
+        source: 'github',
+        repo: 'tak848/dotfiles',
+      },
+    },
+  },
   enabledPlugins: {
     'github@claude-plugins-official': true,
     'context7@claude-plugins-official': true,
     'gopls-lsp@claude-plugins-official': true,
+    'devin@tak848-plugins': true,
+    'aws-knowledge@tak848-plugins': true,
+    'temporal@tak848-plugins': true,
   },
   statusLine: {
     type: 'command',
@@ -149,17 +160,19 @@ local permissionRules = import 'permission-rules.libsonnet';
       'mcp__deepwiki__read_wiki_structure',
       'mcp__deepwiki__read_wiki_contents',
       'mcp__deepwiki__ask_question',
-      'mcp__devin__ask_question',
-      'mcp__devin__read_wiki_contents',
-      // Temporal (kapa.ai hosted MCP)
-      'mcp__temporal__*',
-      // AWS Knowledge MCP
-      'mcp__aws-knowledge__aws___search_documentation',
-      'mcp__aws-knowledge__aws___read_documentation',
-      'mcp__aws-knowledge__aws___recommend',
-      'mcp__aws-knowledge__aws___list_regions',
-      'mcp__aws-knowledge__aws___get_regional_availability',
-      'mcp__aws-knowledge__aws___retrieve_agent_sop',
+      // Devin Plugin (tak848-plugins)
+      // ツール名はプラグイン化後に実機確認して修正すること
+      'mcp__plugin_devin_devin__ask_question',
+      'mcp__plugin_devin_devin__read_wiki_contents',
+      // Temporal Plugin (tak848-plugins)
+      'mcp__plugin_temporal_temporal__*',
+      // AWS Knowledge Plugin (tak848-plugins)
+      'mcp__plugin_aws-knowledge_aws-knowledge__aws___search_documentation',
+      'mcp__plugin_aws-knowledge_aws-knowledge__aws___read_documentation',
+      'mcp__plugin_aws-knowledge_aws-knowledge__aws___recommend',
+      'mcp__plugin_aws-knowledge_aws-knowledge__aws___list_regions',
+      'mcp__plugin_aws-knowledge_aws-knowledge__aws___get_regional_availability',
+      'mcp__plugin_aws-knowledge_aws-knowledge__aws___retrieve_agent_sop',
       // GitHub Plugin - read 系
       'mcp__plugin_github_github__get_me',
       'mcp__plugin_github_github__list_issues',
