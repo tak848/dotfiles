@@ -64,10 +64,17 @@ local rules = [
   {
     matcher: 'Bash',
     spec: 'Bash(npx*)',
+    reason: 'npx は禁止です。プロジェクトのスクリプトを使用してください。',
   },
   {
     matcher: 'Bash',
     spec: 'Bash(pnpx*)',
+    reason: 'pnpx は禁止です。プロジェクトのスクリプトを使用してください。',
+  },
+  {
+    matcher: 'Bash',
+    spec: 'Bash(bunx*)',
+    reason: 'bunx は禁止です。プロジェクトのスクリプトを使用してください。',
   },
   {
     matcher: 'Bash',
