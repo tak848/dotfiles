@@ -11,7 +11,7 @@
     'Draft PR Creation: If the operation creates a pull request AND draft is true in tool_input_raw, allow immediately. If draft is false or absent, fallthrough.',
     'Local Development: Build, test, lint, format commands in the current repository.',
     'Git Feature Branch: Git operations on non-protected branches (not main, master, release/*, prod).',
-    'Package Manager Install: Package manager commands (npm install, go mod tidy, pip install, uv sync, etc.) in the current repository.',
+    'Package Manager Install: Package manager commands (pnpm install, go mod tidy, uv sync, etc.) in the current repository.',
   ],
   deny: [
     'Git Destructive: force push (--force), deleting remote branches (push --delete), or rewriting published history. Check recent_transcript and tool_input.description — if the user explicitly requested the operation, fallthrough instead of deny. deny_message: git の破壊的操作です。ユーザーの明示的な指示を確認してください。',
