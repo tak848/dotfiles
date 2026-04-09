@@ -58,7 +58,22 @@ local rules = [
   },
   {
     matcher: 'Bash',
+    spec: 'Bash(npm*)',
+    reason: 'npm は禁止です。pnpm を使用してください。',
+  },
+  {
+    matcher: 'Bash',
     spec: 'Bash(npx*)',
+  },
+  {
+    matcher: 'Bash',
+    spec: 'Bash(pip *)',
+    reason: 'pip は禁止です。uv を使用してください。',
+  },
+  {
+    matcher: 'Bash',
+    spec: 'Bash(pip3 *)',
+    reason: 'pip3 は禁止です。uv を使用してください。',
   },
   {
     matcher: 'Bash',
