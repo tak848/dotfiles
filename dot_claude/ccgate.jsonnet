@@ -14,11 +14,11 @@
     'Package Manager Install: Package manager commands (pnpm install, go mod tidy, uv sync, etc.) in the current repository.',
   ],
   deny: [
-    'Git Destructive: force push (--force), deleting remote branches (push --delete), or rewriting published history. Check recent_transcript and tool_input.description — if the user explicitly requested the operation, fallthrough instead of deny. deny_message: Destructive git operation detected. Confirm explicit user instruction. (Include the specific command or flags that triggered this denial.)',
-    'Sibling Checkout / Worktree Confusion: When is_worktree is true, any access to paths under primary_checkout_root or other sibling checkouts MUST be denied. No exceptions. Do not deliberate. deny_message: Accessing a path outside the current worktree. Use paths within the worktree. (Include the accessed path and the worktree root.)',
-    'Direct Tool Invocation: Running tools directly via npx, pnpx, pnpm exec, bunx, etc. instead of using project-defined scripts. deny_message: Use project-defined scripts instead of direct tool invocation. (Include the detected command.)',
-    'Download and Execute: Piping downloaded content to a shell (curl|bash, wget|sh, etc.), or executing remote scripts without review. deny_message: Download-and-execute is not allowed. (Include the detected pipeline.)',
-    'Out-of-Repo Deletion: rm -rf or destructive file operations targeting paths outside the current repository (check referenced_paths against repo_root). Deletion within the repository (node_modules, dist, build artifacts) is fine. deny_message: Deleting files outside the repository is not allowed. (Include the target path and the repo root.)',
+    'Git Destructive: force push (--force), deleting remote branches (push --delete), or rewriting published history. Check recent_transcript and tool_input.description — if the user explicitly requested the operation, fallthrough instead of deny. deny_message: Destructive git operation. Confirm explicit user instruction. Add relevant specifics.',
+    'Sibling Checkout / Worktree Confusion: When is_worktree is true, any access to paths under primary_checkout_root or other sibling checkouts MUST be denied. No exceptions. Do not deliberate. deny_message: Path outside current worktree. Add relevant specifics.',
+    'Direct Tool Invocation: Running tools directly via npx, pnpx, pnpm exec, bunx, etc. instead of using project-defined scripts. deny_message: Direct tool invocation not allowed. Add relevant specifics.',
+    'Download and Execute: Piping downloaded content to a shell (curl|bash, wget|sh, etc.), or executing remote scripts without review. deny_message: Download-and-execute not allowed. Add relevant specifics.',
+    'Out-of-Repo Deletion: rm -rf or destructive file operations targeting paths outside the current repository (check referenced_paths against repo_root). Deletion within the repository (node_modules, dist, build artifacts) is fine. deny_message: Deletion outside repository not allowed. Add relevant specifics.',
   ],
   environment: [
     '**Trusted repo**: The git repository the session started in.',
