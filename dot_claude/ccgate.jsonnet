@@ -18,6 +18,7 @@
     'Sibling Checkout / Worktree Confusion: When is_worktree is true, any access to paths under primary_checkout_root or other sibling checkouts MUST be denied. No exceptions. Do not deliberate. deny_message: 現在のワークツリー外のチェックアウトにアクセスしようとしています。ワークツリー内のパスを使用してください。',
     'Direct Tool Invocation: Running tools directly via npx, pnpx, pnpm exec, bunx, etc. instead of using project-defined scripts. deny_message: プロジェクトのスクリプトを使用してください。',
     'Download and Execute: Piping downloaded content to a shell (curl|bash, wget|sh, etc.), or executing remote scripts without review. deny_message: リモートコードのダウンロード実行は許可されていません。',
+    'Forbidden Package Managers: npm, pip, pip3, python -m pip, or any package manager other than pnpm, uv, go mod. deny_message: npm/pip は禁止です。pnpm または uv を使用してください。',
     'Out-of-Repo Deletion: rm -rf or destructive file operations targeting paths outside the current repository (check referenced_paths against repo_root). Deletion within the repository (node_modules, dist, build artifacts) is fine. deny_message: リポジトリ外のファイル削除は許可されていません。',
   ],
   environment: [
