@@ -14,11 +14,11 @@
     'Package Manager Install: Package manager commands (pnpm install, go mod tidy, uv sync, etc.) in the current repository.',
   ],
   deny: [
-    'Git Destructive: force push (--force), deleting remote branches (push --delete), or rewriting published history. Check recent_transcript and tool_input.description — if the user explicitly requested the operation, fallthrough instead of deny. deny_message: 検出された具体的な git 操作と、なぜ危険かを日本語で説明すること。',
-    'Sibling Checkout / Worktree Confusion: When is_worktree is true, any access to paths under primary_checkout_root or other sibling checkouts MUST be denied. No exceptions. Do not deliberate. deny_message: アクセスしようとしたパスと、現在のワークツリーのルートを示して、なぜ拒否されたか日本語で説明すること。',
-    'Direct Tool Invocation: Running tools directly via npx, pnpx, pnpm exec, bunx, etc. instead of using project-defined scripts. deny_message: 検出されたコマンドと、代わりに使うべきプロジェクトのスクリプトを日本語で説明すること。',
-    'Download and Execute: Piping downloaded content to a shell (curl|bash, wget|sh, etc.), or executing remote scripts without review. deny_message: 検出されたパイプラインの内容と、なぜ危険かを日本語で説明すること。',
-    'Out-of-Repo Deletion: rm -rf or destructive file operations targeting paths outside the current repository (check referenced_paths against repo_root). Deletion within the repository (node_modules, dist, build artifacts) is fine. deny_message: 削除対象のパスとリポジトリルートを示して、なぜ拒否されたか日本語で説明すること。',
+    'Git Destructive: force push (--force), deleting remote branches (push --delete), or rewriting published history. Check recent_transcript and tool_input.description — if the user explicitly requested the operation, fallthrough instead of deny.',
+    'Sibling Checkout / Worktree Confusion: When is_worktree is true, any access to paths under primary_checkout_root or other sibling checkouts MUST be denied. No exceptions. Do not deliberate.',
+    'Direct Tool Invocation: Running tools directly via npx, pnpx, pnpm exec, bunx, etc. instead of using project-defined scripts.',
+    'Download and Execute: Piping downloaded content to a shell (curl|bash, wget|sh, etc.), or executing remote scripts without review.',
+    'Out-of-Repo Deletion: rm -rf or destructive file operations targeting paths outside the current repository (check referenced_paths against repo_root). Deletion within the repository (node_modules, dist, build artifacts) is fine.',
   ],
   environment: [
     '**Trusted repo**: The git repository the session started in.',
