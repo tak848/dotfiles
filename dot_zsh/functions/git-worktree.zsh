@@ -93,6 +93,7 @@ gwr() {
 #   gwc --pr https://github.com/owner/repo/pull/123  # PR URL から worktree 作成
 #   gwc --pr 123                     # PR 番号から worktree 作成（同じリポジトリ内）
 #   gwc --pr 123 --copy data.json    # PR と追加ファイルを指定
+#   gwc --cursor                     # 作成後に Cursor で開く
 #   export GWC_COPY_FILES=".env.test,config.local.json"  # 環境変数で事前設定
 #
 gwc() {
@@ -104,6 +105,7 @@ gwc() {
     local extra_copy_files=()
     local pr_ref=""
     local pr_mode=false
+    local open_with_cursor=false
 
     # 環境変数 GWC_COPY_FILES から追加のコピー対象ファイルを取得
     if [ -n "$GWC_COPY_FILES" ]; then
@@ -133,6 +135,10 @@ gwc() {
                 echo "エラー: --pr オプションには PR の URL または番号が必要です。" >&2
                 return 1
             fi
+            ;;
+        --cursor)
+            open_with_cursor=true
+            shift
             ;;
         *)
             echo "エラー: 不明なオプション '$1'" >&2
@@ -306,19 +312,6 @@ gwc() {
 
     fi  # PR モードでない場合の終了
 
-    # Cursor で開くかどうかのフラグ
-    local open_with_cursor=false
-
-    # cursor コマンドが存在する場合のみ質問
-    if command -v cursor >/dev/null 2>&1; then
-        echo
-        read -q "REPLY?作成後、Cursor で開きますか？ [y/N] "
-        echo
-        if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-            open_with_cursor=true
-        fi
-    fi
-
     # --- 4. セットアップコマンドの実行 ---
     if [ $worktree_add_status -eq 0 ]; then
         local find_name_args=()
@@ -376,12 +369,16 @@ gwc() {
             if command -v pnpm >/dev/null 2>&1 && { [ -f "$worktree_path/pnpm-lock.yaml" ] || [ -f "package.json" ]; }; then pnpm install --frozen-lockfile; fi
         }
 
-        # 最後に Cursor で開く（最初に選択していた場合）
+        # --cursor フラグが指定されていた場合、Cursor で開く
         if $open_with_cursor; then
-            echo "\nCursor で開いています..."
-            cursor .
-            echo "元のディレクトリに戻ります: $original_dir"
-            cd "$original_dir"
+            if command -v cursor >/dev/null 2>&1; then
+                echo "\nCursor で開いています..."
+                cursor .
+                echo "元のディレクトリに戻ります: $original_dir"
+                cd "$original_dir"
+            else
+                echo "警告: cursor コマンドが見つかりません。" >&2
+            fi
         fi
         # ★★★ ここまで ★★★
     else
