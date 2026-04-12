@@ -7,12 +7,14 @@
 {{-   $data = fromJson .chezmoi.stdin -}}
 {{- end -}}
 {{- $mcpServers := index $data "mcpServers" | default dict -}}
-{{- /* 全ての旧 MCP エントリを削除（Plugin 移行済み） */ -}}
+{{- /* github, context7, aws-knowledge, temporal は Plugin に移行済み — 旧エントリを削除 */ -}}
 {{- $_ := unset $mcpServers "github" -}}
 {{- $_ := unset $mcpServers "context7" -}}
-{{- $_ := unset $mcpServers "devin" -}}
 {{- $_ := unset $mcpServers "aws-knowledge" -}}
 {{- $_ := unset $mcpServers "temporal" -}}
+{{- /* Devin MCP: プラグインでは env var 展開が機能しないため直接定義 (claude-code#9427) */ -}}
+{{- $devin := dict "type" "http" "url" "https://mcp.devin.ai/mcp" "headers" (dict "Authorization" "Bearer ${DEVIN_API_KEY}") -}}
+{{- $mcpServers = set $mcpServers "devin" $devin -}}
 {{- $data = set $data "mcpServers" $mcpServers -}}
 {{- /* remote-control を常時有効化 */ -}}
 {{- $data = set $data "remoteControlAtStartup" true -}}

@@ -2,6 +2,8 @@
   "devin": {
     "type": "http",
     "url": "https://mcp.devin.ai/mcp",
-    "headersHelper": "echo '{\"Authorization\": \"Bearer '\"$DEVIN_API_KEY\"'\"}'"
+    "headers": {
+      "Authorization": "Bearer ${DEVIN_API_KEY}"
+    }
   }
 }

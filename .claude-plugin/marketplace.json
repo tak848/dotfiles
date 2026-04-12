@@ -7,13 +7,6 @@
   },
   "plugins": [
     {
-      "name": "devin",
-      "description": "Devin MCP for AI session management and DeepWiki documentation",
-      "version": "1.0.0",
-      "source": "./claude-plugins/devin",
-      "category": "productivity"
-    },
-    {
       "name": "aws-knowledge",
       "description": "AWS Knowledge MCP for documentation search and recommendations",
       "version": "1.0.0",
