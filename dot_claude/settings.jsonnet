@@ -17,7 +17,6 @@ local permissionRules = import 'permission-rules.libsonnet';
     'github@claude-plugins-official': true,
     'context7@claude-plugins-official': true,
     'gopls-lsp@claude-plugins-official': true,
-    'devin@tak848-plugins': true,
     'aws-knowledge@tak848-plugins': true,
     'temporal@tak848-plugins': true,
   },
@@ -160,10 +159,9 @@ local permissionRules = import 'permission-rules.libsonnet';
       'mcp__deepwiki__read_wiki_structure',
       'mcp__deepwiki__read_wiki_contents',
       'mcp__deepwiki__ask_question',
-      // Devin Plugin (tak848-plugins)
-      // ツール名はプラグイン化後に実機確認して修正すること
-      'mcp__plugin_devin_devin__ask_question',
-      'mcp__plugin_devin_devin__read_wiki_contents',
+      // Devin MCP (直接定義 — プラグインでは env var 展開が未対応)
+      'mcp__devin__ask_question',
+      'mcp__devin__read_wiki_contents',
       // Temporal Plugin (tak848-plugins)
       'mcp__plugin_temporal_temporal__*',
       // AWS Knowledge Plugin (tak848-plugins)
