@@ -65,36 +65,36 @@ checksum = "sha256:277b83ddbe836a627dcde0655720aa42b02277fdf3a9cdaebeef2a53e9859
 url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_windows_amd64.tar.gz"
 
 [[tools."aqua:neovim/neovim"]]
-version = "0.12.0"
+version = "0.12.1"
 backend = "aqua:neovim/neovim"
 
 [tools."aqua:neovim/neovim"."platforms.linux-arm64"]
-checksum = "sha256:89024e7be2ef3c8f08e9c002b1eb3e3b36672ee44bd6343cf2d168d38b3736b2"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-linux-arm64.tar.gz"
+checksum = "sha256:a3f8aa5590fd2ac930bcc5c9070b9ac1ec33461d262b6428874c5fc640f3f13c"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-arm64.tar.gz"
 
 [tools."aqua:neovim/neovim"."platforms.linux-arm64-musl"]
-checksum = "sha256:89024e7be2ef3c8f08e9c002b1eb3e3b36672ee44bd6343cf2d168d38b3736b2"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-linux-arm64.tar.gz"
+checksum = "sha256:a3f8aa5590fd2ac930bcc5c9070b9ac1ec33461d262b6428874c5fc640f3f13c"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-arm64.tar.gz"
 
 [tools."aqua:neovim/neovim"."platforms.linux-x64"]
-checksum = "sha256:160b69125defb16e60b283b69be112fd4850d67ac8f9a752328c20ad43ec34af"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-linux-x86_64.tar.gz"
+checksum = "sha256:ab757a1fd9ad307d53d2df4045698906a7ca3993d92260dd8fe49108712d57d0"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-x86_64.tar.gz"
 
 [tools."aqua:neovim/neovim"."platforms.linux-x64-musl"]
-checksum = "sha256:160b69125defb16e60b283b69be112fd4850d67ac8f9a752328c20ad43ec34af"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-linux-x86_64.tar.gz"
+checksum = "sha256:ab757a1fd9ad307d53d2df4045698906a7ca3993d92260dd8fe49108712d57d0"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-x86_64.tar.gz"
 
 [tools."aqua:neovim/neovim"."platforms.macos-arm64"]
-checksum = "sha256:cf0137d6961785c34926f879b7a5b5fa0371ab0d6e2959e390e2f00b46165ce9"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-macos-arm64.tar.gz"
+checksum = "sha256:b77e01c5421ac1bac593eed5c2ea1b950439306dd4c32371ac2473792da9a9d5"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-macos-arm64.tar.gz"
 
 [tools."aqua:neovim/neovim"."platforms.macos-x64"]
-checksum = "sha256:309b3252a04bf8e4043389d3ea9bbb94e17becea2cde74f11f948b4775bbe3d4"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-macos-x86_64.tar.gz"
+checksum = "sha256:e59a5eafcdf824e2bf6a738e75f8f62ba4ff1b7f1c7daaec2d134aa46737907c"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-macos-x86_64.tar.gz"
 
 [tools."aqua:neovim/neovim"."platforms.windows-x64"]
-checksum = "sha256:7e6d4ac6b22a46e89b0da3ac560635ee39c00081f14093a8851154fb260b7428"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-win64.zip"
+checksum = "sha256:75fedc530b3772ca9f177edc7db92560bb9d2d6700ac6d5b2c53eaf5a9317ae3"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-win64.zip"
 
 [[tools."github:aquaproj/aqua"]]
 version = "2.57.1"
