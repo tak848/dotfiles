@@ -21,4 +21,4 @@ pnpm = "10.33.0"
 "aqua:neovim/neovim" = "0.12.0"
 
 # npm パッケージ
-"npm:cc-sdd" = "2.1.1"
+"npm:cc-sdd" = "3.0.1"
