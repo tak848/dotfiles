@@ -83,42 +83,42 @@ checksum = "sha256:0ff0b4c4e30ca0615fc0cd966b7bc3f10b6c02b8a3164802b94e621aa5aee
 url = "https://github.com/arl/gitmux/releases/download/v0.11.5/gitmux_v0.11.5_macOS_amd64.tar.gz"
 
 [[tools."aqua:astral-sh/uv"]]
-version = "0.11.3"
+version = "0.11.6"
 backend = "aqua:astral-sh/uv"
 
 [tools."aqua:astral-sh/uv"."platforms.linux-arm64"]
-checksum = "sha256:8ecec82cb9a744d5fabff6d16d7777218a7730f699d2aa0d2f751c17858e2efa"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.3/uv-aarch64-unknown-linux-musl.tar.gz"
+checksum = "sha256:d14ebd6f200047264152daaf97b8bd36c7885a5033e9e8bba8366cb0049c0d00"
+url = "https://github.com/astral-sh/uv/releases/download/0.11.6/uv-aarch64-unknown-linux-musl.tar.gz"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.linux-arm64-musl"]
-checksum = "sha256:8ecec82cb9a744d5fabff6d16d7777218a7730f699d2aa0d2f751c17858e2efa"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.3/uv-aarch64-unknown-linux-musl.tar.gz"
+checksum = "sha256:d14ebd6f200047264152daaf97b8bd36c7885a5033e9e8bba8366cb0049c0d00"
+url = "https://github.com/astral-sh/uv/releases/download/0.11.6/uv-aarch64-unknown-linux-musl.tar.gz"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.linux-x64"]
-checksum = "sha256:8b40cf16b849634b81a530a3d0a0bcae5f24996ef9ae782976fd69b6266d3b8e"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.3/uv-x86_64-unknown-linux-musl.tar.gz"
+checksum = "sha256:aa342a53abe42364093506d7704214d2cdca30b916843e520bc67759a5d20132"
+url = "https://github.com/astral-sh/uv/releases/download/0.11.6/uv-x86_64-unknown-linux-musl.tar.gz"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.linux-x64-musl"]
-checksum = "sha256:8b40cf16b849634b81a530a3d0a0bcae5f24996ef9ae782976fd69b6266d3b8e"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.3/uv-x86_64-unknown-linux-musl.tar.gz"
+checksum = "sha256:aa342a53abe42364093506d7704214d2cdca30b916843e520bc67759a5d20132"
+url = "https://github.com/astral-sh/uv/releases/download/0.11.6/uv-x86_64-unknown-linux-musl.tar.gz"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.macos-arm64"]
-checksum = "sha256:2bc3d0c7bf2bd08325b1e170abac6f7e5b3346e1d4eab3370d17cefec934996f"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.3/uv-aarch64-apple-darwin.tar.gz"
+checksum = "sha256:4b69a4e366ec38cd5f305707de95e12951181c448679a00dce2a78868dfc9f5b"
+url = "https://github.com/astral-sh/uv/releases/download/0.11.6/uv-aarch64-apple-darwin.tar.gz"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.macos-x64"]
-checksum = "sha256:b0e05e0b43a000fdc2132ee3f3400ba5dee427bc2337d3ec4eb8cf4f3d5722af"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.3/uv-x86_64-apple-darwin.tar.gz"
+checksum = "sha256:8e0ed5035eaa28c7c8cd2a46b5b9a05bfff1ef01dbdc090a010eb8fdf193a457"
+url = "https://github.com/astral-sh/uv/releases/download/0.11.6/uv-x86_64-apple-darwin.tar.gz"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.windows-x64"]
-checksum = "sha256:ae681c0aaec7cc96af184648cb88d73f8393ed60fa5880abdd6bdb910f9b227c"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.3/uv-x86_64-pc-windows-msvc.zip"
+checksum = "sha256:99aa60edd017a256dbf378f372d1cff3292dbc6696e0ea01716d9158d773ab77"
+url = "https://github.com/astral-sh/uv/releases/download/0.11.6/uv-x86_64-pc-windows-msvc.zip"
 provenance = "github-attestations"
 
 [[tools."aqua:bufbuild/buf"]]
@@ -456,36 +456,36 @@ checksum = "sha256:2af0b2516cd006b1849f2cdae4cd82abbf5d1c2d49b88563daffaa1fb4ac4
 url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.25.0/lazydocker_0.25.0_Windows_x86_64.zip"
 
 [[tools."aqua:jesseduffield/lazygit"]]
-version = "0.60.0"
+version = "0.61.0"
 backend = "aqua:jesseduffield/lazygit"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.linux-arm64"]
-checksum = "sha256:2c699579165416eede4d2cfaf7d76ccd8f3b20f20f2e8b4abff6b5a6350fcdd7"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.60.0/lazygit_0.60.0_linux_arm64.tar.gz"
+checksum = "sha256:7c3b1594fbb5ca29c17f875c0240849dd924f29bdeaf819ef26ae2107ccad84c"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.61.0/lazygit_0.61.0_linux_arm64.tar.gz"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.linux-arm64-musl"]
-checksum = "sha256:2c699579165416eede4d2cfaf7d76ccd8f3b20f20f2e8b4abff6b5a6350fcdd7"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.60.0/lazygit_0.60.0_linux_arm64.tar.gz"
+checksum = "sha256:7c3b1594fbb5ca29c17f875c0240849dd924f29bdeaf819ef26ae2107ccad84c"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.61.0/lazygit_0.61.0_linux_arm64.tar.gz"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.linux-x64"]
-checksum = "sha256:6252ca6cf98bc4fd3e0d927b54225910cfa57b065d0ad88263f14592f7f9ab15"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.60.0/lazygit_0.60.0_linux_x86_64.tar.gz"
+checksum = "sha256:4a9702b346283a23a6919c9424617e14788ac00e9cd3c9be266bac48cc6de8eb"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.61.0/lazygit_0.61.0_linux_x86_64.tar.gz"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.linux-x64-musl"]
-checksum = "sha256:6252ca6cf98bc4fd3e0d927b54225910cfa57b065d0ad88263f14592f7f9ab15"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.60.0/lazygit_0.60.0_linux_x86_64.tar.gz"
+checksum = "sha256:4a9702b346283a23a6919c9424617e14788ac00e9cd3c9be266bac48cc6de8eb"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.61.0/lazygit_0.61.0_linux_x86_64.tar.gz"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.macos-arm64"]
-checksum = "sha256:5045f0ff2117f12cb5232d65e01c054eb9ea6b8e2f0f0b80e99fbaa589b581b9"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.60.0/lazygit_0.60.0_darwin_arm64.tar.gz"
+checksum = "sha256:7dc684c3c40812de72f7852222d415fecb1c4dae2058b23e5a3c4a5341dc6e9f"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.61.0/lazygit_0.61.0_darwin_arm64.tar.gz"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.macos-x64"]
-checksum = "sha256:9210a8bd8bf18537f9d7747361c8eba62518e10e4d5fbfe915cf110635eaab78"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.60.0/lazygit_0.60.0_darwin_x86_64.tar.gz"
+checksum = "sha256:196232de7647094bb51681afb3fc3076d5b4eb70ae99b9cec145462b13aab54f"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.61.0/lazygit_0.61.0_darwin_x86_64.tar.gz"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.windows-x64"]
-checksum = "sha256:435b53165ff4604e201549b9317eb0b8bb5b3f6728be612656988e90c821a9b9"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.60.0/lazygit_0.60.0_windows_x86_64.zip"
+checksum = "sha256:26bb374ee7f3c6e52627262c7f8cc96ab23f96dfd3ef95b3d485d2ef9b842764"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.61.0/lazygit_0.61.0_windows_x86_64.zip"
 
 [[tools."aqua:jqlang/jq"]]
 version = "1.8.1"
@@ -527,36 +527,36 @@ url = "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-windows-amd64.
 provenance = "github-attestations"
 
 [[tools."aqua:junegunn/fzf"]]
-version = "0.70.0"
+version = "0.71.0"
 backend = "aqua:junegunn/fzf"
 
 [tools."aqua:junegunn/fzf"."platforms.linux-arm64"]
-checksum = "sha256:90a07a13b61f56dd59ccfd0f0bf05070e9cec067713d313fa2607aab2dc0e422"
-url = "https://github.com/junegunn/fzf/releases/download/v0.70.0/fzf-0.70.0-linux_arm64.tar.gz"
+checksum = "sha256:98b7d322efae9c37e4bfbbab1cbcd8722eb742d9399511f96375feb40cc35d1d"
+url = "https://github.com/junegunn/fzf/releases/download/v0.71.0/fzf-0.71.0-linux_arm64.tar.gz"
 
 [tools."aqua:junegunn/fzf"."platforms.linux-arm64-musl"]
-checksum = "sha256:90a07a13b61f56dd59ccfd0f0bf05070e9cec067713d313fa2607aab2dc0e422"
-url = "https://github.com/junegunn/fzf/releases/download/v0.70.0/fzf-0.70.0-linux_arm64.tar.gz"
+checksum = "sha256:98b7d322efae9c37e4bfbbab1cbcd8722eb742d9399511f96375feb40cc35d1d"
+url = "https://github.com/junegunn/fzf/releases/download/v0.71.0/fzf-0.71.0-linux_arm64.tar.gz"
 
 [tools."aqua:junegunn/fzf"."platforms.linux-x64"]
-checksum = "sha256:8fd0e0b93bdf64ba90081ffb6658d77ea5a024c122b36852b1de30f9d2733754"
-url = "https://github.com/junegunn/fzf/releases/download/v0.70.0/fzf-0.70.0-linux_amd64.tar.gz"
+checksum = "sha256:22639bb38489dbca8acef57850cbb50231ab714d0e8e855ac52fae8b41233df4"
+url = "https://github.com/junegunn/fzf/releases/download/v0.71.0/fzf-0.71.0-linux_amd64.tar.gz"
 
 [tools."aqua:junegunn/fzf"."platforms.linux-x64-musl"]
-checksum = "sha256:8fd0e0b93bdf64ba90081ffb6658d77ea5a024c122b36852b1de30f9d2733754"
-url = "https://github.com/junegunn/fzf/releases/download/v0.70.0/fzf-0.70.0-linux_amd64.tar.gz"
+checksum = "sha256:22639bb38489dbca8acef57850cbb50231ab714d0e8e855ac52fae8b41233df4"
+url = "https://github.com/junegunn/fzf/releases/download/v0.71.0/fzf-0.71.0-linux_amd64.tar.gz"
 
 [tools."aqua:junegunn/fzf"."platforms.macos-arm64"]
-checksum = "sha256:75f4905c2e3d00666d81dffdd001bb2a9a8e0ad4e4ac8cecfc17a7401b99e6e4"
-url = "https://github.com/junegunn/fzf/releases/download/v0.70.0/fzf-0.70.0-darwin_arm64.tar.gz"
+checksum = "sha256:02dfb11de8773cb79aa4fc5bfc77e75c6604ee14728bc849fc162dd91a9714c4"
+url = "https://github.com/junegunn/fzf/releases/download/v0.71.0/fzf-0.71.0-darwin_arm64.tar.gz"
 
 [tools."aqua:junegunn/fzf"."platforms.macos-x64"]
-checksum = "sha256:46af74cfeb171c5e2eb936096a653061a0de0f5aeb70319bf9935d8d193e078f"
-url = "https://github.com/junegunn/fzf/releases/download/v0.70.0/fzf-0.70.0-darwin_amd64.tar.gz"
+checksum = "sha256:144e98ee6bcffaf915366162768000561cd2db8fb53b119d73110391a8e5b5f0"
+url = "https://github.com/junegunn/fzf/releases/download/v0.71.0/fzf-0.71.0-darwin_amd64.tar.gz"
 
 [tools."aqua:junegunn/fzf"."platforms.windows-x64"]
-checksum = "sha256:7465a6738e2c844742df973459c7509aed2d10d7a72bfd6de201b867b4eda4cd"
-url = "https://github.com/junegunn/fzf/releases/download/v0.70.0/fzf-0.70.0-windows_amd64.zip"
+checksum = "sha256:15bf30fa658c596d740f0ce9a9a97b6b5d90566124903657d09fd109dd0973d2"
+url = "https://github.com/junegunn/fzf/releases/download/v0.71.0/fzf-0.71.0-windows_amd64.zip"
 
 [[tools."aqua:kubernetes/kubectl"]]
 version = "1.35.0"
@@ -623,36 +623,36 @@ checksum = "sha256:47594981f3848a4b4447494adeca9555f908f7cf0a89c4da3fd0243a4631d
 url = "https://github.com/mikefarah/yq/releases/download/v4.52.5/yq_windows_amd64.exe"
 
 [[tools."aqua:neovim/neovim"]]
-version = "0.12.0"
+version = "0.12.1"
 backend = "aqua:neovim/neovim"
 
 [tools."aqua:neovim/neovim"."platforms.linux-arm64"]
-checksum = "sha256:89024e7be2ef3c8f08e9c002b1eb3e3b36672ee44bd6343cf2d168d38b3736b2"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-linux-arm64.tar.gz"
+checksum = "sha256:a3f8aa5590fd2ac930bcc5c9070b9ac1ec33461d262b6428874c5fc640f3f13c"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-arm64.tar.gz"
 
 [tools."aqua:neovim/neovim"."platforms.linux-arm64-musl"]
-checksum = "sha256:89024e7be2ef3c8f08e9c002b1eb3e3b36672ee44bd6343cf2d168d38b3736b2"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-linux-arm64.tar.gz"
+checksum = "sha256:a3f8aa5590fd2ac930bcc5c9070b9ac1ec33461d262b6428874c5fc640f3f13c"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-arm64.tar.gz"
 
 [tools."aqua:neovim/neovim"."platforms.linux-x64"]
-checksum = "sha256:160b69125defb16e60b283b69be112fd4850d67ac8f9a752328c20ad43ec34af"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-linux-x86_64.tar.gz"
+checksum = "sha256:ab757a1fd9ad307d53d2df4045698906a7ca3993d92260dd8fe49108712d57d0"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-x86_64.tar.gz"
 
 [tools."aqua:neovim/neovim"."platforms.linux-x64-musl"]
-checksum = "sha256:160b69125defb16e60b283b69be112fd4850d67ac8f9a752328c20ad43ec34af"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-linux-x86_64.tar.gz"
+checksum = "sha256:ab757a1fd9ad307d53d2df4045698906a7ca3993d92260dd8fe49108712d57d0"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-x86_64.tar.gz"
 
 [tools."aqua:neovim/neovim"."platforms.macos-arm64"]
-checksum = "sha256:cf0137d6961785c34926f879b7a5b5fa0371ab0d6e2959e390e2f00b46165ce9"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-macos-arm64.tar.gz"
+checksum = "sha256:b77e01c5421ac1bac593eed5c2ea1b950439306dd4c32371ac2473792da9a9d5"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-macos-arm64.tar.gz"
 
 [tools."aqua:neovim/neovim"."platforms.macos-x64"]
-checksum = "sha256:309b3252a04bf8e4043389d3ea9bbb94e17becea2cde74f11f948b4775bbe3d4"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-macos-x86_64.tar.gz"
+checksum = "sha256:e59a5eafcdf824e2bf6a738e75f8f62ba4ff1b7f1c7daaec2d134aa46737907c"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-macos-x86_64.tar.gz"
 
 [tools."aqua:neovim/neovim"."platforms.windows-x64"]
-checksum = "sha256:7e6d4ac6b22a46e89b0da3ac560635ee39c00081f14093a8851154fb260b7428"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-win64.zip"
+checksum = "sha256:75fedc530b3772ca9f177edc7db92560bb9d2d6700ac6d5b2c53eaf5a9317ae3"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-win64.zip"
 
 [[tools."aqua:openai/codex"]]
 version = "0.120.0"
@@ -836,68 +836,68 @@ checksum = "sha256:8a5a77a252af2c76284d6136940a3ff3bd550964df37a544986710191021a
 url = "https://github.com/temporalio/cli/releases/download/v1.6.2/temporal_cli_1.6.2_windows_amd64.tar.gz"
 
 [[tools."aqua:twpayne/chezmoi"]]
-version = "2.70.0"
+version = "2.70.1"
 backend = "aqua:twpayne/chezmoi"
 
 [tools."aqua:twpayne/chezmoi"."platforms.linux-arm64"]
-checksum = "sha256:c65fb55bee4fb2bc14362998e2ce0cf1b1688bce0abfd7dd48cbac6448d6fc75"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.0/chezmoi_2.70.0_linux_arm64.tar.gz"
+checksum = "sha256:7f8307cef8aade159cdee372a10871a606a50c6239284c0860fb463a174faba0"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.1/chezmoi_2.70.1_linux_arm64.tar.gz"
 
 [tools."aqua:twpayne/chezmoi"."platforms.linux-arm64-musl"]
-checksum = "sha256:c65fb55bee4fb2bc14362998e2ce0cf1b1688bce0abfd7dd48cbac6448d6fc75"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.0/chezmoi_2.70.0_linux_arm64.tar.gz"
+checksum = "sha256:7f8307cef8aade159cdee372a10871a606a50c6239284c0860fb463a174faba0"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.1/chezmoi_2.70.1_linux_arm64.tar.gz"
 
 [tools."aqua:twpayne/chezmoi"."platforms.linux-x64"]
-checksum = "sha256:32dbc87a4db7163d0f8c3156b631e3ee1cc6fed400f43ff467eca4211f2905e7"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.0/chezmoi_2.70.0_linux_amd64.tar.gz"
+checksum = "sha256:3bd054238e2a95548eee62a6c5b4d9d1352f2c6c69c6d32f3d1964878398f91a"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.1/chezmoi_2.70.1_linux_amd64.tar.gz"
 
 [tools."aqua:twpayne/chezmoi"."platforms.linux-x64-musl"]
-checksum = "sha256:32dbc87a4db7163d0f8c3156b631e3ee1cc6fed400f43ff467eca4211f2905e7"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.0/chezmoi_2.70.0_linux_amd64.tar.gz"
+checksum = "sha256:3bd054238e2a95548eee62a6c5b4d9d1352f2c6c69c6d32f3d1964878398f91a"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.1/chezmoi_2.70.1_linux_amd64.tar.gz"
 
 [tools."aqua:twpayne/chezmoi"."platforms.macos-arm64"]
-checksum = "sha256:87142ac0465e9b1cd04a71c06c5164867fded7778c3c098f8efbea3ee9df1ade"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.0/chezmoi_2.70.0_darwin_arm64.tar.gz"
+checksum = "sha256:814fd391b755046d9dbe17c1a7e93d7dd725b2842bf9663c08645771f4a92cf1"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.1/chezmoi_2.70.1_darwin_arm64.tar.gz"
 
 [tools."aqua:twpayne/chezmoi"."platforms.macos-x64"]
-checksum = "sha256:8d8abb5da0805ce6fa4d387cf3d9615281ad5b26007bf4d469af603ab3c237af"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.0/chezmoi_2.70.0_darwin_amd64.tar.gz"
+checksum = "sha256:36b9b41dd88485afd30c7940398edef3b4757c19e36689f9324012391ea7dbff"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.1/chezmoi_2.70.1_darwin_amd64.tar.gz"
 
 [tools."aqua:twpayne/chezmoi"."platforms.windows-x64"]
-checksum = "sha256:bd75e4892ed22d5ab767c06242fc72c23c5848ad5b1aea27fd95aec03c10c777"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.0/chezmoi_2.70.0_windows_amd64.zip"
+checksum = "sha256:dfd54ea02f4290dd7d072c2c932efcbdbe3af01035f22315986654711c6d97bd"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.1/chezmoi_2.70.1_windows_amd64.zip"
 
 [[tools."aqua:x-motemen/ghq"]]
-version = "1.9.4"
+version = "1.10.1"
 backend = "aqua:x-motemen/ghq"
 
 [tools."aqua:x-motemen/ghq"."platforms.linux-arm64"]
-checksum = "sha256:9952724ef1369d9f3fc8cc566a7dedfc8770f56015d5f751e4d6d69a8aa0a07e"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.9.4/ghq_linux_arm64.zip"
+checksum = "sha256:7ed154f62751e91c8a2d415280caeeba3d114050d01e39f3d0f4aa1be15f3954"
+url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_linux_arm64.zip"
 
 [tools."aqua:x-motemen/ghq"."platforms.linux-arm64-musl"]
-checksum = "sha256:9952724ef1369d9f3fc8cc566a7dedfc8770f56015d5f751e4d6d69a8aa0a07e"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.9.4/ghq_linux_arm64.zip"
+checksum = "sha256:7ed154f62751e91c8a2d415280caeeba3d114050d01e39f3d0f4aa1be15f3954"
+url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_linux_arm64.zip"
 
 [tools."aqua:x-motemen/ghq"."platforms.linux-x64"]
-checksum = "sha256:33752b7c4fea9751c6d3fa092ea6fb33c3671cde641f20dd7f8328a3a9e240b3"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.9.4/ghq_linux_amd64.zip"
+checksum = "sha256:32e380aa8ac76fdd58758cc06174d9ee5db7270bd0cbcc18138b5d36def91b6b"
+url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_linux_amd64.zip"
 
 [tools."aqua:x-motemen/ghq"."platforms.linux-x64-musl"]
-checksum = "sha256:33752b7c4fea9751c6d3fa092ea6fb33c3671cde641f20dd7f8328a3a9e240b3"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.9.4/ghq_linux_amd64.zip"
+checksum = "sha256:32e380aa8ac76fdd58758cc06174d9ee5db7270bd0cbcc18138b5d36def91b6b"
+url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_linux_amd64.zip"
 
 [tools."aqua:x-motemen/ghq"."platforms.macos-arm64"]
-checksum = "sha256:4f778cacf48f41bf5ba7af8dd011d3af874f585b447a925c4b389ce724e0335c"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.9.4/ghq_darwin_arm64.zip"
+checksum = "sha256:5e3100de0c5a248eebe6ab176ad94d6e12386af70a58c535368a4301861b1398"
+url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_darwin_arm64.zip"
 
 [tools."aqua:x-motemen/ghq"."platforms.macos-x64"]
-checksum = "sha256:8adeacc4f9db32bd362bbb6923cc330cff691faa85d60d084f8a9677f91d032a"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.9.4/ghq_darwin_amd64.zip"
+checksum = "sha256:491e88380b817eee3ab5a3aa09dbe8491b9495a0ffc5223b60e7f4679a97a8eb"
+url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_darwin_amd64.zip"
 
 [tools."aqua:x-motemen/ghq"."platforms.windows-x64"]
-checksum = "sha256:4b7adbbfd2c3b74ef01739aad053aa4952cd5f1b0520450c2dcd2dccc502c58b"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.9.4/ghq_windows_amd64.zip"
+checksum = "sha256:a526da44d5f67250598fa95e5654815e9f672b2c05d1d98c28bce0e60d3cfa6c"
+url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_windows_amd64.zip"
 
 [[tools."github:aquaproj/aqua"]]
 version = "2.57.1"
@@ -1024,39 +1024,39 @@ url = "https://github.com/tmux/tmux-builds/releases/download/v3.6a/LICENSES.tar.
 url_api = "https://api.github.com/repos/tmux/tmux-builds/releases/assets/331787047"
 
 [[tools.go]]
-version = "1.26.1"
+version = "1.26.2"
 backend = "core:go"
 
 [tools.go."platforms.linux-arm64"]
-checksum = "sha256:a290581cfe4fe28ddd737dde3095f3dbeb7f2e4065cab4eae44dfc53b760c2f7"
-url = "https://dl.google.com/go/go1.26.1.linux-arm64.tar.gz"
+checksum = "sha256:c958a1fe1b361391db163a485e21f5f228142d6f8b584f6bef89b26f66dc5b23"
+url = "https://dl.google.com/go/go1.26.2.linux-arm64.tar.gz"
 
 [tools.go."platforms.linux-arm64-musl"]
-checksum = "sha256:a290581cfe4fe28ddd737dde3095f3dbeb7f2e4065cab4eae44dfc53b760c2f7"
-url = "https://dl.google.com/go/go1.26.1.linux-arm64.tar.gz"
+checksum = "sha256:c958a1fe1b361391db163a485e21f5f228142d6f8b584f6bef89b26f66dc5b23"
+url = "https://dl.google.com/go/go1.26.2.linux-arm64.tar.gz"
 
 [tools.go."platforms.linux-x64"]
-checksum = "sha256:031f088e5d955bab8657ede27ad4e3bc5b7c1ba281f05f245bcc304f327c987a"
-url = "https://dl.google.com/go/go1.26.1.linux-amd64.tar.gz"
+checksum = "sha256:990e6b4bbba816dc3ee129eaeaf4b42f17c2800b88a2166c265ac1a200262282"
+url = "https://dl.google.com/go/go1.26.2.linux-amd64.tar.gz"
 
 [tools.go."platforms.linux-x64-musl"]
-checksum = "sha256:031f088e5d955bab8657ede27ad4e3bc5b7c1ba281f05f245bcc304f327c987a"
-url = "https://dl.google.com/go/go1.26.1.linux-amd64.tar.gz"
+checksum = "sha256:990e6b4bbba816dc3ee129eaeaf4b42f17c2800b88a2166c265ac1a200262282"
+url = "https://dl.google.com/go/go1.26.2.linux-amd64.tar.gz"
 
 [tools.go."platforms.macos-arm64"]
-checksum = "sha256:353df43a7811ce284c8938b5f3c7df40b7bfb6f56cb165b150bc40b5e2dd541f"
-url = "https://dl.google.com/go/go1.26.1.darwin-arm64.tar.gz"
+checksum = "sha256:32af1522bf3e3ff3975864780a429cc0b41d190ec7bf90faa661d6d64566e7af"
+url = "https://dl.google.com/go/go1.26.2.darwin-arm64.tar.gz"
 
 [tools.go."platforms.macos-x64"]
-checksum = "sha256:65773dab2f8cc4cd23d93ba6d0a805de150ca0b78378879292be0b903b8cdd08"
-url = "https://dl.google.com/go/go1.26.1.darwin-amd64.tar.gz"
+checksum = "sha256:bc3f1500d9968c36d705442d90ba91addf9271665033748b82532682e90a7966"
+url = "https://dl.google.com/go/go1.26.2.darwin-amd64.tar.gz"
 
 [tools.go."platforms.windows-x64"]
-checksum = "sha256:9b68112c913f45b7aebbf13c036721264bbba7e03a642f8f7490c561eebd1ecc"
-url = "https://dl.google.com/go/go1.26.1.windows-amd64.zip"
+checksum = "sha256:98eb3570bade15cb826b0909338df6cc6d2cf590bc39c471142002db3832b708"
+url = "https://dl.google.com/go/go1.26.2.windows-amd64.zip"
 
 [[tools."go:github.com/tak848/ccgate"]]
-version = "0.4.0"
+version = "0.4.1"
 backend = "go:github.com/tak848/ccgate"
 
 [[tools."go:golang.org/x/tools/gopls"]]
@@ -1100,15 +1100,15 @@ version = "18.0.10"
 backend = "npm:@ccusage/codex"
 
 [[tools."npm:@fission-ai/openspec"]]
-version = "1.2.0"
+version = "1.3.0"
 backend = "npm:@fission-ai/openspec"
 
 [[tools."npm:@google/gemini-cli"]]
-version = "0.36.0"
+version = "0.37.1"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260403.1"
+version = "7.0.0-dev.20260412.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -1120,11 +1120,11 @@ version = "18.0.10"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
-version = "4.0.2"
+version = "4.0.3"
 backend = "npm:difit"
 
 [[tools."npm:freee-mcp"]]
-version = "0.18.0"
+version = "0.22.1"
 backend = "npm:freee-mcp"
 
 [[tools.pnpm]]
