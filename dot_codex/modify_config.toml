@@ -5,6 +5,7 @@ model = "gpt-5.4"
 model_context_window = 1000000
 model_auto_compact_token_limit = 500000
 model_reasoning_effort = "high"
+plan_mode_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 personality = "pragmatic"
 web_search = "live"
