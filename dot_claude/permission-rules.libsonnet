@@ -1,11 +1,16 @@
 local shellSingleQuote(s) =
   "'" + std.strReplace(s, "'", "'\"'\"'") + "'";
 
+// Claude Code v2.1.105 以降、hooks[].if の評価が shell expansion ($(...), $$, ${VAR} 等) を
+// 含むコマンドで fall-open するリグレッションがあり、deny を返すと暴発で大量の false positive
+// deny が発生してコマンド実行が阻害される。
+// そこで permissionDecision は指定せず additionalContext のみで reason を Claude に届ける暫定措置。
+// 本物の deny 判定は permissions.deny 側 (permissionsDeny に同じ spec を登録済み) に完全委任する。
+// 上流修正が入ったら permissionDecision: 'deny' 方式に戻す。
 local preToolResponse(reason) = {
   hookSpecificOutput: {
     hookEventName: 'PreToolUse',
-    permissionDecision: 'deny',
-    permissionDecisionReason: '[auto-rejected: pattern matched] ' + reason,
+    additionalContext: '[deny hint] このコマンドは permissions.deny にマッチする可能性があります。背景: ' + reason,
   },
 };
 
