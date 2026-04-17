@@ -201,7 +201,8 @@ local permissionRules = import 'permission-rules.libsonnet';
   },
   // model: 'claude-opus-4-1-20250805',
   // model: 'claude-opus-4-6',
-  model: 'claude-opus-4-6[1m]',
+  // model: 'claude-opus-4-6[1m]',
+  model: 'claude-opus-4-7[1m]',
   // model: 'opus',
 
   // 無効らしい
@@ -248,7 +249,7 @@ local permissionRules = import 'permission-rules.libsonnet';
     CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR: '1',
     CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: '1',
   },
-  effortLevel: 'high',
+  effortLevel: 'xhigh',
   // alwaysThinkingEnabled は adaptive thinking (effortLevel) により不要
   // alwaysThinkingEnabled: true,  // https://github.com/anthropics/claude-code/issues/8780
   hooks: {
