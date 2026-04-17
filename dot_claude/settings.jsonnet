@@ -249,7 +249,7 @@ local permissionRules = import 'permission-rules.libsonnet';
     CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR: '1',
     CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: '1',
   },
-  effortLevel: 'high',
+  effortLevel: 'xhigh',
   // alwaysThinkingEnabled は adaptive thinking (effortLevel) により不要
   // alwaysThinkingEnabled: true,  // https://github.com/anthropics/claude-code/issues/8780
   hooks: {
