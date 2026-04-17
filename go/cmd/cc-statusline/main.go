@@ -32,6 +32,9 @@ type Data struct {
 		TotalLinesAdded   int     `json:"total_lines_added"`
 		TotalLinesRemoved int     `json:"total_lines_removed"`
 	} `json:"cost"`
+	Workspace struct {
+		GitWorktree string `json:"git_worktree"`
+	} `json:"workspace"`
 	RateLimits *struct {
 		FiveHour *struct {
 			UsedPercentage float64 `json:"used_percentage"`
@@ -123,9 +126,15 @@ func main() {
 
 	sep := colors.Surface + " | " + colors.Reset
 
-	// Line 1: model + progress bar + percentage + tokens
-	fmt.Printf("%s[%s]%s %s %s%d%%%s (%dk/%dk)\n",
+	var wtPart string
+	if d.Workspace.GitWorktree != "" {
+		wtPart = fmt.Sprintf(" %s⎇ %s%s", colors.Peach, d.Workspace.GitWorktree, colors.Reset)
+	}
+
+	// Line 1: model + worktree? + progress bar + percentage + tokens
+	fmt.Printf("%s[%s]%s%s %s %s%d%%%s (%dk/%dk)\n",
 		colors.Teal, d.Model.DisplayName, colors.Reset,
+		wtPart,
 		bar,
 		ctxClr, pct, colors.Reset,
 		usedK, maxK)
