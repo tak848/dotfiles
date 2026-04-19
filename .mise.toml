@@ -7,7 +7,7 @@ locked = false                                 # npm backend が checksum 未対
 
 [tools]
 # このリポジトリで使うランタイム
-node = "24.14.1"
+node = "24.15.0"
 pnpm = "10.33.0"
 
 # aqua CLI（dot_config/aquaproj-aqua の管理用）
@@ -15,7 +15,7 @@ pnpm = "10.33.0"
 
 # このリポジトリで使う CLI ツール
 "aqua:google/go-jsonnet" = "0.22.0"
-"aqua:go-task/task" = "3.49.1"
+"aqua:go-task/task" = "3.50.0"
 
 # lazy-lock.yaml ワークフローで使用
 "aqua:neovim/neovim" = "0.12.1"
