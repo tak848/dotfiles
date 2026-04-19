@@ -216,9 +216,11 @@
     // (Classifier が Declared Dependencies allow として `npm install` を通してしまうのを防ぐ)
     'npm Package Manager Forbidden: Any `npm` invocation (install, i, ci, update, run, exec, publish, etc.) is forbidden. Use `pnpm` for project dependencies. This applies even when the command is wrapped in $(), pipes, or loops.',
 
-    // node エコシステムでの global install を禁止。global 汚染を避けるため tool は mise/aqua に寄せる。
-    // `npm i -g`, `npm install -g`, `pnpm add -g`, `pnpm install -g`, `pnpm i -g`, `yarn global add` 等。
-    'Global Node Package Install Forbidden: Installing node packages globally is forbidden — e.g. `npm install -g`, `npm i -g`, `pnpm add -g`, `pnpm install -g`, `pnpm i -g`, `yarn global add`. Tool installs belong in `mise` or `aqua` configuration, not global node_modules.',
+    // 任意のパッケージマネージャでの global / システム汚染インストールを禁止。
+    // mise / aqua 経由であっても「手で global に入れる」のは NG。
+    // tool は必ず repo-local config (`.mise.toml`, `aqua.yaml`, project manifest) に宣言し、
+    // そこから読む install コマンド (`mise install`, `aqua install`, `pnpm install`, `uv sync` 等) で入れる。
+    'Global Install Forbidden: Installing tools, runtimes, or packages into any global or system-wide scope is forbidden regardless of the package manager. Examples: `npm install -g` / `npm i -g`, `pnpm add -g` / `pnpm install -g` / `pnpm i -g`, `yarn global add`, `mise use -g`, `mise install -g`, `mise use --global`, `go install ...`, `cargo install <name>`, `gem install`, `pip install` (system site-packages), and the same forms wrapped in `$()` / pipes / loops. Even when the manager is `mise` or `aqua`, ad-hoc global installation is still forbidden — declarations must land in repo-local config files (`.mise.toml`, `aqua.yaml`, project manifests) first and be materialised via install commands that read those files (`mise install`, `aqua install`, `pnpm install`, `uv sync`, `cargo build`, `go mod tidy`, etc.).',
 
     // pip / pip3 / `python -m pip` を禁止。代替は uv (uv pip, uv add, uv sync)。
     // システム Python / pinned toolchain の保護のため、$() / pipe 経由も対象。
