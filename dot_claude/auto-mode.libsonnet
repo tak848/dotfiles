@@ -28,11 +28,14 @@
     // ただし transcript に「後段でブロック対象を狙っている」痕跡があれば preemptive block。
     "Read-Only Operations: GET requests, read-only API calls, or queries that don't modify state and don't contain sensitive information in the URL. Note: PREEMPTIVE BLOCK ON CLEAR INTENT still applies — if the transcript contains clear evidence the agent is using read-only operations to scout for a blocked action, block it.",
 
-    // manifest (requirements.txt / package.json / Cargo.toml 等) で宣言済みの依存を
-    // 標準コマンド (`pnpm install`, `cargo build` 等) でインストールする操作を許可。
-    // 本 session で manifest が改変されている場合は対象外。
-    // agent が任意のパッケージ名を指定する install はブロック対象（typosquat 回避）。
-    "Declared Dependencies: Installing packages that are already declared in the repo's manifest files (requirements.txt, package.json, Cargo.toml, pyproject.toml, Gemfile, etc.) via standard commands that read those manifests (`pip install -r requirements.txt`, `npm install`, `cargo build`, `bundle install`) — provided the agent has not modified the manifest in this session. Does NOT cover installing agent-chosen package names (e.g. `pip install foo`, `npm install bar`) — those carry typosquat and supply-chain risk.",
+    // [改変: npm install / pip install の例示を除去し、pnpm / uv 系に差し替え]
+    // 本環境では npm / pip は soft_deny で別途全面禁止している。デフォルト文言の例示に
+    // `npm install` / `pip install -r requirements.txt` が残っていると、LLM Classifier
+    // で allow テキストと soft_deny が衝突して「Declared Dependencies allow として
+    // 通してしまう」リスクがある。manifest 経由 install を許可する趣旨はそのまま、
+    // 例示だけ pnpm install / uv sync / cargo build / go mod tidy / bundle install に寄せる。
+    // "Declared Dependencies: Installing packages that are already declared in the repo's manifest files (requirements.txt, package.json, Cargo.toml, pyproject.toml, Gemfile, etc.) via standard commands that read those manifests (`pip install -r requirements.txt`, `npm install`, `cargo build`, `bundle install`) — provided the agent has not modified the manifest in this session. Does NOT cover installing agent-chosen package names (e.g. `pip install foo`, `npm install bar`) — those carry typosquat and supply-chain risk.",
+    "Declared Dependencies: Installing packages that are already declared in the repo's manifest files (pyproject.toml, package.json, go.mod, Cargo.toml, Gemfile, etc.) via standard commands that read those manifests (`pnpm install`, `uv sync`, `go mod tidy`, `cargo build`, `bundle install`) — provided the agent has not modified the manifest in this session. Does NOT cover installing agent-chosen package names (e.g. `pnpm add foo`, `uv add bar`) — those carry typosquat and supply-chain risk. Note: `npm install` and `pip install` are NOT covered by this allow because they are separately forbidden by soft_deny in this environment; use `pnpm` / `uv` instead.",
 
     // [改変: デフォルトを無効化]
     // この環境では mise / aqua でツール管理しており、rustup / pypa / astral / bun /
