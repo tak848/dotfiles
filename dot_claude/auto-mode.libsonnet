@@ -34,9 +34,13 @@
     // agent が任意のパッケージ名を指定する install はブロック対象（typosquat 回避）。
     "Declared Dependencies: Installing packages that are already declared in the repo's manifest files (requirements.txt, package.json, Cargo.toml, pyproject.toml, Gemfile, etc.) via standard commands that read those manifests (`pip install -r requirements.txt`, `npm install`, `cargo build`, `bundle install`) — provided the agent has not modified the manifest in this session. Does NOT cover installing agent-chosen package names (e.g. `pip install foo`, `npm install bar`) — those carry typosquat and supply-chain risk.",
 
-    // 公式 one-line installer (rustup / pypa / astral / bun / nodesource / docker / brew) から
-    // ランタイム/toolchain をインストールする操作を許可（manifest が要求していれば）。
-    "Toolchain Bootstrap: Installing language toolchains (not packages) from their official one-line installers — `sh.rustup.rs`, `bootstrap.pypa.io`, `astral.sh`, `bun.sh`, `deb.nodesource.com`, `get.docker.com`, `brew.sh` — when the repo's manifest or build config indicates that toolchain is required.",
+    // [改変: デフォルトを無効化]
+    // この環境では mise / aqua でツール管理しており、rustup / pypa / astral / bun /
+    // nodesource / docker / brew の公式ワンライナーインストールを agent に勝手にやらせたくない。
+    // デフォルトの Toolchain Bootstrap allow を外し、curl|bash 形式は soft_deny の
+    // "Code from External" で block されるようにする。必要な toolchain は .mise.toml /
+    // aqua.yaml で宣言し `mise install` / `aqua install` 経由で入れる。
+    // "Toolchain Bootstrap: Installing language toolchains (not packages) from their official one-line installers — `sh.rustup.rs`, `bootstrap.pypa.io`, `astral.sh`, `bun.sh`, `deb.nodesource.com`, `get.docker.com`, `brew.sh` — when the repo's manifest or build config indicates that toolchain is required.",
 
     // agent 自身の config (.env 等) から credentials を読み、対応する provider へ送信する操作を許可。
     "Standard Credentials: Reading credentials from the agent's own config (.env, config files) and sending them to their intended provider (e.g. API key to its matching API endpoint)",
