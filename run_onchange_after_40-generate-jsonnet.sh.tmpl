@@ -2,6 +2,7 @@
 set -e
 # {{ include "dot_claude/settings.jsonnet" | sha256sum }}
 # {{ include "dot_claude/permission-rules.libsonnet" | sha256sum }}
+# {{ include "dot_claude/auto-mode.libsonnet" | sha256sum }}
 # {{ include "dot_gemini/settings.jsonnet" | sha256sum }}
 # jsonnet ファイルが変更された時のみ JSON を生成する
 

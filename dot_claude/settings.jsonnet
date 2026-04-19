@@ -1,4 +1,5 @@
 local permissionRules = import 'permission-rules.libsonnet';
+local autoModeRules = import 'auto-mode.libsonnet';
 
 {
   language: 'japanese',
@@ -198,6 +199,11 @@ local permissionRules = import 'permission-rules.libsonnet';
       // 'mcp__plugin_github_github__update_pull_request',
     ],
     deny: permissionRules.permissionsDeny,
+  },
+  autoMode: {
+    environment: autoModeRules.environment,
+    allow: autoModeRules.allow,
+    soft_deny: autoModeRules.soft_deny,
   },
   // model: 'claude-opus-4-1-20250805',
   // model: 'claude-opus-4-6',
