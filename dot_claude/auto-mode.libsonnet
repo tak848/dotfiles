@@ -205,6 +205,24 @@
     // 単発 package runner (npx / pnpx / pnpm exec / bunx 等) で tool を直接起動するのを禁止。
     // project 定義済み script を使うこと。$() / pipe / loop 等で組み立てたケースも含む。
     'Direct Tool Invocation: Running tools via one-shot package runners (npx, pnpx, pnpm exec, bunx, etc.) instead of project-defined scripts is forbidden. This applies even when the command is wrapped in $(), pipes, or loops.',
+
+    // --- environment pollution guards (permissions.deny を Classifier にも伝える) ---
+
+    // Homebrew 使用全般を禁止。tool 管理は mise (runtime/CLI) と aqua (その他 binary) に一任。
+    // `brew install` はもちろん `brew.sh` 公式インストーラーのダウンロード実行も対象。
+    'Homebrew Forbidden: Any `brew` invocation (install, upgrade, uninstall, tap, bundle, etc.) is forbidden. Tool management in this environment is delegated to `mise` (runtimes and CLIs) and `aqua` (remaining binaries). Installing Homebrew itself via `brew.sh` / `install.sh` is also forbidden.',
+
+    // npm の任意コマンドを禁止。代替は pnpm。$() / pipe / loop 内の組み立てにも効かせる。
+    // (Classifier が Declared Dependencies allow として `npm install` を通してしまうのを防ぐ)
+    'npm Package Manager Forbidden: Any `npm` invocation (install, i, ci, update, run, exec, publish, etc.) is forbidden. Use `pnpm` for project dependencies. This applies even when the command is wrapped in $(), pipes, or loops.',
+
+    // node エコシステムでの global install を禁止。global 汚染を避けるため tool は mise/aqua に寄せる。
+    // `npm i -g`, `npm install -g`, `pnpm add -g`, `pnpm install -g`, `pnpm i -g`, `yarn global add` 等。
+    'Global Node Package Install Forbidden: Installing node packages globally is forbidden — e.g. `npm install -g`, `npm i -g`, `pnpm add -g`, `pnpm install -g`, `pnpm i -g`, `yarn global add`. Tool installs belong in `mise` or `aqua` configuration, not global node_modules.',
+
+    // pip / pip3 / `python -m pip` を禁止。代替は uv (uv pip, uv add, uv sync)。
+    // システム Python / pinned toolchain の保護のため、$() / pipe 経由も対象。
+    'pip Forbidden: `pip`, `pip3`, and `python -m pip` / `python3 -m pip` invocations are forbidden. Use `uv pip`, `uv add`, or `uv sync` — the user manages Python with `uv` to avoid system interpreter pollution. This applies even when the command is wrapped in $(), pipes, or loops.',
   ],
   environment: [
     // --- defaults ---
