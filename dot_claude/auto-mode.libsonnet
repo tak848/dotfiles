@@ -218,9 +218,12 @@
 
     // 任意のパッケージマネージャでの global / システム汚染インストールを禁止。
     // mise / aqua 経由であっても「手で global に入れる」のは NG。
-    // tool は必ず repo-local config (`.mise.toml`, `aqua.yaml`, project manifest) に宣言し、
-    // そこから読む install コマンド (`mise install`, `aqua install`, `pnpm install`, `uv sync` 等) で入れる。
-    'Global Install Forbidden: Installing tools, runtimes, or packages into any global or system-wide scope is forbidden regardless of the package manager. Examples: `npm install -g` / `npm i -g`, `pnpm add -g` / `pnpm install -g` / `pnpm i -g`, `yarn global add`, `mise use -g`, `mise install -g`, `mise use --global`, `go install ...`, `cargo install <name>`, `gem install`, `pip install` (system site-packages), and the same forms wrapped in `$()` / pipes / loops. Even when the manager is `mise` or `aqua`, ad-hoc global installation is still forbidden — declarations must land in repo-local config files (`.mise.toml`, `aqua.yaml`, project manifests) first and be materialised via install commands that read those files (`mise install`, `aqua install`, `pnpm install`, `uv sync`, `cargo build`, `go mod tidy`, etc.).',
+    // tool は必ず config ファイルへ宣言してから install する。repository 全体に要るなら
+    // commit 対象の `.mise.toml` / `aqua.yaml` / project manifest、個人環境限定なら
+    // gitignore 対象の `.mise.local.toml` 等のローカル override を使う。そのうえで
+    // `mise install`, `aqua install`, `pnpm install`, `uv sync` 等、config を読む
+    // install コマンドで入れる。
+    'Global Install Forbidden: Installing tools, runtimes, or packages into any global or system-wide scope is forbidden regardless of the package manager. Examples: `npm install -g` / `npm i -g`, `pnpm add -g` / `pnpm install -g` / `pnpm i -g`, `yarn global add`, `mise use -g`, `mise install -g`, `mise use --global`, `go install ...`, `cargo install <name>`, `gem install`, `pip install` (system site-packages), and the same forms wrapped in `$()` / pipes / loops. Even when the manager is `mise` or `aqua`, ad-hoc global installation is still forbidden — declarations must land in a config file first, and the choice of file depends on scope: use a repository-wide committed config (`.mise.toml`, `aqua.yaml`, project manifests like `package.json` / `pyproject.toml` / `Cargo.toml` / `go.mod`) when the tool should apply to anyone checking out the repo, or a user-local gitignored override (`.mise.local.toml` or the equivalent local-only config for the given manager) when the tool is only needed in this user\'s personal checkout. Installation then goes through the manager reading that config (`mise install`, `aqua install`, `pnpm install`, `uv sync`, `cargo build`, `go mod tidy`, etc.).',
 
     // pip / pip3 / `python -m pip` を禁止。代替は uv (uv pip, uv add, uv sync)。
     // システム Python / pinned toolchain の保護のため、$() / pipe 経由も対象。
