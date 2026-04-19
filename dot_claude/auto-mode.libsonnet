@@ -206,6 +206,12 @@
     // project 定義済み script を使うこと。$() / pipe / loop 等で組み立てたケースも含む。
     'Direct Tool Invocation: Running tools via one-shot package runners (npx, pnpx, pnpm exec, bunx, etc.) instead of project-defined scripts is forbidden. This applies even when the command is wrapped in $(), pipes, or loops.',
 
+    // release/* / prod / production / stg / staging 等の長寿命デプロイ branch への
+    // 直 push を禁止。default branch は別途 "Git Push to Default Branch" (デフォルト)
+    // で保護済み。ccgate.allow "Git Feature Branch" の裏返しとして、保護 branch 以外は
+    // `Git Push to Working Branch` 等のデフォルト allow で通る。
+    'Protected Branches Push Forbidden: Pushing directly to `release/*`, `prod`, `production`, `stg`, `staging`, or similarly named long-lived deployment branches is forbidden in addition to the default-branch protection already covered by "Git Push to Default Branch". These branches drive deployments or external commitments; treat them like the default branch — push via a feature branch and PR review, never directly.',
+
     // --- environment pollution guards (permissions.deny を Classifier にも伝える) ---
 
     // Homebrew 使用全般を禁止。tool 管理は mise (runtime/CLI) と aqua (その他 binary) に一任。
