@@ -101,7 +101,7 @@ gwc() {
     local original_dir=$(pwd)
     local worktree_add_status=1
 
-    local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json" ".serena" "config.toml" ".gemini/settings.json" ".mise.local.toml" "ccgate.local.jsonnet")
+    local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json" ".serena" ".codex/config.toml" ".gemini/settings.json" ".mise.local.toml" "ccgate.local.jsonnet")
     local extra_copy_files=()
     local pr_ref=""
     local pr_mode=false
@@ -331,7 +331,7 @@ gwc() {
         if [ ${#find_name_args[@]} -gt 0 ]; then
             echo "\nSearching for and copying local config files: ${copy_files[*]}"
             local find_grouped_args=(\( "${find_name_args[@]}" \))
-            find "$root_dir" -path "$root_dir/.git" -prune -o -path "$root_dir/node_modules" -prune -o "${find_grouped_args[@]}" -print | while read -r src_path; do
+            find "$root_dir" \( -name .git -o -name node_modules -o -name .venv -o -name venv \) -prune -o "${find_grouped_args[@]}" -print | while read -r src_path; do
                 local rel_path=${src_path#$root_dir}
                 local dest_path="${worktree_path}${rel_path}"
                 
