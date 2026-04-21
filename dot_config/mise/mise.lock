@@ -8,15 +8,7 @@ backend = "aqua:BurntSushi/ripgrep"
 checksum = "sha256:2b661c6ef508e902f388e9098d9c4c5aca72c87b55922d94abdba830b4dc885e"
 url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-aarch64-unknown-linux-gnu.tar.gz"
 
-[tools."aqua:BurntSushi/ripgrep"."platforms.linux-arm64-musl"]
-checksum = "sha256:2b661c6ef508e902f388e9098d9c4c5aca72c87b55922d94abdba830b4dc885e"
-url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-aarch64-unknown-linux-gnu.tar.gz"
-
 [tools."aqua:BurntSushi/ripgrep"."platforms.linux-x64"]
-checksum = "sha256:1c9297be4a084eea7ecaedf93eb03d058d6faae29bbc57ecdaf5063921491599"
-url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-unknown-linux-musl.tar.gz"
-
-[tools."aqua:BurntSushi/ripgrep"."platforms.linux-x64-musl"]
 checksum = "sha256:1c9297be4a084eea7ecaedf93eb03d058d6faae29bbc57ecdaf5063921491599"
 url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-unknown-linux-musl.tar.gz"
 
@@ -39,13 +31,7 @@ backend = "aqua:anthropics/claude-code"
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64"]
 url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.116/linux-arm64/claude"
 
-[tools."aqua:anthropics/claude-code"."platforms.linux-arm64-musl"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.116/linux-arm64/claude"
-
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.116/linux-x64/claude"
-
-[tools."aqua:anthropics/claude-code"."platforms.linux-x64-musl"]
 url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.116/linux-x64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-arm64"]
@@ -62,15 +48,7 @@ backend = "aqua:arl/gitmux"
 checksum = "sha256:89a03a76828267927d57904f0f716a9b9aad627d1697d5c0c883d60c09bb4ff6"
 url = "https://github.com/arl/gitmux/releases/download/v0.11.5/gitmux_v0.11.5_linux_arm64.tar.gz"
 
-[tools."aqua:arl/gitmux"."platforms.linux-arm64-musl"]
-checksum = "sha256:89a03a76828267927d57904f0f716a9b9aad627d1697d5c0c883d60c09bb4ff6"
-url = "https://github.com/arl/gitmux/releases/download/v0.11.5/gitmux_v0.11.5_linux_arm64.tar.gz"
-
 [tools."aqua:arl/gitmux"."platforms.linux-x64"]
-checksum = "sha256:d46a10f5fe07ab5b8a902ac29c937e4d3c8d7f33ea30fa335d682601697b5a71"
-url = "https://github.com/arl/gitmux/releases/download/v0.11.5/gitmux_v0.11.5_linux_amd64.tar.gz"
-
-[tools."aqua:arl/gitmux"."platforms.linux-x64-musl"]
 checksum = "sha256:d46a10f5fe07ab5b8a902ac29c937e4d3c8d7f33ea30fa335d682601697b5a71"
 url = "https://github.com/arl/gitmux/releases/download/v0.11.5/gitmux_v0.11.5_linux_amd64.tar.gz"
 
@@ -91,17 +69,7 @@ checksum = "sha256:46647dc16cbb7d6700f762fdd7a67d220abe18570914732bc310adc91308d
 url = "https://github.com/astral-sh/uv/releases/download/0.11.7/uv-aarch64-unknown-linux-musl.tar.gz"
 provenance = "github-attestations"
 
-[tools."aqua:astral-sh/uv"."platforms.linux-arm64-musl"]
-checksum = "sha256:46647dc16cbb7d6700f762fdd7a67d220abe18570914732bc310adc91308d272"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.7/uv-aarch64-unknown-linux-musl.tar.gz"
-provenance = "github-attestations"
-
 [tools."aqua:astral-sh/uv"."platforms.linux-x64"]
-checksum = "sha256:64ddb5f1087649e3f75aa50d139aa4f36ddde728a5295a141e0fa9697bfb7b0f"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.7/uv-x86_64-unknown-linux-musl.tar.gz"
-provenance = "github-attestations"
-
-[tools."aqua:astral-sh/uv"."platforms.linux-x64-musl"]
 checksum = "sha256:64ddb5f1087649e3f75aa50d139aa4f36ddde728a5295a141e0fa9697bfb7b0f"
 url = "https://github.com/astral-sh/uv/releases/download/0.11.7/uv-x86_64-unknown-linux-musl.tar.gz"
 provenance = "github-attestations"
@@ -129,15 +97,7 @@ backend = "aqua:bufbuild/buf"
 checksum = "sha256:47acba7f04225618b87f2a731499e5f47637715938e5b00e43c253b57d0a8e1a"
 url = "https://github.com/bufbuild/buf/releases/download/v1.68.2/buf-Linux-aarch64.tar.gz"
 
-[tools."aqua:bufbuild/buf"."platforms.linux-arm64-musl"]
-checksum = "sha256:47acba7f04225618b87f2a731499e5f47637715938e5b00e43c253b57d0a8e1a"
-url = "https://github.com/bufbuild/buf/releases/download/v1.68.2/buf-Linux-aarch64.tar.gz"
-
 [tools."aqua:bufbuild/buf"."platforms.linux-x64"]
-checksum = "sha256:557ea42d00458466e3421bd1cf5781d882a95b0c1c0e54efffc326fdf9993d02"
-url = "https://github.com/bufbuild/buf/releases/download/v1.68.2/buf-Linux-x86_64.tar.gz"
-
-[tools."aqua:bufbuild/buf"."platforms.linux-x64-musl"]
 checksum = "sha256:557ea42d00458466e3421bd1cf5781d882a95b0c1c0e54efffc326fdf9993d02"
 url = "https://github.com/bufbuild/buf/releases/download/v1.68.2/buf-Linux-x86_64.tar.gz"
 
@@ -162,17 +122,7 @@ checksum = "sha256:1139e1ad912fcddb5ef4b957530184c2c30d9937ff65ff4e641fbf6ca5f28
 url = "https://github.com/cli/cli/releases/download/v2.90.0/gh_2.90.0_linux_arm64.tar.gz"
 provenance = "github-attestations"
 
-[tools."aqua:cli/cli"."platforms.linux-arm64-musl"]
-checksum = "sha256:1139e1ad912fcddb5ef4b957530184c2c30d9937ff65ff4e641fbf6ca5f28c7c"
-url = "https://github.com/cli/cli/releases/download/v2.90.0/gh_2.90.0_linux_arm64.tar.gz"
-provenance = "github-attestations"
-
 [tools."aqua:cli/cli"."platforms.linux-x64"]
-checksum = "sha256:b2aef7b23ec6899bf27f37a32c57a7935d0a178568ac33dc9bb03842f724195a"
-url = "https://github.com/cli/cli/releases/download/v2.90.0/gh_2.90.0_linux_amd64.tar.gz"
-provenance = "github-attestations"
-
-[tools."aqua:cli/cli"."platforms.linux-x64-musl"]
 checksum = "sha256:b2aef7b23ec6899bf27f37a32c57a7935d0a178568ac33dc9bb03842f724195a"
 url = "https://github.com/cli/cli/releases/download/v2.90.0/gh_2.90.0_linux_amd64.tar.gz"
 provenance = "github-attestations"
@@ -200,15 +150,7 @@ backend = "aqua:cloudflare/cloudflared"
 checksum = "sha256:0755ba4cbab59980e6148367fcf53a8f3ec85a97deefd63c2420cf7850769bee"
 url = "https://github.com/cloudflare/cloudflared/releases/download/2026.3.0/cloudflared-linux-arm64"
 
-[tools."aqua:cloudflare/cloudflared"."platforms.linux-arm64-musl"]
-checksum = "sha256:0755ba4cbab59980e6148367fcf53a8f3ec85a97deefd63c2420cf7850769bee"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.3.0/cloudflared-linux-arm64"
-
 [tools."aqua:cloudflare/cloudflared"."platforms.linux-x64"]
-checksum = "sha256:4a9e50e6d6d798e90fcd01933151a90bf7edd99a0a55c28ad18f2e16263a5c30"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.3.0/cloudflared-linux-amd64"
-
-[tools."aqua:cloudflare/cloudflared"."platforms.linux-x64-musl"]
 checksum = "sha256:4a9e50e6d6d798e90fcd01933151a90bf7edd99a0a55c28ad18f2e16263a5c30"
 url = "https://github.com/cloudflare/cloudflared/releases/download/2026.3.0/cloudflared-linux-amd64"
 
@@ -232,15 +174,7 @@ backend = "aqua:direnv/direnv"
 checksum = "sha256:2a9cef8d73521d6a3ec3f2871c4b747b8c4cc038628c1b57a7efa42b393a2d82"
 url = "https://github.com/direnv/direnv/releases/download/v2.37.1/direnv.linux-arm64"
 
-[tools."aqua:direnv/direnv"."platforms.linux-arm64-musl"]
-checksum = "sha256:2a9cef8d73521d6a3ec3f2871c4b747b8c4cc038628c1b57a7efa42b393a2d82"
-url = "https://github.com/direnv/direnv/releases/download/v2.37.1/direnv.linux-arm64"
-
 [tools."aqua:direnv/direnv"."platforms.linux-x64"]
-checksum = "sha256:1f1b93dd6f38523fde26dfac96151ef9d31a374e3005cd3345fb93555ae0c9b5"
-url = "https://github.com/direnv/direnv/releases/download/v2.37.1/direnv.linux-amd64"
-
-[tools."aqua:direnv/direnv"."platforms.linux-x64-musl"]
 checksum = "sha256:1f1b93dd6f38523fde26dfac96151ef9d31a374e3005cd3345fb93555ae0c9b5"
 url = "https://github.com/direnv/direnv/releases/download/v2.37.1/direnv.linux-amd64"
 
@@ -264,15 +198,7 @@ backend = "aqua:go-task/task"
 checksum = "sha256:ee67e7d999a4a70711bff1946c70bf76628012c91d9be55626ee90ba976897da"
 url = "https://github.com/go-task/task/releases/download/v3.50.0/task_linux_arm64.tar.gz"
 
-[tools."aqua:go-task/task"."platforms.linux-arm64-musl"]
-checksum = "sha256:ee67e7d999a4a70711bff1946c70bf76628012c91d9be55626ee90ba976897da"
-url = "https://github.com/go-task/task/releases/download/v3.50.0/task_linux_arm64.tar.gz"
-
 [tools."aqua:go-task/task"."platforms.linux-x64"]
-checksum = "sha256:d449ba85ab85a0769989d78f8b9872938e4ba9347f7f4f925f73d98272a0a655"
-url = "https://github.com/go-task/task/releases/download/v3.50.0/task_linux_amd64.tar.gz"
-
-[tools."aqua:go-task/task"."platforms.linux-x64-musl"]
 checksum = "sha256:d449ba85ab85a0769989d78f8b9872938e4ba9347f7f4f925f73d98272a0a655"
 url = "https://github.com/go-task/task/releases/download/v3.50.0/task_linux_amd64.tar.gz"
 
@@ -297,17 +223,7 @@ checksum = "sha256:3bcfa2e6f3d32b2bf5cd75eaa876447507025e0303698633f722a05331988
 url = "https://github.com/golangci/golangci-lint/releases/download/v2.11.4/golangci-lint-2.11.4-linux-arm64.tar.gz"
 provenance = "github-attestations"
 
-[tools."aqua:golangci/golangci-lint"."platforms.linux-arm64-musl"]
-checksum = "sha256:3bcfa2e6f3d32b2bf5cd75eaa876447507025e0303698633f722a05331988db4"
-url = "https://github.com/golangci/golangci-lint/releases/download/v2.11.4/golangci-lint-2.11.4-linux-arm64.tar.gz"
-provenance = "github-attestations"
-
 [tools."aqua:golangci/golangci-lint"."platforms.linux-x64"]
-checksum = "sha256:200c5b7503f67b59a6743ccf32133026c174e272b930ee79aa2aa6f37aca7ef1"
-url = "https://github.com/golangci/golangci-lint/releases/download/v2.11.4/golangci-lint-2.11.4-linux-amd64.tar.gz"
-provenance = "github-attestations"
-
-[tools."aqua:golangci/golangci-lint"."platforms.linux-x64-musl"]
 checksum = "sha256:200c5b7503f67b59a6743ccf32133026c174e272b930ee79aa2aa6f37aca7ef1"
 url = "https://github.com/golangci/golangci-lint/releases/download/v2.11.4/golangci-lint-2.11.4-linux-amd64.tar.gz"
 provenance = "github-attestations"
@@ -335,15 +251,7 @@ backend = "aqua:google/go-jsonnet"
 checksum = "sha256:3016b049254cb92548ba99304b6f44ec3795e6173f908e3ce3c5add57243fe20"
 url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_arm64.tar.gz"
 
-[tools."aqua:google/go-jsonnet"."platforms.linux-arm64-musl"]
-checksum = "sha256:3016b049254cb92548ba99304b6f44ec3795e6173f908e3ce3c5add57243fe20"
-url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_arm64.tar.gz"
-
 [tools."aqua:google/go-jsonnet"."platforms.linux-x64"]
-checksum = "sha256:e87a93ea44e34da92c15636205c7f2240bf3ac92d00ccb855dbb4e7e03ea6941"
-url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_amd64.tar.gz"
-
-[tools."aqua:google/go-jsonnet"."platforms.linux-x64-musl"]
 checksum = "sha256:e87a93ea44e34da92c15636205c7f2240bf3ac92d00ccb855dbb4e7e03ea6941"
 url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_amd64.tar.gz"
 
@@ -367,15 +275,7 @@ backend = "aqua:grafana/jsonnet-language-server"
 checksum = "sha256:6cfc48e9bcea7ebfaf85fcd51b4c09d8e26f93978bc352eef6b3aea4fb844440"
 url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.17.0/jsonnet-language-server_0.17.0_linux_arm64"
 
-[tools."aqua:grafana/jsonnet-language-server"."platforms.linux-arm64-musl"]
-checksum = "sha256:6cfc48e9bcea7ebfaf85fcd51b4c09d8e26f93978bc352eef6b3aea4fb844440"
-url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.17.0/jsonnet-language-server_0.17.0_linux_arm64"
-
 [tools."aqua:grafana/jsonnet-language-server"."platforms.linux-x64"]
-checksum = "sha256:1d4327c93505570d9e5bfe43c3b14da669c2e929c4ada3fcd6b4bf97c7cff34e"
-url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.17.0/jsonnet-language-server_0.17.0_linux_amd64"
-
-[tools."aqua:grafana/jsonnet-language-server"."platforms.linux-x64-musl"]
 checksum = "sha256:1d4327c93505570d9e5bfe43c3b14da669c2e929c4ada3fcd6b4bf97c7cff34e"
 url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.17.0/jsonnet-language-server_0.17.0_linux_amd64"
 
@@ -399,15 +299,7 @@ backend = "aqua:jdx/usage"
 checksum = "sha256:9cc22814763948582a31b054e6aa3adfc7a820a3cafb82b317dd4a8931277c0f"
 url = "https://github.com/jdx/usage/releases/download/v3.2.0/usage-aarch64-unknown-linux-musl.tar.gz"
 
-[tools."aqua:jdx/usage"."platforms.linux-arm64-musl"]
-checksum = "sha256:9cc22814763948582a31b054e6aa3adfc7a820a3cafb82b317dd4a8931277c0f"
-url = "https://github.com/jdx/usage/releases/download/v3.2.0/usage-aarch64-unknown-linux-musl.tar.gz"
-
 [tools."aqua:jdx/usage"."platforms.linux-x64"]
-checksum = "sha256:7f48ee228ae95b07c193ec61def326575682b37032473c5af4b3b93a114aec81"
-url = "https://github.com/jdx/usage/releases/download/v3.2.0/usage-x86_64-unknown-linux-musl.tar.gz"
-
-[tools."aqua:jdx/usage"."platforms.linux-x64-musl"]
 checksum = "sha256:7f48ee228ae95b07c193ec61def326575682b37032473c5af4b3b93a114aec81"
 url = "https://github.com/jdx/usage/releases/download/v3.2.0/usage-x86_64-unknown-linux-musl.tar.gz"
 
@@ -431,15 +323,7 @@ backend = "aqua:jesseduffield/lazydocker"
 checksum = "sha256:005c38b685aaa557e7d646d83a3dadb5024340eeed8c6a2e1949eee6f530de23"
 url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.25.2/lazydocker_0.25.2_Linux_arm64.tar.gz"
 
-[tools."aqua:jesseduffield/lazydocker"."platforms.linux-arm64-musl"]
-checksum = "sha256:005c38b685aaa557e7d646d83a3dadb5024340eeed8c6a2e1949eee6f530de23"
-url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.25.2/lazydocker_0.25.2_Linux_arm64.tar.gz"
-
 [tools."aqua:jesseduffield/lazydocker"."platforms.linux-x64"]
-checksum = "sha256:0d9dbfc26068b218e7ed84b104748cadc6e3cf733c0afd35465306fb39b9523c"
-url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.25.2/lazydocker_0.25.2_Linux_x86_64.tar.gz"
-
-[tools."aqua:jesseduffield/lazydocker"."platforms.linux-x64-musl"]
 checksum = "sha256:0d9dbfc26068b218e7ed84b104748cadc6e3cf733c0afd35465306fb39b9523c"
 url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.25.2/lazydocker_0.25.2_Linux_x86_64.tar.gz"
 
@@ -463,15 +347,7 @@ backend = "aqua:jesseduffield/lazygit"
 checksum = "sha256:20b1abb2bee5dfd46173b9047353eb678bc51a23839e821958d0b1863ab1655e"
 url = "https://github.com/jesseduffield/lazygit/releases/download/v0.61.1/lazygit_0.61.1_linux_arm64.tar.gz"
 
-[tools."aqua:jesseduffield/lazygit"."platforms.linux-arm64-musl"]
-checksum = "sha256:20b1abb2bee5dfd46173b9047353eb678bc51a23839e821958d0b1863ab1655e"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.61.1/lazygit_0.61.1_linux_arm64.tar.gz"
-
 [tools."aqua:jesseduffield/lazygit"."platforms.linux-x64"]
-checksum = "sha256:1b91e660700f2332696726b635202576b543e2bc49b639830dccd26bc5160d5d"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.61.1/lazygit_0.61.1_linux_x86_64.tar.gz"
-
-[tools."aqua:jesseduffield/lazygit"."platforms.linux-x64-musl"]
 checksum = "sha256:1b91e660700f2332696726b635202576b543e2bc49b639830dccd26bc5160d5d"
 url = "https://github.com/jesseduffield/lazygit/releases/download/v0.61.1/lazygit_0.61.1_linux_x86_64.tar.gz"
 
@@ -496,17 +372,7 @@ checksum = "sha256:6bc62f25981328edd3cfcfe6fe51b073f2d7e7710d7ef7fcdac28d4e384fc
 url = "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-arm64"
 provenance = "github-attestations"
 
-[tools."aqua:jqlang/jq"."platforms.linux-arm64-musl"]
-checksum = "sha256:6bc62f25981328edd3cfcfe6fe51b073f2d7e7710d7ef7fcdac28d4e384fc3d4"
-url = "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-arm64"
-provenance = "github-attestations"
-
 [tools."aqua:jqlang/jq"."platforms.linux-x64"]
-checksum = "sha256:020468de7539ce70ef1bceaf7cde2e8c4f2ca6c3afb84642aabc5c97d9fc2a0d"
-url = "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-amd64"
-provenance = "github-attestations"
-
-[tools."aqua:jqlang/jq"."platforms.linux-x64-musl"]
 checksum = "sha256:020468de7539ce70ef1bceaf7cde2e8c4f2ca6c3afb84642aabc5c97d9fc2a0d"
 url = "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-linux-amd64"
 provenance = "github-attestations"
@@ -534,15 +400,7 @@ backend = "aqua:junegunn/fzf"
 checksum = "sha256:98b7d322efae9c37e4bfbbab1cbcd8722eb742d9399511f96375feb40cc35d1d"
 url = "https://github.com/junegunn/fzf/releases/download/v0.71.0/fzf-0.71.0-linux_arm64.tar.gz"
 
-[tools."aqua:junegunn/fzf"."platforms.linux-arm64-musl"]
-checksum = "sha256:98b7d322efae9c37e4bfbbab1cbcd8722eb742d9399511f96375feb40cc35d1d"
-url = "https://github.com/junegunn/fzf/releases/download/v0.71.0/fzf-0.71.0-linux_arm64.tar.gz"
-
 [tools."aqua:junegunn/fzf"."platforms.linux-x64"]
-checksum = "sha256:22639bb38489dbca8acef57850cbb50231ab714d0e8e855ac52fae8b41233df4"
-url = "https://github.com/junegunn/fzf/releases/download/v0.71.0/fzf-0.71.0-linux_amd64.tar.gz"
-
-[tools."aqua:junegunn/fzf"."platforms.linux-x64-musl"]
 checksum = "sha256:22639bb38489dbca8acef57850cbb50231ab714d0e8e855ac52fae8b41233df4"
 url = "https://github.com/junegunn/fzf/releases/download/v0.71.0/fzf-0.71.0-linux_amd64.tar.gz"
 
@@ -566,15 +424,7 @@ backend = "aqua:kubernetes/kubectl"
 checksum = "sha256:58f82f9fe796c375c5c4b8439850b0f3f4d401a52434052f2df46035a8789e25"
 url = "https://dl.k8s.io/v1.35.0/bin/linux/arm64/kubectl"
 
-[tools."aqua:kubernetes/kubectl"."platforms.linux-arm64-musl"]
-checksum = "sha256:58f82f9fe796c375c5c4b8439850b0f3f4d401a52434052f2df46035a8789e25"
-url = "https://dl.k8s.io/v1.35.0/bin/linux/arm64/kubectl"
-
 [tools."aqua:kubernetes/kubectl"."platforms.linux-x64"]
-checksum = "sha256:a2e984a18a0c063279d692533031c1eff93a262afcc0afdc517375432d060989"
-url = "https://dl.k8s.io/v1.35.0/bin/linux/amd64/kubectl"
-
-[tools."aqua:kubernetes/kubectl"."platforms.linux-x64-musl"]
 checksum = "sha256:a2e984a18a0c063279d692533031c1eff93a262afcc0afdc517375432d060989"
 url = "https://dl.k8s.io/v1.35.0/bin/linux/amd64/kubectl"
 
@@ -598,15 +448,7 @@ backend = "aqua:mikefarah/yq"
 checksum = "sha256:03061b2a50c7a498de2bbb92d7cb078ce433011f085a4994117c2726be4106ea"
 url = "https://github.com/mikefarah/yq/releases/download/v4.53.2/yq_linux_arm64"
 
-[tools."aqua:mikefarah/yq"."platforms.linux-arm64-musl"]
-checksum = "sha256:03061b2a50c7a498de2bbb92d7cb078ce433011f085a4994117c2726be4106ea"
-url = "https://github.com/mikefarah/yq/releases/download/v4.53.2/yq_linux_arm64"
-
 [tools."aqua:mikefarah/yq"."platforms.linux-x64"]
-checksum = "sha256:d56bf5c6819e8e696340c312bd70f849dc1678a7cda9c2ad63eebd906371d56b"
-url = "https://github.com/mikefarah/yq/releases/download/v4.53.2/yq_linux_amd64"
-
-[tools."aqua:mikefarah/yq"."platforms.linux-x64-musl"]
 checksum = "sha256:d56bf5c6819e8e696340c312bd70f849dc1678a7cda9c2ad63eebd906371d56b"
 url = "https://github.com/mikefarah/yq/releases/download/v4.53.2/yq_linux_amd64"
 
@@ -630,15 +472,7 @@ backend = "aqua:neovim/neovim"
 checksum = "sha256:a3f8aa5590fd2ac930bcc5c9070b9ac1ec33461d262b6428874c5fc640f3f13c"
 url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-arm64.tar.gz"
 
-[tools."aqua:neovim/neovim"."platforms.linux-arm64-musl"]
-checksum = "sha256:a3f8aa5590fd2ac930bcc5c9070b9ac1ec33461d262b6428874c5fc640f3f13c"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-arm64.tar.gz"
-
 [tools."aqua:neovim/neovim"."platforms.linux-x64"]
-checksum = "sha256:ab757a1fd9ad307d53d2df4045698906a7ca3993d92260dd8fe49108712d57d0"
-url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-x86_64.tar.gz"
-
-[tools."aqua:neovim/neovim"."platforms.linux-x64-musl"]
 checksum = "sha256:ab757a1fd9ad307d53d2df4045698906a7ca3993d92260dd8fe49108712d57d0"
 url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-x86_64.tar.gz"
 
@@ -662,15 +496,7 @@ backend = "aqua:openai/codex"
 checksum = "sha256:a153e420cd50afb6b257a7033b719e638902b6d96e3a59de8c2ff948e380943c"
 url = "https://github.com/openai/codex/releases/download/rust-v0.121.0/codex-aarch64-unknown-linux-musl.zst"
 
-[tools."aqua:openai/codex"."platforms.linux-arm64-musl"]
-checksum = "sha256:a153e420cd50afb6b257a7033b719e638902b6d96e3a59de8c2ff948e380943c"
-url = "https://github.com/openai/codex/releases/download/rust-v0.121.0/codex-aarch64-unknown-linux-musl.zst"
-
 [tools."aqua:openai/codex"."platforms.linux-x64"]
-checksum = "sha256:96b299631c87597b744efc6fcd6e3c6cfc0b4ec2ed897638cf1d505c08c4d3ee"
-url = "https://github.com/openai/codex/releases/download/rust-v0.121.0/codex-x86_64-unknown-linux-musl.zst"
-
-[tools."aqua:openai/codex"."platforms.linux-x64-musl"]
 checksum = "sha256:96b299631c87597b744efc6fcd6e3c6cfc0b4ec2ed897638cf1d505c08c4d3ee"
 url = "https://github.com/openai/codex/releases/download/rust-v0.121.0/codex-x86_64-unknown-linux-musl.zst"
 
@@ -694,15 +520,7 @@ backend = "aqua:phiresky/ripgrep-all"
 checksum = "sha256:2cd875ab6c78b27e4830b5bca92c570a8a8dcfb368bc71b189b65ac01fbc3020"
 url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgrep_all-v0.10.10-aarch64-unknown-linux-gnu.tar.gz"
 
-[tools."aqua:phiresky/ripgrep-all"."platforms.linux-arm64-musl"]
-checksum = "sha256:2cd875ab6c78b27e4830b5bca92c570a8a8dcfb368bc71b189b65ac01fbc3020"
-url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgrep_all-v0.10.10-aarch64-unknown-linux-gnu.tar.gz"
-
 [tools."aqua:phiresky/ripgrep-all"."platforms.linux-x64"]
-checksum = "sha256:a969c25b182ac84aa672518313b5f741091decf7d93d03a020bcfe517b9ff4e8"
-url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgrep_all-v0.10.10-x86_64-unknown-linux-musl.tar.gz"
-
-[tools."aqua:phiresky/ripgrep-all"."platforms.linux-x64-musl"]
 checksum = "sha256:a969c25b182ac84aa672518313b5f741091decf7d93d03a020bcfe517b9ff4e8"
 url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgrep_all-v0.10.10-x86_64-unknown-linux-musl.tar.gz"
 
@@ -722,15 +540,7 @@ backend = "aqua:rust-lang/rust-analyzer"
 checksum = "sha256:f0465c6b32508de20583ebd3b8edda08137cd4beaca22919c29701bbc88238eb"
 url = "https://github.com/rust-lang/rust-analyzer/releases/download/2025-12-01/rust-analyzer-aarch64-unknown-linux-gnu.gz"
 
-[tools."aqua:rust-lang/rust-analyzer"."platforms.linux-arm64-musl"]
-checksum = "sha256:f0465c6b32508de20583ebd3b8edda08137cd4beaca22919c29701bbc88238eb"
-url = "https://github.com/rust-lang/rust-analyzer/releases/download/2025-12-01/rust-analyzer-aarch64-unknown-linux-gnu.gz"
-
 [tools."aqua:rust-lang/rust-analyzer"."platforms.linux-x64"]
-checksum = "sha256:94ff40db699ef41500c1ae9a9bdb153662364bf6f4a30a362ff565ef8ab6af6e"
-url = "https://github.com/rust-lang/rust-analyzer/releases/download/2025-12-01/rust-analyzer-x86_64-unknown-linux-gnu.gz"
-
-[tools."aqua:rust-lang/rust-analyzer"."platforms.linux-x64-musl"]
 checksum = "sha256:94ff40db699ef41500c1ae9a9bdb153662364bf6f4a30a362ff565ef8ab6af6e"
 url = "https://github.com/rust-lang/rust-analyzer/releases/download/2025-12-01/rust-analyzer-x86_64-unknown-linux-gnu.gz"
 
@@ -754,15 +564,7 @@ backend = "aqua:starship/starship"
 checksum = "sha256:68ffcb75582e5ed336b43598bb4d8ecc4ec994ea26eac7955d3d378f1375da34"
 url = "https://github.com/starship/starship/releases/download/v1.25.0/starship-aarch64-unknown-linux-musl.tar.gz"
 
-[tools."aqua:starship/starship"."platforms.linux-arm64-musl"]
-checksum = "sha256:68ffcb75582e5ed336b43598bb4d8ecc4ec994ea26eac7955d3d378f1375da34"
-url = "https://github.com/starship/starship/releases/download/v1.25.0/starship-aarch64-unknown-linux-musl.tar.gz"
-
 [tools."aqua:starship/starship"."platforms.linux-x64"]
-checksum = "sha256:0169f187e927a0ee9abf41bb80e316717fea6e37e404267bca5134c6ea10c0ed"
-url = "https://github.com/starship/starship/releases/download/v1.25.0/starship-x86_64-unknown-linux-musl.tar.gz"
-
-[tools."aqua:starship/starship"."platforms.linux-x64-musl"]
 checksum = "sha256:0169f187e927a0ee9abf41bb80e316717fea6e37e404267bca5134c6ea10c0ed"
 url = "https://github.com/starship/starship/releases/download/v1.25.0/starship-x86_64-unknown-linux-musl.tar.gz"
 
@@ -785,13 +587,7 @@ backend = "aqua:tamasfe/taplo"
 [tools."aqua:tamasfe/taplo"."platforms.linux-arm64"]
 url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-aarch64.gz"
 
-[tools."aqua:tamasfe/taplo"."platforms.linux-arm64-musl"]
-url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-aarch64.gz"
-
 [tools."aqua:tamasfe/taplo"."platforms.linux-x64"]
-url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-x86_64.gz"
-
-[tools."aqua:tamasfe/taplo"."platforms.linux-x64-musl"]
 url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-x86_64.gz"
 
 [tools."aqua:tamasfe/taplo"."platforms.macos-arm64"]
@@ -811,15 +607,7 @@ backend = "aqua:temporalio/cli"
 checksum = "sha256:d31f4ac56f6a78f259cc09d0185a43e08eadca303b6904a38f7774c85160d9d7"
 url = "https://github.com/temporalio/cli/releases/download/v1.6.2/temporal_cli_1.6.2_linux_arm64.tar.gz"
 
-[tools."aqua:temporalio/cli"."platforms.linux-arm64-musl"]
-checksum = "sha256:d31f4ac56f6a78f259cc09d0185a43e08eadca303b6904a38f7774c85160d9d7"
-url = "https://github.com/temporalio/cli/releases/download/v1.6.2/temporal_cli_1.6.2_linux_arm64.tar.gz"
-
 [tools."aqua:temporalio/cli"."platforms.linux-x64"]
-checksum = "sha256:31705ce8cb83d9144bc798fb0cf60405133b7a52ac970ccc8c6338e2fd1b1b0a"
-url = "https://github.com/temporalio/cli/releases/download/v1.6.2/temporal_cli_1.6.2_linux_amd64.tar.gz"
-
-[tools."aqua:temporalio/cli"."platforms.linux-x64-musl"]
 checksum = "sha256:31705ce8cb83d9144bc798fb0cf60405133b7a52ac970ccc8c6338e2fd1b1b0a"
 url = "https://github.com/temporalio/cli/releases/download/v1.6.2/temporal_cli_1.6.2_linux_amd64.tar.gz"
 
@@ -835,6 +623,30 @@ url = "https://github.com/temporalio/cli/releases/download/v1.6.2/temporal_cli_1
 checksum = "sha256:8a5a77a252af2c76284d6136940a3ff3bd550964df37a544986710191021a572"
 url = "https://github.com/temporalio/cli/releases/download/v1.6.2/temporal_cli_1.6.2_windows_amd64.tar.gz"
 
+[[tools."aqua:theseus-rs/postgresql-binaries"]]
+version = "18.3.0"
+backend = "aqua:theseus-rs/postgresql-binaries"
+
+[tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-arm64"]
+checksum = "sha256:d2a94bc296758f93bc7d29abb12365b1bdb9e32d14ed25086042802995a606cf"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-aarch64-unknown-linux-gnu.tar.gz"
+
+[tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-x64"]
+checksum = "sha256:71066f6534cfbc1f6d1f645b3c5c7d2d352eb6a53280fe863a5b3d82614e9f7b"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-x86_64-unknown-linux-gnu.tar.gz"
+
+[tools."aqua:theseus-rs/postgresql-binaries"."platforms.macos-arm64"]
+checksum = "sha256:67b2e48b91c61129de6d3c98d7bf6b35e113297b5d6f30c2cd8c6665aa71647b"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-aarch64-apple-darwin.tar.gz"
+
+[tools."aqua:theseus-rs/postgresql-binaries"."platforms.macos-x64"]
+checksum = "sha256:cafd061662f8673584240bd238e20dd83c1eefb2baf70e8e9224b7a8c59d41f1"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-x86_64-apple-darwin.tar.gz"
+
+[tools."aqua:theseus-rs/postgresql-binaries"."platforms.windows-x64"]
+checksum = "sha256:887d2f9094abc6eece59d1ca663ebf3c387869a153e7ffb10996c9ed3f1e6950"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-x86_64-pc-windows-msvc.tar.gz"
+
 [[tools."aqua:twpayne/chezmoi"]]
 version = "2.70.2"
 backend = "aqua:twpayne/chezmoi"
@@ -843,15 +655,7 @@ backend = "aqua:twpayne/chezmoi"
 checksum = "sha256:99e402af70f457dbf3ad545f62f78892375f2d9361db1c9c354e6d924a3b4fae"
 url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.2/chezmoi_2.70.2_linux_arm64.tar.gz"
 
-[tools."aqua:twpayne/chezmoi"."platforms.linux-arm64-musl"]
-checksum = "sha256:99e402af70f457dbf3ad545f62f78892375f2d9361db1c9c354e6d924a3b4fae"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.2/chezmoi_2.70.2_linux_arm64.tar.gz"
-
 [tools."aqua:twpayne/chezmoi"."platforms.linux-x64"]
-checksum = "sha256:dda79928bf8428c1bb3d48497be00237a6ecc95a2bef7ded573608436ec7270b"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.2/chezmoi_2.70.2_linux_amd64.tar.gz"
-
-[tools."aqua:twpayne/chezmoi"."platforms.linux-x64-musl"]
 checksum = "sha256:dda79928bf8428c1bb3d48497be00237a6ecc95a2bef7ded573608436ec7270b"
 url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.2/chezmoi_2.70.2_linux_amd64.tar.gz"
 
@@ -875,15 +679,7 @@ backend = "aqua:x-motemen/ghq"
 checksum = "sha256:7ed154f62751e91c8a2d415280caeeba3d114050d01e39f3d0f4aa1be15f3954"
 url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_linux_arm64.zip"
 
-[tools."aqua:x-motemen/ghq"."platforms.linux-arm64-musl"]
-checksum = "sha256:7ed154f62751e91c8a2d415280caeeba3d114050d01e39f3d0f4aa1be15f3954"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_linux_arm64.zip"
-
 [tools."aqua:x-motemen/ghq"."platforms.linux-x64"]
-checksum = "sha256:32e380aa8ac76fdd58758cc06174d9ee5db7270bd0cbcc18138b5d36def91b6b"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_linux_amd64.zip"
-
-[tools."aqua:x-motemen/ghq"."platforms.linux-x64-musl"]
 checksum = "sha256:32e380aa8ac76fdd58758cc06174d9ee5db7270bd0cbcc18138b5d36def91b6b"
 url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_linux_amd64.zip"
 
@@ -909,19 +705,7 @@ url = "https://github.com/aquaproj/aqua/releases/download/v2.57.1/aqua_linux_arm
 url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/378361481"
 provenance = "github-attestations"
 
-[tools."github:aquaproj/aqua"."platforms.linux-arm64-musl"]
-checksum = "sha256:dbdb45eb8214937e1b02e748b2b6d96b0d84fc5868dfe4d6ca46cc3bd525f9bb"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.57.1/aqua_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/378361481"
-provenance = "github-attestations"
-
 [tools."github:aquaproj/aqua"."platforms.linux-x64"]
-checksum = "sha256:685df389dd8bf4dd4442ca496a2db744d25871351d0edcb1a59dcfa6bd7e7b39"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.57.1/aqua_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/378361471"
-provenance = "github-attestations"
-
-[tools."github:aquaproj/aqua"."platforms.linux-x64-musl"]
 checksum = "sha256:685df389dd8bf4dd4442ca496a2db744d25871351d0edcb1a59dcfa6bd7e7b39"
 url = "https://github.com/aquaproj/aqua/releases/download/v2.57.1/aqua_linux_amd64.tar.gz"
 url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/378361471"
@@ -954,17 +738,7 @@ checksum = "sha256:e09b97d7313bd417a35bde6c747c458486ec84f696e1cfd0f8c527cd69c89
 url = "https://github.com/jgm/pandoc/releases/download/3.9/pandoc-3.9-linux-arm64.tar.gz"
 url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/350472687"
 
-[tools."github:jgm/pandoc"."platforms.linux-arm64-musl"]
-checksum = "sha256:e09b97d7313bd417a35bde6c747c458486ec84f696e1cfd0f8c527cd69c89433"
-url = "https://github.com/jgm/pandoc/releases/download/3.9/pandoc-3.9-linux-arm64.tar.gz"
-url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/350472687"
-
 [tools."github:jgm/pandoc"."platforms.linux-x64"]
-checksum = "sha256:872a10c7ec29d5278831d855b11bd4ade0df4d5ec9a089a3197bc63a37eb4003"
-url = "https://github.com/jgm/pandoc/releases/download/3.9/pandoc-3.9-linux-amd64.tar.gz"
-url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/350472451"
-
-[tools."github:jgm/pandoc"."platforms.linux-x64-musl"]
 checksum = "sha256:872a10c7ec29d5278831d855b11bd4ade0df4d5ec9a089a3197bc63a37eb4003"
 url = "https://github.com/jgm/pandoc/releases/download/3.9/pandoc-3.9-linux-amd64.tar.gz"
 url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/350472451"
@@ -993,17 +767,7 @@ checksum = "sha256:bb5afd9d646df54a7d7c66e198aa22c7d293c7453534f1670f7c540534db8
 url = "https://github.com/tmux/tmux-builds/releases/download/v3.6a/tmux-3.6a-linux-arm64.tar.gz"
 url_api = "https://api.github.com/repos/tmux/tmux-builds/releases/assets/331787049"
 
-[tools."github:tmux/tmux-builds"."platforms.linux-arm64-musl"]
-checksum = "sha256:bb5afd9d646df54a7d7c66e198aa22c7d293c7453534f1670f7c540534db8b5e"
-url = "https://github.com/tmux/tmux-builds/releases/download/v3.6a/tmux-3.6a-linux-arm64.tar.gz"
-url_api = "https://api.github.com/repos/tmux/tmux-builds/releases/assets/331787049"
-
 [tools."github:tmux/tmux-builds"."platforms.linux-x64"]
-checksum = "sha256:c0a772a5e6ca8f129b0111d10029a52e02bcbc8352d5a8c0d3de8466a1e59c2e"
-url = "https://github.com/tmux/tmux-builds/releases/download/v3.6a/tmux-3.6a-linux-x86_64.tar.gz"
-url_api = "https://api.github.com/repos/tmux/tmux-builds/releases/assets/331787044"
-
-[tools."github:tmux/tmux-builds"."platforms.linux-x64-musl"]
 checksum = "sha256:c0a772a5e6ca8f129b0111d10029a52e02bcbc8352d5a8c0d3de8466a1e59c2e"
 url = "https://github.com/tmux/tmux-builds/releases/download/v3.6a/tmux-3.6a-linux-x86_64.tar.gz"
 url_api = "https://api.github.com/repos/tmux/tmux-builds/releases/assets/331787044"
@@ -1031,15 +795,7 @@ backend = "core:go"
 checksum = "sha256:c958a1fe1b361391db163a485e21f5f228142d6f8b584f6bef89b26f66dc5b23"
 url = "https://dl.google.com/go/go1.26.2.linux-arm64.tar.gz"
 
-[tools.go."platforms.linux-arm64-musl"]
-checksum = "sha256:c958a1fe1b361391db163a485e21f5f228142d6f8b584f6bef89b26f66dc5b23"
-url = "https://dl.google.com/go/go1.26.2.linux-arm64.tar.gz"
-
 [tools.go."platforms.linux-x64"]
-checksum = "sha256:990e6b4bbba816dc3ee129eaeaf4b42f17c2800b88a2166c265ac1a200262282"
-url = "https://dl.google.com/go/go1.26.2.linux-amd64.tar.gz"
-
-[tools.go."platforms.linux-x64-musl"]
 checksum = "sha256:990e6b4bbba816dc3ee129eaeaf4b42f17c2800b88a2166c265ac1a200262282"
 url = "https://dl.google.com/go/go1.26.2.linux-amd64.tar.gz"
 
@@ -1071,15 +827,7 @@ backend = "core:node"
 checksum = "sha256:73afc234d558c24919875f51c2d1ea002a2ada4ea6f83601a383869fefa64eed"
 url = "https://nodejs.org/dist/v24.15.0/node-v24.15.0-linux-arm64.tar.gz"
 
-[tools.node."platforms.linux-arm64-musl"]
-checksum = "sha256:73afc234d558c24919875f51c2d1ea002a2ada4ea6f83601a383869fefa64eed"
-url = "https://nodejs.org/dist/v24.15.0/node-v24.15.0-linux-arm64.tar.gz"
-
 [tools.node."platforms.linux-x64"]
-checksum = "sha256:44836872d9aec49f1e6b52a9a922872db9a2b02d235a616a5681b6a85fec8d89"
-url = "https://nodejs.org/dist/v24.15.0/node-v24.15.0-linux-x64.tar.gz"
-
-[tools.node."platforms.linux-x64-musl"]
 checksum = "sha256:44836872d9aec49f1e6b52a9a922872db9a2b02d235a616a5681b6a85fec8d89"
 url = "https://nodejs.org/dist/v24.15.0/node-v24.15.0-linux-x64.tar.gz"
 
@@ -1135,15 +883,7 @@ backend = "aqua:pnpm/pnpm"
 checksum = "sha256:06755ad2817548b84317d857d5c8003dc6e9e28416a3ea7467256c49ab400d48"
 url = "https://github.com/pnpm/pnpm/releases/download/v10.33.0/pnpm-linux-arm64"
 
-[tools.pnpm."platforms.linux-arm64-musl"]
-checksum = "sha256:06755ad2817548b84317d857d5c8003dc6e9e28416a3ea7467256c49ab400d48"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.33.0/pnpm-linux-arm64"
-
 [tools.pnpm."platforms.linux-x64"]
-checksum = "sha256:8d4e8f7d778e8ac482022e2577011706a872542f6f6f233e795a4d9f978ea8b5"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.33.0/pnpm-linux-x64"
-
-[tools.pnpm."platforms.linux-x64-musl"]
 checksum = "sha256:8d4e8f7d778e8ac482022e2577011706a872542f6f6f233e795a4d9f978ea8b5"
 url = "https://github.com/pnpm/pnpm/releases/download/v10.33.0/pnpm-linux-x64"
 
