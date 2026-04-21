@@ -8,7 +8,15 @@ backend = "aqua:go-task/task"
 checksum = "sha256:ee67e7d999a4a70711bff1946c70bf76628012c91d9be55626ee90ba976897da"
 url = "https://github.com/go-task/task/releases/download/v3.50.0/task_linux_arm64.tar.gz"
 
+[tools."aqua:go-task/task"."platforms.linux-arm64-musl"]
+checksum = "sha256:ee67e7d999a4a70711bff1946c70bf76628012c91d9be55626ee90ba976897da"
+url = "https://github.com/go-task/task/releases/download/v3.50.0/task_linux_arm64.tar.gz"
+
 [tools."aqua:go-task/task"."platforms.linux-x64"]
+checksum = "sha256:d449ba85ab85a0769989d78f8b9872938e4ba9347f7f4f925f73d98272a0a655"
+url = "https://github.com/go-task/task/releases/download/v3.50.0/task_linux_amd64.tar.gz"
+
+[tools."aqua:go-task/task"."platforms.linux-x64-musl"]
 checksum = "sha256:d449ba85ab85a0769989d78f8b9872938e4ba9347f7f4f925f73d98272a0a655"
 url = "https://github.com/go-task/task/releases/download/v3.50.0/task_linux_amd64.tar.gz"
 
@@ -32,7 +40,15 @@ backend = "aqua:google/go-jsonnet"
 checksum = "sha256:3016b049254cb92548ba99304b6f44ec3795e6173f908e3ce3c5add57243fe20"
 url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_arm64.tar.gz"
 
+[tools."aqua:google/go-jsonnet"."platforms.linux-arm64-musl"]
+checksum = "sha256:3016b049254cb92548ba99304b6f44ec3795e6173f908e3ce3c5add57243fe20"
+url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_arm64.tar.gz"
+
 [tools."aqua:google/go-jsonnet"."platforms.linux-x64"]
+checksum = "sha256:e87a93ea44e34da92c15636205c7f2240bf3ac92d00ccb855dbb4e7e03ea6941"
+url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_amd64.tar.gz"
+
+[tools."aqua:google/go-jsonnet"."platforms.linux-x64-musl"]
 checksum = "sha256:e87a93ea44e34da92c15636205c7f2240bf3ac92d00ccb855dbb4e7e03ea6941"
 url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_amd64.tar.gz"
 
@@ -56,7 +72,15 @@ backend = "aqua:neovim/neovim"
 checksum = "sha256:a3f8aa5590fd2ac930bcc5c9070b9ac1ec33461d262b6428874c5fc640f3f13c"
 url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-arm64.tar.gz"
 
+[tools."aqua:neovim/neovim"."platforms.linux-arm64-musl"]
+checksum = "sha256:a3f8aa5590fd2ac930bcc5c9070b9ac1ec33461d262b6428874c5fc640f3f13c"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-arm64.tar.gz"
+
 [tools."aqua:neovim/neovim"."platforms.linux-x64"]
+checksum = "sha256:ab757a1fd9ad307d53d2df4045698906a7ca3993d92260dd8fe49108712d57d0"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-x86_64.tar.gz"
+
+[tools."aqua:neovim/neovim"."platforms.linux-x64-musl"]
 checksum = "sha256:ab757a1fd9ad307d53d2df4045698906a7ca3993d92260dd8fe49108712d57d0"
 url = "https://github.com/neovim/neovim/releases/download/v0.12.1/nvim-linux-x86_64.tar.gz"
 
@@ -82,7 +106,19 @@ url = "https://github.com/aquaproj/aqua/releases/download/v2.57.1/aqua_linux_arm
 url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/378361481"
 provenance = "github-attestations"
 
+[tools."github:aquaproj/aqua"."platforms.linux-arm64-musl"]
+checksum = "sha256:dbdb45eb8214937e1b02e748b2b6d96b0d84fc5868dfe4d6ca46cc3bd525f9bb"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.57.1/aqua_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/378361481"
+provenance = "github-attestations"
+
 [tools."github:aquaproj/aqua"."platforms.linux-x64"]
+checksum = "sha256:685df389dd8bf4dd4442ca496a2db744d25871351d0edcb1a59dcfa6bd7e7b39"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.57.1/aqua_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/378361471"
+provenance = "github-attestations"
+
+[tools."github:aquaproj/aqua"."platforms.linux-x64-musl"]
 checksum = "sha256:685df389dd8bf4dd4442ca496a2db744d25871351d0edcb1a59dcfa6bd7e7b39"
 url = "https://github.com/aquaproj/aqua/releases/download/v2.57.1/aqua_linux_amd64.tar.gz"
 url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/378361471"
@@ -114,7 +150,15 @@ backend = "core:node"
 checksum = "sha256:73afc234d558c24919875f51c2d1ea002a2ada4ea6f83601a383869fefa64eed"
 url = "https://nodejs.org/dist/v24.15.0/node-v24.15.0-linux-arm64.tar.gz"
 
+[tools.node."platforms.linux-arm64-musl"]
+checksum = "sha256:73afc234d558c24919875f51c2d1ea002a2ada4ea6f83601a383869fefa64eed"
+url = "https://nodejs.org/dist/v24.15.0/node-v24.15.0-linux-arm64.tar.gz"
+
 [tools.node."platforms.linux-x64"]
+checksum = "sha256:44836872d9aec49f1e6b52a9a922872db9a2b02d235a616a5681b6a85fec8d89"
+url = "https://nodejs.org/dist/v24.15.0/node-v24.15.0-linux-x64.tar.gz"
+
+[tools.node."platforms.linux-x64-musl"]
 checksum = "sha256:44836872d9aec49f1e6b52a9a922872db9a2b02d235a616a5681b6a85fec8d89"
 url = "https://nodejs.org/dist/v24.15.0/node-v24.15.0-linux-x64.tar.gz"
 
@@ -142,7 +186,15 @@ backend = "aqua:pnpm/pnpm"
 checksum = "sha256:06755ad2817548b84317d857d5c8003dc6e9e28416a3ea7467256c49ab400d48"
 url = "https://github.com/pnpm/pnpm/releases/download/v10.33.0/pnpm-linux-arm64"
 
+[tools.pnpm."platforms.linux-arm64-musl"]
+checksum = "sha256:06755ad2817548b84317d857d5c8003dc6e9e28416a3ea7467256c49ab400d48"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.33.0/pnpm-linux-arm64"
+
 [tools.pnpm."platforms.linux-x64"]
+checksum = "sha256:8d4e8f7d778e8ac482022e2577011706a872542f6f6f233e795a4d9f978ea8b5"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.33.0/pnpm-linux-x64"
+
+[tools.pnpm."platforms.linux-x64-musl"]
 checksum = "sha256:8d4e8f7d778e8ac482022e2577011706a872542f6f6f233e795a4d9f978ea8b5"
 url = "https://github.com/pnpm/pnpm/releases/download/v10.33.0/pnpm-linux-x64"
 
