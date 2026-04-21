@@ -835,6 +835,38 @@ url = "https://github.com/temporalio/cli/releases/download/v1.6.2/temporal_cli_1
 checksum = "sha256:8a5a77a252af2c76284d6136940a3ff3bd550964df37a544986710191021a572"
 url = "https://github.com/temporalio/cli/releases/download/v1.6.2/temporal_cli_1.6.2_windows_amd64.tar.gz"
 
+[[tools."aqua:theseus-rs/postgresql-binaries"]]
+version = "18.3.0"
+backend = "aqua:theseus-rs/postgresql-binaries"
+
+[tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-arm64"]
+checksum = "sha256:d2a94bc296758f93bc7d29abb12365b1bdb9e32d14ed25086042802995a606cf"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-aarch64-unknown-linux-gnu.tar.gz"
+
+[tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-arm64-musl"]
+checksum = "sha256:d2a94bc296758f93bc7d29abb12365b1bdb9e32d14ed25086042802995a606cf"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-aarch64-unknown-linux-gnu.tar.gz"
+
+[tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-x64"]
+checksum = "sha256:71066f6534cfbc1f6d1f645b3c5c7d2d352eb6a53280fe863a5b3d82614e9f7b"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-x86_64-unknown-linux-gnu.tar.gz"
+
+[tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-x64-musl"]
+checksum = "sha256:71066f6534cfbc1f6d1f645b3c5c7d2d352eb6a53280fe863a5b3d82614e9f7b"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-x86_64-unknown-linux-gnu.tar.gz"
+
+[tools."aqua:theseus-rs/postgresql-binaries"."platforms.macos-arm64"]
+checksum = "sha256:67b2e48b91c61129de6d3c98d7bf6b35e113297b5d6f30c2cd8c6665aa71647b"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-aarch64-apple-darwin.tar.gz"
+
+[tools."aqua:theseus-rs/postgresql-binaries"."platforms.macos-x64"]
+checksum = "sha256:cafd061662f8673584240bd238e20dd83c1eefb2baf70e8e9224b7a8c59d41f1"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-x86_64-apple-darwin.tar.gz"
+
+[tools."aqua:theseus-rs/postgresql-binaries"."platforms.windows-x64"]
+checksum = "sha256:887d2f9094abc6eece59d1ca663ebf3c387869a153e7ffb10996c9ed3f1e6950"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-x86_64-pc-windows-msvc.tar.gz"
+
 [[tools."aqua:twpayne/chezmoi"]]
 version = "2.70.2"
 backend = "aqua:twpayne/chezmoi"

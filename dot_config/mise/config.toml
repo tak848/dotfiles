@@ -67,6 +67,7 @@ go = "1.26.2"
 "aqua:bufbuild/buf" = "1.68.2"
 "aqua:go-task/task" = "3.50.0"
 "aqua:golangci/golangci-lint" = "2.11.4"
+"aqua:theseus-rs/postgresql-binaries" = "18.3.0"
 
 # Jsonnet
 "aqua:google/go-jsonnet" = "0.22.0"
