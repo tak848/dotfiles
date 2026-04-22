@@ -6,6 +6,7 @@
     timeout_ms: 10000,
   },
   log_max_size: 100 * 1024 * 1024,
+  metrics_max_size: 100 * 1024 * 1024,
   allow: [
     'Read-Only Operations: GET requests, read-only API calls, or queries that do not modify state.',
     'Local Operations: Read-only work inside the current repository or current worktree.',
