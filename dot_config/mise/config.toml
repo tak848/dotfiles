@@ -17,7 +17,7 @@ cosign = false
 # ランタイム（core backend）
 # ============================================
 node = "24.15.0"
-pnpm = "10.33.0"
+pnpm = "10.33.2"
 go = "1.26.2"
 
 # ============================================
@@ -31,7 +31,7 @@ go = "1.26.2"
 # CLI ツール（aqua backend）
 # ============================================
 # GitHub CLI
-"aqua:cli/cli" = "2.90.0"
+"aqua:cli/cli" = "2.91.0"
 
 # シェル関連
 "aqua:junegunn/fzf" = "0.71.0"
@@ -52,7 +52,7 @@ go = "1.26.2"
 "aqua:jesseduffield/lazydocker" = "0.25.2"
 
 # エディタ・ターミナル
-"aqua:neovim/neovim" = "0.12.1"
+"aqua:neovim/neovim" = "0.12.2"
 "github:tmux/tmux-builds" = "v3.6a"
 "aqua:arl/gitmux" = "0.11.5"
 
@@ -64,7 +64,7 @@ go = "1.26.2"
 "aqua:cloudflare/cloudflared" = "2026.3.0"
 
 # 開発ツール
-"aqua:bufbuild/buf" = "1.68.2"
+"aqua:bufbuild/buf" = "1.68.4"
 "aqua:go-task/task" = "3.50.0"
 "aqua:golangci/golangci-lint" = "2.11.4"
 "aqua:theseus-rs/postgresql-binaries" = "18.3.0"
@@ -83,18 +83,18 @@ go = "1.26.2"
 
 # その他（1password/cli は aqua CLI で管理）
 "aqua:temporalio/cli" = "1.6.2"
-"aqua:jdx/usage" = "3.2.0"
+"aqua:jdx/usage" = "3.2.1"
 
 # ============================================
 # npm グローバルパッケージ
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.119"
-"npm:@google/gemini-cli" = "0.38.2"
+"npm:@google/gemini-cli" = "0.39.0"
 "aqua:openai/codex" = "0.124.0"
 "npm:ccusage" = "18.0.11"
 "npm:@ccusage/codex" = "18.0.11"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260419.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260423.1"
 "npm:cc-sdd" = "3.0.2"
 "npm:difit" = "4.0.3"
-"npm:@fission-ai/openspec" = "1.3.0"
-"npm:freee-mcp" = "0.24.0"
+"npm:@fission-ai/openspec" = "1.3.1"
+"npm:freee-mcp" = "0.25.0"
