@@ -1,7 +1,7 @@
 {{- /* chezmoi:modify-template */ -}}
 #:schema https://developers.openai.com/codex/config-schema.json
 
-model = "gpt-5.4"
+model = "gpt-5.5"
 model_context_window = 1000000
 model_auto_compact_token_limit = 500000
 model_reasoning_effort = "high"
@@ -81,11 +81,11 @@ url = "https://knowledge-mcp.global.api.aws"
 url = "https://temporal.mcp.kapa.ai"
 
 [profiles.fast]
-model = "gpt-5.2"
+model = "gpt-5.5"
 model_reasoning_effort = "medium"
 
 [profiles.xhigh]
-model = "gpt-5.2"
+model = "gpt-5.5"
 model_reasoning_effort = "xhigh"
 
 [profiles.codex]
