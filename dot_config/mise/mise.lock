@@ -778,6 +778,34 @@ url = "https://github.com/starship/starship/releases/download/v1.25.0/starship-x
 checksum = "sha256:6c21422d1b786ed49937adcb3f23bebd169d32fef9b72ae8e77dc1bdb4c2acf1"
 url = "https://github.com/starship/starship/releases/download/v1.25.0/starship-x86_64-pc-windows-msvc.zip"
 
+[[tools."aqua:tak848/ccgate"]]
+version = "0.5.3"
+backend = "aqua:tak848/ccgate"
+
+[tools."aqua:tak848/ccgate"."platforms.linux-arm64"]
+checksum = "sha256:f8b9f582492ee1df88688e4d2361caa8a40978bc369cbe4b3792fcff6beb84fc"
+url = "https://github.com/tak848/ccgate/releases/download/v0.5.3/ccgate-linux-arm64.tar.gz"
+
+[tools."aqua:tak848/ccgate"."platforms.linux-arm64-musl"]
+checksum = "sha256:f8b9f582492ee1df88688e4d2361caa8a40978bc369cbe4b3792fcff6beb84fc"
+url = "https://github.com/tak848/ccgate/releases/download/v0.5.3/ccgate-linux-arm64.tar.gz"
+
+[tools."aqua:tak848/ccgate"."platforms.linux-x64"]
+checksum = "sha256:064e1b578f4e3b8a5caa86e7e952c1f4f3f462ec9e587134474d47bf30d34c4a"
+url = "https://github.com/tak848/ccgate/releases/download/v0.5.3/ccgate-linux-amd64.tar.gz"
+
+[tools."aqua:tak848/ccgate"."platforms.linux-x64-musl"]
+checksum = "sha256:064e1b578f4e3b8a5caa86e7e952c1f4f3f462ec9e587134474d47bf30d34c4a"
+url = "https://github.com/tak848/ccgate/releases/download/v0.5.3/ccgate-linux-amd64.tar.gz"
+
+[tools."aqua:tak848/ccgate"."platforms.macos-arm64"]
+checksum = "sha256:af63cea73d493ecb12332de9c7615970b3fd9c40233a1f56537fb33c7a7ff9d5"
+url = "https://github.com/tak848/ccgate/releases/download/v0.5.3/ccgate-darwin-arm64.tar.gz"
+
+[tools."aqua:tak848/ccgate"."platforms.macos-x64"]
+checksum = "sha256:0faf2fb9cc7d8c25a0d11ce6da8fd18f1bceb88b2517fa80227bfd3e11180295"
+url = "https://github.com/tak848/ccgate/releases/download/v0.5.3/ccgate-darwin-amd64.tar.gz"
+
 [[tools."aqua:tamasfe/taplo"]]
 version = "0.10.0"
 backend = "aqua:tamasfe/taplo"
@@ -1086,10 +1114,6 @@ url = "https://dl.google.com/go/go1.26.2.darwin-amd64.tar.gz"
 [tools.go."platforms.windows-x64"]
 checksum = "sha256:98eb3570bade15cb826b0909338df6cc6d2cf590bc39c471142002db3832b708"
 url = "https://dl.google.com/go/go1.26.2.windows-amd64.zip"
-
-[[tools."go:github.com/tak848/ccgate"]]
-version = "0.5.2"
-backend = "go:github.com/tak848/ccgate"
 
 [[tools."go:golang.org/x/tools/gopls"]]
 version = "0.21.1"
