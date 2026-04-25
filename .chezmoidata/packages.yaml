@@ -9,6 +9,7 @@ packages:
         - laishulu/homebrew/macism # 日本語入力切替（im-select.nvim 用）
         - poppler # rga依存: PDF検索用（pdftotext）
         - ffmpeg # rga依存: メディアファイル検索用
+        - vips # 画像処理ライブラリ（CLI + libvips）
     casks:
       base:
         - ghostty # ターミナル
