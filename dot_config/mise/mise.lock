@@ -1005,6 +1005,40 @@ url = "https://github.com/aquaproj/aqua/releases/download/v2.57.1/aqua_windows_a
 url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/378361484"
 provenance = "github-attestations"
 
+[[tools."github:endevco/aube"]]
+version = "1.1.0"
+backend = "github:endevco/aube"
+
+[tools."github:endevco/aube"."platforms.linux-arm64"]
+checksum = "sha256:75d39d7a15b8bd30a1ac89efcae5f6ea52e376a7102ceb2e5928829e9aff22fc"
+url = "https://github.com/endevco/aube/releases/download/v1.1.0/aube-v1.1.0-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/404654989"
+
+[tools."github:endevco/aube"."platforms.linux-arm64-musl"]
+checksum = "sha256:76c0af64e5428b88b53ff6f2f14684b9b2003958f655c268f2ae157607e7abd0"
+url = "https://github.com/endevco/aube/releases/download/v1.1.0/aube-v1.1.0-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/404655144"
+
+[tools."github:endevco/aube"."platforms.linux-x64"]
+checksum = "sha256:7ba3551a7b63f82d9aa4734791db66167b3905e940e749db297372422c82933a"
+url = "https://github.com/endevco/aube/releases/download/v1.1.0/aube-v1.1.0-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/404654853"
+
+[tools."github:endevco/aube"."platforms.linux-x64-musl"]
+checksum = "sha256:447f14e9edad5f212ad029758c5ea416437d225592ca8d716b8d1933b020cf4c"
+url = "https://github.com/endevco/aube/releases/download/v1.1.0/aube-v1.1.0-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/404654425"
+
+[tools."github:endevco/aube"."platforms.macos-arm64"]
+checksum = "sha256:4d77b4f54c78297e6aef6da4ccb8a2327c31297f1a9f37b84fb746928129c4b2"
+url = "https://github.com/endevco/aube/releases/download/v1.1.0/aube-v1.1.0-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/404655454"
+
+[tools."github:endevco/aube"."platforms.windows-x64"]
+checksum = "sha256:41f7d31e35bf7e21d32221ad74fb535bca3fc2fde9da80aee6061cc061f5e0f7"
+url = "https://github.com/endevco/aube/releases/download/v1.1.0/aube-v1.1.0-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/404658938"
+
 [[tools."github:jgm/pandoc"]]
 version = "3.9"
 backend = "github:jgm/pandoc"
