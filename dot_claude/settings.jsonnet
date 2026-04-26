@@ -13,6 +13,12 @@ local autoModeRules = import 'auto-mode.libsonnet';
         repo: 'tak848/dotfiles',
       },
     },
+    'openai-codex': {
+      source: {
+        source: 'github',
+        repo: 'openai/codex-plugin-cc',
+      },
+    },
   },
   enabledPlugins: {
     'github@claude-plugins-official': true,
@@ -20,6 +26,7 @@ local autoModeRules = import 'auto-mode.libsonnet';
     'gopls-lsp@claude-plugins-official': true,
     'aws-knowledge@tak848-plugins': true,
     'temporal@tak848-plugins': true,
+    'codex@openai-codex': true,
   },
   statusLine: {
     type: 'command',
@@ -36,10 +43,6 @@ local autoModeRules = import 'auto-mode.libsonnet';
       'Bash(curl *)',
       'Bash(touch *)',
       'Bash(mktemp *)',
-      'Bash(codex exec *)',
-      'Bash(codex-review-exec *)',
-      'Read(.codex-reviews/*)',
-      'Write(.codex-reviews/*)',
       'Bash(lsof *)',
       'Bash(awk *)',
       'Bash(sed *)',
