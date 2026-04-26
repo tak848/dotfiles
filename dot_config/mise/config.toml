@@ -91,7 +91,7 @@ go = "1.26.2"
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.120"
 "npm:@google/gemini-cli" = "0.39.0"
-"aqua:openai/codex" = "0.124.0"
+"aqua:openai/codex" = "0.125.0"
 "npm:ccusage" = "18.0.11"
 "npm:@ccusage/codex" = "18.0.11"
 "npm:@typescript/native-preview" = "7.0.0-dev.20260423.1"
