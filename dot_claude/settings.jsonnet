@@ -43,6 +43,7 @@ local autoModeRules = import 'auto-mode.libsonnet';
       'Bash(curl *)',
       'Bash(touch *)',
       'Bash(mktemp *)',
+      'Skill(codex:rescue)',
       'Bash(lsof *)',
       'Bash(awk *)',
       'Bash(sed *)',
