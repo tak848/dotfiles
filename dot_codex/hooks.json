@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ccgate codex",
+            "statusMessage": "ccgate evaluating request"
+          }
+        ]
+      }
+    ]
+  }
+}
