@@ -307,7 +307,7 @@ local autoModeRules = import 'auto-mode.libsonnet';
         hooks: [
           {
             type: 'command',
-            command: 'ccgate',
+            command: 'ccgate claude',
           },
         ],
       },
