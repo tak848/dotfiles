@@ -77,6 +77,9 @@ go = "1.26.2"
 # Claude Code permission gate
 "aqua:tak848/ccgate" = "0.7.0"
 
+# Anthropic API CLI（aqua registry 未登録のため go backend）
+"go:github.com/anthropics/anthropic-cli/cmd/ant" = "v1.6.0"
+
 # Language Server
 "go:golang.org/x/tools/gopls" = "0.21.1"
 "aqua:rust-lang/rust-analyzer" = "2025-12-01"
