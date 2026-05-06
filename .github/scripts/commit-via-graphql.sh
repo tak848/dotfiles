@@ -33,8 +33,12 @@ while :; do
     eval "$REGENERATE_CMD"
   fi
 
+  # core.fileMode=false: createCommitOnBranch は executable bit を扱えないため
+  # tree mode が 100644 で固定される一方、再生成コマンド (mise generate
+  # bootstrap -w 等) は fs に +x を付ける。fs vs index の mode 差を
+  # 「変更あり」と誤認すると空 commit を打ち続けるので、ここでは無視する。
   # shellcheck disable=SC2086
-  if git diff --quiet -- $FILES; then
+  if git -c core.fileMode=false diff --quiet -- $FILES; then
     echo "No changes in: $FILES — nothing to commit."
     exit 0
   fi

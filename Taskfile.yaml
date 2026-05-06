@@ -166,11 +166,17 @@ tasks:
         # mise.lock は実行環境によって差異が出るため除外
         # JSON 生成は chezmoi に移行したため除外
         # aqua-checksums, bootstrap のみチェック
+        #
+        # core.fileMode=false: executable_mise は createCommitOnBranch 経由で
+        # commit されるため tree mode が 100644 になるが、`mise generate
+        # bootstrap -w` は filesystem に +x を付ける。chezmoi 側は
+        # `executable_` プレフィックスで apply 時に +x するので保持不要。
+        # ここでは fs の executable bit 差分を無視して内容のみ検証する。
         CHECK_FILES="dot_config/aquaproj-aqua/aqua-checksums.json dot_local/bin/executable_mise"
-        if ! git diff --quiet -- $CHECK_FILES; then
+        if ! git -c core.fileMode=false diff --quiet -- $CHECK_FILES; then
           echo "Error: Generated files are out of date. Run 'task' locally and commit the changes."
-          git diff --name-only -- $CHECK_FILES
-          git diff -- $CHECK_FILES
+          git -c core.fileMode=false diff --name-only -- $CHECK_FILES
+          git -c core.fileMode=false diff -- $CHECK_FILES
           exit 1
         fi
         echo "All generated files are up-to-date."
