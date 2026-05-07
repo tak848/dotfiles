@@ -101,37 +101,18 @@ jobs:
           fi
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
-      - name: Setup nvim config
-        run: |
-          chezmoi apply \
-            --source "$GITHUB_WORKSPACE" \
-            --exclude=scripts \
-            --force \
-            --interactive=false
-
-      - name: Sync plugins and generate lockfile
-        run: |
-          # 1回目: LazyVim 本体をインストール
-          nvim --headless "+Lazy! sync" +qa
-          # 2回目: LazyVim の依存プラグインをインストール
-          nvim --headless "+Lazy! sync" +qa
-          cp ~/.config/nvim/lazy-lock.json dot_config/nvim/
-
-      - name: Check if lockfile changed
-        id: check-changes
-        run: |
-          if git status --porcelain dot_config/nvim/lazy-lock.json | grep -q .; then
-            echo "changed=true" >> $GITHUB_OUTPUT
-          else
-            echo "changed=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Commit and push
-        if: steps.check-changes.outputs.changed == 'true'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add dot_config/nvim/lazy-lock.json
-          git commit -m "chore(nvim): update lazy-lock.json"
-          git pull --rebase
-          git push
+      - name: Sync plugins and commit lockfile via GraphQL
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.head_ref }}
+          FILES: dot_config/nvim/lazy-lock.json
+          MESSAGE: "chore(nvim): update lazy-lock.json"
+          REGENERATE_CMD: |
+            chezmoi apply --source "$GITHUB_WORKSPACE" --exclude=scripts --force --interactive=false
+            # 1回目: LazyVim 本体をインストール
+            nvim --headless "+Lazy! sync" +qa
+            # 2回目: LazyVim の依存プラグインをインストール
+            nvim --headless "+Lazy! sync" +qa
+            cp ~/.config/nvim/lazy-lock.json dot_config/nvim/
+        run: bash .github/scripts/commit-via-graphql.sh

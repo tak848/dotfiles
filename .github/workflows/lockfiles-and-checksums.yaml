@@ -46,35 +46,15 @@ jobs:
         with:
           aqua_version: v2.57.2
 
-      - name: Update root mise.lock
-        run: rm -f mise.lock && mise lock
-
-      - name: Update dot_config mise.lock
-        run: |
-          cd dot_config/mise
-          rm -f mise.lock && mise lock
-
-      - name: Update aqua checksums
-        run: |
-          cd dot_config/aquaproj-aqua
-          aqua update-checksum --prune
-
-      - name: Check if generated files changed
-        id: check-changes
-        run: |
-          CHECK_FILES=(mise.lock dot_config/mise/mise.lock dot_config/aquaproj-aqua/aqua-checksums.json)
-          if git diff --quiet -- "${CHECK_FILES[@]}"; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-          else
-            echo "changed=true" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Commit and push
-        if: steps.check-changes.outputs.changed == 'true'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add mise.lock dot_config/mise/mise.lock dot_config/aquaproj-aqua/aqua-checksums.json
-          git commit -m "chore: update mise lockfiles and aqua checksums"
-          git pull --rebase
-          git push
+      - name: Regenerate and commit via GraphQL
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+          FILES: mise.lock dot_config/mise/mise.lock dot_config/aquaproj-aqua/aqua-checksums.json
+          MESSAGE: "chore: update mise lockfiles and aqua checksums"
+          REGENERATE_CMD: |
+            rm -f mise.lock && mise lock
+            ( cd dot_config/mise && rm -f mise.lock && mise lock )
+            ( cd dot_config/aquaproj-aqua && aqua update-checksum --prune )
+        run: bash .github/scripts/commit-via-graphql.sh
