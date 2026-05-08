@@ -17,6 +17,7 @@
   major: { labels: ["renovate", "update_major"] },
   gitIgnoredAuthors: [
     "github-actions[bot]@users.noreply.github.com",
+    "221638520+tak-automation[bot]@users.noreply.github.com",
   ],
   customManagers: [
     {
