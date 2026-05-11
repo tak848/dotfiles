@@ -17,16 +17,16 @@ cosign = false
 # ランタイム（core backend）
 # ============================================
 node = "24.15.0"
-pnpm = "10.33.2"
-"github:endevco/aube" = "v1.5.1" # 高速な Node.js パッケージマネージャ
-go = "1.26.2"
+pnpm = "10.33.4"
+"github:endevco/aube" = "v1.10.0" # 高速な Node.js パッケージマネージャ
+go = "1.26.3"
 
 # ============================================
 # aqua CLI（github backend）
 # ============================================
 # mise の aqua backend で問題のあるツール（aws-cli, 1password/cli, gopls）は
 # aqua CLI で直接管理する
-"github:aquaproj/aqua" = "2.57.2"
+"github:aquaproj/aqua" = "v2.58.1"
 
 # ============================================
 # CLI ツール（aqua backend）
@@ -36,12 +36,12 @@ go = "1.26.2"
 
 # シェル関連
 "aqua:junegunn/fzf" = "0.72.0"
-"aqua:starship/starship" = "1.25.0"
+"aqua:starship/starship" = "1.25.1"
 "aqua:direnv/direnv" = "2.37.1"
 # zoxide は aqua CLI で管理（mise lock で checksum 取得不可）
 
 # 検索・ファイル操作
-"aqua:twpayne/chezmoi" = "2.70.2"
+"aqua:twpayne/chezmoi" = "2.70.3"
 "aqua:BurntSushi/ripgrep" = "15.1.0"
 "aqua:phiresky/ripgrep-all" = "0.10.10"
 # rga依存: ドキュメント変換（docx, epub, odt等）
@@ -58,7 +58,7 @@ go = "1.26.2"
 "aqua:arl/gitmux" = "0.11.5"
 
 # Python ツール
-"aqua:astral-sh/uv" = "0.11.8"
+"aqua:astral-sh/uv" = "0.11.12"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
@@ -67,7 +67,7 @@ go = "1.26.2"
 # 開発ツール
 "aqua:bufbuild/buf" = "1.69.0"
 "aqua:go-task/task" = "3.50.0"
-"aqua:golangci/golangci-lint" = "2.11.4"
+"aqua:golangci/golangci-lint" = "2.12.2"
 "aqua:theseus-rs/postgresql-binaries" = "18.3.0"
 
 # Jsonnet
@@ -78,7 +78,7 @@ go = "1.26.2"
 "aqua:tak848/ccgate" = "0.9.0"
 
 # Anthropic API CLI（aqua registry 未登録のため go backend）
-"go:github.com/anthropics/anthropic-cli/cmd/ant" = "v1.6.0"
+"go:github.com/anthropics/anthropic-cli/cmd/ant" = "v1.7.0"
 
 # Language Server
 "go:golang.org/x/tools/gopls" = "0.21.1"
@@ -87,18 +87,18 @@ go = "1.26.2"
 
 # その他（1password/cli は aqua CLI で管理）
 "aqua:temporalio/cli" = "1.7.0"
-"aqua:jdx/usage" = "3.2.1"
+"aqua:jdx/usage" = "3.3.0"
 
 # ============================================
 # npm グローバルパッケージ
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.139"
-"npm:@google/gemini-cli" = "0.40.0"
+"npm:@google/gemini-cli" = "0.41.2"
 "aqua:openai/codex" = "0.130.0"
 "npm:ccusage" = "18.0.11"
 "npm:@ccusage/codex" = "18.0.11"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260429.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260510.1"
 "npm:cc-sdd" = "3.0.2"
-"npm:difit" = "4.0.5"
+"npm:difit" = "4.0.7"
 "npm:@fission-ai/openspec" = "1.3.1"
-"npm:freee-mcp" = "0.25.4"
+"npm:freee-mcp" = "0.26.5"
