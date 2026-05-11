@@ -97,49 +97,49 @@ checksum = "sha256:23fe150edbcc976eabe55092e1e9d2e5e237afde69553d170e936f776b405
 url = "https://github.com/neovim/neovim/releases/download/v0.12.2/nvim-win64.zip"
 
 [[tools."github:aquaproj/aqua"]]
-version = "2.57.2"
+version = "2.58.1"
 backend = "github:aquaproj/aqua"
 
 [tools."github:aquaproj/aqua"."platforms.linux-arm64"]
-checksum = "sha256:18781ce8ab6168652d4c1e4312c4c07df711483e03847ab4aaa6ca34cf5c10c7"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.57.2/aqua_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/405294918"
+checksum = "sha256:d6d22cf1272d13f3b4ca3414aa4c38f7c7b966cf9287925470b236dee5926d63"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.58.1/aqua_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/415143875"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.linux-arm64-musl"]
-checksum = "sha256:18781ce8ab6168652d4c1e4312c4c07df711483e03847ab4aaa6ca34cf5c10c7"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.57.2/aqua_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/405294918"
+checksum = "sha256:d6d22cf1272d13f3b4ca3414aa4c38f7c7b966cf9287925470b236dee5926d63"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.58.1/aqua_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/415143875"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.linux-x64"]
-checksum = "sha256:d3d8fc69adc28588d900f1dff6e4aaa8c4105f2e929bf96ba9527f3bbe6139d0"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.57.2/aqua_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/405294911"
+checksum = "sha256:a81ec8b5ee66d7a4e6a250d6260d31c7c7c046922cebab4094b59adfaadc2f75"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.58.1/aqua_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/415143872"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.linux-x64-musl"]
-checksum = "sha256:d3d8fc69adc28588d900f1dff6e4aaa8c4105f2e929bf96ba9527f3bbe6139d0"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.57.2/aqua_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/405294911"
+checksum = "sha256:a81ec8b5ee66d7a4e6a250d6260d31c7c7c046922cebab4094b59adfaadc2f75"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.58.1/aqua_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/415143872"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.macos-arm64"]
-checksum = "sha256:04a81fcdadaf3c0bbf4f8f9c709f57a857c77be9d01d2358c18c524a69cb1632"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.57.2/aqua_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/405294909"
+checksum = "sha256:a68317106c8e7c9850ee158374605c82164bf31f78ac264e3309f32f21cb263e"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.58.1/aqua_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/415143869"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.macos-x64"]
-checksum = "sha256:903902c53b0605c52926d671e90533e76383804bd3ad0ac53e0146c1bd89ec33"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.57.2/aqua_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/405294904"
+checksum = "sha256:9f486b8cbd733a406a24d24cfc0191f45be3ea74a374409d7136bb305fabbaf7"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.58.1/aqua_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/415143859"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.windows-x64"]
-checksum = "sha256:e974550d0e412adeeff491bdc1790dc7bc61856eac207082aa82536f519de862"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.57.2/aqua_windows_amd64.zip"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/405294921"
+checksum = "sha256:2e46b7af0dc9962c1b9d6c92db4e39a983fdbfe22ac078e380e96a7338ade1de"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.58.1/aqua_windows_amd64.zip"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/415143878"
 provenance = "github-attestations"
 
 [[tools.node]]
@@ -179,33 +179,33 @@ version = "3.0.2"
 backend = "npm:cc-sdd"
 
 [[tools.pnpm]]
-version = "10.33.2"
+version = "10.33.4"
 backend = "aqua:pnpm/pnpm"
 
 [tools.pnpm."platforms.linux-arm64"]
-checksum = "sha256:0828e5ee23be89d22bd53cc36e93c181ce9d5c47d75f9fe9bf4bdc7a65c66322"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.33.2/pnpm-linux-arm64"
+checksum = "sha256:d29649c7380b5cd522f574208fbd35335846686498f45004604d3f5b8658b5cb"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.33.4/pnpm-linux-arm64"
 
 [tools.pnpm."platforms.linux-arm64-musl"]
-checksum = "sha256:0828e5ee23be89d22bd53cc36e93c181ce9d5c47d75f9fe9bf4bdc7a65c66322"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.33.2/pnpm-linux-arm64"
+checksum = "sha256:d29649c7380b5cd522f574208fbd35335846686498f45004604d3f5b8658b5cb"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.33.4/pnpm-linux-arm64"
 
 [tools.pnpm."platforms.linux-x64"]
-checksum = "sha256:39d7b6600239712bc9581ea219b17ffef46ba60998779cb717be2e068be029ef"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.33.2/pnpm-linux-x64"
+checksum = "sha256:ff1795595535a10d0dfe327303f3dd02377be141190b1f5756de68edde2cf813"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.33.4/pnpm-linux-x64"
 
 [tools.pnpm."platforms.linux-x64-musl"]
-checksum = "sha256:39d7b6600239712bc9581ea219b17ffef46ba60998779cb717be2e068be029ef"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.33.2/pnpm-linux-x64"
+checksum = "sha256:ff1795595535a10d0dfe327303f3dd02377be141190b1f5756de68edde2cf813"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.33.4/pnpm-linux-x64"
 
 [tools.pnpm."platforms.macos-arm64"]
-checksum = "sha256:a99a4d5d0e6bd3728949c24ff74a2f2f2d07f73bc48fd308e4eea75d8e72acdc"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.33.2/pnpm-macos-arm64"
+checksum = "sha256:7aae186a04e1ffaa0047d43cd07d68a98dec303304f28be52234ba955d26c671"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.33.4/pnpm-macos-arm64"
 
 [tools.pnpm."platforms.macos-x64"]
-checksum = "sha256:3b66abb865f4e7a82393861f0f3784d67a704a31a4021739874d4b7910793dca"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.33.2/pnpm-macos-x64"
+checksum = "sha256:3b0c97b9f794cdda293949a8ee0e0151ca08f512f4a832408386221c7c73eec6"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.33.4/pnpm-macos-x64"
 
 [tools.pnpm."platforms.windows-x64"]
-checksum = "sha256:3d1af71e9da7081efd58f95942e1f7e2107bf8fcdae03eb2331c0b6cea59510b"
-url = "https://github.com/pnpm/pnpm/releases/download/v10.33.2/pnpm-win-x64.exe"
+checksum = "sha256:3268b2f29defe0dce8a3a26c0ef01488f0d4aa4872923173186ef618ab7d68ef"
+url = "https://github.com/pnpm/pnpm/releases/download/v10.33.4/pnpm-win-x64.exe"
