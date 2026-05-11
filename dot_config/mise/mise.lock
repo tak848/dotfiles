@@ -767,32 +767,32 @@ checksum = "sha256:6c21422d1b786ed49937adcb3f23bebd169d32fef9b72ae8e77dc1bdb4c2a
 url = "https://github.com/starship/starship/releases/download/v1.25.0/starship-x86_64-pc-windows-msvc.zip"
 
 [[tools."aqua:tak848/ccgate"]]
-version = "0.7.0"
+version = "0.9.0"
 backend = "aqua:tak848/ccgate"
 
 [tools."aqua:tak848/ccgate"."platforms.linux-arm64"]
-checksum = "sha256:e0edb52a3b713422bc1403abe37b8c6211ae23e16fd3787e68b1ccdd260e3e2a"
-url = "https://github.com/tak848/ccgate/releases/download/v0.7.0/ccgate-linux-arm64.tar.gz"
+checksum = "sha256:b627b9e64cf1d7abb9ffd09fba9d8b588bb0ef3894b0449a4e160365a3aae70b"
+url = "https://github.com/tak848/ccgate/releases/download/v0.9.0/ccgate-linux-arm64.tar.gz"
 
 [tools."aqua:tak848/ccgate"."platforms.linux-arm64-musl"]
-checksum = "sha256:e0edb52a3b713422bc1403abe37b8c6211ae23e16fd3787e68b1ccdd260e3e2a"
-url = "https://github.com/tak848/ccgate/releases/download/v0.7.0/ccgate-linux-arm64.tar.gz"
+checksum = "sha256:b627b9e64cf1d7abb9ffd09fba9d8b588bb0ef3894b0449a4e160365a3aae70b"
+url = "https://github.com/tak848/ccgate/releases/download/v0.9.0/ccgate-linux-arm64.tar.gz"
 
 [tools."aqua:tak848/ccgate"."platforms.linux-x64"]
-checksum = "sha256:8c321b9a1a502b7664bdee4c817df275c95c2daba1dc902db95688e8aae2a042"
-url = "https://github.com/tak848/ccgate/releases/download/v0.7.0/ccgate-linux-amd64.tar.gz"
+checksum = "sha256:65cc604f3030f6ebb171d7f2b36bfb88de71ccc622b7eaf34f0b81e8d8bd21c0"
+url = "https://github.com/tak848/ccgate/releases/download/v0.9.0/ccgate-linux-amd64.tar.gz"
 
 [tools."aqua:tak848/ccgate"."platforms.linux-x64-musl"]
-checksum = "sha256:8c321b9a1a502b7664bdee4c817df275c95c2daba1dc902db95688e8aae2a042"
-url = "https://github.com/tak848/ccgate/releases/download/v0.7.0/ccgate-linux-amd64.tar.gz"
+checksum = "sha256:65cc604f3030f6ebb171d7f2b36bfb88de71ccc622b7eaf34f0b81e8d8bd21c0"
+url = "https://github.com/tak848/ccgate/releases/download/v0.9.0/ccgate-linux-amd64.tar.gz"
 
 [tools."aqua:tak848/ccgate"."platforms.macos-arm64"]
-checksum = "sha256:b6582492154dfbb22e05db09fff14653e61faf769a7b5ae673c1265caec19d5d"
-url = "https://github.com/tak848/ccgate/releases/download/v0.7.0/ccgate-darwin-arm64.tar.gz"
+checksum = "sha256:ec5a71440a5fcfffedb1a5eed068466fa86767b5f4678a548d5f4313e99c1a46"
+url = "https://github.com/tak848/ccgate/releases/download/v0.9.0/ccgate-darwin-arm64.tar.gz"
 
 [tools."aqua:tak848/ccgate"."platforms.macos-x64"]
-checksum = "sha256:593bc88060f29fce8ff4d72d15657344ad80deffd11632152e4ee640cd40c838"
-url = "https://github.com/tak848/ccgate/releases/download/v0.7.0/ccgate-darwin-amd64.tar.gz"
+checksum = "sha256:65ccd105336d40a4152b77e3c3df914a9b7547c29c6bc1fc7700694a95e7f72a"
+url = "https://github.com/tak848/ccgate/releases/download/v0.9.0/ccgate-darwin-amd64.tar.gz"
 
 [[tools."aqua:tamasfe/taplo"]]
 version = "0.10.0"
