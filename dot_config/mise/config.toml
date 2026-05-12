@@ -75,7 +75,7 @@ go = "1.26.3"
 "aqua:grafana/jsonnet-language-server" = "0.17.0"
 
 # Claude Code permission gate
-"aqua:tak848/ccgate" = "0.9.0"
+"aqua:tak848/ccgate" = "0.9.1"
 
 # Anthropic API CLI（aqua registry 未登録のため go backend）
 "go:github.com/anthropics/anthropic-cli/cmd/ant" = "v1.7.0"
