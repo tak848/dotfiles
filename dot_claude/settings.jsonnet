@@ -23,7 +23,8 @@ local autoModeRules = import 'auto-mode.libsonnet';
   enabledPlugins: {
     'github@claude-plugins-official': true,
     'context7@claude-plugins-official': true,
-    'gopls-lsp@claude-plugins-official': true,
+    // gopls-lsp は重いため一律有効化しない。必要なプロジェクトで個別に有効化する。
+    // 'gopls-lsp@claude-plugins-official': true,
     'aws-knowledge@tak848-plugins': true,
     'temporal@tak848-plugins': true,
     'codex@openai-codex': true,
