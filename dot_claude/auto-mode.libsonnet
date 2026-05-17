@@ -35,7 +35,7 @@
     // 通してしまう」リスクがある。manifest 経由 install を許可する趣旨はそのまま、
     // 例示だけ pnpm install / uv sync / cargo build / go mod tidy / bundle install に寄せる。
     // "Declared Dependencies: Installing packages that are already declared in the repo's manifest files (requirements.txt, package.json, Cargo.toml, pyproject.toml, Gemfile, etc.) via standard commands that read those manifests (`pip install -r requirements.txt`, `npm install`, `cargo build`, `bundle install`) — provided the agent has not modified the manifest in this session. Does NOT cover installing agent-chosen package names (e.g. `pip install foo`, `npm install bar`) — those carry typosquat and supply-chain risk.",
-    "Declared Dependencies: Installing packages that are already declared in the repo's manifest files (pyproject.toml, package.json, go.mod, Cargo.toml, Gemfile, etc.) via standard commands that read those manifests (`pnpm install`, `uv sync`, `go mod tidy`, `cargo build`, `bundle install`) — provided the agent has not modified the manifest in this session. Does NOT cover installing agent-chosen package names (e.g. `pnpm add foo`, `uv add bar`) — those carry typosquat and supply-chain risk. Note: `npm install` and `pip install` are NOT covered by this allow because they are separately forbidden by soft_deny in this environment; use `pnpm` / `uv` instead.",
+    "Declared Dependencies: Installing packages that are already declared in the repo's manifest files (pyproject.toml, package.json, go.mod, Cargo.toml, Gemfile, etc.) via standard commands that read those manifests (`pnpm install`, `uv sync`, `go mod tidy`, `cargo build`, `bundle install`) — provided the agent has not modified the manifest in this session. Does NOT cover installing agent-chosen package names (e.g. `pnpm add foo`, `uv add bar`, `go get <pkg>`) — those carry typosquat and supply-chain risk. `go mod tidy` is intentionally included as a normalisation step for already-imported packages; however, if the agent added new imports in this session, `go mod tidy` would introduce new dependencies and is NOT covered — that becomes agent-chosen installation. Note: `npm install` and `pip install` are NOT covered by this allow because they are separately forbidden by soft_deny in this environment; use `pnpm` / `uv` instead.",
 
     // [改変: デフォルトを無効化]
     // この環境では mise / aqua でツール管理しており、rustup / pypa / astral / bun /
@@ -61,14 +61,17 @@
 
     // パッケージ/モジュールキャッシュ・システム temp への read-only 閲覧を明示的に許可。
     // Go module cache / pnpm|npm|yarn store / Python cache / cargo registry / Homebrew / ~/.cache / /tmp 等。
-    // read-only のみ。書き込み/削除/実行は対象外で、別ルールに委ねる。
-    'Library Source Read: Read-only inspection of package and module caches and system temp (Go module cache, pnpm/npm/yarn stores, Python cache, cargo registry, Homebrew prefix, ~/.cache, /tmp, /var/folders, installed tool binaries). READ-ONLY only — writes/deletes/executes to these paths are not covered.',
+    // read-only file access のみ。書き込み/削除/**バイナリの実行**は対象外で別ルールが管理する。
+    'Library Source Read: Read-only inspection of package and module caches and system temp (Go module cache, pnpm/npm/yarn stores, Python cache, cargo registry, Homebrew prefix, ~/.cache, /tmp, /var/folders, installed tool binaries). READ-ONLY file access only — writes/deletes to these paths are not covered, and execution of installed binaries is governed by other rules (Direct Tool Invocation, Code from External, etc.).',
 
-    // draft=true での PR 作成は即時許可。非 draft の PR 作成はユーザーの明示的意図が必要。
-    'Draft PR Creation: Creating a pull request with draft=true is allowed immediately. Non-draft PR creation requires explicit user intent.',
+    // draft=true の PR 作成は即時許可。非 draft 化・body/title 変更・既存 PR への commit push 等は
+    // 非 draft PR 作成と同等扱いで user intent 必要。
+    'Draft PR Creation: Creating a pull request with draft=true is allowed immediately. The following require explicit user intent (treat as non-draft PR creation): marking an existing draft PR as ready-for-review, converting non-draft → draft, updating the title/body of an existing PR, or pushing commits to a PR branch the agent did not create in this session.',
 
-    // 現在のリポジトリでの build / test / lint / format コマンドを許可（明示性のため独立項目に）。
-    'Local Development: Build, test, lint, format commands in the current repository.',
+    // project の task runner 経由で「明らかに build/test/lint/format」の script を実行するのを許可。
+    // manifest に script があるから許可、ではなく script の意味が build/test/lint/format であること。
+    // deploy / migration / prod 対象 / 共有 system への write は対象外（user intent 必要）。
+    'Local Development: Project-declared build/test/lint/format scripts invoked via the project\'s own task runner — e.g. `pnpm run <script>`, `uv run <script>`, `cargo test`, `go test`, `make <target>` — where the target is visibly a build/test/lint/format step and does NOT chain into deploys, migrations, or network writes to shared systems. Arbitrary scripts (e.g. `make deploy`, `pnpm run build:prod`, `pytest tests/integration/ --prod-db`, `./scripts/seed-staging.sh`) are NOT covered just because they live in a manifest; deploy / migration / prod-target scripts require explicit user intent.',
   ],
   soft_deny: [
     // --- defaults ---
@@ -197,23 +200,26 @@
     // --- from ccgate.jsonnet ---
 
     // worktree 境界保護。session 開始した worktree 外（primary checkout / sibling worktree）への
-    // アクセスを全 tool で全面禁止。package cache / /tmp / 別 repo は対象外で別ルールへ。
-    'Sibling Checkout Access (ABSOLUTE): When the session runs inside a git worktree, accessing paths under the primary checkout or other sibling worktrees of the SAME repository is forbidden regardless of tool. This does NOT cover package/module caches, /tmp, or unrelated repositories (handled elsewhere).',
+    // アクセスを全 tool で全面禁止。ABSOLUTE = session 内の user authorization では解除されない。
+    // 必要なら session を抜けて `--add-dir` 指定で再起動する。package cache / /tmp / 別 repo は対象外。
+    'Sibling Checkout Access (ABSOLUTE): When the session runs inside a git worktree, accessing paths under the primary checkout or other sibling worktrees of the SAME repository is forbidden regardless of tool. ABSOLUTE means this rule is NOT cleared by in-session user authorization — if sibling-worktree access is genuinely needed, exit and restart the session with `--add-dir` targeting that path. This rule does NOT cover package/module caches, /tmp, or unrelated repositories (handled elsewhere).',
 
     // --add-dir で明示認可されていない別 git repo への read/write を禁止。
-    // ~/repos/* / ~/src/* / ~/work/* / ~/code/* / ~/ghq/* 配下で、
+    // ~/repos/* / ~/projects/* / ~/src/* / ~/work/* / ~/code/* / ~/ghq/* 配下で、
     // current repo root 外かつ package/module cache 以外は private source repo 扱い。
-    'Unrelated Repository Access: Reading or writing files inside a DIFFERENT git repository the user has NOT explicitly authorized via --add-dir. Paths under ~/repos/*, ~/src/*, ~/work/*, ~/code/*, ~/ghq/* that are not under the current repo root and not a package/module cache should be treated as private source repos.',
+    // `cd` で移動した先を後続コマンドで触る形のすり抜けも対象（動作対象のパスで判定する）。
+    'Unrelated Repository Access: Reading or writing files inside a DIFFERENT git repository the user has NOT explicitly authorized via --add-dir. Paths under ~/repos/*, ~/projects/*, ~/src/*, ~/work/*, ~/code/*, ~/ghq/* (or any path outside the current repo root that is itself inside a git repository) should be treated as private source repos unless under a package/module cache or /tmp. This applies even when reached via `cd` into such a path earlier in the session — detection is against the actual path touched by each action, not the current working directory alone.',
 
-    // 単発 package runner (npx / pnpx / pnpm exec / bunx 等) で tool を直接起動するのを禁止。
-    // project 定義済み script を使うこと。$() / pipe / loop 等で組み立てたケースも含む。
-    'Direct Tool Invocation: Running tools via one-shot package runners (npx, pnpx, pnpm exec, bunx, etc.) instead of project-defined scripts is forbidden. This applies even when the command is wrapped in $(), pipes, or loops.',
+    // 単発 / ad-hoc package runner で declared manifest 外のコードを fetch 実行するのを禁止。
+    // npx / pnpx / pnpm dlx / bunx / uvx / uv tool run / go run <remote-path> 等が対象。
+    // pnpm exec <bin> も、devDependency であっても pnpm run <script> に wrap すること。
+    // $() / pipe / loop 経由も対象。
+    'Direct Tool Invocation: Running tools via one-shot or ad-hoc package runners that fetch and execute code outside the declared manifest is forbidden — e.g. `npx`, `pnpx`, `pnpm dlx`, `bunx`, `uvx`, `uv tool run`, or `go run <remote-path>` such as `go run github.com/foo/bar@latest`. Rationale: one-shot runners fetch and execute code not pinned by the repo\'s manifest. Use project-defined scripts via the manifest runner (`pnpm run <script>`, `uv run <script>`) instead. `pnpm exec <bin>` is also forbidden even when the binary is a declared devDependency — wrap it in a `pnpm run <script>` entry first. This applies even when the command is wrapped in $(), pipes, or loops.',
 
-    // release/* / prod / production / stg / staging 等の長寿命デプロイ branch への
-    // 直 push を禁止。default branch は別途 "Git Push to Default Branch" (デフォルト)
-    // で保護済み。ccgate.allow "Git Feature Branch" の裏返しとして、保護 branch 以外は
-    // `Git Push to Working Branch` 等のデフォルト allow で通る。
-    'Protected Branches Push Forbidden: Pushing directly to `release/*`, `prod`, `production`, `stg`, `staging`, or similarly named long-lived deployment branches is forbidden in addition to the default-branch protection already covered by "Git Push to Default Branch". These branches drive deployments or external commitments; treat them like the default branch — push via a feature branch and PR review, never directly.',
+    // release/* / releases/* / hotfix/* / deploy/* / env/* / prod / production / stg / staging 等の
+    // 長寿命デプロイ branch への直 push を禁止。default branch は "Git Push to Default Branch" で保護済み。
+    // 例示は限定列挙ではなく、deploy / environment / release を示す branch 名は全て保護扱い。
+    'Protected Branches Push Forbidden: Pushing directly to `release/*`, `releases/*`, `hotfix/*`, `deploy/*`, `env/*`, `prod`, `production`, `stg`, `staging`, or similarly named long-lived deployment branches is forbidden in addition to the default-branch protection already covered by "Git Push to Default Branch". The list is illustrative — any branch name whose semantics indicate deployment, environment, or release targeting should be treated as protected. These branches drive deployments or external commitments; treat them like the default branch — push via a feature branch and PR review, never directly.',
 
     // --- environment pollution guards (permissions.deny を Classifier にも伝える) ---
 
@@ -232,7 +238,7 @@
     // gitignore 対象の `.mise.local.toml` 等のローカル override を使う。そのうえで
     // `mise install`, `aqua install`, `pnpm install`, `uv sync` 等、config を読む
     // install コマンドで入れる。
-    'Global Install Forbidden: Installing tools, runtimes, or packages into any global or system-wide scope is forbidden regardless of the package manager. Examples: `npm install -g` / `npm i -g`, `pnpm add -g` / `pnpm install -g` / `pnpm i -g`, `yarn global add`, `mise use -g`, `mise install -g`, `mise use --global`, `go install ...`, `cargo install <name>`, `gem install`, `pip install` (system site-packages), and the same forms wrapped in `$()` / pipes / loops. Even when the manager is `mise` or `aqua`, ad-hoc global installation is still forbidden — declarations must land in a config file first, and the choice of file depends on scope: use a repository-wide committed config (`.mise.toml`, `aqua.yaml`, project manifests like `package.json` / `pyproject.toml` / `Cargo.toml` / `go.mod`) when the tool should apply to anyone checking out the repo, or a user-local gitignored override (`.mise.local.toml` or the equivalent local-only config for the given manager) when the tool is only needed in this user\'s personal checkout. Installation then goes through the manager reading that config (`mise install`, `aqua install`, `pnpm install`, `uv sync`, `cargo build`, `go mod tidy`, etc.).',
+    'Global Install Forbidden: Installing tools, runtimes, or packages into any global or system-wide scope is forbidden regardless of the package manager. Examples: `npm install -g` / `npm i -g`, `pnpm add -g` / `pnpm install -g` / `pnpm i -g`, `yarn global add`, `mise use -g`, `mise install -g`, `mise use --global`, `go install <remote-module>` (e.g. `go install github.com/...@latest`), `cargo install <name>` (from crates.io), `gem install`, `pip install` (system site-packages), and the same forms wrapped in `$()` / pipes / loops. Even when the manager is `mise` or `aqua`, ad-hoc global installation is still forbidden — declarations must land in a config file first, and the choice of file depends on scope: use a repository-wide committed config (`.mise.toml`, `aqua.yaml`, project manifests like `package.json` / `pyproject.toml` / `Cargo.toml` / `go.mod`) when the tool should apply to anyone checking out the repo, or a user-local gitignored override (`.mise.local.toml` or the equivalent local-only config for the given manager) when the tool is only needed in this user\'s personal checkout. Installation then goes through the manager reading that config (`mise install`, `aqua install`, `pnpm install`, `uv sync`, `cargo build`, `go mod tidy`, etc.). Exception: installing the current workspace\'s OWN code is allowed — e.g. `cargo install --path .` (installing this Cargo workspace\'s binary to the user bin path) or `go install ./cmd/<name>` / `go install ./...` where the target is a LOCAL package path (not a remote `go install github.com/...`). These install the repo\'s own artifacts rather than fetching third-party packages globally.',
 
     // pip / pip3 / `python -m pip` を禁止。代替は uv (uv pip, uv add, uv sync)。
     // システム Python / pinned toolchain の保護のため、$() / pipe 経由も対象。
@@ -258,8 +264,8 @@
 
     // --- from ccgate.jsonnet ---
 
-    // worktree コンテキストの優先。user が明示指示しない限り、current worktree とそのファイルを
-    // sibling checkout より優先して扱う。
-    '**Current worktree context**: Prefer the current worktree and its own files over sibling checkouts unless the user clearly asks otherwise.',
+    // sibling worktree は "Sibling Checkout Access (ABSOLUTE)" soft_deny と整合する強さで off-limits と宣言。
+    // current worktree とそのファイルのみが作業対象で、primary checkout / sibling worktree への fallback は不可。
+    '**Current worktree context**: Sibling worktrees of the same repository are off-limits by default — see the "Sibling Checkout Access (ABSOLUTE)" soft_deny rule. The current worktree and its own files are the only in-scope area; do not fall back to primary checkout or sibling worktrees for reference material.',
   ],
 }
