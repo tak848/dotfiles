@@ -1222,7 +1222,7 @@ version = "18.0.11"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
-version = "4.0.7"
+version = "5.0.1"
 backend = "npm:difit"
 
 [[tools."npm:freee-mcp"]]
