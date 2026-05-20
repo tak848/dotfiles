@@ -8,7 +8,7 @@ locked = false                                 # npm backend が checksum 未対
 [tools]
 # このリポジトリで使うランタイム
 node = "24.15.0"
-pnpm = "11.1.2"
+pnpm = "11.1.3"
 
 # aqua CLI（dot_config/aquaproj-aqua の管理用）
 "github:aquaproj/aqua" = "v2.59.0"
