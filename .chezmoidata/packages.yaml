@@ -3,6 +3,7 @@ packages:
     taps:
       base:
         - laishulu/homebrew
+        - manaflow-ai/cmux
         - nikitabobko/tap
     brews:
       base:
@@ -13,6 +14,7 @@ packages:
     casks:
       base:
         - ghostty # ターミナル
+        - manaflow-ai/cmux/cmux # AI コーディングエージェント向け macOS ターミナル
         - nikitabobko/tap/aerospace # タイリングウィンドウマネージャ
         - macvim
         - obsidian
