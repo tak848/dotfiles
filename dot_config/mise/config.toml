@@ -16,8 +16,8 @@ cosign = false
 # ============================================
 # ランタイム（core backend）
 # ============================================
-node = "24.15.0"
-pnpm = "11.1.3"
+node = "24.16.0"
+pnpm = "11.2.2"
 "github:endevco/aube" = "v1.15.0" # 高速な Node.js パッケージマネージャ
 go = "1.26.3"
 
@@ -41,7 +41,7 @@ go = "1.26.3"
 # zoxide は aqua CLI で管理（mise lock で checksum 取得不可）
 
 # 検索・ファイル操作
-"aqua:twpayne/chezmoi" = "2.70.3"
+"aqua:twpayne/chezmoi" = "2.70.4"
 "aqua:BurntSushi/ripgrep" = "15.1.0"
 "aqua:phiresky/ripgrep-all" = "0.10.10"
 # rga依存: ドキュメント変換（docx, epub, odt等）
@@ -58,7 +58,7 @@ go = "1.26.3"
 "aqua:arl/gitmux" = "0.11.5"
 
 # Python ツール
-"aqua:astral-sh/uv" = "0.11.15"
+"aqua:astral-sh/uv" = "0.11.16"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
@@ -78,7 +78,7 @@ go = "1.26.3"
 "aqua:tak848/ccgate" = "0.9.1"
 
 # Anthropic API CLI（aqua registry 未登録のため go backend）
-"go:github.com/anthropics/anthropic-cli/cmd/ant" = "v1.8.0"
+"go:github.com/anthropics/anthropic-cli/cmd/ant" = "v1.9.1"
 
 # Language Server
 "go:golang.org/x/tools/gopls" = "0.22.0"
@@ -93,11 +93,11 @@ go = "1.26.3"
 # npm グローバルパッケージ
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.150"
-"npm:@google/gemini-cli" = "0.42.0"
+"npm:@google/gemini-cli" = "0.43.0"
 "aqua:openai/codex" = "0.133.0"
 "npm:ccusage" = "20.0.4"
 "npm:@ccusage/codex" = "19.0.0"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260518.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260522.1"
 "npm:cc-sdd" = "3.0.2"
 "npm:difit" = "5.0.1"
 "npm:@fission-ai/openspec" = "1.3.1"
