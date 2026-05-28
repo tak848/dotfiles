@@ -7,12 +7,28 @@ export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 
 echo "=== chezmoi 初回セットアップ ==="
 
-# sudo 権限を事前に要求（パスワード入力）
-echo "セットアップには管理者権限が必要です。"
-sudo -v
+# sudo が必要になる処理が走るかを事前に判定し、必要なときだけ認証を取る
+NEEDS_SUDO=false
+{{- if eq .chezmoi.os "darwin" }}
+{{-   if eq .chezmoi.arch "arm64" }}
+BREW_PATH="/opt/homebrew/bin/brew"
+{{-   else }}
+BREW_PATH="/usr/local/bin/brew"
+{{-   end }}
+# Homebrew インストーラが初手で sudo を要求するため
+[ -x "$BREW_PATH" ] || NEEDS_SUDO=true
+{{- end }}
+{{- if eq .chezmoi.os "linux" }}
+# zsh インストール用の apt/dnf/pacman で sudo が必要
+command -v zsh >/dev/null 2>&1 || NEEDS_SUDO=true
+{{- end }}
 
-# sudo 認証を維持（バックグラウンドで更新）
-while true; do sudo -n true; sleep 50; kill -0 "$$" || exit; done 2>/dev/null &
+if [ "$NEEDS_SUDO" = true ]; then
+  echo "セットアップには管理者権限が必要です。"
+  sudo -v
+  # sudo 認証を維持（バックグラウンドで更新）
+  while true; do sudo -n true; sleep 50; kill -0 "$$" || exit; done 2>/dev/null &
+fi
 
 # 0. zsh インストール（Linux の場合）
 {{- if eq .chezmoi.os "linux" }}
@@ -34,17 +50,8 @@ if [ "$SHELL" != "$(which zsh)" ]; then
 fi
 {{- end }}
 
-# 1. Homebrew インストール
+# 1. Homebrew インストール（macOS のみ）
 {{- if eq .chezmoi.os "darwin" }}
-{{-   if eq .chezmoi.arch "arm64" }}
-BREW_PATH="/opt/homebrew/bin/brew"
-{{-   else }}
-BREW_PATH="/usr/local/bin/brew"
-{{-   end }}
-{{- else if eq .chezmoi.os "linux" }}
-BREW_PATH="/home/linuxbrew/.linuxbrew/bin/brew"
-{{- end }}
-
 if [ ! -x "$BREW_PATH" ]; then
   echo "Installing Homebrew..."
   NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -54,6 +61,7 @@ fi
 if [ -x "$BREW_PATH" ]; then
   eval "$($BREW_PATH shellenv)"
 fi
+{{- end }}
 
 # 2. zinit インストール
 ZINIT_HOME="$XDG_DATA_HOME/zinit/zinit.git"
