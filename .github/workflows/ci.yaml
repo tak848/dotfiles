@@ -74,7 +74,8 @@ jobs:
       - name: Check Jsonnet syntax
         run: |
           echo "=== Checking Jsonnet syntax ==="
-          for f in dot_claude/*.jsonnet dot_gemini/*.jsonnet; do
+          shopt -s globstar
+          for f in dot_claude/*.jsonnet dot_gemini/**/*.jsonnet; do
             echo "Checking $f..."
             jsonnet "$f" > /dev/null || exit 1
           done
