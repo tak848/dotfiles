@@ -8,7 +8,15 @@ backend = "aqua:go-task/task"
 checksum = "sha256:49c58bb00eff2449a5553f3b3e694fc424e0dc04d5c669d8831126daee1000f8"
 url = "https://github.com/go-task/task/releases/download/v3.51.1/task_linux_arm64.tar.gz"
 
+[tools."aqua:go-task/task"."platforms.linux-arm64-musl"]
+checksum = "sha256:49c58bb00eff2449a5553f3b3e694fc424e0dc04d5c669d8831126daee1000f8"
+url = "https://github.com/go-task/task/releases/download/v3.51.1/task_linux_arm64.tar.gz"
+
 [tools."aqua:go-task/task"."platforms.linux-x64"]
+checksum = "sha256:da7e92f0ff961ef2aae7cfecbad8d1fd2a08d7b09ba968673adf7ff389b243b5"
+url = "https://github.com/go-task/task/releases/download/v3.51.1/task_linux_amd64.tar.gz"
+
+[tools."aqua:go-task/task"."platforms.linux-x64-musl"]
 checksum = "sha256:da7e92f0ff961ef2aae7cfecbad8d1fd2a08d7b09ba968673adf7ff389b243b5"
 url = "https://github.com/go-task/task/releases/download/v3.51.1/task_linux_amd64.tar.gz"
 
@@ -32,7 +40,15 @@ backend = "aqua:google/go-jsonnet"
 checksum = "sha256:3016b049254cb92548ba99304b6f44ec3795e6173f908e3ce3c5add57243fe20"
 url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_arm64.tar.gz"
 
+[tools."aqua:google/go-jsonnet"."platforms.linux-arm64-musl"]
+checksum = "sha256:3016b049254cb92548ba99304b6f44ec3795e6173f908e3ce3c5add57243fe20"
+url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_arm64.tar.gz"
+
 [tools."aqua:google/go-jsonnet"."platforms.linux-x64"]
+checksum = "sha256:e87a93ea44e34da92c15636205c7f2240bf3ac92d00ccb855dbb4e7e03ea6941"
+url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_amd64.tar.gz"
+
+[tools."aqua:google/go-jsonnet"."platforms.linux-x64-musl"]
 checksum = "sha256:e87a93ea44e34da92c15636205c7f2240bf3ac92d00ccb855dbb4e7e03ea6941"
 url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_amd64.tar.gz"
 
@@ -56,7 +72,15 @@ backend = "aqua:neovim/neovim"
 checksum = "sha256:f697d4e4582b6e4b5c3c26e76e06ce26efa08ba1768e03fd2733fcc422bb0490"
 url = "https://github.com/neovim/neovim/releases/download/v0.12.2/nvim-linux-arm64.tar.gz"
 
+[tools."aqua:neovim/neovim"."platforms.linux-arm64-musl"]
+checksum = "sha256:f697d4e4582b6e4b5c3c26e76e06ce26efa08ba1768e03fd2733fcc422bb0490"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.2/nvim-linux-arm64.tar.gz"
+
 [tools."aqua:neovim/neovim"."platforms.linux-x64"]
+checksum = "sha256:31cf85945cb600d96cdf69f88bc68bec814acbff50863c5546adef3a1bcef260"
+url = "https://github.com/neovim/neovim/releases/download/v0.12.2/nvim-linux-x86_64.tar.gz"
+
+[tools."aqua:neovim/neovim"."platforms.linux-x64-musl"]
 checksum = "sha256:31cf85945cb600d96cdf69f88bc68bec814acbff50863c5546adef3a1bcef260"
 url = "https://github.com/neovim/neovim/releases/download/v0.12.2/nvim-linux-x86_64.tar.gz"
 
@@ -82,7 +106,19 @@ url = "https://github.com/aquaproj/aqua/releases/download/v2.59.1/aqua_linux_arm
 url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/430610113"
 provenance = "github-attestations"
 
+[tools."github:aquaproj/aqua"."platforms.linux-arm64-musl"]
+checksum = "sha256:92298717b849c4baa36947dc4fcdedf7a542a2686dbc939a0dcda83d891b9a25"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.59.1/aqua_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/430610113"
+provenance = "github-attestations"
+
 [tools."github:aquaproj/aqua"."platforms.linux-x64"]
+checksum = "sha256:f2ec38dece860fee4fc48d1213da176fa7bd900e95036cac8d952800d91644e7"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.59.1/aqua_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/430610109"
+provenance = "github-attestations"
+
+[tools."github:aquaproj/aqua"."platforms.linux-x64-musl"]
 checksum = "sha256:f2ec38dece860fee4fc48d1213da176fa7bd900e95036cac8d952800d91644e7"
 url = "https://github.com/aquaproj/aqua/releases/download/v2.59.1/aqua_linux_amd64.tar.gz"
 url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/430610109"
@@ -114,9 +150,17 @@ backend = "core:node"
 checksum = "sha256:589f5b6dd4fcfee4dfda73013903c966abaa8abd93dbc9d436544e472b4f0e74"
 url = "https://nodejs.org/dist/v24.16.0/node-v24.16.0-linux-arm64.tar.gz"
 
+[tools.node."platforms.linux-arm64-musl"]
+checksum = "sha256:85dde27aa73503b03dadfa0410a800067b4e3f702fb7fcaa3beaf284dfcc69e9"
+url = "https://unofficial-builds.nodejs.org/download/release/v24.16.0/node-v24.16.0-linux-arm64-musl.tar.gz"
+
 [tools.node."platforms.linux-x64"]
 checksum = "sha256:2faf6a387e9b62b888e21c54f01249fb27537ffecf1842f29f4c919d0a59a0ff"
 url = "https://nodejs.org/dist/v24.16.0/node-v24.16.0-linux-x64.tar.gz"
+
+[tools.node."platforms.linux-x64-musl"]
+checksum = "sha256:50df5d8d474892d4f7b906167df36f77f5b93908f63dc532dc568219cab65841"
+url = "https://unofficial-builds.nodejs.org/download/release/v24.16.0/node-v24.16.0-linux-x64-musl.tar.gz"
 
 [tools.node."platforms.macos-arm64"]
 checksum = "sha256:39189dab4eeb15706c424af0ac08a3044c9e48f7db12a7d77f6b7aafc7dd5df6"
@@ -143,9 +187,19 @@ checksum = "sha256:383f644f50667e9c1752791173d274ba414117262b09c1b027c2d297bf520
 url = "https://github.com/pnpm/pnpm/releases/download/v11.3.0/pnpm-linux-arm64.tar.gz"
 provenance = "github-attestations"
 
+[tools.pnpm."platforms.linux-arm64-musl"]
+checksum = "sha256:b489128f5e9a6ef56c1c5ff02c03118635bef7726ef9bb2d44e0ccd16d191883"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.3.0/pnpm-linux-arm64-musl.tar.gz"
+provenance = "github-attestations"
+
 [tools.pnpm."platforms.linux-x64"]
 checksum = "sha256:6eb506b53297eb1186ba0cbff1577bb26d17713835a01a5342dcafae550827ce"
 url = "https://github.com/pnpm/pnpm/releases/download/v11.3.0/pnpm-linux-x64.tar.gz"
+provenance = "github-attestations"
+
+[tools.pnpm."platforms.linux-x64-musl"]
+checksum = "sha256:d728c510e04ac218091ce5dc591b28706bb154a14bd9741a146a0defd3ad466b"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.3.0/pnpm-linux-x64-musl.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.macos-arm64"]
