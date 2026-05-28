@@ -59,6 +59,12 @@
       extractVersion: "^rust-v(?<version>.+)$",
     },
     {
+      description: "ccgate: 自作ツールなので age gate なし",
+      matchPackageNames: ["tak848/ccgate"],
+      groupName: "ccgate",
+      minimumReleaseAge: "0 hours",
+    },
+    {
       description: "Use node versioning for Node.js (LTS only)",
       matchPackageNames: ["nodejs/node"],
       versioning: "node",
