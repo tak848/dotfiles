@@ -35,6 +35,16 @@
       minimumReleaseAge: "24 hours",
     },
     {
+      // mise.lock の更新は CI 側の lockfiles-and-checksums.yaml ワークフローに任せる。
+      // Mend Cloud の allowedEnv (BUN_*, GO*, GRADLE_OPTS, RUSTC_BOOTSTRAP, PNPM_WORKERS,
+      // PNPM_MAX_WORKERS) と allowedCommands (git add --all / git reset / pwd) には
+      // MISE_TRUSTED_CONFIG_PATHS も `mise trust` も含まれず、Renovate の mise
+      // post-update artifact 生成が trust エラーで毎回失敗するため、警告を抑止する。
+      description: "Skip mise lockfile artifact update on Mend Cloud (handled by lockfiles-and-checksums.yaml)",
+      matchManagers: ["mise"],
+      skipArtifactsUpdate: true,
+    },
+    {
       description: "Claude Code: independent PR, no age gate",
       matchPackageNames: ["anthropics/claude-code"],
       groupName: "claude-code",
