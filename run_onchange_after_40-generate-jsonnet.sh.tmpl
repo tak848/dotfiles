@@ -4,6 +4,7 @@ set -e
 # {{ include "dot_claude/permission-rules.libsonnet" | sha256sum }}
 # {{ include "dot_claude/auto-mode.libsonnet" | sha256sum }}
 # {{ include "dot_gemini/settings.jsonnet" | sha256sum }}
+# {{ include "dot_gemini/mcp.jsonnet" | sha256sum }}
 # jsonnet ファイルが変更された時のみ JSON を生成する
 
 {{ template "path-setup.tmpl" . }}
@@ -12,11 +13,12 @@ if command -v jsonnet &> /dev/null; then
     echo "Jsonnet から JSON を生成中..."
 
     # ディレクトリが存在しない場合は作成
-    mkdir -p ~/.claude ~/.gemini
+    mkdir -p ~/.claude ~/.gemini/antigravity-cli ~/.gemini/config
 
     # Jsonnet から JSON を生成
     jsonnet "{{ .chezmoi.sourceDir }}/dot_claude/settings.jsonnet" > ~/.claude/settings.json
-    jsonnet "{{ .chezmoi.sourceDir }}/dot_gemini/settings.jsonnet" > ~/.gemini/settings.json
+    jsonnet "{{ .chezmoi.sourceDir }}/dot_gemini/settings.jsonnet" > ~/.gemini/antigravity-cli/settings.json
+    jsonnet "{{ .chezmoi.sourceDir }}/dot_gemini/mcp.jsonnet" > ~/.gemini/config/mcp_config.json
 
     echo "JSON 生成完了"
 else

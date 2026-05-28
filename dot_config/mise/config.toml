@@ -87,8 +87,8 @@ go = "1.26.3"
 # Claude Code permission gate
 "aqua:tak848/ccgate" = "0.9.1"
 
-# Anthropic API CLI（aqua registry 未登録のため go backend）
-"go:github.com/anthropics/anthropic-cli/cmd/ant" = "v1.9.3"
+# Anthropic API CLI
+"aqua:anthropics/anthropic-cli" = "1.9.3"
 
 # Language Server
 "go:golang.org/x/tools/gopls" = "0.22.0"
@@ -103,7 +103,7 @@ go = "1.26.3"
 # npm グローバルパッケージ
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.153"
-"npm:@google/gemini-cli" = "0.43.0"
+"aqua:google.com/antigravity-cli" = "1.0.0-5288553236791296" # agy: Gemini CLI の後継
 "aqua:openai/codex" = "0.134.0"
 "npm:ccusage" = "20.0.5"
 "npm:@ccusage/codex" = "19.0.0"

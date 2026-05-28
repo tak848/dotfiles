@@ -141,24 +141,8 @@ local autoModeRules = import 'auto-mode.libsonnet';
       // 'mcp__playwright__browser_resize',
 
       'mcp__o3__o3-search',
-      'mcp__gemini-cli__googleSearch',
+      // 'mcp__gemini-cli__googleSearch',  // gemini-cli は廃止し agy へ移行
 
-      // // serena-global
-      // 'mcp__serena-global__get_symbols_overview',
-      // 'mcp__serena-global__find_symbol',
-      // 'mcp__serena-global__find_referencing_symbols',
-      // 'mcp__serena-global__list_dir',
-      // 'mcp__serena-global__find_file',
-      // 'mcp__serena-global__search_for_pattern',
-      // 'mcp__serena-global__list_memories',
-      // 'mcp__serena-global__write_memory',
-      // 'mcp__serena-global__read_memory',
-      // 'mcp__serena-global__delete_memory',
-      // 'mcp__serena-global__check_onboarding_performed',
-      // 'mcp__serena-global__onboarding',
-      // 'mcp__serena-global__think_about_collected_information',
-      // 'mcp__serena-global__think_about_task_adherence',
-      // 'mcp__serena-global__think_about_whether_you_are_done',
       'WebSearch',
       'WebFetch(domain:docs.anthropic.com)',
       'WebFetch(domain:docs.devin.ai)',

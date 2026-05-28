@@ -20,7 +20,6 @@ create_dot_zsh
 .claude/commands/kiro
 .codex/prompts/kiro-*.md
 .cursor/commands/kiro
-.gemini/commands/kiro
 /mise.lock
 /.cursorrules
 go.mod

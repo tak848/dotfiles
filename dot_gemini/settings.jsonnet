@@ -1,56 +1,10 @@
+// agy (Antigravity CLI) の CLI 専用設定
+// 出力先: ~/.gemini/antigravity-cli/settings.json
+// 参考: https://antigravity.google/docs/cli-overview
+// 旧 Gemini CLI 用キー (ide.hasSeenNudge, security.auth, ui.*, general.disableAutoUpdate,
+// contextFileName 等) は agy スキーマとの互換性が確認できないため捨てる。
+// MCP サーバー定義は dot_gemini/mcp.jsonnet で別管理。
 {
-  ide: {
-    hasSeenNudge: true,
-  },
-  security: {
-    auth: {
-      selectedType: 'oauth-personal',
-    },
-  },
-  ui: {
-    theme: 'GitHub',
-    showStatusInTitle: true,
-    footer: {
-      hideContextPercentage: false,
-    },
-    showMemoryUsage: true,
-    showLineNumbers: true,
-    showCitations: true,
-  },
-  general: {
-    disableAutoUpdate: true,
-  },
-  contextFileName: ['CLAUDE.md', 'GEMINI.md'],
-  mcpServers: {
-    // gopls: {
-    //   type: 'stdio',
-    //   command: 'gopls',
-    //   args: [
-    //     'mcp',
-    //   ],
-    //   env: {
-    //     MCP_TIMEOUT: '120000',
-    //   },
-    // },
-    context7: {
-      command: 'pnpm',
-      args: ['dlx', '@upstash/context7-mcp'],
-      env: {
-        CONTEXT7_API_KEY: '${CONTEXT7_API_KEY}',
-        MCP_TIMEOUT: '120000',
-      },
-    },
-    devin: {
-      url: 'https://mcp.devin.ai/sse',
-      headers: {
-        Authorization: 'Bearer ${DEVIN_API_KEY}',
-      },
-    },
-    deepwiki: {
-      url: 'https://mcp.deepwiki.com/sse',
-      headers: {
-        Authorization: 'Bearer ${DEVIN_API_KEY}',
-      },
-    },
-  },
+  notifications: true,
+  trustedWorkspaces: [],
 }
