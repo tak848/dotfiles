@@ -54,7 +54,7 @@ task check
 mise.lock は実行環境（macOS/Linux）によって結果が異なる[既知の問題](https://github.com/jdx/mise/discussions/6942)がある。そのため：
 
 - **CI の diff チェックからは除外**（`task check` は mise.lock を検証しない）
-- **mise.lock の更新は Renovate ワークフロー（mise-lock.yaml）に任せる**
+- **mise.lock の更新は GitHub Actions ワークフロー（`lockfiles-and-checksums.yaml`）に任せる**
 
 ## Architecture
 
@@ -138,9 +138,8 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 | ワークフロー | トリガー | 処理 |
 |-------------|---------|------|
 | `ci.yaml` | push | `task check` で自動生成ファイルの diff チェック |
-| `mise-lock.yaml` | push（`mise.toml` / `config.toml` 変更時） | `mise lock` |
+| `lockfiles-and-checksums.yaml` | push（`.mise.toml` / `dot_config/mise/config.toml` / `dot_config/aquaproj-aqua/aqua.yaml` 変更時、`main` / `lazy-lock-update` ブランチを除く） | `mise lock`（ルート + `dot_config/mise/`）と `aqua update-checksum --prune` を Renovate PR ブランチへ commit |
 | `mise-bootstrap.yaml` | push（`.mise-bootstrap-version` 変更時） | `mise generate bootstrap` |
-| `aqua-checksums.yaml` | push（`aqua.yaml` 変更時） | `aqua update-checksum --prune` |
 | `lazy-lock.yaml` | nvim 設定変更 / 週次 cron | Lazy.nvim lockfile 更新（PR 作成 or Renovate PR へコミット） |
 
 ### zsh 設定の読み込み順序
