@@ -102,7 +102,7 @@ go = "1.26.3"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"aqua:anthropics/claude-code" = "2.1.150"
+"aqua:anthropics/claude-code" = "2.1.153"
 "npm:@google/gemini-cli" = "0.43.0"
 "aqua:openai/codex" = "0.133.0"
 "npm:ccusage" = "20.0.4"
