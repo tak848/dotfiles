@@ -365,7 +365,7 @@ url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6
 
 [tools."aqua:google.com/antigravity-cli"."platforms.linux-arm64-musl"]
 checksum = "sha512:0f6d326ef28e57e473c7825583314636fa0bcda50e27117ff3d019196d048d764af29846910a2f238dc87a3f90062e29b5252232c7d586a86abaaea921697e52"
-url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.0-5288553236791296/linux-arm/cli_linux_arm64.tar.gz"
+url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/linux-arm/cli_linux_arm64.tar.gz"
 
 [tools."aqua:google.com/antigravity-cli"."platforms.linux-x64"]
 checksum = "sha512:f6cf890d494f5fd00c696b4d2e541c894d5b10ff50bfd9f6dc02b915386e08b61c56140f17115898fc49f4aa4534581393098f35db70be9aae20dfde3ba5787c"
@@ -373,7 +373,7 @@ url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6
 
 [tools."aqua:google.com/antigravity-cli"."platforms.linux-x64-musl"]
 checksum = "sha512:f6cf890d494f5fd00c696b4d2e541c894d5b10ff50bfd9f6dc02b915386e08b61c56140f17115898fc49f4aa4534581393098f35db70be9aae20dfde3ba5787c"
-url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.0-5288553236791296/linux-x64/cli_linux_x64.tar.gz"
+url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/linux-x64/cli_linux_x64.tar.gz"
 
 [tools."aqua:google.com/antigravity-cli"."platforms.macos-arm64"]
 checksum = "sha512:b2c0d21876ae9b6faf6164b15b573d76e379f643e040e77d528ebafa5d5bd8893cc3c8ebd9a78faf67bd7c676dd4bff0f028f3bbb508e544769d61de3da6b8b1"
