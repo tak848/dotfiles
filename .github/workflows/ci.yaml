@@ -74,7 +74,7 @@ jobs:
       - name: Check Jsonnet syntax
         run: |
           echo "=== Checking Jsonnet syntax ==="
-          for f in dot_claude/*.jsonnet dot_gemini/*.jsonnet; do
+          for f in $(find dot_claude dot_gemini -name '*.jsonnet'); do
             echo "Checking $f..."
             jsonnet "$f" > /dev/null || exit 1
           done

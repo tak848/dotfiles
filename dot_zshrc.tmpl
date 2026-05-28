@@ -123,12 +123,6 @@ fkill() {
 export PATH="{{ .chezmoi.homeDir }}/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 {{- end }}
-{{- if stat (joinPath .chezmoi.homeDir ".antigravity/antigravity/bin") }}
-### MANAGED BY ANTIGRAVITY START (DO NOT EDIT)
-# Added by Antigravity
-export PATH="{{ .chezmoi.homeDir }}/.antigravity/antigravity/bin:$PATH"
-### MANAGED BY ANTIGRAVITY END (DO NOT EDIT)
-{{- end }}
 {{- if stat (joinPath .chezmoi.homeDir ".codeium/windsurf/bin") }}
 ### MANAGED BY WINDSURF START (DO NOT EDIT)
 # Added by Windsurf

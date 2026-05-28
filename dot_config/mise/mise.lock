@@ -28,6 +28,38 @@ url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15
 checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d87493a"
 url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"
 
+[[tools."aqua:anthropics/anthropic-cli"]]
+version = "1.9.3"
+backend = "aqua:anthropics/anthropic-cli"
+
+[tools."aqua:anthropics/anthropic-cli"."platforms.linux-arm64"]
+checksum = "sha256:63c15fedd30747092f6b744e535bf5c2f1970762adcdeb9e823b3eeeeb8e842a"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.9.3/ant_1.9.3_linux_arm64.tar.gz"
+
+[tools."aqua:anthropics/anthropic-cli"."platforms.linux-arm64-musl"]
+checksum = "sha256:63c15fedd30747092f6b744e535bf5c2f1970762adcdeb9e823b3eeeeb8e842a"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.9.3/ant_1.9.3_linux_arm64.tar.gz"
+
+[tools."aqua:anthropics/anthropic-cli"."platforms.linux-x64"]
+checksum = "sha256:2d4df6cee4010f9b2c815896bb3826ec6f89d3a9d2ba9b3a1c3303e34143752d"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.9.3/ant_1.9.3_linux_amd64.tar.gz"
+
+[tools."aqua:anthropics/anthropic-cli"."platforms.linux-x64-musl"]
+checksum = "sha256:2d4df6cee4010f9b2c815896bb3826ec6f89d3a9d2ba9b3a1c3303e34143752d"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.9.3/ant_1.9.3_linux_amd64.tar.gz"
+
+[tools."aqua:anthropics/anthropic-cli"."platforms.macos-arm64"]
+checksum = "sha256:efbbe613daea2dace6d89a0f1a02591b1e613a83d0c6b326f61259fda8104964"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.9.3/ant_1.9.3_macos_arm64.zip"
+
+[tools."aqua:anthropics/anthropic-cli"."platforms.macos-x64"]
+checksum = "sha256:614ce6cd2b6a67ed68cd6a3954ff485d5b1c1c3ed4b62f770f156aa807c7b4e3"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.9.3/ant_1.9.3_macos_amd64.zip"
+
+[tools."aqua:anthropics/anthropic-cli"."platforms.windows-x64"]
+checksum = "sha256:fae140432a4d18261a3640f85a23f6fa687cdbff983e6e05ed8b5ab5d071586a"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.9.3/ant_1.9.3_windows_amd64.zip"
+
 [[tools."aqua:anthropics/claude-code"]]
 version = "2.1.153"
 backend = "aqua:anthropics/claude-code"
@@ -322,6 +354,38 @@ provenance = "github-attestations"
 checksum = "sha256:bd42e3ebc8cb4ececb86941983baaf1dc221bbb04d838e94ce63b49cc91e02bb"
 url = "https://github.com/golangci/golangci-lint/releases/download/v2.12.2/golangci-lint-2.12.2-windows-amd64.zip"
 provenance = "github-attestations"
+
+[[tools."aqua:google.com/antigravity-cli"]]
+version = "1.0.3-6260531212976128"
+backend = "aqua:google.com/antigravity-cli"
+
+[tools."aqua:google.com/antigravity-cli"."platforms.linux-arm64"]
+checksum = "sha512:0f6d326ef28e57e473c7825583314636fa0bcda50e27117ff3d019196d048d764af29846910a2f238dc87a3f90062e29b5252232c7d586a86abaaea921697e52"
+url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/linux-arm/cli_linux_arm64.tar.gz"
+
+[tools."aqua:google.com/antigravity-cli"."platforms.linux-arm64-musl"]
+checksum = "sha512:0f6d326ef28e57e473c7825583314636fa0bcda50e27117ff3d019196d048d764af29846910a2f238dc87a3f90062e29b5252232c7d586a86abaaea921697e52"
+url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/linux-arm/cli_linux_arm64.tar.gz"
+
+[tools."aqua:google.com/antigravity-cli"."platforms.linux-x64"]
+checksum = "sha512:f6cf890d494f5fd00c696b4d2e541c894d5b10ff50bfd9f6dc02b915386e08b61c56140f17115898fc49f4aa4534581393098f35db70be9aae20dfde3ba5787c"
+url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/linux-x64/cli_linux_x64.tar.gz"
+
+[tools."aqua:google.com/antigravity-cli"."platforms.linux-x64-musl"]
+checksum = "sha512:f6cf890d494f5fd00c696b4d2e541c894d5b10ff50bfd9f6dc02b915386e08b61c56140f17115898fc49f4aa4534581393098f35db70be9aae20dfde3ba5787c"
+url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/linux-x64/cli_linux_x64.tar.gz"
+
+[tools."aqua:google.com/antigravity-cli"."platforms.macos-arm64"]
+checksum = "sha512:b2c0d21876ae9b6faf6164b15b573d76e379f643e040e77d528ebafa5d5bd8893cc3c8ebd9a78faf67bd7c676dd4bff0f028f3bbb508e544769d61de3da6b8b1"
+url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/darwin-arm/cli_mac_arm64.tar.gz"
+
+[tools."aqua:google.com/antigravity-cli"."platforms.macos-x64"]
+checksum = "sha512:5e5de4e2b5a9c788930699d0f5f7288eae4ae91fb705dc6e62f79d96a67619f58e2ba4357d6c2dbbfd5309aeb8f16934ebf09a573ef62b489b37e92c2754c74e"
+url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/darwin-x64/cli_mac_x64.tar.gz"
+
+[tools."aqua:google.com/antigravity-cli"."platforms.windows-x64"]
+checksum = "sha512:942e891d99aba5b4537992e0fc2d2bb4dd32ba1c074761314296e5aa0d0427e844a04edd3c55b0816413bfec76d51d065d86fa2921c7b8df6a9435787259569b"
+url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/windows-x64/cli_windows_x64.exe"
 
 [[tools."aqua:google/go-jsonnet"]]
 version = "0.22.0"
@@ -1143,10 +1207,6 @@ url = "https://dl.google.com/go/go1.26.3.darwin-amd64.tar.gz"
 checksum = "sha256:20d2ceafb4ed41b96b879010927b28bc92a5be57a7c1801ce365a9ca51d3224a"
 url = "https://dl.google.com/go/go1.26.3.windows-amd64.zip"
 
-[[tools."go:github.com/anthropics/anthropic-cli/cmd/ant"]]
-version = "1.9.3"
-backend = "go:github.com/anthropics/anthropic-cli/cmd/ant"
-
 [[tools."go:golang.org/x/tools/gopls"]]
 version = "0.22.0"
 backend = "go:golang.org/x/tools/gopls"
@@ -1190,10 +1250,6 @@ backend = "npm:@ccusage/codex"
 [[tools."npm:@fission-ai/openspec"]]
 version = "1.3.1"
 backend = "npm:@fission-ai/openspec"
-
-[[tools."npm:@google/gemini-cli"]]
-version = "0.43.0"
-backend = "npm:@google/gemini-cli"
 
 [[tools."npm:@typescript/native-preview"]]
 version = "7.0.0-dev.20260526.1"
