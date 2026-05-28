@@ -12,6 +12,16 @@ locked = false
 # dotfiles 用の aqua backend では checksum verification のみに寄せる
 cosign = false
 
+[env]
+# aube (mise の npm backend が内部で使う) の trustPolicy=no-downgrade が
+# tinyexec@1.2.2 を ERR_AUBE_TRUST_DOWNGRADE で拒否するため、
+# このバージョンだけ exclude する。
+# - tinyexec@1.0.2 は GitHub Actions OIDC の trusted publisher で publish
+# - tinyexec@1.2.2 (現 latest) はメンテナ個人 publish で provenance attestation のみ
+# バージョンピンでの除外なので、1.2.3+ や他パッケージでは no-downgrade ガードが残る。
+# 参考: https://github.com/tak848/dotfiles/actions/runs/26555130050
+NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
+
 [tools]
 # ============================================
 # ランタイム（core backend）
