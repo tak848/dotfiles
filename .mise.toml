@@ -5,6 +5,12 @@ experimental = true
 lockfile = true
 locked = false                                 # npm backend が checksum 未対応のため
 
+[env]
+# aube (mise の npm backend が内部で使う) の trustPolicy=no-downgrade が
+# tinyexec@1.2.2 を拒否するため、このバージョンだけ exclude。
+# 詳細は dot_config/mise/config.toml の [env] コメント参照。
+NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
+
 [tools]
 # このリポジトリで使うランタイム
 node = "24.16.0"
