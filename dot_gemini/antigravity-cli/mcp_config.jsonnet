@@ -1,5 +1,7 @@
-// agy (Antigravity CLI / IDE) 共有の MCP サーバー設定
-// 出力先: ~/.gemini/config/mcp_config.json
+// agy (Antigravity CLI) 用の MCP サーバー設定
+// 出力先: ~/.gemini/antigravity-cli/mcp_config.json
+// IDE と共有したい場合は ~/.gemini/config/mcp_config.json も読まれるが、
+// 本リポジトリでは CLI 専用パスに固定する。
 // 旧 Gemini CLI の `url` キーは agy では `serverUrl` を使う
 {
   mcpServers: {

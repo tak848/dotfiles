@@ -91,7 +91,8 @@ Homebrew
 | ターゲットファイル | 生成元 | 方式 |
 |------------------|--------|------|
 | `~/.claude/settings.json` | `dot_claude/settings.jsonnet` | jsonnet 全体生成（run_onchange） |
-| `~/.gemini/settings.json` | `dot_gemini/settings.jsonnet` | jsonnet 全体生成（run_onchange） |
+| `~/.gemini/antigravity-cli/settings.json` | `dot_gemini/antigravity-cli/settings.jsonnet` | jsonnet 全体生成（run_onchange） |
+| `~/.gemini/antigravity-cli/mcp_config.json` | `dot_gemini/antigravity-cli/mcp_config.jsonnet` | jsonnet 全体生成（run_onchange） |
 | `~/.claude.json` | `modify_dot_claude.json` | chezmoi modify テンプレート（差分適用） |
 | `~/.codex/config.toml` | `dot_codex/modify_config.toml` | chezmoi modify テンプレート（差分適用） |
 
@@ -119,7 +120,7 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 | `run_onchange_after_10-mise-install.sh.tmpl` | `config.toml` 変更時 | `mise install` |
 | `run_onchange_after_20-aqua-install.sh.tmpl` | `aqua.yaml` 変更時 | `aqua install` |
 | `run_onchange_after_30-install-packages.sh.tmpl` | `packages.yaml` 変更時 | `brew install`（macOS） |
-| `run_onchange_after_40-generate-jsonnet.sh.tmpl` | jsonnet ファイル変更時 | jsonnet → JSON 生成（`~/.claude/settings.json`, `~/.gemini/settings.json`） |
+| `run_onchange_after_40-generate-jsonnet.sh.tmpl` | jsonnet ファイル変更時 | jsonnet → JSON 生成（`~/.claude/settings.json`, `~/.gemini/antigravity-cli/{settings,mcp_config}.json`） |
 | `run_onchange_after_50-claude-plugins.sh.tmpl` | プラグイン定義変更時 | `claude plugin marketplace update` + `install` |
 
 ### Chezmoi ファイル命名規則
