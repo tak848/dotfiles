@@ -96,6 +96,38 @@ url = "https://github.com/neovim/neovim/releases/download/v0.12.2/nvim-macos-x86
 checksum = "sha256:23fe150edbcc976eabe55092e1e9d2e5e237afde69553d170e936f776b405d53"
 url = "https://github.com/neovim/neovim/releases/download/v0.12.2/nvim-win64.zip"
 
+[[tools."aqua:twpayne/chezmoi"]]
+version = "2.70.4"
+backend = "aqua:twpayne/chezmoi"
+
+[tools."aqua:twpayne/chezmoi"."platforms.linux-arm64"]
+checksum = "sha256:b2dc1e0ddf8beff09ee14f212271dd9e943d1d97d5f17a3d070ce35a6ada9e14"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.4/chezmoi_2.70.4_linux_arm64.tar.gz"
+
+[tools."aqua:twpayne/chezmoi"."platforms.linux-arm64-musl"]
+checksum = "sha256:b2dc1e0ddf8beff09ee14f212271dd9e943d1d97d5f17a3d070ce35a6ada9e14"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.4/chezmoi_2.70.4_linux_arm64.tar.gz"
+
+[tools."aqua:twpayne/chezmoi"."platforms.linux-x64"]
+checksum = "sha256:7382f585d35647ebb492bd6345466e7f35564068b78285bb029cb2f35056ecf4"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.4/chezmoi_2.70.4_linux_amd64.tar.gz"
+
+[tools."aqua:twpayne/chezmoi"."platforms.linux-x64-musl"]
+checksum = "sha256:cd34113833a1d4eb22f78a83583c3e967e22a05653304e106d45df0066cc4713"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.4/chezmoi_2.70.4_linux-musl_amd64.tar.gz"
+
+[tools."aqua:twpayne/chezmoi"."platforms.macos-arm64"]
+checksum = "sha256:0093fa436e9ccccf423323315c0146f6dc77985294bd845cee1f3cf3f63eeb0f"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.4/chezmoi_2.70.4_darwin_arm64.tar.gz"
+
+[tools."aqua:twpayne/chezmoi"."platforms.macos-x64"]
+checksum = "sha256:df605c409f16ff9ce002bd2690755c4c0aa6357ca4a065ed2f3cc7936a9f448e"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.4/chezmoi_2.70.4_darwin_amd64.tar.gz"
+
+[tools."aqua:twpayne/chezmoi"."platforms.windows-x64"]
+checksum = "sha256:760e6f772255c062afb2b370666fc5cbef2116fe110ede18a72d4fa57a6eaea7"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.4/chezmoi_2.70.4_windows_amd64.zip"
+
 [[tools."github:aquaproj/aqua"]]
 version = "2.59.1"
 backend = "github:aquaproj/aqua"

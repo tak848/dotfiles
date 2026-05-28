@@ -3,6 +3,7 @@ README.md
 LICENSE
 .git
 .gitignore
+install.sh
 *.jsonnet
 !dot_claude/ccgate.jsonnet
 aqua.yaml
