@@ -1136,6 +1136,40 @@ checksum = "sha256:edccdaa95b5a33b3320187f0e291d58a232e21318a8081750bd31f847e598
 url = "https://github.com/jgm/pandoc/releases/download/3.9/pandoc-3.9-windows-x86_64.zip"
 url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/350472785"
 
+[[tools."github:sorafujitani/ccsession"]]
+version = "0.1.3"
+backend = "github:sorafujitani/ccsession"
+
+[tools."github:sorafujitani/ccsession"."platforms.linux-arm64"]
+checksum = "sha256:b4c673301b9f03d0caaf7316614cd47c3922aa0dcf0a4c1afb91cf9801abdc3a"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.1.3/ccsession_0.1.3_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/430696811"
+
+[tools."github:sorafujitani/ccsession"."platforms.linux-arm64-musl"]
+checksum = "sha256:b4c673301b9f03d0caaf7316614cd47c3922aa0dcf0a4c1afb91cf9801abdc3a"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.1.3/ccsession_0.1.3_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/430696811"
+
+[tools."github:sorafujitani/ccsession"."platforms.linux-x64"]
+checksum = "sha256:718a50bdccbfd8423167e4818cae7a83dd704c14171894d2ede6ca0c3055df8c"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.1.3/ccsession_0.1.3_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/430696807"
+
+[tools."github:sorafujitani/ccsession"."platforms.linux-x64-musl"]
+checksum = "sha256:718a50bdccbfd8423167e4818cae7a83dd704c14171894d2ede6ca0c3055df8c"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.1.3/ccsession_0.1.3_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/430696807"
+
+[tools."github:sorafujitani/ccsession"."platforms.macos-arm64"]
+checksum = "sha256:e7ccf48118dd991fd2cdae93bf8e4bbcbe5359e655b197b43bee16526d034d4c"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.1.3/ccsession_0.1.3_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/430696808"
+
+[tools."github:sorafujitani/ccsession"."platforms.macos-x64"]
+checksum = "sha256:1dfa43f1e38c2ed4f040164eea13f69c0ac728510cbd853171f939979c86b05a"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.1.3/ccsession_0.1.3_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/430696809"
+
 [[tools."github:tmux/tmux-builds"]]
 version = "3.6a"
 backend = "github:tmux/tmux-builds"
