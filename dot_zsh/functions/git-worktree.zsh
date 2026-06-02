@@ -95,6 +95,7 @@ gwr() {
 #   gwc --pr 123 --copy data.json    # PR と追加ファイルを指定
 #   gwc --cursor                     # 作成後に Cursor で開く
 #   export GWC_COPY_FILES=".env.test,config.local.json"  # 環境変数で事前設定
+#   export GWC_PNPM_EXTRA_DIRS="apps/foo,apps/bar"  # root 以外で pnpm install するディレクトリ（worktree root からの相対パス、カンマ区切り）
 #
 gwc() {
     # 元のディレクトリを保存
@@ -368,6 +369,26 @@ gwc() {
             if command -v direnv >/dev/null 2>&1 && [ -f ".envrc" ]; then direnv allow .; fi
             if command -v pnpm >/dev/null 2>&1 && { [ -f "$worktree_path/pnpm-lock.yaml" ] || [ -f "package.json" ]; }; then pnpm install --frozen-lockfile; fi
         }
+
+        # 環境変数 GWC_PNPM_EXTRA_DIRS で指定された root 以外のディレクトリでも pnpm install を実行
+        # （pnpm workspace が分離しているモノレポなどで、root の挙動を変えずに追加で install したい場合用）
+        if [ -n "$GWC_PNPM_EXTRA_DIRS" ] && command -v pnpm >/dev/null 2>&1; then
+            local pnpm_extra_dirs=()
+            IFS=',' read -r -A pnpm_extra_dirs <<< "$GWC_PNPM_EXTRA_DIRS"
+            for extra_dir in "${pnpm_extra_dirs[@]}"; do
+                # 前後の空白を除去（"apps/foo, apps/bar" のようなコンマ後スペースに対応）
+                extra_dir="${extra_dir#"${extra_dir%%[^[:space:]]*}"}"
+                extra_dir="${extra_dir%"${extra_dir##*[^[:space:]]}"}"
+                [ -z "$extra_dir" ] && continue
+                local install_dir="${worktree_path}/${extra_dir}"
+                if [ -f "${install_dir}/pnpm-lock.yaml" ]; then
+                    echo "  ${extra_dir} で pnpm install を実行中..."
+                    (cd "$install_dir" && pnpm install --frozen-lockfile)
+                else
+                    echo "  警告: ${extra_dir} に pnpm-lock.yaml が見つかりません。スキップします。" >&2
+                fi
+            done
+        fi
 
         # --cursor フラグが指定されていた場合、Cursor で開く
         if $open_with_cursor; then
