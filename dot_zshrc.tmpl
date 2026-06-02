@@ -69,8 +69,9 @@ if command -v nvim &> /dev/null; then
   alias view="nvim -R"
 fi
 
-# ディレクトリ移動時にls
+# ディレクトリ移動時にls（手動の対話シェル + 実tty出力時のみ。AIエージェント等では抑制）
 chpwd() {
+    [[ -o interactive && -t 1 ]] || return
     if [[ $(pwd) != $HOME ]]; then;
         ls -la
     fi
