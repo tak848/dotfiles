@@ -88,14 +88,21 @@ gwr() {
 # gwc: 既存ブランチ選択と新規ブランチ作成を兼ねる万能版
 #
 # 使用例:
-#   gwc                              # 通常の使用
+#   gwc                              # 通常の使用（fzf でブランチ選択 / 新規作成）
 #   gwc --copy data.local.json       # 追加ファイルを指定
 #   gwc --pr https://github.com/owner/repo/pull/123  # PR URL から worktree 作成
 #   gwc --pr 123                     # PR 番号から worktree 作成（同じリポジトリ内）
+#   gwc https://github.com/owner/repo/pull/123  # 位置引数でも PR を判定
+#   gwc 123                          # 位置引数の数字は PR 番号として判定
 #   gwc --pr 123 --copy data.json    # PR と追加ファイルを指定
+#   gwc --linear https://linear.app/acme/issue/ENG-123/...  # Linear チケットから作成
+#   gwc https://linear.app/acme/issue/ENG-123/...  # 位置引数でも Linear を判定
+#   gwc ENG-123                      # Linear の identifier を位置引数で指定
+#   gwc ENG-123 --base develop       # base ブランチを上書き（Linear モード、既定は main）
 #   gwc --cursor                     # 作成後に Cursor で開く
 #   export GWC_COPY_FILES=".env.test,config.local.json"  # 環境変数で事前設定
 #   export GWC_PNPM_EXTRA_DIRS="apps/foo,apps/bar"  # root 以外で pnpm install するディレクトリ（worktree root からの相対パス、カンマ区切り）
+#   export LINEAR_API_KEY="lin_api_..."  # Linear モードに必要（環境変数として設定）
 #
 gwc() {
     # 元のディレクトリを保存
@@ -105,7 +112,10 @@ gwc() {
     local default_copy_files=(".envrc.local" ".env.local" "settings.local.json" "CLAUDE.local.md" ".mcp.json" ".codex/config.toml" ".mise.local.toml")
     local extra_copy_files=()
     local pr_ref=""
-    local pr_mode=false
+    local linear_ref=""
+    local base_override=""
+    local positional_ref=""
+    local skip_fzf=false
     local open_with_cursor=false
 
     # 環境変数 GWC_COPY_FILES から追加のコピー対象ファイルを取得
@@ -137,16 +147,68 @@ gwc() {
                 return 1
             fi
             ;;
+        --linear)
+            if [ -n "$2" ]; then
+                linear_ref="$2"
+                shift # --linear を消費
+                shift # Linear URL/identifier を消費
+            else
+                echo "エラー: --linear オプションには Linear の URL または identifier (例 ENG-123) が必要です。" >&2
+                return 1
+            fi
+            ;;
+        --base)
+            if [ -n "$2" ]; then
+                base_override="$2"
+                shift # --base を消費
+                shift # ブランチ名を消費
+            else
+                echo "エラー: --base オプションにはブランチ名が必要です。" >&2
+                return 1
+            fi
+            ;;
         --cursor)
             open_with_cursor=true
             shift
             ;;
-        *)
+        --*)
             echo "エラー: 不明なオプション '$1'" >&2
             return 1
             ;;
+        *)
+            if [ -n "$positional_ref" ]; then
+                echo "エラー: ref は 1 つだけ指定できます ('$positional_ref' と '$1')。" >&2
+                return 1
+            fi
+            positional_ref="$1"
+            shift
+            ;;
         esac
     done
+
+    # --- ref の解決と種別判定 ---
+    # 明示フラグ (--pr / --linear) と位置引数の重複・複数指定をチェック
+    local explicit_ref_count=0
+    [ -n "$pr_ref" ] && explicit_ref_count=$((explicit_ref_count + 1))
+    [ -n "$linear_ref" ] && explicit_ref_count=$((explicit_ref_count + 1))
+    [ -n "$positional_ref" ] && explicit_ref_count=$((explicit_ref_count + 1))
+    if [ "$explicit_ref_count" -gt 1 ]; then
+        echo "エラー: --pr / --linear / 位置引数の ref はいずれか 1 つだけ指定できます。" >&2
+        return 1
+    fi
+
+    # 位置引数が来た場合は内容から PR / Linear を自動判定
+    if [ -n "$positional_ref" ]; then
+        if [[ "$positional_ref" == *linear.app* ]] || [[ "$positional_ref" =~ ^[A-Z][A-Z0-9]*-[0-9]+$ ]]; then
+            linear_ref="$positional_ref"
+        elif { [[ "$positional_ref" == *github.com* ]] && [[ "$positional_ref" == */pull/* ]]; } || [[ "$positional_ref" =~ ^[0-9]+$ ]]; then
+            pr_ref="$positional_ref"
+        else
+            echo "エラー: 位置引数 '$positional_ref' を PR / Linear のいずれとも判定できませんでした。" >&2
+            echo "  PR: github.com の PR URL または番号 / Linear: linear.app の URL または ENG-123 形式" >&2
+            return 1
+        fi
+    fi
 
     # 最終的なコピー対象リストを結合
     local copy_files=("${default_copy_files[@]}" "${extra_copy_files[@]}")
@@ -227,11 +289,70 @@ gwc() {
         git worktree add -b "$pr_branch" "$worktree_path" "origin/$pr_branch"
         worktree_add_status=$?
 
-        pr_mode=true
+        skip_fzf=true
     fi
 
-    # --- PR モードでない場合は通常の fzf 選択 ---
-    if [ "$pr_mode" = "false" ]; then
+    # --- Linear モード: Linear GraphQL API でブランチ名を取得 ---
+    if [ -n "$linear_ref" ]; then
+        # Linear Personal API Key（環境変数 LINEAR_API_KEY として設定しておく）
+        if [ -z "$LINEAR_API_KEY" ]; then
+            echo "エラー: Linear モードには環境変数 LINEAR_API_KEY が必要です。" >&2
+            return 1
+        fi
+        if ! command -v jq >/dev/null 2>&1; then
+            echo "エラー: --linear オプションには jq が必要です。" >&2
+            return 1
+        fi
+
+        # URL でも identifier でも ENG-123 形式の identifier を抽出
+        local linear_identifier
+        linear_identifier=$(echo "$linear_ref" | grep -oE '[A-Z][A-Z0-9]*-[0-9]+' | head -n 1)
+        if [ -z "$linear_identifier" ]; then
+            echo "エラー: '$linear_ref' から Linear の identifier (例 ENG-123) を抽出できませんでした。" >&2
+            return 1
+        fi
+
+        # GraphQL で branchName を取得（issue(id:) は ENG-123 形式の identifier を受け付ける）
+        local linear_query='query($id:String!){issue(id:$id){identifier branchName}}'
+        local linear_payload
+        linear_payload=$(jq -nc --arg q "$linear_query" --arg id "$linear_identifier" '{query:$q, variables:{id:$id}}')
+        local linear_resp
+        linear_resp=$(curl -s -X POST https://api.linear.app/graphql \
+            -H "Authorization: $LINEAR_API_KEY" \
+            -H "Content-Type: application/json" \
+            --data "$linear_payload")
+
+        local linear_branch
+        linear_branch=$(echo "$linear_resp" | jq -r '.data.issue.branchName // empty')
+        if [ -z "$linear_branch" ]; then
+            echo "エラー: Linear ($linear_identifier) からブランチ名を取得できませんでした。" >&2
+            echo "$linear_resp" | jq -r '.errors[]?.message // empty' >&2
+            return 1
+        fi
+
+        echo "Linear チケット $linear_identifier のブランチ名: $linear_branch"
+
+        # base ブランチ解決（既定は main、--base で上書き）。最新を使うため origin を fetch
+        local linear_base="${base_override:-main}"
+        echo "ベースブランチ '$linear_base' を取得中..."
+        git fetch origin "$linear_base" 2>/dev/null
+        local linear_base_ref="origin/$linear_base"
+        if ! git rev-parse --verify --quiet "$linear_base_ref" >/dev/null 2>&1; then
+            linear_base_ref="$linear_base"
+        fi
+
+        local dir_name="${project_name}-$(echo "$linear_branch" | sed 's/\//-/g')"
+        worktree_path="${root_dir}/../${dir_name}"
+
+        echo "ブランチ '$linear_branch' の worktree を '$linear_base_ref' から作成中..."
+        git worktree add -b "$linear_branch" "$worktree_path" "$linear_base_ref"
+        worktree_add_status=$?
+
+        skip_fzf=true
+    fi
+
+    # --- 自動モード（PR / Linear）でない場合は通常の fzf 選択 ---
+    if [ "$skip_fzf" = "false" ]; then
 
     # --- 1. 構造化されたブランチ情報を生成 ---
     local all_branches_meta=$(
