@@ -106,7 +106,7 @@ go = "1.26.3"
 # npm グローバルパッケージ
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.158"
-"aqua:google.com/antigravity-cli" = "1.0.3-6260531212976128" # agy: Gemini CLI の後継
+"github:google-antigravity/antigravity-cli" = "1.0.4"     # agy: Gemini CLI の後継
 "aqua:openai/codex" = "0.135.0"
 "npm:ccusage" = "20.0.6"
 "npm:@ccusage/codex" = "19.0.0"

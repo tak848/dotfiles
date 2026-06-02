@@ -355,38 +355,6 @@ checksum = "sha256:bd42e3ebc8cb4ececb86941983baaf1dc221bbb04d838e94ce63b49cc91e0
 url = "https://github.com/golangci/golangci-lint/releases/download/v2.12.2/golangci-lint-2.12.2-windows-amd64.zip"
 provenance = "github-attestations"
 
-[[tools."aqua:google.com/antigravity-cli"]]
-version = "1.0.3-6260531212976128"
-backend = "aqua:google.com/antigravity-cli"
-
-[tools."aqua:google.com/antigravity-cli"."platforms.linux-arm64"]
-checksum = "sha512:0f6d326ef28e57e473c7825583314636fa0bcda50e27117ff3d019196d048d764af29846910a2f238dc87a3f90062e29b5252232c7d586a86abaaea921697e52"
-url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/linux-arm/cli_linux_arm64.tar.gz"
-
-[tools."aqua:google.com/antigravity-cli"."platforms.linux-arm64-musl"]
-checksum = "sha512:0f6d326ef28e57e473c7825583314636fa0bcda50e27117ff3d019196d048d764af29846910a2f238dc87a3f90062e29b5252232c7d586a86abaaea921697e52"
-url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/linux-arm/cli_linux_arm64.tar.gz"
-
-[tools."aqua:google.com/antigravity-cli"."platforms.linux-x64"]
-checksum = "sha512:f6cf890d494f5fd00c696b4d2e541c894d5b10ff50bfd9f6dc02b915386e08b61c56140f17115898fc49f4aa4534581393098f35db70be9aae20dfde3ba5787c"
-url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/linux-x64/cli_linux_x64.tar.gz"
-
-[tools."aqua:google.com/antigravity-cli"."platforms.linux-x64-musl"]
-checksum = "sha512:f6cf890d494f5fd00c696b4d2e541c894d5b10ff50bfd9f6dc02b915386e08b61c56140f17115898fc49f4aa4534581393098f35db70be9aae20dfde3ba5787c"
-url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/linux-x64/cli_linux_x64.tar.gz"
-
-[tools."aqua:google.com/antigravity-cli"."platforms.macos-arm64"]
-checksum = "sha512:b2c0d21876ae9b6faf6164b15b573d76e379f643e040e77d528ebafa5d5bd8893cc3c8ebd9a78faf67bd7c676dd4bff0f028f3bbb508e544769d61de3da6b8b1"
-url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/darwin-arm/cli_mac_arm64.tar.gz"
-
-[tools."aqua:google.com/antigravity-cli"."platforms.macos-x64"]
-checksum = "sha512:5e5de4e2b5a9c788930699d0f5f7288eae4ae91fb705dc6e62f79d96a67619f58e2ba4357d6c2dbbfd5309aeb8f16934ebf09a573ef62b489b37e92c2754c74e"
-url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/darwin-x64/cli_mac_x64.tar.gz"
-
-[tools."aqua:google.com/antigravity-cli"."platforms.windows-x64"]
-checksum = "sha512:942e891d99aba5b4537992e0fc2d2bb4dd32ba1c074761314296e5aa0d0427e844a04edd3c55b0816413bfec76d51d065d86fa2921c7b8df6a9435787259569b"
-url = "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.0.3-6260531212976128/windows-x64/cli_windows_x64.exe"
-
 [[tools."aqua:google/go-jsonnet"]]
 version = "0.22.0"
 backend = "aqua:google/go-jsonnet"
@@ -1096,6 +1064,45 @@ checksum = "sha256:950fb818925c31dca4e122bae72a6088c92edc8760c8374fbf0470620ce5e
 url = "https://github.com/endevco/aube/releases/download/v1.16.1/aube-v1.16.1-x86_64-pc-windows-msvc.zip"
 url_api = "https://api.github.com/repos/endevco/aube/releases/assets/432804595"
 provenance = "github-attestations"
+
+[[tools."github:google-antigravity/antigravity-cli"]]
+version = "1.0.4"
+backend = "github:google-antigravity/antigravity-cli"
+
+[tools."github:google-antigravity/antigravity-cli"."platforms.linux-arm64"]
+checksum = "sha256:f226b595a6c643e58b49cfefd5f9d70d9f395d64f0d102bf3379458e481c3b5e"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.4/agy_cli_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/435671005"
+
+[tools."github:google-antigravity/antigravity-cli"."platforms.linux-arm64-musl"]
+checksum = "sha256:f226b595a6c643e58b49cfefd5f9d70d9f395d64f0d102bf3379458e481c3b5e"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.4/agy_cli_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/435671005"
+
+[tools."github:google-antigravity/antigravity-cli"."platforms.linux-x64"]
+checksum = "sha256:e63909ae717aceaa0a482de053c23836e77b5ae57b22ee6d445e9833f1e4a7bd"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.4/agy_cli_linux_x64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/435671025"
+
+[tools."github:google-antigravity/antigravity-cli"."platforms.linux-x64-musl"]
+checksum = "sha256:e63909ae717aceaa0a482de053c23836e77b5ae57b22ee6d445e9833f1e4a7bd"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.4/agy_cli_linux_x64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/435671025"
+
+[tools."github:google-antigravity/antigravity-cli"."platforms.macos-arm64"]
+checksum = "sha256:7cfff69ed69e268af076faf857f10bb2879e3e0948270a49ca3d431fe746c1b3"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.4/agy_cli_mac_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/435671039"
+
+[tools."github:google-antigravity/antigravity-cli"."platforms.macos-x64"]
+checksum = "sha256:f1251c12138a5c5f04ef9fd1ae1443e445588b852c6e07a24704b7dafe69a62b"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.4/agy_cli_mac_x64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/435671046"
+
+[tools."github:google-antigravity/antigravity-cli"."platforms.windows-x64"]
+checksum = "sha256:3b692d15e28c58ba4785adefcd3aa2a44863409ff3ac529cf3b62a252040de2f"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.4/agy_cli_windows_x64.zip"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/435671103"
 
 [[tools."github:jgm/pandoc"]]
 version = "3.9"
