@@ -102,7 +102,7 @@ gwr() {
 #   gwc --cursor                     # 作成後に Cursor で開く
 #   export GWC_COPY_FILES=".env.test,config.local.json"  # 環境変数で事前設定
 #   export GWC_PNPM_EXTRA_DIRS="apps/foo,apps/bar"  # root 以外で pnpm install するディレクトリ（worktree root からの相対パス、カンマ区切り）
-#   export LINEAR_API_KEY="lin_api_..."  # Linear モードに必要（環境変数として設定）
+#   export GWC_LINEAR_API_KEY="lin_api_..."  # Linear モードに必要（環境変数として設定）
 #
 gwc() {
     # 元のディレクトリを保存
@@ -294,9 +294,9 @@ gwc() {
 
     # --- Linear モード: Linear GraphQL API でブランチ名を取得 ---
     if [ -n "$linear_ref" ]; then
-        # Linear Personal API Key（環境変数 LINEAR_API_KEY として設定しておく）
-        if [ -z "$LINEAR_API_KEY" ]; then
-            echo "エラー: Linear モードには環境変数 LINEAR_API_KEY が必要です。" >&2
+        # Linear Personal API Key（環境変数 GWC_LINEAR_API_KEY として設定しておく）
+        if [ -z "$GWC_LINEAR_API_KEY" ]; then
+            echo "エラー: Linear モードには環境変数 GWC_LINEAR_API_KEY が必要です。" >&2
             return 1
         fi
         if ! command -v jq >/dev/null 2>&1; then
@@ -318,7 +318,7 @@ gwc() {
         linear_payload=$(jq -nc --arg q "$linear_query" --arg id "$linear_identifier" '{query:$q, variables:{id:$id}}')
         local linear_resp
         linear_resp=$(curl -s -X POST https://api.linear.app/graphql \
-            -H "Authorization: $LINEAR_API_KEY" \
+            -H "Authorization: $GWC_LINEAR_API_KEY" \
             -H "Content-Type: application/json" \
             --data "$linear_payload")
 
