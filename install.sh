@@ -31,6 +31,11 @@ trap 'rm -rf "$TMP_BIN_DIR"' EXIT INT TERM
 ln -s "$MISE_BOOTSTRAP" "$TMP_BIN_DIR/mise"
 MISE="$TMP_BIN_DIR/mise"
 
+# 非対話実行でも config を読み込めるよう、ルート .mise.toml を信頼する。
+# trust が無いと mise は untrusted-config エラーで停止するか config をスキップし、
+# tools（chezmoi 含む）が install されない。明示パスで trust して path 解決を確実にする。
+"$MISE" trust "$(pwd)/.mise.toml"
+
 # ルート .mise.toml の tools を install（chezmoi 含む）
 "$MISE" install
 
