@@ -76,7 +76,9 @@ gwr() {
             if [[ "$REPLY" =~ ^[Yy]$ ]]; then
                 git worktree remove --force "$current_root"
             else
-                echo "Skipped."
+                # 削除しなかったので、移動前にいた元の worktree へ戻す
+                echo "Skipped. Returning to: $current_root"
+                cd "$current_root"
             fi
         fi
         return
@@ -96,15 +98,18 @@ gwr() {
         return
     fi
 
+    # パイプ (echo | while) だとループがサブシェルになり use_force が
+    # 次のイテレーションに引き継がれないため、ヒアストリングで親シェル実行する。
+    # その際 read -q がヒアストリングを消費しないよう端末 (/dev/tty) から読む。
     local use_force=false
-    echo "$worktrees_to_remove" | while read -r line; do
+    while read -r line; do
         local wt_path=$(echo "$line" | awk '{print $2}')
         echo "Removing worktree: $wt_path"
         if $use_force; then
             git worktree remove --force "$wt_path"
         elif ! git worktree remove "$wt_path" 2>/dev/null; then
             echo "Remove failed (uncommitted changes etc.)."
-            read -q "REPLY?--force for this and all remaining? [y/N] "
+            read -q "REPLY?--force for this and all remaining? [y/N] " </dev/tty
             echo
             if [[ "$REPLY" =~ ^[Yy]$ ]]; then
                 use_force=true
@@ -113,7 +118,7 @@ gwr() {
                 echo "Skipped."
             fi
         fi
-    done
+    done <<< "$worktrees_to_remove"
 }
 
 # gwc: 既存ブランチ選択と新規ブランチ作成を兼ねる万能版
