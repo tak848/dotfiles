@@ -85,7 +85,7 @@ go = "1.26.3"
 "aqua:grafana/jsonnet-language-server" = "0.17.0"
 
 # Claude Code permission gate
-"aqua:tak848/ccgate" = "0.9.2"
+"aqua:tak848/ccgate" = "0.9.3"
 
 # Claude Code セッション選択（claude --resume の fzf フロントエンド）
 "github:sorafujitani/ccsession" = "v0.1.4"
