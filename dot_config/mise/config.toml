@@ -27,9 +27,9 @@ NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
 # ランタイム（core backend）
 # ============================================
 node = "24.16.0"
-pnpm = "11.5.0"
+pnpm = "11.5.1"
 "github:endevco/aube" = "v1.17.1" # 高速な Node.js パッケージマネージャ
-go = "1.26.3"
+go = "1.26.4"
 
 # ============================================
 # aqua CLI（github backend）
@@ -88,7 +88,7 @@ go = "1.26.3"
 "aqua:tak848/ccgate" = "0.9.3"
 
 # Claude Code セッション選択（claude --resume の fzf フロントエンド）
-"github:sorafujitani/ccsession" = "v0.1.4"
+"github:sorafujitani/ccsession" = "v0.2.0"
 
 # Anthropic API CLI
 "aqua:anthropics/anthropic-cli" = "1.10.0"
@@ -99,7 +99,7 @@ go = "1.26.3"
 "aqua:tamasfe/taplo" = "0.10.0"
 
 # その他（1password/cli は aqua CLI で管理）
-"aqua:temporalio/cli" = "1.7.0"
+"aqua:temporalio/cli" = "1.7.1"
 "aqua:jdx/usage" = "3.4.0"
 
 # ============================================
@@ -110,8 +110,8 @@ go = "1.26.3"
 "aqua:openai/codex" = "0.136.0"
 "npm:ccusage" = "20.0.6"
 "npm:@ccusage/codex" = "19.0.0"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260601.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260602.1"
 "npm:cc-sdd" = "3.0.2"
-"npm:difit" = "5.0.1"
+"npm:difit" = "5.0.2"
 "npm:@fission-ai/openspec" = "1.4.0"
-"npm:freee-mcp" = "0.27.0"
+"npm:freee-mcp" = "0.27.1"
