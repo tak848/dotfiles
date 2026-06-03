@@ -51,6 +51,37 @@ gwt() {
 
 # git worktree remove
 gwr() {
+    # "." 指定時は選択なしで「今いる worktree」を削除する
+    if [ "$1" = "." ]; then
+        local current_root main_root
+        current_root=$(git rev-parse --show-toplevel 2>/dev/null)
+        if [ -z "$current_root" ]; then
+            echo "エラー: Gitリポジトリではありません。" >&2
+            return 1
+        fi
+        # git worktree list の先頭がメインのワークツリー
+        main_root=$(git worktree list | awk 'NR==1 {print $1}')
+        if [ "$current_root" = "$main_root" ]; then
+            echo "エラー: メインのワークツリーは削除できません。" >&2
+            return 1
+        fi
+        # 現在の worktree 内からは remove できないため、先にメインへ移動する
+        echo "Moving to main worktree: $main_root"
+        cd "$main_root" || return 1
+        echo "Removing worktree: $current_root"
+        if ! git worktree remove "$current_root" 2>/dev/null; then
+            echo "Remove failed (uncommitted changes etc.)."
+            read -q "REPLY?--force? [y/N] "
+            echo
+            if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+                git worktree remove --force "$current_root"
+            else
+                echo "Skipped."
+            fi
+        fi
+        return
+    fi
+
     # メインのワークツリーは削除対象外にする
     # 各 worktree の最終コミット日時を表示
     local worktrees_to_remove=$(git worktree list | awk 'NR>1 {print $1 " " $3}' | while read -r wt_path wt_branch; do
