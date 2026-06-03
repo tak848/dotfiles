@@ -852,36 +852,36 @@ url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-darwin-x8
 url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-windows-x86_64.zip"
 
 [[tools."aqua:temporalio/cli"]]
-version = "1.7.0"
+version = "1.7.1"
 backend = "aqua:temporalio/cli"
 
 [tools."aqua:temporalio/cli"."platforms.linux-arm64"]
-checksum = "sha256:f78d8cf0353b4e04c9024f11e66eaba372f07efe9956de0f41cf03bd31c302f3"
-url = "https://github.com/temporalio/cli/releases/download/v1.7.0/temporal_cli_1.7.0_linux_arm64.tar.gz"
+checksum = "sha256:c05a7b3269cd2aa4802ae2972cd4de3921450273ca3a3a6ca5e76264fcf7d65b"
+url = "https://github.com/temporalio/cli/releases/download/v1.7.1/temporal_cli_1.7.1_linux_arm64.tar.gz"
 
 [tools."aqua:temporalio/cli"."platforms.linux-arm64-musl"]
-checksum = "sha256:f78d8cf0353b4e04c9024f11e66eaba372f07efe9956de0f41cf03bd31c302f3"
-url = "https://github.com/temporalio/cli/releases/download/v1.7.0/temporal_cli_1.7.0_linux_arm64.tar.gz"
+checksum = "sha256:c05a7b3269cd2aa4802ae2972cd4de3921450273ca3a3a6ca5e76264fcf7d65b"
+url = "https://github.com/temporalio/cli/releases/download/v1.7.1/temporal_cli_1.7.1_linux_arm64.tar.gz"
 
 [tools."aqua:temporalio/cli"."platforms.linux-x64"]
-checksum = "sha256:8b5de72e622f4ae062d0d5d948ca398de6212d63b2f25766a1cb810a3dc2d0ed"
-url = "https://github.com/temporalio/cli/releases/download/v1.7.0/temporal_cli_1.7.0_linux_amd64.tar.gz"
+checksum = "sha256:da79615e7c874242ef400e84f17fa0145ad35b3c5f90b1359735e96542588568"
+url = "https://github.com/temporalio/cli/releases/download/v1.7.1/temporal_cli_1.7.1_linux_amd64.tar.gz"
 
 [tools."aqua:temporalio/cli"."platforms.linux-x64-musl"]
-checksum = "sha256:8b5de72e622f4ae062d0d5d948ca398de6212d63b2f25766a1cb810a3dc2d0ed"
-url = "https://github.com/temporalio/cli/releases/download/v1.7.0/temporal_cli_1.7.0_linux_amd64.tar.gz"
+checksum = "sha256:da79615e7c874242ef400e84f17fa0145ad35b3c5f90b1359735e96542588568"
+url = "https://github.com/temporalio/cli/releases/download/v1.7.1/temporal_cli_1.7.1_linux_amd64.tar.gz"
 
 [tools."aqua:temporalio/cli"."platforms.macos-arm64"]
-checksum = "sha256:88a59ea7b1a51309a873e2a914360865123d5b36528d55f8d7c34c6d79007fda"
-url = "https://github.com/temporalio/cli/releases/download/v1.7.0/temporal_cli_1.7.0_darwin_arm64.tar.gz"
+checksum = "sha256:9dbe09d40673d1645332364755362029180fd4d2c6b599c90bd8e18f52c7d565"
+url = "https://github.com/temporalio/cli/releases/download/v1.7.1/temporal_cli_1.7.1_darwin_arm64.tar.gz"
 
 [tools."aqua:temporalio/cli"."platforms.macos-x64"]
-checksum = "sha256:a289156e464bdbb667a125b5e94abeab98a74814771ea4828731970cab4e907c"
-url = "https://github.com/temporalio/cli/releases/download/v1.7.0/temporal_cli_1.7.0_darwin_amd64.tar.gz"
+checksum = "sha256:52bd24779593431ee25078a23bf65ec0479d3926657b12f45a78c83349e80e35"
+url = "https://github.com/temporalio/cli/releases/download/v1.7.1/temporal_cli_1.7.1_darwin_amd64.tar.gz"
 
 [tools."aqua:temporalio/cli"."platforms.windows-x64"]
-checksum = "sha256:62e3ba12dbaccd4773f20c075b15aecb7abbdc06cc6c23e878c1e620e6c76b1e"
-url = "https://github.com/temporalio/cli/releases/download/v1.7.0/temporal_cli_1.7.0_windows_amd64.tar.gz"
+checksum = "sha256:995ee706329b329af7f58f3299793b1c09a1b2d745ae92cc99aa921ef8545e74"
+url = "https://github.com/temporalio/cli/releases/download/v1.7.1/temporal_cli_1.7.1_windows_amd64.tar.gz"
 
 [[tools."aqua:theseus-rs/postgresql-binaries"]]
 version = "18.3.0"
@@ -1144,38 +1144,38 @@ url = "https://github.com/jgm/pandoc/releases/download/3.9/pandoc-3.9-windows-x8
 url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/350472785"
 
 [[tools."github:sorafujitani/ccsession"]]
-version = "0.1.4"
+version = "0.2.0"
 backend = "github:sorafujitani/ccsession"
 
 [tools."github:sorafujitani/ccsession"."platforms.linux-arm64"]
-checksum = "sha256:05628d4b62cdad0e880152379c9711c07371ab44665363c1d1beb25086e5258f"
-url = "https://github.com/sorafujitani/ccsession/releases/download/v0.1.4/ccsession_0.1.4_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/433589417"
+checksum = "sha256:4fa9bdce73b62aafd27d22a6fab7094a0e3b906395334aa34d9963244a94931a"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.2.0/ccsession_0.2.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/436119824"
 
 [tools."github:sorafujitani/ccsession"."platforms.linux-arm64-musl"]
-checksum = "sha256:05628d4b62cdad0e880152379c9711c07371ab44665363c1d1beb25086e5258f"
-url = "https://github.com/sorafujitani/ccsession/releases/download/v0.1.4/ccsession_0.1.4_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/433589417"
+checksum = "sha256:4fa9bdce73b62aafd27d22a6fab7094a0e3b906395334aa34d9963244a94931a"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.2.0/ccsession_0.2.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/436119824"
 
 [tools."github:sorafujitani/ccsession"."platforms.linux-x64"]
-checksum = "sha256:8337f9a5bfce45febe11fc6ce5b35b7e563f5040a3f0b793ace6fe91b993fc60"
-url = "https://github.com/sorafujitani/ccsession/releases/download/v0.1.4/ccsession_0.1.4_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/433589418"
+checksum = "sha256:5b9115b174f859f313cd6587ea55b509dd23ff8b5f028d7afdadecad5dc06825"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.2.0/ccsession_0.2.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/436119825"
 
 [tools."github:sorafujitani/ccsession"."platforms.linux-x64-musl"]
-checksum = "sha256:8337f9a5bfce45febe11fc6ce5b35b7e563f5040a3f0b793ace6fe91b993fc60"
-url = "https://github.com/sorafujitani/ccsession/releases/download/v0.1.4/ccsession_0.1.4_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/433589418"
+checksum = "sha256:5b9115b174f859f313cd6587ea55b509dd23ff8b5f028d7afdadecad5dc06825"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.2.0/ccsession_0.2.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/436119825"
 
 [tools."github:sorafujitani/ccsession"."platforms.macos-arm64"]
-checksum = "sha256:50afc8c48e4d48d0c894c91e3289a15de6c4c943b207b6a04eca909461bec8e1"
-url = "https://github.com/sorafujitani/ccsession/releases/download/v0.1.4/ccsession_0.1.4_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/433589415"
+checksum = "sha256:8317214f4655bbc39bdaf07a3d17f66e113e3ce58d2a3d3796b4677233ddcc43"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.2.0/ccsession_0.2.0_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/436119823"
 
 [tools."github:sorafujitani/ccsession"."platforms.macos-x64"]
-checksum = "sha256:82845275bafd43e5da5fe776ac7ec9257e720f9d299c029cc123f64e446a80d0"
-url = "https://github.com/sorafujitani/ccsession/releases/download/v0.1.4/ccsession_0.1.4_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/433589416"
+checksum = "sha256:f125c6bd6c51730db7cd1b4b65bdfcb764c6ecee0d804b425e13d99f6c198926"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.2.0/ccsession_0.2.0_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/436119826"
 
 [[tools."github:tmux/tmux-builds"]]
 version = "3.6a"
@@ -1217,36 +1217,36 @@ url = "https://github.com/tmux/tmux-builds/releases/download/v3.6a/LICENSES.tar.
 url_api = "https://api.github.com/repos/tmux/tmux-builds/releases/assets/331787047"
 
 [[tools.go]]
-version = "1.26.3"
+version = "1.26.4"
 backend = "core:go"
 
 [tools.go."platforms.linux-arm64"]
-checksum = "sha256:9d89a3ea57d141c2b22d70083f2c8459ba3890f2d9e818e7e933b75614936565"
-url = "https://dl.google.com/go/go1.26.3.linux-arm64.tar.gz"
+checksum = "sha256:ef758ae7c6cf9267c9c0ef080b8965f453d89ab2d25d9eb22de4405925238768"
+url = "https://dl.google.com/go/go1.26.4.linux-arm64.tar.gz"
 
 [tools.go."platforms.linux-arm64-musl"]
-checksum = "sha256:9d89a3ea57d141c2b22d70083f2c8459ba3890f2d9e818e7e933b75614936565"
-url = "https://dl.google.com/go/go1.26.3.linux-arm64.tar.gz"
+checksum = "sha256:ef758ae7c6cf9267c9c0ef080b8965f453d89ab2d25d9eb22de4405925238768"
+url = "https://dl.google.com/go/go1.26.4.linux-arm64.tar.gz"
 
 [tools.go."platforms.linux-x64"]
-checksum = "sha256:2b2cfc7148493da5e73981bffbf3353af381d5f93e789c82c79aff64962eb556"
-url = "https://dl.google.com/go/go1.26.3.linux-amd64.tar.gz"
+checksum = "sha256:1153d3d50e0ac764b447adfe05c2bcf08e889d42a02e0fe0259bd47f6733ad7f"
+url = "https://dl.google.com/go/go1.26.4.linux-amd64.tar.gz"
 
 [tools.go."platforms.linux-x64-musl"]
-checksum = "sha256:2b2cfc7148493da5e73981bffbf3353af381d5f93e789c82c79aff64962eb556"
-url = "https://dl.google.com/go/go1.26.3.linux-amd64.tar.gz"
+checksum = "sha256:1153d3d50e0ac764b447adfe05c2bcf08e889d42a02e0fe0259bd47f6733ad7f"
+url = "https://dl.google.com/go/go1.26.4.linux-amd64.tar.gz"
 
 [tools.go."platforms.macos-arm64"]
-checksum = "sha256:875cf54a15311eee2c99b9dd67c68c4a49351d489ab622bf2cfd28c8f2078d3c"
-url = "https://dl.google.com/go/go1.26.3.darwin-arm64.tar.gz"
+checksum = "sha256:b62ad2b6d7d2464f12a5bcad7ff47f19d08325773b5efd21610e445a05a9bf53"
+url = "https://dl.google.com/go/go1.26.4.darwin-arm64.tar.gz"
 
 [tools.go."platforms.macos-x64"]
-checksum = "sha256:278d580b32e299fe4a9c990fcf2d02acfe538c7e551a6ee18f9c7164573d2c63"
-url = "https://dl.google.com/go/go1.26.3.darwin-amd64.tar.gz"
+checksum = "sha256:05dc9b5f9997744520aaebb3d5deaa7c755371aebbfb7f97c2511a9f3367538d"
+url = "https://dl.google.com/go/go1.26.4.darwin-amd64.tar.gz"
 
 [tools.go."platforms.windows-x64"]
-checksum = "sha256:20d2ceafb4ed41b96b879010927b28bc92a5be57a7c1801ce365a9ca51d3224a"
-url = "https://dl.google.com/go/go1.26.3.windows-amd64.zip"
+checksum = "sha256:3ca8fb4630b07c419cbdd51f754e31363cfcfb83b3a5354d9e895c90be2cc345"
+url = "https://dl.google.com/go/go1.26.4.windows-amd64.zip"
 
 [[tools."go:golang.org/x/tools/gopls"]]
 version = "0.22.0"
@@ -1293,7 +1293,7 @@ version = "1.4.0"
 backend = "npm:@fission-ai/openspec"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260601.1"
+version = "7.0.0-dev.20260602.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -1305,43 +1305,43 @@ version = "20.0.6"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
-version = "5.0.1"
+version = "5.0.2"
 backend = "npm:difit"
 
 [[tools."npm:freee-mcp"]]
-version = "0.27.0"
+version = "0.27.1"
 backend = "npm:freee-mcp"
 
 [[tools.pnpm]]
-version = "11.5.0"
+version = "11.5.1"
 backend = "aqua:pnpm/pnpm"
 
 [tools.pnpm."platforms.linux-arm64"]
-checksum = "sha256:f817841be043e2be465cb8b8c7ddd19dcedf3120214783dc473a6da7f8c84da9"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.5.0/pnpm-linux-arm64.tar.gz"
+checksum = "sha256:6f1e9d36d12a84aafddbbd024f9e98104aa701c888f05f7df5f4149e2fe87479"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.5.1/pnpm-linux-arm64.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.linux-arm64-musl"]
-checksum = "sha256:6733e0f4295a09e3465224639d212cb0c01cc438e3db1b2e47d61e49fd3f4d0a"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.5.0/pnpm-linux-arm64-musl.tar.gz"
+checksum = "sha256:24af7c258d77dd3af077be7775a67d462097864443b5bd48b93baf11c5bfe500"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.5.1/pnpm-linux-arm64-musl.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.linux-x64"]
-checksum = "sha256:d45c4338299cae5b7fcaf5e95294643edb10de98258fc0b1d566ffa00b0c353c"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.5.0/pnpm-linux-x64.tar.gz"
+checksum = "sha256:5cebc2fa002cabc2008075148427e1aa7baaa7df17dd9f5226e2b1b401e83583"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.5.1/pnpm-linux-x64.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.linux-x64-musl"]
-checksum = "sha256:f114fa068bb5b45472e3389b19722feb9cb47b72ca656fb5a5cbb7d5fbb7ed06"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.5.0/pnpm-linux-x64-musl.tar.gz"
+checksum = "sha256:103e77f25422802a89c6206a09466b05042e9f8e40921db177550944abc7882c"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.5.1/pnpm-linux-x64-musl.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.macos-arm64"]
-checksum = "sha256:966f2ed3587457e1135b7102569b08f21c717f49d5676d63f9435bac9682c45b"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.5.0/pnpm-darwin-arm64.tar.gz"
+checksum = "sha256:6533dc62f42eafc1965ef3170fb0bf750ae5c3064d0fd9bcc50bc72c5b95e4c2"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.5.1/pnpm-darwin-arm64.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.windows-x64"]
-checksum = "sha256:f85f5c399caa41e2fbce8a2127b69ea4d2ab9b45296756a557b26110d01dcefd"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.5.0/pnpm-win32-x64.zip"
+checksum = "sha256:776efb770783a262d3de71ee0001460845e8b0ccb9c1a6ceba005fa47dc2d90b"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.5.1/pnpm-win32-x64.zip"
 provenance = "github-attestations"
