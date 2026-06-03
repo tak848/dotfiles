@@ -51,6 +51,39 @@ gwt() {
 
 # git worktree remove
 gwr() {
+    # "." 指定時は選択なしで「今いる worktree」を削除する
+    if [ "$1" = "." ]; then
+        local current_root main_root
+        current_root=$(git rev-parse --show-toplevel 2>/dev/null)
+        if [ -z "$current_root" ]; then
+            echo "エラー: Gitリポジトリではありません。" >&2
+            return 1
+        fi
+        # git worktree list の先頭がメインのワークツリー
+        main_root=$(git worktree list | awk 'NR==1 {print $1}')
+        if [ "$current_root" = "$main_root" ]; then
+            echo "エラー: メインのワークツリーは削除できません。" >&2
+            return 1
+        fi
+        # 現在の worktree 内からは remove できないため、先にメインへ移動する
+        echo "Moving to main worktree: $main_root"
+        cd "$main_root" || return 1
+        echo "Removing worktree: $current_root"
+        if ! git worktree remove "$current_root" 2>/dev/null; then
+            echo "Remove failed (uncommitted changes etc.)."
+            read -q "REPLY?--force? [y/N] "
+            echo
+            if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+                git worktree remove --force "$current_root"
+            else
+                # 削除しなかったので、移動前にいた元の worktree へ戻す
+                echo "Skipped. Returning to: $current_root"
+                cd "$current_root"
+            fi
+        fi
+        return
+    fi
+
     # メインのワークツリーは削除対象外にする
     # 各 worktree の最終コミット日時を表示
     local worktrees_to_remove=$(git worktree list | awk 'NR>1 {print $1 " " $3}' | while read -r wt_path wt_branch; do
@@ -65,15 +98,18 @@ gwr() {
         return
     fi
 
+    # パイプ (echo | while) だとループがサブシェルになり use_force が
+    # 次のイテレーションに引き継がれないため、ヒアストリングで親シェル実行する。
+    # その際 read -q がヒアストリングを消費しないよう端末 (/dev/tty) から読む。
     local use_force=false
-    echo "$worktrees_to_remove" | while read -r line; do
+    while read -r line; do
         local wt_path=$(echo "$line" | awk '{print $2}')
         echo "Removing worktree: $wt_path"
         if $use_force; then
             git worktree remove --force "$wt_path"
         elif ! git worktree remove "$wt_path" 2>/dev/null; then
             echo "Remove failed (uncommitted changes etc.)."
-            read -q "REPLY?--force for this and all remaining? [y/N] "
+            read -q "REPLY?--force for this and all remaining? [y/N] " </dev/tty
             echo
             if [[ "$REPLY" =~ ^[Yy]$ ]]; then
                 use_force=true
@@ -82,7 +118,7 @@ gwr() {
                 echo "Skipped."
             fi
         fi
-    done
+    done <<< "$worktrees_to_remove"
 }
 
 # gwc: 既存ブランチ選択と新規ブランチ作成を兼ねる万能版
