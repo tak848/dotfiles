@@ -61,26 +61,26 @@ checksum = "sha256:bd73d0e17708c5a44936f5480310a7fc0848eb52ca31beac25ed67c1fbb9c
 url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.10.0/ant_1.10.0_windows_amd64.zip"
 
 [[tools."aqua:anthropics/claude-code"]]
-version = "2.1.161"
+version = "2.1.162"
 backend = "aqua:anthropics/claude-code"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.161/linux-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.162/linux-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64-musl"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.161/linux-arm64-musl/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.162/linux-arm64-musl/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.161/linux-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.162/linux-x64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64-musl"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.161/linux-x64-musl/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.162/linux-x64-musl/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-arm64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.161/darwin-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.162/darwin-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-x64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.161/darwin-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.162/darwin-x64/claude"
 
 [[tools."aqua:arl/gitmux"]]
 version = "0.11.5"
