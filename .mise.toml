@@ -24,7 +24,7 @@ pnpm = "11.5.1"
 "aqua:go-task/task" = "3.51.1"
 
 # install.sh からの bootstrap で使う。dot_config/mise/config.toml と揃える
-"aqua:twpayne/chezmoi" = "2.70.4"
+"aqua:twpayne/chezmoi" = "2.70.5"
 
 # lazy-lock.yaml ワークフローで使用
 "aqua:neovim/neovim" = "0.12.2"
