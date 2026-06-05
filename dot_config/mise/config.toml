@@ -28,7 +28,7 @@ NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
 # ============================================
 node = "24.16.0"
 pnpm = "11.5.1"
-"github:endevco/aube" = "v1.17.1" # 高速な Node.js パッケージマネージャ
+"github:endevco/aube" = "v1.18.0" # 高速な Node.js パッケージマネージャ
 go = "1.26.4"
 
 # ============================================
@@ -55,11 +55,11 @@ go = "1.26.4"
 "aqua:BurntSushi/ripgrep" = "15.1.0"
 "aqua:phiresky/ripgrep-all" = "0.10.10"
 # rga依存: ドキュメント変換（docx, epub, odt等）
-"github:jgm/pandoc" = "3.9"
+"github:jgm/pandoc" = "3.10"
 "aqua:jqlang/jq" = "1.8.1"
 "aqua:mikefarah/yq" = "4.53.2"
 "aqua:x-motemen/ghq" = "1.10.1"
-"aqua:jesseduffield/lazygit" = "0.62.1"
+"aqua:jesseduffield/lazygit" = "0.62.2"
 "aqua:jesseduffield/lazydocker" = "0.25.2"
 
 # エディタ・ターミナル
@@ -110,7 +110,7 @@ go = "1.26.4"
 "aqua:openai/codex" = "0.137.0"
 "npm:ccusage" = "20.0.6"
 "npm:@ccusage/codex" = "19.0.0"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260603.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260604.1"
 "npm:cc-sdd" = "3.0.2"
 "npm:difit" = "5.0.2"
 "npm:@fission-ai/openspec" = "1.4.1"
