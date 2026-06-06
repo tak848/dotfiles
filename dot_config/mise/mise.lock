@@ -484,36 +484,36 @@ checksum = "sha256:facae8869c1bf144468191c563002162273a2c2761f052659170530cae3fa
 url = "https://github.com/jesseduffield/lazydocker/releases/download/v0.25.2/lazydocker_0.25.2_Windows_x86_64.zip"
 
 [[tools."aqua:jesseduffield/lazygit"]]
-version = "0.62.1"
+version = "0.62.2"
 backend = "aqua:jesseduffield/lazygit"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.linux-arm64"]
-checksum = "sha256:22a19e4790323dfe0363a876d1f76738ee9722a3086ef27c9e4503c3c1d962ac"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.62.1/lazygit_0.62.1_linux_arm64.tar.gz"
+checksum = "sha256:9ab63dd75a7e9711c4c68a37d77f4334b8099a5d6a3f8fbe8f4e2768b159c9e9"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.62.2/lazygit_0.62.2_linux_arm64.tar.gz"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.linux-arm64-musl"]
-checksum = "sha256:22a19e4790323dfe0363a876d1f76738ee9722a3086ef27c9e4503c3c1d962ac"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.62.1/lazygit_0.62.1_linux_arm64.tar.gz"
+checksum = "sha256:9ab63dd75a7e9711c4c68a37d77f4334b8099a5d6a3f8fbe8f4e2768b159c9e9"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.62.2/lazygit_0.62.2_linux_arm64.tar.gz"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.linux-x64"]
-checksum = "sha256:99d78cce8883b24150c2f4ba151f6a0443644f63f63794f18d6643e99f75be09"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.62.1/lazygit_0.62.1_linux_x86_64.tar.gz"
+checksum = "sha256:8b9a4c2d0969cbea92b45c956dd2a44e1ba76900c9df49f1c60984045ce77984"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.62.2/lazygit_0.62.2_linux_x86_64.tar.gz"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.linux-x64-musl"]
-checksum = "sha256:99d78cce8883b24150c2f4ba151f6a0443644f63f63794f18d6643e99f75be09"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.62.1/lazygit_0.62.1_linux_x86_64.tar.gz"
+checksum = "sha256:8b9a4c2d0969cbea92b45c956dd2a44e1ba76900c9df49f1c60984045ce77984"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.62.2/lazygit_0.62.2_linux_x86_64.tar.gz"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.macos-arm64"]
-checksum = "sha256:878697eb72157915f5bff4d4a40f7ea896f096b308190a1a1b20fe17576cfd0d"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.62.1/lazygit_0.62.1_darwin_arm64.tar.gz"
+checksum = "sha256:f311d96b666b4865760e39f3967edfd7bf30b5d09e52a1bc7ae511f6bdfdd02c"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.62.2/lazygit_0.62.2_darwin_arm64.tar.gz"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.macos-x64"]
-checksum = "sha256:33963e544085e0a820b71837fa4c8db82d6ab409ffd03a5677898b766541c537"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.62.1/lazygit_0.62.1_darwin_x86_64.tar.gz"
+checksum = "sha256:21c276a94f8ddb55d8336df60d69a5b7509e7434024445b4d51d2a11bd6c76b6"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.62.2/lazygit_0.62.2_darwin_x86_64.tar.gz"
 
 [tools."aqua:jesseduffield/lazygit"."platforms.windows-x64"]
-checksum = "sha256:57c4c53d905c7083b689940573fefe6530dd66476a51b2b97737c697bf57dd22"
-url = "https://github.com/jesseduffield/lazygit/releases/download/v0.62.1/lazygit_0.62.1_windows_x86_64.zip"
+checksum = "sha256:805bfcb2445273b77a32b7758dfb5d2d8dbd7b80b7336ab868935584a2fad0ba"
+url = "https://github.com/jesseduffield/lazygit/releases/download/v0.62.2/lazygit_0.62.2_windows_x86_64.zip"
 
 [[tools."aqua:jqlang/jq"]]
 version = "1.8.1"
@@ -1026,43 +1026,43 @@ url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/430610118"
 provenance = "github-attestations"
 
 [[tools."github:endevco/aube"]]
-version = "1.17.1"
+version = "1.18.0"
 backend = "github:endevco/aube"
 
 [tools."github:endevco/aube"."platforms.linux-arm64"]
-checksum = "sha256:e9b6477afde82d1142d9c784e18533460fb4f3ff0173357b44183ce98c1decd4"
-url = "https://github.com/endevco/aube/releases/download/v1.17.1/aube-v1.17.1-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/434710709"
+checksum = "sha256:e7881daae7b5704a68bef2c1d25740f5b808f982a9013e99625910fa72c7e04c"
+url = "https://github.com/endevco/aube/releases/download/v1.18.0/aube-v1.18.0-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/438543417"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-arm64-musl"]
-checksum = "sha256:2bbfaecc09a45ef2e8a60c160494376c6285a9ed3fecfdf98dc057cad2ee6636"
-url = "https://github.com/endevco/aube/releases/download/v1.17.1/aube-v1.17.1-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/434649307"
+checksum = "sha256:ed39261b679c9b96cedc0e64744e66c5080247a1d34a6cf2669c40cce8956309"
+url = "https://github.com/endevco/aube/releases/download/v1.18.0/aube-v1.18.0-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/438516230"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64"]
-checksum = "sha256:61fa92055042de2b315a5d8bc7992d1a4b9ab3b6361420e30f30d62e49d1ccf1"
-url = "https://github.com/endevco/aube/releases/download/v1.17.1/aube-v1.17.1-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/434657319"
+checksum = "sha256:20b158c2439087267c95451dcc5feba13cfd1045b7a108e41a85c779bebbe1da"
+url = "https://github.com/endevco/aube/releases/download/v1.18.0/aube-v1.18.0-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/438526121"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64-musl"]
-checksum = "sha256:ab5b51813ca6f5e24a4ec571c7404cf94f5767d94d32ac058bd2e2d3e4ed0896"
-url = "https://github.com/endevco/aube/releases/download/v1.17.1/aube-v1.17.1-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/434660501"
+checksum = "sha256:d4ef67a858817fd0e158aa4022787b079f4af566eebce7914bdd7eaf0cc803c1"
+url = "https://github.com/endevco/aube/releases/download/v1.18.0/aube-v1.18.0-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/438522827"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.macos-arm64"]
-checksum = "sha256:ef3f429bd94f99afbfd4d49631e10260848b7ffc18cc908199b2eea651fa55cf"
-url = "https://github.com/endevco/aube/releases/download/v1.17.1/aube-v1.17.1-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/434693494"
+checksum = "sha256:0d050f30ff4f80c2fe4bbba106a7c439b7d79702c923ee95502695d8a910a600"
+url = "https://github.com/endevco/aube/releases/download/v1.18.0/aube-v1.18.0-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/438568960"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.windows-x64"]
-checksum = "sha256:dca4a1ea053f8c775d03be267e3a000cffbe958f01ee942a788c17a3d086015a"
-url = "https://github.com/endevco/aube/releases/download/v1.17.1/aube-v1.17.1-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/434660591"
+checksum = "sha256:ddc94d1cf21c14d675271761a7837193a23869f719a9cf57149807525e6b8620"
+url = "https://github.com/endevco/aube/releases/download/v1.18.0/aube-v1.18.0-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/438529280"
 provenance = "github-attestations"
 
 [[tools."github:google-antigravity/antigravity-cli"]]
@@ -1105,43 +1105,50 @@ url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1
 url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/437645120"
 
 [[tools."github:jgm/pandoc"]]
-version = "3.9"
+version = "3.10"
 backend = "github:jgm/pandoc"
 
 [tools."github:jgm/pandoc"."platforms.linux-arm64"]
-checksum = "sha256:e09b97d7313bd417a35bde6c747c458486ec84f696e1cfd0f8c527cd69c89433"
-url = "https://github.com/jgm/pandoc/releases/download/3.9/pandoc-3.9-linux-arm64.tar.gz"
-url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/350472687"
+checksum = "sha256:55413dfb0c1aec861641fe858f1f73e84848f3db497b1c0c02e62887ea76f4a4"
+url = "https://github.com/jgm/pandoc/releases/download/3.10/pandoc-3.10-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/438408619"
+provenance = "github-attestations"
 
 [tools."github:jgm/pandoc"."platforms.linux-arm64-musl"]
-checksum = "sha256:e09b97d7313bd417a35bde6c747c458486ec84f696e1cfd0f8c527cd69c89433"
-url = "https://github.com/jgm/pandoc/releases/download/3.9/pandoc-3.9-linux-arm64.tar.gz"
-url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/350472687"
+checksum = "sha256:55413dfb0c1aec861641fe858f1f73e84848f3db497b1c0c02e62887ea76f4a4"
+url = "https://github.com/jgm/pandoc/releases/download/3.10/pandoc-3.10-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/438408619"
+provenance = "github-attestations"
 
 [tools."github:jgm/pandoc"."platforms.linux-x64"]
-checksum = "sha256:872a10c7ec29d5278831d855b11bd4ade0df4d5ec9a089a3197bc63a37eb4003"
-url = "https://github.com/jgm/pandoc/releases/download/3.9/pandoc-3.9-linux-amd64.tar.gz"
-url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/350472451"
+checksum = "sha256:e0f8af62d0f267d22baa5bcefe6d5dda3a097ccc60de794b759fe03159923244"
+url = "https://github.com/jgm/pandoc/releases/download/3.10/pandoc-3.10-linux-amd64.tar.gz"
+url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/438406829"
+provenance = "github-attestations"
 
 [tools."github:jgm/pandoc"."platforms.linux-x64-musl"]
-checksum = "sha256:872a10c7ec29d5278831d855b11bd4ade0df4d5ec9a089a3197bc63a37eb4003"
-url = "https://github.com/jgm/pandoc/releases/download/3.9/pandoc-3.9-linux-amd64.tar.gz"
-url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/350472451"
+checksum = "sha256:e0f8af62d0f267d22baa5bcefe6d5dda3a097ccc60de794b759fe03159923244"
+url = "https://github.com/jgm/pandoc/releases/download/3.10/pandoc-3.10-linux-amd64.tar.gz"
+url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/438406829"
+provenance = "github-attestations"
 
 [tools."github:jgm/pandoc"."platforms.macos-arm64"]
-checksum = "sha256:7d56ac6fe6fad0a7407bcd776aa142f61ca41838f286165f79d0584fa57b24d1"
-url = "https://github.com/jgm/pandoc/releases/download/3.9/pandoc-3.9-arm64-macOS.zip"
-url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/350472393"
+checksum = "sha256:d9cad01d96ae774a0dc8c8c45bb1ad3e4c5ff2cc2e24f45958f5f9b7974aee34"
+url = "https://github.com/jgm/pandoc/releases/download/3.10/pandoc-3.10-arm64-macOS.zip"
+url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/438404702"
+provenance = "github-attestations"
 
 [tools."github:jgm/pandoc"."platforms.macos-x64"]
-checksum = "sha256:f1dfb5a433976b131818c2e69db70bb46874604367e8923412a5c2fa673f2526"
-url = "https://github.com/jgm/pandoc/releases/download/3.9/pandoc-3.9-x86_64-macOS.zip"
-url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/350473216"
+checksum = "sha256:6334f4d9af7c9e37e761dfad56fa5507685f6d29724ebf31c4be6d5c654a3161"
+url = "https://github.com/jgm/pandoc/releases/download/3.10/pandoc-3.10-x86_64-macOS.zip"
+url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/438436357"
+provenance = "github-attestations"
 
 [tools."github:jgm/pandoc"."platforms.windows-x64"]
-checksum = "sha256:edccdaa95b5a33b3320187f0e291d58a232e21318a8081750bd31f847e598d18"
-url = "https://github.com/jgm/pandoc/releases/download/3.9/pandoc-3.9-windows-x86_64.zip"
-url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/350472785"
+checksum = "sha256:bb808d00fd58762299d64582a9b4c3e4b106cd929e62c5f19bcdcb496f1e54ae"
+url = "https://github.com/jgm/pandoc/releases/download/3.10/pandoc-3.10-windows-x86_64.zip"
+url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/438414170"
+provenance = "github-attestations"
 
 [[tools."github:sorafujitani/ccsession"]]
 version = "0.2.0"
@@ -1293,7 +1300,7 @@ version = "1.4.1"
 backend = "npm:@fission-ai/openspec"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260603.1"
+version = "7.0.0-dev.20260604.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
