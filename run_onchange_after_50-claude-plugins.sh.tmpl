@@ -2,8 +2,6 @@
 # {{ include ".claude-plugin/marketplace.json" | sha256sum }}
 # {{ include "claude-plugins/aws-knowledge/.claude-plugin/plugin.json" | sha256sum }}
 # {{ include "claude-plugins/aws-knowledge/.mcp.json" | sha256sum }}
-# {{ include "claude-plugins/temporal/.claude-plugin/plugin.json" | sha256sum }}
-# {{ include "claude-plugins/temporal/.mcp.json" | sha256sum }}
 # プラグイン定義が変更された時に marketplace update + plugin install を実行する
 
 {{ template "path-setup.tmpl" . }}
@@ -15,6 +13,6 @@ fi
 
 echo "Claude Code プラグインを更新中..."
 claude plugin marketplace update tak848-plugins || echo "WARN: marketplace update failed" >&2
-for plugin in aws-knowledge temporal; do
+for plugin in aws-knowledge; do
     claude plugin install "${plugin}@tak848-plugins" || echo "WARN: plugin install failed: ${plugin}" >&2
 done
