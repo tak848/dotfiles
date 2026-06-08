@@ -26,7 +26,6 @@ local autoModeRules = import 'auto-mode.libsonnet';
     // gopls-lsp は重いため一律有効化しない。必要なプロジェクトで個別に有効化する。
     // 'gopls-lsp@claude-plugins-official': true,
     'aws-knowledge@tak848-plugins': true,
-    'temporal@tak848-plugins': true,
     'codex@openai-codex': true,
   },
   statusLine: {
@@ -155,8 +154,6 @@ local autoModeRules = import 'auto-mode.libsonnet';
       // Devin MCP (直接定義 — プラグインでは env var 展開が未対応)
       'mcp__devin__ask_question',
       'mcp__devin__read_wiki_contents',
-      // Temporal Plugin (tak848-plugins)
-      'mcp__plugin_temporal_temporal__*',
       // AWS Knowledge Plugin (tak848-plugins)
       'mcp__plugin_aws-knowledge_aws-knowledge__aws___search_documentation',
       'mcp__plugin_aws-knowledge_aws-knowledge__aws___read_documentation',

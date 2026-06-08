@@ -12,13 +12,6 @@
       "version": "1.0.0",
       "source": "./claude-plugins/aws-knowledge",
       "category": "development"
-    },
-    {
-      "name": "temporal",
-      "description": "Temporal Docs MCP (kapa.ai hosted) for framework documentation",
-      "version": "1.0.0",
-      "source": "./claude-plugins/temporal",
-      "category": "development"
     }
   ]
 }

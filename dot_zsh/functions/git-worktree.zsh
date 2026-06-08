@@ -65,22 +65,22 @@ gwr() {
             echo "エラー: メインのワークツリーは削除できません。" >&2
             return 1
         fi
-        # 現在の worktree 内からは remove できないため、先にメインへ移動する
-        echo "Moving to main worktree: $main_root"
-        cd "$main_root" || return 1
+        # 現在の worktree 内からだと git が「自身を削除」とみなして失敗するため、
+        # git -C でメイン側から remove する。これによりシェルの cd は一切行わない。
         echo "Removing worktree: $current_root"
-        if ! git worktree remove "$current_root" 2>/dev/null; then
+        if ! git -C "$main_root" worktree remove "$current_root" 2>/dev/null; then
             echo "Remove failed (uncommitted changes etc.)."
             read -q "REPLY?--force? [y/N] "
             echo
             if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-                git worktree remove --force "$current_root"
+                git -C "$main_root" worktree remove --force "$current_root" || return 1
             else
-                # 削除しなかったので、移動前にいた元の worktree へ戻す
-                echo "Skipped. Returning to: $current_root"
-                cd "$current_root"
+                echo "Skipped."
+                return
             fi
         fi
+        # 削除に成功すると今いるディレクトリは消えている。移動はしないので手動で cd すること。
+        echo "Removed. Current directory no longer exists; cd to another worktree manually (e.g. gwt)."
         return
     fi
 
