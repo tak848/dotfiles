@@ -2,7 +2,7 @@
 
 プロジェクト横断のユーザー指示です。
 
-## 言語（一時的な試行）
+## 言語
 
 Think in English, interact with the user in Japanese.
 
