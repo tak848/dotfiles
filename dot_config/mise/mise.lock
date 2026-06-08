@@ -884,36 +884,36 @@ checksum = "sha256:995ee706329b329af7f58f3299793b1c09a1b2d745ae92cc99aa921ef8545
 url = "https://github.com/temporalio/cli/releases/download/v1.7.1/temporal_cli_1.7.1_windows_amd64.tar.gz"
 
 [[tools."aqua:theseus-rs/postgresql-binaries"]]
-version = "18.3.0"
+version = "18.4.0"
 backend = "aqua:theseus-rs/postgresql-binaries"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-arm64"]
-checksum = "sha256:d2a94bc296758f93bc7d29abb12365b1bdb9e32d14ed25086042802995a606cf"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-aarch64-unknown-linux-gnu.tar.gz"
+checksum = "sha256:569984d426365c6ca3c197d2b3a999b73161ff1f3abc963824a8c3624620e5dd"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.4.0/postgresql-18.4.0-aarch64-unknown-linux-gnu.tar.gz"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-arm64-musl"]
-checksum = "sha256:ba5ba86fda498567af9704b35252087f63ca4f8659ffd6c2e3127d0975328082"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-aarch64-unknown-linux-musl.tar.gz"
+checksum = "sha256:10c149f8be1b109f337d35513caf27844ecf2f25929067c1876bde0d7f15bc2e"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.4.0/postgresql-18.4.0-aarch64-unknown-linux-musl.tar.gz"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-x64"]
-checksum = "sha256:71066f6534cfbc1f6d1f645b3c5c7d2d352eb6a53280fe863a5b3d82614e9f7b"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-x86_64-unknown-linux-gnu.tar.gz"
+checksum = "sha256:65c06cf318b9a57525d842d658d6d18cd461d12b3a89b57d6d8ed7cccbe2db53"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.4.0/postgresql-18.4.0-x86_64-unknown-linux-gnu.tar.gz"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-x64-musl"]
-checksum = "sha256:7c226e3dc23e1940214bdde2b60f47161f77b6fbe083702f320426268f90de16"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-x86_64-unknown-linux-musl.tar.gz"
+checksum = "sha256:5e816e0525079f0e68e97a6f5ea9639df369bd33c24e5791dc2ac123436ce1ba"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.4.0/postgresql-18.4.0-x86_64-unknown-linux-musl.tar.gz"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.macos-arm64"]
-checksum = "sha256:67b2e48b91c61129de6d3c98d7bf6b35e113297b5d6f30c2cd8c6665aa71647b"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-aarch64-apple-darwin.tar.gz"
+checksum = "sha256:1b68828f524b638a24918e258b173d0f16773547a0d3b83d9ba74473b61649f2"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.4.0/postgresql-18.4.0-aarch64-apple-darwin.tar.gz"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.macos-x64"]
-checksum = "sha256:cafd061662f8673584240bd238e20dd83c1eefb2baf70e8e9224b7a8c59d41f1"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-x86_64-apple-darwin.tar.gz"
+checksum = "sha256:cbc38067a795d10bbddc730e61c835df0b351c36a7bd2544d388790fcf50aa4d"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.4.0/postgresql-18.4.0-x86_64-apple-darwin.tar.gz"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.windows-x64"]
-checksum = "sha256:887d2f9094abc6eece59d1ca663ebf3c387869a153e7ffb10996c9ed3f1e6950"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.3.0/postgresql-18.3.0-x86_64-pc-windows-msvc.tar.gz"
+checksum = "sha256:4099dcf71c74bed82736e17928d07591df0efee8f802449533b9557d99ae7988"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.4.0/postgresql-18.4.0-x86_64-pc-windows-msvc.tar.gz"
 
 [[tools."aqua:twpayne/chezmoi"]]
 version = "2.70.5"
@@ -1066,43 +1066,43 @@ url_api = "https://api.github.com/repos/endevco/aube/releases/assets/438529280"
 provenance = "github-attestations"
 
 [[tools."github:google-antigravity/antigravity-cli"]]
-version = "1.0.5"
+version = "1.0.6"
 backend = "github:google-antigravity/antigravity-cli"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-arm64"]
-checksum = "sha256:b7a371a126b8de02c3728fe736fbebc87272a5144c7647476572b507c3264eca"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.5/agy_cli_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/437644987"
+checksum = "sha256:be6303d4b891a79457ca6ed169aff2efd3ceb694354634e85ef58c883bae6739"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/439815380"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-arm64-musl"]
-checksum = "sha256:b7a371a126b8de02c3728fe736fbebc87272a5144c7647476572b507c3264eca"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.5/agy_cli_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/437644987"
+checksum = "sha256:be6303d4b891a79457ca6ed169aff2efd3ceb694354634e85ef58c883bae6739"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/439815380"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-x64"]
-checksum = "sha256:2101c31fbc33189999f44c08abd2df4937d002e78fce5a92e71f0d0a248fdccc"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.5/agy_cli_linux_x64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/437645013"
+checksum = "sha256:3eae552781d3054b782142e3cfe7be73e3bd068c736a432ca6f1adaa40f19e07"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_linux_x64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/439815417"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-x64-musl"]
-checksum = "sha256:2101c31fbc33189999f44c08abd2df4937d002e78fce5a92e71f0d0a248fdccc"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.5/agy_cli_linux_x64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/437645013"
+checksum = "sha256:3eae552781d3054b782142e3cfe7be73e3bd068c736a432ca6f1adaa40f19e07"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_linux_x64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/439815417"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.macos-arm64"]
-checksum = "sha256:47f70951b117d404ade49c3d5b09cad91455999d6e59fc2ee2e987aa92bc1285"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.5/agy_cli_mac_arm64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/437645050"
+checksum = "sha256:75d23ad8451a6ab2fc49b7baa615bb532f157b4152d877ba76a2ee72a63ec7d0"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_mac_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/439815450"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.macos-x64"]
-checksum = "sha256:7214eabe5407005320e27826fa40f6f1b03a581dfc3157302480bc6247da7152"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.5/agy_cli_mac_x64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/437645080"
+checksum = "sha256:619817086950c0bd37f2fcb7796e82f90dc1fff920ef2f5fed4e11170c04ab3e"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_mac_x64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/439815462"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.windows-x64"]
-checksum = "sha256:3bb4d107494d66f86f298c8b5ebeaab296bf0fa26023686280b0a1ddb17fc700"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.5/agy_cli_windows_x64.zip"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/437645120"
+checksum = "sha256:96bd5da4469d1a425bae1f112ae5915b6d7a731d08c38e8e30627c654ee7306b"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_windows_x64.zip"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/439815500"
 
 [[tools."github:jgm/pandoc"]]
 version = "3.10"
@@ -1300,7 +1300,7 @@ version = "1.4.1"
 backend = "npm:@fission-ai/openspec"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260604.1"
+version = "7.0.0-dev.20260606.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -1320,35 +1320,35 @@ version = "0.29.0"
 backend = "npm:freee-mcp"
 
 [[tools.pnpm]]
-version = "11.5.1"
+version = "11.5.2"
 backend = "aqua:pnpm/pnpm"
 
 [tools.pnpm."platforms.linux-arm64"]
-checksum = "sha256:6f1e9d36d12a84aafddbbd024f9e98104aa701c888f05f7df5f4149e2fe87479"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.5.1/pnpm-linux-arm64.tar.gz"
+checksum = "sha256:7fef0c74081135d777754fccf25272f698e504b26ba0568504846c0cea402f8f"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.5.2/pnpm-linux-arm64.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.linux-arm64-musl"]
-checksum = "sha256:24af7c258d77dd3af077be7775a67d462097864443b5bd48b93baf11c5bfe500"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.5.1/pnpm-linux-arm64-musl.tar.gz"
+checksum = "sha256:843beed7bca760276d29f8950ca219600995d345dbc93fad8150b3e5f83b74d4"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.5.2/pnpm-linux-arm64-musl.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.linux-x64"]
-checksum = "sha256:5cebc2fa002cabc2008075148427e1aa7baaa7df17dd9f5226e2b1b401e83583"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.5.1/pnpm-linux-x64.tar.gz"
+checksum = "sha256:2033a702618c8576dc6bb0f6adb3a67ab506031351ddd59ca50d1bcaf5d13dc5"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.5.2/pnpm-linux-x64.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.linux-x64-musl"]
-checksum = "sha256:103e77f25422802a89c6206a09466b05042e9f8e40921db177550944abc7882c"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.5.1/pnpm-linux-x64-musl.tar.gz"
+checksum = "sha256:0b794b23461c7475f7ffc29c4945692838b51ddadd857a2ace8edf0018798305"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.5.2/pnpm-linux-x64-musl.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.macos-arm64"]
-checksum = "sha256:6533dc62f42eafc1965ef3170fb0bf750ae5c3064d0fd9bcc50bc72c5b95e4c2"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.5.1/pnpm-darwin-arm64.tar.gz"
+checksum = "sha256:54993dae26bea0f3c1b0e15f9427f6f6a86827d56f32d1d1554d8cda59a62399"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.5.2/pnpm-darwin-arm64.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.windows-x64"]
-checksum = "sha256:776efb770783a262d3de71ee0001460845e8b0ccb9c1a6ceba005fa47dc2d90b"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.5.1/pnpm-win32-x64.zip"
+checksum = "sha256:b3ddff2c2bf87d3996fadf074bac58cd2259f718a17912a04ae930e3775b30e9"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.5.2/pnpm-win32-x64.zip"
 provenance = "github-attestations"
