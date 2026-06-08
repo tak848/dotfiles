@@ -2,6 +2,12 @@
 
 プロジェクト横断のユーザー指示です。
 
+## 言語（一時的な試行）
+
+Think in English, interact with the user in Japanese.
+
+> ハーネスの `language` 強制（settings の `language: 'japanese'`）をやめ、指示ベースで言語を出し分ける試行。効果がなければ見直す。
+
 ## MCP の使用（必須）
 
 ### 検索・情報取得
