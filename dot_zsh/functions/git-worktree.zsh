@@ -1,3 +1,43 @@
+# Linear issue 情報（identifier / title / branchName）を JSON で stdout へ出力する。
+# 引数: Linear URL or identifier（例 ENG-123）。
+# 必要: 環境変数 GWC_LINEAR_API_KEY, jq, curl。
+# gwc（Linear モード）と lcm（cmux.zsh）で共用。
+_linear_fetch_issue() {
+    local ref="$1"
+    if [ -z "$GWC_LINEAR_API_KEY" ]; then
+        echo "エラー: 環境変数 GWC_LINEAR_API_KEY が必要です。" >&2
+        return 1
+    fi
+    if ! command -v jq >/dev/null 2>&1; then
+        echo "エラー: jq が必要です。" >&2
+        return 1
+    fi
+
+    # URL でも identifier でも ENG-123 形式の identifier を抽出
+    local identifier
+    identifier=$(echo "$ref" | grep -oE '[A-Z][A-Z0-9]*-[0-9]+' | head -n 1)
+    if [ -z "$identifier" ]; then
+        echo "エラー: '$ref' から Linear の identifier (例 ENG-123) を抽出できませんでした。" >&2
+        return 1
+    fi
+
+    # GraphQL で issue 情報を取得（issue(id:) は ENG-123 形式の identifier を受け付ける）
+    local query='query($id:String!){issue(id:$id){identifier title branchName}}'
+    local payload resp
+    payload=$(jq -nc --arg q "$query" --arg id "$identifier" '{query:$q, variables:{id:$id}}')
+    resp=$(curl -s -X POST https://api.linear.app/graphql \
+        -H "Authorization: $GWC_LINEAR_API_KEY" \
+        -H "Content-Type: application/json" \
+        --data "$payload")
+
+    if [ -z "$(echo "$resp" | jq -r '.data.issue.identifier // empty')" ]; then
+        echo "エラー: Linear ($identifier) から情報を取得できませんでした。" >&2
+        echo "$resp" | jq -r '.errors[]?.message // empty' >&2
+        return 1
+    fi
+    echo "$resp" | jq -c '.data.issue'
+}
+
 # Git worktree間の移動を楽に
 gwt() {
     # fzfコマンドの存在をチェック
@@ -140,6 +180,10 @@ gwr() {
 #   export GWC_PNPM_EXTRA_DIRS="apps/foo,apps/bar"  # root 以外で pnpm install するディレクトリ（worktree root からの相対パス、カンマ区切り）
 #   export GWC_LINEAR_API_KEY="lin_api_..."  # Linear モードに必要（環境変数として設定）
 #
+# cmux 環境（CMUX_WORKSPACE_ID あり）で Linear/PR モードを使うと、実行元の cmux
+# ワークスペース名を自動設定する（Linear: "<repo>[<ID>] <title>" / PR: "<repo>[#<番号>] <title>"）。
+# cmux 環境でなければ何もしない。単体で名前だけ付け直したい場合は lcm（cmux.zsh）を使う。
+#
 gwc() {
     # 元のディレクトリを保存
     local original_dir=$(pwd)
@@ -153,6 +197,7 @@ gwc() {
     local positional_ref=""
     local skip_fzf=false
     local open_with_cursor=false
+    local cmux_title=""  # cmux 環境ならワークスペース名に設定する文字列（Linear/PR モードでセット）
 
     # 環境変数 GWC_COPY_FILES から追加のコピー対象ファイルを取得
     if [ -n "$GWC_COPY_FILES" ]; then
@@ -285,7 +330,7 @@ gwc() {
 
         # gh pr view で PR 情報を取得（URL でも PR 番号でも対応）
         local pr_info
-        pr_info=$(gh pr view "$pr_ref" --json headRefName,headRepository,headRepositoryOwner 2>/dev/null)
+        pr_info=$(gh pr view "$pr_ref" --json number,title,headRefName,headRepository,headRepositoryOwner 2>/dev/null)
         if [ $? -ne 0 ] || [ -z "$pr_info" ]; then
             echo "エラー: PR '$pr_ref' から情報を取得できませんでした。" >&2
             return 1
@@ -311,6 +356,12 @@ gwc() {
         local pr_branch
         pr_branch=$(echo "$pr_info" | jq -r '.headRefName')
 
+        # cmux ワークスペース名用に PR 番号とタイトルも取得
+        local pr_number pr_title
+        pr_number=$(echo "$pr_info" | jq -r '.number')
+        pr_title=$(echo "$pr_info" | jq -r '.title')
+        cmux_title="${project_name}[#${pr_number}] ${pr_title}"
+
         echo "PR からブランチ '$pr_branch' を取得しました。"
 
         # リモートを fetch して最新状態に
@@ -330,41 +381,22 @@ gwc() {
 
     # --- Linear モード: Linear GraphQL API でブランチ名を取得 ---
     if [ -n "$linear_ref" ]; then
-        # Linear Personal API Key（環境変数 GWC_LINEAR_API_KEY として設定しておく）
-        if [ -z "$GWC_LINEAR_API_KEY" ]; then
-            echo "エラー: Linear モードには環境変数 GWC_LINEAR_API_KEY が必要です。" >&2
-            return 1
-        fi
-        if ! command -v jq >/dev/null 2>&1; then
-            echo "エラー: --linear オプションには jq が必要です。" >&2
-            return 1
-        fi
+        # Linear issue 情報を取得（identifier / title / branchName）。
+        # 必要なツール・API キーのチェックは _linear_fetch_issue 側で行う。
+        local linear_issue
+        linear_issue=$(_linear_fetch_issue "$linear_ref") || return 1
+        local linear_identifier linear_branch linear_title
+        linear_identifier=$(echo "$linear_issue" | jq -r '.identifier')
+        linear_branch=$(echo "$linear_issue" | jq -r '.branchName')
+        linear_title=$(echo "$linear_issue" | jq -r '.title')
 
-        # URL でも identifier でも ENG-123 形式の identifier を抽出
-        local linear_identifier
-        linear_identifier=$(echo "$linear_ref" | grep -oE '[A-Z][A-Z0-9]*-[0-9]+' | head -n 1)
-        if [ -z "$linear_identifier" ]; then
-            echo "エラー: '$linear_ref' から Linear の identifier (例 ENG-123) を抽出できませんでした。" >&2
-            return 1
-        fi
-
-        # GraphQL で branchName を取得（issue(id:) は ENG-123 形式の identifier を受け付ける）
-        local linear_query='query($id:String!){issue(id:$id){identifier branchName}}'
-        local linear_payload
-        linear_payload=$(jq -nc --arg q "$linear_query" --arg id "$linear_identifier" '{query:$q, variables:{id:$id}}')
-        local linear_resp
-        linear_resp=$(curl -s -X POST https://api.linear.app/graphql \
-            -H "Authorization: $GWC_LINEAR_API_KEY" \
-            -H "Content-Type: application/json" \
-            --data "$linear_payload")
-
-        local linear_branch
-        linear_branch=$(echo "$linear_resp" | jq -r '.data.issue.branchName // empty')
-        if [ -z "$linear_branch" ]; then
+        if [ -z "$linear_branch" ] || [ "$linear_branch" = "null" ]; then
             echo "エラー: Linear ($linear_identifier) からブランチ名を取得できませんでした。" >&2
-            echo "$linear_resp" | jq -r '.errors[]?.message // empty' >&2
             return 1
         fi
+
+        # cmux ワークスペース名用の文字列をセット
+        cmux_title="${project_name}[${linear_identifier}] ${linear_title}"
 
         echo "Linear チケット $linear_identifier のブランチ名: $linear_branch"
 
@@ -545,6 +577,14 @@ gwc() {
                     echo "  警告: ${extra_dir} に pnpm-lock.yaml が見つかりません。スキップします。" >&2
                 fi
             done
+        fi
+
+        # cmux 環境なら、コマンド実行元ワークスペース名を設定（非 cmux では nop）。
+        # 対象は CMUX_WORKSPACE_ID（実行元）。cmux current-workspace は選択中のものを返すため使わない。
+        if [ -n "$cmux_title" ] && _cmux_available; then
+            if _cmux_rename_current_workspace "$cmux_title"; then
+                echo "cmux workspace 名を設定: $cmux_title"
+            fi
         fi
 
         # --cursor フラグが指定されていた場合、Cursor で開く
