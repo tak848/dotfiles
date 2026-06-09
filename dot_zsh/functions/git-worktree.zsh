@@ -193,9 +193,14 @@ gwr() {
 #   gwc ENG-123                      # Linear の identifier を位置引数で指定
 #   gwc ENG-123 --base develop       # base ブランチを上書き（Linear モード、既定は main）
 #   gwc --cursor                     # 作成後に Cursor で開く
+#   gwc ENG-123 --cc                 # 作成後に claude を初期プロンプトで起動（GWC_CLAUDE_CODE_INITIAL_PROMPT）
+#   gwc ENG-123 --co                 # 作成後に codex を初期プロンプトで起動（GWC_CODEX_CLI_INITIAL_PROMPT）
+#   gwc ENG-123 --cc "追加の指示"     # 初期プロンプト + 改行2つ + 追加プロンプトで起動（ref より後ろに置くこと）
 #   export GWC_COPY_FILES=".env.test,config.local.json"  # 環境変数で事前設定
 #   export GWC_PNPM_EXTRA_DIRS="apps/foo,apps/bar"  # root 以外で pnpm install するディレクトリ（worktree root からの相対パス、カンマ区切り）
 #   export GWC_LINEAR_API_KEY="lin_api_..."  # Linear モードに必要（環境変数として設定）
+#   export GWC_CLAUDE_CODE_INITIAL_PROMPT="..."  # --cc で claude に渡す初期プロンプト（未設定なら素の起動 or 追加プロンプトのみ）
+#   export GWC_CODEX_CLI_INITIAL_PROMPT="..."    # --co で codex に渡す初期プロンプト（同上）
 #
 # cmux 環境（CMUX_WORKSPACE_ID あり）で Linear/PR モードを使うと、実行元の cmux
 # ワークスペース名を自動設定する（Linear: "<repo>[<ID>] <title>" / PR: "<repo>[#<番号>] <title>"）。
@@ -215,6 +220,8 @@ gwc() {
     local skip_fzf=false
     local open_with_cursor=false
     local cmux_title=""  # cmux 環境ならワークスペース名に設定する文字列（Linear/PR モードでセット）
+    local launch_agent=""  # --cc → claude / --co → codex。worktree 作成後に初期プロンプトで起動
+    local agent_extra=""   # --cc / --co の後ろに渡された追加プロンプト
 
     # 環境変数 GWC_COPY_FILES から追加のコピー対象ファイルを取得
     if [ -n "$GWC_COPY_FILES" ]; then
@@ -268,6 +275,25 @@ gwc() {
         --cursor)
             open_with_cursor=true
             shift
+            ;;
+        --cc | --co)
+            # --cc → claude / --co → codex。worktree 作成後に初期プロンプトで起動する。
+            # 直後にオプションでないトークンがあれば追加プロンプトとして取り込む
+            # （例: gwc ENG-123 --cc "追加の指示"）。ref と紛れないよう --cc/--co は ref の後ろに置くこと。
+            if [ -n "$launch_agent" ]; then
+                echo "エラー: --cc と --co は同時に指定できません。" >&2
+                return 1
+            fi
+            if [ "$1" = "--cc" ]; then
+                launch_agent="claude"
+            else
+                launch_agent="codex"
+            fi
+            shift # --cc / --co を消費
+            if [ -n "$1" ] && [[ "$1" != -* ]]; then
+                agent_extra="$1"
+                shift # 追加プロンプトを消費
+            fi
             ;;
         --*)
             echo "エラー: 不明なオプション '$1'" >&2
@@ -617,6 +643,40 @@ gwc() {
             fi
         fi
         # ★★★ ここまで ★★★
+
+        # --cc / --co: worktree 内で claude / codex を初期プロンプト付きで起動する。
+        # プロンプトは位置引数で渡す（codex は stdin パイプ非対応のため。claude も同様に統一）。
+        #   - 環境変数（GWC_CLAUDE_CODE_INITIAL_PROMPT / GWC_CODEX_CLI_INITIAL_PROMPT）と
+        #     追加プロンプト（agent_extra）の両方があれば「環境変数 + 改行2つ + 追加」を送る
+        #   - どちらか一方だけならそれを送る / 両方なければプロンプト無しで素の起動
+        if [ -n "$launch_agent" ]; then
+            # --cursor で original_dir に戻っている可能性があるため target_dir に入り直す
+            cd "$target_dir"
+            if ! command -v "$launch_agent" >/dev/null 2>&1; then
+                echo "警告: '$launch_agent' コマンドが見つかりません。起動をスキップします。" >&2
+            else
+                local agent_base=""
+                if [ "$launch_agent" = "claude" ]; then
+                    agent_base="$GWC_CLAUDE_CODE_INITIAL_PROMPT"
+                else
+                    agent_base="$GWC_CODEX_CLI_INITIAL_PROMPT"
+                fi
+                local agent_prompt=""
+                if [ -n "$agent_base" ] && [ -n "$agent_extra" ]; then
+                    agent_prompt="${agent_base}"$'\n\n'"${agent_extra}"
+                elif [ -n "$agent_base" ]; then
+                    agent_prompt="$agent_base"
+                elif [ -n "$agent_extra" ]; then
+                    agent_prompt="$agent_extra"
+                fi
+                echo "\n$launch_agent を起動します..."
+                if [ -n "$agent_prompt" ]; then
+                    "$launch_agent" "$agent_prompt"
+                else
+                    "$launch_agent"
+                fi
+            fi
+        fi
     else
         echo "Worktree creation failed. Skipping setup."
     fi
