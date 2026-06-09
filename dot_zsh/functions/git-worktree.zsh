@@ -13,9 +13,11 @@ _linear_fetch_issue() {
         return 1
     fi
 
-    # URL でも identifier でも ENG-123 形式の identifier を抽出
+    # URL / identifier / ブランチ名のいずれからでも ENG-123 形式の identifier を抽出。
+    # 小文字（eng-123 や ブランチ名 tak/eng-123-foo）でも拾えるよう大文字小文字を無視し、
+    # Linear API が要求する大文字 identifier に正規化する。
     local identifier
-    identifier=$(echo "$ref" | grep -oE '[A-Z][A-Z0-9]*-[0-9]+' | head -n 1)
+    identifier=$(echo "$ref" | grep -oiE '[A-Z][A-Z0-9]*-[0-9]+' | head -n 1 | tr '[:lower:]' '[:upper:]')
     if [ -z "$identifier" ]; then
         echo "エラー: '$ref' から Linear の identifier (例 ENG-123) を抽出できませんでした。" >&2
         return 1
@@ -36,6 +38,21 @@ _linear_fetch_issue() {
         return 1
     fi
     echo "$resp" | jq -c '.data.issue'
+}
+
+# リポジトリ名（worktree のディレクトリ名ではなく本来のリポジトリ名）を返す。
+# origin のリモート URL から導出し、なければワークツリールートの basename にフォールバック。
+# 例: git@github.com:tak848/dotfiles.git / https://github.com/tak848/dotfiles.git → dotfiles
+_git_repo_name() {
+    local url
+    url=$(git remote get-url origin 2>/dev/null)
+    if [ -n "$url" ]; then
+        basename "${url%.git}"
+    else
+        local root
+        root=$(git rev-parse --show-toplevel 2>/dev/null)
+        [ -n "$root" ] && basename "$root"
+    fi
 }
 
 # Git worktree間の移動を楽に
@@ -360,7 +377,8 @@ gwc() {
         local pr_number pr_title
         pr_number=$(echo "$pr_info" | jq -r '.number')
         pr_title=$(echo "$pr_info" | jq -r '.title')
-        cmux_title="${project_name}[#${pr_number}] ${pr_title}"
+        # repo は worktree ディレクトリ名ではなくリポジトリ名
+        cmux_title="$(_git_repo_name)[#${pr_number}] ${pr_title}"
 
         echo "PR からブランチ '$pr_branch' を取得しました。"
 
@@ -395,8 +413,8 @@ gwc() {
             return 1
         fi
 
-        # cmux ワークスペース名用の文字列をセット
-        cmux_title="${project_name}[${linear_identifier}] ${linear_title}"
+        # cmux ワークスペース名用の文字列をセット（repo は worktree ディレクトリ名ではなくリポジトリ名）
+        cmux_title="$(_git_repo_name)[${linear_identifier}] ${linear_title}"
 
         echo "Linear チケット $linear_identifier のブランチ名: $linear_branch"
 
