@@ -2,9 +2,7 @@ local permissionRules = import 'permission-rules.libsonnet';
 local autoModeRules = import 'auto-mode.libsonnet';
 
 {
-  // 【一時的】language 強制が思考まで日本語化する不具合の回避（claude-code#62123, #63875）。
-  // 言語制御は CLAUDE.md の「言語」セクションに委譲。問題なければ削除/復帰を判断する。
-  // language: 'japanese',
+  language: 'japanese',
   plansDirectory: '.claude/plans',
   teammateMode: 'tmux',
   includeCoAuthoredBy: false,
@@ -200,7 +198,8 @@ local autoModeRules = import 'auto-mode.libsonnet';
   // model: 'claude-opus-4-6',
   // model: 'claude-opus-4-6[1m]',
   // model: 'claude-opus-4-7[1m]',
-  model: 'claude-opus-4-8[1m]',
+  // model: 'claude-opus-4-8[1m]',
+  model: 'claude-fable-5',
   // model: 'opus',
 
   // 無効らしい
