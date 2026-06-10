@@ -24,7 +24,7 @@ _linear_fetch_issue() {
     fi
 
     # GraphQL で issue 情報を取得（issue(id:) は ENG-123 形式の identifier を受け付ける）
-    local query='query($id:String!){issue(id:$id){identifier title branchName}}'
+    local query='query($id:String!){issue(id:$id){identifier title branchName url}}'
     local payload resp
     payload=$(jq -nc --arg q "$query" --arg id "$identifier" '{query:$q, variables:{id:$id}}')
     resp=$(curl -s -X POST https://api.linear.app/graphql \
