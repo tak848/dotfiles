@@ -619,36 +619,36 @@ checksum = "sha256:4c5d14b8673bd55f813a8965ad70d5150e3960ee5f274025e2286aea3a0fa
 url = "https://dl.k8s.io/v1.35.0/bin/windows/amd64/kubectl.exe"
 
 [[tools."aqua:mikefarah/yq"]]
-version = "4.53.2"
+version = "4.53.3"
 backend = "aqua:mikefarah/yq"
 
 [tools."aqua:mikefarah/yq"."platforms.linux-arm64"]
-checksum = "sha256:03061b2a50c7a498de2bbb92d7cb078ce433011f085a4994117c2726be4106ea"
-url = "https://github.com/mikefarah/yq/releases/download/v4.53.2/yq_linux_arm64"
+checksum = "sha256:578648e463a11c1b6db6010cbf41eafed6bee79466fcffa1bb446672cf7945ea"
+url = "https://github.com/mikefarah/yq/releases/download/v4.53.3/yq_linux_arm64"
 
 [tools."aqua:mikefarah/yq"."platforms.linux-arm64-musl"]
-checksum = "sha256:03061b2a50c7a498de2bbb92d7cb078ce433011f085a4994117c2726be4106ea"
-url = "https://github.com/mikefarah/yq/releases/download/v4.53.2/yq_linux_arm64"
+checksum = "sha256:578648e463a11c1b6db6010cbf41eafed6bee79466fcffa1bb446672cf7945ea"
+url = "https://github.com/mikefarah/yq/releases/download/v4.53.3/yq_linux_arm64"
 
 [tools."aqua:mikefarah/yq"."platforms.linux-x64"]
-checksum = "sha256:d56bf5c6819e8e696340c312bd70f849dc1678a7cda9c2ad63eebd906371d56b"
-url = "https://github.com/mikefarah/yq/releases/download/v4.53.2/yq_linux_amd64"
+checksum = "sha256:fa52a4e758c63d38299163fbdd1edfb4c4963247918bf9c1c5d31d84789eded4"
+url = "https://github.com/mikefarah/yq/releases/download/v4.53.3/yq_linux_amd64"
 
 [tools."aqua:mikefarah/yq"."platforms.linux-x64-musl"]
-checksum = "sha256:d56bf5c6819e8e696340c312bd70f849dc1678a7cda9c2ad63eebd906371d56b"
-url = "https://github.com/mikefarah/yq/releases/download/v4.53.2/yq_linux_amd64"
+checksum = "sha256:fa52a4e758c63d38299163fbdd1edfb4c4963247918bf9c1c5d31d84789eded4"
+url = "https://github.com/mikefarah/yq/releases/download/v4.53.3/yq_linux_amd64"
 
 [tools."aqua:mikefarah/yq"."platforms.macos-arm64"]
-checksum = "sha256:541ba2287560df70f561955e2d7f7e1cd00cf2a15a884f6b5c87a4bfa887bc07"
-url = "https://github.com/mikefarah/yq/releases/download/v4.53.2/yq_darwin_arm64"
+checksum = "sha256:877de31753a4dd2401aa048937aa9a7fc4d5f6ce858cf31508c5802954297213"
+url = "https://github.com/mikefarah/yq/releases/download/v4.53.3/yq_darwin_arm64"
 
 [tools."aqua:mikefarah/yq"."platforms.macos-x64"]
-checksum = "sha256:616b0a0f6a5b79d746f05a169c2b9bb40dee00c605ef165b9a1c1681bba738ac"
-url = "https://github.com/mikefarah/yq/releases/download/v4.53.2/yq_darwin_amd64"
+checksum = "sha256:b4ba1ecce3c47f00803f4f964de38394326c7a32eb6540616e04fb2935a0f08d"
+url = "https://github.com/mikefarah/yq/releases/download/v4.53.3/yq_darwin_amd64"
 
 [tools."aqua:mikefarah/yq"."platforms.windows-x64"]
-checksum = "sha256:2aee32f1de46a20672f48c25df3018839798bd509143f2ce05fdab1550ff5592"
-url = "https://github.com/mikefarah/yq/releases/download/v4.53.2/yq_windows_amd64.exe"
+checksum = "sha256:e279bc506a452eeafcdf364f91a025455e402a8001169083caf01f4b64a544e2"
+url = "https://github.com/mikefarah/yq/releases/download/v4.53.3/yq_windows_amd64.exe"
 
 [[tools."aqua:neovim/neovim"]]
 version = "0.12.2"
@@ -980,89 +980,89 @@ checksum = "sha256:a526da44d5f67250598fa95e5654815e9f672b2c05d1d98c28bce0e60d3cf
 url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_windows_amd64.zip"
 
 [[tools."github:aquaproj/aqua"]]
-version = "2.59.1"
+version = "2.60.0"
 backend = "github:aquaproj/aqua"
 
 [tools."github:aquaproj/aqua"."platforms.linux-arm64"]
-checksum = "sha256:92298717b849c4baa36947dc4fcdedf7a542a2686dbc939a0dcda83d891b9a25"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.59.1/aqua_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/430610113"
+checksum = "sha256:695e04849161feced95cda06f37f8032287168b19b6eebf2c75c8fe0069e23d1"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.60.0/aqua_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/442258178"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.linux-arm64-musl"]
-checksum = "sha256:92298717b849c4baa36947dc4fcdedf7a542a2686dbc939a0dcda83d891b9a25"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.59.1/aqua_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/430610113"
+checksum = "sha256:695e04849161feced95cda06f37f8032287168b19b6eebf2c75c8fe0069e23d1"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.60.0/aqua_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/442258178"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.linux-x64"]
-checksum = "sha256:f2ec38dece860fee4fc48d1213da176fa7bd900e95036cac8d952800d91644e7"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.59.1/aqua_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/430610109"
+checksum = "sha256:7616788062355157671e983d68aa7f4c4b2691fbb765280512f245a64523e3ea"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.60.0/aqua_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/442258176"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.linux-x64-musl"]
-checksum = "sha256:f2ec38dece860fee4fc48d1213da176fa7bd900e95036cac8d952800d91644e7"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.59.1/aqua_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/430610109"
+checksum = "sha256:7616788062355157671e983d68aa7f4c4b2691fbb765280512f245a64523e3ea"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.60.0/aqua_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/442258176"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.macos-arm64"]
-checksum = "sha256:8c658418ba81cf2629813d374358f3dfe13c6715d27ccb476baf85c873acc501"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.59.1/aqua_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/430610107"
+checksum = "sha256:10950cd31a1cbe39009ce82910be4beccfcdfecbcb64ecda940693acd3ea14f3"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.60.0/aqua_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/442258174"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.macos-x64"]
-checksum = "sha256:c2ffc0f9f406f703e07a2c6f16b2e4dd7756b9bddc1c13e7f9f485f54b33e78d"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.59.1/aqua_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/430610097"
+checksum = "sha256:a9ce35fe714ff66be97e65b84cd3b7c9a06a32f291011471d6ed4e18814785f6"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.60.0/aqua_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/442258171"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.windows-x64"]
-checksum = "sha256:0bbdfbd6a9bfc87e6a86d89a2e5b4e6847007b15bbb992fac6b44ac35a4671c2"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.59.1/aqua_windows_amd64.zip"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/430610118"
+checksum = "sha256:ea4549946e7b6244fb947a4714aaff7038a6708e98f4b30bd1e3543ff28643d8"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.60.0/aqua_windows_amd64.zip"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/442258179"
 provenance = "github-attestations"
 
 [[tools."github:endevco/aube"]]
-version = "1.18.0"
+version = "1.18.1"
 backend = "github:endevco/aube"
 
 [tools."github:endevco/aube"."platforms.linux-arm64"]
-checksum = "sha256:e7881daae7b5704a68bef2c1d25740f5b808f982a9013e99625910fa72c7e04c"
-url = "https://github.com/jdx/aube/releases/download/v1.18.0/aube-v1.18.0-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/438543417"
+checksum = "sha256:976dc58cfc3c6fddcded6f00596e066f22bfeabbdf0526c2adf381dd9e89c16e"
+url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441082184"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-arm64-musl"]
-checksum = "sha256:ed39261b679c9b96cedc0e64744e66c5080247a1d34a6cf2669c40cce8956309"
-url = "https://github.com/jdx/aube/releases/download/v1.18.0/aube-v1.18.0-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/438516230"
+checksum = "sha256:e4c32ff77505daae3ba6945a9b109350e1c846ecd37ee6f7aece43ddfc898978"
+url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441064265"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64"]
-checksum = "sha256:20b158c2439087267c95451dcc5feba13cfd1045b7a108e41a85c779bebbe1da"
-url = "https://github.com/jdx/aube/releases/download/v1.18.0/aube-v1.18.0-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/438526121"
+checksum = "sha256:ac5dafafa8dcda43825a96d89ac85471c6452aa5cf313f610c320f79b5a8b4cd"
+url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441067823"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64-musl"]
-checksum = "sha256:d4ef67a858817fd0e158aa4022787b079f4af566eebce7914bdd7eaf0cc803c1"
-url = "https://github.com/jdx/aube/releases/download/v1.18.0/aube-v1.18.0-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/438522827"
+checksum = "sha256:8a6af26deebaab73a2520d3436f6586b096cbadc6381c15cbd6d97348fd0ceda"
+url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441067068"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.macos-arm64"]
-checksum = "sha256:0d050f30ff4f80c2fe4bbba106a7c439b7d79702c923ee95502695d8a910a600"
-url = "https://github.com/jdx/aube/releases/download/v1.18.0/aube-v1.18.0-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/438568960"
+checksum = "sha256:224190686f194ff46660a2119a75a46eb85452e67abffe611408932f1578a657"
+url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441094938"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.windows-x64"]
-checksum = "sha256:ddc94d1cf21c14d675271761a7837193a23869f719a9cf57149807525e6b8620"
-url = "https://github.com/jdx/aube/releases/download/v1.18.0/aube-v1.18.0-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/438529280"
+checksum = "sha256:426d5633aaf0ba23f189cd6f7db91182506a0b9dacaf23465c3288e1b358cb6a"
+url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441073944"
 provenance = "github-attestations"
 
 [[tools."github:google-antigravity/antigravity-cli"]]
@@ -1296,7 +1296,7 @@ version = "1.4.1"
 backend = "npm:@fission-ai/openspec"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260606.1"
+version = "7.0.0-dev.20260608.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -1304,7 +1304,7 @@ version = "3.0.2"
 backend = "npm:cc-sdd"
 
 [[tools."npm:ccusage"]]
-version = "20.0.6"
+version = "20.0.8"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
