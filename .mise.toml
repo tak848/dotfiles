@@ -17,7 +17,7 @@ node = "24.16.0"
 pnpm = "11.5.2"
 
 # aqua CLI（dot_config/aquaproj-aqua の管理用）
-"github:aquaproj/aqua" = "v2.59.1"
+"github:aquaproj/aqua" = "v2.60.0"
 
 # このリポジトリで使う CLI ツール
 "aqua:google/go-jsonnet" = "0.22.0"

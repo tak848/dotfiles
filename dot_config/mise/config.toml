@@ -28,7 +28,7 @@ NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
 # ============================================
 node = "24.16.0"
 pnpm = "11.5.2"
-"github:endevco/aube" = "v1.18.0" # 高速な Node.js パッケージマネージャ
+"github:endevco/aube" = "v1.18.1" # 高速な Node.js パッケージマネージャ
 go = "1.26.4"
 
 # ============================================
@@ -36,7 +36,7 @@ go = "1.26.4"
 # ============================================
 # mise の aqua backend で問題のあるツール（aws-cli, 1password/cli, gopls）は
 # aqua CLI で直接管理する
-"github:aquaproj/aqua" = "v2.59.1"
+"github:aquaproj/aqua" = "v2.60.0"
 
 # ============================================
 # CLI ツール（aqua backend）
@@ -57,7 +57,7 @@ go = "1.26.4"
 # rga依存: ドキュメント変換（docx, epub, odt等）
 "github:jgm/pandoc" = "3.10"
 "aqua:jqlang/jq" = "1.8.1"
-"aqua:mikefarah/yq" = "4.53.2"
+"aqua:mikefarah/yq" = "4.53.3"
 "aqua:x-motemen/ghq" = "1.10.1"
 "aqua:jesseduffield/lazygit" = "0.62.2"
 "aqua:jesseduffield/lazydocker" = "0.25.2"
@@ -108,8 +108,8 @@ go = "1.26.4"
 "aqua:anthropics/claude-code" = "2.1.170"
 "github:google-antigravity/antigravity-cli" = "1.0.6"     # agy: Gemini CLI の後継
 "aqua:openai/codex" = "0.139.0"
-"npm:ccusage" = "20.0.6"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260606.1"
+"npm:ccusage" = "20.0.8"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260608.1"
 "npm:cc-sdd" = "3.0.2"
 "npm:difit" = "5.0.2"
 "npm:@fission-ai/openspec" = "1.4.1"
