@@ -61,26 +61,26 @@ checksum = "sha256:bd73d0e17708c5a44936f5480310a7fc0848eb52ca31beac25ed67c1fbb9c
 url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.10.0/ant_1.10.0_windows_amd64.zip"
 
 [[tools."aqua:anthropics/claude-code"]]
-version = "2.1.170"
+version = "2.1.172"
 backend = "aqua:anthropics/claude-code"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.170/linux-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.172/linux-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64-musl"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.170/linux-arm64-musl/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.172/linux-arm64-musl/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.170/linux-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.172/linux-x64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64-musl"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.170/linux-x64-musl/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.172/linux-x64-musl/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-arm64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.170/darwin-arm64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.172/darwin-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-x64"]
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.170/darwin-x64/claude"
+url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.172/darwin-x64/claude"
 
 [[tools."aqua:arl/gitmux"]]
 version = "0.11.5"
@@ -1033,37 +1033,31 @@ backend = "github:endevco/aube"
 checksum = "sha256:976dc58cfc3c6fddcded6f00596e066f22bfeabbdf0526c2adf381dd9e89c16e"
 url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-aarch64-unknown-linux-gnu.tar.gz"
 url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441082184"
-provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-arm64-musl"]
 checksum = "sha256:e4c32ff77505daae3ba6945a9b109350e1c846ecd37ee6f7aece43ddfc898978"
 url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-aarch64-unknown-linux-musl.tar.gz"
 url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441064265"
-provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64"]
 checksum = "sha256:ac5dafafa8dcda43825a96d89ac85471c6452aa5cf313f610c320f79b5a8b4cd"
 url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-x86_64-unknown-linux-gnu.tar.gz"
 url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441067823"
-provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64-musl"]
 checksum = "sha256:8a6af26deebaab73a2520d3436f6586b096cbadc6381c15cbd6d97348fd0ceda"
 url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-x86_64-unknown-linux-musl.tar.gz"
 url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441067068"
-provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.macos-arm64"]
 checksum = "sha256:224190686f194ff46660a2119a75a46eb85452e67abffe611408932f1578a657"
 url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-aarch64-apple-darwin.tar.gz"
 url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441094938"
-provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.windows-x64"]
 checksum = "sha256:426d5633aaf0ba23f189cd6f7db91182506a0b9dacaf23465c3288e1b358cb6a"
 url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-x86_64-pc-windows-msvc.zip"
 url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441073944"
-provenance = "github-attestations"
 
 [[tools."github:google-antigravity/antigravity-cli"]]
 version = "1.0.6"
