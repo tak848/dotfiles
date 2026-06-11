@@ -28,7 +28,7 @@ NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
 # ============================================
 node = "24.16.0"
 pnpm = "11.5.2"
-"github:endevco/aube" = "v1.18.1" # 高速な Node.js パッケージマネージャ
+"github:endevco/aube" = "v1.18.2" # 高速な Node.js パッケージマネージャ
 go = "1.26.4"
 
 # ============================================
@@ -72,7 +72,7 @@ go = "1.26.4"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
-"aqua:cloudflare/cloudflared" = "2026.5.2"
+"aqua:cloudflare/cloudflared" = "2026.6.0"
 
 # 開発ツール
 "aqua:bufbuild/buf" = "1.70.0"
@@ -91,7 +91,7 @@ go = "1.26.4"
 "github:sorafujitani/ccsession" = "v0.2.0"
 
 # Anthropic API CLI
-"aqua:anthropics/anthropic-cli" = "1.10.0"
+"aqua:anthropics/anthropic-cli" = "1.12.1"
 
 # Language Server
 "go:golang.org/x/tools/gopls" = "0.22.0"
@@ -106,10 +106,10 @@ go = "1.26.4"
 # npm グローバルパッケージ
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.172"
-"github:google-antigravity/antigravity-cli" = "1.0.6"     # agy: Gemini CLI の後継
+"github:google-antigravity/antigravity-cli" = "1.0.7"     # agy: Gemini CLI の後継
 "aqua:openai/codex" = "0.139.0"
-"npm:ccusage" = "20.0.8"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260608.1"
+"npm:ccusage" = "20.0.9"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260609.1"
 "npm:cc-sdd" = "3.0.2"
 "npm:difit" = "5.0.2"
 "npm:@fission-ai/openspec" = "1.4.1"

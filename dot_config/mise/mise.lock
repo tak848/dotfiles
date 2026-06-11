@@ -29,36 +29,36 @@ checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d874
 url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"
 
 [[tools."aqua:anthropics/anthropic-cli"]]
-version = "1.10.0"
+version = "1.12.1"
 backend = "aqua:anthropics/anthropic-cli"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.linux-arm64"]
-checksum = "sha256:ae73c3352e8271032cf4e179271b29ada250f4ae8561c511e97d36dd55e4cd88"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.10.0/ant_1.10.0_linux_arm64.tar.gz"
+checksum = "sha256:5e41a22748c792c790d91a735738b4b2343fa5f2d0869145992f70d1b7f7bf90"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.12.1/ant_1.12.1_linux_arm64.tar.gz"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.linux-arm64-musl"]
-checksum = "sha256:ae73c3352e8271032cf4e179271b29ada250f4ae8561c511e97d36dd55e4cd88"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.10.0/ant_1.10.0_linux_arm64.tar.gz"
+checksum = "sha256:5e41a22748c792c790d91a735738b4b2343fa5f2d0869145992f70d1b7f7bf90"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.12.1/ant_1.12.1_linux_arm64.tar.gz"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.linux-x64"]
-checksum = "sha256:6d8145901edc81276d5ca803ea823ddcf18452b0449354283b91fe448984b215"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.10.0/ant_1.10.0_linux_amd64.tar.gz"
+checksum = "sha256:7205e552c67852198a0152cf1000e1c9bab70075dc00b566fca9199e31d9c509"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.12.1/ant_1.12.1_linux_amd64.tar.gz"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.linux-x64-musl"]
-checksum = "sha256:6d8145901edc81276d5ca803ea823ddcf18452b0449354283b91fe448984b215"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.10.0/ant_1.10.0_linux_amd64.tar.gz"
+checksum = "sha256:7205e552c67852198a0152cf1000e1c9bab70075dc00b566fca9199e31d9c509"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.12.1/ant_1.12.1_linux_amd64.tar.gz"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.macos-arm64"]
-checksum = "sha256:5ce71e3b842e7790e2eeff70f7c2d2210ed1ac36950a6f1f5c4cc15680de8156"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.10.0/ant_1.10.0_macos_arm64.zip"
+checksum = "sha256:544e2e6731667bceb1663be0e6b63c2e050bc51262e54017aa1a3923731a69aa"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.12.1/ant_1.12.1_macos_arm64.zip"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.macos-x64"]
-checksum = "sha256:d75c0aac279424fb9593ae38cba73ac535358143f48daf6bc6589ec7819b0288"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.10.0/ant_1.10.0_macos_amd64.zip"
+checksum = "sha256:5702f0314698bb19a9d332b60aaee8581d24f8eded194394969cb8bd396ac36e"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.12.1/ant_1.12.1_macos_amd64.zip"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.windows-x64"]
-checksum = "sha256:bd73d0e17708c5a44936f5480310a7fc0848eb52ca31beac25ed67c1fbb9c996"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.10.0/ant_1.10.0_windows_amd64.zip"
+checksum = "sha256:4e90faaed80e3631c464a87faf0d64e65e0372e189af15c025e062df06b5b860"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.12.1/ant_1.12.1_windows_amd64.zip"
 
 [[tools."aqua:anthropics/claude-code"]]
 version = "2.1.172"
@@ -221,36 +221,36 @@ url = "https://github.com/cli/cli/releases/download/v2.93.0/gh_2.93.0_windows_am
 provenance = "github-attestations"
 
 [[tools."aqua:cloudflare/cloudflared"]]
-version = "2026.5.2"
+version = "2026.6.0"
 backend = "aqua:cloudflare/cloudflared"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.linux-arm64"]
-checksum = "sha256:5a4e8ce2701105271412059f44b6a0bf1ae4542b4d98ff3180c0c019443a5815"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.5.2/cloudflared-linux-arm64"
+checksum = "sha256:8482ebf1e74a2a4a1a9f1e090e17e3de08423f94100ece6789287cb26fb9480f"
+url = "https://github.com/cloudflare/cloudflared/releases/download/2026.6.0/cloudflared-linux-arm64"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.linux-arm64-musl"]
-checksum = "sha256:5a4e8ce2701105271412059f44b6a0bf1ae4542b4d98ff3180c0c019443a5815"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.5.2/cloudflared-linux-arm64"
+checksum = "sha256:8482ebf1e74a2a4a1a9f1e090e17e3de08423f94100ece6789287cb26fb9480f"
+url = "https://github.com/cloudflare/cloudflared/releases/download/2026.6.0/cloudflared-linux-arm64"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.linux-x64"]
-checksum = "sha256:5286698547f03df745adb2355f04c12dde52ef425491e81f433642d695521886"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.5.2/cloudflared-linux-amd64"
+checksum = "sha256:08d27c4c5d3ed73ee3e98ef2ddceb4ad09fd4cfc28e243565a189538e8ccd706"
+url = "https://github.com/cloudflare/cloudflared/releases/download/2026.6.0/cloudflared-linux-amd64"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.linux-x64-musl"]
-checksum = "sha256:5286698547f03df745adb2355f04c12dde52ef425491e81f433642d695521886"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.5.2/cloudflared-linux-amd64"
+checksum = "sha256:08d27c4c5d3ed73ee3e98ef2ddceb4ad09fd4cfc28e243565a189538e8ccd706"
+url = "https://github.com/cloudflare/cloudflared/releases/download/2026.6.0/cloudflared-linux-amd64"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.macos-arm64"]
-checksum = "sha256:ba94054c9fd4297645093d59d51442e5e546d07bb0516120e694a13d5b216d38"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.5.2/cloudflared-darwin-arm64.tgz"
+checksum = "sha256:88e17987423d3fd49167305f8bda14d83a80ab9f2097ff9c82b317a39e342119"
+url = "https://github.com/cloudflare/cloudflared/releases/download/2026.6.0/cloudflared-darwin-arm64.tgz"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.macos-x64"]
-checksum = "sha256:7240f709506bc2c1eb9da4d89cf2555499c60280ecb854b7d80e8f17d4b7903d"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.5.2/cloudflared-darwin-amd64.tgz"
+checksum = "sha256:f6eaa91260ee327994331ac5ac2f7cec7925c4b6e15296b63fe0916992a06bdc"
+url = "https://github.com/cloudflare/cloudflared/releases/download/2026.6.0/cloudflared-darwin-amd64.tgz"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.windows-x64"]
-checksum = "sha256:20b9638f685333d623798e733effbad2487093f15ba592f6c7752360ff3b7ab7"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.5.2/cloudflared-windows-amd64.exe"
+checksum = "sha256:03e322598e84d77406fa55b93f59e8e54636c5d8501d9dce36697fcf080ed8cc"
+url = "https://github.com/cloudflare/cloudflared/releases/download/2026.6.0/cloudflared-windows-amd64.exe"
 
 [[tools."aqua:direnv/direnv"]]
 version = "2.37.1"
@@ -1026,77 +1026,83 @@ url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/442258179"
 provenance = "github-attestations"
 
 [[tools."github:endevco/aube"]]
-version = "1.18.1"
+version = "1.18.2"
 backend = "github:endevco/aube"
 
 [tools."github:endevco/aube"."platforms.linux-arm64"]
-checksum = "sha256:976dc58cfc3c6fddcded6f00596e066f22bfeabbdf0526c2adf381dd9e89c16e"
-url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441082184"
+checksum = "sha256:5a12d8be39fd553bd7d27a4217cd12e9e7fb2bc1eb1ac5d12506f5e5613af974"
+url = "https://github.com/jdx/aube/releases/download/v1.18.2/aube-v1.18.2-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/442328155"
+provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-arm64-musl"]
-checksum = "sha256:e4c32ff77505daae3ba6945a9b109350e1c846ecd37ee6f7aece43ddfc898978"
-url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441064265"
+checksum = "sha256:4f1b8a5c63645e9cd7e9ca42becd80763a47ebd2cefb2ff764bf4a95a19c87d1"
+url = "https://github.com/jdx/aube/releases/download/v1.18.2/aube-v1.18.2-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/442302292"
+provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64"]
-checksum = "sha256:ac5dafafa8dcda43825a96d89ac85471c6452aa5cf313f610c320f79b5a8b4cd"
-url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441067823"
+checksum = "sha256:2e0b27169c51c77498ccd470da1b59e4d34a4eba8c590fbdd4ba2cfe388a912d"
+url = "https://github.com/jdx/aube/releases/download/v1.18.2/aube-v1.18.2-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/442312841"
+provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64-musl"]
-checksum = "sha256:8a6af26deebaab73a2520d3436f6586b096cbadc6381c15cbd6d97348fd0ceda"
-url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441067068"
+checksum = "sha256:0a1e01d7cce84215b188494df38cd806f816557d573fb07f7644cc34aedab1cd"
+url = "https://github.com/jdx/aube/releases/download/v1.18.2/aube-v1.18.2-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/442314620"
+provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.macos-arm64"]
-checksum = "sha256:224190686f194ff46660a2119a75a46eb85452e67abffe611408932f1578a657"
-url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441094938"
+checksum = "sha256:75886599a4580902a23509e0f1dfd4ec454c738c3df1876f2420072610a087c9"
+url = "https://github.com/jdx/aube/releases/download/v1.18.2/aube-v1.18.2-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/442350963"
+provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.windows-x64"]
-checksum = "sha256:426d5633aaf0ba23f189cd6f7db91182506a0b9dacaf23465c3288e1b358cb6a"
-url = "https://github.com/jdx/aube/releases/download/v1.18.1/aube-v1.18.1-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/441073944"
+checksum = "sha256:e0f13610dfded343b74f3babe53893c57e960cfb95d5b09977f3b0a0dbcb4c5b"
+url = "https://github.com/jdx/aube/releases/download/v1.18.2/aube-v1.18.2-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/442313811"
+provenance = "github-attestations"
 
 [[tools."github:google-antigravity/antigravity-cli"]]
-version = "1.0.6"
+version = "1.0.7"
 backend = "github:google-antigravity/antigravity-cli"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-arm64"]
-checksum = "sha256:be6303d4b891a79457ca6ed169aff2efd3ceb694354634e85ef58c883bae6739"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/439815380"
+checksum = "sha256:400a48e67723e41f1ff2c84705fc8866c5822c4fab21d4b72fe7dbaf120b2114"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.7/agy_cli_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/443047784"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-arm64-musl"]
-checksum = "sha256:be6303d4b891a79457ca6ed169aff2efd3ceb694354634e85ef58c883bae6739"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/439815380"
+checksum = "sha256:400a48e67723e41f1ff2c84705fc8866c5822c4fab21d4b72fe7dbaf120b2114"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.7/agy_cli_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/443047784"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-x64"]
-checksum = "sha256:3eae552781d3054b782142e3cfe7be73e3bd068c736a432ca6f1adaa40f19e07"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_linux_x64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/439815417"
+checksum = "sha256:f5bb465edb938212eb0a185d68c420ff5b78f08c72de5a6d88dfefaf7af17074"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.7/agy_cli_linux_x64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/443047810"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-x64-musl"]
-checksum = "sha256:3eae552781d3054b782142e3cfe7be73e3bd068c736a432ca6f1adaa40f19e07"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_linux_x64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/439815417"
+checksum = "sha256:f5bb465edb938212eb0a185d68c420ff5b78f08c72de5a6d88dfefaf7af17074"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.7/agy_cli_linux_x64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/443047810"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.macos-arm64"]
-checksum = "sha256:75d23ad8451a6ab2fc49b7baa615bb532f157b4152d877ba76a2ee72a63ec7d0"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_mac_arm64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/439815450"
+checksum = "sha256:e0dec63ee4bd0a6aa2a3521eb3e9fc90448c453991ce2300e0cff138bd1bf31a"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.7/agy_cli_mac_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/443047818"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.macos-x64"]
-checksum = "sha256:619817086950c0bd37f2fcb7796e82f90dc1fff920ef2f5fed4e11170c04ab3e"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_mac_x64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/439815462"
+checksum = "sha256:24865be9d7233156827a75c4973306846f02c0ea664aaca2aeb2dc22ef5decd7"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.7/agy_cli_mac_x64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/443047826"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.windows-x64"]
-checksum = "sha256:96bd5da4469d1a425bae1f112ae5915b6d7a731d08c38e8e30627c654ee7306b"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.6/agy_cli_windows_x64.zip"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/439815500"
+checksum = "sha256:018657f38e3be78c3494eef812ef0b99005092a661003b87b8a314f4cfb24aaa"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.0.7/agy_cli_windows_x64.zip"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/443047854"
 
 [[tools."github:jgm/pandoc"]]
 version = "3.10"
@@ -1290,7 +1296,7 @@ version = "1.4.1"
 backend = "npm:@fission-ai/openspec"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260608.1"
+version = "7.0.0-dev.20260609.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -1298,7 +1304,7 @@ version = "3.0.2"
 backend = "npm:cc-sdd"
 
 [[tools."npm:ccusage"]]
-version = "20.0.8"
+version = "20.0.9"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
