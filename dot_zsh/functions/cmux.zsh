@@ -14,6 +14,13 @@ _cmux_rename_current_workspace() {
     cmux workspace rename "$CMUX_WORKSPACE_ID" --title "$title"
 }
 
+# 「コマンドを実行している」cmux ワークスペースを閉じる。
+# socket API 直叩きのため GUI の確認ダイアログは出ない。実行元シェルごと終了する。
+# 呼び出し側で _cmux_available を確認してから呼ぶこと。
+_cmux_close_current_workspace() {
+    cmux workspace close "$CMUX_WORKSPACE_ID"
+}
+
 # lcm (Linear-CMux): Linear URL/identifier から現在の cmux ワークスペース名を設定する。
 #
 # 使用例:
