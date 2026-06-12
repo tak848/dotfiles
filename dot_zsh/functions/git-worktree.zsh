@@ -136,7 +136,13 @@ gwr() {
                 return
             fi
         fi
-        # 削除に成功すると今いるディレクトリは消えている。移動はしないので手動で cd すること。
+        # 削除に成功すると今いるディレクトリは消えている。
+        # cmux 環境なら全処理完了後に実行元ワークスペースを確認なしで閉じる（シェルも終了する）。
+        if _cmux_available; then
+            echo "Removed. Closing cmux workspace..."
+            _cmux_close_current_workspace
+            return
+        fi
         echo "Removed. Current directory no longer exists; cd to another worktree manually (e.g. gwt)."
         return
     fi
