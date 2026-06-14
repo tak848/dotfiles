@@ -35,6 +35,11 @@
       minimumReleaseAge: "24 hours",
     },
     {
+      description: "Ignore aqua HTTP packages without Renovate-supported version sources",
+      matchPackageNames: ["1password/cli", "x.ai/cli/grok"],
+      enabled: false,
+    },
+    {
       // mise.lock の更新は CI 側の lockfiles-and-checksums.yaml ワークフローに任せる。
       // Mend Cloud の allowedEnv (BUN_*, GO*, GRADLE_OPTS, RUSTC_BOOTSTRAP, PNPM_WORKERS,
       // PNPM_MAX_WORKERS) と allowedCommands (git add --all / git reset / pwd) には
