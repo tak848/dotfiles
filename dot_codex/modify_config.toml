@@ -110,4 +110,11 @@ model_reasoning_effort = "xhigh"
 
 {{ dict "notice" (index $existing "notice") | toToml -}}
 {{-   end }}
+{{-   if hasKey $existing "hooks" }}
+{{-     $hooks := index $existing "hooks" }}
+{{-     if hasKey $hooks "state" }}
+
+{{ dict "hooks" (dict "state" (index $hooks "state")) | toToml -}}
+{{-     end }}
+{{-   end }}
 {{- end }}
