@@ -158,6 +158,20 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 - Renovate PR への push には GitHub App Token が必要（GITHUB_TOKEN では不可）
 - 自動生成ファイルは手動編集しない（`task` または Renovate ワークフローで自動更新）
 
+### このリポジトリで作業するエージェントへの厳守事項
+
+- **変更が一段落したら、確認を待たず commit → push → draft PR まで一気に完遂する**（commit で止めない）。PR は draft で作成する
+- `git commit` の前に必ず現在のブランチを確認する（`git branch --show-current`）。plan mode から戻った後や PR マージ後は main に戻っている可能性が高い
+- main に直接 commit しない。main から新しいブランチを切る。push の前にリモートブランチの状態を確認する（`git ls-remote` 等）。マージ済みブランチには push しない・不要なリモートブランチを散らかさない
+- ユーザーが別 repo / 機構を参照したら、default branch だけで「無い」と判断せず `git branch -a` / `git log --all` で他ブランチも確認してから答える
+- **要求スコープを厳守する。** ユーザーが「A の代替として B を作る」等と明示したら、その範囲だけに絞る。隣接レイヤー（前段・後段・類似機能）の改修を勝手に計画へ足さない。関連改善は本線の計画を立てた上で別途質問する
+- **環境を直接変更しない。** 変更は必ずこの repo のソース（`dot_` プレフィックス付きファイル等）を編集し、PR 経由で行う。`~/.local/share/chezmoi` 等の repo 外パスや、`~/.claude/` `~/.codex/` `~/.config/` 等のターゲットファイルを直接書き換えてはならない。環境への適用は `chezmoi update` に委ねる（remote main が single source of truth）
+- **chezmoi ソースを編集する。** `~/.claude/CLAUDE.md` 等のターゲットではなく `dot_claude/CLAUDE.md` 等のソースを編集する。ターゲットを直接編集しても `chezmoi update` で上書きされ、PR にも含められない
+- **ツール導入手段として Homebrew を提案しない**（`packages.yaml` への追加・`brew install` を選択肢に挙げない）。mise（aqua / github / go / npm backend）または aqua CLI で完結させる
+- mise にツールを追加する際、`mise search` / `mise registry` で見つからなくても [aqua-registry](https://github.com/aquaproj/aqua-registry/tree/main/pkgs) に定義があれば `"aqua:<registry path>" = "<version>"` で追加できる（Renovate 自動更新・checksum 検証に乗る）。`http` backend で URL を手書きするのは aqua-registry にも無い最終手段のみ
+- 環境変数（API key 等）の置き場所を勝手に特定ファイル（`.zshrc.local` 等）に指定しない。置き場所はユーザーに委ねる（エラーメッセージやコメントにも特定ファイル名を書かない）
+- `~/.codex/config.toml` 等の modify テンプレート（`dot_codex/modify_config.toml`）は、出力で再出力しないキーを `chezmoi apply` 時に削除する。ツールが書き込む既存キー（`projects` / `notice` / `hooks.state` 等）は保持ブロックに追加すること
+
 ## AI-DLC / Spec-Driven Development
 
 Kiro-style Spec Driven Development を使用可能。
