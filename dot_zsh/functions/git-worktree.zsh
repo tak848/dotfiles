@@ -140,6 +140,9 @@ gwr() {
         # cmux 環境なら全処理完了後に実行元ワークスペースを確認なしで閉じる（シェルも終了する）。
         if _cmux_available; then
             echo "Removed. Closing cmux workspace..."
+            # cwd が削除済みディレクトリのままだと cmux バイナリが cwd を解決できず
+            # close に失敗するため、存在するメイン worktree へ移動してから閉じる。
+            cd "$main_root"
             _cmux_close_current_workspace
             return
         fi
