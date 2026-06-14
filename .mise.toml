@@ -14,7 +14,7 @@ NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
 [tools]
 # このリポジトリで使うランタイム
 node = "24.16.0"
-pnpm = "11.5.2"
+pnpm = "11.6.0"
 
 # aqua CLI（dot_config/aquaproj-aqua の管理用）
 "github:aquaproj/aqua" = "v2.60.0"
@@ -27,7 +27,7 @@ pnpm = "11.5.2"
 "aqua:twpayne/chezmoi" = "2.70.5"
 
 # lazy-lock.yaml ワークフローで使用
-"aqua:neovim/neovim" = "0.12.2"
+"aqua:neovim/neovim" = "0.12.3"
 
 # npm パッケージ
 "npm:cc-sdd" = "3.0.2"
