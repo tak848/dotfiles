@@ -979,6 +979,31 @@ url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_darwin_amd
 checksum = "sha256:a526da44d5f67250598fa95e5654815e9f672b2c05d1d98c28bce0e60d3cfa6c"
 url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_windows_amd64.zip"
 
+[[tools."aqua:x.ai/cli/grok"]]
+version = "0.2.51"
+backend = "aqua:x.ai/cli/grok"
+
+[tools."aqua:x.ai/cli/grok"."platforms.linux-arm64"]
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-aarch64"
+
+[tools."aqua:x.ai/cli/grok"."platforms.linux-arm64-musl"]
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-aarch64"
+
+[tools."aqua:x.ai/cli/grok"."platforms.linux-x64"]
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-x86_64"
+
+[tools."aqua:x.ai/cli/grok"."platforms.linux-x64-musl"]
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-x86_64"
+
+[tools."aqua:x.ai/cli/grok"."platforms.macos-arm64"]
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-macos-aarch64"
+
+[tools."aqua:x.ai/cli/grok"."platforms.macos-x64"]
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-macos-x86_64"
+
+[tools."aqua:x.ai/cli/grok"."platforms.windows-x64"]
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-windows-x86_64.exe"
+
 [[tools."github:aquaproj/aqua"]]
 version = "2.60.0"
 backend = "github:aquaproj/aqua"
