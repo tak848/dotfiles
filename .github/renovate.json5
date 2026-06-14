@@ -28,6 +28,18 @@
       ],
     },
   ],
+  customDatasources: {
+    "1password-cli": {
+      defaultRegistryUrlTemplate: "https://app-updates.agilebits.com/check/1/0/CLI2/en/2.0.0/N",
+      transformTemplates: [
+        '{"releases":[{"version":$join(["v", version]),"changelogUrl":relnotes}],"homepage":"https://www.1password.dev/cli/"}',
+      ],
+    },
+    "grok-build": {
+      defaultRegistryUrlTemplate: "https://x.ai/cli/stable",
+      format: "plain",
+    },
+  },
   packageRules: [
     {
       description: "Default: 24h minimum age for stability",
@@ -35,9 +47,18 @@
       minimumReleaseAge: "24 hours",
     },
     {
-      description: "Ignore aqua HTTP packages without Renovate-supported version sources",
-      matchPackageNames: ["1password/cli", "x.ai/cli/grok"],
-      enabled: false,
+      description: "1Password CLI: use official update check endpoint for aqua HTTP package",
+      matchPackageNames: ["1password/cli"],
+      overrideDatasource: "custom.1password-cli",
+      overridePackageName: "1password-cli",
+      versioning: "semver",
+    },
+    {
+      description: "Grok Build CLI: use official xAI stable channel for aqua HTTP package",
+      matchPackageNames: ["x.ai/cli/grok"],
+      overrideDatasource: "custom.grok-build",
+      overridePackageName: "grok-build",
+      versioning: "semver",
     },
     {
       // mise.lock の更新は CI 側の lockfiles-and-checksums.yaml ワークフローに任せる。
