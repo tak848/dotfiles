@@ -7,7 +7,7 @@
     ":separateMultipleMajorReleases",
     ":prConcurrentLimitNone",
     ":prHourlyLimitNone",
-    "github>aquaproj/aqua-renovate-config#2.12.1",
+    "github>aquaproj/aqua-renovate-config#2.13.0",
   ],
   rangeStrategy: "bump",
   postUpdateOptions: ["gomodTidy"],
