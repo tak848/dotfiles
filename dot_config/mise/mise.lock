@@ -1296,7 +1296,7 @@ version = "1.4.1"
 backend = "npm:@fission-ai/openspec"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260612.1"
+version = "7.0.0-dev.20260613.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
