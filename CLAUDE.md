@@ -95,6 +95,7 @@ Homebrew
 | `~/.gemini/antigravity-cli/mcp_config.json` | `dot_gemini/antigravity-cli/mcp_config.jsonnet` | jsonnet 全体生成（run_onchange） |
 | `~/.claude.json` | `modify_dot_claude.json` | chezmoi modify テンプレート（差分適用） |
 | `~/.codex/config.toml` | `dot_codex/modify_config.toml` | chezmoi modify テンプレート（差分適用） |
+| `~/.codex/ccgate.jsonnet` | `dot_codex/ccgate.jsonnet` | Codex PermissionRequest 補助判定ルール |
 
 `~/.claude.json` と `~/.codex/config.toml` はツールが自動的に書き込むため、jsonnet で全体生成せず modify テンプレートで管理対象キーのみ差分適用する。
 
