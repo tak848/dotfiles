@@ -1051,43 +1051,43 @@ url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/442258179"
 provenance = "github-attestations"
 
 [[tools."github:endevco/aube"]]
-version = "1.19.0"
+version = "1.21.0"
 backend = "github:endevco/aube"
 
 [tools."github:endevco/aube"."platforms.linux-arm64"]
-checksum = "sha256:9e062f319809013c33d4ccb7eba7a36752e8735d08dabe5c8b227d83ae5de102"
-url = "https://github.com/jdx/aube/releases/download/v1.19.0/aube-v1.19.0-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/445129710"
+checksum = "sha256:15f6f4c402f0d3da0c15c09f9d5237515ec1b903001a15e9bbf523352a8e2328"
+url = "https://github.com/jdx/aube/releases/download/v1.21.0/aube-v1.21.0-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/446902056"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-arm64-musl"]
-checksum = "sha256:e4b0ba7a6992c7a4316c4f901cff599ce1f490e6005707254831d10267618017"
-url = "https://github.com/jdx/aube/releases/download/v1.19.0/aube-v1.19.0-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/445109550"
+checksum = "sha256:07da9245c5ac2ef540ed59f795aeee6986d8a9ed5127d4d9c97cbfd1cc05c308"
+url = "https://github.com/jdx/aube/releases/download/v1.21.0/aube-v1.21.0-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/446879332"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64"]
-checksum = "sha256:2ed5bde0bad38d7b3c34195f7f51e5fd491843e1344f3ad35e386af201561fee"
-url = "https://github.com/jdx/aube/releases/download/v1.19.0/aube-v1.19.0-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/445116084"
+checksum = "sha256:f56cb4db3b47e47b51ca8f05677dad7ddef25079e5a81f0ec6afaa0d54201bbe"
+url = "https://github.com/jdx/aube/releases/download/v1.21.0/aube-v1.21.0-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/446882737"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64-musl"]
-checksum = "sha256:f0e16a8d4e76feb21010257def908727cbc278d0361e7b3adfeb5d894e11767e"
-url = "https://github.com/jdx/aube/releases/download/v1.19.0/aube-v1.19.0-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/445114567"
+checksum = "sha256:6761c69514475a87b375d02a3782ebbab1dfdf181a584ee6b6c91814a882cb37"
+url = "https://github.com/jdx/aube/releases/download/v1.21.0/aube-v1.21.0-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/446882077"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.macos-arm64"]
-checksum = "sha256:7652e1a68f0cf14d7228c7e8d6382fe9454d6baf2e0248523006d9fab542e280"
-url = "https://github.com/jdx/aube/releases/download/v1.19.0/aube-v1.19.0-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/445178323"
+checksum = "sha256:dfc28bd63757e4454d09e0f952c8cabfb24a9afa81f1b423ead69eeaf099ea11"
+url = "https://github.com/jdx/aube/releases/download/v1.21.0/aube-v1.21.0-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/446917336"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.windows-x64"]
-checksum = "sha256:90c471a2c2f7fb101c140ce14da2744d7dbc3dc7badd295079cf5d29b8bd9625"
-url = "https://github.com/jdx/aube/releases/download/v1.19.0/aube-v1.19.0-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/445116933"
+checksum = "sha256:14ab972b4e21df08d8954fbe7cff6e2fcf26315b606046e603ff2d68849bf2c8"
+url = "https://github.com/jdx/aube/releases/download/v1.21.0/aube-v1.21.0-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/446887788"
 provenance = "github-attestations"
 
 [[tools."github:google-antigravity/antigravity-cli"]]
@@ -1176,38 +1176,38 @@ url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/438414170"
 provenance = "github-attestations"
 
 [[tools."github:sorafujitani/ccsession"]]
-version = "0.2.0"
+version = "0.6.0"
 backend = "github:sorafujitani/ccsession"
 
 [tools."github:sorafujitani/ccsession"."platforms.linux-arm64"]
-checksum = "sha256:4fa9bdce73b62aafd27d22a6fab7094a0e3b906395334aa34d9963244a94931a"
-url = "https://github.com/sorafujitani/ccsession/releases/download/v0.2.0/ccsession_0.2.0_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/436119824"
+checksum = "sha256:9625fd9e993e91ef8cacd1b90355a8cd988eaa203fa23c9451b1ac63ac05e83b"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.6.0/ccsession_0.6.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/446973507"
 
 [tools."github:sorafujitani/ccsession"."platforms.linux-arm64-musl"]
-checksum = "sha256:4fa9bdce73b62aafd27d22a6fab7094a0e3b906395334aa34d9963244a94931a"
-url = "https://github.com/sorafujitani/ccsession/releases/download/v0.2.0/ccsession_0.2.0_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/436119824"
+checksum = "sha256:9625fd9e993e91ef8cacd1b90355a8cd988eaa203fa23c9451b1ac63ac05e83b"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.6.0/ccsession_0.6.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/446973507"
 
 [tools."github:sorafujitani/ccsession"."platforms.linux-x64"]
-checksum = "sha256:5b9115b174f859f313cd6587ea55b509dd23ff8b5f028d7afdadecad5dc06825"
-url = "https://github.com/sorafujitani/ccsession/releases/download/v0.2.0/ccsession_0.2.0_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/436119825"
+checksum = "sha256:b762cc6d40e46044bfd22bf0cc0f930f263afe1796b702149081eadc530f5d06"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.6.0/ccsession_0.6.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/446973504"
 
 [tools."github:sorafujitani/ccsession"."platforms.linux-x64-musl"]
-checksum = "sha256:5b9115b174f859f313cd6587ea55b509dd23ff8b5f028d7afdadecad5dc06825"
-url = "https://github.com/sorafujitani/ccsession/releases/download/v0.2.0/ccsession_0.2.0_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/436119825"
+checksum = "sha256:b762cc6d40e46044bfd22bf0cc0f930f263afe1796b702149081eadc530f5d06"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.6.0/ccsession_0.6.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/446973504"
 
 [tools."github:sorafujitani/ccsession"."platforms.macos-arm64"]
-checksum = "sha256:8317214f4655bbc39bdaf07a3d17f66e113e3ce58d2a3d3796b4677233ddcc43"
-url = "https://github.com/sorafujitani/ccsession/releases/download/v0.2.0/ccsession_0.2.0_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/436119823"
+checksum = "sha256:403f38f0e9c83fbe81a70f484ff63f30a0d072675ca7ab56f0bbb90f99afb654"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.6.0/ccsession_0.6.0_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/446973508"
 
 [tools."github:sorafujitani/ccsession"."platforms.macos-x64"]
-checksum = "sha256:f125c6bd6c51730db7cd1b4b65bdfcb764c6ecee0d804b425e13d99f6c198926"
-url = "https://github.com/sorafujitani/ccsession/releases/download/v0.2.0/ccsession_0.2.0_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/436119826"
+checksum = "sha256:15606a5ef539876548b9eaf40c9bf633db7fc451cee714feff86525914205b60"
+url = "https://github.com/sorafujitani/ccsession/releases/download/v0.6.0/ccsession_0.6.0_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sorafujitani/ccsession/releases/assets/446973506"
 
 [[tools."github:tmux/tmux-builds"]]
 version = "3.6a"
@@ -1321,7 +1321,7 @@ version = "1.4.1"
 backend = "npm:@fission-ai/openspec"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260612.1"
+version = "7.0.0-dev.20260614.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
