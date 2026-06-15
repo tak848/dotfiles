@@ -9,6 +9,7 @@ plan_mode_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 personality = "pragmatic"
 web_search = "live"
+suppress_unstable_features_warning = true
 notify = ["{{ .chezmoi.homeDir }}/.codex/bin/notification"]
 developer_instructions = """\
 文脈を読め。指示の字面ではなく意図を汲め。ユーザーが求める粒度・スコープに合わせろ。\n\
@@ -77,9 +78,6 @@ url = "https://mcp.figma.com/mcp"
 
 [mcp_servers.aws-knowledge]
 url = "https://knowledge-mcp.global.api.aws"
-
-[mcp_servers.temporal]
-url = "https://temporal.mcp.kapa.ai"
 
 [profiles.fast]
 model = "gpt-5.5"
