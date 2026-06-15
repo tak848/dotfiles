@@ -21,15 +21,18 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 - `modify_dot_claude.json` → `~/.claude.json` の `mcpServers`（Devin）、`remoteControlAtStartup` 設定、旧 MCP エントリの削除
 - `settings.jsonnet` → `~/.claude/settings.json` を全体生成（Claude Code は書き込まない）
 - `ccgate.jsonnet` → `~/.claude/ccgate.jsonnet` の PermissionRequest 補助判定ルール（[tak848/ccgate](https://github.com/tak848/ccgate)）
+- `../ccgate.libsonnet` → `~/ccgate.libsonnet` の Claude/Codex 共通 ccgate ルール
 - `permission-rules.libsonnet` → `permissions.deny` と `PreToolUse` 用の deny ルールのマスタを管理
 - `auto-mode.libsonnet` → `settings.json` の `autoMode` ブロック（Auto Mode Classifier 用 allow / soft_deny / environment）
 
 ## Hook 補助判定の設定（ccgate）
 
-- 共有既定値: `dot_claude/ccgate.jsonnet`
+- 共有既定値: `ccgate.libsonnet`
+- Claude 用エントリポイント: `dot_claude/ccgate.jsonnet`
+- Codex 用エントリポイント: `dot_codex/ccgate.jsonnet`
 - deny ルールのマスタ: `dot_claude/permission-rules.libsonnet`
-- 配置先: `~/.claude/ccgate.jsonnet`
-- プロジェクト単位 override: `ccgate.local.jsonnet` または `.claude/ccgate.local.jsonnet`
+- 配置先: `~/.claude/ccgate.jsonnet`, `~/.codex/ccgate.jsonnet`
+- プロジェクト単位 override: `ccgate.local.jsonnet`, `.claude/ccgate.local.jsonnet`, `.codex/ccgate.local.jsonnet`
 - API key: 環境変数 `CC_AUTOMODE_ANTHROPIC_API_KEY`
 
 `ccgate.local.jsonnet` は Git 管理しない。必要な場合だけ `provider.model` や `allow` / `deny` / `environment` を追加する。読み込み順は `~/.claude/ccgate.jsonnet` → プロジェクト local override。

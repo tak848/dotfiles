@@ -91,6 +91,7 @@ Homebrew
 | ターゲットファイル | 生成元 | 方式 |
 |------------------|--------|------|
 | `~/.claude/settings.json` | `dot_claude/settings.jsonnet` | jsonnet 全体生成（run_onchange） |
+| `~/ccgate.libsonnet` | `ccgate.libsonnet` | Claude/Codex 共通の ccgate ルール |
 | `~/.gemini/antigravity-cli/settings.json` | `dot_gemini/antigravity-cli/settings.jsonnet` | jsonnet 全体生成（run_onchange） |
 | `~/.gemini/antigravity-cli/mcp_config.json` | `dot_gemini/antigravity-cli/mcp_config.jsonnet` | jsonnet 全体生成（run_onchange） |
 | `~/.claude.json` | `modify_dot_claude.json` | chezmoi modify テンプレート（差分適用） |
