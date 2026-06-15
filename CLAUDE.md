@@ -157,6 +157,7 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 ## Conventions
 
 - コミットメッセージは日本語、`feat:`, `fix:`, `chore:` などのプレフィックス必須
+- PR タイトルも日本語、`feat:`, `fix:`, `chore:` などの Conventional Commits プレフィックス必須。`[codex]` / `[claude]` のような agent 名プレフィックスは付けない
 - Renovate PR への push には GitHub App Token が必要（GITHUB_TOKEN では不可）
 - 自動生成ファイルは手動編集しない（`task` または Renovate ワークフローで自動更新）
 
