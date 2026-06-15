@@ -91,10 +91,12 @@ Homebrew
 | ターゲットファイル | 生成元 | 方式 |
 |------------------|--------|------|
 | `~/.claude/settings.json` | `dot_claude/settings.jsonnet` | jsonnet 全体生成（run_onchange） |
+| `~/ccgate.libsonnet` | `ccgate.libsonnet` | Claude/Codex 共通の ccgate ルール |
 | `~/.gemini/antigravity-cli/settings.json` | `dot_gemini/antigravity-cli/settings.jsonnet` | jsonnet 全体生成（run_onchange） |
 | `~/.gemini/antigravity-cli/mcp_config.json` | `dot_gemini/antigravity-cli/mcp_config.jsonnet` | jsonnet 全体生成（run_onchange） |
 | `~/.claude.json` | `modify_dot_claude.json` | chezmoi modify テンプレート（差分適用） |
 | `~/.codex/config.toml` | `dot_codex/modify_config.toml` | chezmoi modify テンプレート（差分適用） |
+| `~/.codex/ccgate.jsonnet` | `dot_codex/ccgate.jsonnet` | Codex PermissionRequest 補助判定ルール |
 
 `~/.claude.json` と `~/.codex/config.toml` はツールが自動的に書き込むため、jsonnet で全体生成せず modify テンプレートで管理対象キーのみ差分適用する。
 
@@ -155,6 +157,7 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 ## Conventions
 
 - コミットメッセージは日本語、`feat:`, `fix:`, `chore:` などのプレフィックス必須
+- PR タイトルも日本語、`feat:`, `fix:`, `chore:` などの Conventional Commits プレフィックス必須。`[codex]` / `[claude]` のような agent 名プレフィックスは付けない
 - Renovate PR への push には GitHub App Token が必要（GITHUB_TOKEN では不可）
 - 自動生成ファイルは手動編集しない（`task` または Renovate ワークフローで自動更新）
 
