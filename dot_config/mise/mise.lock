@@ -1090,6 +1090,43 @@ url = "https://github.com/jdx/aube/releases/download/v1.21.0/aube-v1.21.0-x86_64
 url_api = "https://api.github.com/repos/jdx/aube/releases/assets/446887788"
 provenance = "github-attestations"
 
+[[tools."github:git-ecosystem/git-credential-manager"]]
+version = "2.8.0"
+backend = "github:git-ecosystem/git-credential-manager"
+
+[tools."github:git-ecosystem/git-credential-manager".options]
+matching_regex = '[0-9]\.tar\.gz$'
+
+[tools."github:git-ecosystem/git-credential-manager"."platforms.linux-arm64"]
+checksum = "sha256:6e1782b351eec3399db43699ff4fe2a1bf576654310ee4580aa4867705c0bc08"
+url = "https://github.com/git-ecosystem/git-credential-manager/releases/download/v2.8.0/gcm-linux-arm64-2.8.0.tar.gz"
+url_api = "https://api.github.com/repos/git-ecosystem/git-credential-manager/releases/assets/407398054"
+
+[tools."github:git-ecosystem/git-credential-manager"."platforms.linux-arm64-musl"]
+checksum = "sha256:6e1782b351eec3399db43699ff4fe2a1bf576654310ee4580aa4867705c0bc08"
+url = "https://github.com/git-ecosystem/git-credential-manager/releases/download/v2.8.0/gcm-linux-arm64-2.8.0.tar.gz"
+url_api = "https://api.github.com/repos/git-ecosystem/git-credential-manager/releases/assets/407398054"
+
+[tools."github:git-ecosystem/git-credential-manager"."platforms.linux-x64"]
+checksum = "sha256:6040c849b428a4e5b78594fd4fd2819fc3ea4ca472c13580b65a486bef9df21d"
+url = "https://github.com/git-ecosystem/git-credential-manager/releases/download/v2.8.0/gcm-linux-x64-2.8.0.tar.gz"
+url_api = "https://api.github.com/repos/git-ecosystem/git-credential-manager/releases/assets/407398005"
+
+[tools."github:git-ecosystem/git-credential-manager"."platforms.linux-x64-musl"]
+checksum = "sha256:6040c849b428a4e5b78594fd4fd2819fc3ea4ca472c13580b65a486bef9df21d"
+url = "https://github.com/git-ecosystem/git-credential-manager/releases/download/v2.8.0/gcm-linux-x64-2.8.0.tar.gz"
+url_api = "https://api.github.com/repos/git-ecosystem/git-credential-manager/releases/assets/407398005"
+
+[tools."github:git-ecosystem/git-credential-manager"."platforms.macos-arm64"]
+checksum = "sha256:a61399385e861b8e6e896d04e528eebe1214e002edbb98373e5a458dee194d56"
+url = "https://github.com/git-ecosystem/git-credential-manager/releases/download/v2.8.0/gcm-osx-arm64-2.8.0.tar.gz"
+url_api = "https://api.github.com/repos/git-ecosystem/git-credential-manager/releases/assets/407397928"
+
+[tools."github:git-ecosystem/git-credential-manager"."platforms.macos-x64"]
+checksum = "sha256:bba2b1a20198b2a1a69496a7cd81f4cb23f569fcc7d17751a8a93c071bb6a2b9"
+url = "https://github.com/git-ecosystem/git-credential-manager/releases/download/v2.8.0/gcm-osx-x64-2.8.0.tar.gz"
+url_api = "https://api.github.com/repos/git-ecosystem/git-credential-manager/releases/assets/407397828"
+
 [[tools."github:google-antigravity/antigravity-cli"]]
 version = "1.0.8"
 backend = "github:google-antigravity/antigravity-cli"
