@@ -56,6 +56,9 @@ go = "1.26.4"
 "aqua:x-motemen/ghq" = "1.10.1"
 "aqua:jesseduffield/lazygit" = "0.62.2"
 "aqua:jesseduffield/lazydocker" = "0.25.2"
+# Git credential helper（.NET self-contained。tar.gz を全展開し本体+DLL を同居させる。
+# symbols 版を除外するため matching_regex で末尾を絞り、createdump 等は filter_bins で隠す）
+"github:git-ecosystem/git-credential-manager" = { version = "v2.8.0", matching_regex = '[0-9]\.tar\.gz$', filter_bins = "git-credential-manager" }
 
 # エディタ・ターミナル
 "aqua:neovim/neovim" = "0.12.3"
