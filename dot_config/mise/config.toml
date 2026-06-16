@@ -23,7 +23,7 @@ NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
 # ============================================
 node = "24.16.0"
 pnpm = "11.6.0"
-"github:endevco/aube" = "v1.19.0" # 高速な Node.js パッケージマネージャ
+"github:endevco/aube" = "v1.21.0" # 高速な Node.js パッケージマネージャ
 go = "1.26.4"
 
 # ============================================
@@ -83,7 +83,7 @@ go = "1.26.4"
 "aqua:tak848/ccgate" = "0.9.3"
 
 # Claude Code セッション選択（claude --resume の fzf フロントエンド）
-"github:sorafujitani/ccsession" = "v0.2.0"
+"github:sorafujitani/ccsession" = "v0.6.0"
 
 # Anthropic API CLI
 "aqua:anthropics/anthropic-cli" = "1.12.1"
@@ -105,7 +105,7 @@ go = "1.26.4"
 "aqua:openai/codex" = "0.139.0"
 "aqua:x.ai/cli/grok" = "0.2.51" # Grok Build CLI (xAI のターミナル向けコーディングエージェント)
 "npm:ccusage" = "20.0.11"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260612.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260614.1"
 "npm:cc-sdd" = "3.0.2"
 "npm:difit" = "5.0.2"
 "npm:@fission-ai/openspec" = "1.4.1"
