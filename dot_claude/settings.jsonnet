@@ -6,6 +6,9 @@ local autoModeRules = import 'auto-mode.libsonnet';
   // 言語制御は CLAUDE.md の「言語」セクションに委譲。問題なければ削除/復帰を判断する。
   // language: 'japanese',
   plansDirectory: '.claude/plans',
+  // ccusage が読む ~/.claude/projects/**/*.jsonl の自動削除を実質無効化（デフォルト30日 → 10年）。
+  // 過去の利用量集計が日々消えないようにするため。0 は無効値なので大きい値を指定する。
+  cleanupPeriodDays: 3650,
   teammateMode: 'tmux',
   includeCoAuthoredBy: false,
   extraKnownMarketplaces: {
