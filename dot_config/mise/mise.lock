@@ -1358,7 +1358,7 @@ version = "1.4.1"
 backend = "npm:@fission-ai/openspec"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260614.1"
+version = "7.0.0-dev.20260620.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -1366,7 +1366,7 @@ version = "3.0.2"
 backend = "npm:cc-sdd"
 
 [[tools."npm:ccusage"]]
-version = "20.0.11"
+version = "20.0.14"
 backend = "npm:ccusage"
 
 [[tools."npm:difit"]]
@@ -1374,7 +1374,7 @@ version = "5.0.2"
 backend = "npm:difit"
 
 [[tools."npm:freee-mcp"]]
-version = "0.30.0"
+version = "0.30.1"
 backend = "npm:freee-mcp"
 
 [[tools.pnpm]]
