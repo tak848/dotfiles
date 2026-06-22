@@ -23,7 +23,7 @@ NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
 # ============================================
 node = "24.17.0"
 pnpm = "11.8.0"
-"github:endevco/aube" = "v1.22.0" # 高速な Node.js パッケージマネージャ
+"github:endevco/aube" = "v1.23.0" # 高速な Node.js パッケージマネージャ
 go = "1.26.4"
 
 # ============================================
@@ -108,7 +108,7 @@ go = "1.26.4"
 "aqua:openai/codex" = "0.141.0"
 "aqua:x.ai/cli/grok" = "0.2.51" # Grok Build CLI (xAI のターミナル向けコーディングエージェント)
 "npm:ccusage" = "20.0.14"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260620.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260621.1"
 "npm:cc-sdd" = "3.0.2"
 "npm:difit" = "5.0.2"
 "npm:@fission-ai/openspec" = "1.4.1"
