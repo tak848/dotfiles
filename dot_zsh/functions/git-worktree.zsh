@@ -205,6 +205,8 @@ gwr() {
 #   gwc ENG-123 --cc                 # 作成後に claude を初期プロンプトで起動（GWC_CLAUDE_CODE_INITIAL_PROMPT）
 #   gwc ENG-123 --co                 # 作成後に codex を初期プロンプトで起動（GWC_CODEX_CLI_INITIAL_PROMPT）
 #   gwc ENG-123 --cc "追加の指示"     # 初期プロンプト + 改行2つ + 追加プロンプトで起動（ref より後ろに置くこと）
+#   gwc ENG-123 --ccco               # cmux 限定: claude を現在ペイン、codex を右 split で同時起動
+#   gwc ENG-123 --ccco "追加の指示"   # 追加プロンプトは claude / codex 両方に渡る
 #   export GWC_COPY_FILES=".env.test,config.local.json"  # 環境変数で事前設定
 #   export GWC_PNPM_EXTRA_DIRS="apps/foo,apps/bar"  # root 以外で pnpm install するディレクトリ（worktree root からの相対パス、カンマ区切り）
 #   export GWC_LINEAR_API_KEY="lin_api_..."  # Linear モードに必要（環境変数として設定）
@@ -229,8 +231,9 @@ gwc() {
     local skip_fzf=false
     local open_with_cursor=false
     local cmux_title=""  # cmux 環境ならワークスペース名に設定する文字列（Linear/PR モードでセット）
-    local launch_agent=""  # --cc → claude / --co → codex。worktree 作成後に初期プロンプトで起動
-    local agent_extra=""   # --cc / --co の後ろに渡された追加プロンプト
+    local launch_agent=""  # --cc → claude / --co → codex / --ccco → claude（前面）。worktree 作成後に初期プロンプトで起動
+    local split_agent=""   # --ccco → codex を右 split で起動（claude は launch_agent で現在ペイン前面起動）
+    local agent_extra=""   # --cc / --co / --ccco の後ろに渡された追加プロンプト
 
     # 環境変数 GWC_COPY_FILES から追加のコピー対象ファイルを取得
     if [ -n "$GWC_COPY_FILES" ]; then
@@ -289,8 +292,8 @@ gwc() {
             # --cc → claude / --co → codex。worktree 作成後に初期プロンプトで起動する。
             # 直後にオプションでないトークンがあれば追加プロンプトとして取り込む
             # （例: gwc ENG-123 --cc "追加の指示"）。ref と紛れないよう --cc/--co は ref の後ろに置くこと。
-            if [ -n "$launch_agent" ]; then
-                echo "エラー: --cc と --co は同時に指定できません。" >&2
+            if [ -n "$launch_agent" ] || [ -n "$split_agent" ]; then
+                echo "エラー: --cc / --co / --ccco は同時に指定できません。" >&2
                 return 1
             fi
             if [ "$1" = "--cc" ]; then
@@ -299,6 +302,26 @@ gwc() {
                 launch_agent="codex"
             fi
             shift # --cc / --co を消費
+            if [ -n "$1" ] && [[ "$1" != -* ]]; then
+                agent_extra="$1"
+                shift # 追加プロンプトを消費
+            fi
+            ;;
+        --ccco)
+            # cmux 限定: claude を現在ペイン前面、codex を右 split で同時起動する。
+            # 末尾に非オプションのトークンがあれば両エージェント共通の追加プロンプトとして取り込む。
+            if [ -n "$launch_agent" ] || [ -n "$split_agent" ]; then
+                echo "エラー: --cc / --co / --ccco は同時に指定できません。" >&2
+                return 1
+            fi
+            # validation を最初に: cmux 環境でなければここで弾く（worktree を作らない）
+            if ! _cmux_available; then
+                echo "エラー: --ccco は cmux 環境でのみ使用できます。" >&2
+                return 1
+            fi
+            launch_agent="claude"   # 現在ペインで前面起動（既存経路を再利用）
+            split_agent="codex"     # 右 split で起動
+            shift # --ccco を消費
             if [ -n "$1" ] && [[ "$1" != -* ]]; then
                 agent_extra="$1"
                 shift # 追加プロンプトを消費
@@ -661,6 +684,59 @@ gwc() {
         if [ -n "$launch_agent" ]; then
             # --cursor で original_dir に戻っている可能性があるため target_dir に入り直す
             cd "$target_dir"
+
+            # --ccco: codex を右 split で起動（claude はこの後段で現在ペイン前面起動）。
+            # split は別ペイン＝別シェルのため、zsh 変数を直接渡せず cmux send でコマンドを送る。
+            # 複数行プロンプトを send にインラインで埋めると改行が Enter と解釈されコマンドが
+            # 途中実行されるため、プロンプトは一時ファイルに書き split 側で cat して読み込む。
+            if [ -n "$split_agent" ] && _cmux_available; then
+                if ! command -v "$split_agent" >/dev/null 2>&1; then
+                    echo "警告: '$split_agent' コマンドが見つかりません。split 起動をスキップします。" >&2
+                else
+                    # codex 用プロンプト合成（既存 --co と同じ規則: GWC_CODEX_CLI_INITIAL_PROMPT + extra）
+                    local split_base="$GWC_CODEX_CLI_INITIAL_PROMPT"
+                    local split_prompt=""
+                    if [ -n "$split_base" ] && [ -n "$agent_extra" ]; then
+                        split_prompt="${split_base}"$'\n\n'"${agent_extra}"
+                    elif [ -n "$split_base" ]; then
+                        split_prompt="$split_base"
+                    elif [ -n "$agent_extra" ]; then
+                        split_prompt="$agent_extra"
+                    fi
+                    # 別シェルへ安全に渡すため、プロンプトは一時ファイル経由にする
+                    local split_cmd
+                    if [ -n "$split_prompt" ]; then
+                        local promptfile
+                        promptfile=$(mktemp -t gwc-codex-prompt) || promptfile=""
+                        if [ -n "$promptfile" ]; then
+                            print -r -- "$split_prompt" > "$promptfile"
+                            split_cmd="cd ${(q)target_dir} && ${split_agent} \"\$(cat ${(q)promptfile})\"; rm -f ${(q)promptfile}"
+                        else
+                            split_cmd="cd ${(q)target_dir} && ${split_agent}"
+                        fi
+                    else
+                        split_cmd="cd ${(q)target_dir} && ${split_agent}"
+                    fi
+                    # 右 split を作成し、その surface へコマンドを送る
+                    local split_ref split_surface
+                    split_ref=$(cmux new-split right --focus false 2>/dev/null)
+                    split_surface=$(print -r -- "$split_ref" | grep -oE 'surface:[0-9]+' | head -1)
+                    if [ -z "$split_surface" ]; then
+                        # new-split が pane ref を返した場合は surface を引き直す
+                        local split_pane
+                        split_pane=$(print -r -- "$split_ref" | grep -oE 'pane:[0-9]+' | head -1)
+                        [ -n "$split_pane" ] && split_surface=$(cmux list-pane-surfaces --pane "$split_pane" 2>/dev/null | grep -oE 'surface:[0-9]+' | head -1)
+                    fi
+                    if [ -n "$split_surface" ]; then
+                        sleep 0.5  # 新ペインのシェル起動待ち（早すぎる send の取りこぼし防止）
+                        cmux send --surface "$split_surface" "${split_cmd}\n"
+                        echo "右 split で ${split_agent} を起動しました。"
+                    else
+                        echo "警告: split の surface を特定できず ${split_agent} を起動できませんでした。" >&2
+                    fi
+                fi
+            fi
+
             if ! command -v "$launch_agent" >/dev/null 2>&1; then
                 echo "警告: '$launch_agent' コマンドが見つかりません。起動をスキップします。" >&2
             else
