@@ -93,6 +93,7 @@ go = "1.26.4"
 
 # Language Server
 "go:golang.org/x/tools/gopls" = "0.22.0"
+"github:sivchari/gopls-lazy" = "v0.1.1" # gopls を高速化する LSP プロキシ（大規模 Go モノレポ向け）
 "aqua:rust-lang/rust-analyzer" = "2025-12-01"
 "aqua:tamasfe/taplo" = "0.10.0"
 
