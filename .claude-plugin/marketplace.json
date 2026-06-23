@@ -12,6 +12,13 @@
       "version": "1.0.0",
       "source": "./claude-plugins/aws-knowledge",
       "category": "development"
+    },
+    {
+      "name": "gopls-lazy",
+      "description": "gopls-lazy LSP server for Go (lazy workspace proxy for large monorepos)",
+      "version": "1.0.0",
+      "source": "./claude-plugins/gopls-lazy",
+      "category": "development"
     }
   ]
 }
