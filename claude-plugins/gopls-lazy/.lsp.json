@@ -1,6 +1,7 @@
 {
   "go": {
     "command": "gopls-lazy",
+    "workspaceFolder": "${CLAUDE_PROJECT_DIR}",
     "extensionToLanguage": {
       ".go": "go"
     }
