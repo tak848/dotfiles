@@ -1220,43 +1220,43 @@ url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/438414170"
 provenance = "github-attestations"
 
 [[tools."github:sivchari/gopls-lazy"]]
-version = "0.1.1"
+version = "0.2.0"
 backend = "github:sivchari/gopls-lazy"
 
 [tools."github:sivchari/gopls-lazy"."platforms.linux-arm64"]
-checksum = "sha256:4f224256d963a635c5b93e2ead5eadf8b7b41dd704a462266ffa02f9e7af47a0"
-url = "https://github.com/sivchari/gopls-lazy/releases/download/v0.1.1/gopls-lazy_0.1.1_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/gopls-lazy/releases/assets/450942009"
+checksum = "sha256:acecf693c3c439075aec2364a9e3a9a944fa10931aef73ff2b5dc98386bf771a"
+url = "https://github.com/sivchari/gopls-lazy/releases/download/v0.2.0/gopls-lazy_0.2.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/gopls-lazy/releases/assets/455441156"
 
 [tools."github:sivchari/gopls-lazy"."platforms.linux-arm64-musl"]
-checksum = "sha256:4f224256d963a635c5b93e2ead5eadf8b7b41dd704a462266ffa02f9e7af47a0"
-url = "https://github.com/sivchari/gopls-lazy/releases/download/v0.1.1/gopls-lazy_0.1.1_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/gopls-lazy/releases/assets/450942009"
+checksum = "sha256:acecf693c3c439075aec2364a9e3a9a944fa10931aef73ff2b5dc98386bf771a"
+url = "https://github.com/sivchari/gopls-lazy/releases/download/v0.2.0/gopls-lazy_0.2.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/gopls-lazy/releases/assets/455441156"
 
 [tools."github:sivchari/gopls-lazy"."platforms.linux-x64"]
-checksum = "sha256:e4c12e06cc865c1170e16bdaeeb38dd2784e6efbc7ddc98a4f8c0d73b35c2c67"
-url = "https://github.com/sivchari/gopls-lazy/releases/download/v0.1.1/gopls-lazy_0.1.1_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/gopls-lazy/releases/assets/450942004"
+checksum = "sha256:9da7eb137e673e1e9141bf85d17e62073c3b958fc90a7d0d8d1d35c3d5da6b35"
+url = "https://github.com/sivchari/gopls-lazy/releases/download/v0.2.0/gopls-lazy_0.2.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/gopls-lazy/releases/assets/455441169"
 
 [tools."github:sivchari/gopls-lazy"."platforms.linux-x64-musl"]
-checksum = "sha256:e4c12e06cc865c1170e16bdaeeb38dd2784e6efbc7ddc98a4f8c0d73b35c2c67"
-url = "https://github.com/sivchari/gopls-lazy/releases/download/v0.1.1/gopls-lazy_0.1.1_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/gopls-lazy/releases/assets/450942004"
+checksum = "sha256:9da7eb137e673e1e9141bf85d17e62073c3b958fc90a7d0d8d1d35c3d5da6b35"
+url = "https://github.com/sivchari/gopls-lazy/releases/download/v0.2.0/gopls-lazy_0.2.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/gopls-lazy/releases/assets/455441169"
 
 [tools."github:sivchari/gopls-lazy"."platforms.macos-arm64"]
-checksum = "sha256:7eb863d93e0b1631143438fd4bf7ac2765eeda938154bb69043206e3d409ee4b"
-url = "https://github.com/sivchari/gopls-lazy/releases/download/v0.1.1/gopls-lazy_0.1.1_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/gopls-lazy/releases/assets/450942002"
+checksum = "sha256:b55cc81e82aed6aad3943556e5d4d4d5c5224bb7acc3d9fb5b907e1bc7f048b2"
+url = "https://github.com/sivchari/gopls-lazy/releases/download/v0.2.0/gopls-lazy_0.2.0_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/gopls-lazy/releases/assets/455441153"
 
 [tools."github:sivchari/gopls-lazy"."platforms.macos-x64"]
-checksum = "sha256:b128807a84c07128f5c4d9ac68d5731f89fb33cc81005c1da9681d26c0ef44df"
-url = "https://github.com/sivchari/gopls-lazy/releases/download/v0.1.1/gopls-lazy_0.1.1_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/gopls-lazy/releases/assets/450942011"
+checksum = "sha256:1de5a8e8334e90d35177e552ac9ac46637da155d59d81f8550f0e6bae5015a2b"
+url = "https://github.com/sivchari/gopls-lazy/releases/download/v0.2.0/gopls-lazy_0.2.0_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/gopls-lazy/releases/assets/455441154"
 
 [tools."github:sivchari/gopls-lazy"."platforms.windows-x64"]
-checksum = "sha256:965cf34550f1123e01b6fcc2c7a0eba8ed974318cbebff46ed08eb658bf7ef8d"
-url = "https://github.com/sivchari/gopls-lazy/releases/download/v0.1.1/gopls-lazy_0.1.1_windows_amd64.zip"
-url_api = "https://api.github.com/repos/sivchari/gopls-lazy/releases/assets/450942005"
+checksum = "sha256:39189e5d24858934e5838be018839c928022379e0ef46ab8f3cac8fb2acf6e68"
+url = "https://github.com/sivchari/gopls-lazy/releases/download/v0.2.0/gopls-lazy_0.2.0_windows_amd64.zip"
+url_api = "https://api.github.com/repos/sivchari/gopls-lazy/releases/assets/455441168"
 
 [[tools."github:sorafujitani/ccsession"]]
 version = "0.7.0"
