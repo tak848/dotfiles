@@ -2,7 +2,10 @@
 # {{ include ".claude-plugin/marketplace.json" | sha256sum }}
 # {{ include "claude-plugins/aws-knowledge/.claude-plugin/plugin.json" | sha256sum }}
 # {{ include "claude-plugins/aws-knowledge/.mcp.json" | sha256sum }}
+# {{ include "claude-plugins/gopls-lazy/.claude-plugin/plugin.json" | sha256sum }}
+# {{ include "claude-plugins/gopls-lazy/.lsp.json" | sha256sum }}
 # プラグイン定義が変更された時に marketplace update + plugin install を実行する
+# 注: gopls-lazy はデフォルト無効（必要なプロジェクトで個別有効化）のため install ループには含めない
 
 {{ template "path-setup.tmpl" . }}
 

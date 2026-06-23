@@ -1,0 +1,8 @@
+{
+  "go": {
+    "command": "gopls-lazy",
+    "extensionToLanguage": {
+      ".go": "go"
+    }
+  }
+}

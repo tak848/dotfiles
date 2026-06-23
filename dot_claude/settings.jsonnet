@@ -30,6 +30,9 @@ local autoModeRules = import 'auto-mode.libsonnet';
     'context7@claude-plugins-official': true,
     // gopls-lsp は重いため一律有効化しない。必要なプロジェクトで個別に有効化する。
     // 'gopls-lsp@claude-plugins-official': true,
+    // gopls-lazy は大規模 Go モノレポ向けの軽量 LSP プロキシ（mise: github:sivchari/gopls-lazy）。
+    // 公式 gopls-lsp と同様、一律有効化せず必要なプロジェクトで個別に有効化する。
+    // 'gopls-lazy@tak848-plugins': true,
     'aws-knowledge@tak848-plugins': true,
     'codex@openai-codex': true,
   },
