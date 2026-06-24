@@ -111,42 +111,42 @@ checksum = "sha256:0ff0b4c4e30ca0615fc0cd966b7bc3f10b6c02b8a3164802b94e621aa5aee
 url = "https://github.com/arl/gitmux/releases/download/v0.11.5/gitmux_v0.11.5_macOS_amd64.tar.gz"
 
 [[tools."aqua:astral-sh/uv"]]
-version = "0.11.23"
+version = "0.11.24"
 backend = "aqua:astral-sh/uv"
 
 [tools."aqua:astral-sh/uv"."platforms.linux-arm64"]
-checksum = "sha256:80efb615b78c1e5721e5858135cd3499609b26741220332c843bd58936053bc6"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.23/uv-aarch64-unknown-linux-musl.tar.gz"
+checksum = "sha256:222fcd9878ed6f5a8565d121d1a10e1f958e3c7b42e4ec5cbc6927b2be20cc1a"
+url = "https://github.com/astral-sh/uv/releases/download/0.11.24/uv-aarch64-unknown-linux-musl.tar.gz"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.linux-arm64-musl"]
-checksum = "sha256:80efb615b78c1e5721e5858135cd3499609b26741220332c843bd58936053bc6"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.23/uv-aarch64-unknown-linux-musl.tar.gz"
+checksum = "sha256:222fcd9878ed6f5a8565d121d1a10e1f958e3c7b42e4ec5cbc6927b2be20cc1a"
+url = "https://github.com/astral-sh/uv/releases/download/0.11.24/uv-aarch64-unknown-linux-musl.tar.gz"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.linux-x64"]
-checksum = "sha256:6be47081100ff1ce0ac7e85ba2ac12e32f2ffa6f946d78bf7f24ee9ce3a46181"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.23/uv-x86_64-unknown-linux-musl.tar.gz"
+checksum = "sha256:2f9eaa976cf8ad8574623dde6916fb87ec047524fe65b99dc11e44e33eae4bfb"
+url = "https://github.com/astral-sh/uv/releases/download/0.11.24/uv-x86_64-unknown-linux-musl.tar.gz"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.linux-x64-musl"]
-checksum = "sha256:6be47081100ff1ce0ac7e85ba2ac12e32f2ffa6f946d78bf7f24ee9ce3a46181"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.23/uv-x86_64-unknown-linux-musl.tar.gz"
+checksum = "sha256:2f9eaa976cf8ad8574623dde6916fb87ec047524fe65b99dc11e44e33eae4bfb"
+url = "https://github.com/astral-sh/uv/releases/download/0.11.24/uv-x86_64-unknown-linux-musl.tar.gz"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.macos-arm64"]
-checksum = "sha256:71ef9de85db820749b3b12b7585624ee279e9c5afcbc6f8236bc3d628c4305b0"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.23/uv-aarch64-apple-darwin.tar.gz"
+checksum = "sha256:7578c6087c5cd76981732b1f5d126248101faebdf81016ba780a65ce03653cdf"
+url = "https://github.com/astral-sh/uv/releases/download/0.11.24/uv-aarch64-apple-darwin.tar.gz"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.macos-x64"]
-checksum = "sha256:7a88155033cc469bba5bd5a24212e355eb92e3e2a276320b669ec576296c1e25"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.23/uv-x86_64-apple-darwin.tar.gz"
+checksum = "sha256:8e026ec796a2760c33c832298b0910bf07fb369d00cc075761c321923ac37522"
+url = "https://github.com/astral-sh/uv/releases/download/0.11.24/uv-x86_64-apple-darwin.tar.gz"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.windows-x64"]
-checksum = "sha256:02ad29f07e674d68726ba3bb1ff25b335d83515756e2b1a194bb56c3cc30e07c"
-url = "https://github.com/astral-sh/uv/releases/download/0.11.23/uv-x86_64-pc-windows-msvc.zip"
+checksum = "sha256:af9573a2e36f7020b18ec5fdde20117aae74bbad3f4acb3dc3fc03319f1aa083"
+url = "https://github.com/astral-sh/uv/releases/download/0.11.24/uv-x86_64-pc-windows-msvc.zip"
 provenance = "github-attestations"
 
 [[tools."aqua:bufbuild/buf"]]
@@ -427,36 +427,36 @@ checksum = "sha256:805b70884d202ed6f8568607d4d94a3bfe0318ea6902e904c673be0c43d3c
 url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.17.0/jsonnet-language-server_0.17.0_windows_amd64.exe"
 
 [[tools."aqua:jdx/usage"]]
-version = "3.5.2"
+version = "3.5.3"
 backend = "aqua:jdx/usage"
 
 [tools."aqua:jdx/usage"."platforms.linux-arm64"]
-checksum = "sha256:ef4b872c9c371e8c200c53f0610295d6318d7281bf73e211e6d9eb865a19d98e"
-url = "https://github.com/jdx/usage/releases/download/v3.5.2/usage-aarch64-unknown-linux-musl.tar.gz"
+checksum = "sha256:c5ee535f65cadca0a0883ce0073095e1a12fc749224a79a13d57e38cbcc88dd4"
+url = "https://github.com/jdx/usage/releases/download/v3.5.3/usage-aarch64-unknown-linux-musl.tar.gz"
 
 [tools."aqua:jdx/usage"."platforms.linux-arm64-musl"]
-checksum = "sha256:ef4b872c9c371e8c200c53f0610295d6318d7281bf73e211e6d9eb865a19d98e"
-url = "https://github.com/jdx/usage/releases/download/v3.5.2/usage-aarch64-unknown-linux-musl.tar.gz"
+checksum = "sha256:c5ee535f65cadca0a0883ce0073095e1a12fc749224a79a13d57e38cbcc88dd4"
+url = "https://github.com/jdx/usage/releases/download/v3.5.3/usage-aarch64-unknown-linux-musl.tar.gz"
 
 [tools."aqua:jdx/usage"."platforms.linux-x64"]
-checksum = "sha256:be7d66c000940a604001fc0dbe2e340ade00d949b46ae41a434853c1873d7f1d"
-url = "https://github.com/jdx/usage/releases/download/v3.5.2/usage-x86_64-unknown-linux-musl.tar.gz"
+checksum = "sha256:678114d182273bc8a1316f3528f1f8ded047ed56b41b822656de7046e16a6deb"
+url = "https://github.com/jdx/usage/releases/download/v3.5.3/usage-x86_64-unknown-linux-musl.tar.gz"
 
 [tools."aqua:jdx/usage"."platforms.linux-x64-musl"]
-checksum = "sha256:be7d66c000940a604001fc0dbe2e340ade00d949b46ae41a434853c1873d7f1d"
-url = "https://github.com/jdx/usage/releases/download/v3.5.2/usage-x86_64-unknown-linux-musl.tar.gz"
+checksum = "sha256:678114d182273bc8a1316f3528f1f8ded047ed56b41b822656de7046e16a6deb"
+url = "https://github.com/jdx/usage/releases/download/v3.5.3/usage-x86_64-unknown-linux-musl.tar.gz"
 
 [tools."aqua:jdx/usage"."platforms.macos-arm64"]
-checksum = "sha256:e2a6380f037cdf25f4b355d1ae2387bef12c2b624b7901d284d42a57d12212e6"
-url = "https://github.com/jdx/usage/releases/download/v3.5.2/usage-universal-apple-darwin.tar.gz"
+checksum = "sha256:dc6628015c420f0e0384c95999266ca74dc19de8279b4d54667844286cf8fa13"
+url = "https://github.com/jdx/usage/releases/download/v3.5.3/usage-universal-apple-darwin.tar.gz"
 
 [tools."aqua:jdx/usage"."platforms.macos-x64"]
-checksum = "sha256:e2a6380f037cdf25f4b355d1ae2387bef12c2b624b7901d284d42a57d12212e6"
-url = "https://github.com/jdx/usage/releases/download/v3.5.2/usage-universal-apple-darwin.tar.gz"
+checksum = "sha256:dc6628015c420f0e0384c95999266ca74dc19de8279b4d54667844286cf8fa13"
+url = "https://github.com/jdx/usage/releases/download/v3.5.3/usage-universal-apple-darwin.tar.gz"
 
 [tools."aqua:jdx/usage"."platforms.windows-x64"]
-checksum = "sha256:709843742514bd0bb669568d87c4dc5261ef7465e48bbeaad4de9084be3d735a"
-url = "https://github.com/jdx/usage/releases/download/v3.5.2/usage-x86_64-pc-windows-msvc.zip"
+checksum = "sha256:3cd7995171854518873f84bf60be17c8e331cad1ca180e03911fac414a7a6372"
+url = "https://github.com/jdx/usage/releases/download/v3.5.3/usage-x86_64-pc-windows-msvc.zip"
 
 [[tools."aqua:jesseduffield/lazydocker"]]
 version = "0.25.2"
@@ -1058,43 +1058,43 @@ url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/448669481"
 provenance = "github-attestations"
 
 [[tools."github:endevco/aube"]]
-version = "1.23.0"
+version = "1.24.0"
 backend = "github:endevco/aube"
 
 [tools."github:endevco/aube"."platforms.linux-arm64"]
-checksum = "sha256:b87a1ea2e4d315e5f0e9d04ed7832dc95bcaf75fccb4f12ab5ee7d0707804521"
-url = "https://github.com/jdx/aube/releases/download/v1.23.0/aube-v1.23.0-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/453784100"
+checksum = "sha256:3dc921937446a617cddad30879ea4fa7b407cf645fabd90ce89bbd83aed147c5"
+url = "https://github.com/jdx/aube/releases/download/v1.24.0/aube-v1.24.0-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/455917419"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-arm64-musl"]
-checksum = "sha256:09994cbfca71785c899014aa81386bbff1ee26d8346b1f059310d0420edb9784"
-url = "https://github.com/jdx/aube/releases/download/v1.23.0/aube-v1.23.0-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/453769709"
+checksum = "sha256:7f76147146f648fa236f06580e129eb257bea293790ac55e142ae8b853e0a1d0"
+url = "https://github.com/jdx/aube/releases/download/v1.24.0/aube-v1.24.0-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/455898203"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64"]
-checksum = "sha256:6d20fa6f57ca29f44f3efd1bf8a6618db9ee7386be51f5e78a513ca815af8d0a"
-url = "https://github.com/jdx/aube/releases/download/v1.23.0/aube-v1.23.0-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/453776930"
+checksum = "sha256:c50e5d283170b7ffb62beb229f97ebd42481dc8380f24d8123b472d87328e5b4"
+url = "https://github.com/jdx/aube/releases/download/v1.24.0/aube-v1.24.0-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/455903206"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64-musl"]
-checksum = "sha256:3ea3a011c8df28824e5b9f7ec564a28495fb4230c1d28200eab075e349bfabfe"
-url = "https://github.com/jdx/aube/releases/download/v1.23.0/aube-v1.23.0-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/453774848"
+checksum = "sha256:4077980962b590e35402c3a51b752cfc6d151ad3ae43f3d1759349b4857f0443"
+url = "https://github.com/jdx/aube/releases/download/v1.24.0/aube-v1.24.0-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/455902182"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.macos-arm64"]
-checksum = "sha256:a686654da91b0a254460d034c0b14c99182aa394e41e7969af9b619cac5c9cbe"
-url = "https://github.com/jdx/aube/releases/download/v1.23.0/aube-v1.23.0-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/453793352"
+checksum = "sha256:729feaec0408c3bd8f27cb69903a9d3d61d6fba89c6ca4fa2b6ece6e3eff92de"
+url = "https://github.com/jdx/aube/releases/download/v1.24.0/aube-v1.24.0-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/455919105"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.windows-x64"]
-checksum = "sha256:e6fa607be0170f5408813e9a4f68dd9c1fbf5b61bff228c6c33603335d3c3719"
-url = "https://github.com/jdx/aube/releases/download/v1.23.0/aube-v1.23.0-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/453779183"
+checksum = "sha256:c4eb67851341ed42b6d85c45963f300213907c812c5d9ecaf5039ef8c257ea27"
+url = "https://github.com/jdx/aube/releases/download/v1.24.0/aube-v1.24.0-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/jdx/aube/releases/assets/455907062"
 provenance = "github-attestations"
 
 [[tools."github:git-ecosystem/git-credential-manager"]]
@@ -1368,43 +1368,43 @@ version = "0.22.0"
 backend = "go:golang.org/x/tools/gopls"
 
 [[tools.node]]
-version = "24.17.0"
+version = "24.18.0"
 backend = "core:node"
 
 [tools.node."platforms.linux-arm64"]
-checksum = "sha256:faa0d59ba7fe7045c950ed09b190578fb8eee73e4358686d38fcc99ca58c1480"
-url = "https://nodejs.org/dist/v24.17.0/node-v24.17.0-linux-arm64.tar.gz"
+checksum = "sha256:6b4484c2190274175df9aa8f28e2d758a819cb1c1fe6ab481e2f95b463ab8508"
+url = "https://nodejs.org/dist/v24.18.0/node-v24.18.0-linux-arm64.tar.gz"
 
 [tools.node."platforms.linux-arm64-musl"]
-checksum = "sha256:cc54f73a1a4108d9e325eb201d90b25eeab60edc92b2a13240b2877a74c596da"
-url = "https://unofficial-builds.nodejs.org/download/release/v24.17.0/node-v24.17.0-linux-arm64-musl.tar.gz"
+checksum = "sha256:b1c6c2dc31b46dd8fb2322f4fe75b07e775c5120bc37251deeea28f529d4567b"
+url = "https://unofficial-builds.nodejs.org/download/release/v24.18.0/node-v24.18.0-linux-arm64-musl.tar.gz"
 
 [tools.node."platforms.linux-x64"]
-checksum = "sha256:e0472427aa791ad80bdc426ff7cc73cdd28ed0f616d1ff9689a23a7f47f1265f"
-url = "https://nodejs.org/dist/v24.17.0/node-v24.17.0-linux-x64.tar.gz"
+checksum = "sha256:783130984963db7ba9cbd01089eaf2c2efb055c7c1693c943174b967b3050cb8"
+url = "https://nodejs.org/dist/v24.18.0/node-v24.18.0-linux-x64.tar.gz"
 
 [tools.node."platforms.linux-x64-musl"]
-checksum = "sha256:f884c958c0652f7cd0ea43fdc39dddd1a98456ea9b1adeca85964847e2e39fb0"
-url = "https://unofficial-builds.nodejs.org/download/release/v24.17.0/node-v24.17.0-linux-x64-musl.tar.gz"
+checksum = "sha256:ea58409911e141ec6b19d9178efa2d9185a13295005b1cbf5521b3157eed1d95"
+url = "https://unofficial-builds.nodejs.org/download/release/v24.18.0/node-v24.18.0-linux-x64-musl.tar.gz"
 
 [tools.node."platforms.macos-arm64"]
-checksum = "sha256:4fc3266a3702eebc39cc37661cf4eeceeade307e242ab64e4d7ce7949197e11f"
-url = "https://nodejs.org/dist/v24.17.0/node-v24.17.0-darwin-arm64.tar.gz"
+checksum = "sha256:e1a97e14c99c803e96c7339403282ea05a499c32f8d83defe9ef5ec66f979ed1"
+url = "https://nodejs.org/dist/v24.18.0/node-v24.18.0-darwin-arm64.tar.gz"
 
 [tools.node."platforms.macos-x64"]
-checksum = "sha256:80da552fe037290cb130e9dea590f5eeeb7aa450636f0c89ab41415511c1ec27"
-url = "https://nodejs.org/dist/v24.17.0/node-v24.17.0-darwin-x64.tar.gz"
+checksum = "sha256:dfd0dbd3e721503434df7b7205e719f61b3a3a31b2bcf9729b8b91fea240f080"
+url = "https://nodejs.org/dist/v24.18.0/node-v24.18.0-darwin-x64.tar.gz"
 
 [tools.node."platforms.windows-x64"]
-checksum = "sha256:f2aa33b35b75aca5f3f7b85675a6f6423201053e9381911e64961f3bda2528ab"
-url = "https://nodejs.org/dist/v24.17.0/node-v24.17.0-win-x64.zip"
+checksum = "sha256:0ae68406b42d7725661da979b1403ec9926da205c6770827f33aac9d8f26e821"
+url = "https://nodejs.org/dist/v24.18.0/node-v24.18.0-win-x64.zip"
 
 [[tools."npm:@fission-ai/openspec"]]
 version = "1.4.1"
 backend = "npm:@fission-ai/openspec"
 
 [[tools."npm:@typescript/native-preview"]]
-version = "7.0.0-dev.20260621.1"
+version = "7.0.0-dev.20260623.1"
 backend = "npm:@typescript/native-preview"
 
 [[tools."npm:cc-sdd"]]
@@ -1420,39 +1420,39 @@ version = "5.0.2"
 backend = "npm:difit"
 
 [[tools."npm:freee-mcp"]]
-version = "0.30.1"
+version = "0.30.2"
 backend = "npm:freee-mcp"
 
 [[tools.pnpm]]
-version = "11.8.0"
+version = "11.9.0"
 backend = "aqua:pnpm/pnpm"
 
 [tools.pnpm."platforms.linux-arm64"]
-checksum = "sha256:251222a30b3dcf6bc1c30c44fe3fdcd0bd4b2b06dd29f6a549647e56fa51548c"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.8.0/pnpm-linux-arm64.tar.gz"
+checksum = "sha256:7981d0109fffdf8f15b838243240c8c9f9114dd4b7111d4227c1453522d75b61"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.9.0/pnpm-linux-arm64.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.linux-arm64-musl"]
-checksum = "sha256:dbc5077793d76d6318ea9a0b9c250327b12afaab4473b02549ee232f2d7b55b3"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.8.0/pnpm-linux-arm64-musl.tar.gz"
+checksum = "sha256:3622d3010d6af601190e7b63994fb0fe297e805699145aec949f4879f2672fb5"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.9.0/pnpm-linux-arm64-musl.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.linux-x64"]
-checksum = "sha256:86b9aa5362b06cc61f5e829e41614ffda2fbda09993b8e84176feaa3c97b9532"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.8.0/pnpm-linux-x64.tar.gz"
+checksum = "sha256:8d987d82585453bcf260ea5d0bae346d298f1a5e71bcde8d99976521408ad895"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.9.0/pnpm-linux-x64.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.linux-x64-musl"]
-checksum = "sha256:c22f99ca91ec4bab1f37114ed3eacc23e68da72573f42e72ebfafaeaa1131167"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.8.0/pnpm-linux-x64-musl.tar.gz"
+checksum = "sha256:655fcf2609e3145cfd7c2f05113429523706d0a618f2957eaa6c3562f6a5998b"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.9.0/pnpm-linux-x64-musl.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.macos-arm64"]
-checksum = "sha256:7c9ef7523abf1190a2fde2b81dd652260d1679ba471c09950e8a08fa772c06e2"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.8.0/pnpm-darwin-arm64.tar.gz"
+checksum = "sha256:ca6f98a8911ec975509464026205e2b54aed74cecd36c5ae9932e5997bd7de2a"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.9.0/pnpm-darwin-arm64.tar.gz"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.windows-x64"]
-checksum = "sha256:8cf6951ade777eeb7e4665fdcaefe77942724b217690eb3fa2f0b27c67b4310c"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.8.0/pnpm-win32-x64.zip"
+checksum = "sha256:82c130717a59f237c49e8eaa8a7ed75c1d8d351a5b6dedeee3196b8e1b597c6e"
+url = "https://github.com/pnpm/pnpm/releases/download/v11.9.0/pnpm-win32-x64.zip"
 provenance = "github-attestations"
