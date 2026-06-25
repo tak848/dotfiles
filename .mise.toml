@@ -13,8 +13,8 @@ NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
 
 [tools]
 # このリポジトリで使うランタイム
-node = "24.17.0"
-pnpm = "11.8.0"
+node = "24.18.0"
+pnpm = "11.9.0"
 
 # aqua CLI（dot_config/aquaproj-aqua の管理用）
 "github:aquaproj/aqua" = "v2.60.1"
