@@ -100,6 +100,8 @@ go = "1.26.4"
 # その他（1password/cli は aqua CLI で管理）
 "aqua:temporalio/cli" = "1.7.2"
 "aqua:jdx/usage" = "3.5.3"
+# Datadog の AI エージェント向け CLI コンパニオン
+"aqua:DataDog/pup" = "1.4.0"
 
 # ============================================
 # npm グローバルパッケージ
