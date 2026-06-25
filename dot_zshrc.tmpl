@@ -96,6 +96,11 @@ if command -v mise &> /dev/null; then
   eval "$(mise completion zsh)"
 fi
 
+# temporal completion (遅延ロード)
+if command -v temporal &> /dev/null; then
+  eval "$(temporal completion zsh)"
+fi
+
 # fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
 fbr() {
   local branches branch
