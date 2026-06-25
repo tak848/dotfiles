@@ -28,6 +28,40 @@ url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15
 checksum = "sha256:124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d87493a"
 url = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"
 
+[[tools."aqua:DataDog/pup"]]
+version = "1.4.0"
+backend = "aqua:DataDog/pup"
+
+[tools."aqua:DataDog/pup"."platforms.linux-arm64"]
+checksum = "sha256:438c253c74db327b84f2db329227a4e10f3d5f5cfbeebd6aad7d74c9a066734c"
+url = "https://github.com/DataDog/pup/releases/download/v1.4.0/pup_1.4.0_Linux_arm64.tar.gz"
+provenance = "cosign"
+
+[tools."aqua:DataDog/pup"."platforms.linux-arm64-musl"]
+checksum = "sha256:438c253c74db327b84f2db329227a4e10f3d5f5cfbeebd6aad7d74c9a066734c"
+url = "https://github.com/DataDog/pup/releases/download/v1.4.0/pup_1.4.0_Linux_arm64.tar.gz"
+provenance = "cosign"
+
+[tools."aqua:DataDog/pup"."platforms.linux-x64"]
+checksum = "sha256:21aa9df37a4353cebe7468bb4775cf6f69c79e16dc13fe1c643c5fe2ea44451d"
+url = "https://github.com/DataDog/pup/releases/download/v1.4.0/pup_1.4.0_Linux_x86_64.tar.gz"
+provenance = "cosign"
+
+[tools."aqua:DataDog/pup"."platforms.linux-x64-musl"]
+checksum = "sha256:21aa9df37a4353cebe7468bb4775cf6f69c79e16dc13fe1c643c5fe2ea44451d"
+url = "https://github.com/DataDog/pup/releases/download/v1.4.0/pup_1.4.0_Linux_x86_64.tar.gz"
+provenance = "cosign"
+
+[tools."aqua:DataDog/pup"."platforms.macos-arm64"]
+checksum = "sha256:2f87c5e411c919aab7231234f30e19bb08380f377fde7a92fabf8fed08e18e47"
+url = "https://github.com/DataDog/pup/releases/download/v1.4.0/pup_1.4.0_Darwin_arm64.tar.gz"
+provenance = "cosign"
+
+[tools."aqua:DataDog/pup"."platforms.macos-x64"]
+checksum = "sha256:1ebc57d6d20448a78b027c5fd5126aa8e1370f3c335c02c7ba543096c634d8cd"
+url = "https://github.com/DataDog/pup/releases/download/v1.4.0/pup_1.4.0_Darwin_x86_64.tar.gz"
+provenance = "cosign"
+
 [[tools."aqua:anthropics/anthropic-cli"]]
 version = "1.12.1"
 backend = "aqua:anthropics/anthropic-cli"
