@@ -47,6 +47,7 @@ status_line = [
 ]
 
 [features]
+hooks = true
 unified_exec = true
 shell_snapshot = true
 prevent_idle_sleep = true
