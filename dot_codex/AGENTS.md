@@ -42,6 +42,8 @@ Always respond in 日本語(japanese).
 
 ## PR・issue ルール
 
+- **最重要**: PR title / branch name / commit message / PR description / issue body は、必ず対象リポジトリの規約・テンプレート・既存の書き方に従うこと。`[codex]` や `codex/` などの agent 名 prefix を勝手に付けてはならない。
+- PR description や issue body は、対象リポジトリのテンプレートや既存構成を尊重すること。指示されていない独自の見出し構成・要約形式・agent 由来の定型文へ勝手に置き換えないこと。
 - PR 作成時はリポジトリ内の PULL REQUEST テンプレートを探索し（ルート、`.github/`、`docs/`、各 `PULL_REQUEST_TEMPLATE/` サブディレクトリ）、見つかったら必ず従うこと。テンプレートを無視した PR は禁止
 - issue/PR にコメント・返信する際は、本文末尾に `(by Codex)` を付与すること
 - レビューコメントの指摘に対して修正を行った場合は、必ず該当コメントに reply すること。修正した commit へのリンク（`https://github.com/{owner}/{repo}/commit/{sha}` 形式）を含めること
