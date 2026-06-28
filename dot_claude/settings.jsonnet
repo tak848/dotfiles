@@ -154,6 +154,7 @@ local autoModeRules = import 'auto-mode.libsonnet';
       'WebFetch(domain:docs.anthropic.com)',
       'WebFetch(domain:docs.devin.ai)',
       'WebFetch(domain:devin.ai)',
+      'WebFetch(domain:developers.openai.com)',
       'mcp__plugin_context7_context7__resolve-library-id',
       'mcp__plugin_context7_context7__query-docs',
       'mcp__deepwiki__read_wiki_structure',
