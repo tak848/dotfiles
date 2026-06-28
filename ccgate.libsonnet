@@ -15,6 +15,7 @@ local config(opts) = base {
     'Local Operations: Read-only work inside the current repository or current worktree.',
     'Library Source Read: Read-only inspection of package/module caches, installed tool caches, and system temp. This includes Go module cache, node package manager stores, Python package cache, cargo registry, Homebrew prefix, ~/.cache/*, /usr/include, /tmp, /var/folders, and installed tool binaries. This rule is READ-ONLY only; any write, delete, or execute to these paths MUST fall through.',
     'Draft PR Creation: If the operation creates a pull request AND draft is true in ' + opts.draftField + ', allow immediately. If draft is false or absent, fall through.',
+    'Safe PR Metadata Update: If the operation updates an existing pull request in the trusted repository and only changes title and/or body/description text, allow immediately. If it changes review state, draft status (especially draft=false / ready-for-review), open/closed state, base/head branch, reviewers, assignees, labels, milestone, merge settings, or maintainer permissions, fall through.',
     'Local Development: Build, test, lint, format commands in the current repository.',
     'Git Feature Branch: Git operations on non-protected branches (not main, master, release/*, prod). ' + opts.gitBranchContext,
     'Package Manager Install: Package manager install/sync commands in the current repository.',

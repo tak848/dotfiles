@@ -67,6 +67,9 @@
     // draft=true での PR 作成は即時許可。非 draft の PR 作成はユーザーの明示的意図が必要。
     'Draft PR Creation: Creating a pull request with draft=true is allowed immediately. Non-draft PR creation requires explicit user intent.',
 
+    // 既存 PR の title/body だけの修正は許可。draft 解除や close、base/head/reviewer 等の変更は対象外。
+    'Safe PR Metadata Update: Updating an existing pull request in the trusted repository is allowed when the update only changes title and/or body/description text. Changes to review state, draft status (especially draft=false / ready-for-review), open/closed state, base/head branch, reviewers, assignees, labels, milestone, merge settings, or maintainer permissions are not covered.',
+
     // 現在のリポジトリでの build / test / lint / format コマンドを許可（明示性のため独立項目に）。
     'Local Development: Build, test, lint, format commands in the current repository.',
   ],
