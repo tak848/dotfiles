@@ -7,6 +7,7 @@ model_auto_compact_token_limit = 500000
 model_reasoning_effort = "high"
 plan_mode_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
+approval_policy = "untrusted"
 personality = "pragmatic"
 web_search = "live"
 suppress_unstable_features_warning = true
@@ -59,16 +60,46 @@ writable_roots = [
 {{- end }}
 ]
 
+# MCP tool の自動承認は、Claude (dot_claude/settings.jsonnet permissions.allow) が
+# allow している tool 名だけを per-tool approve で揃える。server 全体の
+# default_tools_approval_mode = "approve" は使わない（Claude 未承認 tool まで緩めないため）。
+# approval_mode は approve のみ global approval_policy に関係なく自動承認される。
 [mcp_servers.context7]
 url = "https://mcp.context7.com/mcp/oauth"
+tools.resolve-library-id.approval_mode = "approve"
+tools.query-docs.approval_mode = "approve"
 
 [mcp_servers.github]
 url = "https://api.githubcopilot.com/mcp/"
 bearer_token_env_var = "GH_TOKEN"
+tools.get_me.approval_mode = "approve"
+tools.list_issues.approval_mode = "approve"
+tools.search_issues.approval_mode = "approve"
+tools.issue_read.approval_mode = "approve"
+tools.list_pull_requests.approval_mode = "approve"
+tools.search_pull_requests.approval_mode = "approve"
+tools.pull_request_read.approval_mode = "approve"
+tools.get_file_contents.approval_mode = "approve"
+tools.list_commits.approval_mode = "approve"
+tools.get_commit.approval_mode = "approve"
+tools.list_branches.approval_mode = "approve"
+tools.list_releases.approval_mode = "approve"
+tools.list_tags.approval_mode = "approve"
+tools.search_code.approval_mode = "approve"
+tools.get_repository_tree.approval_mode = "approve"
+tools.list_notifications.approval_mode = "approve"
+tools.get_notification_details.approval_mode = "approve"
+# write 系は Claude が自動許可しているコメント/Issue のみ（PR 作成・更新は都度確認）
+tools.add_issue_comment.approval_mode = "approve"
+tools.issue_write.approval_mode = "approve"
+tools.add_reply_to_pull_request_comment.approval_mode = "approve"
 
 [mcp_servers.devin]
 url = "https://mcp.devin.ai/mcp"
 bearer_token_env_var = "DEVIN_API_KEY"
+tools.ask_question.approval_mode = "approve"
+tools.read_wiki_contents.approval_mode = "approve"
+tools.read_wiki_structure.approval_mode = "approve"
 
 [mcp_servers.notion]
 url = "https://mcp.notion.com/mcp"
@@ -78,6 +109,12 @@ url = "https://mcp.figma.com/mcp"
 
 [mcp_servers.aws-knowledge]
 url = "https://knowledge-mcp.global.api.aws"
+tools.aws___search_documentation.approval_mode = "approve"
+tools.aws___read_documentation.approval_mode = "approve"
+tools.aws___recommend.approval_mode = "approve"
+tools.aws___list_regions.approval_mode = "approve"
+tools.aws___get_regional_availability.approval_mode = "approve"
+tools.aws___retrieve_agent_sop.approval_mode = "approve"
 
 [profiles.fast]
 model = "gpt-5.5"

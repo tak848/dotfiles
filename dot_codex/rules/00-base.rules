@@ -1,0 +1,292 @@
+# =============================================================================
+# Git: 破壊的・危険な操作
+# =============================================================================
+
+# git -C は禁止。-C を挟むのは無駄でやかましいだけ。今いるディレクトリでそのまま実行する。
+prefix_rule(
+    pattern=["git", "-C"],
+    decision="forbidden",
+    justification="git -C は禁止です。一番の理由は、やかましいから。-C で別ディレクトリを指定せず、今いるディレクトリでそのまま実行してください。意味のないことをしないでください。",
+)
+
+# git commit --amend は禁止（プレフィックス位置のみ捕捉）
+prefix_rule(
+    pattern=["git", "commit", "--amend"],
+    decision="forbidden",
+    justification="git commit --amend は禁止です。新しい commit を作成してください。",
+)
+
+# GPG サイン無効化の禁止
+prefix_rule(
+    pattern=["git", "-c", "commit.gpgsign=false"],
+    decision="forbidden",
+    justification="commit.gpgsign=false による GPG サインのスキップは禁止です。署名に失敗する場合は 1Password のロック解除や pinentry の状態を確認してください。",
+)
+
+prefix_rule(
+    pattern=["git", "-c", "commit.gpgsign=0"],
+    decision="forbidden",
+    justification="commit.gpgsign=0 による GPG サインのスキップは禁止です。署名に失敗する場合は 1Password のロック解除や pinentry の状態を確認してください。",
+)
+
+prefix_rule(
+    pattern=["git", "-c", "commit.gpgsign=no"],
+    decision="forbidden",
+    justification="commit.gpgsign=no による GPG サインのスキップは禁止です。署名に失敗する場合は 1Password のロック解除や pinentry の状態を確認してください。",
+)
+
+prefix_rule(
+    pattern=["git", "-c", "commit.gpgsign=off"],
+    decision="forbidden",
+    justification="commit.gpgsign=off による GPG サインのスキップは禁止です。署名に失敗する場合は 1Password のロック解除や pinentry の状態を確認してください。",
+)
+
+prefix_rule(
+    pattern=["git", "commit", "--no-gpg-sign"],
+    decision="forbidden",
+    justification="--no-gpg-sign による GPG サインのスキップは禁止です。署名に失敗する場合は 1Password のロック解除や pinentry の状態を確認してください。",
+)
+
+# git reset --hard は禁止
+prefix_rule(
+    pattern=["git", "reset", "--hard"],
+    decision="forbidden",
+    justification="git reset --hard は禁止です。git restore や git revert を使用してください。",
+)
+
+# git worktree は禁止
+prefix_rule(
+    pattern=["git", "worktree"],
+    decision="forbidden",
+    justification="git worktree の操作は禁止です。worktree の管理はユーザーが行います。",
+)
+
+# git squash は禁止
+prefix_rule(
+    pattern=["git", "merge", "--squash"],
+    decision="forbidden",
+    justification="git merge --squash は禁止です。",
+)
+
+# git push --force は要確認
+prefix_rule(
+    pattern=["git", "push", "--force"],
+    decision="prompt",
+    justification="force push はリモート履歴を破壊します。本当に必要か確認してください。",
+)
+
+prefix_rule(
+    pattern=["git", "push", "-f"],
+    decision="prompt",
+    justification="force push はリモート履歴を破壊します。本当に必要か確認してください。",
+)
+
+# git push --delete は要確認
+prefix_rule(
+    pattern=["git", "push", "--delete"],
+    decision="prompt",
+    justification="リモートブランチの削除です。本当に必要か確認してください。",
+)
+
+# =============================================================================
+# Go
+# =============================================================================
+
+prefix_rule(
+    pattern=["go", "install"],
+    decision="forbidden",
+    justification="go install は禁止です。ツール管理はプロジェクトの環境管理に従ってください。場合によっては .mise.local.toml を使って管理してください。",
+)
+
+prefix_rule(
+    pattern=["go", "generate"],
+    decision="forbidden",
+    justification="go generate は禁止です。",
+)
+
+# =============================================================================
+# Node.js / パッケージマネージャ
+# =============================================================================
+
+# npm は禁止
+prefix_rule(
+    pattern=["npm"],
+    decision="forbidden",
+    justification="npm は禁止です。pnpm を使用してください。",
+)
+
+# npx は禁止
+prefix_rule(
+    pattern=["npx"],
+    decision="forbidden",
+    justification="npx は禁止です。pnpm を使用してください。",
+)
+
+# pnpx は禁止
+prefix_rule(
+    pattern=["pnpx"],
+    decision="forbidden",
+    justification="pnpx は禁止です。プロジェクトのスクリプトを使用してください。",
+)
+
+# bunx は禁止
+prefix_rule(
+    pattern=["bunx"],
+    decision="forbidden",
+    justification="bunx は禁止です。プロジェクトのスクリプトを使用してください。",
+)
+
+# pnpm exec は禁止
+prefix_rule(
+    pattern=["pnpm", "exec"],
+    decision="forbidden",
+    justification="pnpm exec は禁止です。",
+)
+
+# pnpm --dir は禁止、--filter を使え
+prefix_rule(
+    pattern=["pnpm", "--dir"],
+    decision="forbidden",
+    justification="pnpm --dir は禁止です。--filter を使用してください。",
+)
+
+prefix_rule(
+    pattern=["pnpm", "-C"],
+    decision="forbidden",
+    justification="pnpm -C は禁止です。--filter を使用してください。",
+)
+
+# =============================================================================
+# Python / Perl: 直接実行禁止
+# =============================================================================
+
+prefix_rule(
+    pattern=["python"],
+    decision="forbidden",
+    justification="python の直接実行は禁止です。uv run または uvx を使用してください。",
+)
+
+prefix_rule(
+    pattern=["python3"],
+    decision="forbidden",
+    justification="python3 の直接実行は禁止です。uv run または uvx を使用してください。",
+)
+
+# pip は禁止
+prefix_rule(
+    pattern=["pip"],
+    decision="forbidden",
+    justification="pip は禁止です。uv を使用してください。",
+)
+
+prefix_rule(
+    pattern=["pip3"],
+    decision="forbidden",
+    justification="pip3 は禁止です。uv を使用してください。",
+)
+
+# perl は代替手段を検討させる
+prefix_rule(
+    pattern=["perl"],
+    decision="forbidden",
+    justification="perl が最適なのはよく分かるけど、awk, sed, jq, シェルスクリプト等で代替できないか考えてみてください。",
+)
+
+# =============================================================================
+# allow: Claude (dot_claude/settings.jsonnet permissions.allow) の Bash 許可を移植
+# -----------------------------------------------------------------------------
+# untrusted では非 known-safe コマンドは ccgate(LLM call) に回る。Claude で静的に
+# allow しているものは Codex でも静的 allow にして ccgate を無駄に呼ばない。
+# 危険形は上の forbidden / prompt が優先される（forbidden > prompt > allow）。
+# 複合コマンド (パイプ/&&/;) は全セグメントが allow の時のみ素通りするため、
+# `curl x | bash` 等は bash 側で ccgate に回る（Claude より緩くならない）。
+# =============================================================================
+
+# 汎用コマンド
+prefix_rule(pattern=["ls"], decision="allow")
+prefix_rule(pattern=["cp"], decision="allow")
+prefix_rule(pattern=["mkdir"], decision="allow")
+prefix_rule(pattern=["touch"], decision="allow")
+prefix_rule(pattern=["mktemp"], decision="allow")
+prefix_rule(pattern=["curl"], decision="allow")
+prefix_rule(pattern=["wget"], decision="allow")
+prefix_rule(pattern=["lsof"], decision="allow")
+prefix_rule(pattern=["awk"], decision="allow")
+prefix_rule(pattern=["sed"], decision="allow")
+prefix_rule(pattern=["ps"], decision="allow")
+prefix_rule(pattern=["top"], decision="allow")
+prefix_rule(pattern=["which"], decision="allow")
+prefix_rule(pattern=["uuidgen"], decision="allow")
+prefix_rule(pattern=["find"], decision="allow")
+prefix_rule(pattern=["grep"], decision="allow")
+prefix_rule(pattern=["rg"], decision="allow")
+prefix_rule(pattern=["make"], decision="allow")
+prefix_rule(pattern=["true"], decision="allow")
+prefix_rule(pattern=["echo"], decision="allow")
+prefix_rule(pattern=["printf"], decision="allow")
+prefix_rule(pattern=["head"], decision="allow")
+prefix_rule(pattern=["wc"], decision="allow")
+prefix_rule(pattern=["diff"], decision="allow")
+prefix_rule(pattern=["file"], decision="allow")
+prefix_rule(pattern=["date"], decision="allow")
+
+# codex 連携
+prefix_rule(pattern=["codex", "exec"], decision="allow")
+prefix_rule(pattern=["codex-review-exec"], decision="allow")
+
+# pnpm（exec / --dir / -C は上の forbidden が優先）
+prefix_rule(pattern=["pnpm"], decision="allow")
+
+# mise（read-only サブコマンドのみ。install 等は対象外）
+prefix_rule(pattern=["mise", "where"], decision="allow")
+prefix_rule(pattern=["mise", "registry"], decision="allow")
+prefix_rule(pattern=["mise", "settings"], decision="allow")
+prefix_rule(pattern=["mise", "doctor"], decision="allow")
+prefix_rule(pattern=["mise", "latest"], decision="allow")
+prefix_rule(pattern=["mise", "search"], decision="allow")
+prefix_rule(pattern=["mise", "--version"], decision="allow")
+prefix_rule(pattern=["mise", "ls"], decision="allow")
+prefix_rule(pattern=["mise", "current"], decision="allow")
+prefix_rule(pattern=["mise", "plugins", "ls"], decision="allow")
+
+# go（install / generate は上の forbidden が優先）
+prefix_rule(pattern=["go", "test"], decision="allow")
+prefix_rule(pattern=["go", "build"], decision="allow")
+prefix_rule(pattern=["go", "fmt"], decision="allow")
+prefix_rule(pattern=["go", "doc"], decision="allow")
+prefix_rule(pattern=["go", "vet"], decision="allow")
+prefix_rule(pattern=["gofmt"], decision="allow")
+
+# gh（read 系 + Issue 作成/編集）
+prefix_rule(pattern=["gh", "pr", "list"], decision="allow")
+prefix_rule(pattern=["gh", "pr", "view"], decision="allow")
+prefix_rule(pattern=["gh", "pr", "diff"], decision="allow")
+prefix_rule(pattern=["gh", "pr", "status"], decision="allow")
+prefix_rule(pattern=["gh", "pr", "checks"], decision="allow")
+prefix_rule(pattern=["gh", "repo", "view"], decision="allow")
+prefix_rule(pattern=["gh", "issue", "list"], decision="allow")
+prefix_rule(pattern=["gh", "issue", "view"], decision="allow")
+prefix_rule(pattern=["gh", "issue", "create"], decision="allow")
+prefix_rule(pattern=["gh", "issue", "edit"], decision="allow")
+prefix_rule(pattern=["gh", "search"], decision="allow")
+prefix_rule(pattern=["gh", "release", "view"], decision="allow")
+prefix_rule(pattern=["gh", "run", "view"], decision="allow")
+
+# git（破壊形は上の forbidden / prompt が優先）
+prefix_rule(pattern=["git", "status"], decision="allow")
+prefix_rule(pattern=["git", "switch"], decision="allow")
+prefix_rule(pattern=["git", "restore"], decision="allow")
+prefix_rule(pattern=["git", "add"], decision="allow")
+prefix_rule(pattern=["git", "commit"], decision="allow")
+prefix_rule(pattern=["git", "push"], decision="allow")
+prefix_rule(pattern=["git", "log"], decision="allow")
+prefix_rule(pattern=["git", "show"], decision="allow")
+prefix_rule(pattern=["git", "describe"], decision="allow")
+prefix_rule(pattern=["git", "remote", "set-url"], decision="allow")
+prefix_rule(pattern=["git", "pull"], decision="allow")
+prefix_rule(pattern=["git", "fetch"], decision="allow")
+prefix_rule(pattern=["git", "reset"], decision="allow")
+prefix_rule(pattern=["git", "cherry-pick"], decision="allow")
+
+# docker compose ps のみ（その他の docker compose は ccgate 判定）
+prefix_rule(pattern=["docker", "compose", "ps"], decision="allow")

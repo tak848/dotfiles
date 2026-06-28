@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+# 旧 ~/.codex/rules/default.rules を一度だけ削除する（リネーム移行）。
+# chezmoi 管理ファイルを dot_codex/rules/default.rules → 00-base.rules に
+# リネームしたが、chezmoi はソース削除時にターゲットを自動削除しない（forget する
+# だけ）ため、既存マシンに残る旧ファイルを orphan にしないよう一度きりで除去する。
+# .chezmoiremove を使わないのは、毎回 apply で消すと TUI が default.rules へ追記した
+# allowlist まで消えてしまうため。default.rules は以後 Codex TUI の書き込み先として空ける。
+
+rm -f "{{ .chezmoi.homeDir }}/.codex/rules/default.rules"
