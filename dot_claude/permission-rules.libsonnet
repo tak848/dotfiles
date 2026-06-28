@@ -69,17 +69,32 @@ local rules = [
   {
     matcher: 'Bash',
     spec: 'Bash(npx*)',
-    reason: 'npx は禁止です。プロジェクトのスクリプトを使用してください。',
+    reason: 'npx は registry から package を一時取得して実行できるため禁止です。必要な CLI は依存に宣言し、package.json の script として pnpm run <script> または pnpm <script> で実行してください。',
+  },
+  {
+    matcher: 'Bash',
+    spec: 'Bash(pnpm dlx*)',
+    reason: 'pnpm dlx は registry から package を一時取得して実行するため禁止です。必要な CLI は依存に宣言し、package.json の script として pnpm run <script> または pnpm <script> で実行してください。',
+  },
+  {
+    matcher: 'Bash',
+    spec: 'Bash(pnpm exec*)',
+    reason: 'pnpm exec は package.json の scripts を迂回して任意の依存 bin を直接実行できるため禁止です。必要なコマンドは package.json に script として定義し、pnpm run <script> または pnpm <script> で実行してください。',
   },
   {
     matcher: 'Bash',
     spec: 'Bash(pnpx*)',
-    reason: 'pnpx は禁止です。プロジェクトのスクリプトを使用してください。',
+    reason: 'pnpx は pnpm dlx の alias であり、registry から package を一時取得して実行するため禁止です。必要な CLI は依存に宣言し、package.json の script として pnpm run <script> または pnpm <script> で実行してください。',
+  },
+  {
+    matcher: 'Bash',
+    spec: 'Bash(pnx*)',
+    reason: 'pnx は pnpm dlx の alias であり、registry から package を一時取得して実行するため禁止です。必要な CLI は依存に宣言し、package.json の script として pnpm run <script> または pnpm <script> で実行してください。',
   },
   {
     matcher: 'Bash',
     spec: 'Bash(bunx*)',
-    reason: 'bunx は禁止です。プロジェクトのスクリプトを使用してください。',
+    reason: 'bunx は registry から package を一時取得して実行できるため禁止です。必要な CLI は依存に宣言し、package.json の script として pnpm run <script> または pnpm <script> で実行してください。',
   },
   {
     matcher: 'Bash',
@@ -90,10 +105,6 @@ local rules = [
     matcher: 'Bash',
     spec: 'Bash(pip3 *)',
     reason: 'pip3 は禁止です。uv を使用してください。',
-  },
-  {
-    matcher: 'Bash',
-    spec: 'Bash(pnpm exec*)',
   },
   {
     matcher: 'Bash',

@@ -119,28 +119,55 @@ prefix_rule(
 prefix_rule(
     pattern=["npx"],
     decision="forbidden",
-    justification="npx は禁止です。pnpm を使用してください。",
+    justification="npx は registry から package を一時取得して実行できるため禁止です。必要な CLI は依存に宣言し、package.json の script として pnpm run <script> または pnpm <script> で実行してください。",
 )
 
-# pnpx は禁止
+# pnpm dlx / pnpx / pnx は一時 package runner なので禁止
+prefix_rule(
+    pattern=["pnpm", "dlx"],
+    decision="forbidden",
+    justification="pnpm dlx は registry から package を一時取得して実行するため禁止です。必要な CLI は依存に宣言し、package.json の script として pnpm run <script> または pnpm <script> で実行してください。",
+    match=[
+        "pnpm dlx --package renovate renovate-config-validator .github/renovate.json5",
+        "pnpm dlx create-vue my-app",
+    ],
+    not_match=[
+        "pnpm run lint",
+    ],
+)
+
+# pnpm exec は package.json scripts を迂回して任意 bin を直接実行できるため禁止
+prefix_rule(
+    pattern=["pnpm", "exec"],
+    decision="forbidden",
+    justification="pnpm exec は package.json の scripts を迂回して任意の依存 bin を直接実行できるため禁止です。必要なコマンドは package.json に script として定義し、pnpm run <script> または pnpm <script> で実行してください。",
+    match=[
+        "pnpm exec renovate-config-validator .github/renovate.json5",
+        "pnpm exec eslint .",
+    ],
+    not_match=[
+        "pnpm run lint",
+        "pnpm test",
+    ],
+)
+
 prefix_rule(
     pattern=["pnpx"],
     decision="forbidden",
-    justification="pnpx は禁止です。プロジェクトのスクリプトを使用してください。",
+    justification="pnpx は pnpm dlx の alias であり、registry から package を一時取得して実行するため禁止です。必要な CLI は依存に宣言し、package.json の script として pnpm run <script> または pnpm <script> で実行してください。",
+)
+
+prefix_rule(
+    pattern=["pnx"],
+    decision="forbidden",
+    justification="pnx は pnpm dlx の alias であり、registry から package を一時取得して実行するため禁止です。必要な CLI は依存に宣言し、package.json の script として pnpm run <script> または pnpm <script> で実行してください。",
 )
 
 # bunx は禁止
 prefix_rule(
     pattern=["bunx"],
     decision="forbidden",
-    justification="bunx は禁止です。プロジェクトのスクリプトを使用してください。",
-)
-
-# pnpm exec は禁止
-prefix_rule(
-    pattern=["pnpm", "exec"],
-    decision="forbidden",
-    justification="pnpm exec は禁止です。",
+    justification="bunx は registry から package を一時取得して実行できるため禁止です。必要な CLI は依存に宣言し、package.json の script として pnpm run <script> または pnpm <script> で実行してください。",
 )
 
 # pnpm --dir は禁止、--filter を使え
@@ -234,7 +261,7 @@ prefix_rule(pattern=["date"], decision="allow")
 prefix_rule(pattern=["codex", "exec"], decision="allow")
 prefix_rule(pattern=["codex-review-exec"], decision="allow")
 
-# pnpm（exec / --dir / -C は上の forbidden が優先）
+# pnpm（dlx / exec / --dir / -C は上の forbidden が優先）
 prefix_rule(pattern=["pnpm"], decision="allow")
 
 # mise（read-only サブコマンドのみ。install 等は対象外）
