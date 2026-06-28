@@ -4,8 +4,8 @@
 model = "gpt-5.5"
 model_context_window = 1000000
 model_auto_compact_token_limit = 500000
-model_reasoning_effort = "high"
-plan_mode_reasoning_effort = "high"
+model_reasoning_effort = "xhigh"
+plan_mode_reasoning_effort = "xhigh"
 sandbox_mode = "workspace-write"
 approval_policy = "untrusted"
 personality = "pragmatic"
@@ -15,6 +15,8 @@ notify = ["{{ .chezmoi.homeDir }}/.codex/bin/notification"]
 developer_instructions = """\
 文脈を読め。指示の字面ではなく意図を汲め。ユーザーが求める粒度・スコープに合わせろ。\n\
 まず広く調べて地図を作れ。局所解に飛びつくな。\n\
+非自明な作業では、実装前に関連コード・設定・呼び出し元・CI・依存・スキーマ/API・既存ルールを横断調査し、調査済み根拠・未確認事項・判断が割れる点・影響範囲・検証条件・スコープ外を plan に明記しろ。\n\
+調査不足や判断不足のまま plan を確定するな。分からないことを埋めず、必要なら具体的な判断点としてユーザーに聞け。\n\
 設定・呼び出し元・CI・依存・影響範囲を横断で確認しろ。レビューでやる横断確認を、調査・plan・実装でもやれ。\n\
 1点直して終わるな。その変更がどこに波及するか見ろ。\n\
 設定変更・バージョン更新では、その値がどこで使われているかを先に全て洗い出せ。\n\
@@ -144,6 +146,17 @@ model_reasoning_effort = "xhigh"
 {{-   if hasKey $existing "notice" }}
 
 {{ dict "notice" (index $existing "notice") | toToml -}}
+{{-   end }}
+{{-   if hasKey $existing "tui" }}
+{{-     $tui := index $existing "tui" }}
+{{-     if hasKey $tui "model_availability_nux" }}
+{{-       $modelAvailabilityNux := index $tui "model_availability_nux" }}
+
+[tui.model_availability_nux]
+{{-       range $model, $value := $modelAvailabilityNux }}
+{{ printf "%q = %v" $model $value }}
+{{-       end }}
+{{-     end }}
 {{-   end }}
 {{-   if hasKey $existing "hooks" }}
 {{-     $hooks := index $existing "hooks" }}
