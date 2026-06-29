@@ -11,6 +11,10 @@ local autoModeRules = import 'auto-mode.libsonnet';
   cleanupPeriodDays: 3650,
   teammateMode: 'tmux',
   includeCoAuthoredBy: false,
+  // auto-memory を全プロジェクトで一律無効化。false で読み書き・memory ディレクトリ生成を停止する。
+  // 規約・コンテキストは CLAUDE.md / AGENTS.md / CLAUDE.local.md に集約する方針。
+  // ref: https://code.claude.com/docs/en/memory#enable-or-disable-auto-memory
+  autoMemoryEnabled: false,
   extraKnownMarketplaces: {
     'tak848-plugins': {
       source: {

@@ -77,3 +77,14 @@ Think in English, interact with the user in Japanese.
 
 - 自動許可: `git switch`, `git restore`, `git commit`（amend除く）
 - 禁止: `--amend`, `--no-gpg-sign`, `reset --hard`
+
+## メモリ（auto-memory）を使わない
+
+Claude Code の auto-memory（`~/.claude/projects/<project>/memory/`）は設定で無効化済み。使わない。学び・規約・コンテキストは memory に溜めず、内容に応じて置き場所を振り分ける:
+
+- **プロジェクトに還元すべき規約・知見** → 各 Agent が追える位置に配置し、プロジェクトで git 管理する。Claude はそのプロジェクトの `CLAUDE.md`（リポジトリ直下／該当サブディレクトリ）、Codex はそのプロジェクトの `AGENTS.md`。
+- **複数人で共有する意味のないもの**（タスクの進め方・細かい運用ルール・個人の嗜好寄りの話）→ `CLAUDE.local.md` に追記する。git worktree の場合は worktree root の `CLAUDE.local.md` に書く。`CLAUDE.local.md` へ書く前に必ずユーザーに確認する。
+
+## 散文に不要な改行を入れない
+
+PR 本文・plan・issue/PR コメント・ドキュメント等の散文で、見栄え目的の改行（hard wrap）を入れない。改行は段落の区切り・リスト・コードブロックなど意味のある区切りにだけ使う。1文の途中で折り返さない。

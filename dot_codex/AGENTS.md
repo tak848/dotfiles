@@ -47,3 +47,7 @@ Always respond in 日本語(japanese).
 - PR 作成時はリポジトリ内の PULL REQUEST テンプレートを探索し（ルート、`.github/`、`docs/`、各 `PULL_REQUEST_TEMPLATE/` サブディレクトリ）、見つかったら必ず従うこと。テンプレートを無視した PR は禁止
 - issue/PR にコメント・返信する際は、本文末尾に `(by Codex)` を付与すること
 - レビューコメントの指摘に対して修正を行った場合は、必ず該当コメントに reply すること。修正した commit へのリンク（`https://github.com/{owner}/{repo}/commit/{sha}` 形式）を含めること
+
+## 散文に不要な改行を入れない
+
+PR 本文・plan・issue/PR コメント・ドキュメント等の散文で、見栄え目的の改行（hard wrap）を入れない。改行は段落の区切り・リスト・コードブロックなど意味のある区切りにだけ使う。1文の途中で折り返さない。
