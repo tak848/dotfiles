@@ -67,6 +67,9 @@
     // draft=true での PR 作成は即時許可。非 draft の PR 作成はユーザーの明示的意図が必要。
     'Draft PR Creation: Creating a pull request with draft=true is allowed immediately. Non-draft PR creation requires explicit user intent.',
 
+    // 既存 PR の title/body だけの修正は許可。draft 解除や close、base/head/reviewer 等の変更は対象外。
+    'Safe PR Metadata Update: Updating an existing pull request in the trusted repository is allowed when the update only changes title and/or body/description text. Changes to review state, draft status (especially draft=false / ready-for-review), open/closed state, base/head branch, reviewers, assignees, labels, milestone, merge settings, or maintainer permissions are not covered.',
+
     // 現在のリポジトリでの build / test / lint / format コマンドを許可（明示性のため独立項目に）。
     'Local Development: Build, test, lint, format commands in the current repository.',
   ],
@@ -205,9 +208,9 @@
     // current repo root 外かつ package/module cache 以外は private source repo 扱い。
     'Unrelated Repository Access: Reading or writing files inside a DIFFERENT git repository the user has NOT explicitly authorized via --add-dir. Paths under ~/repos/*, ~/src/*, ~/work/*, ~/code/*, ~/ghq/* that are not under the current repo root and not a package/module cache should be treated as private source repos.',
 
-    // 単発 package runner (npx / pnpx / pnpm exec / bunx 等) で tool を直接起動するのを禁止。
-    // project 定義済み script を使うこと。$() / pipe / loop 等で組み立てたケースも含む。
-    'Direct Tool Invocation: Running tools via one-shot package runners (npx, pnpx, pnpm exec, bunx, etc.) instead of project-defined scripts is forbidden. This applies even when the command is wrapped in $(), pipes, or loops.',
+    // 単発 package runner (npx / pnpx / pnx / pnpm dlx / bunx 等) と pnpm exec による scripts 迂回を禁止。
+    // package.json の script を pnpm run <script> または pnpm <script> で実行すること。$() / pipe / loop 等で組み立てたケースも含む。
+    'Direct Tool Invocation: Running tools via one-shot package runners (npx, pnpx, pnx, pnpm dlx, bunx, etc.) or bypassing package.json scripts with `pnpm exec` is forbidden. Use package.json scripts via `pnpm run <script>` or `pnpm <script>` instead. This applies even when the command is wrapped in $(), pipes, or loops.',
 
     // release/* / prod / production / stg / staging 等の長寿命デプロイ branch への
     // 直 push を禁止。default branch は別途 "Git Push to Default Branch" (デフォルト)
