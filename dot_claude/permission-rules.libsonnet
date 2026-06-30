@@ -134,7 +134,7 @@ local rules = [
   {
     matcher: 'Bash',
     spec: 'Bash(ruby*)',
-    reason: 'ruby が最適なのはよく分かるけど、awk, sed, jq, シェルスクリプト等で代替できないか考えてみてください。',
+    reason: 'ruby の直接実行は禁止です。awk, sed, jq, シェルスクリプト等で代替できないか考えてみてください。',
   },
 ];
 
