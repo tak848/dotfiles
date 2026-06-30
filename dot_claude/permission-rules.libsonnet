@@ -131,6 +131,11 @@ local rules = [
     spec: 'Bash(perl*)',
     reason: 'perl が最適なのはよく分かるけど、awk, sed, jq, シェルスクリプト等で代替できないか考えてみてください。',
   },
+  {
+    matcher: 'Bash',
+    spec: 'Bash(ruby*)',
+    reason: 'ruby の直接実行は禁止です。awk, sed, jq, シェルスクリプト等で代替できないか、それでも足りなければ Go で書けないか考えてみてください。',
+  },
 ];
 
 {
