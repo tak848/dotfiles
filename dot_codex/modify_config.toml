@@ -58,6 +58,7 @@ network_access = true
 writable_roots = [
   "{{ .chezmoi.homeDir }}/.local/share/aquaproj-aqua",
   "{{ .chezmoi.homeDir }}/go/pkg/mod",
+  "{{ .chezmoi.homeDir }}/go/pkg/sumdb",
 {{- if eq .chezmoi.os "darwin" }}
   "{{ .chezmoi.homeDir }}/Library/Caches",
 {{- end }}
