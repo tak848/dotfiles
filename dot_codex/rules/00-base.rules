@@ -223,7 +223,7 @@ prefix_rule(
 prefix_rule(
     pattern=["ruby"],
     decision="forbidden",
-    justification="ruby の直接実行は禁止です。awk, sed, jq, シェルスクリプト等で代替できないか考えてみてください。",
+    justification="ruby の直接実行は禁止です。awk, sed, jq, シェルスクリプト等で代替できないか、それでも足りなければ Go で書けないか考えてみてください。",
 )
 
 # =============================================================================
