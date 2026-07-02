@@ -203,6 +203,8 @@ gwr() {
 #   gwc ENG-123 --base develop       # base ブランチを上書き（Linear モード、既定は main）
 #   gwc --cursor                     # 作成後に Cursor で開く
 #   gwc ENG-123 --cc                 # 作成後に claude を初期プロンプトで起動（GWC_CLAUDE_CODE_INITIAL_PROMPT）
+#   gwc ENG-123 --ccf                # 作成後に claude --model fable を初期プロンプトで起動
+#   gwc ENG-123 --cco                # 作成後に claude --model opus を初期プロンプトで起動
 #   gwc ENG-123 --co                 # 作成後に codex を初期プロンプトで起動（GWC_CODEX_CLI_INITIAL_PROMPT）
 #   gwc ENG-123 --cc "追加の指示"     # 初期プロンプト + 改行2つ + 追加プロンプトで起動（ref より後ろに置くこと）
 #   gwc ENG-123 --ccco               # cmux 限定: claude を現在ペイン、codex を右 split で同時起動
@@ -232,6 +234,7 @@ gwc() {
     local open_with_cursor=false
     local cmux_title=""  # cmux 環境ならワークスペース名に設定する文字列（Linear/PR モードでセット）
     local launch_agent=""  # --cc → claude / --co → codex / --ccco → claude（前面）。worktree 作成後に初期プロンプトで起動
+    local launch_model=""  # --ccf → fable / --cco → opus。claude 起動時だけ --model として渡す
     local split_agent=""   # --ccco → codex を右 split で起動（claude は launch_agent で現在ペイン前面起動）
     local agent_extra=""   # --cc / --co / --ccco の後ろに渡された追加プロンプト
 
@@ -302,6 +305,23 @@ gwc() {
                 launch_agent="codex"
             fi
             shift # --cc / --co を消費
+            if [ -n "$1" ] && [[ "$1" != -* ]]; then
+                agent_extra="$1"
+                shift # 追加プロンプトを消費
+            fi
+            ;;
+        --ccf | --cco)
+            if [ -n "$launch_agent" ] || [ -n "$split_agent" ]; then
+                echo "エラー: --cc / --ccf / --cco / --co / --ccco は同時に指定できません。" >&2
+                return 1
+            fi
+            launch_agent="claude"
+            if [ "$1" = "--ccf" ]; then
+                launch_model="fable"
+            else
+                launch_model="opus"
+            fi
+            shift # --ccf / --cco を消費
             if [ -n "$1" ] && [[ "$1" != -* ]]; then
                 agent_extra="$1"
                 shift # 追加プロンプトを消費
@@ -754,11 +774,15 @@ gwc() {
                 elif [ -n "$agent_extra" ]; then
                     agent_prompt="$agent_extra"
                 fi
+                local launch_args=()
+                if [ -n "$launch_model" ]; then
+                    launch_args+=(--model "$launch_model")
+                fi
                 echo "\n$launch_agent を起動します..."
                 if [ -n "$agent_prompt" ]; then
-                    "$launch_agent" "$agent_prompt"
+                    "$launch_agent" "${launch_args[@]}" "$agent_prompt"
                 else
-                    "$launch_agent"
+                    "$launch_agent" "${launch_args[@]}"
                 fi
             fi
         fi
