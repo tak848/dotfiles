@@ -21,7 +21,7 @@ pnpm = "11.9.0"
 
 # このリポジトリで使う CLI ツール
 "aqua:google/go-jsonnet" = "0.22.0"
-"aqua:go-task/task" = "3.51.1"
+"aqua:go-task/task" = "3.52.0"
 
 # install.sh からの bootstrap で使う。dot_config/mise/config.toml と揃える
 "aqua:twpayne/chezmoi" = "2.70.5"
