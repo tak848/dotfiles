@@ -86,7 +86,7 @@ go = "1.26.4"
 "aqua:tak848/ccgate" = "0.9.5"
 
 # Claude Code セッション選択（claude --resume の fzf フロントエンド）
-"github:sorafujitani/ccsession" = "v0.7.0"
+"github:sorafujitani/ccsession" = "v1.0.0"
 
 # Anthropic API CLI
 "aqua:anthropics/anthropic-cli" = "1.16.0"
