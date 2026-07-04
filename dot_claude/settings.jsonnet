@@ -207,6 +207,12 @@ local autoModeRules = import 'auto-mode.libsonnet';
     allow: autoModeRules.allow,
     soft_deny: autoModeRules.soft_deny,
   },
+  // plan mode 中に auto mode classifier が read-only tool を auto-allow し、
+  // ccgate（PermissionRequest hook）をバイパスするのを止める。許可判定は ccgate に一本化する。
+  // auto mode 自体は無効化しない（disableAutoMode は使わない）。Shift+Tab での手動利用は維持。
+  // CC 2.1.186 で入った plan-mode read-only auto-allow 挙動への対処。
+  // 未設定（デフォルト）は true 扱い（cBr() の `!== false` 判定）のため、明示的に false にする必要がある。
+  useAutoModeDuringPlan: false,
   // model: 'claude-opus-4-1-20250805',
   // model: 'claude-opus-4-6',
   // model: 'claude-opus-4-6[1m]',
