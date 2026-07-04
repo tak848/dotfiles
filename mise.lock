@@ -7,30 +7,37 @@ backend = "aqua:go-task/task"
 [tools."aqua:go-task/task"."platforms.linux-arm64"]
 checksum = "sha256:49c58bb00eff2449a5553f3b3e694fc424e0dc04d5c669d8831126daee1000f8"
 url = "https://github.com/go-task/task/releases/download/v3.51.1/task_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/go-task/task/releases/assets/422054392"
 
 [tools."aqua:go-task/task"."platforms.linux-arm64-musl"]
 checksum = "sha256:49c58bb00eff2449a5553f3b3e694fc424e0dc04d5c669d8831126daee1000f8"
 url = "https://github.com/go-task/task/releases/download/v3.51.1/task_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/go-task/task/releases/assets/422054392"
 
 [tools."aqua:go-task/task"."platforms.linux-x64"]
 checksum = "sha256:da7e92f0ff961ef2aae7cfecbad8d1fd2a08d7b09ba968673adf7ff389b243b5"
 url = "https://github.com/go-task/task/releases/download/v3.51.1/task_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/go-task/task/releases/assets/422054344"
 
 [tools."aqua:go-task/task"."platforms.linux-x64-musl"]
 checksum = "sha256:da7e92f0ff961ef2aae7cfecbad8d1fd2a08d7b09ba968673adf7ff389b243b5"
 url = "https://github.com/go-task/task/releases/download/v3.51.1/task_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/go-task/task/releases/assets/422054344"
 
 [tools."aqua:go-task/task"."platforms.macos-arm64"]
 checksum = "sha256:a0330f0df20dd1187e323f284a7f365c0ea1f2f271c1e154811e9fc4724bed13"
 url = "https://github.com/go-task/task/releases/download/v3.51.1/task_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/go-task/task/releases/assets/422054327"
 
 [tools."aqua:go-task/task"."platforms.macos-x64"]
 checksum = "sha256:08b0a2107c56940e1fc7be15ebd5999f28a867925cfcd619393f8075fef67409"
 url = "https://github.com/go-task/task/releases/download/v3.51.1/task_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/go-task/task/releases/assets/422054326"
 
 [tools."aqua:go-task/task"."platforms.windows-x64"]
 checksum = "sha256:422d79dff5afd5a55fb46ae1cfacc7350ec96d4ef27a63a3ec77a5c30a7b0f03"
 url = "https://github.com/go-task/task/releases/download/v3.51.1/task_windows_amd64.zip"
+url_api = "https://api.github.com/repos/go-task/task/releases/assets/422054329"
 
 [[tools."aqua:google/go-jsonnet"]]
 version = "0.22.0"
@@ -39,30 +46,37 @@ backend = "aqua:google/go-jsonnet"
 [tools."aqua:google/go-jsonnet"."platforms.linux-arm64"]
 checksum = "sha256:3016b049254cb92548ba99304b6f44ec3795e6173f908e3ce3c5add57243fe20"
 url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google/go-jsonnet/releases/assets/380558845"
 
 [tools."aqua:google/go-jsonnet"."platforms.linux-arm64-musl"]
 checksum = "sha256:3016b049254cb92548ba99304b6f44ec3795e6173f908e3ce3c5add57243fe20"
 url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google/go-jsonnet/releases/assets/380558845"
 
 [tools."aqua:google/go-jsonnet"."platforms.linux-x64"]
 checksum = "sha256:e87a93ea44e34da92c15636205c7f2240bf3ac92d00ccb855dbb4e7e03ea6941"
 url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/google/go-jsonnet/releases/assets/380558847"
 
 [tools."aqua:google/go-jsonnet"."platforms.linux-x64-musl"]
 checksum = "sha256:e87a93ea44e34da92c15636205c7f2240bf3ac92d00ccb855dbb4e7e03ea6941"
 url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/google/go-jsonnet/releases/assets/380558847"
 
 [tools."aqua:google/go-jsonnet"."platforms.macos-arm64"]
 checksum = "sha256:112534191b6e27f2ae01bb80c6ab82950fb7bf5772e2e81c5472f59a069700f5"
 url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google/go-jsonnet/releases/assets/380558841"
 
 [tools."aqua:google/go-jsonnet"."platforms.macos-x64"]
 checksum = "sha256:2ada40ece13e8b4e1f37c06315783110c84b496963b0b8b90809daf69df7dfc9"
 url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/google/go-jsonnet/releases/assets/380558829"
 
 [tools."aqua:google/go-jsonnet"."platforms.windows-x64"]
 checksum = "sha256:277b83ddbe836a627dcde0655720aa42b02277fdf3a9cdaebeef2a53e98599b1"
 url = "https://github.com/google/go-jsonnet/releases/download/v0.22.0/go-jsonnet_0.22.0_windows_amd64.tar.gz"
+url_api = "https://api.github.com/repos/google/go-jsonnet/releases/assets/380558839"
 
 [[tools."aqua:neovim/neovim"]]
 version = "0.12.3"
@@ -71,30 +85,37 @@ backend = "aqua:neovim/neovim"
 [tools."aqua:neovim/neovim"."platforms.linux-arm64"]
 checksum = "sha256:e055af73fa9c72b37456da8d204fa5c09850bc07e80e9176fe3b87d4afb7a3fc"
 url = "https://github.com/neovim/neovim/releases/download/v0.12.3/nvim-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/neovim/neovim/releases/assets/444117722"
 
 [tools."aqua:neovim/neovim"."platforms.linux-arm64-musl"]
 checksum = "sha256:e055af73fa9c72b37456da8d204fa5c09850bc07e80e9176fe3b87d4afb7a3fc"
 url = "https://github.com/neovim/neovim/releases/download/v0.12.3/nvim-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/neovim/neovim/releases/assets/444117722"
 
 [tools."aqua:neovim/neovim"."platforms.linux-x64"]
 checksum = "sha256:c441b547142860bf01bcce39e36cbed185c41112813e15443b16e5237750724d"
 url = "https://github.com/neovim/neovim/releases/download/v0.12.3/nvim-linux-x86_64.tar.gz"
+url_api = "https://api.github.com/repos/neovim/neovim/releases/assets/444117727"
 
 [tools."aqua:neovim/neovim"."platforms.linux-x64-musl"]
 checksum = "sha256:c441b547142860bf01bcce39e36cbed185c41112813e15443b16e5237750724d"
 url = "https://github.com/neovim/neovim/releases/download/v0.12.3/nvim-linux-x86_64.tar.gz"
+url_api = "https://api.github.com/repos/neovim/neovim/releases/assets/444117727"
 
 [tools."aqua:neovim/neovim"."platforms.macos-arm64"]
 checksum = "sha256:532da1d00e465a660fa01c3d4991333d09c52107dce7df937368545daca0a14e"
 url = "https://github.com/neovim/neovim/releases/download/v0.12.3/nvim-macos-arm64.tar.gz"
+url_api = "https://api.github.com/repos/neovim/neovim/releases/assets/444117725"
 
 [tools."aqua:neovim/neovim"."platforms.macos-x64"]
 checksum = "sha256:4b40e318eb7073321fa5fc06d7f60c3c0de1d7ea50ffbaa8b04286f5484d294f"
 url = "https://github.com/neovim/neovim/releases/download/v0.12.3/nvim-macos-x86_64.tar.gz"
+url_api = "https://api.github.com/repos/neovim/neovim/releases/assets/444117724"
 
 [tools."aqua:neovim/neovim"."platforms.windows-x64"]
 checksum = "sha256:63daa0a0374f2255d2fb4c0867fcacc64a09c8d7ec1c349f781aff1b8350a8ad"
 url = "https://github.com/neovim/neovim/releases/download/v0.12.3/nvim-win64.zip"
+url_api = "https://api.github.com/repos/neovim/neovim/releases/assets/444117749"
 
 [[tools."aqua:twpayne/chezmoi"]]
 version = "2.70.5"
@@ -103,30 +124,37 @@ backend = "aqua:twpayne/chezmoi"
 [tools."aqua:twpayne/chezmoi"."platforms.linux-arm64"]
 checksum = "sha256:4f4f31d0a10ed3b955e814a5ae20075426e27c9d3a09f536bfa4a6c8718353f2"
 url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.5/chezmoi_2.70.5_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/437664058"
 
 [tools."aqua:twpayne/chezmoi"."platforms.linux-arm64-musl"]
 checksum = "sha256:4f4f31d0a10ed3b955e814a5ae20075426e27c9d3a09f536bfa4a6c8718353f2"
 url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.5/chezmoi_2.70.5_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/437664058"
 
 [tools."aqua:twpayne/chezmoi"."platforms.linux-x64"]
 checksum = "sha256:6a76a0ac3718f0d45b34b4b57067f9556f8f6042e3da710a3c496838362aca14"
 url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.5/chezmoi_2.70.5_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/437663993"
 
 [tools."aqua:twpayne/chezmoi"."platforms.linux-x64-musl"]
 checksum = "sha256:4892f688c759b88ab937f1d94e06177cdd405b48022f080b8659daed2f1c2506"
 url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.5/chezmoi_2.70.5_linux-musl_amd64.tar.gz"
+url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/437664100"
 
 [tools."aqua:twpayne/chezmoi"."platforms.macos-arm64"]
 checksum = "sha256:c3531896769175089b9b2e9cf99b15a2357427f776289b66583a2432d69cd3cc"
 url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.5/chezmoi_2.70.5_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/437664008"
 
 [tools."aqua:twpayne/chezmoi"."platforms.macos-x64"]
 checksum = "sha256:6676e06f094e5b0860bd3642d203b71869b5cbeb8089155886bc54c1096b9d3c"
 url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.5/chezmoi_2.70.5_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/437663975"
 
 [tools."aqua:twpayne/chezmoi"."platforms.windows-x64"]
 checksum = "sha256:ebc29455dc9106e8d2d980708b45bd3120e44c7d5e6a06787ff307faaa0681a8"
 url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.5/chezmoi_2.70.5_windows_amd64.zip"
+url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/437663978"
 
 [[tools."github:aquaproj/aqua"]]
 version = "2.60.1"
@@ -217,29 +245,35 @@ backend = "aqua:pnpm/pnpm"
 [tools.pnpm."platforms.linux-arm64"]
 checksum = "sha256:7981d0109fffdf8f15b838243240c8c9f9114dd4b7111d4227c1453522d75b61"
 url = "https://github.com/pnpm/pnpm/releases/download/v11.9.0/pnpm-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/455748044"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.linux-arm64-musl"]
 checksum = "sha256:3622d3010d6af601190e7b63994fb0fe297e805699145aec949f4879f2672fb5"
 url = "https://github.com/pnpm/pnpm/releases/download/v11.9.0/pnpm-linux-arm64-musl.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/455748040"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.linux-x64"]
 checksum = "sha256:8d987d82585453bcf260ea5d0bae346d298f1a5e71bcde8d99976521408ad895"
 url = "https://github.com/pnpm/pnpm/releases/download/v11.9.0/pnpm-linux-x64.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/455748039"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.linux-x64-musl"]
 checksum = "sha256:655fcf2609e3145cfd7c2f05113429523706d0a618f2957eaa6c3562f6a5998b"
 url = "https://github.com/pnpm/pnpm/releases/download/v11.9.0/pnpm-linux-x64-musl.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/455748037"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.macos-arm64"]
 checksum = "sha256:ca6f98a8911ec975509464026205e2b54aed74cecd36c5ae9932e5997bd7de2a"
 url = "https://github.com/pnpm/pnpm/releases/download/v11.9.0/pnpm-darwin-arm64.tar.gz"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/455748038"
 provenance = "github-attestations"
 
 [tools.pnpm."platforms.windows-x64"]
 checksum = "sha256:82c130717a59f237c49e8eaa8a7ed75c1d8d351a5b6dedeee3196b8e1b597c6e"
 url = "https://github.com/pnpm/pnpm/releases/download/v11.9.0/pnpm-win32-x64.zip"
+url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/455748043"
 provenance = "github-attestations"
