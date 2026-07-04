@@ -25,6 +25,9 @@ set -euo pipefail
 REGENERATE_CMD="${REGENERATE_CMD:-}"
 MAX_ATTEMPTS="${MAX_ATTEMPTS:-3}"
 
+WORKDIR=$(mktemp -d)
+trap 'rm -rf "$WORKDIR"' EXIT
+
 attempt=0
 while :; do
   attempt=$((attempt + 1))
@@ -45,37 +48,45 @@ while :; do
 
   EXPECTED_OID=$(git rev-parse HEAD)
 
-  additions=$(
+  # ファイル内容は jq の argv に載せない。base64 化した lockfile は単一引数の
+  # 上限 (Linux の MAX_ARG_STRLEN = 128KB) を超え得て、--arg/--argjson が
+  # "Argument list too long" (E2BIG) で失敗する。--rawfile / --slurpfile で
+  # 一時ファイルから読ませ、GraphQL payload は gh に stdin (--input -) で渡す。
+  adds_file="$WORKDIR/additions.json"
+  input_file="$WORKDIR/input.json"
+  payload_file="$WORKDIR/payload.json"
+
+  {
     # shellcheck disable=SC2086
     for f in $FILES; do
-      jq -n \
-        --arg path "$f" \
-        --arg contents "$(base64 < "$f" | tr -d '\n')" \
+      b64="$WORKDIR/content.b64"
+      base64 < "$f" | tr -d '\n' >"$b64"
+      jq -n --arg path "$f" --rawfile contents "$b64" \
         '{path: $path, contents: $contents}'
-    done | jq -s '.'
-  )
+    done
+  } | jq -s '.' >"$adds_file"
 
-  input=$(jq -n \
+  jq -n \
     --arg repo "$REPO" \
     --arg branch "$BRANCH" \
     --arg oid "$EXPECTED_OID" \
     --arg msg "$MESSAGE" \
-    --argjson adds "$additions" \
+    --slurpfile adds "$adds_file" \
     '{
       branch: {repositoryNameWithOwner: $repo, branchName: $branch},
       expectedHeadOid: $oid,
       message: {headline: $msg},
-      fileChanges: {additions: $adds}
-    }')
+      fileChanges: {additions: $adds[0]}
+    }' >"$input_file"
 
-  payload=$(jq -n \
+  jq -n \
     --arg query 'mutation($input: CreateCommitOnBranchInput!) {
       createCommitOnBranch(input: $input) { commit { url oid } }
     }' \
-    --argjson input "$input" \
-    '{query: $query, variables: {input: $input}}')
+    --slurpfile input "$input_file" \
+    '{query: $query, variables: {input: $input[0]}}' >"$payload_file"
 
-  if echo "$payload" | gh api graphql --input -; then
+  if gh api graphql --input - <"$payload_file"; then
     exit 0
   fi
 
