@@ -9,7 +9,8 @@ local autoModeRules = import 'auto-mode.libsonnet';
   // ccusage が読む ~/.claude/projects/**/*.jsonl の自動削除を実質無効化（デフォルト30日 → 10年）。
   // 過去の利用量集計が日々消えないようにするため。0 は無効値なので大きい値を指定する。
   cleanupPeriodDays: 3650,
-  teammateMode: 'tmux',
+  // teammateMode は Agent Teams 用の設定。Agent Teams 無効化に伴い不要（下記 env 参照）。
+  // teammateMode: 'tmux',
   includeCoAuthoredBy: false,
   // auto-memory を全プロジェクトで一律無効化。false で読み書き・memory ディレクトリ生成を停止する。
   // 規約・コンテキストは CLAUDE.md / AGENTS.md / CLAUDE.local.md に集約する方針。
@@ -262,7 +263,11 @@ local autoModeRules = import 'auto-mode.libsonnet';
     DISABLE_ERROR_REPORTING: '1',
     DISABLE_NON_ESSENTIAL_MODEL_CALLS: '1',
     CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR: '1',
-    CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: '1',
+    // 実験的 Agent Teams は無効化する。teammate（subagent）の permission request が
+    // PermissionRequest hook を経由せず端末の手動プロンプトに直行し、ccgate による許可判定が
+    // バイパスされる既知バグ（anthropics/claude-code#23983, open）があるため。
+    // 許可制御を ccgate に一本化している運用と両立しない。upstream 修正後に再検討する。
+    // CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: '1',
   },
   effortLevel: 'xhigh',
   // alwaysThinkingEnabled は adaptive thinking (effortLevel) により不要
