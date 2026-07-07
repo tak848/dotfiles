@@ -15,7 +15,10 @@ if ! command -v claude &> /dev/null; then
 fi
 
 echo "Claude Code プラグインを更新中..."
-claude plugin marketplace update tak848-plugins || echo "WARN: marketplace update failed" >&2
+# settings.json の extraKnownMarketplaces 宣言だけでは、非対話 CLI 用の状態ファイル
+# （~/.claude/plugins/known_marketplaces.json）にマーケットプレイスが登録されない。
+# 明示的に add して登録する（同名は置換される冪等操作。最新を clone し直すため update は不要）。
+claude plugin marketplace add tak848/dotfiles || echo "WARN: marketplace add failed" >&2
 for plugin in aws-knowledge; do
     claude plugin install "${plugin}@tak848-plugins" || echo "WARN: plugin install failed: ${plugin}" >&2
 done
