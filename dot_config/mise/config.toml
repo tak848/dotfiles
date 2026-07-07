@@ -22,7 +22,7 @@ NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
 # ランタイム（core backend）
 # ============================================
 node = "24.18.0"
-pnpm = "11.9.0"
+pnpm = "11.10.0"
 "github:endevco/aube" = "v1.25.2" # 高速な Node.js パッケージマネージャ
 go = "1.26.4"
 
@@ -54,14 +54,14 @@ go = "1.26.4"
 "aqua:jqlang/jq" = "1.8.1"
 "aqua:mikefarah/yq" = "4.53.3"
 "aqua:x-motemen/ghq" = "1.10.1"
-"aqua:jesseduffield/lazygit" = "0.62.2"
+"aqua:jesseduffield/lazygit" = "0.63.0"
 "aqua:jesseduffield/lazydocker" = "0.25.2"
 # Git credential helper（.NET self-contained。tar.gz を全展開し本体+DLL を同居させる。
 # symbols 版を除外するため matching_regex で末尾を絞り、createdump 等は filter_bins で隠す）
 "github:git-ecosystem/git-credential-manager" = { version = "v2.8.0", matching_regex = '[0-9]\.tar\.gz$', filter_bins = "git-credential-manager" }
 
 # エディタ・ターミナル
-"aqua:neovim/neovim" = "0.12.3"
+"aqua:neovim/neovim" = "0.12.4"
 "github:tmux/tmux-builds" = "v3.6a"
 "aqua:arl/gitmux" = "0.11.5"
 
@@ -86,7 +86,7 @@ go = "1.26.4"
 "aqua:tak848/ccgate" = "0.9.5"
 
 # Claude Code セッション選択（claude --resume の fzf フロントエンド）
-"github:sorafujitani/ccsession" = "v1.0.0"
+"github:sorafujitani/ccsession" = "v1.0.1"
 
 # Anthropic API CLI
 "aqua:anthropics/anthropic-cli" = "1.16.0"
@@ -111,8 +111,8 @@ go = "1.26.4"
 "aqua:openai/codex" = "0.142.5"
 "aqua:x.ai/cli/grok" = "0.2.51" # Grok Build CLI (xAI のターミナル向けコーディングエージェント)
 "npm:ccusage" = "20.0.14"
-"npm:@typescript/native-preview" = "7.0.0-dev.20260703.1"
+"npm:@typescript/native-preview" = "7.0.0-dev.20260705.1"
 "npm:cc-sdd" = "3.0.2"
-"npm:difit" = "5.0.4"
+"npm:difit" = "5.0.6"
 "npm:@fission-ai/openspec" = "1.5.0"
 "npm:freee-mcp" = "0.30.3"

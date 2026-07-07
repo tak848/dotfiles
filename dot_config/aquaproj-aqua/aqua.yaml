@@ -17,4 +17,4 @@ checksum:
 packages:
   - name: aws/aws-cli@2.35.15
   - name: 1password/cli@v2.32.0
-  - name: ajeetdsouza/zoxide@v0.9.9
+  - name: ajeetdsouza/zoxide@v0.10.0
