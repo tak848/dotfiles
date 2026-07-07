@@ -261,6 +261,11 @@ local autoModeRules = import 'auto-mode.libsonnet';
     // MAX_THINKING_TOKENS: '31199',
     // CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING: '1',  // これを設定すると MAX_THINKING_TOKENS に戻る
 
+    // fullscreen rendering のマウスクリック機能（select メニューのクリック選択・click-to-expand 等）
+    // を無効化する。ダイアログ表示直後の意図しないクリックで選択肢が勝手に確定する事故を防ぐ。
+    // ホイールスクロールは維持される（CLAUDE_CODE_DISABLE_MOUSE と違いキャプチャ自体は残る）。
+    // ref: https://code.claude.com/docs/en/fullscreen#keep-native-text-selection
+    CLAUDE_CODE_DISABLE_MOUSE_CLICKS: '1',
     CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY: '1',
     // DISABLE_TELEMETRY はフィーチャーフラグ(Statsig)の取得も停止してしまうため無効化
     // ref: https://zenn.dev/m0370/articles/d7e77adebd0ba8
