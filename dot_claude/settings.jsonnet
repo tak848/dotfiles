@@ -12,6 +12,11 @@ local autoModeRules = import 'auto-mode.libsonnet';
   // teammateMode は Agent Teams 用の設定。Agent Teams 無効化に伴い不要（下記 env 参照）。
   // teammateMode: 'tmux',
   includeCoAuthoredBy: false,
+  // fullscreen rendering（research preview）。classic renderer は再描画のたびに scrollback を
+  // 破壊する既知バグがあり、上スクロールで表示が崩れるため fullscreen に切り替える。
+  // 履歴検索は Ctrl+O（transcript mode）→ `[` で native scrollback に書き出して Cmd+F。
+  // ref: https://code.claude.com/docs/en/fullscreen
+  tui: 'fullscreen',
   // auto-memory を全プロジェクトで一律無効化。false で読み書き・memory ディレクトリ生成を停止する。
   // 規約・コンテキストは CLAUDE.md / AGENTS.md / CLAUDE.local.md に集約する方針。
   // ref: https://code.claude.com/docs/en/memory#enable-or-disable-auto-memory
