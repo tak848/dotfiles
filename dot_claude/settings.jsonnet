@@ -12,6 +12,9 @@ local autoModeRules = import 'auto-mode.libsonnet';
   // teammateMode は Agent Teams 用の設定。Agent Teams 無効化に伴い不要（下記 env 参照）。
   // teammateMode: 'tmux',
   includeCoAuthoredBy: false,
+  // ツール出力・コマンド出力を省略せずフル表示する。表示が省略されて情報が欠けるのを避ける。
+  // thinking の常時フル表示設定は存在しない（transcript viewer の Ctrl+E で全表示は可能）。
+  verbose: true,
   // fullscreen rendering（research preview）。classic renderer は再描画のたびに scrollback を
   // 破壊する既知バグがあり、上スクロールで表示が崩れるため fullscreen に切り替える。
   // 履歴検索は Ctrl+O（transcript mode）→ `[` で native scrollback に書き出して Cmd+F。
