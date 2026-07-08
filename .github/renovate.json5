@@ -85,6 +85,13 @@
       extractVersion: "^rust-v(?<version>.+)$",
     },
     {
+      description: "opencode: independent PR, no age gate",
+      matchPackageNames: ["anomalyco/opencode"],
+      matchManagers: ["mise"],
+      groupName: "opencode",
+      minimumReleaseAge: "0 hours",
+    },
+    {
       description: "ccgate: 自作ツールなので age gate なし",
       matchPackageNames: ["tak848/ccgate"],
       groupName: "ccgate",
