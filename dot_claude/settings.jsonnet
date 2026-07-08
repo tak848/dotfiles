@@ -15,11 +15,11 @@ local autoModeRules = import 'auto-mode.libsonnet';
   // ツール出力・コマンド出力を省略せずフル表示する。表示が省略されて情報が欠けるのを避ける。
   // thinking の常時フル表示設定は存在しない（transcript viewer の Ctrl+E で全表示は可能）。
   verbose: true,
-  // classic renderer（default）。かつて再描画のたびに scrollback を破壊するバグがあり
-  // fullscreen に切り替えていたが、2.1.204 時点で崩れが解消したことを確認したため戻す。
-  // fullscreen はマウスキャプチャにより素のドラッグで文字選択できない点がストレスだった。
+  // fullscreen rendering（research preview）。classic renderer は再描画のたびに scrollback を
+  // 破壊する既知バグがあり、上スクロールで表示が崩れるため fullscreen に切り替える。
+  // 履歴検索は Ctrl+O（transcript mode）→ `[` で native scrollback に書き出して Cmd+F。
   // ref: https://code.claude.com/docs/en/fullscreen
-  tui: 'default',
+  tui: 'fullscreen',
   // auto-memory を全プロジェクトで一律無効化。false で読み書き・memory ディレクトリ生成を停止する。
   // 規約・コンテキストは CLAUDE.md / AGENTS.md / CLAUDE.local.md に集約する方針。
   // ref: https://code.claude.com/docs/en/memory#enable-or-disable-auto-memory
