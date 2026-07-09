@@ -108,7 +108,7 @@ go = "1.26.4"
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.205"
 "github:google-antigravity/antigravity-cli" = "1.0.16"     # agy: Gemini CLI の後継
-"aqua:openai/codex" = "0.143.0"
+"aqua:openai/codex" = "0.144.0"
 "aqua:anomalyco/opencode" = "1.17.15"
 "aqua:x.ai/cli/grok" = "0.2.51" # Grok Build CLI (xAI のターミナル向けコーディングエージェント)
 "npm:ccusage" = "20.0.14"
