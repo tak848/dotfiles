@@ -52,6 +52,7 @@ unified_exec = true
 shell_snapshot = true
 prevent_idle_sleep = true
 multi_agent_v2 = true
+default_mode_request_user_input = true
 
 [sandbox_workspace_write]
 network_access = true
