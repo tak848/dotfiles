@@ -1,7 +1,7 @@
 {{- /* chezmoi:modify-template */ -}}
 #:schema https://developers.openai.com/codex/config-schema.json
 
-model = "gpt-5.5"
+model = "gpt-5.6-sol"
 model_context_window = 1000000
 model_auto_compact_token_limit = 500000
 model_reasoning_effort = "xhigh"
@@ -121,11 +121,11 @@ tools.aws___get_regional_availability.approval_mode = "approve"
 tools.aws___retrieve_agent_sop.approval_mode = "approve"
 
 [profiles.fast]
-model = "gpt-5.5"
+model = "gpt-5.6-sol"
 model_reasoning_effort = "medium"
 
 [profiles.xhigh]
-model = "gpt-5.5"
+model = "gpt-5.6-sol"
 model_reasoning_effort = "xhigh"
 
 [profiles.codex]
