@@ -907,43 +907,43 @@ url = "https://github.com/neovim/neovim/releases/download/v0.12.4/nvim-win64.zip
 url_api = "https://api.github.com/repos/neovim/neovim/releases/assets/467170653"
 
 [[tools."aqua:openai/codex"]]
-version = "0.144.1"
+version = "0.144.3"
 backend = "aqua:openai/codex"
 
 [tools."aqua:openai/codex"."platforms.linux-arm64"]
-checksum = "sha256:218ab48bdda98dde3e10df184cc0c4eb92c4372d9ca924ef1aa5fc81b4f6a38e"
-url = "https://github.com/openai/codex/releases/download/rust-v0.144.1/codex-package-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/openai/codex/releases/assets/471838376"
+checksum = "sha256:d91c6354ec1efc125068056c02bc8cffbc0a53fd4ecfebc3e5f1771765fc7fa3"
+url = "https://github.com/openai/codex/releases/download/rust-v0.144.3/codex-package-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/openai/codex/releases/assets/475146737"
 
 [tools."aqua:openai/codex"."platforms.linux-arm64-musl"]
-checksum = "sha256:218ab48bdda98dde3e10df184cc0c4eb92c4372d9ca924ef1aa5fc81b4f6a38e"
-url = "https://github.com/openai/codex/releases/download/rust-v0.144.1/codex-package-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/openai/codex/releases/assets/471838376"
+checksum = "sha256:d91c6354ec1efc125068056c02bc8cffbc0a53fd4ecfebc3e5f1771765fc7fa3"
+url = "https://github.com/openai/codex/releases/download/rust-v0.144.3/codex-package-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/openai/codex/releases/assets/475146737"
 
 [tools."aqua:openai/codex"."platforms.linux-x64"]
-checksum = "sha256:3fd50cf96809b1eea294bbfba0a5c3a576871b4876a1f0e91226e520c1923be1"
-url = "https://github.com/openai/codex/releases/download/rust-v0.144.1/codex-package-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/openai/codex/releases/assets/471838288"
+checksum = "sha256:1c3c1f1f636da56a197ce0b5084d44b86f58f0fb32983278fa55c2544d221af4"
+url = "https://github.com/openai/codex/releases/download/rust-v0.144.3/codex-package-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/openai/codex/releases/assets/475146680"
 
 [tools."aqua:openai/codex"."platforms.linux-x64-musl"]
-checksum = "sha256:3fd50cf96809b1eea294bbfba0a5c3a576871b4876a1f0e91226e520c1923be1"
-url = "https://github.com/openai/codex/releases/download/rust-v0.144.1/codex-package-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/openai/codex/releases/assets/471838288"
+checksum = "sha256:1c3c1f1f636da56a197ce0b5084d44b86f58f0fb32983278fa55c2544d221af4"
+url = "https://github.com/openai/codex/releases/download/rust-v0.144.3/codex-package-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/openai/codex/releases/assets/475146680"
 
 [tools."aqua:openai/codex"."platforms.macos-arm64"]
-checksum = "sha256:326198829dfb4b68da59723cf605478a2e9bec89ff47feb645814a4c5eaf5f6c"
-url = "https://github.com/openai/codex/releases/download/rust-v0.144.1/codex-package-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/openai/codex/releases/assets/471838395"
+checksum = "sha256:9f74eca4a113f972be6187f0fc1c6bcf0d2831b604ed59c217c926ec512fef1f"
+url = "https://github.com/openai/codex/releases/download/rust-v0.144.3/codex-package-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/openai/codex/releases/assets/475146802"
 
 [tools."aqua:openai/codex"."platforms.macos-x64"]
-checksum = "sha256:1c797880977549b281eeb4ecd9dbd145542c4ce262a2835ea2847f19922ed30c"
-url = "https://github.com/openai/codex/releases/download/rust-v0.144.1/codex-package-x86_64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/openai/codex/releases/assets/471838320"
+checksum = "sha256:35a1c886f00ec70c350773d88ef4f7cb083510ae682ff90ac687779ecb75bf88"
+url = "https://github.com/openai/codex/releases/download/rust-v0.144.3/codex-package-x86_64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/openai/codex/releases/assets/475146696"
 
 [tools."aqua:openai/codex"."platforms.windows-x64"]
-checksum = "sha256:ce94e1fb84693d3f7332ceeab5be73e93de38725da4b82dff863cd2c795b4730"
-url = "https://github.com/openai/codex/releases/download/rust-v0.144.1/codex-package-x86_64-pc-windows-msvc.tar.gz"
-url_api = "https://api.github.com/repos/openai/codex/releases/assets/471838305"
+checksum = "sha256:8b969400e1b675360439d95cff2c552c9483dbdb85490c135d407be804aeb6b5"
+url = "https://github.com/openai/codex/releases/download/rust-v0.144.3/codex-package-x86_64-pc-windows-msvc.tar.gz"
+url_api = "https://api.github.com/repos/openai/codex/releases/assets/475146728"
 
 [[tools."aqua:phiresky/ripgrep-all"]]
 version = "0.10.10"
