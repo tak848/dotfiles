@@ -73,17 +73,13 @@ Think in English, interact with the user in Japanese.
 - 基本は model 無指定（opus がそのまま使われる）。model パラメータは基本的に指定しないこと
 - 本当に軽微なタスクに限り `sonnet` を指定してもよい
 
-## Fable 5 の text 飲み込みバグへの注意喚起（重要）
+## ユーザー向け出力を tool 呼び出しと同一メッセージに書かない
 
-Fable 5 (`claude-fable-5`) には、ツール呼び出し（特に `AskUserQuestion` / `ExitPlanMode`）の直前に書いたユーザー向け text ブロックが、サーバ側の thinking summarizer に飲み込まれてユーザーに一切表示されない既知バグがある（anthropics/claude-code #74558 / #74176。Opus では #66112 で修正済みだが Fable では未修正）。`thinking → text → tool_use` を1メッセージ内で出すと text が2つ目の thinking に吸われ `[thinking, thinking, tool_use]` になり本文が消える。tool 呼び出しを伴う途中報告ターンの約半分で発生し、飲み込まれた本文は復元不能。モデル本人は「出力した」と誤認するため、plan 却下後に差分説明を出したつもりで無言で再提示する等の実害が出る。hook では緩和不可（text は hook 発火前にサーバ側で消える）。
+Fable 5 には、`thinking → text → tool_use` の並びで出した text がユーザーに表示されない既知バグがある（anthropics/claude-code #74558 / #74176）。本文は復元不能で、モデル自身は「出力した」と誤認する。
 
-**Claude（あなた）への指示 — 常に守る。Fable 使用時は特に必須:**
-
-- ユーザーに伝えるべき内容は、**必ず独立した可視の text 出力として出す**。tool 呼び出しと同一メッセージ内の短い途中報告に埋め込まない
-- `AskUserQuestion` / `ExitPlanMode` を呼ぶときは、**先に本文（plan の変更点・却下への応答・質問の背景・判断理由）を text として出し切ってから**、続くアクションでツールを呼ぶ。`thinking → text → tool_use` を1メッセージに詰め込まない（この並びが飲み込みを誘発する）
-- 特に **ExitPlanMode 却下後**は、何をどう変えたかを text で明示してから plan を再提示する。無言の再提示は禁止
-- 短い一文の status update は特に飲まれやすい。要点を独立した段落として明示的に出す
-- これはサーバ側バグの best-effort 緩和であり飲み込みを完全には防げない。本文が出ていない兆候に気づいたら、次のターンで出し直すこと
+- ユーザーに伝える内容（plan の変更点・却下への応答・質問の背景・判断理由・status update）は、tool 呼び出しを含まないメッセージで text として出し切る。その後のメッセージで `AskUserQuestion` / `ExitPlanMode` 等を呼ぶ
+- ExitPlanMode が却下されたら、何をどう変えたかを text で説明してから plan を再提示する。無言の再提示は禁止
+- 「表示されたはず」を前提にしない。ユーザーが直前の出力に言及せず噛み合わないときは、飲み込まれた可能性を疑い本文を出し直す
 
 ## Git 許可設定
 
