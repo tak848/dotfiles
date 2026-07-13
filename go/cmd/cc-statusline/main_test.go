@@ -119,10 +119,11 @@ func TestFormatResetTime(t *testing.T) {
 		weekly bool
 		want   string
 	}{
-		"zero":      {epoch: 0, weekly: false, want: ""},
-		"past":      {epoch: now.Add(-1 * time.Hour).Unix(), weekly: false, want: ""},
-		"future_5h": {epoch: time.Date(2026, 3, 23, 15, 30, 0, 0, time.Local).Unix(), weekly: false, want: "(~15:30)"},
-		"future_7d": {epoch: time.Date(2026, 3, 25, 0, 0, 0, 0, time.Local).Unix(), weekly: true, want: "(~3/25水)"},
+		"zero":                {epoch: 0, weekly: false, want: ""},
+		"past":                {epoch: now.Add(-1 * time.Hour).Unix(), weekly: false, want: ""},
+		"future_5h":           {epoch: time.Date(2026, 3, 23, 15, 30, 0, 0, time.Local).Unix(), weekly: false, want: "(~15:30)"},
+		"future_7d":           {epoch: time.Date(2026, 3, 25, 0, 0, 0, 0, time.Local).Unix(), weekly: true, want: "(~3/25(水) 0:00)"},
+		"future_7d_with_time": {epoch: time.Date(2026, 3, 25, 9, 5, 0, 0, time.Local).Unix(), weekly: true, want: "(~3/25(水) 9:05)"},
 	}
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
