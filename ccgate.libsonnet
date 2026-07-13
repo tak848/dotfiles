@@ -18,7 +18,7 @@ local config(opts) = base {
     'Safe PR Metadata Update: If the operation updates an existing pull request in the trusted repository and only changes title and/or body/description text, allow immediately. If it changes review state, draft status (especially draft=false / ready-for-review), open/closed state, base/head branch, reviewers, assignees, labels, milestone, merge settings, or maintainer permissions, fall through.',
     'Local Development: Build, test, lint, format commands in the current repository.',
     'Git Feature Branch: Git operations on non-protected branches (not main, master, release/*, prod). ' + opts.gitBranchContext,
-    'Package Manager Install: Package manager install/sync commands in the current repository.',
+    'Package Manager Install: Project-scoped dependency install/sync that resolves dependencies declared in the current repository (e.g. npm/pnpm/yarn install, go mod download/tidy, uv sync, pip install -r within a project venv, bundle install, cargo fetch, mise/aqua install of already-declared tools). This does NOT include commands that install software system-wide or globally, outside the repository: Homebrew (brew install/upgrade/reinstall/tap), OS package managers (apt, apt-get, dnf, yum, pacman, apk, zypper), or globally-scoped installs (npm/pnpm/yarn add -g, npm -g install, pipx install, cargo install, go install). Those mutate machine state beyond the repo and MUST fall through.',
   ],
 
   deny: [
