@@ -73,6 +73,16 @@ Think in English, interact with the user in Japanese.
 - 基本は model 無指定（opus がそのまま使われる）。model パラメータは基本的に指定しないこと
 - 本当に軽微なタスクに限り `sonnet` を指定してもよい
 
+## Fable 5 の text 飲み込みバグと運用規約（重要）
+
+Fable 5 (`claude-fable-5`) には、ツール呼び出し（特に `AskUserQuestion` / `ExitPlanMode`）の直前にユーザー向けに書いた text ブロックが、サーバ側の thinking summarizer に飲み込まれてユーザーに一切表示されない既知バグがある（anthropics/claude-code #74558 / #74176、Opus では #66112 で修正済みだが Fable では未修正）。tool 呼び出しを伴う途中報告ターンの約半分で発生し、飲み込まれた本文は thinking を展開しても短縮パラフレーズしか残らず**復元不能**。モデル本人は「出力した」と誤認するため、plan を却下されても差分説明を出したつもりで無言で再提示する等の実害が出る。hook では緩和不可（text は hook 発火前にサーバ側で消える）。
+
+**規約:**
+
+- **plan mode・`AskUserQuestion`・`ExitPlanMode` を多用する対話作業では Fable を使わず Opus を使う。**これが唯一の確実な回避策（同一セッションで Opus に切り替えると再現しなくなることが確認されている）。`gwc` の worktree 起動でも、対話・plan 主体の作業は `--ccf`（fable）ではなく `--cco`（opus）を選ぶ
+- 通常のメインモデルは既に Opus 指定なので、意図的に Fable を選んだ場面だけこの規約が効く
+- **プロンプトレベルの best-effort（Fable を使わざるを得ない場合）:** ユーザー向けの内容は必ず可視の text ブロックとして出力する。`AskUserQuestion` / `ExitPlanMode` を呼ぶ直前に伝えたいこと（plan の変更点・却下への応答・判断理由等）は、ツール呼び出しと同一ターンの短い途中報告に頼らず、独立した text 出力として明示的に出す。ただしこれはサーバ側バグの緩和にすぎず確実ではないため、根本回避はあくまで Opus 利用とする
+
 ## Git 許可設定
 
 - 自動許可: `git switch`, `git restore`, `git commit`（amend除く）
