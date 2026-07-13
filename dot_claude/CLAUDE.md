@@ -77,7 +77,8 @@ Think in English, interact with the user in Japanese.
 
 Fable 5 には、`thinking → text → tool_use` の並びで出した text がユーザーに表示されない既知バグがある（anthropics/claude-code #74558 / #74176）。本文は復元不能で、モデル自身は「出力した」と誤認する。
 
-- ユーザーに伝える内容（plan の変更点・却下への応答・質問の背景・判断理由・status update）は、tool 呼び出しを含まないメッセージで text として出し切る。その後のメッセージで `AskUserQuestion` / `ExitPlanMode` 等を呼ぶ
+- ユーザーに伝える内容（plan の変更点・却下への応答・質問の背景・判断理由・status update）は、tool 呼び出しを含まないメッセージで text として出し切る。その後、**同一ターン内で続けて** `AskUserQuestion` / `ExitPlanMode` 等を呼ぶ
+- text を出した後に「表示を確認できたら次のターンで〜します」等とユーザーの確認を待ってターンを終えるのは禁止。text 出力とツール呼び出しはメッセージを分けるだけで、間に確認を挟まず一気に完遂する
 - ExitPlanMode が却下されたら、何をどう変えたかを text で説明してから plan を再提示する。無言の再提示は禁止
 - 「表示されたはず」を前提にしない。ユーザーが直前の出力に言及せず噛み合わないときは、飲み込まれた可能性を疑い本文を出し直す
 
