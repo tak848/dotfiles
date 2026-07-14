@@ -259,7 +259,9 @@ local autoModeRules = import 'auto-mode.libsonnet';
     MCP_TIMEOUT: '600000',
     MCP_TOOL_TIMEOUT: '600000',
     MAX_MCP_OUTPUT_TOKENS: '100000',  // default: 25000
-    CLAUDE_CODE_AUTO_COMPACT_WINDOW: '500000',
+    // CLAUDE_CODE_AUTO_COMPACT_WINDOW は dot_zshenv.tmpl で export している。
+    // claudex（proxy 経由で GPT-5.6 Sol を使う）が context 長に合わせて上書きするため、
+    // settings.json 側には置かない
     // adaptive thinking (effortLevel) が有効な場合、以下は不要
     // MAX_THINKING_TOKENS: '31199',
     // CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING: '1',  // これを設定すると MAX_THINKING_TOKENS に戻る

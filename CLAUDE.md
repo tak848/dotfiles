@@ -77,6 +77,17 @@ Homebrew
 - **mise** (`dot_config/mise/`, `dot_local/bin/executable_mise`): ランタイム、CLI ツール、npm パッケージの統合管理。bootstrap 方式でインストール
 - **aqua** (`dot_config/aquaproj-aqua/`): mise lock で checksum が取得できないツールを管理。aqua CLI 自体は mise でインストール
 
+### claudex（Claude Code を GPT-5.6 Sol で駆動する）
+
+`dot_zsh/functions/claudex.zsh` が提供する `claudex` コマンドは、Claude Code のハーネス（ツールループ・サブエージェント・hooks・MCP）をそのままに、推論するモデルだけを GPT-5.6 Sol に差し替える。`claude-code-proxy`（mise の `github:` backend で導入）が Anthropic Messages API 互換のプロキシとして `127.0.0.1:18765` に立ち、ChatGPT サブスクの OAuth 経由で Codex backend に転送する。初回のみ `claude-code-proxy codex auth login` が必要。
+
+- 素の `claude` は従来通り Claude サブスク / Opus で動く。`claudex` 使用中は Anthropic にリクエストが飛ばないため Claude の quota は減らず、代わりに ChatGPT 側の quota を消費する
+- プロキシはマシン単位で 1 プロセス。worktree ごとには立たず、全 worktree・全セッションが 1 つを共有する（`claudex` が未起動時のみ自動起動する）
+- Anthropic は非 Claude モデルへの gateway ルーティングを公式サポートしていない。壊れても直らない前提で使う
+- `CLAUDE_CODE_AUTO_COMPACT_WINDOW` を `settings.jsonnet` の `env` ではなく `dot_zshenv.tmpl` で export しているのは、`claudex` がモデルの context 長に合わせて上書きできるようにするため
+
+これは既に有効化されている `codex@openai-codex` プラグイン（Claude Code から Codex CLI に作業を委譲する）とは別物で、両立する。
+
 ### 自動生成ファイル一覧
 
 | ファイル | 生成元 | 生成方法 |

@@ -1502,6 +1502,43 @@ url = "https://github.com/jgm/pandoc/releases/download/3.10/pandoc-3.10-windows-
 url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/438414170"
 provenance = "github-attestations"
 
+[[tools."github:raine/claude-code-proxy"]]
+version = "0.1.17"
+backend = "github:raine/claude-code-proxy"
+
+[tools."github:raine/claude-code-proxy".options]
+matching_regex = '\.tar\.gz$'
+
+[tools."github:raine/claude-code-proxy"."platforms.linux-arm64"]
+checksum = "sha256:76c3c28e044fd779655f57be1048924330492fb5eb65cdabaa21d3fa8543d139"
+url = "https://github.com/raine/claude-code-proxy/releases/download/v0.1.17/claude-code-proxy-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/raine/claude-code-proxy/releases/assets/475934107"
+
+[tools."github:raine/claude-code-proxy"."platforms.linux-arm64-musl"]
+checksum = "sha256:76c3c28e044fd779655f57be1048924330492fb5eb65cdabaa21d3fa8543d139"
+url = "https://github.com/raine/claude-code-proxy/releases/download/v0.1.17/claude-code-proxy-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/raine/claude-code-proxy/releases/assets/475934107"
+
+[tools."github:raine/claude-code-proxy"."platforms.linux-x64"]
+checksum = "sha256:24057ea37c4ad386f0a0e3d257dc9b734d220f717fbd57114dc003a61e4a79be"
+url = "https://github.com/raine/claude-code-proxy/releases/download/v0.1.17/claude-code-proxy-linux-amd64.tar.gz"
+url_api = "https://api.github.com/repos/raine/claude-code-proxy/releases/assets/475934111"
+
+[tools."github:raine/claude-code-proxy"."platforms.linux-x64-musl"]
+checksum = "sha256:24057ea37c4ad386f0a0e3d257dc9b734d220f717fbd57114dc003a61e4a79be"
+url = "https://github.com/raine/claude-code-proxy/releases/download/v0.1.17/claude-code-proxy-linux-amd64.tar.gz"
+url_api = "https://api.github.com/repos/raine/claude-code-proxy/releases/assets/475934111"
+
+[tools."github:raine/claude-code-proxy"."platforms.macos-arm64"]
+checksum = "sha256:547ca330f3ee553ab697d695fb7117a12ab1b63ae629287c30b8c7cd4baca329"
+url = "https://github.com/raine/claude-code-proxy/releases/download/v0.1.17/claude-code-proxy-darwin-arm64.tar.gz"
+url_api = "https://api.github.com/repos/raine/claude-code-proxy/releases/assets/475934103"
+
+[tools."github:raine/claude-code-proxy"."platforms.macos-x64"]
+checksum = "sha256:070149ecffedd0e5efeba4a7aa2b7a60fd0b0bf479484990647b0f172a86f7d1"
+url = "https://github.com/raine/claude-code-proxy/releases/download/v0.1.17/claude-code-proxy-darwin-amd64.tar.gz"
+url_api = "https://api.github.com/repos/raine/claude-code-proxy/releases/assets/475934106"
+
 [[tools."github:sivchari/gopls-lazy"]]
 version = "0.3.0"
 backend = "github:sivchari/gopls-lazy"
