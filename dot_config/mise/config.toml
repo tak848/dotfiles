@@ -111,6 +111,8 @@ go = "1.26.5"
 "aqua:openai/codex" = "0.144.3"
 "aqua:anomalyco/opencode" = "1.17.15"
 "aqua:x.ai/cli/grok" = "0.2.51" # Grok Build CLI (xAI のターミナル向けコーディングエージェント)
+# Claude Code のハーネスを ChatGPT サブスクの Codex backend に向ける Anthropic 互換プロキシ。claudex から使う
+"github:raine/claude-code-proxy" = { version = "v0.1.17", matching_regex = '\.tar\.gz$' }
 "npm:ccusage" = "20.0.17"
 "npm:@typescript/native-preview" = "7.0.0-dev.20260707.2"
 "npm:cc-sdd" = "3.0.2"
