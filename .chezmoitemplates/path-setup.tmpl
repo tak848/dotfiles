@@ -9,8 +9,13 @@ export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 {{-   end }}
 {{- end }}
-# mise 管理ツール（claude/node 等）を Homebrew 等より優先する。
+# aqua CLI 直管理のツール（aws-cli, op, zoxide）。
+# aqua の bin は過去に管理していたツールの aqua-proxy symlink が残り続けるため、
+# mise 管理ツールを追い越さないよう mise shims より後ろに置く。
+# 例: 孤児化した bin/go -> aqua-proxy が mise の go を隠すと、mise が go backend の
+# 子プロセスから shims を外した瞬間に aqua-proxy が aqua を見失い、go install が落ちる。
+export PATH="${XDG_DATA_HOME}/aquaproj-aqua/bin:$PATH"
+# mise 管理ツール（claude/node/go 等）を aqua・Homebrew 等より優先する。
 # これが無いと run_onchange 内で /opt/homebrew/bin の野良ツールが mise 版を追い越して呼ばれる。
 export PATH="${XDG_DATA_HOME}/mise/shims:$PATH"
-export PATH="${XDG_DATA_HOME}/aquaproj-aqua/bin:$PATH"
 export AQUA_GLOBAL_CONFIG="${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME}/aquaproj-aqua/aqua.yaml"
