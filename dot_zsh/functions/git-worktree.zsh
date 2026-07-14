@@ -206,6 +206,7 @@ gwr() {
 #   gwc ENG-123 --ccf                # 作成後に claude --model fable を初期プロンプトで起動
 #   gwc ENG-123 --cco                # 作成後に claude --model opus を初期プロンプトで起動
 #   gwc ENG-123 --ccs                # 作成後に claude --model sonnet を初期プロンプトで起動
+#   gwc ENG-123 --ccx                # 作成後に claudex（Claude Code のハーネス + GPT-5.6 Sol）を初期プロンプトで起動
 #   gwc ENG-123 --co                 # 作成後に codex を初期プロンプトで起動（GWC_CODEX_CLI_INITIAL_PROMPT）
 #   gwc ENG-123 --cc "追加の指示"     # 初期プロンプト + 改行2つ + 追加プロンプトで起動（ref より後ろに置くこと）
 #   gwc ENG-123 --ccco               # cmux 限定: claude を現在ペイン、codex を右 split で同時起動
@@ -213,7 +214,7 @@ gwr() {
 #   export GWC_COPY_FILES=".env.test,config.local.json"  # 環境変数で事前設定
 #   export GWC_PNPM_EXTRA_DIRS="apps/foo,apps/bar"  # root 以外で pnpm install するディレクトリ（worktree root からの相対パス、カンマ区切り）
 #   export GWC_LINEAR_API_KEY="lin_api_..."  # Linear モードに必要（環境変数として設定）
-#   export GWC_CLAUDE_CODE_INITIAL_PROMPT="..."  # --cc で claude に渡す初期プロンプト（未設定なら素の起動 or 追加プロンプトのみ）
+#   export GWC_CLAUDE_CODE_INITIAL_PROMPT="..."  # --cc / --ccx で claude / claudex に渡す初期プロンプト（未設定なら素の起動 or 追加プロンプトのみ）
 #   export GWC_CODEX_CLI_INITIAL_PROMPT="..."    # --co で codex に渡す初期プロンプト（同上）
 #
 # cmux 環境（CMUX_WORKSPACE_ID あり）で Linear/PR モードを使うと、実行元の cmux
@@ -234,8 +235,9 @@ gwc() {
     local skip_fzf=false
     local open_with_cursor=false
     local cmux_title=""  # cmux 環境ならワークスペース名に設定する文字列（Linear/PR モードでセット）
-    local launch_agent=""  # --cc → claude / --co → codex / --ccco → claude（前面）。worktree 作成後に初期プロンプトで起動
+    local launch_agent=""  # --cc → claude / --ccx → claudex / --co → codex / --ccco → claude（前面）。worktree 作成後に初期プロンプトで起動
     local launch_model=""  # --ccf → fable / --cco → opus / --ccs → sonnet。claude 起動時だけ --model として渡す
+                           # （--ccx は claudex 側が --model を指定するため空のままにする）
     local split_agent=""   # --ccco → codex を右 split で起動（claude は launch_agent で現在ペイン前面起動）
     local agent_extra=""   # --cc / --co / --ccco の後ろに渡された追加プロンプト
 
@@ -297,7 +299,7 @@ gwc() {
             # 直後にオプションでないトークンがあれば追加プロンプトとして取り込む
             # （例: gwc ENG-123 --cc "追加の指示"）。ref と紛れないよう --cc/--co は ref の後ろに置くこと。
             if [ -n "$launch_agent" ] || [ -n "$split_agent" ]; then
-                echo "エラー: --cc / --ccf / --cco / --ccs / --co / --ccco は同時に指定できません。" >&2
+                echo "エラー: --cc / --ccf / --cco / --ccs / --ccx / --co / --ccco は同時に指定できません。" >&2
                 return 1
             fi
             if [ "$1" = "--cc" ]; then
@@ -313,7 +315,7 @@ gwc() {
             ;;
         --ccf | --cco | --ccs)
             if [ -n "$launch_agent" ] || [ -n "$split_agent" ]; then
-                echo "エラー: --cc / --ccf / --cco / --ccs / --co / --ccco は同時に指定できません。" >&2
+                echo "エラー: --cc / --ccf / --cco / --ccs / --ccx / --co / --ccco は同時に指定できません。" >&2
                 return 1
             fi
             launch_agent="claude"
@@ -330,11 +332,25 @@ gwc() {
                 shift # 追加プロンプトを消費
             fi
             ;;
+        --ccx)
+            # Claude Code のハーネスを GPT-5.6 Sol で駆動する claudex を起動する。
+            # claudex 自身が --model を指定するため launch_model は空のままにする。
+            if [ -n "$launch_agent" ] || [ -n "$split_agent" ]; then
+                echo "エラー: --cc / --ccf / --cco / --ccs / --ccx / --co / --ccco は同時に指定できません。" >&2
+                return 1
+            fi
+            launch_agent="claudex"
+            shift # --ccx を消費
+            if [ -n "$1" ] && [[ "$1" != -* ]]; then
+                agent_extra="$1"
+                shift # 追加プロンプトを消費
+            fi
+            ;;
         --ccco)
             # cmux 限定: claude を現在ペイン前面、codex を右 split で同時起動する。
             # 末尾に非オプションのトークンがあれば両エージェント共通の追加プロンプトとして取り込む。
             if [ -n "$launch_agent" ] || [ -n "$split_agent" ]; then
-                echo "エラー: --cc / --ccf / --cco / --ccs / --co / --ccco は同時に指定できません。" >&2
+                echo "エラー: --cc / --ccf / --cco / --ccs / --ccx / --co / --ccco は同時に指定できません。" >&2
                 return 1
             fi
             # validation を最初に: cmux 環境でなければここで弾く（worktree を作らない）
@@ -699,7 +715,7 @@ gwc() {
         fi
         # ★★★ ここまで ★★★
 
-        # --cc / --co: worktree 内で claude / codex を初期プロンプト付きで起動する。
+        # --cc / --ccx / --co: worktree 内で claude / claudex / codex を初期プロンプト付きで起動する。
         # プロンプトは位置引数で渡す（codex は stdin パイプ非対応のため。claude も同様に統一）。
         #   - 環境変数（GWC_CLAUDE_CODE_INITIAL_PROMPT / GWC_CODEX_CLI_INITIAL_PROMPT）と
         #     追加プロンプト（agent_extra）の両方があれば「環境変数 + 改行2つ + 追加」を送る
@@ -764,7 +780,8 @@ gwc() {
                 echo "警告: '$launch_agent' コマンドが見つかりません。起動をスキップします。" >&2
             else
                 local agent_base=""
-                if [ "$launch_agent" = "claude" ]; then
+                # claudex は Claude Code のハーネスなので claude と同じ初期プロンプトを使う
+                if [ "$launch_agent" = "claude" ] || [ "$launch_agent" = "claudex" ]; then
                     agent_base="$GWC_CLAUDE_CODE_INITIAL_PROMPT"
                 else
                     agent_base="$GWC_CODEX_CLI_INITIAL_PROMPT"
