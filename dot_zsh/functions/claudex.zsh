@@ -14,7 +14,7 @@
 #
 # 上書き用の環境変数: CLAUDEX_MODEL, CLAUDEX_SMALL_MODEL, CLAUDEX_PORT, CLAUDEX_COMPACT_WINDOW
 #   例) CLAUDEX_MODEL='gpt-5.6-sol-fast' claudex        # priority tier で叩く
-#   例) CLAUDEX_COMPACT_WINDOW=300000 claudex           # バックエンドが安定して 353K 出るとき
+#   例) CLAUDEX_COMPACT_WINDOW=250000 claudex           # backend が 272K に巻き戻った日は下げる
 
 # ポートが listen されているか（外部コマンドに依存せず zsh 組み込みで確認する）
 _claudex_port_open() {
@@ -67,16 +67,23 @@ claudex() {
 
     local model="${CLAUDEX_MODEL:-gpt-5.6-sol}"
 
-    # [1m] サフィックスは付けない。gpt-5.6-sol は API では 1.05M context だが、claudex が
-    # 経由する ChatGPT/Codex バックエンドでは実効 ~353K（raw 372K）にキャップされ、regression で
-    # 258K まで下がることもある（openai/codex#31860, #32806）。[1m] を付けると CC が「1M ある」と
-    # 誤認して auto-compact を焚かず、~372K の壁に激突する。しかも壁に当たってからの compact は
-    # 全 context を要約に送るため同じ上限を超えて失敗し、デッドロックする。
+    # [1m] サフィックスは付けない。gpt-5.6-sol は API では 1.05M context だが、claudex が経由する
+    # ChatGPT/Codex バックエンドでは context がキャップされる（実測で ~372K まで到達を確認）。OpenAI は
+    # 372K で課金が想定超だったため Codex の default を一時 272K に戻し、数日かけて 372K に戻すと
+    # アナウンスした（thsottiaux 2076495156757577895 / openai/codex#31860, #32806）ので、当面 272K↔372K
+    # で揺れうる。[1m] を付けると CC が「1M ある」と誤認して auto-compact を焚かず壁に激突する。壁に
+    # 当たってからの compact は現 context 全量を要約に送るため同じ上限を超えて失敗し、デッドロックする。
     #
-    # そのため CLAUDE_CODE_AUTO_COMPACT_WINDOW をバックエンドのキャップより十分下に設定し、
-    # 壁に当たる前に必ず compact させる。regression（258K）でも余裕を残すため 220000 とする。
-    # CLAUDEX_COMPACT_WINDOW で上書き可能。
+    # 既定は観測済みの 372K キャップに合わせて 360000（compact は窓の約9割手前 ~331K で焚かれ、summary
+    # 呼び出しが 372K の壁の内側で完了する）。もし backend が 272K に巻き戻った日に "Context limit
+    # reached" のデッドロックが再発したら、その時だけ CLAUDEX_COMPACT_WINDOW=250000 のように下げる。
     #
+    # これは OS 環境変数ではなく --settings（CLI 引数）で渡す。settings ファイルの env は OS 環境変数に
+    # 勝つため、プロジェクトの .claude/settings.json が env.CLAUDE_CODE_AUTO_COMPACT_WINDOW を設定して
+    # いると OS env 注入では負ける。優先順位は Managed > Command-line > Local > Project > User なので、
+    # --settings で渡せば project 設定にも勝てる（settings.md）。
+    local compact_settings="{\"env\":{\"CLAUDE_CODE_AUTO_COMPACT_WINDOW\":\"${CLAUDEX_COMPACT_WINDOW:-360000}\"}}"
+
     # CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC は settings.jsonnet と同様に設定しない
     # （remote-control の eligibility チェックがブロックされるため）。無駄なモデル呼び出し自体は
     # settings.jsonnet の DISABLE_NON_ESSENTIAL_MODEL_CALLS で既に止まっている
@@ -84,9 +91,8 @@ claudex() {
     ANTHROPIC_AUTH_TOKEN="unused" \
     ANTHROPIC_SMALL_FAST_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-luna}" \
     CLAUDE_CODE_SUBAGENT_MODEL="${model%\[*}" \
-    CLAUDE_CODE_AUTO_COMPACT_WINDOW="${CLAUDEX_COMPACT_WINDOW:-220000}" \
     CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 \
     CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK=1 \
     ENABLE_TOOL_SEARCH=false \
-        command claude --model "$model" "$@"
+        command claude --model "$model" --settings "$compact_settings" "$@"
 }
