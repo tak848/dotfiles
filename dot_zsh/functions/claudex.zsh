@@ -12,8 +12,9 @@
 #   - プロキシはマシン単位で 1 プロセス。全 worktree・全セッションが 1 つを共有する
 #   - Anthropic は非 Claude モデルへの gateway ルーティングを公式サポートしていない
 #
-# 上書き用の環境変数: CLAUDEX_MODEL, CLAUDEX_SMALL_MODEL, CLAUDEX_PORT
-#   例) CLAUDEX_MODEL='gpt-5.6-sol-fast[1m]' claudex   # priority tier で叩く
+# 上書き用の環境変数: CLAUDEX_MODEL, CLAUDEX_SMALL_MODEL, CLAUDEX_PORT, CLAUDEX_COMPACT_WINDOW
+#   例) CLAUDEX_MODEL='gpt-5.6-sol-fast' claudex        # priority tier で叩く
+#   例) CLAUDEX_COMPACT_WINDOW=300000 claudex           # バックエンドが安定して 353K 出るとき
 
 # ポートが listen されているか（外部コマンドに依存せず zsh 組み込みで確認する）
 _claudex_port_open() {
@@ -64,20 +65,26 @@ _claudex_ensure_proxy() {
 claudex() {
     _claudex_ensure_proxy || return 1
 
-    local model="${CLAUDEX_MODEL:-gpt-5.6-sol[1m]}"
+    local model="${CLAUDEX_MODEL:-gpt-5.6-sol}"
 
-    # [1m] は Claude Code 側の compaction 閾値を動かすためのサフィックスで、proxy が upstream に
-    # 送る前に剥がす。CLAUDE_CODE_SUBAGENT_MODEL には付けない（サブエージェントが Opus を継承する
-    # のを防ぐのが目的で、閾値制御は不要）
+    # [1m] サフィックスは付けない。gpt-5.6-sol は API では 1.05M context だが、claudex が
+    # 経由する ChatGPT/Codex バックエンドでは実効 ~353K（raw 372K）にキャップされ、regression で
+    # 258K まで下がることもある（openai/codex#31860, #32806）。[1m] を付けると CC が「1M ある」と
+    # 誤認して auto-compact を焚かず、~372K の壁に激突する。しかも壁に当たってからの compact は
+    # 全 context を要約に送るため同じ上限を超えて失敗し、デッドロックする。
+    #
+    # そのため CLAUDE_CODE_AUTO_COMPACT_WINDOW をバックエンドのキャップより十分下に設定し、
+    # 壁に当たる前に必ず compact させる。regression（258K）でも余裕を残すため 220000 とする。
+    # CLAUDEX_COMPACT_WINDOW で上書き可能。
     #
     # CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC は settings.jsonnet と同様に設定しない
     # （remote-control の eligibility チェックがブロックされるため）。無駄なモデル呼び出し自体は
     # settings.jsonnet の DISABLE_NON_ESSENTIAL_MODEL_CALLS で既に止まっている
     ANTHROPIC_BASE_URL="http://127.0.0.1:${CLAUDEX_PORT:-18765}" \
     ANTHROPIC_AUTH_TOKEN="unused" \
-    ANTHROPIC_SMALL_FAST_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-luna[1m]}" \
+    ANTHROPIC_SMALL_FAST_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-luna}" \
     CLAUDE_CODE_SUBAGENT_MODEL="${model%\[*}" \
-    CLAUDE_CODE_AUTO_COMPACT_WINDOW=272000 \
+    CLAUDE_CODE_AUTO_COMPACT_WINDOW="${CLAUDEX_COMPACT_WINDOW:-220000}" \
     CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 \
     CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK=1 \
     ENABLE_TOOL_SEARCH=false \
