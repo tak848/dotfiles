@@ -13,7 +13,8 @@
 #   - Anthropic は非 Claude モデルへの gateway ルーティングを公式サポートしていない
 #
 # 上書き用の環境変数: CLAUDEX_MODEL, CLAUDEX_SMALL_MODEL, CLAUDEX_PORT, CLAUDEX_COMPACT_WINDOW
-#   例) CLAUDEX_MODEL='gpt-5.6-sol-fast' claudex        # priority tier で叩く
+#   例) CLAUDEX_MODEL='gpt-5.6-sol-fast[1m]' claudex    # priority tier で叩く
+#   例) CLAUDEX_MODEL='gpt-5.6-sol' claudex             # [1m] が compact を壊す場合のフォールバック
 #   例) CLAUDEX_COMPACT_WINDOW=250000 claudex           # backend が 272K に巻き戻った日は下げる
 
 # ポートが listen されているか（外部コマンドに依存せず zsh 組み込みで確認する）
@@ -65,23 +66,28 @@ _claudex_ensure_proxy() {
 claudex() {
     _claudex_ensure_proxy || return 1
 
-    local model="${CLAUDEX_MODEL:-gpt-5.6-sol}"
+    local model="${CLAUDEX_MODEL:-gpt-5.6-sol[1m]}"
 
-    # [1m] サフィックスは付けない。gpt-5.6-sol は API では 1.05M context だが、claudex が経由する
-    # ChatGPT/Codex バックエンドでは context がキャップされる（実測で ~372K まで到達を確認）。OpenAI は
-    # 372K で課金が想定超だったため Codex の default を一時 272K に戻し、数日かけて 372K に戻すと
-    # アナウンスした（thsottiaux 2076495156757577895 / openai/codex#31860, #32806）ので、当面 272K↔372K
-    # で揺れうる。[1m] を付けると CC が「1M ある」と誤認して auto-compact を焚かず壁に激突する。壁に
-    # 当たってからの compact は現 context 全量を要約に送るため同じ上限を超えて失敗し、デッドロックする。
+    # [1m] を付けて statusline を /1000k にする。gpt-5.6-sol は claudex が経由する ChatGPT/Codex
+    # バックエンドでは context がキャップされる（実測で ~372K まで到達を確認。OpenAI は 372K で課金が
+    # 想定超だったため Codex default を一時 272K に戻し、数日かけて 372K に戻すとアナウンス:
+    # thsottiaux 2076495156757577895 / openai/codex#31860, #32806）。[1m] を外すと statusline の分母が
+    # モデル既定（~200K）になり、Sol は 200K を超えるためゲージが 100% を振り切って読めなくなる。
+    # 実キャップ 372K に一番近い表示は [1m] の /1000k なので付ける。
     #
-    # 既定は観測済みの 372K キャップに合わせて 360000（compact は窓の約9割手前 ~331K で焚かれ、summary
-    # 呼び出しが 372K の壁の内側で完了する）。もし backend が 272K に巻き戻った日に "Context limit
-    # reached" のデッドロックが再発したら、その時だけ CLAUDEX_COMPACT_WINDOW=250000 のように下げる。
+    # auto-compact は下の --settings の CLAUDE_CODE_AUTO_COMPACT_WINDOW（既定 360000）で
+    # 壁の手前 ~331K に焚く。既定は観測済みの 372K キャップに合わせてある。backend が 272K に
+    # 巻き戻った日に "Context limit reached" が再発したら CLAUDEX_COMPACT_WINDOW=250000 で下げる。
     #
-    # これは OS 環境変数ではなく --settings（CLI 引数）で渡す。settings ファイルの env は OS 環境変数に
-    # 勝つため、プロジェクトの .claude/settings.json が env.CLAUDE_CODE_AUTO_COMPACT_WINDOW を設定して
-    # いると OS env 注入では負ける。優先順位は Managed > Command-line > Local > Project > User なので、
-    # --settings で渡せば project 設定にも勝てる（settings.md）。
+    # 【要実測の前提】[1m]（context 窓 1M と認識）と明示 AUTO_COMPACT_WINDOW=360000 が両立し、
+    # compact が 1M 手前ではなく 360000 基準（~331K）で焚かれること。ドキュメントが曖昧で nested claude
+    # 禁止のため机上検証不可。もし [1m] が AUTO_COMPACT_WINDOW を上書きして 372K で詰むなら、
+    # CLAUDEX_MODEL='gpt-5.6-sol'（[1m] 無し）にフォールバックする。
+    #
+    # AUTO_COMPACT_WINDOW は OS 環境変数ではなく --settings（CLI 引数）で渡す。settings ファイルの env は
+    # OS 環境変数に勝つため、プロジェクトの .claude/settings.json が env.CLAUDE_CODE_AUTO_COMPACT_WINDOW を
+    # 設定していると OS env 注入では負ける。優先順位は Managed > Command-line > Local > Project > User
+    # なので、--settings で渡せば project 設定にも勝てる（settings.md）。
     local compact_settings="{\"env\":{\"CLAUDE_CODE_AUTO_COMPACT_WINDOW\":\"${CLAUDEX_COMPACT_WINDOW:-360000}\"}}"
 
     # CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC は settings.jsonnet と同様に設定しない
@@ -89,7 +95,7 @@ claudex() {
     # settings.jsonnet の DISABLE_NON_ESSENTIAL_MODEL_CALLS で既に止まっている
     ANTHROPIC_BASE_URL="http://127.0.0.1:${CLAUDEX_PORT:-18765}" \
     ANTHROPIC_AUTH_TOKEN="unused" \
-    ANTHROPIC_SMALL_FAST_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-luna}" \
+    ANTHROPIC_SMALL_FAST_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-luna[1m]}" \
     CLAUDE_CODE_SUBAGENT_MODEL="${model%\[*}" \
     CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 \
     CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK=1 \
