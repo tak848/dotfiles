@@ -90,8 +90,13 @@ claudex() {
     # なので、--settings で渡せば project 設定にも勝てる（settings.md）。
     local compact_settings="{\"env\":{\"CLAUDE_CODE_AUTO_COMPACT_WINDOW\":\"${CLAUDEX_COMPACT_WINDOW:-360000}\"}}"
 
-    # 要約・タイトル生成等のバックグラウンド機能に使う小モデルは ANTHROPIC_DEFAULT_HAIKU_MODEL で指定する。
-    # 旧 ANTHROPIC_SMALL_FAST_MODEL は非推奨（model-config の環境変数表の注記）。
+    # メインの推論モデル（--model）以外に、CC が内部で使う haiku / sonnet エイリアスも Codex モデルに
+    # 向けておく。素の Claude 名（claude-haiku-* / claude-sonnet-*）に解決されると proxy 経由で意図しない
+    # モデルになるため、両方 terra 系（CLAUDEX_SMALL_MODEL）にマッピングする。
+    #   - ANTHROPIC_DEFAULT_HAIKU_MODEL: haiku エイリアス＋バックグラウンド機能（要約・タイトル生成等）。
+    #     旧 ANTHROPIC_SMALL_FAST_MODEL は非推奨（model-config の環境変数表の注記）
+    #   - ANTHROPIC_DEFAULT_SONNET_MODEL: sonnet エイリアス（/model sonnet 等）
+    # opus エイリアスは今は未マッピング（primary は --model で sol を明示しているため通常は不要）。
     #
     # CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC は settings.jsonnet と同様に設定しない
     # （remote-control の eligibility チェックがブロックされるため）。無駄なモデル呼び出し自体は
@@ -99,6 +104,7 @@ claudex() {
     ANTHROPIC_BASE_URL="http://127.0.0.1:${CLAUDEX_PORT:-18765}" \
     ANTHROPIC_AUTH_TOKEN="unused" \
     ANTHROPIC_DEFAULT_HAIKU_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-terra[1m]}" \
+    ANTHROPIC_DEFAULT_SONNET_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-terra[1m]}" \
     CLAUDE_CODE_SUBAGENT_MODEL="${model%\[*}" \
     CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 \
     CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK=1 \
