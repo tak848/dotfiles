@@ -95,7 +95,7 @@ claudex() {
     # settings.jsonnet の DISABLE_NON_ESSENTIAL_MODEL_CALLS で既に止まっている
     ANTHROPIC_BASE_URL="http://127.0.0.1:${CLAUDEX_PORT:-18765}" \
     ANTHROPIC_AUTH_TOKEN="unused" \
-    ANTHROPIC_SMALL_FAST_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-luna[1m]}" \
+    ANTHROPIC_SMALL_FAST_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-terra[1m]}" \
     CLAUDE_CODE_SUBAGENT_MODEL="${model%\[*}" \
     CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 \
     CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK=1 \
@@ -105,8 +105,11 @@ claudex() {
 
 # claudexf: claudex の Codex fast/priority tier 版。
 # -fast サフィックスを claude-code-proxy が service_tier: "priority" に翻訳して upstream に投げる。
+# メインの推論モデルと small/fast モデル（要約・タイトル生成）の両方を fast tier にする。
 # 速い代わりにサブスク usage の減りが早い。quota を使い切れないとき向け。
-# CLAUDEX_MODEL が明示指定されていればそれを優先する（fast を強制しない）。
+# CLAUDEX_MODEL / CLAUDEX_SMALL_MODEL が明示指定されていればそれを優先する（fast を強制しない）。
 claudexf() {
-    CLAUDEX_MODEL="${CLAUDEX_MODEL:-gpt-5.6-sol-fast[1m]}" claudex "$@"
+    CLAUDEX_MODEL="${CLAUDEX_MODEL:-gpt-5.6-sol-fast[1m]}" \
+    CLAUDEX_SMALL_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-terra-fast[1m]}" \
+        claudex "$@"
 }
