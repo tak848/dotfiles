@@ -90,21 +90,22 @@ claudex() {
     # なので、--settings で渡せば project 設定にも勝てる（settings.md）。
     local compact_settings="{\"env\":{\"CLAUDE_CODE_AUTO_COMPACT_WINDOW\":\"${CLAUDEX_COMPACT_WINDOW:-360000}\"}}"
 
-    # メインの推論モデル（--model）以外に、CC が内部で使う haiku / sonnet エイリアスも Codex モデルに
-    # 向けておく。素の Claude 名（claude-haiku-* / claude-sonnet-*）に解決されると proxy 経由で意図しない
-    # モデルになるため、両方 terra 系（CLAUDEX_SMALL_MODEL）にマッピングする。
-    #   - ANTHROPIC_DEFAULT_HAIKU_MODEL: haiku エイリアス＋バックグラウンド機能（要約・タイトル生成等）。
-    #     旧 ANTHROPIC_SMALL_FAST_MODEL は非推奨（model-config の環境変数表の注記）
-    #   - ANTHROPIC_DEFAULT_SONNET_MODEL: sonnet エイリアス（/model sonnet 等）
-    # opus エイリアスは今は未マッピング（primary は --model で sol を明示しているため通常は不要）。
+    # メインの推論モデル（--model）以外に、CC が内部で使う opus / sonnet / haiku エイリアスも Codex モデルに
+    # 向けておく。素の Claude 名（claude-opus-* 等）に解決されると proxy 経由で意図しないモデルになるため
+    # 全部マッピングする。plan mode 常用（default / opus / opusplan は opus 系に解決）なので特に opus が要る。
+    #   - ANTHROPIC_DEFAULT_OPUS_MODEL:   opus エイリアス／plan mode の opusplan（plan フェーズ）→ primary と同じ sol 系
+    #   - ANTHROPIC_DEFAULT_SONNET_MODEL: sonnet エイリアス／opusplan の実行フェーズ → 同じく sol 系（実作業なので flagship）
+    #   - ANTHROPIC_DEFAULT_HAIKU_MODEL:  haiku エイリアス＋バックグラウンド機能（要約・タイトル生成等）→ terra 系
+    #     （旧 ANTHROPIC_SMALL_FAST_MODEL は非推奨: model-config の環境変数表の注記）
     #
     # CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC は settings.jsonnet と同様に設定しない
     # （remote-control の eligibility チェックがブロックされるため）。無駄なモデル呼び出し自体は
     # settings.jsonnet の DISABLE_NON_ESSENTIAL_MODEL_CALLS で既に止まっている
     ANTHROPIC_BASE_URL="http://127.0.0.1:${CLAUDEX_PORT:-18765}" \
     ANTHROPIC_AUTH_TOKEN="unused" \
+    ANTHROPIC_DEFAULT_OPUS_MODEL="$model" \
+    ANTHROPIC_DEFAULT_SONNET_MODEL="$model" \
     ANTHROPIC_DEFAULT_HAIKU_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-terra[1m]}" \
-    ANTHROPIC_DEFAULT_SONNET_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-terra[1m]}" \
     CLAUDE_CODE_SUBAGENT_MODEL="${model%\[*}" \
     CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 \
     CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK=1 \
