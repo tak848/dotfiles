@@ -14,7 +14,7 @@
 #
 # 上書き用の環境変数: CLAUDEX_MODEL, CLAUDEX_SMALL_MODEL, CLAUDEX_PORT, CLAUDEX_COMPACT_WINDOW
 #   例) CLAUDEX_MODEL='gpt-5.6-sol-fast[1m]' claudex    # priority tier で叩く
-#   例) CLAUDEX_MODEL='gpt-5.6-sol' claudex             # [1m] が compact を壊す場合のフォールバック
+#   例) CLAUDEX_COMPACT_WINDOW=250000 claudex           # backend が 272K に巻き戻った日は下げる
 #   例) CLAUDEX_COMPACT_WINDOW=250000 claudex           # backend が 272K に巻き戻った日は下げる
 
 # ポートが listen されているか（外部コマンドに依存せず zsh 組み込みで確認する）
@@ -68,21 +68,21 @@ claudex() {
 
     local model="${CLAUDEX_MODEL:-gpt-5.6-sol[1m]}"
 
-    # [1m] を付けて statusline を /1000k にする。gpt-5.6-sol は claudex が経由する ChatGPT/Codex
-    # バックエンドでは context がキャップされる（実測で ~372K まで到達を確認。OpenAI は 372K で課金が
-    # 想定超だったため Codex default を一時 272K に戻し、数日かけて 372K に戻すとアナウンス:
-    # thsottiaux 2076495156757577895 / openai/codex#31860, #32806）。[1m] を外すと statusline の分母が
-    # モデル既定（~200K）になり、Sol は 200K を超えるためゲージが 100% を振り切って読めなくなる。
-    # 実キャップ 372K に一番近い表示は [1m] の /1000k なので付ける。
+    # [1m] は必須。claudex は ANTHROPIC_BASE_URL が proxy(=LLM gateway) を指すため、CC は 1M サポートを
+    # 検証できず、[1m] を外すと window を 200K として割り当て 200K で auto-compact する
+    # （model-config「拡張コンテキスト」/ Sonnet 5 の項に gateway の挙動として明記）。[1m] で 1M window を
+    # 選ぶことで実キャップ 372K まで使え、statusline も /1000k になる。
     #
-    # auto-compact は下の --settings の CLAUDE_CODE_AUTO_COMPACT_WINDOW（既定 360000）で
-    # 壁の手前 ~331K に焚く。既定は観測済みの 372K キャップに合わせてある。backend が 272K に
-    # 巻き戻った日に "Context limit reached" が再発したら CLAUDEX_COMPACT_WINDOW=250000 で下げる。
+    # gpt-5.6-sol の実キャップ: ChatGPT/Codex backend では ~372K（272K↔372K で揺れる。OpenAI が 372K で
+    # 課金想定超のため Codex default を一時 272K に戻し、数日かけて 372K に戻すとアナウンス:
+    # thsottiaux 2076495156757577895 / openai/codex#31860, #32806）。
     #
-    # 【要実測の前提】[1m]（context 窓 1M と認識）と明示 AUTO_COMPACT_WINDOW=360000 が両立し、
-    # compact が 1M 手前ではなく 360000 基準（~331K）で焚かれること。ドキュメントが曖昧で nested claude
-    # 禁止のため机上検証不可。もし [1m] が AUTO_COMPACT_WINDOW を上書きして 372K で詰むなら、
-    # CLAUDEX_MODEL='gpt-5.6-sol'（[1m] 無し）にフォールバックする。
+    # compact しきい値: [1m] が window を 1M と認識させ、CLAUDE_CODE_AUTO_COMPACT_WINDOW がその中の発火
+    # しきい値を決める（両者は競合せず共存。model-config: Sonnet 5 は 1M window で既定 ~967K しきい値、
+    # 変更は CLAUDE_CODE_AUTO_COMPACT_WINDOW）。この値は「そのトークン数ちょうどで compact」であり、9割
+    # 手前ではない。既定 360000 は 372K の壁の手前 12K で要約に入る想定（要約リクエストは現 context 全量を
+    # 送るのでしきい値 < 実キャップ でないと壁を超えて失敗＝デッドロックする）。backend が 272K に巻き戻った
+    # 日は 360000 では詰むため CLAUDEX_COMPACT_WINDOW=250000 のように下げる。
     #
     # AUTO_COMPACT_WINDOW は OS 環境変数ではなく --settings（CLI 引数）で渡す。settings ファイルの env は
     # OS 環境変数に勝つため、プロジェクトの .claude/settings.json が env.CLAUDE_CODE_AUTO_COMPACT_WINDOW を
@@ -90,12 +90,15 @@ claudex() {
     # なので、--settings で渡せば project 設定にも勝てる（settings.md）。
     local compact_settings="{\"env\":{\"CLAUDE_CODE_AUTO_COMPACT_WINDOW\":\"${CLAUDEX_COMPACT_WINDOW:-360000}\"}}"
 
+    # 要約・タイトル生成等のバックグラウンド機能に使う小モデルは ANTHROPIC_DEFAULT_HAIKU_MODEL で指定する。
+    # 旧 ANTHROPIC_SMALL_FAST_MODEL は非推奨（model-config の環境変数表の注記）。
+    #
     # CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC は settings.jsonnet と同様に設定しない
     # （remote-control の eligibility チェックがブロックされるため）。無駄なモデル呼び出し自体は
     # settings.jsonnet の DISABLE_NON_ESSENTIAL_MODEL_CALLS で既に止まっている
     ANTHROPIC_BASE_URL="http://127.0.0.1:${CLAUDEX_PORT:-18765}" \
     ANTHROPIC_AUTH_TOKEN="unused" \
-    ANTHROPIC_SMALL_FAST_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-terra[1m]}" \
+    ANTHROPIC_DEFAULT_HAIKU_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-terra[1m]}" \
     CLAUDE_CODE_SUBAGENT_MODEL="${model%\[*}" \
     CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 \
     CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK=1 \
