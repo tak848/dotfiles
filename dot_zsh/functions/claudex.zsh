@@ -102,3 +102,11 @@ claudex() {
     ENABLE_TOOL_SEARCH=false \
         command claude --model "$model" --settings "$compact_settings" "$@"
 }
+
+# claudexf: claudex の Codex fast/priority tier 版。
+# -fast サフィックスを claude-code-proxy が service_tier: "priority" に翻訳して upstream に投げる。
+# 速い代わりにサブスク usage の減りが早い。quota を使い切れないとき向け。
+# CLAUDEX_MODEL が明示指定されていればそれを優先する（fast を強制しない）。
+claudexf() {
+    CLAUDEX_MODEL="${CLAUDEX_MODEL:-gpt-5.6-sol-fast[1m]}" claudex "$@"
+}
