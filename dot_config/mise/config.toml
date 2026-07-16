@@ -22,8 +22,8 @@ NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
 # ランタイム（core backend）
 # ============================================
 node = "24.18.0"
-pnpm = "11.12.0"
-"github:endevco/aube" = "v1.26.0" # 高速な Node.js パッケージマネージャ
+pnpm = "11.13.0"
+"github:endevco/aube" = "v1.27.0" # 高速な Node.js パッケージマネージャ
 go = "1.26.5"
 
 # ============================================
@@ -58,7 +58,7 @@ go = "1.26.5"
 "aqua:jesseduffield/lazydocker" = "0.25.2"
 # Git credential helper（.NET self-contained。tar.gz を全展開し本体+DLL を同居させる。
 # symbols 版を除外するため matching_regex で末尾を絞り、createdump 等は filter_bins で隠す）
-"github:git-ecosystem/git-credential-manager" = { version = "v2.8.0", matching_regex = '[0-9]\.tar\.gz$', filter_bins = "git-credential-manager" }
+"github:git-ecosystem/git-credential-manager" = { version = "v2.9.1", matching_regex = '[0-9]\.tar\.gz$', filter_bins = "git-credential-manager" }
 
 # エディタ・ターミナル
 "aqua:neovim/neovim" = "0.12.4"
@@ -99,7 +99,7 @@ go = "1.26.5"
 
 # その他（1password/cli は aqua CLI で管理）
 "aqua:temporalio/cli" = "1.8.0"
-"aqua:jdx/usage" = "3.5.4"
+"aqua:jdx/usage" = "3.5.5"
 # Datadog の AI エージェント向け CLI コンパニオン
 "aqua:DataDog/pup" = "1.6.3"
 
@@ -107,12 +107,12 @@ go = "1.26.5"
 # npm グローバルパッケージ
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.211"
-"github:google-antigravity/antigravity-cli" = "1.1.1"     # agy: Gemini CLI の後継
+"github:google-antigravity/antigravity-cli" = "1.1.2"     # agy: Gemini CLI の後継
 "aqua:openai/codex" = "0.144.5"
 "aqua:anomalyco/opencode" = "1.17.15"
 "aqua:x.ai/cli/grok" = "0.2.51" # Grok Build CLI (xAI のターミナル向けコーディングエージェント)
 # Claude Code のハーネスを ChatGPT サブスクの Codex backend に向ける Anthropic 互換プロキシ。claudex から使う
-"github:raine/claude-code-proxy" = { version = "v0.1.17", matching_regex = '\.tar\.gz$' }
+"github:raine/claude-code-proxy" = { version = "v0.1.20", matching_regex = '\.tar\.gz$' }
 "npm:ccusage" = "20.0.17"
 "npm:@typescript/native-preview" = "7.0.0-dev.20260707.2"
 "npm:cc-sdd" = "3.0.2"
