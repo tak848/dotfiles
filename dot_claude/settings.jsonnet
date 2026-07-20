@@ -67,7 +67,7 @@ local autoModeRules = import 'auto-mode.libsonnet';
       'Bash(codex exec *)',
       'Bash(codex-review-exec *)',
       'Read(.codex-reviews/*)',
-      'Write(.codex-reviews/*)',
+      'Edit(.codex-reviews/*)',
       'Bash(lsof *)',
       'Bash(awk *)',
       'Bash(sed *)',
