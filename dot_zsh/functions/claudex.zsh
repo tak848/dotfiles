@@ -12,9 +12,9 @@
 #   - プロキシはマシン単位で 1 プロセス。全 worktree・全セッションが 1 つを共有する
 #   - Anthropic は非 Claude モデルへの gateway ルーティングを公式サポートしていない
 #
-# 上書き用の環境変数: CLAUDEX_MODEL, CLAUDEX_SMALL_MODEL, CLAUDEX_PORT, CLAUDEX_COMPACT_WINDOW
-#   例) CLAUDEX_MODEL='gpt-5.6-sol-fast[1m]' claudex    # priority tier で叩く
-#   例) CLAUDEX_COMPACT_WINDOW=250000 claudex           # backend が 272K に巻き戻った日は下げる
+# 上書き用の環境変数: CLAUDEX_MODEL, CLAUDEX_SMALL_MODEL, CLAUDEX_PORT, CLAUDEX_CONTEXT_TOKENS
+#   例) CLAUDEX_MODEL='gpt-5.6-sol-fast' claudex    # priority tier で叩く
+#   例) CLAUDEX_CONTEXT_TOKENS=272000 claudex      # backend が 272K に巻き戻った日は下げる
 
 # ポートが listen されているか（外部コマンドに依存せず zsh 組み込みで確認する）
 _claudex_port_open() {
@@ -65,27 +65,20 @@ _claudex_ensure_proxy() {
 claudex() {
     _claudex_ensure_proxy || return 1
 
-    local model="${CLAUDEX_MODEL:-gpt-5.6-sol[1m]}"
+    local model="${CLAUDEX_MODEL:-gpt-5.6-sol}"
 
-    # [1m] は必須。claudex は ANTHROPIC_BASE_URL が proxy(=LLM gateway) を指すため、CC は 1M サポートを
-    # 検証できず、[1m] を外すと window を 200K として割り当て 200K で auto-compact する
-    # （model-config「拡張コンテキスト」/ Sonnet 5 の項に gateway の挙動として明記）。[1m] で 1M window を
-    # 選ぶことで実キャップ 372K まで使え、statusline も /1000k になる。
+    # CLAUDE_CODE_MAX_CONTEXT_TOKENS は、ANTHROPIC_BASE_URL 経由の未認識モデルについて Claude Code が
+    # 仮定する context window を上書きする。gpt-5.6-sol の実キャップは ChatGPT/Codex backend で約372K
+    # （272K↔372Kで変動）なので、既定値を372Kとする。Claude Codeはここから出力領域を予約して
+    # auto-compactするため、CLAUDE_CODE_AUTO_COMPACT_WINDOWを340Kに上書きすると余裕を二重に
+    # 差し引いてしまう。グローバル設定の500Kはmodel contextの372Kにcapされるため、そのままでよい。
+    # [1m] は基盤モデルが実際に1M contextをサポートする場合の指定なので使用しない。
+    # statuslineも実態に合う /372k 表示になる。
     #
-    # gpt-5.6-sol の実キャップ: ChatGPT/Codex backend では ~372K（272K↔372K で揺れる。OpenAI が 372K で
-    # 課金想定超のため Codex default を一時 272K に戻し、数日かけて 372K に戻すとアナウンス:
-    # thsottiaux 2076495156757577895 / openai/codex#31860, #32806）。
-    #
-    # compact 計算用の容量: [1m] が window を 1M と認識させ、CLAUDE_CODE_AUTO_COMPACT_WINDOW が
-    # auto-compact の計算に使う容量を上書きする（両者は競合せず共存）。これは物理的な context 上限や厳密な
-    # 発火トークン数ではない。既定 340000 は観測済みの 372K キャップに対して計算上 32K の余裕を確保する。
-    # backend が 272K に巻き戻った日は 340000 でも詰むため CLAUDEX_COMPACT_WINDOW=250000 のように下げる。
-    #
-    # AUTO_COMPACT_WINDOW は OS 環境変数ではなく --settings（CLI 引数）で渡す。settings ファイルの env は
-    # OS 環境変数に勝つため、プロジェクトの .claude/settings.json が env.CLAUDE_CODE_AUTO_COMPACT_WINDOW を
-    # 設定していると OS env 注入では負ける。優先順位は Managed > Command-line > Local > Project > User
-    # なので、--settings で渡せば project 設定にも勝てる（settings.md）。
-    local compact_settings="{\"env\":{\"CLAUDE_CODE_AUTO_COMPACT_WINDOW\":\"${CLAUDEX_COMPACT_WINDOW:-340000}\"}}"
+    # settings ファイルの env は OS 環境変数に勝つため、プロジェクトの .claude/settings.json が同じ変数を
+    # 設定していても上書きできるよう --settings で渡す。優先順位は Managed > Command-line > Local >
+    # Project > User（settings.md）。
+    local context_settings="{\"env\":{\"CLAUDE_CODE_MAX_CONTEXT_TOKENS\":\"${CLAUDEX_CONTEXT_TOKENS:-372000}\"}}"
 
     # メインの推論モデル（--model）以外に、CC が内部で使う opus / sonnet / haiku エイリアスも Codex モデルに
     # 向けておく。素の Claude 名（claude-opus-* 等）に解決されると proxy 経由で意図しないモデルになるため
@@ -102,12 +95,12 @@ claudex() {
     ANTHROPIC_AUTH_TOKEN="unused" \
     ANTHROPIC_DEFAULT_OPUS_MODEL="$model" \
     ANTHROPIC_DEFAULT_SONNET_MODEL="$model" \
-    ANTHROPIC_DEFAULT_HAIKU_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-terra[1m]}" \
+    ANTHROPIC_DEFAULT_HAIKU_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-terra}" \
     CLAUDE_CODE_SUBAGENT_MODEL="${model%\[*}" \
     CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 \
     CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK=1 \
     ENABLE_TOOL_SEARCH=false \
-        command claude --model "$model" --settings "$compact_settings" "$@"
+        command claude --model "$model" --settings "$context_settings" "$@"
 }
 
 # claudexf: claudex の Codex fast/priority tier 版。
@@ -116,7 +109,7 @@ claudex() {
 # 速い代わりにサブスク usage の減りが早い。quota を使い切れないとき向け。
 # CLAUDEX_MODEL / CLAUDEX_SMALL_MODEL が明示指定されていればそれを優先する（fast を強制しない）。
 claudexf() {
-    CLAUDEX_MODEL="${CLAUDEX_MODEL:-gpt-5.6-sol-fast[1m]}" \
-    CLAUDEX_SMALL_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-terra-fast[1m]}" \
+    CLAUDEX_MODEL="${CLAUDEX_MODEL:-gpt-5.6-sol-fast}" \
+    CLAUDEX_SMALL_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-terra-fast}" \
         claudex "$@"
 }
