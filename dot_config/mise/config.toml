@@ -108,7 +108,7 @@ go = "1.26.5"
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.216"
 "github:google-antigravity/antigravity-cli" = "1.1.2"     # agy: Gemini CLI の後継
-"aqua:openai/codex" = "0.144.6"
+"aqua:openai/codex" = "0.145.0"
 "aqua:anomalyco/opencode" = "1.18.2"
 "aqua:x.ai/cli/grok" = "0.2.51" # Grok Build CLI (xAI のターミナル向けコーディングエージェント)
 # Claude Code のハーネスを ChatGPT サブスクの Codex backend に向ける Anthropic 互換プロキシ。claudex から使う
