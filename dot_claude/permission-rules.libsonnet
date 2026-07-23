@@ -44,6 +44,18 @@ local rules = [
     reason: 'git worktree の操作は禁止です。worktree の管理はユーザーが行います。',
   },
   {
+    // subagent を isolation: worktree で起動する経路を禁止する。Bash(git worktree*) は
+    // シェル経由の git worktree コマンドしか止められず、Agent/Task ツールが内部で worktree を
+    // 作る経路（isolation: 'worktree'）を素通りさせていたため、意図せず worktree で agent が
+    // 起動されるインシデントが発生した。worktree の管理はユーザーが行う方針に合わせ、
+    // subagent の worktree 隔離だけをピンポイントで deny する（ユーザーの `claude --worktree` や
+    // EnterWorktree は影響を受けない）。
+    // ref: https://code.claude.com/docs/en/permissions#match-by-input-parameter
+    matcher: 'Agent',
+    spec: 'Agent(isolation:worktree)',
+    reason: 'subagent を isolation: worktree で起動することは禁止です。worktree の管理はユーザーが行います。isolation を外して起動してください。',
+  },
+  {
     matcher: 'Bash',
     spec: 'Bash(git merge*--squash*)',
     reason: 'git merge --squash は禁止です。',
