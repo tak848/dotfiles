@@ -278,11 +278,12 @@ local autoModeRules = import 'auto-mode.libsonnet';
     DISABLE_ERROR_REPORTING: '1',
     DISABLE_NON_ESSENTIAL_MODEL_CALLS: '1',
     CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR: '1',
-    // 2.1.217 で subagent に 2 つの上限が入った。どちらも既定値は運用に合わないため緩和する。
-    // - 同時実行数の上限（既定 20）。大規模な fan-out を潰さないよう引き上げる
-    // - subagent からの nested spawn 禁止（既定は深さ 1 相当）。ネスト委譲を常用するため許可する
-    CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS: '100',
-    CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH: '5',
+    // 2.1.217 で subagent に 2 つの上限が入った。
+    // - 同時実行数の上限（既定 20）。既定のまま明示（暴走防止のため上げすぎない）
+    // - subagent からの nested spawn 禁止（既定は深さ 1 相当）。1 段だけネスト委譲を許可する。
+    //   claudex（GPT-5.6 Sol）利用時に subagent が無限に生成されることがあるため深くしない
+    CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS: '20',
+    CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH: '2',
     // 実験的 Agent Teams は無効化する。teammate（subagent）の permission request が
     // PermissionRequest hook を経由せず端末の手動プロンプトに直行し、ccgate による許可判定が
     // バイパスされる既知バグ（anthropics/claude-code#23983, open）があるため。
