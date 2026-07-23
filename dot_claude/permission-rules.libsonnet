@@ -56,6 +56,15 @@ local rules = [
     reason: 'subagent を isolation: worktree で起動することは禁止です。worktree の管理はユーザーが行います。isolation を外して起動してください。',
   },
   {
+    // Claude がセッション内でその場に worktree を作って入る EnterWorktree ツールを禁止する。
+    // 「work in a worktree」等で worktree に移動する経路。worktree の管理はユーザーが行う方針に
+    // 従い、worktree 操作は一切禁止する。ExitWorktree（worktree から抜ける／後始末）は逃げ道
+    // として残す。
+    matcher: 'EnterWorktree',
+    spec: 'EnterWorktree',
+    reason: 'worktree の操作は一切禁止です。worktree の作成・移動はユーザーが行います。現在の作業ディレクトリのまま作業してください。',
+  },
+  {
     matcher: 'Bash',
     spec: 'Bash(git merge*--squash*)',
     reason: 'git merge --squash は禁止です。',
