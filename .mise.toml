@@ -14,17 +14,17 @@ NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
 [tools]
 # このリポジトリで使うランタイム
 node = "24.18.0"
-pnpm = "11.13.0"
+pnpm = "11.17.0"
 
 # aqua CLI（dot_config/aquaproj-aqua の管理用）
-"github:aquaproj/aqua" = "v2.61.0"
+"github:aquaproj/aqua" = "v2.62.1"
 
 # このリポジトリで使う CLI ツール
 "aqua:google/go-jsonnet" = "0.22.0"
 "aqua:go-task/task" = "3.52.0"
 
 # install.sh からの bootstrap で使う。dot_config/mise/config.toml と揃える
-"aqua:twpayne/chezmoi" = "2.71.0"
+"aqua:twpayne/chezmoi" = "2.71.1"
 
 # lazy-lock.yaml ワークフローで使用
 "aqua:neovim/neovim" = "0.12.4"
