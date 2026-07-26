@@ -17,10 +17,6 @@ renovate.json5
 AGENTS.md
 Taskfile.yaml
 create_dot_zsh
-.kiro
-.claude/commands/kiro
-.codex/prompts/kiro-*.md
-.cursor/commands/kiro
 /mise.lock
 /.cursorrules
 go.mod
