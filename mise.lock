@@ -241,10 +241,6 @@ url = "https://nodejs.org/dist/v24.18.0/node-v24.18.0-darwin-x64.tar.gz"
 checksum = "sha256:0ae68406b42d7725661da979b1403ec9926da205c6770827f33aac9d8f26e821"
 url = "https://nodejs.org/dist/v24.18.0/node-v24.18.0-win-x64.zip"
 
-[[tools."npm:cc-sdd"]]
-version = "3.0.2"
-backend = "npm:cc-sdd"
-
 [[tools.pnpm]]
 version = "11.17.0"
 backend = "aqua:pnpm/pnpm"

@@ -1745,10 +1745,6 @@ backend = "npm:@fission-ai/openspec"
 version = "7.0.0-dev.20260707.2"
 backend = "npm:@typescript/native-preview"
 
-[[tools."npm:cc-sdd"]]
-version = "3.0.2"
-backend = "npm:cc-sdd"
-
 [[tools."npm:ccusage"]]
 version = "20.0.18"
 backend = "npm:ccusage"
