@@ -118,3 +118,4 @@ go = "1.26.5"
 "npm:cc-sdd" = "3.0.2"
 "npm:difit" = "5.0.8"
 "npm:@fission-ai/openspec" = "1.6.0"
+"npm:defuddle" = "0.19.2"                                  # WebFetch の代替: URL 本文をモデル要約を挟まず clean な Markdown で取得
