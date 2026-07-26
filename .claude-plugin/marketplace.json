@@ -19,6 +19,13 @@
       "version": "1.0.0",
       "source": "./claude-plugins/gopls-lazy",
       "category": "development"
+    },
+    {
+      "name": "freee",
+      "description": "freee Remote MCP for accounting, HR, invoicing, and related freee API operations",
+      "version": "1.0.0",
+      "source": "./claude-plugins/freee",
+      "category": "productivity"
     }
   ]
 }

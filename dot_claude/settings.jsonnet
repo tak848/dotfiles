@@ -47,6 +47,9 @@ local autoModeRules = import 'auto-mode.libsonnet';
     // 公式 gopls-lsp と同様、一律有効化せず必要なプロジェクトで個別に有効化する。
     // 'gopls-lazy@tak848-plugins': true,
     'aws-knowledge@tak848-plugins': true,
+    // freee Remote MCP (https://mcp.freee.co.jp/mcp)。OAuth 認証が必要なため一律有効化せず、
+    // 使うときだけ個別に有効化する。
+    // 'freee@tak848-plugins': true,
     'codex@openai-codex': true,
   },
   statusLine: {
