@@ -38,7 +38,13 @@ local autoModeRules = import 'auto-mode.libsonnet';
   },
   enabledPlugins: {
     'github@claude-plugins-official': true,
-    'context7@claude-plugins-official': true,
+    // context7 の公式プラグインは `npx -y @upstash/context7-mcp` を起動する。registry からの
+    // 都度取得は permission-rules.libsonnet の deny 方針（npx / pnpm dlx 禁止）と衝突するため、
+    // remote MCP（https://mcp.context7.com/mcp）を指す自前プラグインへ差し替える。
+    // プラグイン名・サーバー名とも context7 のままなので、ツール名は
+    // mcp__plugin_context7_context7__* で変わらない。
+    // 'context7@claude-plugins-official': true,
+    'context7@tak848-plugins': true,
     // gopls-lsp は重いため一律有効化しない。必要なプロジェクトで個別に有効化する。
     // 'gopls-lsp@claude-plugins-official': true,
     // gopls-lazy は大規模 Go モノレポ向けの軽量 LSP プロキシ（mise: github:sivchari/gopls-lazy）。
