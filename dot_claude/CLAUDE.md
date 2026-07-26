@@ -50,6 +50,12 @@ Think in English, interact with the user in Japanese.
 - 確信が持てない場合は context7・deepwiki 等の MCP・web search・ドキュメント直接参照等で一次ソースの裏付けを取ること
 - 裏付けが取れなかった場合は「未確認」と明記すること
 
+## Web ページ本文の取得
+
+- `WebFetch` は取得本文を小型モデル（reported: Haiku）で要約してからメインモデルに返すため、**通常の HTML ページでは本文が要約・改変されて忠実さが落ちる**。ページ本文を忠実に全文読み込みたいときは、`WebFetch` ではなく `defuddle parse <url> --md` を使う（モデルを挟まず clean な Markdown が返る）。
+- ただし `WebFetch` は、レスポンスが既に markdown（`text/markdown` かつ ~100K 文字未満。約80の信頼ドメインが典型）の場合はモデルを通さず原文をそのまま返す。そのケースは劣化しないので `WebFetch` のままでよい。軽い事実確認・ピンポイント Q&A も同様。全面置き換えではなく、モデル要約で困るときだけ defuddle に寄せる。
+- `defuddle` は静的 HTML をパースするため、JS レンダリング必須の SPA では本文が取れない。その場合は `WebFetch` / claude-in-chrome にフォールバックする。
+
 ## 各種一時的ファイルの出力ディレクトリ
 
 一時的なファイルの出力先として `z` ディレクトリが使える（`.config/git/ignore` により ignore 済み）。

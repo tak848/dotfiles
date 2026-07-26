@@ -82,6 +82,8 @@ local autoModeRules = import 'auto-mode.libsonnet';
       'Bash(find *)',
       'Bash(grep *)',
       'Bash(rg *)',
+      // Web ページ本文を WebFetch のモデル要約を挟まず clean な Markdown で取得（読み取り専用）
+      'Bash(defuddle parse:*)',
       'Fetch(https://*)',
       // 'WebFetch(https://*)',
       'Bash(pnpm *)',
