@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # {{ include ".claude-plugin/marketplace.json" | sha256sum }}
 # {{ include "claude-plugins/aws-knowledge/.claude-plugin/plugin.json" | sha256sum }}
 # {{ include "claude-plugins/aws-knowledge/.mcp.json" | sha256sum }}
@@ -6,8 +7,13 @@
 # {{ include "claude-plugins/gopls-lazy/.lsp.json" | sha256sum }}
 # {{ include "claude-plugins/context7/.claude-plugin/plugin.json" | sha256sum }}
 # {{ include "claude-plugins/context7/.mcp.json" | sha256sum }}
-# プラグイン定義が変更された時に marketplace update + plugin install を実行する
-# 注: gopls-lazy はデフォルト無効（必要なプロジェクトで個別有効化）のため install ループには含めない
+# プラグイン定義が変更された時に marketplace の登録・更新と plugin install を実行する
+# 注: gopls-lazy / freee はデフォルト無効（必要なときに個別有効化）のため install ループには含めない
+#
+# 失敗は WARN に丸めず異常終了させる。run_onchange スクリプトが非ゼロで終わると chezmoi は
+# 実行状態を記録しないため（TargetStateScript.Apply が RunScript のエラー時に PersistentStateSet
+# の前で return する）、次の chezmoi apply で自動的に再試行される。WARN に丸めて exit 0 すると
+# 「成功」として記録され、スクリプト内容が変わるまで二度と再試行されない。
 
 {{ template "path-setup.tmpl" . }}
 
@@ -20,12 +26,11 @@ echo "Claude Code プラグインを更新中..."
 # settings.json の extraKnownMarketplaces 宣言だけでは、非対話 CLI 用の状態ファイル
 # （~/.claude/plugins/known_marketplaces.json）にマーケットプレイスが登録されない。
 # 明示的に add して登録する（未登録なら clone、登録済みなら何もしない）。
-claude plugin marketplace add tak848/dotfiles || echo "WARN: marketplace add failed" >&2
-# add は登録済みの marketplace を更新しない（"already on disk" で終了する）ため、
-# ~/.claude/plugins/marketplaces/tak848-plugins の clone が古いまま残り、
-# 新しく追加したプラグインが install 時に "not found in marketplace" になる。
-# 明示的に update して clone を最新にする。
-claude plugin marketplace update tak848-plugins || echo "WARN: marketplace update failed" >&2
+claude plugin marketplace add tak848/dotfiles
+# add は登録済みの marketplace の clone を更新しない（"already on disk" で終了する）ため、
+# ~/.claude/plugins/marketplaces/tak848-plugins が古いまま残り、新しく追加したプラグインが
+# install 時に "not found in marketplace" になる。明示的に update して clone を最新にする。
+claude plugin marketplace update tak848-plugins
 for plugin in aws-knowledge context7; do
-    claude plugin install "${plugin}@tak848-plugins" || echo "WARN: plugin install failed: ${plugin}" >&2
+    claude plugin install "${plugin}@tak848-plugins"
 done
