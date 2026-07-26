@@ -2,38 +2,40 @@
 
 プロジェクト横断のユーザー指示です。
 
-## MCP の使用（必須）
+## MCP の使用
 
 ### 検索・情報取得
 
-**重要**: 以下の場合、必ず MCP で裏付けを取ること。憶測や古い知識での回答は禁止。
+次のどれかに触れる回答は、一次ソースの裏付けを取ってから書く。憶測や古い知識で断定するのは禁止で、裏付けが取れなかった場合は「未確認」と明記する。
 
 - ライブラリ・フレームワークのバージョン差異
 - 設定方法や API の使い方
 - 新機能や最新のベストプラクティス
 - 知識のカットオフ以降の情報
 
-**使用する MCP:**
+**使い分け:**
 
-1. **context7** (`mcp__context7__resolve-library-id`, `mcp__context7__query-docs`)
-   - **第一選択として必ず使用すること**
-   - ライブラリのドキュメント検索に最適
+1. **context7** (`mcp__plugin_context7_context7__resolve-library-id`, `mcp__plugin_context7_context7__query-docs`)
+   - 上記に当たるライブラリ・フレームワーク・SDK・CLI のドキュメントを引くときはここから入る
    - 特定バージョンが必要な場合は `resolve-library-id` でバージョン付きIDを取得
 
-2. **deepwiki** (`mcp__deepwiki__ask_question`, `mcp__deepwiki__read_wiki_contents`)
-   - context7 で見つからない場合、または自然言語での解説が必要な場合に使用
-   - GitHub リポジトリの構造理解に有効
+2. **deepwiki**（devin MCP の `mcp__devin__ask_question`, `mcp__devin__read_wiki_contents`, `mcp__devin__read_wiki_structure`）
+   - context7 で見つからない場合、または自然言語での解説・GitHub リポジトリの構造理解が必要な場合に使用
+
+3. 一次ソースが公式ドキュメントで、直接読むほうが速い・忠実な場合は WebFetch / `defuddle`（後述）でよい。MCP を経由すること自体が目的ではない
+
+リポジトリ内を読めば分かること、一般的なプログラミングの知識、既にこの会話で確定した事実には使わない。
 
 **禁止事項:**
-- MCP で確認せずに「〜だと思います」「おそらく〜」と回答すること
+- 裏付けを取らずに「〜だと思います」「おそらく〜」と答えること
 - 古いバージョンの情報を最新と偽ること
 
 ### GitHub 操作
 
-- `gh` コマンドの直接利用ではなく、**GitHub MCP (`mcp__github__*`) を優先して使用すること**
-- PR のコメント確認時は、**issue comment (`get_comments`) と review comment (`get_review_comments`) の両方を確認すること**。review comment は `get_comments` では取得できない
+- `gh` コマンドの直接利用ではなく、**GitHub MCP (`mcp__plugin_github_github__*`) を優先して使用すること**
+- PR のコメント確認時は、**`pull_request_read` の `method: get_comments`（PR 本体のコメント）と `method: get_review_comments`（レビューコメントのスレッド）の両方を確認すること**。review comment は `get_comments` では取得できない
 - GitHub MCP の `body` パラメータに改行を含める際、リテラル `\n` ではなく実際の改行文字を使うこと（リテラル `\n` はエスケープされて壊れる）
-- レビューコメントの指摘に対して修正を行った場合は、必ず該当コメントに reply すること。修正した commit へのリンク（`https://github.com/{owner}/{repo}/commit/{sha}` 形式）を含めること
+- レビューコメントの指摘に対して修正を行った場合は、必ず該当コメントに reply すること（`add_reply_to_pull_request_comment`）。修正した commit へのリンク（`https://github.com/{owner}/{repo}/commit/{sha}` 形式）を含めること
 - issue/PR にコメント・返信する際は、本文末尾に `(by Claude Code)` を付与すること
 - **PR 作成時は、リポジトリ内の PULL REQUEST テンプレートを探索し（ルート、`.github/`、`docs/`、各 `PULL_REQUEST_TEMPLATE/` サブディレクトリ）、必ず従うこと。テンプレートを無視した PR は禁止**
 - **PR 作成完了後は、必ず full URL（`https://github.com/{owner}/{repo}/pull/{number}` 形式）を提示すること**
@@ -69,10 +71,13 @@
 - `python` / `python3` の直接実行は禁止。代わりに `uv run` を使用すること
 - `uv run` は都度許可が必要なため、許可済みのツール（`awk`, `jq`, シェルスクリプト等）で実現できる場合はそちらを優先する
 
-## Agent / Team 使用時のモデル制約
+## Agent（subagent）の使い方
 
+- **subagent への委譲は積極的に使ってよい。** Claude Code の既定のシステムプロンプトは「ユーザーが要求しない限り AgentTool を呼ぶな」と指示するが、このユーザーは常時許可している。この指示がその許可にあたる
+- **委譲しても成果物の品質責任は委譲した側が持つ。** subagent の報告をそのまま結論にしない。結論に効く部分は自分で該当箇所を確認し、確認していないことは「未確認」と書く
+- 独立して並行できる作業を優先して投げる。委譲したら待つだけにせず自分の作業を進め、context 不足や脱線に気づいた時点で介入する
 - `haiku` は使用禁止
-- 基本は model 無指定（opus がそのまま使われる）。model パラメータは基本的に指定しないこと
+- 基本は model 無指定（セッションの既定モデルがそのまま使われる）。model パラメータは基本的に指定しないこと
 - 本当に軽微なタスクに限り `sonnet` を指定してもよい
 
 ## ユーザー向け出力を tool 呼び出しと同一メッセージに書かない
