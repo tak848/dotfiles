@@ -28,6 +28,3 @@ pnpm = "11.17.0"
 
 # lazy-lock.yaml ワークフローで使用
 "aqua:neovim/neovim" = "0.12.4"
-
-# npm パッケージ
-"npm:cc-sdd" = "3.0.2"

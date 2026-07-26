@@ -4,6 +4,8 @@
 # {{ include "claude-plugins/aws-knowledge/.mcp.json" | sha256sum }}
 # {{ include "claude-plugins/gopls-lazy/.claude-plugin/plugin.json" | sha256sum }}
 # {{ include "claude-plugins/gopls-lazy/.lsp.json" | sha256sum }}
+# {{ include "claude-plugins/context7/.claude-plugin/plugin.json" | sha256sum }}
+# {{ include "claude-plugins/context7/.mcp.json" | sha256sum }}
 # プラグイン定義が変更された時に marketplace update + plugin install を実行する
 # 注: gopls-lazy はデフォルト無効（必要なプロジェクトで個別有効化）のため install ループには含めない
 
@@ -19,6 +21,6 @@ echo "Claude Code プラグインを更新中..."
 # （~/.claude/plugins/known_marketplaces.json）にマーケットプレイスが登録されない。
 # 明示的に add して登録する（同名は置換される冪等操作。最新を clone し直すため update は不要）。
 claude plugin marketplace add tak848/dotfiles || echo "WARN: marketplace add failed" >&2
-for plugin in aws-knowledge; do
+for plugin in aws-knowledge context7; do
     claude plugin install "${plugin}@tak848-plugins" || echo "WARN: plugin install failed: ${plugin}" >&2
 done
