@@ -2,10 +2,6 @@
 
 プロジェクト横断のユーザー指示です。
 
-## 言語
-
-Think in English, interact with the user in Japanese.
-
 ## MCP の使用（必須）
 
 ### 検索・情報取得
