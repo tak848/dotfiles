@@ -1739,10 +1739,6 @@ backend = "npm:ccusage"
 version = "5.0.8"
 backend = "npm:difit"
 
-[[tools."npm:freee-mcp"]]
-version = "0.30.4"
-backend = "npm:freee-mcp"
-
 [[tools.pnpm]]
 version = "11.13.0"
 backend = "aqua:pnpm/pnpm"
