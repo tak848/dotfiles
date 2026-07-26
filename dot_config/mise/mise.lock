@@ -1735,6 +1735,10 @@ backend = "npm:cc-sdd"
 version = "20.0.17"
 backend = "npm:ccusage"
 
+[[tools."npm:defuddle"]]
+version = "0.19.2"
+backend = "npm:defuddle"
+
 [[tools."npm:difit"]]
 version = "5.0.8"
 backend = "npm:difit"
