@@ -227,11 +227,7 @@ local autoModeRules = import 'auto-mode.libsonnet';
   // CC 2.1.186 で入った plan-mode read-only auto-allow 挙動への対処。
   // 未設定（デフォルト）は true 扱い（cBr() の `!== false` 判定）のため、明示的に false にする必要がある。
   useAutoModeDuringPlan: false,
-  // model: 'claude-opus-4-1-20250805',
-  // model: 'claude-opus-4-6',
-  // model: 'claude-opus-4-6[1m]',
-  // model: 'claude-opus-4-7[1m]',
-  model: 'claude-opus-4-8[1m]',
+  model: 'claude-opus-5[1m]',
   // model: 'opus',
 
   // 無効らしい
