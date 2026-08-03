@@ -27,6 +27,18 @@
         "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\nMISE_VERSION=(?<currentValue>\\S+)",
       ],
     },
+    {
+      // Renovate の mise manager は http backend を抽出対象にしていないため
+      // （サポートは core / asdf / aqua / cargo / gem / github / go / npm / pipx / spm / ubi / vfox）、
+      // [tools."http:grok"] を regex で拾って custom datasource で更新する
+      description: "Grok Build CLI: mise の http backend は mise manager が拾わないため regex で拾う",
+      customType: "regex",
+      managerFilePatterns: ["/^dot_config/mise/config\\.toml$/"],
+      matchStrings: [
+        '# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n\\[tools\\."http:grok"\\]\\nversion = "(?<currentValue>[^"]+)"',
+      ],
+      versioningTemplate: "semver",
+    },
   ],
   customDatasources: {
     "1password-cli": {
@@ -51,13 +63,6 @@
       matchPackageNames: ["1password/cli"],
       overrideDatasource: "custom.1password-cli",
       overridePackageName: "1password-cli",
-      versioning: "semver",
-    },
-    {
-      description: "Grok Build CLI: use official xAI stable channel for aqua HTTP package",
-      matchPackageNames: ["x.ai/cli/grok"],
-      overrideDatasource: "custom.grok-build",
-      overridePackageName: "grok-build",
       versioning: "semver",
     },
     {

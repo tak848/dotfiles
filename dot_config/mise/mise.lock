@@ -1281,31 +1281,6 @@ checksum = "sha256:a526da44d5f67250598fa95e5654815e9f672b2c05d1d98c28bce0e60d3cf
 url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_windows_amd64.zip"
 url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/394135809"
 
-[[tools."aqua:x.ai/cli/grok"]]
-version = "0.2.51"
-backend = "aqua:x.ai/cli/grok"
-
-[tools."aqua:x.ai/cli/grok"."platforms.linux-arm64"]
-url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-aarch64"
-
-[tools."aqua:x.ai/cli/grok"."platforms.linux-arm64-musl"]
-url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-aarch64"
-
-[tools."aqua:x.ai/cli/grok"."platforms.linux-x64"]
-url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-x86_64"
-
-[tools."aqua:x.ai/cli/grok"."platforms.linux-x64-musl"]
-url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-x86_64"
-
-[tools."aqua:x.ai/cli/grok"."platforms.macos-arm64"]
-url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-macos-aarch64"
-
-[tools."aqua:x.ai/cli/grok"."platforms.macos-x64"]
-url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-macos-x86_64"
-
-[tools."aqua:x.ai/cli/grok"."platforms.windows-x64"]
-url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-windows-x86_64.exe"
-
 [[tools."github:aquaproj/aqua"]]
 version = "2.62.3"
 backend = "github:aquaproj/aqua"
@@ -1707,6 +1682,31 @@ url = "https://dl.google.com/go/go1.26.5.windows-amd64.zip"
 [[tools."go:golang.org/x/tools/gopls"]]
 version = "0.23.0"
 backend = "go:golang.org/x/tools/gopls"
+
+[[tools."http:grok"]]
+version = "0.2.51"
+backend = "http:grok"
+
+[tools."http:grok"."platforms.linux-arm64"]
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-aarch64"
+
+[tools."http:grok"."platforms.linux-arm64-musl"]
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-aarch64"
+
+[tools."http:grok"."platforms.linux-x64"]
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-x86_64"
+
+[tools."http:grok"."platforms.linux-x64-musl"]
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-x86_64"
+
+[tools."http:grok"."platforms.macos-arm64"]
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-macos-aarch64"
+
+[tools."http:grok"."platforms.macos-x64"]
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-macos-x86_64"
+
+[tools."http:grok"."platforms.windows-x64"]
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-windows-x86_64.exe"
 
 [[tools.node]]
 version = "24.18.1"

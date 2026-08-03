@@ -68,6 +68,7 @@ Homebrew
   └─ mise (統合ツール管理)
        ├─ ランタイム管理: go, node, pnpm (core backend)
        ├─ CLI ツール管理: fzf, ripgrep, starship, etc. (aqua backend)
+       ├─ 独自ホスティング配布のツール: grok (http backend)
        ├─ npm グローバルパッケージ
        └─ aqua CLI (github backend)
             └─ mise lock で checksum 取得不可のツール
@@ -192,5 +193,6 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 - **chezmoi ソースを編集する。** `~/.claude/CLAUDE.md` 等のターゲットではなく `dot_claude/CLAUDE.md` 等のソースを編集する。ターゲットを直接編集しても `chezmoi update` で上書きされ、PR にも含められない
 - **ツール導入手段として Homebrew を提案しない**（`packages.yaml` への追加・`brew install` を選択肢に挙げない）。mise（aqua / github / go / npm backend）または aqua CLI で完結させる
 - mise にツールを追加する際、`mise search` / `mise registry` で見つからなくても [aqua-registry](https://github.com/aquaproj/aqua-registry/tree/main/pkgs) に定義があれば `"aqua:<registry path>" = "<version>"` で追加できる（Renovate 自動更新・checksum 検証に乗る）。`http` backend で URL を手書きするのは aqua-registry にも無い最終手段のみ
+- 例外として、aqua-registry 側の定義が `type: http`（GitHub リリースではなく独自ホスティング配布）のパッケージは `aqua:` で追加しない。mise の aqua backend が lockfile 生成のたびに GitHub のタグ取得を試みて必ず失敗し警告を出すうえ、[Renovate の mise manager も aqua の http パッケージを抽出対象外にしている](https://docs.renovatebot.com/modules/manager/mise/#limitations)ため更新も効かない。この場合は mise の `http` backend で URL を直接指定する（`dot_config/mise/config.toml` の `[tools."http:grok"]` が例）
 - 環境変数（API key 等）の置き場所を勝手に特定ファイル（`.zshrc.local` 等）に指定しない。置き場所はユーザーに委ねる（エラーメッセージやコメントにも特定ファイル名を書かない）
 - `~/.codex/config.toml` 等の modify テンプレート（`dot_codex/modify_config.toml`）は、出力で再出力しないキーを `chezmoi apply` 時に削除する。ツールが書き込む既存キー（`projects` / `notice` / `hooks.state` 等）は保持ブロックに追加すること

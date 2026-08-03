@@ -110,7 +110,7 @@ go = "1.26.5"
 "github:google-antigravity/antigravity-cli" = "1.1.9"     # agy: Gemini CLI の後継
 "aqua:openai/codex" = "0.146.0"
 "aqua:anomalyco/opencode" = "1.18.11"
-"aqua:x.ai/cli/grok" = "0.2.51" # Grok Build CLI (xAI のターミナル向けコーディングエージェント)
+# Grok Build CLI (xAI) は http backend で管理（末尾の [tools."http:grok"] を参照）
 # Claude Code のハーネスを ChatGPT サブスクの Codex backend に向ける Anthropic 互換プロキシ。claudex から使う
 "github:raine/claude-code-proxy" = { version = "v0.1.30", matching_regex = '\.tar\.gz$' }
 "npm:ccusage" = "20.0.19"
@@ -118,3 +118,21 @@ go = "1.26.5"
 "npm:difit" = "5.0.8"
 "npm:@fission-ai/openspec" = "1.7.0"
 "npm:defuddle" = "0.19.2"                                  # WebFetch の代替: URL 本文をモデル要約を挟まず clean な Markdown で取得
+
+# ============================================
+# Grok Build CLI (xAI のターミナル向けコーディングエージェント)
+# ============================================
+# aqua-registry の x.ai/cli/grok は GCS 配信の http パッケージで repo_owner/repo_name を持たない。
+# mise の aqua backend は lockfile 生成のたびに GitHub のタグ取得を試みて必ず失敗し、対象
+# プラットフォームの数だけ警告を出す。Renovate の mise manager も aqua の http パッケージは
+# 抽出対象外で更新が効かない。どちらも http backend で URL を直接指定すれば解消する。
+# インラインテーブルにすると platforms を書けないため、[tools] の末尾にサブテーブルで置く。
+# renovate: datasource=custom.grok-build depName=grok-build
+[tools."http:grok"]
+version = "0.2.51"
+url = 'https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-{{ version }}-{{ os() }}-{{ arch(x64="x86_64", arm64="aarch64") }}'
+bin = "grok"
+
+# windows のアーティファクトだけ .exe が付くため個別に上書きする
+[tools."http:grok".platforms]
+windows-x64 = { url = 'https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-{{ version }}-windows-x86_64.exe' }
