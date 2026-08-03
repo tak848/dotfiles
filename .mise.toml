@@ -13,11 +13,11 @@ NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
 
 [tools]
 # このリポジトリで使うランタイム
-node = "24.18.0"
-pnpm = "11.17.0"
+node = "24.18.1"
+pnpm = "11.18.0"
 
 # aqua CLI（dot_config/aquaproj-aqua の管理用）
-"github:aquaproj/aqua" = "v2.62.1"
+"github:aquaproj/aqua" = "v2.62.3"
 
 # このリポジトリで使う CLI ツール
 "aqua:google/go-jsonnet" = "0.22.0"
