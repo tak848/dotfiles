@@ -56,6 +56,26 @@
       "algorithm": "sha256"
     },
     {
+      "id": "http/storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-aarch64",
+      "checksum": "1AD7974D7386AC37C5FCFCF8EEEDF61403B6134D4F561B40C59334222F6C578B",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-x86_64",
+      "checksum": "52916267AA2F7868C23A6DD7847DFE066E39A52B8FFD216380186397EA7D0075",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-macos-aarch64",
+      "checksum": "1CAAB58EB25E1AD76B309154ACD2643A7099247555E103FE3AC63F4388099A82",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-macos-x86_64",
+      "checksum": "0302B17CF59A762977210A52DC2A25C10601EBD343E9B08C10559B423CCF7D0B",
+      "algorithm": "sha256"
+    },
+    {
       "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.542.0/registry.yaml",
       "checksum": "0FF75B25D9D7CF158DF4BDE701E55F7F0B0966F7EF4B2C329B72FA4E003E74E3",
       "algorithm": "sha256"

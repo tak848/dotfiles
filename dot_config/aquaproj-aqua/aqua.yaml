@@ -18,3 +18,7 @@ packages:
   - name: aws/aws-cli@2.36.8
   - name: 1password/cli@v2.32.0
   - name: ajeetdsouza/zoxide@v0.10.0
+  # Grok Build CLI (xAI のターミナル向けコーディングエージェント)
+  # aqua-registry では GCS 配信の http パッケージとして定義されており repo_owner/repo_name を
+  # 持たないため、mise の aqua backend は lockfile 生成時に GitHub のタグ取得を試みて必ず失敗する
+  - name: x.ai/cli/grok@0.2.51

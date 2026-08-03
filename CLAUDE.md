@@ -71,7 +71,7 @@ Homebrew
        ├─ npm グローバルパッケージ
        └─ aqua CLI (github backend)
             └─ mise lock で checksum 取得不可のツール
-                 └─ aws-cli, 1password/cli, zoxide
+                 └─ aws-cli, 1password/cli, zoxide, x.ai/cli/grok
 ```
 
 - **mise** (`dot_config/mise/`, `dot_local/bin/executable_mise`): ランタイム、CLI ツール、npm パッケージの統合管理。bootstrap 方式でインストール

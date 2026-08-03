@@ -106,7 +106,7 @@ tasks:
 
   #############################################################################
   # aqua checksum 生成
-  # mise lock で checksum が取得できないツール（aws-cli, 1password/cli, zoxide）用
+  # mise lock で checksum が取得できないツール（aws-cli, 1password/cli, zoxide, x.ai/cli/grok）用
   # --prune で不要なエントリを削除
   #############################################################################
   aqua:checksum:
