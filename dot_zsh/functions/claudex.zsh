@@ -71,7 +71,7 @@ claudex() {
     # 仮定する context window を上書きする。gpt-5.6-sol の実キャップは ChatGPT/Codex backend で約372K
     # （272K↔372Kで変動）なので、既定値を372Kとする。Claude Codeはここから出力領域を予約して
     # auto-compactするため、CLAUDE_CODE_AUTO_COMPACT_WINDOWを340Kに上書きすると余裕を二重に
-    # 差し引いてしまう。グローバル設定の500Kはmodel contextの372Kにcapされるため、そのままでよい。
+    # 差し引いてしまう。グローバル設定の750Kはmodel contextの372Kにcapされるため、そのままでよい。
     # [1m] は基盤モデルが実際に1M contextをサポートする場合の指定なので使用しない。
     # statuslineも実態に合う /372k 表示になる。
     #
