@@ -31,7 +31,7 @@ codexp() {
         update doctor debug apply a cloud exec-server features help
     )
 
-    local profile="$CODEX_PROFILE"
+    local profile="${CODEX_PROFILE:-}"
     if [ -z "$profile" ]; then
         command codex "$@"
         return
