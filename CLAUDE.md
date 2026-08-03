@@ -88,6 +88,15 @@ Homebrew
 
 これは既に有効化されている `codex@openai-codex` プラグイン（Claude Code から Codex CLI に作業を委譲する）とは別物で、両立する。
 
+### codexp（Codex を profile 付きで起動する）
+
+`dot_zsh/functions/codexp.zsh` が提供する `codexp` コマンドは、環境変数 `CODEX_PROFILE` を読んで `codex --profile <name>` に変換する薄いラッパー。Codex CLI の `--profile` は `$CODEX_HOME/<name>.config.toml` を base config の上にレイヤーする仕組みだが、Codex 自身には profile を選ぶ環境変数が無いため、repo ごとの切り替えをこの関数で補う。`CODEX_PROFILE` 未設定なら素の `codex` と完全に同じ挙動になる。
+
+- `--profile` が使えるのは runtime サブコマンド（サブコマンド無し / `exec` / `review` / `resume` / `archive` / `delete` / `unarchive` / `fork` / `mcp` / `sandbox` / `debug prompt-input`）だけで、`login` や `doctor` に付けると Codex はエラーで即終了する。そのため非対応サブコマンドを denylist で除外している
+- Codex は存在しない profile 名を黙って無視するため、`codexp` 側で profile ファイルの存在を確認して警告を出す
+- profile 定義ファイル（`$CODEX_HOME/<name>.config.toml`）は chezmoi 管理外。`dot_codex/modify_config.toml` に残る legacy な `[profiles.*]` と同名の profile 名を指定すると Codex がエラーになるため、名前を衝突させないこと
+- `gwc` の `--co` / `--ccco` は `codex` ではなく `codexp` を起動する
+
 ### 自動生成ファイル一覧
 
 | ファイル | 生成元 | 生成方法 |
