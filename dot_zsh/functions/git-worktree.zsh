@@ -208,15 +208,16 @@ gwr() {
 #   gwc ENG-123 --ccs                # 作成後に claude --model sonnet を初期プロンプトで起動
 #   gwc ENG-123 --ccx                # 作成後に claudex（Claude Code のハーネス + GPT-5.6 Sol）を初期プロンプトで起動
 #   gwc ENG-123 --ccxf               # 作成後に claudexf（claudex の Codex fast/priority tier 版）を初期プロンプトで起動
-#   gwc ENG-123 --co                 # 作成後に codex を初期プロンプトで起動（GWC_CODEX_CLI_INITIAL_PROMPT）
+#   gwc ENG-123 --co                 # 作成後に codexp を初期プロンプトで起動（GWC_CODEX_CLI_INITIAL_PROMPT）
 #   gwc ENG-123 --cc "追加の指示"     # 初期プロンプト + 改行2つ + 追加プロンプトで起動（ref より後ろに置くこと）
-#   gwc ENG-123 --ccco               # cmux 限定: claude を現在ペイン、codex を右 split で同時起動
-#   gwc ENG-123 --ccco "追加の指示"   # 追加プロンプトは claude / codex 両方に渡る
+#   gwc ENG-123 --ccco               # cmux 限定: claude を現在ペイン、codexp を右 split で同時起動
+#   gwc ENG-123 --ccco "追加の指示"   # 追加プロンプトは claude / codexp 両方に渡る
 #   export GWC_COPY_FILES=".env.test,config.local.json"  # 環境変数で事前設定
 #   export GWC_PNPM_EXTRA_DIRS="apps/foo,apps/bar"  # root 以外で pnpm install するディレクトリ（worktree root からの相対パス、カンマ区切り）
 #   export GWC_LINEAR_API_KEY="lin_api_..."  # Linear モードに必要（環境変数として設定）
 #   export GWC_CLAUDE_CODE_INITIAL_PROMPT="..."  # --cc / --ccx / --ccxf で claude / claudex(f) に渡す初期プロンプト（未設定なら素の起動 or 追加プロンプトのみ）
-#   export GWC_CODEX_CLI_INITIAL_PROMPT="..."    # --co で codex に渡す初期プロンプト（同上）
+#   export GWC_CODEX_CLI_INITIAL_PROMPT="..."    # --co で codexp に渡す初期プロンプト（同上）
+#   export CODEX_PROFILE="..."       # codexp が codex --profile に渡す profile 名（codexp.zsh）
 #
 # cmux 環境（CMUX_WORKSPACE_ID あり）で Linear/PR モードを使うと、実行元の cmux
 # ワークスペース名を自動設定する（Linear: "<repo>[<ID>] <title>" / PR: "<repo>[#<番号>] <title>"）。
@@ -236,10 +237,10 @@ gwc() {
     local skip_fzf=false
     local open_with_cursor=false
     local cmux_title=""  # cmux 環境ならワークスペース名に設定する文字列（Linear/PR モードでセット）
-    local launch_agent=""  # --cc → claude / --ccx → claudex / --ccxf → claudexf / --co → codex / --ccco → claude（前面）。worktree 作成後に初期プロンプトで起動
+    local launch_agent=""  # --cc → claude / --ccx → claudex / --ccxf → claudexf / --co → codexp / --ccco → claude（前面）。worktree 作成後に初期プロンプトで起動
     local launch_model=""  # --ccf → fable / --cco → opus / --ccs → sonnet。claude 起動時だけ --model として渡す
                            # （--ccx / --ccxf は claudex(f) 側が --model を指定するため空のままにする）
-    local split_agent=""   # --ccco → codex を右 split で起動（claude は launch_agent で現在ペイン前面起動）
+    local split_agent=""   # --ccco → codexp を右 split で起動（claude は launch_agent で現在ペイン前面起動）
     local agent_extra=""   # --cc / --co / --ccco の後ろに渡された追加プロンプト
 
     # 環境変数 GWC_COPY_FILES から追加のコピー対象ファイルを取得
@@ -296,7 +297,7 @@ gwc() {
             shift
             ;;
         --cc | --co)
-            # --cc → claude / --co → codex。worktree 作成後に初期プロンプトで起動する。
+            # --cc → claude / --co → codexp。worktree 作成後に初期プロンプトで起動する。
             # 直後にオプションでないトークンがあれば追加プロンプトとして取り込む
             # （例: gwc ENG-123 --cc "追加の指示"）。ref と紛れないよう --cc/--co は ref の後ろに置くこと。
             if [ -n "$launch_agent" ] || [ -n "$split_agent" ]; then
@@ -306,7 +307,7 @@ gwc() {
             if [ "$1" = "--cc" ]; then
                 launch_agent="claude"
             else
-                launch_agent="codex"
+                launch_agent="codexp"
             fi
             shift # --cc / --co を消費
             if [ -n "$1" ] && [[ "$1" != -* ]]; then
@@ -353,7 +354,7 @@ gwc() {
             fi
             ;;
         --ccco)
-            # cmux 限定: claude を現在ペイン前面、codex を右 split で同時起動する。
+            # cmux 限定: claude を現在ペイン前面、codexp を右 split で同時起動する。
             # 末尾に非オプションのトークンがあれば両エージェント共通の追加プロンプトとして取り込む。
             if [ -n "$launch_agent" ] || [ -n "$split_agent" ]; then
                 echo "エラー: --cc / --ccf / --cco / --ccs / --ccx / --ccxf / --co / --ccco は同時に指定できません。" >&2
@@ -365,7 +366,7 @@ gwc() {
                 return 1
             fi
             launch_agent="claude"   # 現在ペインで前面起動（既存経路を再利用）
-            split_agent="codex"     # 右 split で起動
+            split_agent="codexp"    # 右 split で起動
             shift # --ccco を消費
             if [ -n "$1" ] && [[ "$1" != -* ]]; then
                 agent_extra="$1"
@@ -721,7 +722,7 @@ gwc() {
         fi
         # ★★★ ここまで ★★★
 
-        # --cc / --ccx / --ccxf / --co: worktree 内で claude / claudex / claudexf / codex を初期プロンプト付きで起動する。
+        # --cc / --ccx / --ccxf / --co: worktree 内で claude / claudex / claudexf / codexp を初期プロンプト付きで起動する。
         # プロンプトは位置引数で渡す（codex は stdin パイプ非対応のため。claude も同様に統一）。
         #   - 環境変数（GWC_CLAUDE_CODE_INITIAL_PROMPT / GWC_CODEX_CLI_INITIAL_PROMPT）と
         #     追加プロンプト（agent_extra）の両方があれば「環境変数 + 改行2つ + 追加」を送る
@@ -730,15 +731,17 @@ gwc() {
             # --cursor で original_dir に戻っている可能性があるため target_dir に入り直す
             cd "$target_dir"
 
-            # --ccco: codex を右 split で起動（claude はこの後段で現在ペイン前面起動）。
+            # --ccco: codexp を右 split で起動（claude はこの後段で現在ペイン前面起動）。
             # split は別ペイン＝別シェルのため、zsh 変数を直接渡せず cmux send でコマンドを送る。
+            # codexp は PATH 上のバイナリではなく zsh 関数だが、新ペインも interactive zsh で
+            # ~/.zshrc（→ ~/.zsh/functions/*.zsh）を読むため、送り先のシェルでも定義されている。
             # 複数行プロンプトを send にインラインで埋めると改行が Enter と解釈されコマンドが
             # 途中実行されるため、プロンプトは一時ファイルに書き split 側で cat して読み込む。
             if [ -n "$split_agent" ] && _cmux_available; then
                 if ! command -v "$split_agent" >/dev/null 2>&1; then
                     echo "警告: '$split_agent' コマンドが見つかりません。split 起動をスキップします。" >&2
                 else
-                    # codex 用プロンプト合成（既存 --co と同じ規則: GWC_CODEX_CLI_INITIAL_PROMPT + extra）
+                    # codexp 用プロンプト合成（既存 --co と同じ規則: GWC_CODEX_CLI_INITIAL_PROMPT + extra）
                     local split_base="$GWC_CODEX_CLI_INITIAL_PROMPT"
                     local split_prompt=""
                     if [ -n "$split_base" ] && [ -n "$agent_extra" ]; then
