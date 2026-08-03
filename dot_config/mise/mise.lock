@@ -1497,6 +1497,7 @@ checksum = "sha256:72948bf5784f560d5ad1876709daca27e0667f262da727bb33f77b58e52df
 url = "https://github.com/jgm/pandoc/releases/download/3.10.1/pandoc-3.10.1-linux-amd64.tar.gz"
 url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/486227507"
 provenance = "github-attestations"
+provenance_verified = true
 
 [tools."github:jgm/pandoc"."platforms.linux-x64-musl"]
 checksum = "sha256:72948bf5784f560d5ad1876709daca27e0667f262da727bb33f77b58e52df2f5"
