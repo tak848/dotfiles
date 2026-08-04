@@ -162,21 +162,27 @@ version = "2.1.221"
 backend = "aqua:anthropics/claude-code"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64"]
+checksum = "sha256:d3c59d6bcc4adcf4cd85abca3bc13fa1131a34cb32f982bdf030d83a3b11e700"
 url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.221/linux-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64-musl"]
+checksum = "sha256:85985afd58d33578efd217788dd9e5cbbc0177ad00e638d9316c6fd89640f3ff"
 url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.221/linux-arm64-musl/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64"]
+checksum = "sha256:60db8e88d42c24b5199c92cfd56ec88370c510c3789c6f364af748354f087ada"
 url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.221/linux-x64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64-musl"]
+checksum = "sha256:15b068e06eafff9b64583b46cdc065ac18b0d0d13950c2a83c6ee854f301a32f"
 url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.221/linux-x64-musl/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-arm64"]
+checksum = "sha256:7a181f36ed0fc4fbac6cee4ecf2b615eff93d8b434221fff5d7c878dc5ebf380"
 url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.221/darwin-arm64/claude"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-x64"]
+checksum = "sha256:f408b9f7e46439f6e34a3687ff67433fc6bc189f40220ce4f0a1e829e58f0a52"
 url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.221/darwin-x64/claude"
 
 [[tools."aqua:arl/gitmux"]]
@@ -1091,30 +1097,37 @@ version = "0.10.0"
 backend = "aqua:tamasfe/taplo"
 
 [tools."aqua:tamasfe/taplo"."platforms.linux-arm64"]
+checksum = "sha256:033681d01eec8376c3fd38fa3703c79316f5e14bb013d859943b60a07bccdcc3"
 url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-aarch64.gz"
 url_api = "https://api.github.com/repos/tamasfe/taplo/releases/assets/257322597"
 
 [tools."aqua:tamasfe/taplo"."platforms.linux-arm64-musl"]
+checksum = "sha256:033681d01eec8376c3fd38fa3703c79316f5e14bb013d859943b60a07bccdcc3"
 url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-aarch64.gz"
 url_api = "https://api.github.com/repos/tamasfe/taplo/releases/assets/257322597"
 
 [tools."aqua:tamasfe/taplo"."platforms.linux-x64"]
+checksum = "sha256:8fe196b894ccf9072f98d4e1013a180306e17d244830b03986ee5e8eabeb6156"
 url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-x86_64.gz"
 url_api = "https://api.github.com/repos/tamasfe/taplo/releases/assets/257322600"
 
 [tools."aqua:tamasfe/taplo"."platforms.linux-x64-musl"]
+checksum = "sha256:8fe196b894ccf9072f98d4e1013a180306e17d244830b03986ee5e8eabeb6156"
 url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-x86_64.gz"
 url_api = "https://api.github.com/repos/tamasfe/taplo/releases/assets/257322600"
 
 [tools."aqua:tamasfe/taplo"."platforms.macos-arm64"]
+checksum = "sha256:713734314c3e71894b9e77513c5349835eefbd52908445a0d73b0c7dc469347d"
 url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-darwin-aarch64.gz"
 url_api = "https://api.github.com/repos/tamasfe/taplo/releases/assets/257323110"
 
 [tools."aqua:tamasfe/taplo"."platforms.macos-x64"]
+checksum = "sha256:898122cde3a0b1cd1cbc2d52d3624f23338218c91b5ddb71518236a4c2c10ef2"
 url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-darwin-x86_64.gz"
 url_api = "https://api.github.com/repos/tamasfe/taplo/releases/assets/257323116"
 
 [tools."aqua:tamasfe/taplo"."platforms.windows-x64"]
+checksum = "sha256:1615eed140039bd58e7089109883b1c434de5d6de8f64a993e6e8c80ca57bdf9"
 url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-windows-x86_64.zip"
 url_api = "https://api.github.com/repos/tamasfe/taplo/releases/assets/257323062"
 
@@ -1688,24 +1701,31 @@ version = "0.2.51"
 backend = "http:grok"
 
 [tools."http:grok"."platforms.linux-arm64"]
+checksum = "sha256:1ad7974d7386ac37c5fcfcf8eeedf61403b6134d4f561b40c59334222f6c578b"
 url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-aarch64"
 
 [tools."http:grok"."platforms.linux-arm64-musl"]
+checksum = "sha256:1ad7974d7386ac37c5fcfcf8eeedf61403b6134d4f561b40c59334222f6c578b"
 url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-aarch64"
 
 [tools."http:grok"."platforms.linux-x64"]
+checksum = "sha256:52916267aa2f7868c23a6dd7847dfe066e39a52b8ffd216380186397ea7d0075"
 url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-x86_64"
 
 [tools."http:grok"."platforms.linux-x64-musl"]
+checksum = "sha256:52916267aa2f7868c23a6dd7847dfe066e39a52b8ffd216380186397ea7d0075"
 url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-linux-x86_64"
 
 [tools."http:grok"."platforms.macos-arm64"]
+checksum = "sha256:1caab58eb25e1ad76b309154acd2643a7099247555e103fe3ac63f4388099a82"
 url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-macos-aarch64"
 
 [tools."http:grok"."platforms.macos-x64"]
+checksum = "sha256:0302b17cf59a762977210a52dc2a25c10601ebd343e9b08c10559b423ccf7d0b"
 url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-macos-x86_64"
 
 [tools."http:grok"."platforms.windows-x64"]
+checksum = "sha256:3d7fd4a04ef7f6e88b0ffb3ccee21e367ff7424e4a8877ee6e9e069ef8dc5e66"
 url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-0.2.51-windows-x86_64.exe"
 
 [[tools.node]]
