@@ -162,7 +162,9 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 | ワークフロー | トリガー | 処理 |
 |-------------|---------|------|
 | `ci.yaml` | push | `task check` で自動生成ファイルの diff チェック |
-| `lockfiles-and-checksums.yaml` | push（`.mise.toml` / `dot_config/mise/config.toml` / `dot_config/aquaproj-aqua/aqua.yaml` 変更時、`main` / `lazy-lock-update` ブランチを除く） | `mise lock`（ルート + `dot_config/mise/`）と `aqua update-checksum --prune` を Renovate PR ブランチへ commit |
+| `lockfiles-and-checksums.yaml` | push（`.mise.toml` / `dot_config/mise/config.toml` / `dot_config/aquaproj-aqua/aqua.yaml` 変更時、`main` / `lazy-lock-update` ブランチを除く） | `mise lock`（ルート + `dot_config/mise/`）→ `fill-lockfile-checksums.sh` → `aqua update-checksum --prune` を Renovate PR ブランチへ commit |
+
+`fill-lockfile-checksums.sh` は、`mise lock` では checksum が埋まらないツールを補う。mise は backend が checksum を供給できる場合しか lockfile に書き込まないため、`http` backend のツールや aqua-registry 側に checksum 定義が無いパッケージ（`anthropics/claude-code`, `tamasfe/taplo`, `http:grok`）は url だけが残り、install 時の整合性検証が働かない。そこで実アーティファクトを取得して sha256 を計算し、lockfile に追記する。checksum のあるエントリは触らないので冪等。アーティファクトを丸ごとダウンロードする都合上、対象が増えるほど CI 時間は延びる（現状で合計 2 GB 強）。
 | `mise-bootstrap.yaml` | push（`.mise-bootstrap-version` 変更時） | `mise generate bootstrap` |
 | `lazy-lock.yaml` | nvim 設定変更 / 週次 cron | Lazy.nvim lockfile 更新（PR 作成 or Renovate PR へコミット） |
 

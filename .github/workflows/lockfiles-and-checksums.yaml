@@ -66,5 +66,9 @@ jobs:
           REGENERATE_CMD: |
             rm -f mise.lock && mise lock
             ( cd dot_config/mise && rm -f mise.lock && mise lock )
+            # backend が checksum を供給できないツール（http backend や、aqua-registry 側に
+            # checksum 定義が無いパッケージ）は mise lock で url しか埋まらない。
+            # lockfile を作り直した後に実アーティファクトから sha256 を計算して補う。
+            bash .github/scripts/fill-lockfile-checksums.sh mise.lock dot_config/mise/mise.lock
             ( cd dot_config/aquaproj-aqua && aqua update-checksum --prune )
         run: bash .github/scripts/commit-via-graphql.sh
