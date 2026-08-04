@@ -65,17 +65,28 @@
       overridePackageName: "1password-cli",
       versioning: "semver",
     },
+    // custom datasource（xAI の stable channel / 1Password の update check endpoint）は
+    // バージョン番号しか返さず releaseTimestamp を持たない。Renovate 42 以降は
+    // minimumReleaseAgeBehaviour の既定が timestamp-required で、timestamp の無い
+    // リリースを「まだ minimumReleaseAge を満たしていない」扱いにするため、
+    // internalChecksFilter=strict（既定）のもとでブランチすら作られず更新が止まる。
+    // 実際 1password/cli は Renovate 42 が出た直後の 2025-11-19 から v2.32.0 で
+    // 止まっていた。timestamp を提供しようのないデータソースなので age gate を外す。
+    //
+    // ただし age gate が効かない以上、リリース直後でも PR が立つ。group:allNonMajor の
+    // 一括 PR に混ぜると 24h 経ったものと経っていないものが同居して見分けがつかなくなるため、
+    // groupName を与えて単独 PR に分離する。
     {
-      // custom datasource（xAI の stable channel / 1Password の update check endpoint）は
-      // バージョン番号しか返さず releaseTimestamp を持たない。Renovate 42 以降は
-      // minimumReleaseAgeBehaviour の既定が timestamp-required で、timestamp の無い
-      // リリースを「まだ minimumReleaseAge を満たしていない」扱いにするため、
-      // internalChecksFilter=strict（既定）のもとでブランチすら作られず更新が止まる。
-      // 実際 1password/cli は Renovate 42 が出た直後の 2025-11-19 から v2.32.0 で
-      // 止まっていた。timestamp を提供しようのないデータソースなので age gate を外す。
-      description: "custom datasource: releaseTimestamp が無いため age gate を timestamp-optional にする",
-      matchPackageNames: ["1password/cli", "1password-cli", "grok-build"],
+      description: "1Password CLI: releaseTimestamp が無く age gate が効かないため単独 PR にする",
+      matchPackageNames: ["1password/cli", "1password-cli"],
       minimumReleaseAgeBehaviour: "timestamp-optional",
+      groupName: "1password-cli",
+    },
+    {
+      description: "Grok Build CLI: releaseTimestamp が無く age gate が効かないため単独 PR にする",
+      matchPackageNames: ["grok-build"],
+      minimumReleaseAgeBehaviour: "timestamp-optional",
+      groupName: "grok-build",
     },
     {
       // mise.lock の更新は CI 側の lockfiles-and-checksums.yaml ワークフローに任せる。
