@@ -1294,6 +1294,24 @@ checksum = "sha256:a526da44d5f67250598fa95e5654815e9f672b2c05d1d98c28bce0e60d3cf
 url = "https://github.com/x-motemen/ghq/releases/download/v1.10.1/ghq_windows_amd64.zip"
 url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/394135809"
 
+[[tools."github:Azure/azure-cli"]]
+version = "2.89.0"
+backend = "github:Azure/azure-cli"
+
+[tools."github:Azure/azure-cli".options]
+matching_regex = "macos"
+version_prefix = "azure-cli-"
+
+[tools."github:Azure/azure-cli"."platforms.macos-arm64"]
+checksum = "sha256:ac5e8ce16b2355a55a3bea20afee9d3d2dbc1289a18e8aa3625d0b62910124ba"
+url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.89.0/azure-cli-2.89.0-macos-arm64.tar.gz"
+url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/500703301"
+
+[tools."github:Azure/azure-cli"."platforms.macos-x64"]
+checksum = "sha256:9b94be70fe95b547b1208c07f3018e8880a5676aaff3335005ab445ab5044792"
+url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.89.0/azure-cli-2.89.0-macos-x86_64.tar.gz"
+url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/500703321"
+
 [[tools."github:aquaproj/aqua"]]
 version = "2.62.3"
 backend = "github:aquaproj/aqua"
