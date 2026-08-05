@@ -80,43 +80,43 @@ url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/496096471"
 provenance = "cosign"
 
 [[tools."aqua:anomalyco/opencode"]]
-version = "1.18.12"
+version = "1.18.14"
 backend = "aqua:anomalyco/opencode"
 
 [tools."aqua:anomalyco/opencode"."platforms.linux-arm64"]
-checksum = "sha256:82b9c5157b7ae10acb5feacedb07c90a9b6dce94efb3b7060c863b073a622ad0"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.12/opencode-linux-arm64.tar.gz"
-url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/500691505"
+checksum = "sha256:27ede7aa2080002459d8c970a40016bbef49cd13bb467302777da67467f1602d"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.14/opencode-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/503045908"
 
 [tools."aqua:anomalyco/opencode"."platforms.linux-arm64-musl"]
-checksum = "sha256:e4b626af805696597bd1fa012d939576f5e562f0167a79c210d7f1d69ffd5662"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.12/opencode-linux-arm64-musl.tar.gz"
-url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/500691528"
+checksum = "sha256:3bdf6a9e66a4008780e3b00a3040c4d958d44f85ba64722ff8470075a9812557"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.14/opencode-linux-arm64-musl.tar.gz"
+url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/503045933"
 
 [tools."aqua:anomalyco/opencode"."platforms.linux-x64"]
-checksum = "sha256:7a2e3b706306b04fbf5353b67d916b0801fcda565f9ee021bea2a77207961452"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.12/opencode-linux-x64.tar.gz"
-url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/500691451"
+checksum = "sha256:f23980ba2aebfbfa53948e55e213d3f2a53740fd7326553828e89ad27e970572"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.14/opencode-linux-x64.tar.gz"
+url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/503046045"
 
 [tools."aqua:anomalyco/opencode"."platforms.linux-x64-musl"]
-checksum = "sha256:5816f22959c6f7ed705dad084db0eb47358b58a68420e14975b1d2017b33f018"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.12/opencode-linux-x64-musl.tar.gz"
-url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/500691452"
+checksum = "sha256:2ef42702c08c1f9baedb5f4618aaa6d8fd9ac09614e577df06731e7f3da3ba84"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.14/opencode-linux-x64-musl.tar.gz"
+url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/503045905"
 
 [tools."aqua:anomalyco/opencode"."platforms.macos-arm64"]
-checksum = "sha256:aa19412dd20fc49416742440077fab60944096650072b0ce08e87a16183978e1"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.12/opencode-darwin-arm64.zip"
-url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/500691350"
+checksum = "sha256:ad8125bb649086eb9210a87bbd27ac453a526e2432aebd4d3c9853e2d42e3291"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.14/opencode-darwin-arm64.zip"
+url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/503045781"
 
 [tools."aqua:anomalyco/opencode"."platforms.macos-x64"]
-checksum = "sha256:7aef6a818713b79b7d57d4934b9227a4d81f7887f6db49214fb0416aef0364ff"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.12/opencode-darwin-x64.zip"
-url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/500691353"
+checksum = "sha256:78b2e99a9094ce7a4fb38416990d2b9b23e5f99a9992a37b04fb861f24c48925"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.14/opencode-darwin-x64.zip"
+url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/503045779"
 
 [tools."aqua:anomalyco/opencode"."platforms.windows-x64"]
-checksum = "sha256:db87932dc3f500ca2b187cebb4154585035ece4f5d51d46f5fc1ea8e670a4c52"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.12/opencode-windows-x64.zip"
-url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/500694476"
+checksum = "sha256:437501f14cd35655e97b1c6bb5cb8f4128172eaeaaf8de55750537b0f1c989e0"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.14/opencode-windows-x64.zip"
+url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/503049596"
 
 [[tools."aqua:anthropics/anthropic-cli"]]
 version = "1.21.0"
