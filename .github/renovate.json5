@@ -126,6 +126,15 @@
       minimumReleaseAge: "0 hours",
     },
     {
+      // config.toml 側は version_prefix = "azure-cli-" を使って version に素の semver を書いている。
+      // datasource が返すのはタグ名（azure-cli-2.89.0）なので、ここで version 部分だけを取り出して
+      // currentValue と比較・書き戻しできるようにする。codex の rust-v prefix と同じ扱い。
+      description: "Azure CLI: GitHub のタグが azure-cli-<version> 形式なので version 部分だけを抽出する",
+      matchPackageNames: ["Azure/azure-cli"],
+      matchManagers: ["mise"],
+      extractVersion: "^azure-cli-(?<version>.+)$",
+    },
+    {
       description: "Use node versioning for Node.js (LTS only)",
       matchPackageNames: ["nodejs/node"],
       versioning: "node",
