@@ -20,9 +20,10 @@ NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
 # Azure CLI の tarball は Python を同梱しておらず、libexec/lib/python3.14/site-packages と
 # bash ランチャーだけが入っている。ランチャーは Homebrew Cask 配下に置かれていない場合、
 # AZ_PYTHON が指す Python 3.14 で `python -sm azure.cli` を実行する作りで、未設定なら即エラー終了する。
-# mise の python backend で入れると PATH に python / python3 が生えて誰でも使えてしまうため、
-# PATH に出てこない uv 管理の Python を指す。未導入のマシンでは `uv python install 3.14` で用意する。
-AZ_PYTHON = '{{env.HOME}}/.local/share/uv/python/cpython-3.14-macos-{{ arch(x64="x86_64", arm64="aarch64") }}-none/bin/python3.14'
+# mise の python backend で入れると PATH に python / python3 が生えて誰でも使えてしまうため使わない。
+# uv も既定では実行ファイルを ~/.local/bin（uv python dir --bin）に置いて PATH に生やすので、
+# azure-cli 専用のディレクトリに閉じ込める。実体を入れるのは tools 側の postinstall。
+AZ_PYTHON = '{{ env.XDG_DATA_HOME | default(value=env.HOME ~ "/.local/share") }}/azure-cli/python/python3.14'
 
 [tools]
 # ============================================
@@ -83,8 +84,10 @@ go = "1.26.5"
 # matching_regex は x86_64 マシンで -x64.msi / -x64.zip を掴まないための保険。
 # tag が azure-cli-<version> 形式なので version_prefix で補い、version 自体は素の semver にする
 # （Renovate に extractVersion で追わせるため。renovate.json5 の packageRules を参照）。
-# 実行には AZ_PYTHON が必要（[env] を参照）。
-"github:Azure/azure-cli" = { version = "2.89.0", version_prefix = "azure-cli-", os = ["macos"], matching_regex = "macos" }
+# 実行に必要な Python 3.14 は postinstall で入れる。UV_PYTHON_BIN_DIR を指定しないと uv が
+# ~/.local/bin に python3.14 を置いて PATH に生えるため、[env] の AZ_PYTHON と同じ
+# azure-cli 専用ディレクトリに向ける（postinstall には [env] が渡らないのでシェル側で XDG を解決する）。
+"github:Azure/azure-cli" = { version = "2.89.0", version_prefix = "azure-cli-", os = ["macos"], matching_regex = "macos", depends = ["aqua:astral-sh/uv"], postinstall = 'UV_PYTHON_BIN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/azure-cli/python" uv python install 3.14' }
 
 # 開発ツール
 "aqua:bufbuild/buf" = "1.72.0"
