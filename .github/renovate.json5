@@ -39,6 +39,18 @@
       ],
       versioningTemplate: "semver",
     },
+    {
+      // Azure CLI の tarball は Python を同梱しないため run_onchange スクリプトで uv python install
+      // する。mise manager が見るのは config.toml のツール定義だけなので、スクリプト側は regex で追う。
+      description: "Azure CLI が使う Python: run_onchange スクリプトのバージョンを追う",
+      customType: "regex",
+      managerFilePatterns: [
+        "/^run_onchange_after_15-azure-cli-python\\.sh\\.tmpl$/",
+      ],
+      matchStrings: [
+        '# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\nAZURE_CLI_PYTHON_VERSION="(?<currentValue>[^"]+)"',
+      ],
+    },
   ],
   customDatasources: {
     "1password-cli": {
@@ -124,6 +136,26 @@
       matchPackageNames: ["tak848/ccgate"],
       groupName: "ccgate",
       minimumReleaseAge: "0 hours",
+    },
+    {
+      // config.toml 側は version_prefix = "azure-cli-" を使って version に素の semver を書いている。
+      // datasource が返すのはタグ名（azure-cli-2.89.0）なので、ここで version 部分だけを取り出して
+      // currentValue と比較・書き戻しできるようにする。codex の rust-v prefix と同じ扱い。
+      description: "Azure CLI: GitHub のタグが azure-cli-<version> 形式なので version 部分だけを抽出する",
+      matchPackageNames: ["Azure/azure-cli"],
+      matchManagers: ["mise"],
+      extractVersion: "^azure-cli-(?<version>.+)$",
+    },
+    {
+      // uv は Python のダウンロード metadata をバイナリに焼き込んでいるため、CPython のパッチが
+      // 出ても uv 自体が更新されるまでは `uv python install <patch>` が
+      // `No download found for request` で失敗する。実際 CPython 3.14.7 は 2026-08-05 12:40 UTC
+      // リリース、python-build-standalone のビルドは同日 17:58 UTC、uv 0.12.2 は同日 19:22 UTC で、
+      // astral 側の追随自体は速い。待ちが生じるのはこのリポジトリで uv の更新 PR がマージされるまで。
+      // その猶予として age gate を長めに取る。
+      description: "Azure CLI が使う Python: uv 側の追随を待つため age gate を長めにする",
+      matchDatasources: ["python-version"],
+      minimumReleaseAge: "7 days",
     },
     {
       description: "Use node versioning for Node.js (LTS only)",

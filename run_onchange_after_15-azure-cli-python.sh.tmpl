@@ -1,0 +1,32 @@
+#!/bin/bash
+set -euo pipefail
+
+# Azure CLI が実行に使う Python を用意する。
+#
+# Azure CLI の tarball（dot_config/mise/config.toml の github:Azure/azure-cli）は Python を
+# 同梱しておらず、bash ランチャーが AZ_PYTHON の指す Python 3.14 で azure.cli を起動する。
+# mise の python backend で入れると PATH に python / python3 が生えて Azure CLI 以外からも
+# 使えてしまうため使わない。uv も既定では実行ファイルを ~/.local/bin（uv python dir --bin）に
+# 置いて PATH に生やすので、UV_PYTHON_BIN_DIR で azure-cli 専用ディレクトリに閉じ込める。
+# 置き場所は config.toml の [env] AZ_PYTHON と一致させること。
+#
+# mise の postinstall ではなくここに置いている理由は、postinstall がシステムの PATH で実行され、
+# mise 管理の uv を解決できないため。実際 postinstall 内の uv は Homebrew の古い版が使われ、
+# 新しい CPython パッチを知らず `No download found for request` で失敗した。
+# path-setup.tmpl は mise shims を Homebrew より前に置くので、ここでは mise 管理の uv が使われる。
+
+{{ template "path-setup.tmpl" . }}
+
+{{- if eq .chezmoi.os "darwin" }}
+# uv は Python のダウンロード metadata をバイナリに焼き込んでいるため、CPython のパッチが出ても
+# uv 自体が更新されるまでは入れられない。Renovate 側で age gate を長めに取って追随を待つ
+# （.github/renovate.json5 の packageRules を参照）。
+# renovate: datasource=python-version depName=python
+AZURE_CLI_PYTHON_VERSION="3.14.6"
+
+if command -v uv &> /dev/null; then
+    export UV_PYTHON_BIN_DIR="${XDG_DATA_HOME}/azure-cli/python"
+    echo "Azure CLI 用の Python ${AZURE_CLI_PYTHON_VERSION} を用意中..."
+    uv python install "${AZURE_CLI_PYTHON_VERSION}"
+fi
+{{- end }}
