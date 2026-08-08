@@ -21,8 +21,8 @@ NPM_CONFIG_TRUST_POLICY_EXCLUDE = "tinyexec@1.2.2"
 # ============================================
 # ランタイム（core backend）
 # ============================================
-node = "24.18.1"
-pnpm = "11.18.0"
+node = "24.19.0"
+pnpm = "11.20.0"
 "github:endevco/aube" = "v1.37.0" # 高速な Node.js パッケージマネージャ
 go = "1.26.5"
 
@@ -46,7 +46,7 @@ go = "1.26.5"
 # zoxide は aqua CLI で管理（mise lock で checksum 取得不可）
 
 # 検索・ファイル操作
-"aqua:twpayne/chezmoi" = "2.71.1"
+"aqua:twpayne/chezmoi" = "2.72.0"
 "aqua:BurntSushi/ripgrep" = "15.2.0"
 "aqua:phiresky/ripgrep-all" = "0.10.10"
 # rga依存: ドキュメント変換（docx, epub, odt等）
@@ -54,7 +54,7 @@ go = "1.26.5"
 "aqua:jqlang/jq" = "1.8.1"
 "aqua:mikefarah/yq" = "4.53.3"
 "aqua:x-motemen/ghq" = "1.10.1"
-"aqua:jesseduffield/lazygit" = "0.63.1"
+"aqua:jesseduffield/lazygit" = "0.64.0"
 "aqua:jesseduffield/lazydocker" = "0.25.2"
 # Git credential helper（.NET self-contained。tar.gz を全展開し本体+DLL を同居させる。
 # symbols 版を除外するため matching_regex で末尾を絞り、createdump 等は filter_bins で隠す）
@@ -66,7 +66,7 @@ go = "1.26.5"
 "aqua:arl/gitmux" = "0.11.5"
 
 # Python ツール
-"aqua:astral-sh/uv" = "0.12.1"
+"aqua:astral-sh/uv" = "0.12.3"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
@@ -86,14 +86,14 @@ go = "1.26.5"
 "aqua:tak848/ccgate" = "0.10.0"
 
 # Claude Code セッション選択（claude --resume の fzf フロントエンド）
-"github:sorafujitani/ccsession" = "v1.1.0"
+"github:sorafujitani/ccsession" = "v1.2.0"
 
 # Anthropic API CLI
-"aqua:anthropics/anthropic-cli" = "1.21.0"
+"aqua:anthropics/anthropic-cli" = "1.22.0"
 
 # Language Server
 "go:golang.org/x/tools/gopls" = "v0.23.0"
-"github:sivchari/gopls-lazy" = "v0.3.0" # gopls を高速化する LSP プロキシ（大規模 Go モノレポ向け）
+"github:sivchari/gopls-lazy" = "v0.4.1" # gopls を高速化する LSP プロキシ（大規模 Go モノレポ向け）
 "aqua:rust-lang/rust-analyzer" = "2025-12-01"
 "aqua:tamasfe/taplo" = "0.10.0"
 
@@ -101,22 +101,22 @@ go = "1.26.5"
 "aqua:temporalio/cli" = "1.8.2"
 "aqua:jdx/usage" = "5.0.0"
 # Datadog の AI エージェント向け CLI コンパニオン
-"aqua:DataDog/pup" = "1.10.1"
+"aqua:DataDog/pup" = "1.10.4"
 
 # ============================================
 # npm グローバルパッケージ
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.223"
-"github:google-antigravity/antigravity-cli" = "1.1.9"     # agy: Gemini CLI の後継
+"github:google-antigravity/antigravity-cli" = "1.1.11"     # agy: Gemini CLI の後継
 "aqua:openai/codex" = "0.146.1"
 "aqua:anomalyco/opencode" = "1.18.14"
 # Grok Build CLI (xAI) は http backend で管理（末尾の [tools."http:grok"] を参照）
 # Claude Code のハーネスを ChatGPT サブスクの Codex backend に向ける Anthropic 互換プロキシ。claudex から使う
-"github:raine/claude-code-proxy" = { version = "v0.1.30", matching_regex = '\.tar\.gz$' }
+"github:raine/claude-code-proxy" = { version = "v0.1.32", matching_regex = '\.tar\.gz$' }
 "npm:ccusage" = "20.0.19"
 "npm:@typescript/native-preview" = "7.0.0-dev.20260707.2"
-"npm:difit" = "5.0.8"
-"npm:@fission-ai/openspec" = "1.7.0"
+"npm:difit" = "5.0.9"
+"npm:@fission-ai/openspec" = "1.8.0"
 "npm:defuddle" = "0.19.2"                                  # WebFetch の代替: URL 本文をモデル要約を挟まず clean な Markdown で取得
 
 # ============================================
