@@ -1794,10 +1794,6 @@ backend = "npm:ccusage"
 version = "0.19.2"
 backend = "npm:defuddle"
 
-[[tools."npm:difit"]]
-version = "5.0.8"
-backend = "npm:difit"
-
 [[tools.pnpm]]
 version = "11.18.0"
 backend = "aqua:pnpm/pnpm"

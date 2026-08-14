@@ -131,7 +131,6 @@ go = "1.26.5"
 "github:raine/claude-code-proxy" = { version = "v0.1.30", matching_regex = '\.tar\.gz$' }
 "npm:ccusage" = "20.0.19"
 "npm:@typescript/native-preview" = "7.0.0-dev.20260707.2"
-"npm:difit" = "5.0.8"
 "npm:@fission-ai/openspec" = "1.7.0"
 "npm:defuddle" = "0.19.2"                                  # WebFetch の代替: URL 本文をモデル要約を挟まず clean な Markdown で取得
 
