@@ -11,4 +11,11 @@ shift
 mkdir -p .codex-reviews
 TMPFILE=$(mktemp .codex-reviews/codex-review.XXXXXXXXXX)
 trap 'echo "OUTPUT_FILE=$TMPFILE"' EXIT
-codex exec --json --full-auto -o "$TMPFILE" "$@" - < "$PROMPT_FILE"
+# --sandbox は codex 0.147.0 で削除された --full-auto の後継。
+# https://github.com/openai/codex/pull/36054 で `codex exec` から --full-auto が消え、
+# sandbox は明示指定が必須になった（それ以前は --full-auto が workspace-write を暗黙指定していた）。
+# --full-auto のもう一方の役割だった承認スキップは不要で、`codex exec` は headless のため
+# approval_policy を Never に固定する（config.toml の approval_policy は効かない）。
+# --sandbox は subcommand 非対応（`codex exec resume --help` に出ない）だが、
+# 親コマンド側で解釈されるため resume 経路でも効く。
+codex exec --json --sandbox workspace-write -o "$TMPFILE" "$@" - < "$PROMPT_FILE"
