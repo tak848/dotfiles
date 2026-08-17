@@ -1,5 +1,9 @@
 // Claude Code Auto Mode Classifier 用ルール定義。
 //
+// 【現在は不活性】settings.jsonnet の permissions.disableAutoMode = 'disable' により
+// auto mode 自体を無効化しているため、本ファイルのルールは実行時に一切参照されない。
+// auto mode を再有効化したくなったときにそのまま使えるよう温存している。
+//
 // 目的: ccgate.jsonnet と同等のポリシーを Classifier に適用する。
 // Auto Mode 中は PermissionRequest hook が発火せず ccgate が呼ばれないため、
 // ccgate 相当のルールを soft_deny / allow / environment に移植してある。
