@@ -63,6 +63,15 @@ local autoModeRules = import 'auto-mode.libsonnet';
   },
   permissions: {
     defaultMode: 'plan',
+    // auto mode を全面無効化する。許可判定は ccgate（PermissionRequest hook）に一本化しており、
+    // auto mode 中は hook が発火せず classifier が代わりに判定してしまうため、classifier を
+    // 一切走らせない。CC 2.1.233 で確認した挙動として、この設定を入れると:
+    //   - Shift+Tab のサイクルから auto が外れる（手動で入れなくなる）
+    //   - permission prompt の「Yes, and switch to auto mode」提案が出なくなる
+    //   - 「Auto mode is now Claude Code's default permission mode.」の案内も出なくなる
+    // 値は boolean ではなく文字列 'disable'。top-level の disableAutoMode でも同じ効果だが、
+    // 設定スキーマ上の定義位置に合わせて permissions 配下に置く。
+    disableAutoMode: 'disable',
     allow: [
       'List(*)',
       'Bash(ls *)',
@@ -220,6 +229,9 @@ local autoModeRules = import 'auto-mode.libsonnet';
     ],
     deny: permissionRules.permissionsDeny,
   },
+  // permissions.disableAutoMode により auto mode 自体が無効なので、以下の autoMode
+  // classifier ルールは現状どこからも参照されない。auto mode を再有効化したくなったときに
+  // すぐ戻せるよう温存してある。
   autoMode: {
     environment: autoModeRules.environment,
     allow: autoModeRules.allow,
@@ -227,9 +239,9 @@ local autoModeRules = import 'auto-mode.libsonnet';
   },
   // plan mode 中に auto mode classifier が read-only tool を auto-allow し、
   // ccgate（PermissionRequest hook）をバイパスするのを止める。許可判定は ccgate に一本化する。
-  // auto mode 自体は無効化しない（disableAutoMode は使わない）。Shift+Tab での手動利用は維持。
   // CC 2.1.186 で入った plan-mode read-only auto-allow 挙動への対処。
   // 未設定（デフォルト）は true 扱い（cBr() の `!== false` 判定）のため、明示的に false にする必要がある。
+  // permissions.disableAutoMode 追加後は冗長だが、二重の保険として残す。
   useAutoModeDuringPlan: false,
   model: 'claude-opus-5[1m]',
   // model: 'opus',
