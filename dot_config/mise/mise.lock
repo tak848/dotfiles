@@ -162,28 +162,39 @@ version = "2.1.237"
 backend = "aqua:anthropics/claude-code"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64"]
-checksum = "sha256:a701cfb6bb4703abc6f3ce47508c878ca8158ebdbeacd5c35c7d510c7bc70177"
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.237/linux-arm64/claude"
+checksum = "sha256:aa99b5672ec5ac1ba0e5536ab4cab23df0080022df25ae0b84e8a678dbbabe5a"
+url = "https://github.com/anthropics/claude-code/releases/download/v2.1.237/claude-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/521491800"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64-musl"]
-checksum = "sha256:60d832e81dd5076333e9f91286f660f2aaacc630079863599555caa8fe134eba"
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.237/linux-arm64-musl/claude"
+checksum = "sha256:c95d775170a1c69d2fd2cd2a0ffcdba4989f006f4735304c7529125233a50207"
+url = "https://github.com/anthropics/claude-code/releases/download/v2.1.237/claude-linux-arm64-musl.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/521491798"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64"]
-checksum = "sha256:73975167f0108693cf6fd6614994781657ebb8456ebef5d247458734abfb3916"
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.237/linux-x64/claude"
+checksum = "sha256:fe1c47e3309c731b6c9b382599603df3784b00d65a2236f46c867fc55436adfa"
+url = "https://github.com/anthropics/claude-code/releases/download/v2.1.237/claude-linux-x64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/521491870"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64-musl"]
-checksum = "sha256:b2c81ba8f2b0086b2536a56bf074bbf643043c2bd1aeea6ac8905709ae296168"
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.237/linux-x64-musl/claude"
+checksum = "sha256:a63ae57fa25754afd20f5cf0f6255ddac5a53cf3d2346dd499be00e74634c6d3"
+url = "https://github.com/anthropics/claude-code/releases/download/v2.1.237/claude-linux-x64-musl.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/521491799"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-arm64"]
-checksum = "sha256:338901351d4ff17495738c67fc3e12a32c1b506738ac5e012eb782d3d8b5be43"
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.237/darwin-arm64/claude"
+checksum = "sha256:cc5c73476727d8a8232eab949c19e3cd1ada2a3e51767b954eccd1ab752c9563"
+url = "https://github.com/anthropics/claude-code/releases/download/v2.1.237/claude-darwin-arm64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/521491796"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-x64"]
-checksum = "sha256:9f00789754a7b95febc6d4e37a3b6523d4d9c4c2333a2ce4bd596ad82186224e"
-url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.237/darwin-x64/claude"
+checksum = "sha256:9850f5507a99596cf3f96bb33e6eb6f1478eb0f1063a97e9b72858aebdaca576"
+url = "https://github.com/anthropics/claude-code/releases/download/v2.1.237/claude-darwin-x64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/521491797"
+
+[tools."aqua:anthropics/claude-code"."platforms.windows-x64"]
+checksum = "sha256:c9ddd1452d439b2bb6c496832dc4dca16f2093e9ceac8b307f235c46c64a80e1"
+url = "https://github.com/anthropics/claude-code/releases/download/v2.1.237/claude-win32-x64.zip"
+url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/521491875"
 
 [[tools."aqua:arl/gitmux"]]
 version = "0.11.5"
@@ -1034,9 +1045,9 @@ url = "https://github.com/starship/starship/releases/download/v1.26.0/starship-a
 url_api = "https://api.github.com/repos/starship/starship/releases/assets/460374586"
 
 [tools."aqua:starship/starship"."platforms.linux-x64"]
-checksum = "sha256:b7c232b0e8249d8e55a40beb79c5c43a7d370f3f9408bd215deb0170daeaadf3"
-url = "https://github.com/starship/starship/releases/download/v1.26.0/starship-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/starship/starship/releases/assets/460374630"
+checksum = "sha256:321f0dd7af8340a5f2e6a8fec6538a04f617486f9ec70d878f91c09cd8deef22"
+url = "https://github.com/starship/starship/releases/download/v1.26.0/starship-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/starship/starship/releases/assets/460374620"
 
 [tools."aqua:starship/starship"."platforms.linux-x64-musl"]
 checksum = "sha256:b7c232b0e8249d8e55a40beb79c5c43a7d370f3f9408bd215deb0170daeaadf3"
