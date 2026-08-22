@@ -22,7 +22,7 @@ set -euo pipefail
 # uv 自体が更新されるまでは入れられない。Renovate 側で age gate を長めに取って追随を待つ
 # （.github/renovate.json5 の packageRules を参照）。
 # renovate: datasource=python-version depName=python
-AZURE_CLI_PYTHON_VERSION="3.14.6"
+AZURE_CLI_PYTHON_VERSION="3.14.7"
 
 if command -v uv &> /dev/null; then
     export UV_PYTHON_BIN_DIR="${XDG_DATA_HOME}/azure-cli/python"
