@@ -1794,6 +1794,10 @@ backend = "npm:ccusage"
 version = "0.19.2"
 backend = "npm:defuddle"
 
+[[tools."pipx:snowflake-cli"]]
+version = "3.24.1"
+backend = "pipx:snowflake-cli"
+
 [[tools.pnpm]]
 version = "11.18.0"
 backend = "aqua:pnpm/pnpm"
