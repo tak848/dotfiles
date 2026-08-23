@@ -54,7 +54,8 @@ Always respond in Japanese(常に日本語で答えること).
 - **要求スコープを厳守する。** ユーザーが「A の代替として B を作る」等と明示したら、その範囲だけに絞る。隣接レイヤー（前段・後段・類似機能）の改修を勝手に計画へ足さない。関連改善は本線の計画を立てた上で別途質問する。
 - **環境を直接変更しない。** 変更は必ずこの repo のソース（`dot_` プレフィックス付きファイル等）を編集し、PR 経由で行う。`~/.local/share/chezmoi` 等の repo 外パスや、`~/.claude/` `~/.codex/` `~/.config/` 等のターゲットファイルを直接書き換えてはならない。環境への適用は `chezmoi update` に委ねる（remote main が single source of truth）。
 - **chezmoi ソースを編集する。** `~/.codex/AGENTS.md` 等のターゲットではなく `dot_codex/AGENTS.md` 等のソースを編集する。ターゲットを直接編集しても `chezmoi update` で上書きされ、PR にも含められない。
-- **ツール導入手段として Homebrew を提案しない**（`packages.yaml` への追加・`brew install` を選択肢に挙げない）。mise（aqua / github / go / npm backend）または aqua CLI で完結させる。
+- **ツール導入手段として Homebrew を提案しない**（`packages.yaml` への追加・`brew install` を選択肢に挙げない）。mise（aqua / github / go / npm / pipx backend）または aqua CLI で完結させる。
+- Python 製 CLI でバイナリ配布が無いものは mise の `pipx` backend で入れる（uv が入っていれば mise は内部で `uv tool install` を使う）。Renovate の mise manager が PyPI datasource として追える。システム Python に引きずられないよう `install_env = { UV_PYTHON_PREFERENCE = "only-managed" }` を付ける。
 - mise にツールを追加する際、`mise search` / `mise registry` で見つからなくても [aqua-registry](https://github.com/aquaproj/aqua-registry/tree/main/pkgs) に定義があれば `"aqua:<registry path>" = "<version>"` で追加できる（Renovate 自動更新・checksum 検証に乗る）。`http` backend で URL を手書きするのは aqua-registry にも無い最終手段のみ。
 - 環境変数（API key 等）の置き場所を勝手に特定ファイル（`.zshrc.local` 等）に指定しない。置き場所はユーザーに委ねる（エラーメッセージやコメントにも特定ファイル名を書かない）。
 - `~/.codex/config.toml` 等の modify テンプレート（`dot_codex/modify_config.toml`）は、出力で再出力しないキーを `chezmoi apply` 時に削除する。ツールが書き込む既存キー（`projects` / `notice` / `hooks.state` 等）は保持ブロックに追加すること。
