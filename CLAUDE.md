@@ -69,6 +69,7 @@ Homebrew
        ├─ ランタイム管理: go, node, pnpm (core backend)
        ├─ CLI ツール管理: fzf, ripgrep, starship, etc. (aqua backend)
        ├─ 独自ホスティング配布のツール: grok (http backend)
+       ├─ Python 製 CLI: snowflake-cli (pipx backend / 内部で uv tool install)
        ├─ npm グローバルパッケージ
        └─ aqua CLI (github backend)
             └─ mise lock で checksum 取得不可のツール
@@ -193,7 +194,8 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 - **要求スコープを厳守する。** ユーザーが「A の代替として B を作る」等と明示したら、その範囲だけに絞る。隣接レイヤー（前段・後段・類似機能）の改修を勝手に計画へ足さない。関連改善は本線の計画を立てた上で別途質問する
 - **環境を直接変更しない。** 変更は必ずこの repo のソース（`dot_` プレフィックス付きファイル等）を編集し、PR 経由で行う。`~/.local/share/chezmoi` 等の repo 外パスや、`~/.claude/` `~/.codex/` `~/.config/` 等のターゲットファイルを直接書き換えてはならない。環境への適用は `chezmoi update` に委ねる（remote main が single source of truth）
 - **chezmoi ソースを編集する。** `~/.claude/CLAUDE.md` 等のターゲットではなく `dot_claude/CLAUDE.md` 等のソースを編集する。ターゲットを直接編集しても `chezmoi update` で上書きされ、PR にも含められない
-- **ツール導入手段として Homebrew を提案しない**（`packages.yaml` への追加・`brew install` を選択肢に挙げない）。mise（aqua / github / go / npm backend）または aqua CLI で完結させる
+- **ツール導入手段として Homebrew を提案しない**（`packages.yaml` への追加・`brew install` を選択肢に挙げない）。mise（aqua / github / go / npm / pipx backend）または aqua CLI で完結させる
+- Python 製 CLI でバイナリ配布が無いものは mise の `pipx` backend で入れる（uv が入っていれば mise は内部で `uv tool install` を使う）。Renovate の mise manager が PyPI datasource として追える。システム Python に引きずられないよう `install_env = { UV_PYTHON_PREFERENCE = "only-managed" }` を付ける
 - mise にツールを追加する際、`mise search` / `mise registry` で見つからなくても [aqua-registry](https://github.com/aquaproj/aqua-registry/tree/main/pkgs) に定義があれば `"aqua:<registry path>" = "<version>"` で追加できる（Renovate 自動更新・checksum 検証に乗る）。`http` backend で URL を手書きするのは aqua-registry にも無い最終手段のみ
 - 例外として、aqua-registry 側の定義が `type: http`（GitHub リリースではなく独自ホスティング配布）のパッケージは `aqua:` で追加しない。mise の aqua backend が lockfile 生成のたびに GitHub のタグ取得を試みて必ず失敗し警告を出すうえ、[Renovate の mise manager も aqua の http パッケージを抽出対象外にしている](https://docs.renovatebot.com/modules/manager/mise/#limitations)ため更新も効かない。この場合は mise の `http` backend で URL を直接指定する（`dot_config/mise/config.toml` の `[tools."http:grok"]` が例）
 - 環境変数（API key 等）の置き場所を勝手に特定ファイル（`.zshrc.local` 等）に指定しない。置き場所はユーザーに委ねる（エラーメッセージやコメントにも特定ファイル名を書かない）

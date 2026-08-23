@@ -3,7 +3,7 @@ idiomatic_version_file_enable_tools = ["node"]
 auto_install = false
 experimental = true
 lockfile = true
-# npm backend が checksum/URL をサポートしていないため locked は無効化
+# npm / pipx backend が checksum/URL をサポートしていないため locked は無効化
 # checksum があるツール（aqua: 等）は lockfile=true で検証される
 locked = false
 
@@ -87,6 +87,18 @@ go = "1.26.5"
 # 実行に必要な Python 3.14 は run_onchange_after_15-azure-cli-python.sh.tmpl が入れる。
 # mise の postinstall はシステムの PATH で走り mise 管理の uv が使えないため、そちらには置けない。
 "github:Azure/azure-cli" = { version = "2.89.0", version_prefix = "azure-cli-", os = ["macos"], matching_regex = "macos" }
+
+# Snowflake CLI（snow）。GitHub リリースには署名（.sig / .pub）しか無く、公式の配布先である
+# sfc-repo も macOS は .pkg、Linux は .deb / .rpm だけで、mise の http backend が扱える形式が無い。
+# aqua-registry にも定義が無いため、実体である PyPI パッケージを pipx backend で入れる。
+# uv が入っていれば mise は内部で uv tool install を使うので pipx 自体は不要。
+# Renovate の mise manager は pipx backend を PyPI datasource として追えるので更新も自動で乗る。
+#
+# uv の python-preference は既定が managed で、uv 管理の Python が無いマシンでは
+# システム（Homebrew）の python3 を拾う。Homebrew 側が Python を上げると venv が壊れるため、
+# only-managed で uv 管理の Python に固定する（無ければ uv が自前でダウンロードする）。
+# PATH に生えるのは snow だけで、venv の python は mise の bin ディレクトリに出ない。
+"pipx:snowflake-cli" = { version = "3.24.1", install_env = { UV_PYTHON_PREFERENCE = "only-managed" } }
 
 # 開発ツール
 "aqua:bufbuild/buf" = "1.72.0"
