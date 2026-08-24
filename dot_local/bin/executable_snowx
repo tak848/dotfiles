@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# snowx: PYTHONPATH を外して Snowflake CLI (snow) を実行する
+#
+# snow は起動時に google.protobuf を import する。google は名前空間パッケージ
+# （__init__.py を持たず、複数の場所に散ったツリーがマージされる）で、Python の
+# sys.path 探索順は「スクリプトのディレクトリ → PYTHONPATH → venv の site-packages」。
+# PYTHONPATH 側に __init__.py を持つ通常パッケージとしての google/ があると、Python は
+# そこで google の解決を打ち切り、venv 側の google/protobuf に到達できずに
+# ModuleNotFoundError: No module named 'google.protobuf' で落ちる。
+# protoc / gRPC の生成コード置き場を .envrc で PYTHONPATH に入れている repo で踏む。
+#
+# snow 自体は PYTHONPATH を必要としないので、外して起動すれば済む。素の snow は
+# 残してあるので、PYTHONPATH を汚していない場所ではそのまま使える。
+#
+# zsh 関数ではなくスクリプトにしてあるのは、非対話シェル（Claude Code / Codex の
+# シェルツール、スクリプト、cron）から使いたいため。~/.local/bin は .zshenv で PATH に
+# 入るので非対話でも通る。snowx という名前は mise が提供しないので、mise activate が
+# installs を PATH 先頭に足しても衝突しない（snow を上書きする形だと負ける）。
+#
+# 注意:
+#   - PYTHONPATH= （空文字）では駄目。空エントリは cwd に解決されうるので unset する
+#   - 呼び出し元の PYTHONPATH は触らない。repo 側の Python 作業を壊さないため
+
+set -euo pipefail
+
+snow_bin=""
+if snow_bin=$(command -v snow 2>/dev/null); then
+    # PATH に居るならそれを使う（mise activate 済みの対話シェルなど）
+    :
+elif [ -x "${XDG_DATA_HOME:-$HOME/.local/share}/mise/shims/snow" ]; then
+    # mise の PATH が通っていない非対話シェル向け。shims は mise がツール追加時に生成する
+    snow_bin="${XDG_DATA_HOME:-$HOME/.local/share}/mise/shims/snow"
+elif command -v mise > /dev/null 2>&1; then
+    # shims が未生成でも mise 本体があれば実体を引ける
+    snow_bin=$(mise which snow 2>/dev/null || true)
+fi
+
+if [ -z "$snow_bin" ]; then
+    echo "snowx: snow が見つかりません。mise install で snowflake-cli を入れてください。" >&2
+    exit 127
+fi
+
+exec env -u PYTHONPATH "$snow_bin" "$@"

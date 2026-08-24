@@ -101,11 +101,14 @@ Homebrew
 
 ### snowx（Snowflake CLI を PYTHONPATH 無しで起動する）
 
-`dot_zsh/functions/snowx.zsh` が提供する `snowx` コマンドは、`env -u PYTHONPATH snow` を実行するだけの薄いラッパー。`snow` は起動時に `google.protobuf` を import するが、`google` は名前空間パッケージなので、`PYTHONPATH` 側に `__init__.py` を持つ通常パッケージとしての `google/` があると、Python はそこで解決を打ち切って venv 側の `google/protobuf` に到達できず `ModuleNotFoundError` で落ちる。protoc / gRPC の生成コード置き場を `.envrc` で `PYTHONPATH` に入れている repo で踏む。
+`dot_local/bin/executable_snowx` が提供する `snowx` コマンドは、`env -u PYTHONPATH snow` を実行するだけの薄いラッパー。`snow` は起動時に `google.protobuf` を import するが、`google` は名前空間パッケージなので、`PYTHONPATH` 側に `__init__.py` を持つ通常パッケージとしての `google/` があると、Python はそこで解決を打ち切って venv 側の `google/protobuf` に到達できず `ModuleNotFoundError` で落ちる。protoc / gRPC の生成コード置き場を `.envrc` で `PYTHONPATH` に入れている repo で踏む。
 
 - `PYTHONPATH=`（空文字）では直らない。空エントリは cwd に解決されうるので unset する必要がある
-- 呼び出し元シェルの `PYTHONPATH` は触らない。repo 側の Python 作業を壊さないため
-- zsh 関数なのでインタラクティブシェルでのみ有効。素の `snow` は残してあり、`PYTHONPATH` を汚していない場所ではそのまま使える
+- 呼び出し元の `PYTHONPATH` は触らない。repo 側の Python 作業を壊さないため
+- `claudex` / `codexp` と違って zsh 関数ではなくスクリプトなのは、非対話シェル（Claude Code / Codex のシェルツール、スクリプト、cron）から使いたいため。zsh 関数は対話シェルでしか読まれない。`~/.local/bin` は `dot_zshenv.tmpl` で PATH に入るので非対話でも通る
+- `snowx` という名前は mise が提供しないので、`mise activate` が installs を PATH 先頭に足しても衝突しない。`snow` を上書きする形の shim だとこの PATH 争いに負ける
+- `snow` の実体は「PATH → `mise/shims/snow` → `mise which snow`」の順で解決する。非対話シェルには mise の PATH が通っていないことがあるため
+- 素の `snow` は残してあり、`PYTHONPATH` を汚していない場所ではそのまま使える
 
 ### 自動生成ファイル一覧
 
