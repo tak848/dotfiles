@@ -99,6 +99,14 @@ Homebrew
 - profile 定義ファイル（`$CODEX_HOME/<name>.config.toml`）は chezmoi 管理外。`dot_codex/modify_config.toml` に残る legacy な `[profiles.*]` と同名の profile 名を指定すると Codex がエラーになるため、名前を衝突させないこと
 - `gwc` の `--co` / `--ccco` は `codex` ではなく `codexp` を起動する
 
+### snowx（Snowflake CLI を PYTHONPATH 無しで起動する）
+
+`dot_zsh/functions/snowx.zsh` が提供する `snowx` コマンドは、`env -u PYTHONPATH snow` を実行するだけの薄いラッパー。`snow` は起動時に `google.protobuf` を import するが、`google` は名前空間パッケージなので、`PYTHONPATH` 側に `__init__.py` を持つ通常パッケージとしての `google/` があると、Python はそこで解決を打ち切って venv 側の `google/protobuf` に到達できず `ModuleNotFoundError` で落ちる。protoc / gRPC の生成コード置き場を `.envrc` で `PYTHONPATH` に入れている repo で踏む。
+
+- `PYTHONPATH=`（空文字）では直らない。空エントリは cwd に解決されうるので unset する必要がある
+- 呼び出し元シェルの `PYTHONPATH` は触らない。repo 側の Python 作業を壊さないため
+- zsh 関数なのでインタラクティブシェルでのみ有効。素の `snow` は残してあり、`PYTHONPATH` を汚していない場所ではそのまま使える
+
 ### 自動生成ファイル一覧
 
 | ファイル | 生成元 | 生成方法 |
