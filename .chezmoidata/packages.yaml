@@ -21,6 +21,10 @@ packages:
         - claude
         - codex-app
         - thebrowsercompany-dia
+        # Ubuntu VM を立てる CLI。単体バイナリの配布が無く（GitHub リリースは .pkg / .msi のみ、
+        # Linux は snap）、multipassd を LaunchDaemon として登録する pkg なので mise / aqua では扱えない。
+        # pkg ベースの cask のため brew install --cask 時に管理者パスワードを聞かれる。
+        - multipass
 
 # im-select 設定（macOS のみ）
 im_select:
