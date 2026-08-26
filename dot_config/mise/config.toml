@@ -31,7 +31,7 @@ AZ_PYTHON = '{{ env.XDG_DATA_HOME | default(value=env.HOME ~ "/.local/share") }}
 # ============================================
 node = "24.18.1"
 pnpm = "11.18.0"
-"github:endevco/aube" = "v1.37.0" # 高速な Node.js パッケージマネージャ
+"github:endevco/aube" = "v2.2.0" # 高速な Node.js パッケージマネージャ
 go = "1.26.5"
 
 # ============================================
