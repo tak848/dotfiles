@@ -3,7 +3,7 @@ set -e
 
 # clone 後に手動で実行する初回セットアップ用スクリプト。
 #
-# - chezmoi が既に PATH にあればそのまま `chezmoi init --apply tak848`
+# - chezmoi が既に PATH にあればそのまま `chezmoi init --apply --force tak848`
 # - 無ければリポジトリ同梱の mise bootstrap script で mise を起動し、
 #   ルート .mise.toml で pin した chezmoi を install してから apply する
 #
