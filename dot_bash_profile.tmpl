@@ -1,0 +1,16 @@
+# bash 用のログインシェル設定。
+#
+# デフォルトシェルを zsh に変えられない環境（chsh が PAM 認証を要求して失敗する
+# 自動セットアップ環境など）では、mise / aqua で入れたツールがどのシェルからも
+# 見えなくなる。ログイン bash に限ってそれらへ PATH を通すのがこのファイルの目的で、
+# 対話利用は想定していないためプロンプト・補完・alias は一切設定しない。
+#
+# ~/.bash_profile を置くと bash はログイン時に ~/.profile を読まなくなるため、
+# ディストリ側の設定を落とさないよう先に明示的に source する
+# （Ubuntu の ~/.profile は bash なら ~/.bashrc も読み込む）。
+if [ -f "$HOME/.profile" ]; then
+  . "$HOME/.profile"
+fi
+
+{{ template "path-setup.tmpl" . }}
+export MISE_GLOBAL_CONFIG_FILE="${XDG_CONFIG_HOME}/mise/config.toml"
