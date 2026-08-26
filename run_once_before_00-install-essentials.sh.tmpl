@@ -29,8 +29,11 @@ command -v zsh >/dev/null 2>&1 || NEEDS_SUDO=true
 
 HAS_SUDO=false
 if [ "$NEEDS_SUDO" = true ] && command -v sudo >/dev/null 2>&1; then
-  # まず noninteractive で試す（passwordless sudo な環境向け）
-  if sudo -n -v 2>/dev/null; then
+  # まず noninteractive で試す（passwordless sudo な環境向け）。
+  # `sudo -n -v` は NOPASSWD:ALL の環境でも "a password is required" で落ちる。
+  # -v は credential cache の更新が目的で、NOPASSWD ルールでは cache を作らないため。
+  # 実コマンドを走らせる `sudo -n true` なら passwordless 環境で正しく通る。
+  if sudo -n true 2>/dev/null; then
     HAS_SUDO=true
   elif [ -t 0 ]; then
     # tty があれば対話的にパスワードを取得
