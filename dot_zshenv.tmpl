@@ -17,7 +17,10 @@ export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 {{-   end }}
 {{- end }}
-export PATH="${XDG_DATA_HOME}/aquaproj-aqua/bin:$PATH"
+# aqua root は home 配下に固定する（環境側の AQUA_ROOT_DIR が書き込み不可な
+# パスを指していると aqua install が permission denied で落ちるため）
+export AQUA_ROOT_DIR="${XDG_DATA_HOME}/aquaproj-aqua"
+export PATH="${AQUA_ROOT_DIR}/bin:$PATH"
 
 # aqua/mise 設定
 export AQUA_GLOBAL_CONFIG="${AQUA_GLOBAL_CONFIG:-}:${XDG_CONFIG_HOME}/aquaproj-aqua/aqua.yaml"

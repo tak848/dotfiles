@@ -14,7 +14,14 @@ export PATH="/usr/local/bin:$PATH"
 # mise 管理ツールを追い越さないよう mise shims より後ろに置く。
 # 例: 孤児化した bin/go -> aqua-proxy が mise の go を隠すと、mise が go backend の
 # 子プロセスから shims を外した瞬間に aqua-proxy が aqua を見失い、go install が落ちる。
-export PATH="${XDG_DATA_HOME}/aquaproj-aqua/bin:$PATH"
+#
+# aqua root は home 配下に固定する。aqua は AQUA_ROOT_DIR があればそれを既定値
+# （${XDG_DATA_HOME}/aquaproj-aqua）より優先するため、環境側が書き込み不可なパス
+# （root 所有の /opt 配下など）を指していると aqua install が
+# `mkdir ...: permission denied` で落ちる。PATH だけ home 配下に向けていても
+# aqua 本体の書き込み先は変わらないので、AQUA_ROOT_DIR ごと上書きする。
+export AQUA_ROOT_DIR="${XDG_DATA_HOME}/aquaproj-aqua"
+export PATH="${AQUA_ROOT_DIR}/bin:$PATH"
 # mise 管理ツール（claude/node/go 等）を aqua・Homebrew 等より優先する。
 # これが無いと run_onchange 内で /opt/homebrew/bin の野良ツールが mise 版を追い越して呼ばれる。
 export PATH="${XDG_DATA_HOME}/mise/shims:$PATH"
