@@ -30,6 +30,6 @@ export MISE_GLOBAL_CONFIG_FILE="${XDG_CONFIG_HOME}/mise/config.toml"
 export CLAUDE_CODE_AUTO_UPDATE=false
 export DISABLE_AUTOUPDATER=1
 
-# Opus の 1M context 前提の auto-compact 閾値。claudex はこの値を上書きせず、
-# CLAUDE_CODE_MAX_CONTEXT_TOKENS で宣言した短い model context 側に cap させる
+# 1M context 前提の auto-compact 閾値。素の Claude（Opus[1m]）でも claudex（gpt-5.6-sol の
+# 872K）でも model context より小さいので、そのまま閾値として効く
 export CLAUDE_CODE_AUTO_COMPACT_WINDOW=750000

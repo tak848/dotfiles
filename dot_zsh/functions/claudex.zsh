@@ -68,17 +68,25 @@ claudex() {
     local model="${CLAUDEX_MODEL:-gpt-5.6-sol}"
 
     # CLAUDE_CODE_MAX_CONTEXT_TOKENS は、ANTHROPIC_BASE_URL 経由の未認識モデルについて Claude Code が
-    # 仮定する context window を上書きする。gpt-5.6-sol の実キャップは ChatGPT/Codex backend で約372K
-    # （272K↔372Kで変動）なので、既定値を372Kとする。Claude Codeはここから出力領域を予約して
-    # auto-compactするため、CLAUDE_CODE_AUTO_COMPACT_WINDOWを340Kに上書きすると余裕を二重に
-    # 差し引いてしまう。グローバル設定の750Kはmodel contextの372Kにcapされるため、そのままでよい。
-    # [1m] は基盤モデルが実際に1M contextをサポートする場合の指定なので使用しない。
-    # statuslineも実態に合う /372k 表示になる。
+    # 仮定する context window を上書きする。値の根拠は ChatGPT アカウントに配られる Codex の live カタログで、
+    # 次のコマンドで確認できる:
+    #   codex debug models | jq -r '.models[] | "\(.slug) \(.context_window) \(.max_context_window)"'
+    # カタログの既定は context_window=272000 だが、クライアントは max_context_window まで引き上げてよい
+    # （codex 本体も model_context_window をこの値で clamp する）。2026-08 に OpenAI が API key 限定だった
+    # 1M context を ChatGPT アカウントにも解禁し、このアカウントの max_context_window は 872000
+    # （2026-08-31 時点。おそらく 1,000,000 から出力 128,000 を引いた値）。以前の 372000 はその前のカタログ値。
+    # カタログは過去に 272K ↔ 372K と揺れているので、巻き戻ったら CLAUDEX_CONTEXT_TOKENS で下げる。
+    # statusline は /872k 表示になる。
+    #
+    # [1m] は 1,000,000 を宣言してしまい 872000 を超えるので使わない（proxy は [1m] を剥がすだけで
+    # upstream の context は変わらない）。upstream が実際に 872000 まで受けるかは未実測だが、
+    # dot_zshenv.tmpl の CLAUDE_CODE_AUTO_COMPACT_WINDOW=750000 が model context より小さいため、
+    # 約 122K を残して compaction が先に走る。これがカタログ巻き戻り時の保険にもなる。
     #
     # settings ファイルの env は OS 環境変数に勝つため、プロジェクトの .claude/settings.json が同じ変数を
     # 設定していても上書きできるよう --settings で渡す。優先順位は Managed > Command-line > Local >
     # Project > User（settings.md）。
-    local context_settings="{\"env\":{\"CLAUDE_CODE_MAX_CONTEXT_TOKENS\":\"${CLAUDEX_CONTEXT_TOKENS:-372000}\"}}"
+    local context_settings="{\"env\":{\"CLAUDE_CODE_MAX_CONTEXT_TOKENS\":\"${CLAUDEX_CONTEXT_TOKENS:-872000}\"}}"
 
     # メインの推論モデル（--model）以外に、CC が内部で使う opus / sonnet / haiku エイリアスも Codex モデルに
     # 向けておく。素の Claude 名（claude-opus-* 等）に解決されると proxy 経由で意図しないモデルになるため
