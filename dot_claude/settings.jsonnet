@@ -22,6 +22,10 @@ local autoModeRules = import 'auto-mode.libsonnet';
   // 規約・コンテキストは CLAUDE.md / AGENTS.md / CLAUDE.local.md に集約する方針。
   // ref: https://code.claude.com/docs/en/memory#enable-or-disable-auto-memory
   autoMemoryEnabled: false,
+  // 2.1.247 で入った SendFeedback ツール（セッション中に問題が起きると Claude が
+  // フィードバック下書きを作り、/feedback からレビューして送れる）を無効化する。
+  // enum は notify（既定・下書きを作って通知）/ quiet（通知なしで作る）/ off（作らない）。
+  feedbackDrafts: 'off',
   extraKnownMarketplaces: {
     'tak848-plugins': {
       source: {

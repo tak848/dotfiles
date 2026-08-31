@@ -86,7 +86,8 @@ Homebrew
 - 素の `claude` は従来通り Claude サブスク / Opus で動く。`claudex` 使用中は Anthropic にリクエストが飛ばないため Claude の quota は減らず、代わりに ChatGPT 側の quota を消費する
 - プロキシはマシン単位で 1 プロセス。worktree ごとには立たず、全 worktree・全セッションが 1 つを共有する（`claudex` が未起動時のみ自動起動する）
 - Anthropic は非 Claude モデルへの gateway ルーティングを公式サポートしていない。壊れても直らない前提で使う
-- `CLAUDE_CODE_AUTO_COMPACT_WINDOW` は素の Claude 用に `dot_zshenv.tmpl` で export している。`claudex` は `CLAUDE_CODE_MAX_CONTEXT_TOKENS` で GPT-5.6 Sol の実 context 長を指定し、Claude Code 自身の出力領域予約に基づく auto-compact を使う
+- `claudex` は `CLAUDE_CODE_MAX_CONTEXT_TOKENS` で GPT-5.6 Sol の実 context 長（872K）を宣言する。値の根拠は ChatGPT アカウントに配られる Codex の live カタログの `max_context_window` で、`codex debug models` で確認できる。カタログは過去に 272K ↔ 372K と揺れているため、巻き戻ったら `CLAUDEX_CONTEXT_TOKENS` で下げる
+- `dot_zshenv.tmpl` で export している `CLAUDE_CODE_AUTO_COMPACT_WINDOW=750000` は、素の Claude（Opus[1m]）でも `claudex`（872K）でも model context より小さいので、そのまま compaction 閾値として効く
 
 これは既に有効化されている `codex@openai-codex` プラグイン（Claude Code から Codex CLI に作業を委譲する）とは別物で、両立する。
 
