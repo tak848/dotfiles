@@ -1,3 +1,7 @@
+# パターンの先頭に / を付けないこと。chezmoi 2.72.0 の path 検証強化で絶対パス扱いになり
+# `invalid path` で apply 全体が落ちる。パターンは doublestar で target path 全体に対して
+# 照合されるので、先頭スラッシュ無しでも root 直下だけに当たる（`mise.lock` は
+# ~/mise.lock だけを無視し、~/.config/mise/mise.lock は無視しない）。
 CLAUDE.md
 README.md
 LICENSE
@@ -17,13 +21,13 @@ renovate.json5
 AGENTS.md
 Taskfile.yaml
 create_dot_zsh
-/mise.lock
-/.cursorrules
+mise.lock
+.cursorrules
 go.mod
 go/
 .claude/bin
 .codex/bin
-/.claude-plugin
-/.claude-plugin/**
-/claude-plugins
-/claude-plugins/**
+.claude-plugin
+.claude-plugin/**
+claude-plugins
+claude-plugins/**
