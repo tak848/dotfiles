@@ -599,43 +599,43 @@ url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.1
 url_api = "https://api.github.com/repos/grafana/jsonnet-language-server/releases/assets/354270599"
 
 [[tools."aqua:jdx/usage"]]
-version = "5.0.0"
+version = "6.5.0"
 backend = "aqua:jdx/usage"
 
 [tools."aqua:jdx/usage"."platforms.linux-arm64"]
-checksum = "sha256:fb2dfc21532129ce230314818e05a8a75ee1c8929936f8b3a5bbd078736706d7"
-url = "https://github.com/jdx/usage/releases/download/v5.0.0/usage-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/501424806"
+checksum = "sha256:8c78dfa87c0426214642448e6caca0892992d42d92dc722d116dab7d9129d295"
+url = "https://github.com/jdx/usage/releases/download/v6.5.0/usage-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/533940980"
 
 [tools."aqua:jdx/usage"."platforms.linux-arm64-musl"]
-checksum = "sha256:fb2dfc21532129ce230314818e05a8a75ee1c8929936f8b3a5bbd078736706d7"
-url = "https://github.com/jdx/usage/releases/download/v5.0.0/usage-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/501424806"
+checksum = "sha256:8c78dfa87c0426214642448e6caca0892992d42d92dc722d116dab7d9129d295"
+url = "https://github.com/jdx/usage/releases/download/v6.5.0/usage-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/533940980"
 
 [tools."aqua:jdx/usage"."platforms.linux-x64"]
-checksum = "sha256:16e87ac9110face925d39a9aae5c90767738df2cc390af1be1f00e625b599280"
-url = "https://github.com/jdx/usage/releases/download/v5.0.0/usage-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/501424566"
+checksum = "sha256:bc5bfe1078c4ce9339ba126670d5ced3eb25d63acbd4b1bbe7b51b04f243cd0c"
+url = "https://github.com/jdx/usage/releases/download/v6.5.0/usage-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/533940976"
 
 [tools."aqua:jdx/usage"."platforms.linux-x64-musl"]
-checksum = "sha256:16e87ac9110face925d39a9aae5c90767738df2cc390af1be1f00e625b599280"
-url = "https://github.com/jdx/usage/releases/download/v5.0.0/usage-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/501424566"
+checksum = "sha256:bc5bfe1078c4ce9339ba126670d5ced3eb25d63acbd4b1bbe7b51b04f243cd0c"
+url = "https://github.com/jdx/usage/releases/download/v6.5.0/usage-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/533940976"
 
 [tools."aqua:jdx/usage"."platforms.macos-arm64"]
-checksum = "sha256:35f1703ed922486387d499265c9d6c0dbc84b8347e565fb31d54ad23fdff712d"
-url = "https://github.com/jdx/usage/releases/download/v5.0.0/usage-universal-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/501428939"
+checksum = "sha256:54e692f240d11a2e8a34fb3e0273821e35272f5b502226bd958736c16f7e7e3d"
+url = "https://github.com/jdx/usage/releases/download/v6.5.0/usage-universal-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/533960041"
 
 [tools."aqua:jdx/usage"."platforms.macos-x64"]
-checksum = "sha256:35f1703ed922486387d499265c9d6c0dbc84b8347e565fb31d54ad23fdff712d"
-url = "https://github.com/jdx/usage/releases/download/v5.0.0/usage-universal-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/501428939"
+checksum = "sha256:54e692f240d11a2e8a34fb3e0273821e35272f5b502226bd958736c16f7e7e3d"
+url = "https://github.com/jdx/usage/releases/download/v6.5.0/usage-universal-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/533960041"
 
 [tools."aqua:jdx/usage"."platforms.windows-x64"]
-checksum = "sha256:0ca7cbc821d6fe274ef42162058935261bf0f7ad8029a197275ff83cc36d996e"
-url = "https://github.com/jdx/usage/releases/download/v5.0.0/usage-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/501427490"
+checksum = "sha256:041603b3f09e66870f5cb2475e4cb8a7cb10e222281bda13fe301c7a3b26a39b"
+url = "https://github.com/jdx/usage/releases/download/v6.5.0/usage-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/533944295"
 
 [[tools."aqua:jesseduffield/lazydocker"]]
 version = "0.25.2"
