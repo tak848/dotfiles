@@ -44,7 +44,9 @@ local config(opts) = base {
     draftField: 'tool_input_raw',
     gitBranchContext: 'For switch -c / checkout -b, the target branch is in the command; context.branch_name is the pre-command branch.',
     intentContext: 'Check recent_transcript and tool_input.description; if the user explicitly requested the operation, fall through instead of deny.',
-    extraEnvironment: [],
+    extraEnvironment: [
+      'Session scratchpad: Claude Code gives every session a private temp directory and tells the agent to use it for temporary files: /tmp/claude-<uid>/<project-slug>/<session-id>/scratchpad (/private/tmp/... on macOS). <project-slug> is the repo path with slashes replaced by dashes (e.g. -Users-me-repos-github-com-org-repo), so the path LOOKS like a source-hosting path but it is NOT a repository. Treat it as system temp that belongs to the current session, and judge the operation itself by the other rules as usual.',
+    ],
   }) + {
     ['$schema']: 'https://raw.githubusercontent.com/tak848/ccgate/main/schemas/claude.schema.json',
   },
