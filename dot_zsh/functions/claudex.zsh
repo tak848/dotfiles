@@ -12,7 +12,7 @@
 #   - プロキシはマシン単位で 1 プロセス。全 worktree・全セッションが 1 つを共有する
 #   - Anthropic は非 Claude モデルへの gateway ルーティングを公式サポートしていない
 #
-# 上書き用の環境変数: CLAUDEX_MODEL, CLAUDEX_SMALL_MODEL, CLAUDEX_PORT, CLAUDEX_CONTEXT_TOKENS
+# 上書き用の環境変数: CLAUDEX_MODEL, CLAUDEX_MID_MODEL, CLAUDEX_SMALL_MODEL, CLAUDEX_PORT, CLAUDEX_CONTEXT_TOKENS
 #   例) CLAUDEX_MODEL='gpt-5.6-sol-fast' claudex    # priority tier で叩く
 #   例) CLAUDEX_CONTEXT_TOKENS=272000 claudex      # backend が 272K に巻き戻った日は下げる
 
@@ -65,7 +65,11 @@ _claudex_ensure_proxy() {
 claudex() {
     _claudex_ensure_proxy || return 1
 
+    # GPT-5.6 の 3 モデルは Codex の live カタログ上で sol（frontier）> terra（balanced）> luna（fast/affordable）
+    # の序列になっており、Claude 側の fable/opus > sonnet > haiku というスロットの重みに素直に対応する。
     local model="${CLAUDEX_MODEL:-gpt-5.6-sol}"
+    local mid_model="${CLAUDEX_MID_MODEL:-gpt-5.6-terra}"
+    local small_model="${CLAUDEX_SMALL_MODEL:-gpt-5.6-luna}"
 
     # CLAUDE_CODE_MAX_CONTEXT_TOKENS は、ANTHROPIC_BASE_URL 経由の未認識モデルについて Claude Code が
     # 仮定する context window を上書きする。値の根拠は ChatGPT アカウントに配られる Codex の live カタログで、
@@ -88,12 +92,14 @@ claudex() {
     # Project > User（settings.md）。
     local context_settings="{\"env\":{\"CLAUDE_CODE_MAX_CONTEXT_TOKENS\":\"${CLAUDEX_CONTEXT_TOKENS:-872000}\"}}"
 
-    # メインの推論モデル（--model）以外に、CC が内部で使う opus / sonnet / haiku エイリアスも Codex モデルに
-    # 向けておく。素の Claude 名（claude-opus-* 等）に解決されると proxy 経由で意図しないモデルになるため
+    # メインの推論モデル（--model）以外に、CC が内部で使う fable / opus / sonnet / haiku エイリアスも Codex
+    # モデルに向けておく。素の Claude 名（claude-opus-* 等）に解決されると proxy 経由で意図しないモデルになるため
     # 全部マッピングする。plan mode 常用（default / opus / opusplan は opus 系に解決）なので特に opus が要る。
+    # subagent も、定義側で model を明示しているものはこのスロット経由で解決される。
+    #   - ANTHROPIC_DEFAULT_FABLE_MODEL:  fable エイリアス → primary と同じ sol 系
     #   - ANTHROPIC_DEFAULT_OPUS_MODEL:   opus エイリアス／plan mode の opusplan（plan フェーズ）→ primary と同じ sol 系
-    #   - ANTHROPIC_DEFAULT_SONNET_MODEL: sonnet エイリアス／opusplan の実行フェーズ → 同じく sol 系（実作業なので flagship）
-    #   - ANTHROPIC_DEFAULT_HAIKU_MODEL:  haiku エイリアス＋バックグラウンド機能（要約・タイトル生成等）→ terra 系
+    #   - ANTHROPIC_DEFAULT_SONNET_MODEL: sonnet エイリアス／opusplan の実行フェーズ → terra 系
+    #   - ANTHROPIC_DEFAULT_HAIKU_MODEL:  haiku エイリアス＋バックグラウンド機能（要約・タイトル生成等）→ luna 系
     #     （旧 ANTHROPIC_SMALL_FAST_MODEL は非推奨: model-config の環境変数表の注記）
     #
     # CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC は settings.jsonnet と同様に設定しない
@@ -101,9 +107,10 @@ claudex() {
     # settings.jsonnet の DISABLE_NON_ESSENTIAL_MODEL_CALLS で既に止まっている
     ANTHROPIC_BASE_URL="http://127.0.0.1:${CLAUDEX_PORT:-18765}" \
     ANTHROPIC_AUTH_TOKEN="unused" \
+    ANTHROPIC_DEFAULT_FABLE_MODEL="$model" \
     ANTHROPIC_DEFAULT_OPUS_MODEL="$model" \
-    ANTHROPIC_DEFAULT_SONNET_MODEL="$model" \
-    ANTHROPIC_DEFAULT_HAIKU_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-terra}" \
+    ANTHROPIC_DEFAULT_SONNET_MODEL="$mid_model" \
+    ANTHROPIC_DEFAULT_HAIKU_MODEL="$small_model" \
     CLAUDE_CODE_SUBAGENT_MODEL="${model%\[*}" \
     CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 \
     CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK=1 \
@@ -113,11 +120,12 @@ claudex() {
 
 # claudexf: claudex の Codex fast/priority tier 版。
 # -fast サフィックスを claude-code-proxy が service_tier: "priority" に翻訳して upstream に投げる。
-# メインの推論モデルと small/fast モデル（要約・タイトル生成）の両方を fast tier にする。
+# 3 スロット（primary / mid / small）をまとめて fast tier にする。
 # 速い代わりにサブスク usage の減りが早い。quota を使い切れないとき向け。
-# CLAUDEX_MODEL / CLAUDEX_SMALL_MODEL が明示指定されていればそれを優先する（fast を強制しない）。
+# CLAUDEX_MODEL / CLAUDEX_MID_MODEL / CLAUDEX_SMALL_MODEL が明示指定されていればそれを優先する（fast を強制しない）。
 claudexf() {
     CLAUDEX_MODEL="${CLAUDEX_MODEL:-gpt-5.6-sol-fast}" \
-    CLAUDEX_SMALL_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-terra-fast}" \
+    CLAUDEX_MID_MODEL="${CLAUDEX_MID_MODEL:-gpt-5.6-terra-fast}" \
+    CLAUDEX_SMALL_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-luna-fast}" \
         claudex "$@"
 }
