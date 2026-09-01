@@ -311,7 +311,17 @@ local autoModeRules = import 'auto-mode.libsonnet';
     // 許可制御を ccgate に一本化している運用と両立しない。upstream 修正後に再検討する。
     // CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: '1',
   },
+  // 保存済みの effort を持たないモデルの既定値。値は low / medium / high / xhigh のみで、
+  // max は effortLevel でも modelSettings でも受け付けない（--effort max / /effort max のセッション単位のみ）。
   effortLevel: 'xhigh',
+  // モデル別の effort（CC 2.1.251+）。同一ファイル内では effortLevel より優先される。
+  // キーは canonical name で書けば、その alias・日付サフィックス付き・[1m] 付きの ID も同じエントリにマッチする。
+  // Fable 5.1 だけ high に下げ、残りは上の xhigh に任せる。Haiku 4.5 は effort 自体に非対応なので書かない。
+  // 対話セッションで /effort や /model の effort スライダーを動かすと CC がこのキーに書き込むが、
+  // settings.json は jsonnet から全体生成しているため次の chezmoi apply で消える。恒久的に変えるならここを編集する。
+  modelSettings: {
+    'claude-fable-5-1': { effortLevel: 'high' },
+  },
   // alwaysThinkingEnabled は adaptive thinking (effortLevel) により不要
   // alwaysThinkingEnabled: true,  // https://github.com/anthropics/claude-code/issues/8780
   hooks: {
