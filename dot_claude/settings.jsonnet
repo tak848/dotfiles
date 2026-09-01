@@ -311,6 +311,15 @@ local autoModeRules = import 'auto-mode.libsonnet';
     // 許可制御を ccgate に一本化している運用と両立しない。upstream 修正後に再検討する。
     // CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: '1',
   },
+  // server-side advisor tool（実験的）。方針を決める前・同じエラーが繰り返すとき・完了を宣言する前などに
+  // Claude が第二のモデルへ会話全体を渡して意見を求める。呼ぶタイミングはモデル側が決める。
+  // advisor は main model 以上の能力が要求され、main が Opus 5 だと Fable か Opus 4.7 以降しか受け付けない
+  // （Sonnet を指定しても pairing 検証で落ちて advisor 無しで飛ぶ）。
+  // /advisor で選ぶと ~/.claude/settings.json に書かれるが、jsonnet 全体生成で消えるためここに書く。
+  // プランによっては Fable advisor に usage credits への請求の同意が要る。未同意だと advisor が付かないので、
+  // その場合は /model fable で同意する。claudex では advisor は効かない（server tool が proxy を通らず、
+  // 未認識モデルにはそもそも attach されない）。
+  advisorModel: 'fable',
   // 保存済みの effort を持たないモデルの既定値。値は low / medium / high / xhigh のみで、
   // max は effortLevel でも modelSettings でも受け付けない（--effort max / /effort max のセッション単位のみ）。
   effortLevel: 'xhigh',
