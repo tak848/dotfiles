@@ -315,7 +315,6 @@ local autoModeRules = import 'auto-mode.libsonnet';
   // Claude が第二のモデルへ会話全体を渡して意見を求める。呼ぶタイミングはモデル側が決める。
   // advisor は main model 以上の能力が要求され、main が Opus 5 だと Fable か Opus 4.7 以降しか受け付けない
   // （Sonnet を指定しても pairing 検証で落ちて advisor 無しで飛ぶ）。
-  // /advisor で選ぶと ~/.claude/settings.json に書かれるが、jsonnet 全体生成で消えるためここに書く。
   // プランによっては Fable advisor に usage credits への請求の同意が要る。未同意だと advisor が付かないので、
   // その場合は /model fable で同意する。claudex では advisor は効かない（server tool が proxy を通らず、
   // 未認識モデルにはそもそも attach されない）。
@@ -326,8 +325,6 @@ local autoModeRules = import 'auto-mode.libsonnet';
   // モデル別の effort（CC 2.1.251+）。同一ファイル内では effortLevel より優先される。
   // キーは canonical name で書けば、その alias・日付サフィックス付き・[1m] 付きの ID も同じエントリにマッチする。
   // Fable 5.1 だけ high に下げ、残りは上の xhigh に任せる。Haiku 4.5 は effort 自体に非対応なので書かない。
-  // 対話セッションで /effort や /model の effort スライダーを動かすと CC がこのキーに書き込むが、
-  // settings.json は jsonnet から全体生成しているため次の chezmoi apply で消える。恒久的に変えるならここを編集する。
   modelSettings: {
     'claude-fable-5-1': { effortLevel: 'high' },
   },
