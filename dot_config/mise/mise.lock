@@ -86,7 +86,7 @@ provenance = "cosign"
 [[tools."aqua:anomalyco/opencode"]]
 version = "1.18.25"
 backend = "aqua:anomalyco/opencode"
-specifiers = ["1.18.14"]
+specifiers = ["1.18.25"]
 
 [tools."aqua:anomalyco/opencode"."platforms.linux-arm64"]
 checksum = "sha256:35ef77897425e41b5183a2c21ac4fb1d4d944d82a94e3c920f57b5490af11ac5"
