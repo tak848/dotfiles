@@ -30,8 +30,8 @@ AZ_PYTHON = '{{ env.XDG_DATA_HOME | default(value=env.HOME ~ "/.local/share") }}
 # ランタイム（core backend）
 # ============================================
 node = "24.20.0"
-pnpm = "11.24.0"
-"github:endevco/aube" = "v2.2.0" # 高速な Node.js パッケージマネージャ
+pnpm = "11.25.0"
+"github:endevco/aube" = "v2.2.4" # 高速な Node.js パッケージマネージャ
 go = "1.27.0"
 
 # ============================================
@@ -54,7 +54,7 @@ go = "1.27.0"
 # zoxide は aqua CLI で管理（mise lock で checksum 取得不可）
 
 # 検索・ファイル操作
-"aqua:twpayne/chezmoi" = "2.72.0"
+"aqua:twpayne/chezmoi" = "2.72.1"
 "aqua:BurntSushi/ripgrep" = "15.2.0"
 "aqua:phiresky/ripgrep-all" = "0.10.10"
 # rga依存: ドキュメント変換（docx, epub, odt等）
@@ -78,7 +78,7 @@ go = "1.27.0"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
-"aqua:cloudflare/cloudflared" = "2026.8.2"
+"aqua:cloudflare/cloudflared" = "2026.8.3"
 # Azure CLI。aqua-registry に Azure/azure-cli の定義が無いため github backend で入れる。
 # リリースアセットは macOS 用 tarball と Windows 用 msi/zip だけで Linux 向けが無いので os で絞る。
 # matching_regex は x86_64 マシンで -x64.msi / -x64.zip を掴まないための保険。
@@ -98,7 +98,7 @@ go = "1.27.0"
 # システム（Homebrew）の python3 を拾う。Homebrew 側が Python を上げると venv が壊れるため、
 # only-managed で uv 管理の Python に固定する（無ければ uv が自前でダウンロードする）。
 # PATH に生えるのは snow だけで、venv の python は mise の bin ディレクトリに出ない。
-"pipx:snowflake-cli" = { version = "3.25.0", install_env = { UV_PYTHON_PREFERENCE = "only-managed" } }
+"pipx:snowflake-cli" = { version = "3.26.0", install_env = { UV_PYTHON_PREFERENCE = "only-managed" } }
 
 # 開発ツール
 "aqua:bufbuild/buf" = "1.72.0"
@@ -127,9 +127,9 @@ go = "1.27.0"
 
 # その他（1password/cli は aqua CLI で管理）
 "aqua:temporalio/cli" = "1.8.2"
-"aqua:jdx/usage" = "6.5.0"
+"aqua:jdx/usage" = "6.6.0"
 # Datadog の AI エージェント向け CLI コンパニオン
-"aqua:DataDog/pup" = "1.15.2"
+"aqua:DataDog/pup" = "1.16.1"
 
 # ============================================
 # npm グローバルパッケージ
