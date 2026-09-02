@@ -125,7 +125,7 @@ go = "1.27.0"
 # gopls-lazy の後継。gopls に依存せず go/parser + go/types で自前に実装した LSP サーバーで、
 # workspace 全体を一度だけ index してディスクに永続化するためメモリ使用量が workspace サイズに依存しない。
 # gopls-lazy はまだ動くので、golance が同等に使えると確認できるまで両方入れておく。
-"github:sivchari/golance" = "v0.4.3"
+"github:sivchari/golance" = "v0.4.4"
 "aqua:rust-lang/rust-analyzer" = "2025-12-01"
 "aqua:tamasfe/taplo" = "0.10.0"
 
