@@ -114,9 +114,28 @@ func Width(s string) int {
 	return w
 }
 
+// linkClose は OSC 8 のリンクを閉じるシーケンス。リンクが開いていないときに
+// 出しても無害なので、切り詰めの保険として常に付ける。閉じ損ねると以降の
+// 端末出力がすべてリンク扱いになる。
+const linkClose = "\033]8;;\a"
+
+// StripANSI は ANSI エスケープを取り除き、表示される文字だけを返す。
+func StripANSI(s string) string {
+	var b strings.Builder
+	for i := 0; i < len(s); {
+		if n := escapeLen(s[i:]); n > 0 {
+			i += n
+			continue
+		}
+		b.WriteByte(s[i])
+		i++
+	}
+	return b.String()
+}
+
 // Truncate は表示幅が max を超えないよう s を切り詰める。ANSI エスケープは
 // 幅 0 として保持するため、シーケンスの途中で切れることはない。切り詰めた
-// ときは色が開いたまま残らないよう Reset を付ける。
+// ときは色とリンクが開いたまま残らないよう、Reset と OSC 8 の閉じを付ける。
 func Truncate(s string, max int) string {
 	if max <= 0 {
 		return ""
@@ -143,6 +162,7 @@ func Truncate(s string, max int) string {
 		i += size
 	}
 	b.WriteString(colors.Reset)
+	b.WriteString(linkClose)
 	return b.String()
 }
 
@@ -254,7 +274,7 @@ func Link(rawURL, text string, enabled bool) string {
 	if err != nil || u.Host == "" || (u.Scheme != "https" && u.Scheme != "http") {
 		return text
 	}
-	return "\033]8;;" + rawURL + "\a" + text + "\033]8;;\a"
+	return "\033]8;;" + rawURL + "\a" + text + linkClose
 }
 
 // UsageColor は使用率に応じた色を返す。

@@ -50,7 +50,7 @@ func TestRenderTask(t *testing.T) {
 		"full": {
 			mutate:      func(*task) {},
 			width:       80,
-			wantContain: []string{"sonnet·H", "12%", "Explore", "検索中"},
+			wantContain: []string{"sonnet·high", "12%", "Explore", "検索中"},
 		},
 		// effort が数値のトークン予算で来ることがある。桁が大きいので出さない。
 		"numeric_effort": {
@@ -69,18 +69,16 @@ func TestRenderTask(t *testing.T) {
 			width:       80,
 			wantContain: []string{"Explore"},
 		},
-		// contextWindowSize が 0 でもゼロ除算しない。
+		// contextWindowSize が 0 でもゼロ除算せず、枠だけ残して伏せる。
 		"zero_context_window": {
 			mutate:      func(tk *task) { tk.ContextWindowSize = 0 },
 			width:       80,
-			wantContain: []string{"Explore"},
-			wantAbsent:  []string{"%"},
+			wantContain: []string{"Explore", "--%"},
 		},
 		"zero_tokens": {
 			mutate:      func(tk *task) { tk.TokenCount = 0 },
 			width:       80,
-			wantAbsent:  []string{"%"},
-			wantContain: []string{"Explore"},
+			wantContain: []string{"Explore", "--%"},
 		},
 		"no_name": {
 			mutate:      func(tk *task) { tk.Name = "" },
