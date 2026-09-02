@@ -14,3 +14,13 @@ fi
 
 {{ template "path-setup.tmpl" . }}
 export MISE_GLOBAL_CONFIG_FILE="${XDG_CONFIG_HOME}/mise/config.toml"
+{{- if and (eq .chezmoi.os "darwin") (stat (joinPath .chezmoi.homeDir ".rd/bin")) }}
+
+# Rancher Desktop の PATH 管理（rcfiles モード）は、ログインシェル向けに
+# ~/.bash_profile へ下記ブロックを自動追記する。chezmoi 側が同じ内容を持っていないと
+# apply のたびに「変更されている」と検出されて上書き確認が出るため、先回りして書いておく。
+# Rancher Desktop はマーカー間の内容だけを管理し、一致していれば書き換えない（.zshrc も同じ方式）。
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="{{ .chezmoi.homeDir }}/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+{{- end }}
