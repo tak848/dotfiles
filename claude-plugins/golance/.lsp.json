@@ -1,0 +1,9 @@
+{
+  "go": {
+    "command": "golance",
+    "workspaceFolder": "${CLAUDE_PROJECT_DIR}",
+    "extensionToLanguage": {
+      ".go": "go"
+    }
+  }
+}
