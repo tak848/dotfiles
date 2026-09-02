@@ -12,24 +12,8 @@ import (
 func ptr[T any](v T) *T { return &v }
 
 // stripANSI は表示内容だけを取り出す。セパレータの重複判定などに使う。
-func stripANSI(s string) string {
-	var b strings.Builder
-	for i := 0; i < len(s); {
-		if s[i] == 0x1b {
-			for i < len(s) {
-				c := s[i]
-				i++
-				if c == 0x07 || (c >= 0x40 && c <= 0x7e && i > 1 && s[i-2] != 0x1b) {
-					break
-				}
-			}
-			continue
-		}
-		b.WriteByte(s[i])
-		i++
-	}
-	return b.String()
-}
+// OSC 8 の URL まで正しく飛ばす必要があるので、描画側と同じ実装を使う。
+func stripANSI(s string) string { return render.StripANSI(s) }
 
 // checkLine は全ケースに共通する不変条件を確かめる。行が増える・崩れるバグは
 // 個別の期待文字列より、この 4 つで捕まえたほうが確実に効く。

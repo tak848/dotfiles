@@ -80,16 +80,16 @@ func TestTruncate(t *testing.T) {
 	}{
 		"fits":     {in: "abc", max: 5, want: "abc"},
 		"exact":    {in: "abc", max: 3, want: "abc"},
-		"cut":      {in: "abcdef", max: 3, want: "abc" + colors.Reset},
+		"cut":      {in: "abcdef", max: 3, want: "abc" + colors.Reset + linkClose},
 		"zero":     {in: "abc", max: 0, want: ""},
 		"negative": {in: "abc", max: -1, want: ""},
 		"keeps_ansi": {
 			in:   colors.Red + "abcdef" + colors.Reset,
 			max:  3,
-			want: colors.Red + "abc" + colors.Reset,
+			want: colors.Red + "abc" + colors.Reset + linkClose,
 		},
 		// 全角は 2 セルなので、幅 3 では 1 文字しか入らない。
-		"wide": {in: "検索中", max: 3, want: "検" + colors.Reset},
+		"wide": {in: "検索中", max: 3, want: "検" + colors.Reset + linkClose},
 	}
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
@@ -105,15 +105,41 @@ func TestTruncate(t *testing.T) {
 	}
 }
 
-func TestTruncateNeverSplitsEscape(t *testing.T) {
+// TestTruncateClosesSequences は切り詰めた出力が色とリンクを閉じて終わることを
+// 確かめる。リンクを閉じ損ねると、以降の端末出力すべてがリンク扱いになる。
+func TestTruncateClosesSequences(t *testing.T) {
 	t.Parallel()
 
-	in := colors.Red + "abcdef" + colors.Reset
-	for maxw := 1; maxw <= 8; maxw++ {
+	in := "\033]8;;https://example.com\aabcdef" + linkClose
+	// Width は 6 なので、5 までは必ず切り詰めが起きる。
+	for maxw := 1; maxw <= 5; maxw++ {
 		got := Truncate(in, maxw)
-		if strings.Count(got, "\033") > 0 && !strings.HasSuffix(got, "m") {
-			t.Errorf("Truncate(%q, %d) = %q ends mid-escape", in, maxw, got)
+		if !strings.HasSuffix(got, colors.Reset+linkClose) {
+			t.Errorf("Truncate(%q, %d) = %q, want it to end with Reset and an OSC 8 close", in, maxw, got)
 		}
+	}
+}
+
+func TestStripANSI(t *testing.T) {
+	t.Parallel()
+
+	tests := map[string]struct {
+		in   string
+		want string
+	}{
+		"plain": {in: "abc", want: "abc"},
+		"color": {in: colors.Red + "abc" + colors.Reset, want: "abc"},
+		// URL が表示文字として漏れないこと。
+		"osc8":  {in: "\033]8;;https://example.com/pull/1234\a#1234" + linkClose, want: "#1234"},
+		"mixed": {in: colors.Red + "a" + linkClose + "b", want: "ab"},
+	}
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			if got := StripANSI(tt.in); got != tt.want {
+				t.Errorf("StripANSI(%q) = %q, want %q", tt.in, got, tt.want)
+			}
+		})
 	}
 }
 
@@ -135,7 +161,7 @@ func TestJoin(t *testing.T) {
 		"fits":        {width: 100, want: "anchor|mid|tail"},
 		"drop_tail":   {width: 12, want: "anchor|mid"},
 		"drop_both":   {width: 8, want: "anchor"},
-		"below_floor": {width: 3, want: "anc" + colors.Reset},
+		"below_floor": {width: 3, want: "anc" + colors.Reset + linkClose},
 	}
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
