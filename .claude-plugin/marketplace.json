@@ -14,10 +14,10 @@
       "category": "development"
     },
     {
-      "name": "gopls-lazy",
-      "description": "gopls-lazy LSP server for Go (lazy workspace proxy for large monorepos)",
+      "name": "golance",
+      "description": "golance LSP server for Go (memory-bounded LSP server for large monorepos)",
       "version": "1.0.0",
-      "source": "./claude-plugins/gopls-lazy",
+      "source": "./claude-plugins/golance",
       "category": "development"
     },
     {

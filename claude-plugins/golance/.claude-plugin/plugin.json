@@ -1,0 +1,5 @@
+{
+  "name": "golance",
+  "description": "golance LSP server for Go (memory-bounded LSP server for large monorepos)",
+  "author": { "name": "tak848" }
+}

@@ -3,12 +3,12 @@ set -euo pipefail
 # {{ include ".claude-plugin/marketplace.json" | sha256sum }}
 # {{ include "claude-plugins/aws-knowledge/.claude-plugin/plugin.json" | sha256sum }}
 # {{ include "claude-plugins/aws-knowledge/.mcp.json" | sha256sum }}
-# {{ include "claude-plugins/gopls-lazy/.claude-plugin/plugin.json" | sha256sum }}
-# {{ include "claude-plugins/gopls-lazy/.lsp.json" | sha256sum }}
+# {{ include "claude-plugins/golance/.claude-plugin/plugin.json" | sha256sum }}
+# {{ include "claude-plugins/golance/.lsp.json" | sha256sum }}
 # {{ include "claude-plugins/context7/.claude-plugin/plugin.json" | sha256sum }}
 # {{ include "claude-plugins/context7/.mcp.json" | sha256sum }}
 # プラグイン定義が変更された時に marketplace の登録・更新と plugin install を実行する
-# 注: gopls-lazy / freee はデフォルト無効（必要なときに個別有効化）のため install ループには含めない
+# 注: golance / freee はデフォルト無効（必要なときに個別有効化）のため install ループには含めない
 #
 # 失敗は WARN に丸めず異常終了させる。run_onchange スクリプトが非ゼロで終わると chezmoi は
 # 実行状態を記録しないため（TargetStateScript.Apply が RunScript のエラー時に PersistentStateSet

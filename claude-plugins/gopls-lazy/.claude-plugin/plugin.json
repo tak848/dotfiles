@@ -1,5 +1,0 @@
-{
-  "name": "gopls-lazy",
-  "description": "gopls-lazy LSP server for Go (lazy workspace proxy for large monorepos)",
-  "author": { "name": "tak848" }
-}
