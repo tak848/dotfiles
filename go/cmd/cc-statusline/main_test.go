@@ -76,8 +76,9 @@ func fullData() *Data {
 		SevenDay   *Window `json:"seven_day"`
 		SpendLimit *Window `json:"spend_limit"`
 	}{
-		FiveHour: &Window{UsedPercentage: 23.5},
-		SevenDay: &Window{UsedPercentage: 41.2},
+		// 2100 年。テストの now より確実に未来にして、時刻表記が出る状態にする。
+		FiveHour: &Window{UsedPercentage: 23.5, ResetsAt: 4102412400},
+		SevenDay: &Window{UsedPercentage: 41.2, ResetsAt: 4102412400},
 	}
 	d.PR = &struct {
 		Number      float64 `json:"number"`
@@ -101,7 +102,7 @@ func TestRenderModelLine(t *testing.T) {
 	}{
 		"full": {
 			mutate:      func(*Data) {},
-			wantContain: []string{"[Opus·H]", "⎇ feat-x", "25%", "(250k/1000k)"},
+			wantContain: []string{"[Opus·high]", "⎇ feat-x", "25%", "(250k/1000k)"},
 		},
 		"no_effort": {
 			mutate:      func(d *Data) { d.Effort = nil },
@@ -113,7 +114,7 @@ func TestRenderModelLine(t *testing.T) {
 		},
 		"fast_mode": {
 			mutate:      func(d *Data) { d.FastMode = true },
-			wantContain: []string{"[Opus·H·fast]"},
+			wantContain: []string{"[Opus·high·fast]"},
 		},
 		"thinking_off": {
 			mutate:      func(d *Data) { d.Thinking.Enabled = false },
@@ -131,16 +132,16 @@ func TestRenderModelLine(t *testing.T) {
 			},
 			wantContain: []string{"@reviewer"},
 		},
-		// 使用率が未確定のうちは 0% の緑バーではなく、値が無いことを示す。
+		// 使用率が未確定のうちは 0% と言い切らず伏せる。バーの枠は出したまま。
 		"percentage_null": {
 			mutate:      func(d *Data) { d.ContextWindow.UsedPercentage = nil },
-			wantContain: []string{"--%"},
+			wantContain: []string{"--%", "▏"},
 			wantAbsent:  []string{"0%"},
 		},
-		// current_usage が null のときに 0k と出すと嘘になるので出さない。
+		// current_usage が null のときに 0k と出すと嘘になるので伏せる。
 		"usage_null": {
-			mutate:     func(d *Data) { d.ContextWindow.CurrentUsage = nil },
-			wantAbsent: []string{"0k"},
+			mutate:      func(d *Data) { d.ContextWindow.CurrentUsage = nil },
+			wantContain: []string{"(--k/1000k)"},
 		},
 		"no_worktree": {
 			mutate:     func(d *Data) { d.Workspace.GitWorktree = "" },
@@ -148,7 +149,7 @@ func TestRenderModelLine(t *testing.T) {
 		},
 		"empty_model": {
 			mutate:      func(d *Data) { d.Model.DisplayName = "" },
-			wantContain: []string{"[?·H]"},
+			wantContain: []string{"[?·high]"},
 		},
 	}
 	for name, tt := range tests {
@@ -187,51 +188,49 @@ func TestRenderCostLine(t *testing.T) {
 			mutate:      func(d *Data) { d.PromptCache.ExpiresAt = ptr(soon) },
 			wantContain: []string{"$1.23", "12:34", "(api 33%)", "+156", "-23", "cache 1h", "warm(~11:00)", "91%", "miss2", "5h:", "7d:"},
 		},
+		// 統計が届く前でも枠は残す。消すと初回応答で行が横に伸びる。
 		"no_prompt_cache": {
-			mutate:     func(d *Data) { d.PromptCache = nil },
-			wantAbsent: []string{"cache"},
+			mutate:      func(d *Data) { d.PromptCache = nil },
+			wantContain: []string{"cache -- -- --% miss0"},
 		},
-		// キャッシュを観測できない環境では統計に意味が無いので出さない。
 		"caching_not_observed": {
-			mutate:     func(d *Data) { d.PromptCache.CachingObserved = false },
-			wantAbsent: []string{"cache"},
+			mutate:      func(d *Data) { d.PromptCache.CachingObserved = false },
+			wantContain: []string{"cache -- -- --% miss0"},
 		},
 		"cold": {
 			mutate:      func(d *Data) { d.PromptCache.Warm = false },
 			wantContain: []string{"cold"},
 			wantAbsent:  []string{"warm"},
 		},
-		// 期限を過ぎた expires_at は時刻を出さない。warm 表示だけが残る。
+		// 期限を過ぎた expires_at は時刻を伏せる。枠は残すので幅は動かない。
 		"expired": {
 			mutate:      func(d *Data) { d.PromptCache.ExpiresAt = ptr(float64(now.Add(-time.Hour).Unix())) },
-			wantContain: []string{"warm"},
-			wantAbsent:  []string{"(~"},
+			wantContain: []string{"warm(~--:--)"},
 		},
 		"hit_ratio_null": {
 			mutate:      func(d *Data) { d.PromptCache.HitRatio = nil },
-			wantContain: []string{"cache 1h"},
-			wantAbsent:  []string{"%|"},
+			wantContain: []string{"cache 1h", "--%"},
 		},
+		// ミスが 0 でも miss0 を出す。出し入れすると幅が動く。
 		"no_misses": {
-			mutate:     func(d *Data) { d.PromptCache.Misses = 0 },
-			wantAbsent: []string{"miss"},
+			mutate:      func(d *Data) { d.PromptCache.Misses = 0 },
+			wantContain: []string{"miss0"},
 		},
 		"no_rate_limits": {
-			mutate:     func(d *Data) { d.RateLimits = nil },
-			wantAbsent: []string{"5h:", "7d:"},
+			mutate:      func(d *Data) { d.RateLimits = nil },
+			wantContain: []string{"5h:--%", "7d:--%"},
 		},
 		"only_five_hour": {
 			mutate:      func(d *Data) { d.RateLimits.SevenDay = nil },
-			wantContain: []string{"5h:"},
-			wantAbsent:  []string{"7d:"},
+			wantContain: []string{"5h:", "7d:--%"},
 		},
 		"spend_limit": {
 			mutate:      func(d *Data) { d.RateLimits.SpendLimit = &Window{UsedPercentage: 62.8} },
 			wantContain: []string{"$:"},
 		},
 		"no_api_duration": {
-			mutate:     func(d *Data) { d.Cost.TotalAPIDurationMs = 0 },
-			wantAbsent: []string{"api"},
+			mutate:      func(d *Data) { d.Cost.TotalAPIDurationMs = 0 },
+			wantContain: []string{"(api --%)"},
 		},
 	}
 	for name, tt := range tests {
@@ -443,6 +442,50 @@ func TestBarWidthShrinksWithTerminal(t *testing.T) {
 				t.Errorf("barWidth(%d) = %d, want %d", tt.width, got, tt.want)
 			}
 		})
+	}
+}
+
+// TestLayoutDoesNotGrowWhenDataArrives は、指標がまだ届いていない状態と
+// 全部揃った状態でセグメントの数が変わらないことを確かめる。値が来た瞬間に
+// 行が横に伸びると、読んでいる位置が飛ぶ。
+func TestLayoutDoesNotGrowWhenDataArrives(t *testing.T) {
+	t.Parallel()
+
+	now := time.Now()
+	full := fullData()
+
+	// セッション開始直後に相当する、指標がまだ何も届いていない状態。
+	empty := fullData()
+	empty.ContextWindow.UsedPercentage = nil
+	empty.ContextWindow.CurrentUsage = nil
+	empty.PromptCache = nil
+	empty.RateLimits = nil
+	empty.PR = nil
+
+	tests := map[string]struct {
+		got, want string
+	}{
+		"cost":    {got: renderCostLine(empty, now, 200), want: renderCostLine(full, now, 200)},
+		"session": {got: renderSessionLine(empty, 200, false), want: renderSessionLine(full, 200, false)},
+	}
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			gotSeps := strings.Count(stripANSI(tt.got), "|")
+			wantSeps := strings.Count(stripANSI(tt.want), "|")
+			if gotSeps != wantSeps {
+				t.Errorf("segment count changes as data arrives: %d vs %d\n  empty: %q\n  full:  %q",
+					gotSeps, wantSeps, stripANSI(tt.got), stripANSI(tt.want))
+			}
+		})
+	}
+
+	// 1 行目はセパレータを持たないので、枠そのものが残ることを直接見る。
+	line := stripANSI(renderModelLine(empty, 200))
+	for _, want := range []string{"▏", "--%", "(--k/"} {
+		if !strings.Contains(line, want) {
+			t.Errorf("renderModelLine() = %q, want it to keep %q while values are missing", line, want)
+		}
 	}
 }
 

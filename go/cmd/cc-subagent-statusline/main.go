@@ -22,6 +22,10 @@ import (
 	"github.com/tak848/dotfiles/go/internal/render"
 )
 
+// placeholder は値がまだ届いていない箇所を埋める。モデルが解決する前や最初の
+// トークン数が入る前に枠ごと消すと、直後に行が伸びて表示が飛ぶ。
+const placeholder = "--"
+
 // task は subagent パネルの 1 行。model と contextWindowSize は v2.1.205 以降、
 // effort は v2.1.214 以降で、いずれも欠落しうる。
 type task struct {
@@ -65,49 +69,41 @@ func statusColor(status string) string {
 	}
 }
 
-// effortShort はレベル文字列を 1 文字に畳む。数値のトークン予算で来た場合は
-// 表示しない（桁が大きく、行幅に見合わないため）。
-func effortShort(raw json.RawMessage) string {
+// effortLevel は effort をそのまま返す。数値のトークン予算で来た場合は表示
+// しない（桁が大きく、行幅に見合わないため）。
+func effortLevel(raw json.RawMessage) string {
 	var level string
 	if err := json.Unmarshal(raw, &level); err != nil {
 		return ""
 	}
-	switch level {
-	case "low":
-		return "L"
-	case "medium":
-		return "M"
-	case "high":
-		return "H"
-	case "xhigh":
-		return "X"
-	case "max":
-		return "MAX"
-	default:
-		return render.Sanitize(level)
-	}
+	return render.Sanitize(level)
 }
 
 // renderTask は 1 行の本体を組み立てる。content が空だと行そのものが消えるので、
-// 何も情報が無い場合でも最低限の識別子を返す。
+// 何も情報が無い場合でも最低限の識別子を返す。モデルや使用率がまだ解決して
+// いないタスクでも枠を出し、値が届いた瞬間に行が伸びないようにする。
 func renderTask(t task, width int) string {
-	var segs []render.Segment
-
-	if m := render.ShortModel(t.Model); m != "" {
-		badge := m
-		if e := effortShort(t.Effort); e != "" {
-			badge += "·" + e
-		}
-		segs = append(segs, render.Seg(colors.Surface+badge+colors.Reset, 3))
+	badge := render.ShortModel(t.Model)
+	if badge == "" {
+		badge = placeholder
 	}
+	if e := effortLevel(t.Effort); e != "" {
+		badge += "·" + e
+	}
+	segs := []render.Segment{render.Seg(colors.Surface+badge+colors.Reset, 3)}
 
+	pct := -1
 	if t.ContextWindowSize > 0 && t.TokenCount > 0 {
-		pct := max(0, min(int(t.TokenCount/t.ContextWindowSize*100), 100))
-		segs = append(segs,
-			render.Seg(render.Bar(pct, 5), 2),
-			render.Seg(render.UsageColor(pct)+strconv.Itoa(pct)+"%"+colors.Reset, 1),
-		)
+		pct = max(0, min(int(t.TokenCount/t.ContextWindowSize*100), 100))
 	}
+	pctText := colors.Surface + placeholder + "%" + colors.Reset
+	if pct >= 0 {
+		pctText = render.UsageColor(pct) + strconv.Itoa(pct) + "%" + colors.Reset
+	}
+	segs = append(segs,
+		render.Seg(render.Bar(max(pct, 0), 5), 2),
+		render.Seg(pctText, 1),
+	)
 
 	name := render.Sanitize(t.Name)
 	if name == "" {

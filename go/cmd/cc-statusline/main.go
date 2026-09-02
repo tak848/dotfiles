@@ -116,14 +116,9 @@ const (
 	rightMargin = 12
 )
 
-// effortShort は effort レベルの短縮表記。
-var effortShort = map[string]string{
-	"low":    "L",
-	"medium": "M",
-	"high":   "H",
-	"xhigh":  "X",
-	"max":    "MAX",
-}
+// placeholder は値がまだ届いていない箇所を埋める。セグメントごと消すと値が
+// 来た瞬間に行が横に伸びて表示が飛ぶので、枠は残して中身だけ伏せる。
+const placeholder = "--"
 
 // reviewMark は PR のレビュー状態を記号と色に対応づける。
 var reviewMark = map[string][2]string{
@@ -131,6 +126,25 @@ var reviewMark = map[string][2]string{
 	"changes_requested": {"✗", colors.Red},
 	"pending":           {"…", colors.Yellow},
 	"draft":             {"◌", colors.Surface},
+}
+
+// placeholderTime は時刻がまだ分からないときの伏せ字。実際の表記と桁を
+// 揃えてあるので、値が入っても幅が動かない。
+func placeholderTime(weekly bool) string {
+	if weekly {
+		return colors.Surface + "(~--/--(-) --:--)" + colors.Reset
+	}
+	return colors.Surface + "(~--:--)" + colors.Reset
+}
+
+// resetTime は絶対時刻を返す。未設定や到達済みのときは伏せ字で枠を残す。
+// resets_at / expires_at の到達時にも statusline は再実行されるので、
+// その瞬間だけ表記が消えるのを防ぐ。
+func resetTime(epoch float64, now time.Time, weekly bool) string {
+	if s := render.ResetTime(epoch, now, weekly); s != "" {
+		return s
+	}
+	return placeholderTime(weekly)
 }
 
 func barWidth(width int) int {
@@ -152,10 +166,8 @@ func modelBadge(d *Data) string {
 		badge = "?"
 	}
 	if d.Effort != nil {
-		if s, ok := effortShort[d.Effort.Level]; ok {
-			badge += "·" + s
-		} else if d.Effort.Level != "" {
-			badge += "·" + render.Sanitize(d.Effort.Level)
+		if lv := render.Sanitize(d.Effort.Level); lv != "" {
+			badge += "·" + lv
 		}
 	}
 	if d.FastMode {
@@ -184,90 +196,108 @@ func renderModelLine(d *Data, width int) string {
 		segs = append(segs, render.Seg(colors.Peach+"⎇ "+wt+colors.Reset, 2))
 	}
 
-	if d.ContextWindow.UsedPercentage == nil {
-		// セッション初期はまだ使用率が分からない。バーを出すと 0% の緑バーに
-		// 見えてしまうので、値が無いことをそのまま示す。
-		segs = append(segs, render.Seg(colors.Surface+"--%"+colors.Reset, 0))
-	} else {
-		pct := max(0, min(int(*d.ContextWindow.UsedPercentage), 100))
-		segs = append(segs,
-			render.Seg(render.Bar(pct, barWidth(width)), 1),
-			render.Seg(render.UsageColor(pct)+strconv.Itoa(pct)+"%"+colors.Reset, 0),
-		)
+	// 使用率がまだ来ていなくても、空のバーと伏せた数値で枠を出す。セッション
+	// 初期や /compact 直後にセグメントごと消えると、次の応答で急に行が伸びる。
+	pct := -1
+	if d.ContextWindow.UsedPercentage != nil {
+		pct = max(0, min(int(*d.ContextWindow.UsedPercentage), 100))
 	}
+	pctText := colors.Surface + placeholder + "%" + colors.Reset
+	if pct >= 0 {
+		pctText = render.UsageColor(pct) + strconv.Itoa(pct) + "%" + colors.Reset
+	}
+	segs = append(segs,
+		render.Seg(render.Bar(max(pct, 0), barWidth(width)), 1),
+		render.Seg(pctText, 0),
+	)
 
+	used := placeholder
 	if u := d.ContextWindow.CurrentUsage; u != nil {
-		used := int(u.InputTokens+u.CacheCreationInputTokens+u.CacheReadInputTokens) / 1000
-		size := int(d.ContextWindow.ContextWindowSize) / 1000
-		segs = append(segs, render.Seg(fmt.Sprintf("(%dk/%dk)", used, size), 1))
+		used = strconv.Itoa(int(u.InputTokens+u.CacheCreationInputTokens+u.CacheReadInputTokens) / 1000)
 	}
+	size := placeholder
+	if d.ContextWindow.ContextWindowSize > 0 {
+		size = strconv.Itoa(int(d.ContextWindow.ContextWindowSize) / 1000)
+	}
+	segs = append(segs, render.Seg(fmt.Sprintf("(%sk/%sk)", used, size), 1))
 
 	return render.Join(segs, " ", width)
 }
 
-// cacheSegment は prompt cache の要約を組み立てる。キャッシュが観測できていない
-// 環境（プロキシ越しなど）では何も出さない。
+// cacheSegment は prompt cache の要約を組み立てる。統計が届くのは main
+// conversation の初回 API 応答後なので、それまでは枠だけ出しておく。
+// キャッシュを観測できない環境（プロキシ越しなど）でも同じ形にする。
 func cacheSegment(d *Data, now time.Time) string {
 	pc := d.PromptCache
 	if pc == nil || !pc.CachingObserved {
-		return ""
+		return colors.Surface +
+			strings.Join([]string{"cache", placeholder, placeholder, placeholder + "%", "miss0"}, " ") +
+			colors.Reset
 	}
 
-	parts := []string{"cache"}
+	ttl := placeholder
 	if pc.TTL != "" {
-		parts = append(parts, render.Sanitize(pc.TTL))
+		ttl = render.Sanitize(pc.TTL)
 	}
+
+	state := colors.Red + "cold" + colors.Reset
 	if pc.Warm {
-		state := colors.Green + "warm" + colors.Reset
+		// 期限到達時は Claude Code が statusline を再実行するので、そのとき
+		// 時刻が消えると同時に cold へ落ちる。
+		expires := placeholderTime(false)
 		if pc.ExpiresAt != nil {
-			// 期限到達時は Claude Code が statusline を再実行するので、
-			// そのタイミングで時刻が消えると同時に cold へ落ちる。
-			if at := render.ResetTime(*pc.ExpiresAt, now, false); at != "" {
-				state += at
-			}
+			expires = resetTime(*pc.ExpiresAt, now, false)
 		}
-		parts = append(parts, state)
-	} else {
-		parts = append(parts, colors.Red+"cold"+colors.Reset)
+		state = colors.Green + "warm" + colors.Reset + expires
 	}
+
+	ratio := colors.Surface + placeholder + "%" + colors.Reset
 	if pc.HitRatio != nil {
-		parts = append(parts, strconv.Itoa(int(*pc.HitRatio*100))+"%")
+		ratio = strconv.Itoa(int(*pc.HitRatio*100)) + "%"
 	}
+
+	miss := colors.Surface + "miss0" + colors.Reset
 	if pc.Misses > 0 {
-		parts = append(parts, colors.Yellow+"miss"+strconv.Itoa(int(pc.Misses))+colors.Reset)
+		miss = colors.Yellow + "miss" + strconv.Itoa(int(pc.Misses)) + colors.Reset
 	}
-	return strings.Join(parts, " ")
+
+	return strings.Join([]string{"cache", ttl, state, ratio, miss}, " ")
 }
 
+// rateSegment はレート制限を組み立てる。rate_limits も初回 API 応答までは
+// 来ないので、その間は伏せた値で枠を出す。spend_limit は Claude apps gateway
+// 配下でしか生成されないため、あるときだけ足す。
 func rateSegment(d *Data, now time.Time) string {
-	if d.RateLimits == nil {
-		return ""
+	var five, seven, spend *Window
+	if d.RateLimits != nil {
+		five, seven, spend = d.RateLimits.FiveHour, d.RateLimits.SevenDay, d.RateLimits.SpendLimit
 	}
 
-	var parts []string
-	add := func(label string, w *Window, weekly bool) {
+	format := func(label string, w *Window, weekly bool) string {
 		if w == nil {
-			return
+			return label + ":" + colors.Surface + placeholder + "%" + colors.Reset + placeholderTime(weekly)
 		}
-		clr := render.UsageColor(int(w.UsedPercentage))
-		parts = append(parts, fmt.Sprintf("%s:%s%.0f%%%s%s",
-			label, clr, w.UsedPercentage, colors.Reset, render.ResetTime(w.ResetsAt, now, weekly)))
+		return fmt.Sprintf("%s:%s%.0f%%%s%s", label,
+			render.UsageColor(int(w.UsedPercentage)), w.UsedPercentage, colors.Reset,
+			resetTime(w.ResetsAt, now, weekly))
 	}
-	add("5h", d.RateLimits.FiveHour, false)
-	add("7d", d.RateLimits.SevenDay, true)
-	add("$", d.RateLimits.SpendLimit, true)
 
+	parts := []string{format("5h", five, false), format("7d", seven, true)}
+	if spend != nil {
+		parts = append(parts, format("$", spend, true))
+	}
 	return strings.Join(parts, " ")
 }
 
 // renderCostLine は 2 行目を組み立てる。
 func renderCostLine(d *Data, now time.Time, width int) string {
-	elapsed := render.Duration(d.Cost.TotalDurationMs)
+	// 経過時間と API 時間を並べると「2 つの時間」で読みにくいので、API 側は
+	// 占有率にする。まだ API 応答が無いうちも括弧ごと残して幅を保つ。
+	api := colors.Surface + "(api " + placeholder + "%)" + colors.Reset
 	if d.Cost.TotalDurationMs > 0 && d.Cost.TotalAPIDurationMs > 0 {
-		// 経過時間と API 時間を並べると「2 つの時間」で読みにくいので、
-		// API 側は占有率にする。
-		elapsed += fmt.Sprintf(" (api %.0f%%)", d.Cost.TotalAPIDurationMs/d.Cost.TotalDurationMs*100)
+		api = fmt.Sprintf("(api %.0f%%)", d.Cost.TotalAPIDurationMs/d.Cost.TotalDurationMs*100)
 	}
+	elapsed := render.Duration(d.Cost.TotalDurationMs) + " " + api
 
 	segs := []render.Segment{
 		render.Seg(fmt.Sprintf("%s$%.2f%s", colors.Green, d.Cost.TotalCostUSD, colors.Reset), 0),
@@ -282,10 +312,11 @@ func renderCostLine(d *Data, now time.Time, width int) string {
 }
 
 // prSegment は PR 番号とレビュー状態を組み立てる。番号だけでも意味が通るよう、
-// リンクは番号そのものに掛ける。
+// リンクは番号そのものに掛ける。PR は作業中に現れたり消えたりするので、
+// 無いときも枠を残す。
 func prSegment(d *Data, links bool) string {
 	if d.PR == nil || d.PR.Number <= 0 {
-		return ""
+		return colors.Surface + "#" + placeholder + colors.Reset
 	}
 
 	prefix := "#"
