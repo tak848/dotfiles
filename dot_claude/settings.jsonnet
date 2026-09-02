@@ -68,6 +68,14 @@ local autoModeRules = import 'auto-mode.libsonnet';
     command: '~/.claude/bin/cc-statusline',
     padding: 2,
   },
+  // subagent パネル（subagent 実行中だけプロンプト下に出る行）の本体を差し替える。
+  // 既定の `name · description · token count` に代えて、モデル・effort・
+  // コンテキスト使用率を出す。statusLine とは別コマンドで、未設定なら既定描画。
+  // ref: https://code.claude.com/docs/en/statusline#subagent-status-lines
+  subagentStatusLine: {
+    type: 'command',
+    command: '~/.claude/bin/cc-subagent-statusline',
+  },
   permissions: {
     defaultMode: 'plan',
     // auto mode を全面無効化する。許可判定は ccgate（PermissionRequest hook）に一本化しており、

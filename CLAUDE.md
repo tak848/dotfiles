@@ -112,6 +112,31 @@ Homebrew
 - `snow` の実体は「PATH → `mise/shims/snow` → `mise which snow`」の順で解決する。非対話シェルには mise の PATH が通っていないことがあるため
 - 素の `snow` は残してあり、`PYTHONPATH` を汚していない場所ではそのまま使える
 
+### statusline（cc-statusline / cc-subagent-statusline）
+
+`go/cmd/cc-statusline` が画面下部の statusline を 3 行で描き、`go/cmd/cc-subagent-statusline` が subagent 実行中だけプロンプト下に出るパネルの各行を描く。両者は別設定・別コマンドで、後者を設定しなければ Claude Code 組み込みの `name · description · token count` が使われる。表示ロジックは `go/internal/render` に集約している。
+
+入力 JSON のスキーマは [公式ドキュメント](https://code.claude.com/docs/en/statusline) にあるが、手元の環境で来るかどうかは別問題なので、実装時に確認した結果を残す。
+
+- `rate_limits.spend_limit` は Claude apps gateway 配下でのみ生成される。個人の Max 契約では来ないので、読むだけにして表示は成り行きに任せている
+- `permission_mode` は JSON に含まれない。statusline の再実行トリガーではあるが値は渡らないため、表示はできない
+- `remote.session_id` は公式ドキュメントに記載が無いが、remote session では実際に来る
+- `worktree.*` は Claude Code の worktree セッション機能専用で、`gwc` 運用では来ない。ワークツリー名は `workspace.git_worktree` を使う
+
+実装で踏みやすい落とし穴が 4 つある。
+
+- **null をポインタで受ける。** `encoding/json` は非ポインタ型に `null` を入れても no-op でゼロ値のまま通す。`context_window.current_usage` を値型で受けると、`/compact` 直後に「0k・0%・緑バー」というもっともらしい嘘が出る
+- **数値は `float64` で受ける。** `resets_at` を `int64` で受けていると、上流が小数付き数値を出した瞬間に decode 全体が失敗し、statusline が丸ごと消える
+- **外部由来の文字列は制御文字を落とす。** `session_name` や PR タイトルに改行が 1 個混ざると幻の行が増え、ESC が混ざると色や OSC 8 の終端を乗っ取られる。`render.Sanitize` を必ず通す
+- **各行に必ず残るセグメントを置く。** 行が空になると statusline の高さが変わり、fullscreen renderer では入力欄が上下に跳ねる。`render.Segment` の `Drop` が 0 のものは幅が足りなくても落とさない
+
+そのほかの設計上の判断。
+
+- 時刻はすべて絶対時刻で出しているので `refreshInterval` は設定していない。`resets_at` / `expires_at` の到達自体が再実行トリガーなので、イベント駆動だけで表示が古びない。ただし経過時間だけは入力のスナップショットなので、アイドル中は止まって見える
+- OSC 8 ハイパーリンクの可否は環境変数だけで決める（stdout がパイプなので isatty が使えない）。`CC_STATUSLINE_HYPERLINKS` で明示的に上書きでき、`NO_COLOR` や `TERM=dumb` では出さない
+- 失敗時の振る舞いは 2 つで逆にしてある。cc-statusline は無出力だと statusline が黙って消えて壊れたことに気づけないのでエラー行を出し、cc-subagent-statusline は無出力が既定描画へのフォールバックになるので黙って終わる
+- `run_onchange_after_45-build-statusline.sh.tmpl` の `include` リストから漏れたファイルは、編集しても再ビルドされず古いバイナリが残る。エラーも警告も出ないので、`go/cmd/cc-statusline/buildscript_test.go` が網羅を検証している
+
 ### 自動生成ファイル一覧
 
 | ファイル | 生成元 | 生成方法 |
@@ -158,6 +183,7 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 | `run_onchange_after_20-aqua-install.sh.tmpl` | `aqua.yaml` 変更時 | `aqua install` |
 | `run_onchange_after_30-install-packages.sh.tmpl` | `packages.yaml` 変更時 | `brew install`（macOS） |
 | `run_onchange_after_40-generate-jsonnet.sh.tmpl` | jsonnet ファイル変更時 | jsonnet → JSON 生成（`~/.claude/settings.json`, `~/.gemini/antigravity-cli/{settings,mcp_config}.json`） |
+| `run_onchange_after_45-build-statusline.sh.tmpl` | Go ソース変更時 | `~/.claude/bin/` と `~/.codex/bin/` へ Go バイナリをビルド |
 | `run_onchange_after_50-claude-plugins.sh.tmpl` | プラグイン定義変更時 | `claude plugin marketplace update` + `install` |
 
 ### Chezmoi ファイル命名規則
