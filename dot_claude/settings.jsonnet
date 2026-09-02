@@ -54,6 +54,9 @@ local autoModeRules = import 'auto-mode.libsonnet';
     // gopls-lazy は大規模 Go モノレポ向けの軽量 LSP プロキシ（mise: github:sivchari/gopls-lazy）。
     // 公式 gopls-lsp と同様、一律有効化せず必要なプロジェクトで個別に有効化する。
     // 'gopls-lazy@tak848-plugins': true,
+    // golance は gopls-lazy の後継（mise: github:sivchari/golance）。gopls に依存しない自前実装の
+    // LSP サーバー。gopls-lazy と同じ 'go' サーバー名なので、有効化するのはどちらか一方だけにする。
+    // 'golance@tak848-plugins': true,
     'aws-knowledge@tak848-plugins': true,
     // freee Remote MCP (https://mcp.freee.co.jp/mcp)。OAuth 認証が必要なため一律有効化せず、
     // 使うときだけ個別に有効化する。

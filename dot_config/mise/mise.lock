@@ -1619,6 +1619,46 @@ checksum = "sha256:bdc2ef93fd8e8cdae22cc6cc732e0630d1ca826302abb34ffea256b488017
 url = "https://github.com/raine/claude-code-proxy/releases/download/v0.1.35/claude-code-proxy-darwin-amd64.tar.gz"
 url_api = "https://api.github.com/repos/raine/claude-code-proxy/releases/assets/521279467"
 
+[[tools."github:sivchari/golance"]]
+version = "0.4.3"
+backend = "github:sivchari/golance"
+specifiers = ["v0.4.3"]
+
+[tools."github:sivchari/golance"."platforms.linux-arm64"]
+checksum = "sha256:49e0503e744f8b665c0400b420f4fb9b1accbef220d22cf9261e0d5732b3f533"
+url = "https://github.com/sivchari/golance/releases/download/v0.4.3/golance_0.4.3_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/540742709"
+
+[tools."github:sivchari/golance"."platforms.linux-arm64-musl"]
+checksum = "sha256:49e0503e744f8b665c0400b420f4fb9b1accbef220d22cf9261e0d5732b3f533"
+url = "https://github.com/sivchari/golance/releases/download/v0.4.3/golance_0.4.3_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/540742709"
+
+[tools."github:sivchari/golance"."platforms.linux-x64"]
+checksum = "sha256:37785d8120a312ecbfa3a134a0631fe2b965dbb90e759333c403b59ae7f308f2"
+url = "https://github.com/sivchari/golance/releases/download/v0.4.3/golance_0.4.3_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/540742707"
+
+[tools."github:sivchari/golance"."platforms.linux-x64-musl"]
+checksum = "sha256:37785d8120a312ecbfa3a134a0631fe2b965dbb90e759333c403b59ae7f308f2"
+url = "https://github.com/sivchari/golance/releases/download/v0.4.3/golance_0.4.3_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/540742707"
+
+[tools."github:sivchari/golance"."platforms.macos-arm64"]
+checksum = "sha256:bf9c1df45902095f00ba4956bf21940d3d545b77ebdfa641ea8a875555de4995"
+url = "https://github.com/sivchari/golance/releases/download/v0.4.3/golance_0.4.3_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/540742732"
+
+[tools."github:sivchari/golance"."platforms.macos-x64"]
+checksum = "sha256:184f44c8a272073ea9dc580d62ed7bc9921673783f58e1173e940826e686809c"
+url = "https://github.com/sivchari/golance/releases/download/v0.4.3/golance_0.4.3_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/540742731"
+
+[tools."github:sivchari/golance"."platforms.windows-x64"]
+checksum = "sha256:87c5170ff567612d64ec00482e09f38007d9086945f7cb58b1f0cd03cd3cb5eb"
+url = "https://github.com/sivchari/golance/releases/download/v0.4.3/golance_0.4.3_windows_amd64.zip"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/540742710"
+
 [[tools."github:sivchari/gopls-lazy"]]
 version = "0.4.1"
 backend = "github:sivchari/gopls-lazy"
