@@ -9,7 +9,20 @@ local autoModeRules = import 'auto-mode.libsonnet';
   cleanupPeriodDays: 3650,
   // teammateMode は Agent Teams 用の設定。Agent Teams 無効化に伴い不要（下記 env 参照）。
   // teammateMode: 'tmux',
-  includeCoAuthoredBy: false,
+  // Claude Code がコミット・PR に付ける attribution を全て消す。
+  // かつて使っていた includeCoAuthoredBy は v2.0.62 で attribution に置き換えられた deprecated 設定で、
+  // Co-Authored-By trailer と PR 本文の文言は消せるが session link は消せない。そのため remote session
+  // （Claude Code on the web / Remote Control）から commit すると
+  // `Claude-Session: https://claude.ai/code/session_...` trailer が、PR を立てるとそのリンクが残る。
+  // 消すには attribution.sessionUrl: false が要る。
+  // ref: https://zenn.dev/khasegawa/articles/985d970d6cc4a2
+  // なお attribution.commit / attribution.pr のどちらかを設定した時点で includeCoAuthoredBy は
+  // 無視されるため、併記せず attribution に一本化する。
+  attribution: {
+    commit: '',
+    pr: '',
+    sessionUrl: false,
+  },
   // ツール出力・コマンド出力を省略せずフル表示する。表示が省略されて情報が欠けるのを避ける。
   // thinking の常時フル表示設定は存在しない（transcript viewer の Ctrl+E で全表示は可能）。
   verbose: true,
