@@ -86,7 +86,9 @@ go = "1.27.0"
 # （Renovate に extractVersion で追わせるため。renovate.json5 の packageRules を参照）。
 # 実行に必要な Python 3.14 は run_onchange_after_15-azure-cli-python.sh.tmpl が入れる。
 # mise の postinstall はシステムの PATH で走り mise 管理の uv が使えないため、そちらには置けない。
-"github:Azure/azure-cli" = { version = "2.89.1", version_prefix = "azure-cli-", os = ["macos"], matching_regex = "macos" }
+"github:Azure/azure-cli" = { version = "2.89.1", version_prefix = "azure-cli-", os = [
+    "macos",
+], matching_regex = "macos" }
 
 # Snowflake CLI（snow）。GitHub リリースには署名（.sig / .pub）しか無く、公式の配布先である
 # sfc-repo も macOS は .pkg、Linux は .deb / .rpm だけで、mise の http backend が扱える形式が無い。
@@ -121,11 +123,11 @@ go = "1.27.0"
 
 # Language Server
 "go:golang.org/x/tools/gopls" = "v0.23.0"
-"github:sivchari/gopls-lazy" = "v0.4.1" # gopls を高速化する LSP プロキシ（大規模 Go モノレポ向け）
+"github:sivchari/gopls-lazy" = "v0.4.1"   # gopls を高速化する LSP プロキシ（大規模 Go モノレポ向け）
 # gopls-lazy の後継。gopls に依存せず go/parser + go/types で自前に実装した LSP サーバーで、
 # workspace 全体を一度だけ index してディスクに永続化するためメモリ使用量が workspace サイズに依存しない。
 # gopls-lazy はまだ動くので、golance が同等に使えると確認できるまで両方入れておく。
-"github:sivchari/golance" = "v0.6.0"
+"github:sivchari/golance" = "v0.7.0"
 "aqua:rust-lang/rust-analyzer" = "2025-12-01"
 "aqua:tamasfe/taplo" = "0.10.0"
 
@@ -139,7 +141,7 @@ go = "1.27.0"
 # npm グローバルパッケージ
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.258"
-"github:google-antigravity/antigravity-cli" = "1.1.22"     # agy: Gemini CLI の後継
+"github:google-antigravity/antigravity-cli" = "1.1.22" # agy: Gemini CLI の後継
 "aqua:openai/codex" = "0.152.0"
 "aqua:anomalyco/opencode" = "1.18.25"
 # Grok Build CLI (xAI) は http backend で管理（末尾の [tools."http:grok"] を参照）
@@ -148,7 +150,7 @@ go = "1.27.0"
 "npm:ccusage" = "20.0.20"
 "npm:@typescript/native-preview" = "7.0.0-dev.20260707.2"
 "npm:@fission-ai/openspec" = "1.11.0"
-"npm:defuddle" = "0.19.3"                                  # WebFetch の代替: URL 本文をモデル要約を挟まず clean な Markdown で取得
+"npm:defuddle" = "0.19.3"                                                                 # WebFetch の代替: URL 本文をモデル要約を挟まず clean な Markdown で取得
 
 # ============================================
 # Grok Build CLI (xAI のターミナル向けコーディングエージェント)
