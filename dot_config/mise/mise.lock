@@ -1414,46 +1414,38 @@ specifiers = ["v2.2.4"]
 
 [tools."github:endevco/aube"."platforms.linux-arm64"]
 checksum = "sha256:ded66b083215124d196d918ce44506791c2153552f8f307786e07d9bb3f9221e"
-url = "https://github.com/jdx/aube/releases/download/v2.2.4/aube-v2.2.4-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/538160671"
-provenance = "github-attestations"
+url = "https://github.com/aubepkg/aube/releases/download/v2.2.4/aube-v2.2.4-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/aubepkg/aube/releases/assets/538160671"
 
 [tools."github:endevco/aube"."platforms.linux-arm64-musl"]
 checksum = "sha256:07ad5c91d0c7ebb8e9092883ce4910284dc3c909d3aa3ef3c0041c8d25facb7b"
-url = "https://github.com/jdx/aube/releases/download/v2.2.4/aube-v2.2.4-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/538133294"
-provenance = "github-attestations"
+url = "https://github.com/aubepkg/aube/releases/download/v2.2.4/aube-v2.2.4-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/aubepkg/aube/releases/assets/538133294"
 
 [tools."github:endevco/aube"."platforms.linux-x64"]
 checksum = "sha256:20b8fda0f9f471500ee64814880bd84c1bc402ee7f6dece39bfae25cc93aa1d8"
-url = "https://github.com/jdx/aube/releases/download/v2.2.4/aube-v2.2.4-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/538149375"
-provenance = "github-attestations"
-provenance_verified = true
+url = "https://github.com/aubepkg/aube/releases/download/v2.2.4/aube-v2.2.4-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/aubepkg/aube/releases/assets/538149375"
 
 [tools."github:endevco/aube"."platforms.linux-x64-musl"]
 checksum = "sha256:ff864b3348d8aad6a1b50fe47e2234d53527797e80f190533c0456ef6255d6e4"
-url = "https://github.com/jdx/aube/releases/download/v2.2.4/aube-v2.2.4-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/538157265"
-provenance = "github-attestations"
+url = "https://github.com/aubepkg/aube/releases/download/v2.2.4/aube-v2.2.4-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/aubepkg/aube/releases/assets/538157265"
 
 [tools."github:endevco/aube"."platforms.macos-arm64"]
 checksum = "sha256:aa3f6e8e319c8d9c92393e797cd5576229eacc0740e8cf2b34d4c65bb1e61708"
-url = "https://github.com/jdx/aube/releases/download/v2.2.4/aube-v2.2.4-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/538155490"
-provenance = "github-attestations"
+url = "https://github.com/aubepkg/aube/releases/download/v2.2.4/aube-v2.2.4-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/aubepkg/aube/releases/assets/538155490"
 
 [tools."github:endevco/aube"."platforms.macos-x64"]
 checksum = "sha256:ada4d37cc28ff03c1c7573105d9a149e0e9922abec8b2332d0ec11020b77ad2b"
-url = "https://github.com/jdx/aube/releases/download/v2.2.4/libaube-x86_64-apple-darwin.dylib"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/538190348"
-provenance = "github-attestations"
+url = "https://github.com/aubepkg/aube/releases/download/v2.2.4/libaube-x86_64-apple-darwin.dylib"
+url_api = "https://api.github.com/repos/aubepkg/aube/releases/assets/538190348"
 
 [tools."github:endevco/aube"."platforms.windows-x64"]
 checksum = "sha256:b6ace0276285c6a0e0f0f2850f45bdcc4e51e1cc11fa005457c6fb83998a6d23"
-url = "https://github.com/jdx/aube/releases/download/v2.2.4/aube-v2.2.4-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/jdx/aube/releases/assets/538150861"
-provenance = "github-attestations"
+url = "https://github.com/aubepkg/aube/releases/download/v2.2.4/aube-v2.2.4-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/aubepkg/aube/releases/assets/538150861"
 
 [[tools."github:git-ecosystem/git-credential-manager"]]
 version = "2.9.1"
@@ -1620,44 +1612,44 @@ url = "https://github.com/raine/claude-code-proxy/releases/download/v0.1.35/clau
 url_api = "https://api.github.com/repos/raine/claude-code-proxy/releases/assets/521279467"
 
 [[tools."github:sivchari/golance"]]
-version = "0.4.4"
+version = "0.6.0"
 backend = "github:sivchari/golance"
-specifiers = ["v0.4.4"]
+specifiers = ["v0.6.0"]
 
 [tools."github:sivchari/golance"."platforms.linux-arm64"]
-checksum = "sha256:9e5673b213e59c3b0c30a3902b1a572a42f0748cb16f3b4b7a0211b43d81e450"
-url = "https://github.com/sivchari/golance/releases/download/v0.4.4/golance_0.4.4_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/540849805"
+checksum = "sha256:0413bbbc13cc34a4dddeb31483ab2b72e88c340c8cfb3782b2d250ff63ea2555"
+url = "https://github.com/sivchari/golance/releases/download/v0.6.0/golance_0.6.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/542231828"
 
 [tools."github:sivchari/golance"."platforms.linux-arm64-musl"]
-checksum = "sha256:9e5673b213e59c3b0c30a3902b1a572a42f0748cb16f3b4b7a0211b43d81e450"
-url = "https://github.com/sivchari/golance/releases/download/v0.4.4/golance_0.4.4_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/540849805"
+checksum = "sha256:0413bbbc13cc34a4dddeb31483ab2b72e88c340c8cfb3782b2d250ff63ea2555"
+url = "https://github.com/sivchari/golance/releases/download/v0.6.0/golance_0.6.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/542231828"
 
 [tools."github:sivchari/golance"."platforms.linux-x64"]
-checksum = "sha256:c9076e01ce926c96cb9447793f70162cde4c0f734cb74abf194b14af0ac7b2a2"
-url = "https://github.com/sivchari/golance/releases/download/v0.4.4/golance_0.4.4_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/540849760"
+checksum = "sha256:037c5b02ee754a8a5dce57b1679366096258faff552198f8633b2d3fdfce99c2"
+url = "https://github.com/sivchari/golance/releases/download/v0.6.0/golance_0.6.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/542231813"
 
 [tools."github:sivchari/golance"."platforms.linux-x64-musl"]
-checksum = "sha256:c9076e01ce926c96cb9447793f70162cde4c0f734cb74abf194b14af0ac7b2a2"
-url = "https://github.com/sivchari/golance/releases/download/v0.4.4/golance_0.4.4_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/540849760"
+checksum = "sha256:037c5b02ee754a8a5dce57b1679366096258faff552198f8633b2d3fdfce99c2"
+url = "https://github.com/sivchari/golance/releases/download/v0.6.0/golance_0.6.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/542231813"
 
 [tools."github:sivchari/golance"."platforms.macos-arm64"]
-checksum = "sha256:e891b6540545b59cd23ba3e9ec1c00c771c37a4c69cd576ac5534f448d225af2"
-url = "https://github.com/sivchari/golance/releases/download/v0.4.4/golance_0.4.4_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/540849721"
+checksum = "sha256:2ffd8e199ba5d99803d577827455fc52802c4bd72109ac5517ecd82afc9e9447"
+url = "https://github.com/sivchari/golance/releases/download/v0.6.0/golance_0.6.0_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/542231811"
 
 [tools."github:sivchari/golance"."platforms.macos-x64"]
-checksum = "sha256:9a25049b86c9c34d183f5ff7892967b154514d9f8ad6a27fd8abe6c6a13afff2"
-url = "https://github.com/sivchari/golance/releases/download/v0.4.4/golance_0.4.4_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/540849685"
+checksum = "sha256:07419f3f25b92200b1dbb282ae7dc8244d69a2f442fdd57835be00bb55f90cc8"
+url = "https://github.com/sivchari/golance/releases/download/v0.6.0/golance_0.6.0_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/542231815"
 
 [tools."github:sivchari/golance"."platforms.windows-x64"]
-checksum = "sha256:d642216ff852af708e7e8b62f8d481b644fe251f55848d7aa578f106d7a99d52"
-url = "https://github.com/sivchari/golance/releases/download/v0.4.4/golance_0.4.4_windows_amd64.zip"
-url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/540849851"
+checksum = "sha256:95fd40afe33c57e32e3ad318b6756f3bba9081d2fd8057e273a115ab3f8c2851"
+url = "https://github.com/sivchari/golance/releases/download/v0.6.0/golance_0.6.0_windows_amd64.zip"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/542231826"
 
 [[tools."github:sivchari/gopls-lazy"]]
 version = "0.4.1"
