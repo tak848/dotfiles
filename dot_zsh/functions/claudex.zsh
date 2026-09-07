@@ -19,6 +19,9 @@
 # 上書き用の環境変数: CLAUDEX_MODEL, CLAUDEX_FABLE_MODEL, CLAUDEX_MID_MODEL, CLAUDEX_SMALL_MODEL, CLAUDEX_CONTEXT_TOKENS
 #   例) CLAUDEX_MODEL='gpt-6-astra' claudex         # primary も astra にする
 #   例) CLAUDEX_CONTEXT_TOKENS=272000 claudex      # backend が 272K に巻き戻った日は下げる
+#
+# 以下の _claudex_* ヘルパーは claudep（dot_zsh/functions/claudep.zsh）からも使う。~/.zsh/functions/*.zsh は
+# 全て source されるので、名前や引数を変えるときは claudep 側も合わせること。
 
 _claudex_config_path() {
     echo "${XDG_CONFIG_HOME:-$HOME/.config}/cli-proxy-api/config.yaml"

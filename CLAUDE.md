@@ -96,6 +96,24 @@ Homebrew
 
 これは既に有効化されている `codex@openai-codex` プラグイン（Claude Code から Codex CLI に作業を委譲する）とは別物で、両立する。
 
+### claudep（1 セッションで Claude と Codex のモデルを混ぜる）
+
+`dot_zsh/functions/claudep.zsh` が提供する `claudep` コマンドは、Claude Code を素の Claude（サブスクの OAuth、既定モデルのまま）で起動しつつ、`gpt-*` を名乗るリクエストだけを Codex に流す。`claudex` がセッション全体のモデルを差し替えるのに対し、こちらは `model: gpt-6-astra` のような frontmatter を持つ subagent を Claude のセッションの中から呼ぶためのもので、そういう agent は `claudep`（または `claudex`）の下でしか動かない。素の `claude` では Anthropic にそのモデル名を弾かれる。
+
+```
+claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
+            ├─ claude-* / model 無し → api.anthropic.com（ヘッダ・本文とも素通し）
+            └─ gpt-*                 → cli-proxy-api（127.0.0.1:8317）→ Codex
+```
+
+- Claude Code は `ANTHROPIC_BASE_URL` だけ設定して `ANTHROPIC_AUTH_TOKEN` / `ANTHROPIC_API_KEY` / `apiKeyHelper` を設定しなければ、gateway 越しでも claude.ai のログインを認証に使い続ける（公式ドキュメント llm-gateway "Subscriptions and gateways"）。条件は gateway が `Authorization` と `anthropic-beta`（OAuth の capability）をそのまま転送することで、router は Claude 向けの経路で Host 以外を一切触らない。`httputil.ReverseProxy` の `Director` ではなく `Rewrite` を使っているのは、`Director` が `X-Forwarded-For` を勝手に足すため
+- Codex 向けの経路では `Authorization` / `x-api-key` を落としてダミーの Bearer に差し替える。Claude サブスクのトークンが CLIProxyAPI（とそのログ）に渡らないようにするため。router 自身のログも method / path / model / 転送先 / status / 所要時間しか出さず、ヘッダや本文は決して出さない
+- 振り分けは本文 JSON のトップレベル `model` の前方一致（既定 `gpt-`、大文字小文字を区別しない）だけ。本文が無い・JSON でない・`model` が無いリクエスト（`HEAD /api/hello`、`GET /v1/models` 等）は Anthropic に流す。`/v1/messages/count_tokens` も同じ規則で振り分ける（CLIProxyAPI が `gpt-*` で 200 と本文長に応じた `input_tokens` を返すことは curl で確認済み。Claude Code が実際にこのパスを叩くかは観測していない）
+- router・cli-proxy-api ともマシン単位で 1 プロセス、未起動時だけ `claudep` が自動起動する（`claudex` と同じ mkdir ロック）。起動済みの router は `/healthz` の `codex=` が今の CLIProxyAPI のポートと一致することを確認してから使う。バイナリ更新（`chezmoi update`）は検出できないので、その後は `pkill -x cc-model-router` で入れ替える。router のログは `$XDG_STATE_HOME/cc-model-router/router.log`。バイナリは `run_onchange_after_45-build-statusline.sh.tmpl` が `~/.claude/bin/cc-model-router` に置く
+- `claudex` が付ける `ANTHROPIC_DEFAULT_*_MODEL` / `CLAUDE_CODE_SUBAGENT_MODEL` / `ENABLE_TOOL_SEARCH=false` 等は「primary が gpt-*」前提の調整なので `claudep` は付けない。付けるのは `ANTHROPIC_CUSTOM_MODEL_OPTION=gpt-6-astra`（`/model` の候補に 1 件足す）とその `_SUPPORTED_CAPABILITIES`、`CLAUDE_CODE_MAX_CONTEXT_TOKENS=872000` だけ。後者は `claude-*` を名乗る ID には `DISABLE_COMPACT` を併用しない限り効かず、認識できない ID（`gpt-*`）にだけ効く（model-config "Correct the window for a gateway or custom model ID"）ので、Claude 側の context 判定は変わらない
+- 実機で確認済み: `claudep -p` の Claude 経路がサブスクの OAuth で通ること、`--model gpt-6-astra` が Codex に届くこと、primary が Claude のセッションから `model: gpt-6-astra` の subagent（`--agents` で定義）を起動すると Claude Code が frontmatter の model ID をそのまま送り、router が Codex に振り分けて応答が返ること。未検証: `ANTHROPIC_CUSTOM_MODEL_OPTION_SUPPORTED_CAPABILITIES` の宣言が subagent 側の `gpt-*` にも効くか（effort / thinking が subagent で有効になるか）
+- Claude への通信は素の `claude` と同じなので Claude の quota を消費する。`gpt-*` の分だけ ChatGPT 側の quota。上書きは `CLAUDEP_GPT_MODEL` / `CLAUDEP_CONTEXT_TOKENS` / `CLAUDEP_ROUTER_PORT`
+
 ### codexp（Codex を profile 付きで起動する）
 
 `dot_zsh/functions/codexp.zsh` が提供する `codexp` コマンドは、環境変数 `CODEX_PROFILE` を読んで `codex --profile <name>` に変換する薄いラッパー。Codex CLI の `--profile` は `$CODEX_HOME/<name>.config.toml` を base config の上にレイヤーする仕組みだが、Codex 自身には profile を選ぶ環境変数が無いため、repo ごとの切り替えをこの関数で補う。`CODEX_PROFILE` 未設定なら素の `codex` と完全に同じ挙動になる。
