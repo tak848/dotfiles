@@ -123,6 +123,7 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - `tools` は読み取り系に絞っているが Bash は含める（テスト・lint・`git diff` を根拠にさせるため）。ファイルを変える操作は本文で禁止している
 - 出力形式（結論 / 重要度付きの指摘 / 問題なしと判断した点 / 参照ファイル / 未確認事項）は本文で固定し、呼び出し元が全文を読む前提
 - Claude への通信は素の `claude` と同じなので Claude の quota を消費する。`gpt-*` の分だけ ChatGPT 側の quota。上書きは `CLAUDEP_GPT_MODEL` / `CLAUDEP_CONTEXT_TOKENS` / `CLAUDEP_ROUTER_PORT`
+- `gwc` の `--cc` / `--ccf` / `--cco` / `--ccs` は `claude` ではなく `claudep` を起動する（`--model` はそのまま渡る）。claudep は素の claude に gpt-* の subagent を足すだけで Claude 側の挙動は変わらないため。Codex 未認証のマシンでは claudep がエラーで止まる。`--ccco` は従来通り素の `claude`
 
 ### codexp（Codex を profile 付きで起動する）
 
