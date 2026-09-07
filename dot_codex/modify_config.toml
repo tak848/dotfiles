@@ -1,9 +1,15 @@
 {{- /* chezmoi:modify-template */ -}}
 #:schema https://developers.openai.com/codex/config-schema.json
 
-model = "gpt-5.6-sol"
+model = "gpt-6-astra"
 model_context_window = 1000000
-model_auto_compact_token_limit = 500000
+# model_auto_compact_token_limit は設定せず Codex の既定（モデルごとの値）に任せる。
+# #483 で 1M context を有効にしたときに「とりあえず」で入れた 500000 が残っていたが、カタログの
+# max_context_window は 872000（model_context_window はこれで clamp される）なので、372K を使わずに
+# compaction していた。既定は config リファレンスで "unset uses model defaults"、カタログには
+# effective_context_window_percent = 95 があり、その付近で走ると読めるが算出式は未確認。
+# この修正テンプレートは再出力しないキーを削除するので、コメントアウトで既存の値も消える。
+# model_auto_compact_token_limit = 500000
 model_reasoning_effort = "xhigh"
 plan_mode_reasoning_effort = "xhigh"
 sandbox_mode = "workspace-write"
