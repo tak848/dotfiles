@@ -140,9 +140,11 @@ func newHandler(cfg config) http.Handler {
 	}
 
 	mux := http.NewServeMux()
+	// 1 行目は生存確認、2 行目以降は起動時に固定された転送先。claudep はこれを期待値と照合し、
+	// 設定変更後に古いプロセスが残っている（別の CLIProxyAPI ポートに転送している）ことを検出する
 	mux.HandleFunc("/healthz", func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-		_, _ = io.WriteString(w, "ok\n")
+		_, _ = fmt.Fprintf(w, "ok\ncodex=%s\nanthropic=%s\n", cfg.codex, cfg.anthropic)
 	})
 	mux.Handle("/", r)
 	return mux

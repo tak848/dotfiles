@@ -44,20 +44,38 @@ _claudep_router_bin() {
     return 1
 }
 
-# ポートが開いているだけでは別のプロセス（古いビルドや無関係な dev server）かもしれないので、
-# router 自身の /healthz が ok を返すことまで確認する
-_claudep_router_ready() {
-    [[ "$(curl -sS -m 2 "http://127.0.0.1:${1}/healthz" 2>/dev/null)" == "ok" ]]
+# /healthz の応答。1 行目が ok なら router 本人、2 行目以降は起動時に固定された転送先（codex=... / anthropic=...）
+_claudep_router_health() {
+    curl -sS -m 2 "http://127.0.0.1:${1}/healthz" 2>/dev/null
 }
 
-# _claudex_ensure_proxy と同じ作り: mkdir でロックを取った側だけが起動し、他は listen を待つ
+# ポートが開いているだけでは別のプロセス（無関係な dev server 等）かもしれないので、
+# router 自身の /healthz が ok を返すことまで確認する
+_claudep_router_ready() {
+    [[ "$(_claudep_router_health "$1" | head -n1)" == "ok" ]]
+}
+
+# _claudex_ensure_proxy と同じ作り: mkdir でロックを取った側だけが起動し、他は listen を待つ。
+# router は転送先を起動時に固定するので、既に動いている場合は /healthz の codex= が今の CLIProxyAPI のポートと
+# 一致することも確認する（config.yaml の port を変えた後に古いプロセスが残っているケース）。
+# バイナリの更新（chezmoi update）は検出できないので、その後は `pkill -x cc-model-router` で入れ替える。
 _claudep_ensure_router() {
     local rport="$1" cport="$2"
     if _claudex_port_open "$rport"; then
-        _claudep_router_ready "$rport" && return 0
-        echo "エラー: 127.0.0.1:${rport} は listen されていますが cc-model-router ではありません（/healthz が応答しない）" >&2
-        echo "  別のプロセスが使っているなら CLAUDEP_ROUTER_PORT で router のポートを変えてください" >&2
-        return 1
+        local health
+        health="$(_claudep_router_health "$rport")"
+        if [[ "${health%%$'\n'*}" != "ok" ]]; then
+            echo "エラー: 127.0.0.1:${rport} は listen されていますが cc-model-router ではありません（/healthz が応答しない）" >&2
+            echo "  別のプロセスが使っているなら CLAUDEP_ROUTER_PORT で router のポートを変えてください" >&2
+            return 1
+        fi
+        local want="codex=http://127.0.0.1:${cport}"
+        if [[ "$health" != *"$want"* ]]; then
+            echo "エラー: 起動中の cc-model-router の転送先が今の設定（${want}）と違います" >&2
+            echo "  古いプロセスを止めてから再実行してください: pkill -x cc-model-router" >&2
+            return 1
+        fi
+        return 0
     fi
 
     local bin
@@ -117,10 +135,11 @@ claudep() {
     # claudex.zsh のコメント）を宣言する。--settings で渡すのはプロジェクトの settings に勝たせるため
     local settings="{\"env\":{\"CLAUDE_CODE_MAX_CONTEXT_TOKENS\":\"${CLAUDEP_CONTEXT_TOKENS:-872000}\"}}"
 
-    # ANTHROPIC_AUTH_TOKEN / ANTHROPIC_API_KEY は絶対に設定しない（設定した瞬間サブスクのログインが使われなくなる）。
+    # ANTHROPIC_AUTH_TOKEN / ANTHROPIC_API_KEY は設定した瞬間サブスクのログインが使われなくなる（API 課金か認証失敗）
+    # ので、呼び出し元のシェルに入っていても継承しないよう明示的に外す。
     # claudex が付けている ANTHROPIC_DEFAULT_*_MODEL / CLAUDE_CODE_SUBAGENT_MODEL / ENABLE_TOOL_SEARCH 等は
     # 「primary が gpt-*」前提の調整なので、Claude が primary の claudep では付けない
-    env \
+    env -u ANTHROPIC_AUTH_TOKEN -u ANTHROPIC_API_KEY \
     ANTHROPIC_BASE_URL="http://127.0.0.1:${rport}" \
     ANTHROPIC_CUSTOM_MODEL_OPTION="$gpt_model" \
     ANTHROPIC_CUSTOM_MODEL_OPTION_SUPPORTED_CAPABILITIES="$caps" \

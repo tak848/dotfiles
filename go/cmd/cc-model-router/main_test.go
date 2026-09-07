@@ -285,14 +285,15 @@ func TestUpstreamUnreachableReturns502(t *testing.T) {
 }
 
 func TestHealthz(t *testing.T) {
-	rt := newRouterServer(t, "http://127.0.0.1:1", "http://127.0.0.1:1")
+	rt := newRouterServer(t, "https://api.anthropic.com", "http://127.0.0.1:8317")
 	resp, err := http.Get(rt.URL + "/healthz")
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer resp.Body.Close()
 	b, _ := io.ReadAll(resp.Body)
-	if resp.StatusCode != http.StatusOK || string(b) != "ok\n" {
+	want := "ok\ncodex=http://127.0.0.1:8317\nanthropic=https://api.anthropic.com\n"
+	if resp.StatusCode != http.StatusOK || string(b) != want {
 		t.Errorf("status = %d body = %q", resp.StatusCode, b)
 	}
 }
