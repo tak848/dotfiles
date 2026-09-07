@@ -69,9 +69,11 @@ _claudep_ensure_router() {
             echo "  別のプロセスが使っているなら CLAUDEP_ROUTER_PORT で router のポートを変えてください" >&2
             return 1
         fi
-        local want="codex=http://127.0.0.1:${cport}"
-        if [[ "$health" != *"$want"* ]]; then
-            echo "エラー: 起動中の cc-model-router の転送先が今の設定（${want}）と違います" >&2
+        # codex= の行を取り出して行単位で完全一致させる（部分一致だと 8317 と 831 のような前方一致を見逃す）
+        local want="codex=http://127.0.0.1:${cport}" got
+        got="$(printf '%s\n' "$health" | sed -n 's/^codex=//p' | head -n1)"
+        if [[ "codex=${got}" != "$want" ]]; then
+            echo "エラー: 起動中の cc-model-router の転送先（codex=${got}）が今の設定（${want}）と違います" >&2
             echo "  古いプロセスを止めてから再実行してください: pkill -x cc-model-router" >&2
             return 1
         fi
