@@ -1,22 +1,41 @@
-# claudex: Claude Code のハーネスのまま、モデルだけ GPT-5.6 Sol にする
+# claudex: Claude Code のハーネスのまま、モデルだけ Codex（GPT-5.6 Sol / GPT-6 Astra）にする
 #
-# claude-code-proxy が Anthropic Messages API 互換のプロキシとして立ち、ChatGPT サブスクの
-# OAuth 経由で Codex backend に転送する。ツールループ・サブエージェント・hooks・MCP は Claude
-# Code のものがそのまま効き、推論するモデルだけが入れ替わる。
+# CLIProxyAPI（router-for-me/CLIProxyAPI、mise の github backend で導入）が Anthropic Messages API 互換の
+# プロキシとして立ち、ChatGPT サブスクの OAuth 経由で Codex backend に転送する。ツールループ・サブエージェント・
+# hooks・MCP は Claude Code のものがそのまま効き、推論するモデルだけが入れ替わる。
+# 設定は $XDG_CONFIG_HOME/cli-proxy-api/config.yaml（chezmoi 管理: dot_config/cli-proxy-api/config.yaml.tmpl）。
+# OAuth トークンと serve.log は $XDG_STATE_HOME/cli-proxy-api/。
 #
-# 初回のみ認証が必要:
-#   claude-code-proxy codex auth login   # ChatGPT Plus/Pro アカウントでログイン
+# 初回のみ認証が必要（ブラウザで ChatGPT Plus/Pro アカウントにログイン）:
+#   cli-proxy-api --config "$XDG_CONFIG_HOME/cli-proxy-api/config.yaml" --codex-login
 #
 # 注意:
 #   - 消費するのは ChatGPT 側の quota。Claude のサブスクは減らない（素の claude は従来通り）
 #   - プロキシはマシン単位で 1 プロセス。全 worktree・全セッションが 1 つを共有する
 #   - Anthropic は非 Claude モデルへの gateway ルーティングを公式サポートしていない
+#   - モデルカタログは起動時と 3 時間ごとに router-for-me/models（GitHub）から取り直すので、Codex に新モデルが
+#     出てもバイナリ更新を待たずに使える
 #
-# 上書き用の環境変数: CLAUDEX_MODEL, CLAUDEX_FABLE_MODEL, CLAUDEX_MID_MODEL, CLAUDEX_SMALL_MODEL,
-#                     CLAUDEX_PORT, CLAUDEX_CONTEXT_TOKENS
-#   例) CLAUDEX_MODEL='gpt-5.6-sol-fast' claudex    # priority tier で叩く
+# 上書き用の環境変数: CLAUDEX_MODEL, CLAUDEX_FABLE_MODEL, CLAUDEX_MID_MODEL, CLAUDEX_SMALL_MODEL, CLAUDEX_CONTEXT_TOKENS
 #   例) CLAUDEX_MODEL='gpt-6-astra' claudex         # primary も astra にする
 #   例) CLAUDEX_CONTEXT_TOKENS=272000 claudex      # backend が 272K に巻き戻った日は下げる
+
+_claudex_config_path() {
+    echo "${XDG_CONFIG_HOME:-$HOME/.config}/cli-proxy-api/config.yaml"
+}
+
+# config.yaml の auth-dir と同じ場所。CLIProxyAPI は環境変数を展開しないので、config.yaml 側は chezmoi の
+# テンプレートで apply 時の XDG_STATE_HOME を焼き込んでいる（dot_config/cli-proxy-api/config.yaml.tmpl）
+_claudex_state_dir() {
+    echo "${XDG_STATE_HOME:-$HOME/.local/state}/cli-proxy-api"
+}
+
+# listen ポートは config.yaml が唯一の情報源。環境変数で別ポートを渡せるようにすると YAML と食い違うので読むだけにする
+_claudex_port() {
+    local port
+    port="$(sed -n 's/^port:[[:space:]]*\([0-9][0-9]*\).*/\1/p' "$1" 2>/dev/null | head -n1)"
+    echo "${port:-8317}"
+}
 
 # ポートが listen されているか（外部コマンドに依存せず zsh 組み込みで確認する）
 _claudex_port_open() {
@@ -31,24 +50,24 @@ _claudex_port_open() {
 # プロキシが生きていなければ起動する。同時に複数の claudex が走っても二重起動しないよう
 # mkdir のアトミック性でロックを取り、ロックを取れなかった側は起動を待つだけにする
 _claudex_ensure_proxy() {
-    local port="${CLAUDEX_PORT:-18765}"
+    local config="$1" port="$2"
     _claudex_port_open "$port" && return 0
 
-    if ! command -v claude-code-proxy >/dev/null 2>&1; then
-        echo "エラー: claude-code-proxy が見つかりません（mise install で導入されます）" >&2
+    if ! command -v cli-proxy-api >/dev/null 2>&1; then
+        echo "エラー: cli-proxy-api が見つかりません（mise install で導入されます）" >&2
+        return 1
+    fi
+    if [[ ! -f "$config" ]]; then
+        echo "エラー: $config がありません（chezmoi update で配置されます）" >&2
         return 1
     fi
 
-    if ! claude-code-proxy codex auth status >/dev/null 2>&1; then
-        echo "エラー: Codex が未認証です。'claude-code-proxy codex auth login' を実行してください" >&2
-        return 1
-    fi
-
+    local statedir
+    statedir="$(_claudex_state_dir)"
     local lockdir="${TMPDIR:-/tmp}/claudex-${port}.lock"
     if mkdir "$lockdir" 2>/dev/null; then
-        local logdir="${XDG_STATE_HOME:-$HOME/.local/state}/claude-code-proxy"
-        mkdir -p "$logdir"
-        PORT="$port" nohup claude-code-proxy serve --no-monitor >>"$logdir/serve.log" 2>&1 &
+        mkdir -p "$statedir"
+        nohup cli-proxy-api --config "$config" >>"$statedir/serve.log" 2>&1 &
         disown
         rmdir "$lockdir" 2>/dev/null
     fi
@@ -59,13 +78,28 @@ _claudex_ensure_proxy() {
         sleep 0.1
     done
 
-    echo "エラー: claude-code-proxy が 127.0.0.1:${port} で起動しませんでした" >&2
-    echo "  ログ: ${XDG_STATE_HOME:-$HOME/.local/state}/claude-code-proxy/serve.log" >&2
+    echo "エラー: cli-proxy-api が 127.0.0.1:${port} で起動しませんでした" >&2
+    echo "  ログ: ${statedir}/serve.log" >&2
     return 1
 }
 
+# Codex の OAuth が入っているか。CLIProxyAPI は認証済みプロバイダのモデルだけを /v1/models に出すので、
+# gpt-* が 1 つも無ければ未認証（またはトークン失効）と判断する。auth ファイルの命名に依存しない
+_claudex_codex_ready() {
+    curl -sS -m 5 "http://127.0.0.1:${1}/v1/models" -H 'Authorization: Bearer unused' 2>/dev/null | grep -q '"gpt-'
+}
+
 claudex() {
-    _claudex_ensure_proxy || return 1
+    local config port
+    config="$(_claudex_config_path)"
+    port="$(_claudex_port "$config")"
+    _claudex_ensure_proxy "$config" "$port" || return 1
+
+    if ! _claudex_codex_ready "$port"; then
+        echo "エラー: Codex が未認証です。次を実行してブラウザでログインしてください（プロキシの再起動は不要）:" >&2
+        echo "  cli-proxy-api --config '$config' --codex-login" >&2
+        return 1
+    fi
 
     # Codex の live カタログ（codex debug models）上の序列は astra（"Our most capable model"、GPT-6）
     # > sol（"Reliable agentic workhorse"）> terra（balanced）> luna（fast/affordable）で、Claude 側の
@@ -76,16 +110,12 @@ claudex() {
     local mid_model="${CLAUDEX_MID_MODEL:-gpt-5.6-terra}"
     local small_model="${CLAUDEX_SMALL_MODEL:-gpt-5.6-luna}"
 
-    # claude-code-proxy は Codex モデルを allowlist で弾く（未登録だと "Unknown model" で即エラー）。
-    # gpt-6-astra の登録は raine/claude-code-proxy#129（2026-09-04、main）で、v0.1.35 には含まれない。
-    # 対応版が出るまでは fable スロットを primary に落として、/model fable や model: fable の subagent が
-    # 壊れないようにする。判定は PATH 上のバイナリの `models` 出力なので、mise で更新した直後は
-    # 起動済みの旧プロセスを止めて（pkill -f 'claude-code-proxy serve'）再起動する必要がある。
-    if [[ "$fable_model" == gpt-6-astra* ]] \
-        && ! claude-code-proxy models 2>/dev/null | grep -q 'gpt-6-astra'; then
-        echo "警告: この claude-code-proxy は gpt-6-astra 未対応のため fable スロットを ${model} にします" >&2
-        fable_model="$model"
-    fi
+    # Claude Code は model ID のパターンで effort / thinking 対応を判定するため、gpt-* だとどちらも無効になる。
+    # 各スロットの _SUPPORTED_CAPABILITIES で明示する。adaptive_thinking が重要で、これが無いと Claude Code は
+    # thinking を {type: enabled, budget_tokens} で送り、CLIProxyAPI は budget から effort を逆算して
+    # output_config.effort（/effort の値）を無視する。adaptive なら /effort がそのまま Codex の reasoning.effort になる。
+    # max は Codex 側に無い（low/medium/high/xhigh）ので max_effort は宣言しない。
+    local caps="effort,xhigh_effort,thinking,adaptive_thinking,interleaved_thinking"
 
     # CLAUDE_CODE_MAX_CONTEXT_TOKENS は、ANTHROPIC_BASE_URL 経由の未認識モデルについて Claude Code が
     # 仮定する context window を上書きする。値の根拠は ChatGPT アカウントに配られる Codex の live カタログで、
@@ -94,23 +124,34 @@ claudex() {
     # カタログの既定は context_window=272000 だが、クライアントは max_context_window まで引き上げてよい
     # （codex 本体も model_context_window をこの値で clamp する）。2026-08 に OpenAI が API key 限定だった
     # 1M context を ChatGPT アカウントにも解禁し、このアカウントの max_context_window は 872000
-    # （2026-08-31 時点。おそらく 1,000,000 から出力 128,000 を引いた値）。以前の 372000 はその前のカタログ値。
+    # （2026-08-31 時点。おそらく 1,000,000 から出力 128,000 を引いた値）。astra も同じ 872000。
     # カタログは過去に 272K ↔ 372K と揺れているので、巻き戻ったら CLAUDEX_CONTEXT_TOKENS で下げる。
-    # statusline は /872k 表示になる。
     #
-    # [1m] は 1,000,000 を宣言してしまい 872000 を超えるので使わない（proxy は [1m] を剥がすだけで
-    # upstream の context は変わらない）。upstream が実際に 872000 まで受けるかは未実測だが、
     # dot_zshenv.tmpl の CLAUDE_CODE_AUTO_COMPACT_WINDOW=750000 が model context より小さいため、
     # 約 122K を残して compaction が先に走る。これがカタログ巻き戻り時の保険にもなる。
     #
     # settings ファイルの env は OS 環境変数に勝つため、プロジェクトの .claude/settings.json が同じ変数を
     # 設定していても上書きできるよう --settings で渡す。優先順位は Managed > Command-line > Local >
     # Project > User（settings.md）。
-    local context_settings="{\"env\":{\"CLAUDE_CODE_MAX_CONTEXT_TOKENS\":\"${CLAUDEX_CONTEXT_TOKENS:-872000}\"}}"
+    local settings="{\"env\":{\"CLAUDE_CODE_MAX_CONTEXT_TOKENS\":\"${CLAUDEX_CONTEXT_TOKENS:-872000}\"}"
+
+    # claudexf 用。CLIProxyAPI には raine/claude-code-proxy の `-fast` サフィックスに当たるモデル名の仕組みが無く、
+    # Codex の priority tier はリクエストの service_tier / speed: fast でしか指定できない。Claude Code が
+    # speed: fast を付けるのは fast mode の間だけなので、fastMode を settings で入れ、Bearer 認証だけの
+    # セッションで fast mode が「組織で無効」扱いになるのを CLAUDE_CODE_SKIP_FAST_MODE_ORG_CHECK で避ける。
+    # Claude Code の fast mode は Opus 系にしか対応しないため、gpt-* の pinned model で実際に speed: fast が
+    # 送られるかは未検証（送られなければ通常 tier で動くだけで、失敗はしない）。
+    local fast_env=()
+    if [[ "${CLAUDEX_FAST:-0}" == 1 ]]; then
+        settings+=',"fastMode":true'
+        fast_env=(CLAUDE_CODE_SKIP_FAST_MODE_ORG_CHECK=1)
+    fi
+    settings+='}'
 
     # メインの推論モデル（--model）以外に、CC が内部で使う fable / opus / sonnet / haiku エイリアスも Codex
-    # モデルに向けておく。素の Claude 名（claude-opus-* 等）に解決されると proxy 経由で意図しないモデルになるため
-    # 全部マッピングする。plan mode 常用（default / opus / opusplan は opus 系に解決）なので特に opus が要る。
+    # モデルに向けておく。素の Claude 名（claude-opus-* 等）に解決されると proxy に「unknown provider」で
+    # 弾かれるため全部マッピングする（config.yaml の oauth-model-alias が最後の逃げ道）。plan mode 常用
+    # （default / opus / opusplan は opus 系に解決）なので特に opus が要る。
     # subagent も、定義側で model を明示しているものはこのスロット経由で解決される。
     #   - ANTHROPIC_DEFAULT_FABLE_MODEL:  fable エイリアス（/model fable、model: fable の subagent）→ astra 系
     #   - ANTHROPIC_DEFAULT_OPUS_MODEL:   opus エイリアス／plan mode の opusplan（plan フェーズ）→ primary と同じ sol 系
@@ -118,32 +159,35 @@ claudex() {
     #   - ANTHROPIC_DEFAULT_HAIKU_MODEL:  haiku エイリアス＋バックグラウンド機能（要約・タイトル生成等）→ luna 系
     #     （旧 ANTHROPIC_SMALL_FAST_MODEL は非推奨: model-config の環境変数表の注記）
     #
+    # CLAUDE_CODE_ALWAYS_ENABLE_EFFORT は _SUPPORTED_CAPABILITIES で effort を宣言していれば冗長だが、
+    # --model に渡した名前がどのスロットにも一致しないとき（CLAUDEX_MODEL で独自指定した場合）の保険として付ける。
+    #
     # CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC は settings.jsonnet と同様に設定しない
     # （remote-control の eligibility チェックがブロックされるため）。無駄なモデル呼び出し自体は
     # settings.jsonnet の DISABLE_NON_ESSENTIAL_MODEL_CALLS で既に止まっている
-    ANTHROPIC_BASE_URL="http://127.0.0.1:${CLAUDEX_PORT:-18765}" \
+    env "${fast_env[@]}" \
+    ANTHROPIC_BASE_URL="http://127.0.0.1:${port}" \
     ANTHROPIC_AUTH_TOKEN="unused" \
     ANTHROPIC_DEFAULT_FABLE_MODEL="$fable_model" \
+    ANTHROPIC_DEFAULT_FABLE_MODEL_SUPPORTED_CAPABILITIES="$caps" \
     ANTHROPIC_DEFAULT_OPUS_MODEL="$model" \
+    ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES="$caps" \
     ANTHROPIC_DEFAULT_SONNET_MODEL="$mid_model" \
+    ANTHROPIC_DEFAULT_SONNET_MODEL_SUPPORTED_CAPABILITIES="$caps" \
     ANTHROPIC_DEFAULT_HAIKU_MODEL="$small_model" \
+    ANTHROPIC_DEFAULT_HAIKU_MODEL_SUPPORTED_CAPABILITIES="$caps" \
+    CLAUDE_CODE_ALWAYS_ENABLE_EFFORT=1 \
     CLAUDE_CODE_SUBAGENT_MODEL="${model%\[*}" \
     CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 \
     CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK=1 \
     ENABLE_TOOL_SEARCH=false \
-        command claude --model "$model" --settings "$context_settings" "$@"
+        claude --model "$model" --settings "$settings" "$@"
 }
 
 # claudexf: claudex の Codex fast/priority tier 版。
-# -fast サフィックスを claude-code-proxy が service_tier: "priority" に翻訳して upstream に投げる。
-# 4 スロット（primary / fable / mid / small）をまとめて fast tier にする。
-# 速い代わりにサブスク usage の減りが早い。quota を使い切れないとき向け。
-# CLAUDEX_MODEL / CLAUDEX_FABLE_MODEL / CLAUDEX_MID_MODEL / CLAUDEX_SMALL_MODEL が明示指定されていれば
-# それを優先する（fast を強制しない）。
+# Claude Code の fast mode を有効にして起動し、CLIProxyAPI がリクエストの speed: fast を Codex の
+# service_tier: priority に翻訳する。速い代わりにサブスク usage の減りが早い。quota を使い切れないとき向け。
+# 上の claudex 内のコメントにある通り、gpt-* に対して Claude Code が実際に speed: fast を送るかは未検証。
 claudexf() {
-    CLAUDEX_MODEL="${CLAUDEX_MODEL:-gpt-5.6-sol-fast}" \
-    CLAUDEX_FABLE_MODEL="${CLAUDEX_FABLE_MODEL:-gpt-6-astra-fast}" \
-    CLAUDEX_MID_MODEL="${CLAUDEX_MID_MODEL:-gpt-5.6-terra-fast}" \
-    CLAUDEX_SMALL_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-luna-fast}" \
-        claudex "$@"
+    CLAUDEX_FAST=1 claudex "$@"
 }

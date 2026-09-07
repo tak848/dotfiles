@@ -79,16 +79,19 @@ Homebrew
 - **mise** (`dot_config/mise/`, `dot_local/bin/executable_mise`): ランタイム、CLI ツール、npm パッケージの統合管理。bootstrap 方式でインストール
 - **aqua** (`dot_config/aquaproj-aqua/`): mise lock で checksum が取得できないツールを管理。aqua CLI 自体は mise でインストール
 
-### claudex（Claude Code を GPT-5.6 Sol で駆動する）
+### claudex（Claude Code を Codex のモデルで駆動する）
 
-`dot_zsh/functions/claudex.zsh` が提供する `claudex` コマンドは、Claude Code のハーネス（ツールループ・サブエージェント・hooks・MCP）をそのままに、推論するモデルだけを GPT-5.6 Sol に差し替える。`claude-code-proxy`（mise の `github:` backend で導入）が Anthropic Messages API 互換のプロキシとして `127.0.0.1:18765` に立ち、ChatGPT サブスクの OAuth 経由で Codex backend に転送する。初回のみ `claude-code-proxy codex auth login` が必要。
+`dot_zsh/functions/claudex.zsh` が提供する `claudex` コマンドは、Claude Code のハーネス（ツールループ・サブエージェント・hooks・MCP）をそのままに、推論するモデルだけを GPT-5.6 Sol / GPT-6 Astra に差し替える。CLIProxyAPI（`router-for-me/CLIProxyAPI`、mise の `github:` backend で導入、バイナリ名は `cli-proxy-api`）が Anthropic Messages API 互換のプロキシとして `127.0.0.1:8317` に立ち、ChatGPT サブスクの OAuth 経由で Codex backend に転送する。設定は `dot_config/cli-proxy-api/config.yaml.tmpl`（`$XDG_CONFIG_HOME/cli-proxy-api/config.yaml`）。初回のみ `cli-proxy-api --config "$XDG_CONFIG_HOME/cli-proxy-api/config.yaml" --codex-login` が必要で、トークンとログは `$XDG_STATE_HOME/cli-proxy-api/` に置かれる。CLIProxyAPI は設定内で環境変数を展開しない（`~` のみ）ため、auth-dir は chezmoi apply 時の `XDG_STATE_HOME` をテンプレートで焼き込んでいる。`XDG_STATE_HOME` は `dot_zshenv.tmpl` で他の XDG 変数と同様に export している。
 
 - 素の `claude` は従来通り Claude サブスク / Opus で動く。`claudex` 使用中は Anthropic にリクエストが飛ばないため Claude の quota は減らず、代わりに ChatGPT 側の quota を消費する
-- プロキシはマシン単位で 1 プロセス。worktree ごとには立たず、全 worktree・全セッションが 1 つを共有する（`claudex` が未起動時のみ自動起動する）
+- プロキシはマシン単位で 1 プロセス。worktree ごとには立たず、全 worktree・全セッションが 1 つを共有する（`claudex` が未起動時のみ自動起動する）。listen ポートは config.yaml の `port` が唯一の情報源で、`claudex` はそれを読む
 - Anthropic は非 Claude モデルへの gateway ルーティングを公式サポートしていない。壊れても直らない前提で使う
 - Claude 側の 4 スロット（fable / opus / sonnet / haiku）はそれぞれ `ANTHROPIC_DEFAULT_*_MODEL` で Codex モデルに向ける。Codex の live カタログ上の序列（astra = GPT-6 の最上位 > sol = workhorse > terra = balanced > luna = fast/affordable）に合わせて fable を astra、opus を sol、sonnet を terra、haiku を luna に割り当てる。primary（`--model`）は素の Claude の既定が Opus であるのに合わせて sol のまま。subagent も、定義側で model を明示しているものはこのスロット経由で解決される。上書きは `CLAUDEX_MODEL` / `CLAUDEX_FABLE_MODEL` / `CLAUDEX_MID_MODEL` / `CLAUDEX_SMALL_MODEL`
-- claude-code-proxy は Codex モデルを allowlist で弾くため、未対応のモデル名を渡すと "Unknown model" で即エラーになる。`gpt-6-astra` の登録は raine/claude-code-proxy#129（main）で v0.1.35 には無いので、`claudex` は起動時に `claude-code-proxy models` を見て未対応なら fable スロットを primary に落とす（警告を出す）。Renovate で対応版に上がったら、起動済みの旧プロキシプロセスを止めて再起動する
-- `claudex` は `CLAUDE_CODE_MAX_CONTEXT_TOKENS` で GPT-5.6 Sol の実 context 長（872K）を宣言する。値の根拠は ChatGPT アカウントに配られる Codex の live カタログの `max_context_window` で、`codex debug models` で確認できる。カタログは過去に 272K ↔ 372K と揺れているため、巻き戻ったら `CLAUDEX_CONTEXT_TOKENS` で下げる
+- Claude Code は model ID のパターンで effort / thinking の対応を判定するため、`gpt-*` ではどちらも無効になる。`claudex` は各スロットの `ANTHROPIC_DEFAULT_*_MODEL_SUPPORTED_CAPABILITIES` で `effort,xhigh_effort,thinking,adaptive_thinking,interleaved_thinking` を宣言する。`adaptive_thinking` が無いと Claude Code は thinking を `budget_tokens` 付きで送り、CLIProxyAPI は budget から effort を逆算して `/effort` の値を無視する
+- CLIProxyAPI はモデルカタログを起動時と 3 時間ごとに `router-for-me/models`（GitHub）から取り直すので、Codex に新モデルが出てもバイナリ更新を待たずに使える。以前使っていた raine/claude-code-proxy はバイナリ内の allowlist でモデルを弾く方式で、`gpt-6-astra` が使えるようになるまでリリースを待つ必要があったため乗り換えた（#807 の選定理由だった effort マッピングと thinking ブロック変換は CLIProxyAPI 側にも入った）
+- 認証状態は `/v1/models` に `gpt-*` が出るかで判定する。CLIProxyAPI は認証済みプロバイダのモデルしか一覧に出さないので、空なら未認証かトークン失効。ログイン後は auth-dir の file watcher が拾うのでプロキシの再起動は要らない
+- `claudexf` は Claude Code の fast mode（`fastMode: true` + `CLAUDE_CODE_SKIP_FAST_MODE_ORG_CHECK=1`）で起動し、CLIProxyAPI がリクエストの `speed: fast` を Codex の `service_tier: priority` に翻訳する。CLIProxyAPI にはモデル名サフィックスで tier を指定する仕組みが無いためこの形になっている。Claude Code の fast mode は Opus 系にしか対応しないので、`gpt-*` で実際に `speed: fast` が送られるかは未検証
+- `claudex` は `CLAUDE_CODE_MAX_CONTEXT_TOKENS` で Codex モデルの実 context 長（872K）を宣言する。値の根拠は ChatGPT アカウントに配られる Codex の live カタログの `max_context_window` で、`codex debug models` で確認できる。カタログは過去に 272K ↔ 372K と揺れているため、巻き戻ったら `CLAUDEX_CONTEXT_TOKENS` で下げる
 - `dot_zshenv.tmpl` で export している `CLAUDE_CODE_AUTO_COMPACT_WINDOW=750000` は、素の Claude（Opus[1m]）でも `claudex`（872K）でも model context より小さいので、そのまま compaction 閾値として効く
 
 これは既に有効化されている `codex@openai-codex` プラグイン（Claude Code から Codex CLI に作業を委譲する）とは別物で、両立する。

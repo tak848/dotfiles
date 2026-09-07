@@ -1,0 +1,68 @@
+# CLIProxyAPI（router-for-me/CLIProxyAPI）の設定。claudex（dot_zsh/functions/claudex.zsh）が
+# $XDG_CONFIG_HOME/cli-proxy-api/config.yaml として読む。キーの一覧と説明はリリース tarball 同梱の
+# config.example.yaml（https://github.com/router-for-me/CLIProxyAPI/blob/main/config.example.yaml）を参照。
+#
+# ローカルの Claude Code からしか叩かないので、bind は loopback、クライアント認証（api-keys）は無し。
+# api-keys が空だと全リクエストを認証無しで通す。Claude Code が送る Authorization: Bearer unused は無視される。
+host: "127.0.0.1"
+port: 8317
+
+# Codex（ChatGPT サブスク）の OAuth トークンの置き場所。`cli-proxy-api --config <この file> --codex-login` が
+# ここに書き、起動中のプロキシは file watcher で変更を拾うので再起動は要らない。CLIProxyAPI は同じディレクトリに
+# logs/（リクエストエラーのダンプ）も作る。claudex の serve.log もここに置く。
+# 既定は ~/.cli-proxy-api だが、状態ファイルなので XDG_STATE_HOME 配下に寄せる。CLIProxyAPI は ~ しか展開しない
+# ため、chezmoi apply 時の XDG_STATE_HOME（未設定なら ~/.local/state）をテンプレートで焼き込む。
+# claudex（dot_zsh/functions/claudex.zsh）も同じ値を見る。
+auth-dir: "{{ env "XDG_STATE_HOME" | default (joinPath .chezmoi.homeDir ".local" "state") }}/cli-proxy-api"
+
+# Management API（/v0/management）と管理パネル。secret-key が空なら API 自体が無効（404）。
+# パネルは GitHub から自動ダウンロードされるので、使わないものは落としておく。
+remote-management:
+  allow-remote: false
+  secret-key: ""
+  disable-control-panel: true
+
+# 動的ライブラリの plugin はプロセス内で動く信頼コード扱いなので有効にしない
+plugins:
+  enabled: false
+
+debug: false
+logging-to-file: false
+usage-statistics-enabled: false
+
+# Claude Code が Claude の名前で投げてきた場合の逃げ道。claudex は 4 スロットを ANTHROPIC_DEFAULT_*_MODEL で
+# Codex モデルに向けているので通常はここを通らないが、素の Claude 名が漏れたときに Codex 側で受けられるようにする。
+# 序列は Codex の live カタログ（codex debug models）に合わせて astra > sol > terra > luna。
+# fork: true で上流名（gpt-6-astra 等）もそのままクライアントに見せる。
+oauth-model-alias:
+  codex:
+    - name: "gpt-6-astra"
+      alias: "fable"
+      fork: true
+    - name: "gpt-6-astra"
+      alias: "claude-fable-5-1"
+      fork: true
+    - name: "gpt-6-astra"
+      alias: "claude-fable-5"
+      fork: true
+    - name: "gpt-5.6-sol"
+      alias: "opus"
+      fork: true
+    - name: "gpt-5.6-sol"
+      alias: "claude-opus-5"
+      fork: true
+    - name: "gpt-5.6-terra"
+      alias: "sonnet"
+      fork: true
+    - name: "gpt-5.6-terra"
+      alias: "claude-sonnet-5"
+      fork: true
+    - name: "gpt-5.6-luna"
+      alias: "haiku"
+      fork: true
+    - name: "gpt-5.6-luna"
+      alias: "claude-haiku-4-5"
+      fork: true
+    - name: "gpt-5.6-luna"
+      alias: "claude-haiku-4-5-20251001"
+      fork: true
