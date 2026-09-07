@@ -86,7 +86,8 @@ Homebrew
 - 素の `claude` は従来通り Claude サブスク / Opus で動く。`claudex` 使用中は Anthropic にリクエストが飛ばないため Claude の quota は減らず、代わりに ChatGPT 側の quota を消費する
 - プロキシはマシン単位で 1 プロセス。worktree ごとには立たず、全 worktree・全セッションが 1 つを共有する（`claudex` が未起動時のみ自動起動する）
 - Anthropic は非 Claude モデルへの gateway ルーティングを公式サポートしていない。壊れても直らない前提で使う
-- Claude 側の 4 スロット（fable / opus / sonnet / haiku）はそれぞれ `ANTHROPIC_DEFAULT_*_MODEL` で Codex モデルに向ける。Codex の live カタログ上の序列（sol = frontier > terra = balanced > luna = fast/affordable）に合わせて fable と opus を sol、sonnet を terra、haiku を luna に割り当てる。subagent も、定義側で model を明示しているものはこのスロット経由で解決される。上書きは `CLAUDEX_MODEL` / `CLAUDEX_MID_MODEL` / `CLAUDEX_SMALL_MODEL`
+- Claude 側の 4 スロット（fable / opus / sonnet / haiku）はそれぞれ `ANTHROPIC_DEFAULT_*_MODEL` で Codex モデルに向ける。Codex の live カタログ上の序列（astra = GPT-6 の最上位 > sol = workhorse > terra = balanced > luna = fast/affordable）に合わせて fable を astra、opus を sol、sonnet を terra、haiku を luna に割り当てる。primary（`--model`）は素の Claude の既定が Opus であるのに合わせて sol のまま。subagent も、定義側で model を明示しているものはこのスロット経由で解決される。上書きは `CLAUDEX_MODEL` / `CLAUDEX_FABLE_MODEL` / `CLAUDEX_MID_MODEL` / `CLAUDEX_SMALL_MODEL`
+- claude-code-proxy は Codex モデルを allowlist で弾くため、未対応のモデル名を渡すと "Unknown model" で即エラーになる。`gpt-6-astra` の登録は raine/claude-code-proxy#129（main）で v0.1.35 には無いので、`claudex` は起動時に `claude-code-proxy models` を見て未対応なら fable スロットを primary に落とす（警告を出す）。Renovate で対応版に上がったら、起動済みの旧プロキシプロセスを止めて再起動する
 - `claudex` は `CLAUDE_CODE_MAX_CONTEXT_TOKENS` で GPT-5.6 Sol の実 context 長（872K）を宣言する。値の根拠は ChatGPT アカウントに配られる Codex の live カタログの `max_context_window` で、`codex debug models` で確認できる。カタログは過去に 272K ↔ 372K と揺れているため、巻き戻ったら `CLAUDEX_CONTEXT_TOKENS` で下げる
 - `dot_zshenv.tmpl` で export している `CLAUDE_CODE_AUTO_COMPACT_WINDOW=750000` は、素の Claude（Opus[1m]）でも `claudex`（872K）でも model context より小さいので、そのまま compaction 閾値として効く
 

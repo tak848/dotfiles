@@ -12,8 +12,10 @@
 #   - プロキシはマシン単位で 1 プロセス。全 worktree・全セッションが 1 つを共有する
 #   - Anthropic は非 Claude モデルへの gateway ルーティングを公式サポートしていない
 #
-# 上書き用の環境変数: CLAUDEX_MODEL, CLAUDEX_MID_MODEL, CLAUDEX_SMALL_MODEL, CLAUDEX_PORT, CLAUDEX_CONTEXT_TOKENS
+# 上書き用の環境変数: CLAUDEX_MODEL, CLAUDEX_FABLE_MODEL, CLAUDEX_MID_MODEL, CLAUDEX_SMALL_MODEL,
+#                     CLAUDEX_PORT, CLAUDEX_CONTEXT_TOKENS
 #   例) CLAUDEX_MODEL='gpt-5.6-sol-fast' claudex    # priority tier で叩く
+#   例) CLAUDEX_MODEL='gpt-6-astra' claudex         # primary も astra にする
 #   例) CLAUDEX_CONTEXT_TOKENS=272000 claudex      # backend が 272K に巻き戻った日は下げる
 
 # ポートが listen されているか（外部コマンドに依存せず zsh 組み込みで確認する）
@@ -65,11 +67,25 @@ _claudex_ensure_proxy() {
 claudex() {
     _claudex_ensure_proxy || return 1
 
-    # GPT-5.6 の 3 モデルは Codex の live カタログ上で sol（frontier）> terra（balanced）> luna（fast/affordable）
-    # の序列になっており、Claude 側の fable/opus > sonnet > haiku というスロットの重みに素直に対応する。
+    # Codex の live カタログ（codex debug models）上の序列は astra（"Our most capable model"、GPT-6）
+    # > sol（"Reliable agentic workhorse"）> terra（balanced）> luna（fast/affordable）で、Claude 側の
+    # fable > opus > sonnet > haiku というスロットの重みに素直に対応する。primary（--model）は素の Claude の
+    # 既定が Opus であるのに合わせて sol のままにし、fable スロットだけ astra に向ける。
     local model="${CLAUDEX_MODEL:-gpt-5.6-sol}"
+    local fable_model="${CLAUDEX_FABLE_MODEL:-gpt-6-astra}"
     local mid_model="${CLAUDEX_MID_MODEL:-gpt-5.6-terra}"
     local small_model="${CLAUDEX_SMALL_MODEL:-gpt-5.6-luna}"
+
+    # claude-code-proxy は Codex モデルを allowlist で弾く（未登録だと "Unknown model" で即エラー）。
+    # gpt-6-astra の登録は raine/claude-code-proxy#129（2026-09-04、main）で、v0.1.35 には含まれない。
+    # 対応版が出るまでは fable スロットを primary に落として、/model fable や model: fable の subagent が
+    # 壊れないようにする。判定は PATH 上のバイナリの `models` 出力なので、mise で更新した直後は
+    # 起動済みの旧プロセスを止めて（pkill -f 'claude-code-proxy serve'）再起動する必要がある。
+    if [[ "$fable_model" == gpt-6-astra* ]] \
+        && ! claude-code-proxy models 2>/dev/null | grep -q 'gpt-6-astra'; then
+        echo "警告: この claude-code-proxy は gpt-6-astra 未対応のため fable スロットを ${model} にします" >&2
+        fable_model="$model"
+    fi
 
     # CLAUDE_CODE_MAX_CONTEXT_TOKENS は、ANTHROPIC_BASE_URL 経由の未認識モデルについて Claude Code が
     # 仮定する context window を上書きする。値の根拠は ChatGPT アカウントに配られる Codex の live カタログで、
@@ -96,7 +112,7 @@ claudex() {
     # モデルに向けておく。素の Claude 名（claude-opus-* 等）に解決されると proxy 経由で意図しないモデルになるため
     # 全部マッピングする。plan mode 常用（default / opus / opusplan は opus 系に解決）なので特に opus が要る。
     # subagent も、定義側で model を明示しているものはこのスロット経由で解決される。
-    #   - ANTHROPIC_DEFAULT_FABLE_MODEL:  fable エイリアス → primary と同じ sol 系
+    #   - ANTHROPIC_DEFAULT_FABLE_MODEL:  fable エイリアス（/model fable、model: fable の subagent）→ astra 系
     #   - ANTHROPIC_DEFAULT_OPUS_MODEL:   opus エイリアス／plan mode の opusplan（plan フェーズ）→ primary と同じ sol 系
     #   - ANTHROPIC_DEFAULT_SONNET_MODEL: sonnet エイリアス／opusplan の実行フェーズ → terra 系
     #   - ANTHROPIC_DEFAULT_HAIKU_MODEL:  haiku エイリアス＋バックグラウンド機能（要約・タイトル生成等）→ luna 系
@@ -107,7 +123,7 @@ claudex() {
     # settings.jsonnet の DISABLE_NON_ESSENTIAL_MODEL_CALLS で既に止まっている
     ANTHROPIC_BASE_URL="http://127.0.0.1:${CLAUDEX_PORT:-18765}" \
     ANTHROPIC_AUTH_TOKEN="unused" \
-    ANTHROPIC_DEFAULT_FABLE_MODEL="$model" \
+    ANTHROPIC_DEFAULT_FABLE_MODEL="$fable_model" \
     ANTHROPIC_DEFAULT_OPUS_MODEL="$model" \
     ANTHROPIC_DEFAULT_SONNET_MODEL="$mid_model" \
     ANTHROPIC_DEFAULT_HAIKU_MODEL="$small_model" \
@@ -120,11 +136,13 @@ claudex() {
 
 # claudexf: claudex の Codex fast/priority tier 版。
 # -fast サフィックスを claude-code-proxy が service_tier: "priority" に翻訳して upstream に投げる。
-# 3 スロット（primary / mid / small）をまとめて fast tier にする。
+# 4 スロット（primary / fable / mid / small）をまとめて fast tier にする。
 # 速い代わりにサブスク usage の減りが早い。quota を使い切れないとき向け。
-# CLAUDEX_MODEL / CLAUDEX_MID_MODEL / CLAUDEX_SMALL_MODEL が明示指定されていればそれを優先する（fast を強制しない）。
+# CLAUDEX_MODEL / CLAUDEX_FABLE_MODEL / CLAUDEX_MID_MODEL / CLAUDEX_SMALL_MODEL が明示指定されていれば
+# それを優先する（fast を強制しない）。
 claudexf() {
     CLAUDEX_MODEL="${CLAUDEX_MODEL:-gpt-5.6-sol-fast}" \
+    CLAUDEX_FABLE_MODEL="${CLAUDEX_FABLE_MODEL:-gpt-6-astra-fast}" \
     CLAUDEX_MID_MODEL="${CLAUDEX_MID_MODEL:-gpt-5.6-terra-fast}" \
     CLAUDEX_SMALL_MODEL="${CLAUDEX_SMALL_MODEL:-gpt-5.6-luna-fast}" \
         claudex "$@"
