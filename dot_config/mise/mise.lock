@@ -1578,9 +1578,6 @@ version = "7.2.152"
 backend = "github:router-for-me/CLIProxyAPI"
 specifiers = ["v7.2.152"]
 
-[tools."github:router-for-me/CLIProxyAPI".options]
-matching_regex = '_(darwin|linux)_(aarch64|amd64)\.tar\.gz$'
-
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-arm64"]
 checksum = "sha256:4ac6b5859cf001300b3aa063f49466d4fee80255f2cf14c6eab549874d88f57b"
 url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v7.2.152/CLIProxyAPI_7.2.152_linux_aarch64.tar.gz"
@@ -1610,6 +1607,11 @@ url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/asset
 checksum = "sha256:cb8545345a4986937f6321c687c8bf36e4f2f483664cab74074dd176fa6c01d2"
 url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v7.2.152/CLIProxyAPI_7.2.152_darwin_amd64.tar.gz"
 url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/546905539"
+
+[tools."github:router-for-me/CLIProxyAPI"."platforms.windows-x64"]
+checksum = "sha256:7b01cc85bc58881d7c4640066efdf474875b7f5b5d57367e426c6bc4fcf764ce"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v7.2.152/CLIProxyAPI_7.2.152_windows_amd64.zip"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/546905742"
 
 [[tools."github:sivchari/golance"]]
 version = "0.7.0"
