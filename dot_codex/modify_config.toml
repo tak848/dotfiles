@@ -7,7 +7,12 @@ model_auto_compact_token_limit = 500000
 model_reasoning_effort = "xhigh"
 plan_mode_reasoning_effort = "xhigh"
 sandbox_mode = "workspace-write"
-approval_policy = "untrusted"
+# approval_policy は設定しない。"untrusted" は Codex 0.153.x で config から書けなくなり
+# （書くと config load 自体が落ちる）、projects.<path>.trust_level から導出される内部専用の
+# policy になった。未設定にすると trust_level ベースの fallback（trusted なら on-request、
+# trust_level = "untrusted" なら内部 UnlessTrusted）が効くので、明示的に "on-request" とは書かない。
+# { granular = { ... } } は代替にならない。rule にマッチしない非 dangerous コマンドは granular でも
+# on-request と同じく無確認で通り、granular が決めるのは確認ダイアログの種類ごとの表示/自動 reject だけ。
 personality = "pragmatic"
 web_search = "live"
 suppress_unstable_features_warning = true
