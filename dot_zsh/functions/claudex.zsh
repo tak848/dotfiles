@@ -3,10 +3,11 @@
 # CLIProxyAPI（router-for-me/CLIProxyAPI、mise の github backend で導入）が Anthropic Messages API 互換の
 # プロキシとして立ち、ChatGPT サブスクの OAuth 経由で Codex backend に転送する。ツールループ・サブエージェント・
 # hooks・MCP は Claude Code のものがそのまま効き、推論するモデルだけが入れ替わる。
-# 設定は ~/.config/cli-proxy-api/config.yaml（chezmoi 管理: dot_config/cli-proxy-api/config.yaml）。
+# 設定は $XDG_CONFIG_HOME/cli-proxy-api/config.yaml（chezmoi 管理: dot_config/cli-proxy-api/config.yaml.tmpl）。
+# OAuth トークンと serve.log は $XDG_STATE_HOME/cli-proxy-api/。
 #
 # 初回のみ認証が必要（ブラウザで ChatGPT Plus/Pro アカウントにログイン）:
-#   cli-proxy-api --config ~/.config/cli-proxy-api/config.yaml --codex-login
+#   cli-proxy-api --config "$XDG_CONFIG_HOME/cli-proxy-api/config.yaml" --codex-login
 #
 # 注意:
 #   - 消費するのは ChatGPT 側の quota。Claude のサブスクは減らない（素の claude は従来通り）
@@ -23,10 +24,10 @@ _claudex_config_path() {
     echo "${XDG_CONFIG_HOME:-$HOME/.config}/cli-proxy-api/config.yaml"
 }
 
-# config.yaml の auth-dir と同じ場所。CLIProxyAPI は ~ しか展開しないので、こちらも XDG_STATE_HOME を見ずに
-# $HOME/.local/state 固定にして食い違いを防ぐ
+# config.yaml の auth-dir と同じ場所。CLIProxyAPI は環境変数を展開しないので、config.yaml 側は chezmoi の
+# テンプレートで apply 時の XDG_STATE_HOME を焼き込んでいる（dot_config/cli-proxy-api/config.yaml.tmpl）
 _claudex_state_dir() {
-    echo "$HOME/.local/state/cli-proxy-api"
+    echo "${XDG_STATE_HOME:-$HOME/.local/state}/cli-proxy-api"
 }
 
 # listen ポートは config.yaml が唯一の情報源。環境変数で別ポートを渡せるようにすると YAML と食い違うので読むだけにする

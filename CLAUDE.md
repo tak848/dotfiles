@@ -81,7 +81,7 @@ Homebrew
 
 ### claudex（Claude Code を Codex のモデルで駆動する）
 
-`dot_zsh/functions/claudex.zsh` が提供する `claudex` コマンドは、Claude Code のハーネス（ツールループ・サブエージェント・hooks・MCP）をそのままに、推論するモデルだけを GPT-5.6 Sol / GPT-6 Astra に差し替える。CLIProxyAPI（`router-for-me/CLIProxyAPI`、mise の `github:` backend で導入、バイナリ名は `cli-proxy-api`）が Anthropic Messages API 互換のプロキシとして `127.0.0.1:8317` に立ち、ChatGPT サブスクの OAuth 経由で Codex backend に転送する。設定は `dot_config/cli-proxy-api/config.yaml`（`~/.config/cli-proxy-api/config.yaml`）。初回のみ `cli-proxy-api --config ~/.config/cli-proxy-api/config.yaml --codex-login` が必要で、トークンは `~/.local/state/cli-proxy-api/` に置かれる。
+`dot_zsh/functions/claudex.zsh` が提供する `claudex` コマンドは、Claude Code のハーネス（ツールループ・サブエージェント・hooks・MCP）をそのままに、推論するモデルだけを GPT-5.6 Sol / GPT-6 Astra に差し替える。CLIProxyAPI（`router-for-me/CLIProxyAPI`、mise の `github:` backend で導入、バイナリ名は `cli-proxy-api`）が Anthropic Messages API 互換のプロキシとして `127.0.0.1:8317` に立ち、ChatGPT サブスクの OAuth 経由で Codex backend に転送する。設定は `dot_config/cli-proxy-api/config.yaml.tmpl`（`$XDG_CONFIG_HOME/cli-proxy-api/config.yaml`）。初回のみ `cli-proxy-api --config "$XDG_CONFIG_HOME/cli-proxy-api/config.yaml" --codex-login` が必要で、トークンとログは `$XDG_STATE_HOME/cli-proxy-api/` に置かれる。CLIProxyAPI は設定内で環境変数を展開しない（`~` のみ）ため、auth-dir は chezmoi apply 時の `XDG_STATE_HOME` をテンプレートで焼き込んでいる。`XDG_STATE_HOME` は `dot_zshenv.tmpl` で他の XDG 変数と同様に export している。
 
 - 素の `claude` は従来通り Claude サブスク / Opus で動く。`claudex` 使用中は Anthropic にリクエストが飛ばないため Claude の quota は減らず、代わりに ChatGPT 側の quota を消費する
 - プロキシはマシン単位で 1 プロセス。worktree ごとには立たず、全 worktree・全セッションが 1 つを共有する（`claudex` が未起動時のみ自動起動する）。listen ポートは config.yaml の `port` が唯一の情報源で、`claudex` はそれを読む

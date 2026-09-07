@@ -1,5 +1,5 @@
 # CLIProxyAPI（router-for-me/CLIProxyAPI）の設定。claudex（dot_zsh/functions/claudex.zsh）が
-# ~/.config/cli-proxy-api/config.yaml として読む。キーの一覧と説明はリリース tarball 同梱の
+# $XDG_CONFIG_HOME/cli-proxy-api/config.yaml として読む。キーの一覧と説明はリリース tarball 同梱の
 # config.example.yaml（https://github.com/router-for-me/CLIProxyAPI/blob/main/config.example.yaml）を参照。
 #
 # ローカルの Claude Code からしか叩かないので、bind は loopback、クライアント認証（api-keys）は無し。
@@ -10,8 +10,10 @@ port: 8317
 # Codex（ChatGPT サブスク）の OAuth トークンの置き場所。`cli-proxy-api --config <この file> --codex-login` が
 # ここに書き、起動中のプロキシは file watcher で変更を拾うので再起動は要らない。CLIProxyAPI は同じディレクトリに
 # logs/（リクエストエラーのダンプ）も作る。claudex の serve.log もここに置く。
-# 既定は ~/.cli-proxy-api だが、状態ファイルなので XDG state 配下に寄せている。
-auth-dir: "~/.local/state/cli-proxy-api"
+# 既定は ~/.cli-proxy-api だが、状態ファイルなので XDG_STATE_HOME 配下に寄せる。CLIProxyAPI は ~ しか展開しない
+# ため、chezmoi apply 時の XDG_STATE_HOME（未設定なら ~/.local/state）をテンプレートで焼き込む。
+# claudex（dot_zsh/functions/claudex.zsh）も同じ値を見る。
+auth-dir: "{{ env "XDG_STATE_HOME" | default (joinPath .chezmoi.homeDir ".local" "state") }}/cli-proxy-api"
 
 # Management API（/v0/management）と管理パネル。secret-key が空なら API 自体が無効（404）。
 # パネルは GitHub から自動ダウンロードされるので、使わないものは落としておく。
