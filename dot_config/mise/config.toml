@@ -30,7 +30,7 @@ AZ_PYTHON = '{{ env.XDG_DATA_HOME | default(value=env.HOME ~ "/.local/share") }}
 # ランタイム（core backend）
 # ============================================
 node = "24.20.0"
-pnpm = "11.25.0"
+pnpm = "12.3.4"
 "github:endevco/aube" = "v2.2.4" # 高速な Node.js パッケージマネージャ
 go = "1.27.0"
 
