@@ -7,12 +7,12 @@ model_auto_compact_token_limit = 500000
 model_reasoning_effort = "xhigh"
 plan_mode_reasoning_effort = "xhigh"
 sandbox_mode = "workspace-write"
-# approval_policy は設定しない。"untrusted" は Codex 0.153.x で config から書けなくなり
-# （書くと config load 自体が落ちる）、projects.<path>.trust_level から導出される内部専用の
-# policy になった。未設定にすると trust_level ベースの fallback（trusted なら on-request、
-# trust_level = "untrusted" なら内部 UnlessTrusted）が効くので、明示的に "on-request" とは書かない。
-# { granular = { ... } } は代替にならない。rule にマッチしない非 dangerous コマンドは granular でも
-# on-request と同じく無確認で通り、granular が決めるのは確認ダイアログの種類ごとの表示/自動 reject だけ。
+# approval_policy は意図的に未設定（= trusted な project では on-request）。
+# 以前は "untrusted"（rule 未マッチのコマンドを全て承認要求にし、PermissionRequest hook の ccgate に
+# 判定させる）だったが、Codex 0.149.0（openai/codex#39630）で config に書けない値になり、書いてあると
+# config load が失敗して起動しない。0.153.4 時点で同等の設定値は無い。on-request では rule 未マッチの
+# コマンドは sandbox 内で承認要求なしに実行されるため、ccgate に届くのは prompt rule・dangerous 判定・
+# sandbox 外への escalation・MCP だけになる。経緯と調査結果は openai/codex#39973 と、この行を入れた PR を参照。
 personality = "pragmatic"
 web_search = "live"
 suppress_unstable_features_warning = true
