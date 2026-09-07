@@ -123,12 +123,13 @@ claudep() {
 
     local gpt_model="${CLAUDEP_GPT_MODEL:-gpt-6-astra}"
 
-    # gpt-* は Claude Code のモデル名パターンに合わないので effort / thinking の対応を明示する（claudex と同じ理由。
-    # adaptive_thinking が無いと /effort が Codex の reasoning.effort に届かない）。
     # ANTHROPIC_CUSTOM_MODEL_OPTION は /model の候補に 1 件足すだけで、Claude 側の 4 スロットは素のまま。
-    # subagent の frontmatter `model: gpt-6-astra` は Claude Code が model ID をそのまま API に送るので、
-    # この変数が無くても router 経由で Codex に届く（実機で確認済み）。capabilities の宣言がその subagent にも
-    # 効くか（subagent 側で effort / thinking が有効になるか）は未検証。
+    # _SUPPORTED_CAPABILITIES は /model でその gpt-* を primary に切り替えたとき用（gpt-* は Claude Code の
+    # モデル名パターンに合わないので effort / thinking の対応を明示する。claudex と同じ理由）。
+    # subagent（frontmatter `model: gpt-6-astra`、例: dot_claude/agents/gpt-review.md）には関係ない。Claude Code は
+    # model ID をそのまま送り、thinking は main の設定を継承し、effort は frontmatter の effort:（無ければ settings の
+    # effortLevel）が output_config.effort になる。この変数の有無で変わらないことを捕捉サーバーで確認済み
+    # （詳細は CLAUDE.md の claudep セクション）。
     local caps="effort,xhigh_effort,thinking,adaptive_thinking,interleaved_thinking"
 
     # CLAUDE_CODE_MAX_CONTEXT_TOKENS は claude-* を名乗る ID には（DISABLE_COMPACT を併用しない限り）効かず、

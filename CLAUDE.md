@@ -111,7 +111,17 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - 振り分けは本文 JSON のトップレベル `model` の前方一致（既定 `gpt-`、大文字小文字を区別しない）だけ。本文が無い・JSON でない・`model` が無いリクエスト（`HEAD /api/hello`、`GET /v1/models` 等）は Anthropic に流す。`/v1/messages/count_tokens` も同じ規則で振り分ける（CLIProxyAPI が `gpt-*` で 200 と本文長に応じた `input_tokens` を返すことは curl で確認済み。Claude Code が実際にこのパスを叩くかは観測していない）
 - router・cli-proxy-api ともマシン単位で 1 プロセス、未起動時だけ `claudep` が自動起動する（`claudex` と同じ mkdir ロック）。起動済みの router は `/healthz` の `codex=` が今の CLIProxyAPI のポートと一致することを確認してから使う。バイナリ更新（`chezmoi update`）は検出できないので、その後は `pkill -x cc-model-router` で入れ替える。router のログは `$XDG_STATE_HOME/cc-model-router/router.log`。バイナリは `run_onchange_after_45-build-statusline.sh.tmpl` が `~/.claude/bin/cc-model-router` に置く
 - `claudex` が付ける `ANTHROPIC_DEFAULT_*_MODEL` / `CLAUDE_CODE_SUBAGENT_MODEL` / `ENABLE_TOOL_SEARCH=false` 等は「primary が gpt-*」前提の調整なので `claudep` は付けない。付けるのは `ANTHROPIC_CUSTOM_MODEL_OPTION=gpt-6-astra`（`/model` の候補に 1 件足す）とその `_SUPPORTED_CAPABILITIES`、`CLAUDE_CODE_MAX_CONTEXT_TOKENS=872000` だけ。後者は `claude-*` を名乗る ID には `DISABLE_COMPACT` を併用しない限り効かず、認識できない ID（`gpt-*`）にだけ効く（model-config "Correct the window for a gateway or custom model ID"）ので、Claude 側の context 判定は変わらない
-- 実機で確認済み: `claudep -p` の Claude 経路がサブスクの OAuth で通ること、`--model gpt-6-astra` が Codex に届くこと、primary が Claude のセッションから `model: gpt-6-astra` の subagent（`--agents` で定義）を起動すると Claude Code が frontmatter の model ID をそのまま送り、router が Codex に振り分けて応答が返ること。未検証: `ANTHROPIC_CUSTOM_MODEL_OPTION_SUPPORTED_CAPABILITIES` の宣言が subagent 側の `gpt-*` にも効くか（effort / thinking が subagent で有効になるか）
+- 実機で確認済み: `claudep -p` の Claude 経路がサブスクの OAuth で通ること、`--model gpt-6-astra` が Codex に届くこと、primary が Claude のセッションから `model: gpt-6-astra` の subagent（`--agents` で定義）を起動すると Claude Code が frontmatter の model ID をそのまま送り、router が Codex に振り分けて応答が返ること
+- subagent の effort / thinking は `ANTHROPIC_CUSTOM_MODEL_OPTION_SUPPORTED_CAPABILITIES` に関係なく送られる（Codex の代わりに立てた捕捉サーバーで観測。変数の有無にかかわらず `thinking: {type: adaptive}` と `output_config.effort` が付き、frontmatter の `effort:` がそのまま `output_config.effort` になる。無指定なら settings の `effortLevel`）。subagent は main の thinking 設定を継承する仕様（sub-agents "Choose a model"）で、model ID のパターン判定は通らないらしい。この変数が効くのは `/model gpt-6-astra` で primary を切り替えたときだけ
+
+### gpt-review（GPT-6 Astra で動くレビュー専用 subagent）
+
+`dot_claude/agents/gpt-review.md`。`model: gpt-6-astra` の frontmatter を持つので `claudep` / `claudex` の下でしか動かない（素の `claude` では Anthropic に弾かれる）。`codex-review` agent（Codex CLI を `codex exec` で叩くラッパー）とは別物で、こちらは Claude Code のネイティブな subagent として Read / Grep / Glob / Bash / WebFetch / WebSearch / context7 / deepwiki を自分で使ってレビューする。修正はしない。
+
+- `codex-review` の thread_id 方式に当たるものは Claude Code の subagent resume で、修正後の再レビューは同じ agent に `SendMessage` で修正内容を送る（会話が残るので前回指摘と突き合わせられる）。確証バイアスを避ける最終確認は、前回の指摘を渡さずに新しいインスタンスを起動する
+- `effort: xhigh` を frontmatter で固定している。Codex の reasoning.effort は low / medium / high / xhigh で、`max` は無い
+- `tools` は読み取り系に絞っているが Bash は含める（テスト・lint・`git diff` を根拠にさせるため）。ファイルを変える操作は本文で禁止している
+- 出力形式（結論 / 重要度付きの指摘 / 問題なしと判断した点 / 参照ファイル / 未確認事項）は本文で固定し、呼び出し元が全文を読む前提
 - Claude への通信は素の `claude` と同じなので Claude の quota を消費する。`gpt-*` の分だけ ChatGPT 側の quota。上書きは `CLAUDEP_GPT_MODEL` / `CLAUDEP_CONTEXT_TOKENS` / `CLAUDEP_ROUTER_PORT`
 
 ### codexp（Codex を profile 付きで起動する）
