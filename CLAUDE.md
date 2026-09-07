@@ -98,7 +98,7 @@ Homebrew
 
 ### claudep（1 セッションで Claude と Codex のモデルを混ぜる）
 
-`dot_zsh/functions/claudep.zsh` が提供する `claudep` コマンドは、Claude Code を素の Claude（サブスクの OAuth、Opus 既定）のまま起動しつつ、`gpt-*` を名乗るリクエストだけを Codex に流す。`claudex` がセッション全体のモデルを差し替えるのに対し、こちらは `model: gpt-6-astra` のような frontmatter を持つ subagent を Claude のセッションの中から呼ぶためのもので、そういう agent は `claudep`（または `claudex`）の下でしか動かない。素の `claude` では Anthropic にそのモデル名を弾かれる。
+`dot_zsh/functions/claudep.zsh` が提供する `claudep` コマンドは、Claude Code を素の Claude（サブスクの OAuth、既定モデルのまま）で起動しつつ、`gpt-*` を名乗るリクエストだけを Codex に流す。`claudex` がセッション全体のモデルを差し替えるのに対し、こちらは `model: gpt-6-astra` のような frontmatter を持つ subagent を Claude のセッションの中から呼ぶためのもので、そういう agent は `claudep`（または `claudex`）の下でしか動かない。素の `claude` では Anthropic にそのモデル名を弾かれる。
 
 ```
 claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）

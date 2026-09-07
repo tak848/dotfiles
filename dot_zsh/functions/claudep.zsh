@@ -1,6 +1,6 @@
 # claudep: Claude Code を cc-model-router 経由で起動し、1 セッションの中で Claude と Codex（gpt-*）を混ぜる
 #
-# claudex がモデルを丸ごと Codex に差し替えるのに対し、claudep は素の Claude（サブスクの OAuth、Opus 既定）の
+# claudex がモデルを丸ごと Codex に差し替えるのに対し、claudep は素の Claude（サブスクの OAuth、既定モデルのまま）の
 # ままで、gpt-* を名乗るリクエストだけを Codex に流す。用途は `model: gpt-6-astra` を frontmatter に持つ
 # subagent（レビュー等）で、素の claude で起動したセッションではそのモデル名は Anthropic に弾かれるため、
 # そういう agent は claudep（または claudex）の下でしか使えない。
@@ -44,10 +44,21 @@ _claudep_router_bin() {
     return 1
 }
 
+# ポートが開いているだけでは別のプロセス（古いビルドや無関係な dev server）かもしれないので、
+# router 自身の /healthz が ok を返すことまで確認する
+_claudep_router_ready() {
+    [[ "$(curl -sS -m 2 "http://127.0.0.1:${1}/healthz" 2>/dev/null)" == "ok" ]]
+}
+
 # _claudex_ensure_proxy と同じ作り: mkdir でロックを取った側だけが起動し、他は listen を待つ
 _claudep_ensure_router() {
     local rport="$1" cport="$2"
-    _claudex_port_open "$rport" && return 0
+    if _claudex_port_open "$rport"; then
+        _claudep_router_ready "$rport" && return 0
+        echo "エラー: 127.0.0.1:${rport} は listen されていますが cc-model-router ではありません（/healthz が応答しない）" >&2
+        echo "  別のプロセスが使っているなら CLAUDEP_ROUTER_PORT で router のポートを変えてください" >&2
+        return 1
+    fi
 
     local bin
     if ! bin="$(_claudep_router_bin)"; then
@@ -67,7 +78,7 @@ _claudep_ensure_router() {
 
     local i
     for i in {1..50}; do
-        _claudex_port_open "$rport" && return 0
+        _claudep_router_ready "$rport" && return 0
         sleep 0.1
     done
 
