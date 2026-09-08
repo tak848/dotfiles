@@ -66,3 +66,30 @@ oauth-model-alias:
     - name: "gpt-5.6-luna"
       alias: "claude-haiku-4-5-20251001"
       fork: true
+    # <model>-fast: Codex の priority tier（カタログの service_tiers: priority。astra は 2x、sol は 1.5x speed、
+    # 代わりにサブスク usage の減りが早い）で叩くための別名。claudexf / claudeapf が使う。
+    # Claude Code の fast mode（fastMode / speed: fast）は Opus 専用で、gpt-* の primary では speed が送られない
+    # ことを捕捉サーバーで確認済みなので、モデル名で tier を分け、下の payload.override で service_tier を付ける。
+    - name: "gpt-6-astra"
+      alias: "gpt-6-astra-fast"
+      fork: true
+    - name: "gpt-5.6-sol"
+      alias: "gpt-5.6-sol-fast"
+      fork: true
+    - name: "gpt-5.6-terra"
+      alias: "gpt-5.6-terra-fast"
+      fork: true
+    - name: "gpt-5.6-luna"
+      alias: "gpt-5.6-luna-fast"
+      fork: true
+
+# 上の *-fast 別名で来たリクエストに service_tier: priority を付ける。name はクライアントが指定した名前（別名）と
+# 解決後の上流名の両方に対して照合されるので、別名側のパターンで書く。上流に送る payload に
+# "service_tier":"priority" が入ることは request-log で確認済み（素の gpt-6-astra では null）。
+payload:
+  override:
+    - models:
+        - name: "gpt-*-fast"
+          protocol: "codex"
+      params:
+        service_tier: priority
