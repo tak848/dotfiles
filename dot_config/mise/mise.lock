@@ -627,44 +627,44 @@ url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.1
 url_api = "https://api.github.com/repos/grafana/jsonnet-language-server/releases/assets/354270599"
 
 [[tools."aqua:jdx/usage"]]
-version = "6.7.1"
+version = "6.8.0"
 backend = "aqua:jdx/usage"
-specifiers = ["6.7.1"]
+specifiers = ["6.8.0"]
 
 [tools."aqua:jdx/usage"."platforms.linux-arm64"]
-checksum = "sha256:a50aa71d5c859242a9e2b8a4bd2a0bdb171b990f6e746b899f33b05c43435754"
-url = "https://github.com/jdx/usage/releases/download/v6.7.1/usage-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/546276509"
+checksum = "sha256:5ac012d6a7a1aaa5049e22afb77c3ec76768c2203d323d6d26a7b494ddccc780"
+url = "https://github.com/jdx/usage/releases/download/v6.8.0/usage-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/547479496"
 
 [tools."aqua:jdx/usage"."platforms.linux-arm64-musl"]
-checksum = "sha256:0c0be5f174219b753fe3f2ef163a85791f8cdf4b8718e41cf0d22734b41c4e93"
-url = "https://github.com/jdx/usage/releases/download/v6.7.1/usage-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/546276824"
+checksum = "sha256:a9b15be628824117d03d1ca2b7e1a42b5acfd5b8d1a6bfeffaa8256f2616a66e"
+url = "https://github.com/jdx/usage/releases/download/v6.8.0/usage-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/547479495"
 
 [tools."aqua:jdx/usage"."platforms.linux-x64"]
-checksum = "sha256:799ac850dffa11705c9ace5faf5b12c43da297310cb3950f2316eb7582cd8e84"
-url = "https://github.com/jdx/usage/releases/download/v6.7.1/usage-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/546276448"
+checksum = "sha256:468c27b16302250cf74f2bddb0d0539b958ae3a391d226acc73bdd714c2a18cb"
+url = "https://github.com/jdx/usage/releases/download/v6.8.0/usage-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/547479229"
 
 [tools."aqua:jdx/usage"."platforms.linux-x64-musl"]
-checksum = "sha256:a70fd80a609b64f70b380650dd8b3890ea31a6cd054cdf8a8867b0a6cf9bdedb"
-url = "https://github.com/jdx/usage/releases/download/v6.7.1/usage-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/546276832"
+checksum = "sha256:62b44e6d10e636e4ff1e5f56366d84475d8282990a5882499cae658e95b99f32"
+url = "https://github.com/jdx/usage/releases/download/v6.8.0/usage-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/547479563"
 
 [tools."aqua:jdx/usage"."platforms.macos-arm64"]
-checksum = "sha256:7c9d4a3b575a9b3bed6a211aed8a080a287bf376e01ae3f1edcd4d6af4dc038f"
-url = "https://github.com/jdx/usage/releases/download/v6.7.1/usage-universal-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/546276594"
+checksum = "sha256:f6bfe2e5353e02769d3f6902d06db1cb201f84124df08465fd4826f9ce7ba632"
+url = "https://github.com/jdx/usage/releases/download/v6.8.0/usage-universal-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/547480261"
 
 [tools."aqua:jdx/usage"."platforms.macos-x64"]
-checksum = "sha256:7c9d4a3b575a9b3bed6a211aed8a080a287bf376e01ae3f1edcd4d6af4dc038f"
-url = "https://github.com/jdx/usage/releases/download/v6.7.1/usage-universal-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/546276594"
+checksum = "sha256:f6bfe2e5353e02769d3f6902d06db1cb201f84124df08465fd4826f9ce7ba632"
+url = "https://github.com/jdx/usage/releases/download/v6.8.0/usage-universal-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/547480261"
 
 [tools."aqua:jdx/usage"."platforms.windows-x64"]
-checksum = "sha256:8e106b9b98dc6f789cc11b00bf9d438884128ebc4b94d0fc115e13c466c02260"
-url = "https://github.com/jdx/usage/releases/download/v6.7.1/usage-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/546280317"
+checksum = "sha256:f97cf597bef4a2a643b38abcb02e2d47622e658fccf17fd5d1a97df9fac17b78"
+url = "https://github.com/jdx/usage/releases/download/v6.8.0/usage-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/547482883"
 
 [[tools."aqua:jesseduffield/lazydocker"]]
 version = "0.25.2"
@@ -1622,44 +1622,44 @@ url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v7.2.152/C
 url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/546905742"
 
 [[tools."github:sivchari/golance"]]
-version = "0.7.0"
+version = "0.7.1"
 backend = "github:sivchari/golance"
-specifiers = ["v0.7.0"]
+specifiers = ["v0.7.1"]
 
 [tools."github:sivchari/golance"."platforms.linux-arm64"]
-checksum = "sha256:e28c77f1b8eae58f17dffd92004559a77afcd1e16846b3fdcebc844a8d29ba27"
-url = "https://github.com/sivchari/golance/releases/download/v0.7.0/golance_0.7.0_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/542432910"
+checksum = "sha256:5a63bd0cfe383c921ec64b93a49335047bfabdb65754ca2d983a60b4647ad5c0"
+url = "https://github.com/sivchari/golance/releases/download/v0.7.1/golance_0.7.1_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/548108728"
 
 [tools."github:sivchari/golance"."platforms.linux-arm64-musl"]
-checksum = "sha256:e28c77f1b8eae58f17dffd92004559a77afcd1e16846b3fdcebc844a8d29ba27"
-url = "https://github.com/sivchari/golance/releases/download/v0.7.0/golance_0.7.0_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/542432910"
+checksum = "sha256:5a63bd0cfe383c921ec64b93a49335047bfabdb65754ca2d983a60b4647ad5c0"
+url = "https://github.com/sivchari/golance/releases/download/v0.7.1/golance_0.7.1_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/548108728"
 
 [tools."github:sivchari/golance"."platforms.linux-x64"]
-checksum = "sha256:c61fd8d40ecbff440f75edead18c10182f2386605ac250e950c2aa627a174d95"
-url = "https://github.com/sivchari/golance/releases/download/v0.7.0/golance_0.7.0_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/542432912"
+checksum = "sha256:87ce9d1a5ccabc2e0512e0a5db0c90574db3b2ef79ad4b1d048b5a18249356fd"
+url = "https://github.com/sivchari/golance/releases/download/v0.7.1/golance_0.7.1_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/548108716"
 
 [tools."github:sivchari/golance"."platforms.linux-x64-musl"]
-checksum = "sha256:c61fd8d40ecbff440f75edead18c10182f2386605ac250e950c2aa627a174d95"
-url = "https://github.com/sivchari/golance/releases/download/v0.7.0/golance_0.7.0_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/542432912"
+checksum = "sha256:87ce9d1a5ccabc2e0512e0a5db0c90574db3b2ef79ad4b1d048b5a18249356fd"
+url = "https://github.com/sivchari/golance/releases/download/v0.7.1/golance_0.7.1_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/548108716"
 
 [tools."github:sivchari/golance"."platforms.macos-arm64"]
-checksum = "sha256:839c8454f1fb5f9b141ef3cf8f324538a4ccb69a076a048c50212df69083898b"
-url = "https://github.com/sivchari/golance/releases/download/v0.7.0/golance_0.7.0_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/542432917"
+checksum = "sha256:0b7d862a4071c1a40f629ad24cfcc329410d954cfcf233b952f035447ec2aae9"
+url = "https://github.com/sivchari/golance/releases/download/v0.7.1/golance_0.7.1_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/548108714"
 
 [tools."github:sivchari/golance"."platforms.macos-x64"]
-checksum = "sha256:f6195b28e37439afb3e3c3ff8fe6eebe7b90de3c530444017295d1c394fc258f"
-url = "https://github.com/sivchari/golance/releases/download/v0.7.0/golance_0.7.0_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/542432938"
+checksum = "sha256:b698a6eccfe64d90ae9950cbb6533fad18344f2e2da8a8bdf0cd81b98a956b7c"
+url = "https://github.com/sivchari/golance/releases/download/v0.7.1/golance_0.7.1_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/548108715"
 
 [tools."github:sivchari/golance"."platforms.windows-x64"]
-checksum = "sha256:b97327fb95b2f793a923e6ff858d9d23095a440ae79af8c40508b85f1ba7c2f8"
-url = "https://github.com/sivchari/golance/releases/download/v0.7.0/golance_0.7.0_windows_amd64.zip"
-url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/542432913"
+checksum = "sha256:8c4141f030e23cbe13cf236da5817d08f62f69b2b2e987e9189430103bb52e66"
+url = "https://github.com/sivchari/golance/releases/download/v0.7.1/golance_0.7.1_windows_amd64.zip"
+url_api = "https://api.github.com/repos/sivchari/golance/releases/assets/548108729"
 
 [[tools."github:sivchari/gopls-lazy"]]
 version = "0.4.1"
