@@ -108,10 +108,16 @@ claudex() {
     # > sol（"Reliable agentic workhorse"）> terra（balanced）> luna（fast/affordable）で、Claude 側の
     # fable > opus > sonnet > haiku というスロットの重みに素直に対応する。primary（--model）は素の Claude の
     # 既定が Opus であるのに合わせて sol のままにし、fable スロットだけ astra に向ける。
-    local model="${CLAUDEX_MODEL:-gpt-5.6-sol}"
-    local fable_model="${CLAUDEX_FABLE_MODEL:-gpt-6-astra}"
-    local mid_model="${CLAUDEX_MID_MODEL:-gpt-5.6-terra}"
-    local small_model="${CLAUDEX_SMALL_MODEL:-gpt-5.6-luna}"
+    # claudexf 用。CLAUDEX_FAST=1 なら各モデルを <model>-fast（config.yaml の別名。CLIProxyAPI が payload.override で
+    # service_tier: priority を付けて素の名前で Codex に送る）に向ける。Claude Code の fast mode（fastMode +
+    # speed: fast）は Opus 専用で、gpt-* の primary では speed が送られないことを捕捉サーバーで確認したため、
+    # モデル名で tier を分ける方式にした。CLAUDEX_*_MODEL で明示された名前には付けない。
+    local suffix=""
+    [[ "${CLAUDEX_FAST:-0}" == 1 ]] && suffix="-fast"
+    local model="${CLAUDEX_MODEL:-gpt-5.6-sol${suffix}}"
+    local fable_model="${CLAUDEX_FABLE_MODEL:-gpt-6-astra${suffix}}"
+    local mid_model="${CLAUDEX_MID_MODEL:-gpt-5.6-terra${suffix}}"
+    local small_model="${CLAUDEX_SMALL_MODEL:-gpt-5.6-luna${suffix}}"
 
     # Claude Code は model ID のパターンで effort / thinking 対応を判定するため、gpt-* だとどちらも無効になる。
     # 各スロットの _SUPPORTED_CAPABILITIES で明示する。adaptive_thinking が重要で、これが無いと Claude Code は
@@ -136,20 +142,7 @@ claudex() {
     # settings ファイルの env は OS 環境変数に勝つため、プロジェクトの .claude/settings.json が同じ変数を
     # 設定していても上書きできるよう --settings で渡す。優先順位は Managed > Command-line > Local >
     # Project > User（settings.md）。
-    local settings="{\"env\":{\"CLAUDE_CODE_MAX_CONTEXT_TOKENS\":\"${CLAUDEX_CONTEXT_TOKENS:-872000}\"}"
-
-    # claudexf 用。CLIProxyAPI には raine/claude-code-proxy の `-fast` サフィックスに当たるモデル名の仕組みが無く、
-    # Codex の priority tier はリクエストの service_tier / speed: fast でしか指定できない。Claude Code が
-    # speed: fast を付けるのは fast mode の間だけなので、fastMode を settings で入れ、Bearer 認証だけの
-    # セッションで fast mode が「組織で無効」扱いになるのを CLAUDE_CODE_SKIP_FAST_MODE_ORG_CHECK で避ける。
-    # Claude Code の fast mode は Opus 系にしか対応しないため、gpt-* の pinned model で実際に speed: fast が
-    # 送られるかは未検証（送られなければ通常 tier で動くだけで、失敗はしない）。
-    local fast_env=()
-    if [[ "${CLAUDEX_FAST:-0}" == 1 ]]; then
-        settings+=',"fastMode":true'
-        fast_env=(CLAUDE_CODE_SKIP_FAST_MODE_ORG_CHECK=1)
-    fi
-    settings+='}'
+    local settings="{\"env\":{\"CLAUDE_CODE_MAX_CONTEXT_TOKENS\":\"${CLAUDEX_CONTEXT_TOKENS:-872000}\"}}"
 
     # メインの推論モデル（--model）以外に、CC が内部で使う fable / opus / sonnet / haiku エイリアスも Codex
     # モデルに向けておく。素の Claude 名（claude-opus-* 等）に解決されると proxy に「unknown provider」で
@@ -168,7 +161,7 @@ claudex() {
     # CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC は settings.jsonnet と同様に設定しない
     # （remote-control の eligibility チェックがブロックされるため）。無駄なモデル呼び出し自体は
     # settings.jsonnet の DISABLE_NON_ESSENTIAL_MODEL_CALLS で既に止まっている
-    env "${fast_env[@]}" \
+    env \
     ANTHROPIC_BASE_URL="http://127.0.0.1:${port}" \
     ANTHROPIC_AUTH_TOKEN="unused" \
     ANTHROPIC_DEFAULT_FABLE_MODEL="$fable_model" \
@@ -187,10 +180,8 @@ claudex() {
         claude --model "$model" --settings "$settings" "$@"
 }
 
-# claudexf: claudex の Codex fast/priority tier 版。
-# Claude Code の fast mode を有効にして起動し、CLIProxyAPI がリクエストの speed: fast を Codex の
-# service_tier: priority に翻訳する。速い代わりにサブスク usage の減りが早い。quota を使い切れないとき向け。
-# 上の claudex 内のコメントにある通り、gpt-* に対して Claude Code が実際に speed: fast を送るかは未検証。
+# claudexf: claudex の Codex priority tier 版。4 スロットとも <model>-fast（config.yaml の別名）に向け、CLIProxyAPI が
+# service_tier: priority を付けて Codex に送る。速い代わりにサブスク usage の減りが早い。quota を使い切れないとき向け。
 claudexf() {
     CLAUDEX_FAST=1 claudex "$@"
 }

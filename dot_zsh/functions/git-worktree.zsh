@@ -208,6 +208,7 @@ gwr() {
 #   gwc ENG-123 --ccs                # 作成後に claudep --model sonnet を初期プロンプトで起動
 #   gwc ENG-123 --ccp                # --cc と同じ（claudep を明示したいとき用）
 #   gwc ENG-123 --ccap               # 作成後に claudeap（fable スロットだけ GPT-6 Astra、他は Claude）を初期プロンプトで起動
+#   gwc ENG-123 --ccapf              # 作成後に claudeapf（claudeap の Codex priority tier 版）を初期プロンプトで起動
 #   gwc ENG-123 --ccx                # 作成後に claudex（Claude Code のハーネス + GPT-5.6 Sol）を初期プロンプトで起動
 #   gwc ENG-123 --ccxf               # 作成後に claudexf（claudex の Codex fast/priority tier 版）を初期プロンプトで起動
 #   gwc ENG-123 --co                 # 作成後に codexp を初期プロンプトで起動（GWC_CODEX_CLI_INITIAL_PROMPT）
@@ -218,7 +219,7 @@ gwr() {
 #   export GWC_COPY_FILES=".env.test,config.local.json"  # 環境変数で事前設定
 #   export GWC_PNPM_EXTRA_DIRS="apps/foo,apps/bar"  # root 以外で pnpm install するディレクトリ（worktree root からの相対パス、カンマ区切り）
 #   export GWC_LINEAR_API_KEY="lin_api_..."  # Linear モードに必要（環境変数として設定）
-#   export GWC_CLAUDE_CODE_INITIAL_PROMPT="..."  # --cc 系 / --ccap / --ccx / --ccxf / --ccco で claudep / claudeap / claudex(f) / claude に渡す初期プロンプト（未設定なら素の起動 or 追加プロンプトのみ）
+#   export GWC_CLAUDE_CODE_INITIAL_PROMPT="..."  # --cc 系 / --ccap / --ccapf / --ccx / --ccxf / --ccco で claudep / claudeap(f) / claudex(f) / claude に渡す初期プロンプト（未設定なら素の起動 or 追加プロンプトのみ）
 #
 # --cc / --ccf / --cco / --ccs が素の claude ではなく claudep（claudep.zsh）を起動するのは、claudep が素の claude に
 # gpt-* の subagent（gpt-review 等）を足すだけで、Claude 側の挙動は変わらないため。--model はそのまま claude に渡る。
@@ -245,7 +246,7 @@ gwc() {
     local skip_fzf=false
     local open_with_cursor=false
     local cmux_title=""  # cmux 環境ならワークスペース名に設定する文字列（Linear/PR モードでセット）
-    local launch_agent=""  # --cc / --ccp → claudep / --ccap → claudeap / --ccx → claudex / --ccxf → claudexf / --co → codexp / --ccco → claude（前面）。worktree 作成後に初期プロンプトで起動
+    local launch_agent=""  # --cc / --ccp → claudep / --ccap → claudeap / --ccapf → claudeapf / --ccx → claudex / --ccxf → claudexf / --co → codexp / --ccco → claude（前面）。worktree 作成後に初期プロンプトで起動
     local launch_model=""  # --ccf → fable / --cco → opus / --ccs → sonnet。claudep 起動時だけ --model として渡す
                            # （--ccx / --ccxf は claudex(f) 側が --model を指定するため空のままにする）
     local split_agent=""   # --ccco → codexp を右 split で起動（claude は launch_agent で現在ペイン前面起動）
@@ -305,20 +306,21 @@ gwc() {
             open_with_cursor=true
             shift
             ;;
-        --cc | --ccp | --ccap | --co)
-            # --cc / --ccp → claudep / --ccap → claudeap / --co → codexp。worktree 作成後に初期プロンプトで起動する。
+        --cc | --ccp | --ccap | --ccapf | --co)
+            # --cc / --ccp → claudep / --ccap → claudeap / --ccapf → claudeapf / --co → codexp。worktree 作成後に初期プロンプトで起動する。
             # 直後にオプションでないトークンがあれば追加プロンプトとして取り込む
             # （例: gwc ENG-123 --cc "追加の指示"）。ref と紛れないよう --cc/--co は ref の後ろに置くこと。
             if [ -n "$launch_agent" ] || [ -n "$split_agent" ]; then
-                echo "エラー: --cc / --ccf / --cco / --ccs / --ccp / --ccap / --ccx / --ccxf / --co / --ccco は同時に指定できません。" >&2
+                echo "エラー: --cc / --ccf / --cco / --ccs / --ccp / --ccap / --ccapf / --ccx / --ccxf / --co / --ccco は同時に指定できません。" >&2
                 return 1
             fi
             case "$1" in
             --cc | --ccp) launch_agent="claudep" ;;
             --ccap) launch_agent="claudeap" ;;
+            --ccapf) launch_agent="claudeapf" ;;
             *) launch_agent="codexp" ;;
             esac
-            shift # --cc / --ccp / --ccap / --co を消費
+            shift # --cc / --ccp / --ccap / --ccapf / --co を消費
             if [ -n "$1" ] && [[ "$1" != -* ]]; then
                 agent_extra="$1"
                 shift # 追加プロンプトを消費
@@ -326,7 +328,7 @@ gwc() {
             ;;
         --ccf | --cco | --ccs)
             if [ -n "$launch_agent" ] || [ -n "$split_agent" ]; then
-                echo "エラー: --cc / --ccf / --cco / --ccs / --ccp / --ccap / --ccx / --ccxf / --co / --ccco は同時に指定できません。" >&2
+                echo "エラー: --cc / --ccf / --cco / --ccs / --ccp / --ccap / --ccapf / --ccx / --ccxf / --co / --ccco は同時に指定できません。" >&2
                 return 1
             fi
             launch_agent="claudep"
@@ -348,7 +350,7 @@ gwc() {
             # --ccxf は Codex fast/priority tier 版の claudexf。
             # claudex/claudexf 自身が --model を指定するため launch_model は空のままにする。
             if [ -n "$launch_agent" ] || [ -n "$split_agent" ]; then
-                echo "エラー: --cc / --ccf / --cco / --ccs / --ccp / --ccap / --ccx / --ccxf / --co / --ccco は同時に指定できません。" >&2
+                echo "エラー: --cc / --ccf / --cco / --ccs / --ccp / --ccap / --ccapf / --ccx / --ccxf / --co / --ccco は同時に指定できません。" >&2
                 return 1
             fi
             if [ "$1" = "--ccxf" ]; then
@@ -366,7 +368,7 @@ gwc() {
             # cmux 限定: claude を現在ペイン前面、codexp を右 split で同時起動する。
             # 末尾に非オプションのトークンがあれば両エージェント共通の追加プロンプトとして取り込む。
             if [ -n "$launch_agent" ] || [ -n "$split_agent" ]; then
-                echo "エラー: --cc / --ccf / --cco / --ccs / --ccp / --ccap / --ccx / --ccxf / --co / --ccco は同時に指定できません。" >&2
+                echo "エラー: --cc / --ccf / --cco / --ccs / --ccp / --ccap / --ccapf / --ccx / --ccxf / --co / --ccco は同時に指定できません。" >&2
                 return 1
             fi
             # validation を最初に: cmux 環境でなければここで弾く（worktree を作らない）
@@ -813,8 +815,8 @@ gwc() {
                 echo "警告: '$launch_agent' コマンドが見つかりません。起動をスキップします。" >&2
             else
                 local agent_base=""
-                # claudep / claudeap / claudex / claudexf は Claude Code のハーネスなので claude と同じ初期プロンプトを使う
-                if [ "$launch_agent" = "claude" ] || [ "$launch_agent" = "claudep" ] || [ "$launch_agent" = "claudeap" ] || [ "$launch_agent" = "claudex" ] || [ "$launch_agent" = "claudexf" ]; then
+                # claudep / claudeap / claudeapf / claudex / claudexf は Claude Code のハーネスなので claude と同じ初期プロンプトを使う
+                if [ "$launch_agent" = "claude" ] || [ "$launch_agent" = "claudep" ] || [ "$launch_agent" = "claudeap" ] || [ "$launch_agent" = "claudeapf" ] || [ "$launch_agent" = "claudex" ] || [ "$launch_agent" = "claudexf" ]; then
                     agent_base="$GWC_CLAUDE_CODE_INITIAL_PROMPT"
                 else
                     agent_base="$GWC_CODEX_CLI_INITIAL_PROMPT"

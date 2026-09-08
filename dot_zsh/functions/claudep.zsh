@@ -172,3 +172,11 @@ claudep() {
 claudeap() {
     CLAUDEP_FABLE_MODEL="${CLAUDEP_FABLE_MODEL:-gpt-6-astra}" claudep "$@"
 }
+
+# claudeapf: claudeap の Codex priority tier 版。fable スロットを gpt-6-astra-fast（config.yaml の別名。CLIProxyAPI が
+# payload.override で service_tier: priority を付けて gpt-6-astra に送る）に向ける。2x speed の代わりに ChatGPT 側の
+# usage の減りが早い。Claude Code の fast mode（fastMode）は Opus 専用で gpt-* には効かないので使わない。
+# Claude 側（opus / sonnet / haiku）は通常速度のまま。
+claudeapf() {
+    CLAUDEP_FABLE_MODEL="${CLAUDEP_FABLE_MODEL:-gpt-6-astra-fast}" claudep "$@"
+}
