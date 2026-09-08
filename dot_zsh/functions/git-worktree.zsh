@@ -214,6 +214,7 @@ gwr() {
 #   gwc ENG-123 --cc "追加の指示"     # 初期プロンプト + 改行2つ + 追加プロンプトで起動（ref より後ろに置くこと）
 #   gwc ENG-123 --ccco               # cmux 限定: claude を現在ペイン、codexp を右 split で同時起動
 #   gwc ENG-123 --ccco "追加の指示"   # 追加プロンプトは claude / codexp 両方に渡る
+#   gwc ENG-123 --cc "追加の指示" -- --resume --permission-mode plan  # -- 以降は起動するエージェントにそのまま渡る（--ccco では両方に渡る）
 #   export GWC_COPY_FILES=".env.test,config.local.json"  # 環境変数で事前設定
 #   export GWC_PNPM_EXTRA_DIRS="apps/foo,apps/bar"  # root 以外で pnpm install するディレクトリ（worktree root からの相対パス、カンマ区切り）
 #   export GWC_LINEAR_API_KEY="lin_api_..."  # Linear モードに必要（環境変数として設定）
@@ -249,6 +250,7 @@ gwc() {
                            # （--ccx / --ccxf は claudex(f) 側が --model を指定するため空のままにする）
     local split_agent=""   # --ccco → codexp を右 split で起動（claude は launch_agent で現在ペイン前面起動）
     local agent_extra=""   # --cc / --co / --ccco の後ろに渡された追加プロンプト
+    local agent_args=()    # -- 以降の引数。起動するエージェントにそのまま渡す（プロンプトより前に置く）
 
     # 環境変数 GWC_COPY_FILES から追加のコピー対象ファイルを取得
     if [ -n "$GWC_COPY_FILES" ]; then
@@ -380,6 +382,13 @@ gwc() {
                 shift # 追加プロンプトを消費
             fi
             ;;
+        --)
+            # 以降の引数は解析せず、起動するエージェント（claude 系 / codexp）にそのまま渡す。
+            # 例: gwc ENG-123 --cc "追加の指示" -- --resume --permission-mode plan
+            shift # -- を消費
+            agent_args=("$@")
+            set --
+            ;;
         --*)
             echo "エラー: 不明なオプション '$1'" >&2
             return 1
@@ -394,6 +403,11 @@ gwc() {
             ;;
         esac
     done
+
+    if [ ${#agent_args[@]} -gt 0 ] && [ -z "$launch_agent" ]; then
+        echo "エラー: -- 以降の引数は --cc 系 / --co / --ccco で起動するエージェントに渡すものです。起動オプションと併用してください。" >&2
+        return 1
+    fi
 
     # --- ref の解決と種別判定 ---
     # 明示フラグ (--pr / --linear) と位置引数の重複・複数指定をチェック
@@ -759,18 +773,21 @@ gwc() {
                         split_prompt="$agent_extra"
                     fi
                     # 別シェルへ安全に渡すため、プロンプトは一時ファイル経由にする
+                    # -- 以降の引数は別シェルで再解釈されるので、各要素を (q) でクォートして繋ぐ
+                    local split_args=""
+                    [ ${#agent_args[@]} -gt 0 ] && split_args=" ${(j: :)${(q)agent_args[@]}}"
                     local split_cmd
                     if [ -n "$split_prompt" ]; then
                         local promptfile
                         promptfile=$(mktemp -t gwc-codex-prompt) || promptfile=""
                         if [ -n "$promptfile" ]; then
                             print -r -- "$split_prompt" > "$promptfile"
-                            split_cmd="cd ${(q)target_dir} && ${split_agent} \"\$(cat ${(q)promptfile})\"; rm -f ${(q)promptfile}"
+                            split_cmd="cd ${(q)target_dir} && ${split_agent}${split_args} \"\$(cat ${(q)promptfile})\"; rm -f ${(q)promptfile}"
                         else
-                            split_cmd="cd ${(q)target_dir} && ${split_agent}"
+                            split_cmd="cd ${(q)target_dir} && ${split_agent}${split_args}"
                         fi
                     else
-                        split_cmd="cd ${(q)target_dir} && ${split_agent}"
+                        split_cmd="cd ${(q)target_dir} && ${split_agent}${split_args}"
                     fi
                     # 右 split を作成し、その surface へコマンドを送る
                     local split_ref split_surface
@@ -814,6 +831,8 @@ gwc() {
                 if [ -n "$launch_model" ]; then
                     launch_args+=(--model "$launch_model")
                 fi
+                # -- 以降の引数は --model の後、プロンプトの前に置く（同じオプションがあれば後ろが勝つ）
+                launch_args+=("${agent_args[@]}")
                 echo "\n$launch_agent を起動します..."
                 if [ -n "$agent_prompt" ]; then
                     "$launch_agent" "${launch_args[@]}" "$agent_prompt"
