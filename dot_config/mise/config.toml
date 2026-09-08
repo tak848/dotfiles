@@ -127,13 +127,13 @@ go = "1.27.1"
 # gopls-lazy の後継。gopls に依存せず go/parser + go/types で自前に実装した LSP サーバーで、
 # workspace 全体を一度だけ index してディスクに永続化するためメモリ使用量が workspace サイズに依存しない。
 # gopls-lazy はまだ動くので、golance が同等に使えると確認できるまで両方入れておく。
-"github:sivchari/golance" = "v0.7.0"
+"github:sivchari/golance" = "v0.7.1"
 "aqua:rust-lang/rust-analyzer" = "2025-12-01"
 "aqua:tamasfe/taplo" = "0.10.0"
 
 # その他（1password/cli は aqua CLI で管理）
 "aqua:temporalio/cli" = "1.8.3"
-"aqua:jdx/usage" = "6.7.1"
+"aqua:jdx/usage" = "6.8.0"
 # Datadog の AI エージェント向け CLI コンパニオン
 "aqua:DataDog/pup" = "1.18.1"
 
