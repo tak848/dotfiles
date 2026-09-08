@@ -123,7 +123,8 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - `tools` は読み取り系に絞っているが Bash は含める（テスト・lint・`git diff` を根拠にさせるため）。ファイルを変える操作は本文で禁止している
 - 出力形式（結論 / 重要度付きの指摘 / 問題なしと判断した点 / 参照ファイル / 未確認事項）は本文で固定し、呼び出し元が全文を読む前提
 - Claude への通信は素の `claude` と同じなので Claude の quota を消費する。`gpt-*` の分だけ ChatGPT 側の quota。上書きは `CLAUDEP_GPT_MODEL` / `CLAUDEP_CONTEXT_TOKENS` / `CLAUDEP_ROUTER_PORT`
-- `gwc` の `--cc` / `--ccf` / `--cco` / `--ccs` は `claude` ではなく `claudep` を起動する（`--model` はそのまま渡る）。claudep は素の claude に gpt-* の subagent を足すだけで Claude 側の挙動は変わらないため。Codex 未認証のマシンでは claudep がエラーで止まる。`--ccco` は従来通り素の `claude`
+- `gwc` の `--cc` / `--ccp` / `--ccf` / `--cco` / `--ccs` は `claude` ではなく `claudep` を起動する（`--model` はそのまま渡る）。claudep は素の claude に gpt-* の subagent を足すだけで Claude 側の挙動は変わらないため。Codex 未認証のマシンでは claudep がエラーで止まる。`--ccap` は `claudeap`。`--ccco` は従来通り素の `claude`
+- `claudeap` は claudep の fable スロットだけを GPT-6 Astra に向けた版。`ANTHROPIC_DEFAULT_FABLE_MODEL=gpt-6-astra` と `--model fable` で起動し、opus / sonnet / haiku のスロットは触らない。`--model fable` を明示するのは、`ANTHROPIC_DEFAULT_FABLE_MODEL` が効くのが `fable` エイリアスだけで、settings.json の `model` に入っている `claude-fable-5-1[1m]` のような full ID には効かないため。`"$@"` より前に置いてあるので、呼び出し側の `--model opus` が勝つ。実機で確認済み: primary が `gpt-6-astra` になる、`claudeap --model opus` は `claude-opus-5` になる、`model: sonnet` の subagent は `claude-sonnet-5`、`model: fable` の subagent は `gpt-6-astra` に振り分けられる。上書きは `CLAUDEP_FABLE_MODEL`
 
 ### codexp（Codex を profile 付きで起動する）
 
