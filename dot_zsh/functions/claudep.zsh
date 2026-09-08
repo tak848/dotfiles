@@ -23,8 +23,9 @@
 #   - router と cli-proxy-api はマシン単位で 1 プロセスずつ。全 worktree・全セッションで共有し、未起動時だけ自動起動する
 #   - router のログ（method / path / model / 転送先 / status / 所要時間のみ）は $XDG_STATE_HOME/cc-model-router/router.log
 #
-# 上書き用の環境変数: CLAUDEP_GPT_MODEL, CLAUDEP_CONTEXT_TOKENS, CLAUDEP_ROUTER_PORT
+# 上書き用の環境変数: CLAUDEP_GPT_MODEL, CLAUDEP_CONTEXT_TOKENS, CLAUDEP_ROUTER_PORT, CLAUDEP_FABLE_MODEL
 #   例) CLAUDEP_GPT_MODEL='gpt-5.6-sol' claudep     # /model の追加候補（と ANTHROPIC_CUSTOM_MODEL_OPTION）を sol にする
+#   例) claudeap                                   # fable スロットだけ astra（下の claudeap を参照）
 
 _claudep_router_port() {
     echo "${CLAUDEP_ROUTER_PORT:-8318}"
@@ -138,6 +139,20 @@ claudep() {
     # claudex.zsh のコメント）を宣言する。--settings で渡すのはプロジェクトの settings に勝たせるため
     local settings="{\"env\":{\"CLAUDE_CODE_MAX_CONTEXT_TOKENS\":\"${CLAUDEP_CONTEXT_TOKENS:-872000}\"}}"
 
+    # claudeap 用: fable スロットだけ Codex モデルに向ける（CLAUDEP_FABLE_MODEL が非空のとき）。
+    # ANTHROPIC_DEFAULT_FABLE_MODEL が効くのは `fable` エイリアス（--model fable、/model fable、model: fable の
+    # subagent）だけで、settings.json の model に入っている claude-fable-5-1[1m] のような full ID には効かない。
+    # そのため claudeap は --model fable を明示して起動する（"$@" より前に置くので、呼び出し側の --model が勝つ）。
+    # opus / sonnet / haiku のスロットは触らないので Claude のまま。
+    local -a fable_env=() fable_args=()
+    if [[ -n "${CLAUDEP_FABLE_MODEL:-}" ]]; then
+        fable_env=(
+            ANTHROPIC_DEFAULT_FABLE_MODEL="$CLAUDEP_FABLE_MODEL"
+            ANTHROPIC_DEFAULT_FABLE_MODEL_SUPPORTED_CAPABILITIES="$caps"
+        )
+        fable_args=(--model fable)
+    fi
+
     # ANTHROPIC_AUTH_TOKEN / ANTHROPIC_API_KEY は設定した瞬間サブスクのログインが使われなくなる（API 課金か認証失敗）
     # ので、呼び出し元のシェルに入っていても継承しないよう明示的に外す。
     # claudex が付けている ANTHROPIC_DEFAULT_*_MODEL / CLAUDE_CODE_SUBAGENT_MODEL / ENABLE_TOOL_SEARCH 等は
@@ -146,5 +161,14 @@ claudep() {
     ANTHROPIC_BASE_URL="http://127.0.0.1:${rport}" \
     ANTHROPIC_CUSTOM_MODEL_OPTION="$gpt_model" \
     ANTHROPIC_CUSTOM_MODEL_OPTION_SUPPORTED_CAPABILITIES="$caps" \
-        claude --settings "$settings" "$@"
+    "${fable_env[@]}" \
+        claude --settings "$settings" "${fable_args[@]}" "$@"
+}
+
+# claudeap: claudep の fable スロットを GPT-6 Astra に向けた版。primary は --model fable 経由で astra になり、
+# opus / sonnet / haiku（plan mode の opusplan、model: sonnet の subagent、バックグラウンド処理）は Claude のまま。
+# claudex との違いは「Claude 側のスロットを丸ごと差し替えない」こと。Claude の quota は opus 以下の分だけ減る。
+# 上書き: CLAUDEP_FABLE_MODEL（既定 gpt-6-astra）
+claudeap() {
+    CLAUDEP_FABLE_MODEL="${CLAUDEP_FABLE_MODEL:-gpt-6-astra}" claudep "$@"
 }
