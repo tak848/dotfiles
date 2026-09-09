@@ -29,7 +29,7 @@ AZ_PYTHON = '{{ env.XDG_DATA_HOME | default(value=env.HOME ~ "/.local/share") }}
 # ============================================
 # ランタイム（core backend）
 # ============================================
-node = "24.20.0"
+node = "24.21.0"
 pnpm = "12.3.4"
 "github:endevco/aube" = "v2.2.12" # 高速な Node.js パッケージマネージャ
 go = "1.27.1"
@@ -127,7 +127,7 @@ go = "1.27.1"
 # gopls-lazy の後継。gopls に依存せず go/parser + go/types で自前に実装した LSP サーバーで、
 # workspace 全体を一度だけ index してディスクに永続化するためメモリ使用量が workspace サイズに依存しない。
 # gopls-lazy はまだ動くので、golance が同等に使えると確認できるまで両方入れておく。
-"github:sivchari/golance" = "v0.7.1"
+"github:sivchari/golance" = "v0.7.2"
 "aqua:rust-lang/rust-analyzer" = "2025-12-01"
 "aqua:tamasfe/taplo" = "0.10.0"
 
@@ -146,7 +146,7 @@ go = "1.27.1"
 "aqua:anomalyco/opencode" = "1.18.25"
 # Grok Build CLI (xAI) は http backend で管理（末尾の [tools."http:grok"] を参照）
 # Claude Code のハーネスを ChatGPT サブスクの Codex backend に向ける Anthropic 互換プロキシ。claudex から使う
-"github:router-for-me/CLIProxyAPI" = "v7.2.152"
+"github:router-for-me/CLIProxyAPI" = "v7.2.154"
 "npm:ccusage" = "20.0.20"
 "npm:@typescript/native-preview" = "7.0.0-dev.20260707.2"
 "npm:@fission-ai/openspec" = "1.12.0"
