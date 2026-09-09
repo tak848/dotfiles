@@ -348,9 +348,14 @@ local autoModeRules = import 'auto-mode.libsonnet';
   effortLevel: 'xhigh',
   // モデル別の effort（CC 2.1.251+）。同一ファイル内では effortLevel より優先される。
   // キーは canonical name で書けば、その alias・日付サフィックス付き・[1m] 付きの ID も同じエントリにマッチする。
-  // Fable 5.1 だけ high に下げ、残りは上の xhigh に任せる。Haiku 4.5 は effort 自体に非対応なので書かない。
+  // Fable 5.1 と GPT-6 Astra（claudex / claudeap / gpt-review が使う）は high に下げ、残りは上の xhigh に任せる。
+  // Haiku 4.5 は effort 自体に非対応なので書かない。
+  // gpt-* のような未認識 ID もキーに書けば primary / subagent の両方で output_config.effort に反映される
+  // （捕捉サーバーで確認済み）。ただし未認識 ID には alias 展開が無いので、-fast 別名は別エントリが要る。
   modelSettings: {
     'claude-fable-5-1': { effortLevel: 'high' },
+    'gpt-6-astra': { effortLevel: 'high' },
+    'gpt-6-astra-fast': { effortLevel: 'high' },
   },
   // alwaysThinkingEnabled は adaptive thinking (effortLevel) により不要
   // alwaysThinkingEnabled: true,  // https://github.com/anthropics/claude-code/issues/8780
