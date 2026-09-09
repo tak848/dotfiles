@@ -8,7 +8,6 @@ description: >
   修正後の再レビューは同じエージェントに SendMessage で修正内容を送る（会話が残るので前回指摘との突き合わせができる）。
   確証バイアスを避けたい最終確認は、前回の指摘を渡さずに新しいインスタンスを起動する。
 model: gpt-6-astra
-effort: xhigh
 color: purple
 tools:
   - Read
