@@ -162,7 +162,7 @@ go = "1.27.1"
 # インラインテーブルにすると platforms を書けないため、[tools] の末尾にサブテーブルで置く。
 # renovate: datasource=custom.grok-build depName=grok-build
 [tools."http:grok"]
-version = "1.0.13"
+version = "1.0.30"
 url = 'https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-{{ version }}-{{ os() }}-{{ arch(x64="x86_64", arm64="aarch64") }}'
 bin = "grok"
 
