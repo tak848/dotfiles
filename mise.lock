@@ -191,7 +191,6 @@ checksum = "sha256:89cb081adb19e425b1dca6b16d912c349a43535ce88d8713050738c926361
 url = "https://github.com/aquaproj/aqua/releases/download/v2.62.3/aqua_linux_amd64.tar.gz"
 url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/498541913"
 provenance = "github-attestations"
-provenance_verified = true
 
 [tools."github:aquaproj/aqua"."platforms.linux-x64-musl"]
 checksum = "sha256:89cb081adb19e425b1dca6b16d912c349a43535ce88d8713050738c9263618d0"
