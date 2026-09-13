@@ -30,8 +30,8 @@ AZ_PYTHON = '{{ env.XDG_DATA_HOME | default(value=env.HOME ~ "/.local/share") }}
 # ランタイム（core backend）
 # ============================================
 node = "24.21.0"
-pnpm = "12.3.4"
-"github:endevco/aube" = "v2.2.12" # 高速な Node.js パッケージマネージャ
+pnpm = "12.4.1"
+"github:endevco/aube" = "v2.2.14" # 高速な Node.js パッケージマネージャ
 go = "1.27.1"
 
 # ============================================
@@ -48,7 +48,7 @@ go = "1.27.1"
 "aqua:cli/cli" = "2.100.0"
 
 # シェル関連
-"aqua:junegunn/fzf" = "0.74.3"
+"aqua:junegunn/fzf" = "0.74.4"
 "aqua:starship/starship" = "1.26.0"
 "aqua:direnv/direnv" = "2.37.1"
 # zoxide は aqua CLI で管理（mise lock で checksum 取得不可）
@@ -74,11 +74,11 @@ go = "1.27.1"
 "aqua:arl/gitmux" = "0.11.5"
 
 # Python ツール
-"aqua:astral-sh/uv" = "0.12.10"
+"aqua:astral-sh/uv" = "0.12.13"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
-"aqua:cloudflare/cloudflared" = "2026.8.3"
+"aqua:cloudflare/cloudflared" = "2026.9.1"
 # Azure CLI。aqua-registry に Azure/azure-cli の定義が無いため github backend で入れる。
 # リリースアセットは macOS 用 tarball と Windows 用 msi/zip だけで Linux 向けが無いので os で絞る。
 # matching_regex は x86_64 マシンで -x64.msi / -x64.zip を掴まないための保険。
@@ -100,10 +100,10 @@ go = "1.27.1"
 # システム（Homebrew）の python3 を拾う。Homebrew 側が Python を上げると venv が壊れるため、
 # only-managed で uv 管理の Python に固定する（無ければ uv が自前でダウンロードする）。
 # PATH に生えるのは snow だけで、venv の python は mise の bin ディレクトリに出ない。
-"pipx:snowflake-cli" = { version = "3.26.0", install_env = { UV_PYTHON_PREFERENCE = "only-managed" } }
+"pipx:snowflake-cli" = { version = "3.27.0", install_env = { UV_PYTHON_PREFERENCE = "only-managed" } }
 
 # 開発ツール
-"aqua:bufbuild/buf" = "1.72.0"
+"aqua:bufbuild/buf" = "1.73.0"
 "aqua:go-task/task" = "3.53.1"
 "aqua:golangci/golangci-lint" = "2.13.2"
 "aqua:theseus-rs/postgresql-binaries" = "18.6.0"
@@ -119,7 +119,7 @@ go = "1.27.1"
 "github:sorafujitani/ccsession" = "v1.3.0"
 
 # Anthropic API CLI
-"aqua:anthropics/anthropic-cli" = "1.31.0"
+"aqua:anthropics/anthropic-cli" = "1.32.0"
 
 # Language Server
 "go:golang.org/x/tools/gopls" = "v0.23.0"
@@ -135,21 +135,21 @@ go = "1.27.1"
 "aqua:temporalio/cli" = "1.8.3"
 "aqua:jdx/usage" = "6.8.0"
 # Datadog の AI エージェント向け CLI コンパニオン
-"aqua:DataDog/pup" = "1.18.1"
+"aqua:DataDog/pup" = "1.19.1"
 
 # ============================================
 # npm グローバルパッケージ
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.270"
-"github:google-antigravity/antigravity-cli" = "1.1.27" # agy: Gemini CLI の後継
+"github:google-antigravity/antigravity-cli" = "1.2.2" # agy: Gemini CLI の後継
 "aqua:openai/codex" = "0.154.0"
 "aqua:anomalyco/opencode" = "1.18.25"
 # Grok Build CLI (xAI) は http backend で管理（末尾の [tools."http:grok"] を参照）
 # Claude Code のハーネスを ChatGPT サブスクの Codex backend に向ける Anthropic 互換プロキシ。claudex から使う
-"github:router-for-me/CLIProxyAPI" = "v7.2.154"
+"github:router-for-me/CLIProxyAPI" = "v7.2.158"
 "npm:ccusage" = "20.0.20"
 "npm:@typescript/native-preview" = "7.0.0-dev.20260707.2"
-"npm:@fission-ai/openspec" = "1.12.0"
+"npm:@fission-ai/openspec" = "1.13.0"
 "npm:defuddle" = "0.19.3"                                                                 # WebFetch の代替: URL 本文をモデル要約を挟まず clean な Markdown で取得
 
 # ============================================
