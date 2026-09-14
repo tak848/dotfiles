@@ -8,8 +8,8 @@
 // 各行には必ず残るセグメント（Drop が 0 のもの）を置いてある。行が空になると
 // fullscreen renderer で statusline の高さが変わり、入力欄が上下に跳ねるため。
 //
-// 欠落しうるフィールドはすべてポインタで受ける。encoding/json は非ポインタ型に
-// null を入れても no-op でゼロ値のまま通すので、ポインタにしないと
+// 欠落しうるフィールドはすべてポインタで受ける。encoding/json/v2 は非ポインタ型に
+// null を入れるとゼロ値にするので、ポインタにしないと
 // 「current_usage が null」と「本当に 0 トークン」を区別できず、/compact 直後に
 // もっともらしい嘘を表示することになる。数値は int ではなく float64 で受ける。
 // 上流が epoch を小数付きで出した瞬間に decode 全体が落ちて statusline が
@@ -17,7 +17,7 @@
 package main
 
 import (
-	"encoding/json"
+	"encoding/json/v2"
 	"fmt"
 	"os"
 	"strconv"
@@ -370,7 +370,7 @@ func renderSessionLine(d *Data, width int, links bool) string {
 
 func main() {
 	var d Data
-	if err := json.NewDecoder(os.Stdin).Decode(&d); err != nil {
+	if err := json.UnmarshalRead(os.Stdin, &d, json.MatchCaseInsensitiveNames(true)); err != nil {
 		// 無出力にすると statusline が黙って消え、壊れたことに気づけない。
 		fmt.Printf("%scc-statusline: 入力を読めませんでした (%v)%s\n", colors.Red, err, colors.Reset)
 		return

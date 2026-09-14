@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/json"
+	"encoding/json/v2"
 	"strings"
 	"testing"
 	"time"
@@ -365,7 +365,7 @@ func TestSanitizesHostileStrings(t *testing.T) {
 }
 
 // TestDecodeNullsAreNotZero は null が 0 に化けないことを確かめる。
-// encoding/json は非ポインタ型に null を入れても no-op で通してしまうので、
+// encoding/json/v2 は非ポインタ型に null を入れるとゼロ値にするので、
 // ここが崩れると /compact 直後に「0k・0%」という嘘が表示される。
 func TestDecodeNullsAreNotZero(t *testing.T) {
 	t.Parallel()
@@ -395,6 +395,37 @@ func TestDecodeNullsAreNotZero(t *testing.T) {
 	}
 	if d.PromptCache == nil || d.PromptCache.HitRatio != nil || d.PromptCache.ExpiresAt != nil {
 		t.Error("prompt_cache null fields should stay nil")
+	}
+}
+
+func TestDecodeZeroAndNullUsage(t *testing.T) {
+	t.Parallel()
+	for _, tt := range []struct {
+		name, usage string
+		wantNil     bool
+	}{
+		{"null", `{"USED_PERCENTAGE":null,"CURRENT_USAGE":null}`, true},
+		{"missing", `{}`, true},
+		{"zero", `{"USED_PERCENTAGE":0,"CURRENT_USAGE":{"INPUT_TOKENS":0}}`, false},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			var d Data
+			payload := `{"CONTEXT_WINDOW":` + tt.usage + `,"unknown":{"field":null}}`
+			if err := json.UnmarshalRead(strings.NewReader(payload), &d, json.MatchCaseInsensitiveNames(true)); err != nil {
+				t.Fatal(err)
+			}
+			if (d.ContextWindow.UsedPercentage == nil) != tt.wantNil || (d.ContextWindow.CurrentUsage == nil) != tt.wantNil {
+				t.Fatalf("null/missing and zero must stay distinct: %+v", d.ContextWindow)
+			}
+			line := stripANSI(renderModelLine(&d, 200))
+			if tt.wantNil && (!strings.Contains(line, "--%") || !strings.Contains(line, "--k/")) {
+				t.Errorf("null/missing usage must render placeholders: %q", line)
+			}
+			if !tt.wantNil && (!strings.Contains(line, "0%") || !strings.Contains(line, "(0k/")) {
+				t.Errorf("real zero usage must render zero: %q", line)
+			}
+		})
 	}
 }
 

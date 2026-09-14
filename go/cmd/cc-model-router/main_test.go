@@ -2,6 +2,8 @@ package main
 
 import (
 	"bufio"
+	"encoding/json/v2"
+	"errors"
 	"io"
 	"log"
 	"net/http"
@@ -183,6 +185,10 @@ func TestRoutingRules(t *testing.T) {
 		{"claude model", http.MethodPost, "/v1/messages", `{"model":"claude-sonnet-5"}`, "anthropic"},
 		{"model with gpt in the middle", http.MethodPost, "/v1/messages", `{"model":"claude-gpt-x"}`, "anthropic"},
 		{"no model field", http.MethodPost, "/v1/messages", `{"messages":[]}`, "anthropic"},
+		{"model key is case-insensitive", http.MethodPost, "/v1/messages", `{"MODEL":"gpt-6-astra"}`, "codex"},
+		{"null model", http.MethodPost, "/v1/messages", `{"model":null}`, "anthropic"},
+		{"unknown null map and slice", http.MethodPost, "/v1/messages", `{"model":"gpt-6-astra","messages":null,"metadata":null}`, "codex"},
+		{"unknown empty map and slice", http.MethodPost, "/v1/messages", `{"model":"gpt-6-astra","messages":[],"metadata":{}}`, "codex"},
 		{"non-json body", http.MethodPost, "/v1/messages", `not json`, "anthropic"},
 		{"empty body", http.MethodPost, "/v1/messages", ``, "anthropic"},
 		{"GET without body", http.MethodGet, "/v1/models", ``, "anthropic"},
@@ -281,6 +287,35 @@ func TestUpstreamUnreachableReturns502(t *testing.T) {
 	}
 	if anth.snapshot().method != "" {
 		t.Error("anthropic upstream received a request")
+	}
+}
+
+func TestErrorResponseJSONEncoding(t *testing.T) {
+	t.Parallel()
+	r := &router{cfg: config{logger: log.New(io.Discard, "", 0)}}
+	w := httptest.NewRecorder()
+	r.errorHandler("codex")(w, httptest.NewRequest(http.MethodPost, "/v1/messages", nil), errors.New("<down>&"+string([]rune{0x2028, 0x2029})))
+	body := w.Body.String()
+	if strings.Count(body, "\n") != 1 || !strings.HasSuffix(body, "\n") {
+		t.Fatalf("want newline-terminated JSON error, got %q", body)
+	}
+	for _, escaped := range []string{"\\u003c", "\\u003e", "\\u0026", "\\u2028", "\\u2029"} {
+		if !strings.Contains(body, escaped) {
+			t.Errorf("missing escaping %q in %s", escaped, body)
+		}
+	}
+	var got struct {
+		Type  string `json:"type"`
+		Error struct {
+			Type    string `json:"type"`
+			Message string `json:"message"`
+		} `json:"error"`
+	}
+	if err := json.Unmarshal([]byte(body), &got); err != nil {
+		t.Fatal(err)
+	}
+	if w.Code != http.StatusBadGateway || got.Type != "error" || got.Error.Type != "api_error" || !strings.Contains(got.Error.Message, "<down>&") {
+		t.Errorf("unexpected error response: status=%d body=%+v", w.Code, got)
 	}
 }
 

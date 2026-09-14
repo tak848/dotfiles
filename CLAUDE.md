@@ -160,7 +160,7 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 
 実装で踏みやすい落とし穴が 4 つある。
 
-- **null をポインタで受ける。** `encoding/json` は非ポインタ型に `null` を入れても no-op でゼロ値のまま通す。`context_window.current_usage` を値型で受けると、`/compact` 直後に「0k・0%・緑バー」というもっともらしい嘘が出る
+- **null をポインタで受ける。** `null` と有効なゼロ値を区別するため、`context_window.current_usage` はポインタで受ける。値型では `/compact` 直後の未取得を「0k・0%・緑バー」と誤表示してしまう
 - **数値は `float64` で受ける。** `resets_at` を `int64` で受けていると、上流が小数付き数値を出した瞬間に decode 全体が失敗し、statusline が丸ごと消える
 - **外部由来の文字列は制御文字を落とす。** `session_name` や PR タイトルに改行が 1 個混ざると幻の行が増え、ESC が混ざると色や OSC 8 の終端を乗っ取られる。`render.Sanitize` を必ず通す
 - **各行に必ず残るセグメントを置く。** 行が空になると statusline の高さが変わり、fullscreen renderer では入力欄が上下に跳ねる。`render.Segment` の `Drop` が 0 のものは幅が足りなくても落とさない
@@ -171,6 +171,24 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - OSC 8 ハイパーリンクの可否は環境変数だけで決める（stdout がパイプなので isatty が使えない）。`CC_STATUSLINE_HYPERLINKS` で明示的に上書きでき、`NO_COLOR` や `TERM=dumb` では出さない
 - 失敗時の振る舞いは 2 つで逆にしてある。cc-statusline は無出力だと statusline が黙って消えて壊れたことに気づけないのでエラー行を出し、cc-subagent-statusline は無出力が既定描画へのフォールバックになるので黙って終わる
 - `run_onchange_after_45-build-statusline.sh.tmpl` の `include` リストから漏れたファイルは、編集しても再ビルドされず古いバイナリが残る。エラーも警告も出ないので、`go/cmd/cc-statusline/buildscript_test.go` が網羅を検証している
+
+### Stop ゲート（cc-stop-gate / cc-push-guard）
+
+`go/cmd/cc-stop-gate` は同期の Stop hook。主眼は「plan があれば今開き直し、ユーザーの依頼を全項目実装・検証したか、勝手な先送りがないか」を確認させること。最終行の `完了誓約: <要約>` / `調査完了: <要約>` と本文の離脱宣言を照合する。署名は自己確認であり、意味的な完遂の証明ではない。編集センサー、PostToolUse のマーカー、内部 TODO の状態検査、transcript の走査は行わない。
+
+- `last_assistant_message` を使用し、取得できないときに古い transcript の文章で代用しない。`stop_hook_active` による自動解除はしない
+- `作業待機: <対象>` は Stop 入力の `background_tasks` / `session_crons` に ID のある要素が存在するときだけ許可する。これは稼働中の仕事の存在の確認で、依頼との関連性の証明ではない
+- `permission_mode: plan` では git の照会をしない。計画・説明 HTML の差分に commit / push / PR を要求せず、計画なら ExitPlanMode、判断が必要なら AskUserQuestion を促す。plan mode での完了誓約は無効
+- 通常モードでは `go/internal/gitstate` で未 commit・送信先への未 push・既定ブランチの先行・必要な PR の不足を補助検査する。署名で検査結果を覆せない。取得不能を「問題なし」に変換せず差し戻す。既存 WIP を勝手に commit / 削除して検査を通してはならない
+- `CC_STOP_GATE_REQUIRE_PR_OWNERS` は **PR が無いので作成しろという指示だけ**の対象 owner 一覧。未設定なら `tak848`、設定時はカンマ区切りの一覧で置き換え、空文字は作成要求なし。前後の空白を除き大文字小文字を区別しない。fork は origin の owner だけで判断しない。他の停止チェックと push ガードには適用しない
+- `CC_STOP_GATE=0` / `false` / `off` / `no` で Stop 全体を明示的に無効化できる（最優先）。環境変数の配置はユーザーが決める。モデルが検査を回避するために設定を書き換えてはならない
+- `go/cmd/cc-push-guard` は同期の PreToolUse(Bash)。push 前に実送信先と ref、マージ済み PR の履歴を確認し、削除されたマージ済みブランチの復活を止める。対象が動的・曖昧な push は単独の明確なコマンドに分けるよう差し戻す。`CC_PUSH_GUARD=0` / `false` / `off` / `no` がこのガード専用の opt-out
+- push 対象の probe は dry-run。probe で既存 pre-push hook を実行させないための `--no-verify` は本番の push に付加しない。Bash 外の MCP、外部 wrapper、検査後の変更まで完全に防ぐものではない
+- 既存 `cc-stop` は非同期の読み上げで別機能。Stop ゲートに `async` を付けると停止制御できない。ローカル設定に旧ゲートが残っていてもグローバル版で上書きされないので、展開時は二重登録を確認する
+
+### Go の JSON 処理
+
+コード・テストとも `encoding/json/v2` を使用する。raw JSON は `encoding/json/jsontext.Value`、JSONL は `jsontext.Encoder` と `json.MarshalEncode` を使う。Go 1.27.1 で利用でき、追加の外部依存は持たない。v1 import への戻りは `go/cmd/cc-statusline/jsonv2_test.go` が検出する。既存プロトコルの入力・出力の互換性は局所的な option とテストで確認し、新規コードへ一律の寛容な option を付けない。
 
 ### 自動生成ファイル一覧
 
