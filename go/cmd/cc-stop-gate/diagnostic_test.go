@@ -19,7 +19,7 @@ func TestInspectionFailureDoesNotDemandReimplementation(t *testing.T) {
 		Issues:  []string{gitstate.CheckFailurePrefix + " [github-repository] API を確認できません。"},
 	}
 	d := decide(f)
-	if d.Decision != "block" || !strings.Contains(d.Reason, "【補助チェックの実行失敗】") || !strings.Contains(d.Reason, f.CWD) || !strings.Contains(d.Reason, "[github-repository]") {
+	if d.Decision != "block" || !strings.Contains(d.Reason, "必要な情報を取得できませんでした") || !strings.Contains(d.Reason, f.CWD) || !strings.Contains(d.Reason, "GitHub のリポジトリ情報") {
 		t.Fatal(d)
 	}
 	if strings.Contains(d.Reason, completionCheck) || strings.Contains(d.Reason, "【署名の前に全項目") {
@@ -52,13 +52,37 @@ func TestFailureFeedbackDoesNotTurnIntoScopeChanges(t *testing.T) {
 	}
 }
 
+func TestFeedbackNeedsNoHookKnowledge(t *testing.T) {
+	t.Parallel()
+	cases := []facts{
+		{Message: message{}},
+		{Message: message{Signature: waiting}},
+		{Mode: "plan", Message: message{}},
+		{Mode: "plan", Message: message{Signature: pledge}},
+		{Message: message{Tells: true}},
+		{CWD: "/repo", Issues: []string{"未 commit の変更があります。"}},
+		{CWD: "/repo", Issues: []string{gitstate.CheckFailurePrefix + " [github-pulls] PR 情報の取得に失敗しました。"}},
+	}
+	for _, f := range cases {
+		d := decide(f)
+		if d.Decision != "block" {
+			t.Fatal(d)
+		}
+		for _, forbidden := range []string{"hook", "gate", "補助チェック", "background_tasks", "session_crons", "transcript", "cwd", "検査ID", "検査 ID", "[github-", gitstate.CheckFailurePrefix} {
+			if strings.Contains(d.Reason, forbidden) {
+				t.Fatalf("implementation detail %q in feedback: %s", forbidden, d.Reason)
+			}
+		}
+	}
+}
+
 func TestObservedProblemsRemainBlocking(t *testing.T) {
 	t.Parallel()
 	d := decide(facts{
 		Message: message{Signature: pledge},
 		Issues:  []string{"未 commit の変更があります。", gitstate.CheckFailurePrefix + " [remote-ref] 確認できません。"},
 	})
-	if d.Decision != "block" || !strings.Contains(d.Reason, "未 commit") || !strings.Contains(d.Reason, "[remote-ref]") || !strings.Contains(d.Reason, completionCheck) {
+	if d.Decision != "block" || !strings.Contains(d.Reason, "未 commit") || !strings.Contains(d.Reason, "送信先ブランチの commit") || !strings.Contains(d.Reason, completionCheck) {
 		t.Fatal(d)
 	}
 }
@@ -77,7 +101,7 @@ func TestDiagnosticCWDFromHookInput(t *testing.T) {
 	if err := json.Unmarshal(out.Bytes(), &d); err != nil {
 		t.Fatal(err)
 	}
-	if code != 0 || d.Decision != "block" || !strings.Contains(d.Reason, "検査対象 cwd: /repo/checked") {
+	if code != 0 || d.Decision != "block" || !strings.Contains(d.Reason, "作業ディレクトリ: /repo/checked") {
 		t.Fatal(code, d)
 	}
 }

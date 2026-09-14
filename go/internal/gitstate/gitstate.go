@@ -467,7 +467,7 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 	defer cancel()
 	ok, e := c.repository(ctx, dir)
 	if e != nil {
-		return []string{checkFailure("worktree", e, "hook 入力の cwd が読み取り可能な作業ツリーか確認してください。別の作業リポジトリの確認結果では代用できません。")}
+		return []string{checkFailure("worktree", e, "この作業ディレクトリ が読み取り可能な作業ツリーか確認してください。別の作業リポジトリの確認結果では代用できません。")}
 	}
 	if !ok {
 		return nil
@@ -475,19 +475,19 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 	var reasons []string
 	status, e := c.git(ctx, dir, "status", "--porcelain=v1", "--untracked-files=normal")
 	if e != nil {
-		return []string{checkFailure("worktree-status", e, "hook 入力の cwd で git status を確認してください。変更の有無はまだ判定していません。")}
+		return []string{checkFailure("worktree-status", e, "この作業ディレクトリ で git status を確認してください。変更の有無はまだ判定していません。")}
 	}
 	if strings.TrimSpace(status) != "" {
 		reasons = append(reasons, "未 commit の変更があります。内容を確認し、必要な変更を commit してください。既存の変更を勝手に破棄・commit せず、判断が必要ならユーザーに確認してください。")
 	}
 	branch, e := c.git(ctx, dir, "symbolic-ref", "--quiet", "--short", "HEAD")
 	if e != nil {
-		return append(reasons, checkFailure("local-branch", e, "detached HEAD など、hook 入力の cwd のブランチ状態を確認してください。作業用 PR の有無を調べた結果ではありません。"))
+		return append(reasons, checkFailure("local-branch", e, "detached HEAD など、この作業ディレクトリ のブランチ状態を確認してください。作業用 PR の有無を調べた結果ではありません。"))
 	}
 	branch = strings.TrimSpace(branch)
 	ds, e := c.destinations(ctx, dir, branch, "")
 	if e != nil {
-		return append(reasons, checkFailure("push-destination", e, "hook 入力の cwd で pushRemote / remote.pushDefault / remote の URL を確認してください。SSH alias・独自 SSH command・remote helper など、現在のガードで解決できない設定もこの段階で拒否されます。PR の積み方はこの判定に関係ありません。"))
+		return append(reasons, checkFailure("push-destination", e, "この作業ディレクトリ で pushRemote / remote.pushDefault / remote の URL を確認してください。SSH alias・独自 SSH command・remote helper など、送信先を特定できない設定もこの段階で拒否されます。PR の積み方はこの判定に関係ありません。"))
 	}
 	if len(ds) == 0 {
 		return reasons
@@ -495,7 +495,7 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 	head, e := c.git(ctx, dir, "rev-parse", "--verify", "HEAD")
 	head = strings.TrimSpace(head)
 	if e != nil || !validSHA(head) {
-		return append(reasons, checkFailure("local-head", e, "hook 入力の cwd の HEAD を確認してください。初回 commit 前かどうかを含め、PR 作成ではなくローカル状態の確認が必要です。"))
+		return append(reasons, checkFailure("local-head", e, "この作業ディレクトリ の HEAD を確認してください。初回 commit 前かどうかを含め、PR 作成ではなくローカル状態の確認が必要です。"))
 	}
 	for _, d := range ds {
 		ref, err := c.stopRef(ctx, dir, branch, d.remote)
@@ -511,7 +511,7 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 		if d.repo != "" && !isDefault {
 			info, e = c.info(ctx, dir, d.repo)
 			if e != nil {
-				reasons = append(reasons, checkFailure("github-repository", e, "hook と同じ実行環境で対象リポジトリの gh api 応答を確認してください。gh auth status の成功だけでは、この API の権限・SSO・応答形式・名前変更を確認したことにはなりません。PR の有無はまだ判定していません。"))
+				reasons = append(reasons, checkFailure("github-repository", e, "現在の環境で対象リポジトリの gh api 応答を確認してください。gh auth status の成功だけでは、この API の権限・SSO・応答形式・名前変更を確認したことにはなりません。PR の有無はまだ判定していません。"))
 				continue
 			}
 			isDefault = branch == info.DefaultBranch || targetBranch == info.DefaultBranch
@@ -519,7 +519,7 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 		if d.repo == "" && !isDefault {
 			s, err := c.git(ctx, dir, "ls-remote", "--symref", d.url, "HEAD")
 			if err != nil {
-				reasons = append(reasons, checkFailure("remote-default-branch", err, "送信先の HEAD の照会に失敗しました。hook の非対話環境から送信先へ接続できるか確認してください。"))
+				reasons = append(reasons, checkFailure("remote-default-branch", err, "送信先の HEAD の照会に失敗しました。送信先への接続を確認してください。"))
 				continue
 			}
 			for _, line := range strings.Split(s, "\n") {
@@ -530,7 +530,7 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 		}
 		live, err := c.live(ctx, dir, d.url, ref)
 		if err != nil {
-			reasons = append(reasons, checkFailure("remote-ref", err, "送信先 ref の ls-remote 照会に失敗しました。hook 入力の cwd と実際の push URL に対して確認してください。gh のログイン状態や別リポジトリの照会成功では代用できません。"))
+			reasons = append(reasons, checkFailure("remote-ref", err, "送信先 ref の ls-remote 照会に失敗しました。この作業ディレクトリ と実際の push URL に対して確認してください。gh のログイン状態や別リポジトリの照会成功では代用できません。"))
 			continue
 		}
 		covered := false
@@ -611,7 +611,7 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 			continue
 		}
 		if !covered {
-			reasons = append(reasons, "現在の commit が push 送信先に反映されていません。送信先と差分を確認し、push guard の確認を通して push してください。")
+			reasons = append(reasons, "現在の commit が push 送信先に反映されていません。送信先と差分を確認して push してください。")
 		}
 		if d.repo != "" && ownerRequired(base, owners) && !open && !completed {
 			if len(bases) > 0 {
@@ -621,7 +621,7 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 			} else if historyFailure != "" {
 				reasons = append(reasons, historyFailure)
 			} else {
-				reasons = append(reasons, "対象 owner のリポジトリに現在の commit を扱う PR がありません。base を確認して draft PR を作成してください。")
+				reasons = append(reasons, "現在の commit を扱う PR がありません。base リポジトリを確認して draft PR を作成してください。")
 			}
 		}
 	}

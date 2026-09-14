@@ -17,6 +17,41 @@ func IsCheckFailure(reason string) bool {
 	return strings.HasPrefix(reason, CheckFailurePrefix)
 }
 
+// Feedback は内部の分類記号を、事実と必要な行動が分かる文章に変換する。
+// 判定ロジックは元の理由を使い、表示だけを変える。
+func Feedback(reason string) string {
+	if !IsCheckFailure(reason) {
+		return reason
+	}
+	rest := strings.TrimSpace(strings.TrimPrefix(reason, CheckFailurePrefix))
+	stage, body, ok := strings.Cut(strings.TrimPrefix(rest, "["), "] ")
+	if !ok {
+		return rest
+	}
+	labels := map[string]string{
+		"worktree":              "Git 作業ツリー",
+		"worktree-status":       "ファイル変更の有無",
+		"local-branch":          "現在のブランチ",
+		"local-head":            "現在の commit",
+		"push-destination":      "push 送信先",
+		"push-ref":              "push 対象ブランチ",
+		"github-repository":     "GitHub のリポジトリ情報",
+		"remote-default-branch": "送信先の既定ブランチ",
+		"remote-ref":            "送信先ブランチの commit",
+		"commit-graph":          "commit の祖先関係",
+		"fetch-object":          "比較用 commit の取得",
+		"github-pulls":          "GitHub の PR 一覧",
+		"pr-base":               "PR の対象リポジトリ",
+		"pr-head":               "PR と送信先の対応",
+		"input-cwd":             "作業ディレクトリ",
+		"deadline":              "Git / GitHub への接続",
+	}
+	if label := labels[stage]; label != "" {
+		return label + ": " + body
+	}
+	return body
+}
+
 func checkFailure(stage string, err error, action string) string {
 	cause := "応答または設定の検証に失敗"
 	var command *exec.Error
@@ -28,7 +63,7 @@ func checkFailure(stage string, err error, action string) string {
 	case errors.Is(err, context.Canceled):
 		cause = "照会がキャンセル"
 	case errors.As(err, &command):
-		cause = "hook の実行環境でコマンドを起動できない"
+		cause = "現在の環境で git または gh を起動できない"
 	case errors.As(err, &path):
 		cause = "実行先のディレクトリまたはファイルにアクセスできない"
 	case errors.As(err, &exit):

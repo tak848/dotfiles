@@ -280,6 +280,26 @@ func TestStackedPRDoesNotProduceUnknown(t *testing.T) {
 	}
 }
 
+func TestFeedbackExplainsTheOperation(t *testing.T) {
+	t.Parallel()
+	raw := checkFailure("github-repository", exitError(403), "リポジトリの読み取り権限を確認してください。")
+	feedback := Feedback(raw)
+	for _, want := range []string{"GitHub のリポジトリ情報", "403", "読み取り権限"} {
+		if !strings.Contains(feedback, want) {
+			t.Fatal(feedback)
+		}
+	}
+	for _, forbidden := range []string{CheckFailurePrefix, "[github-repository]", "hook", "private URL"} {
+		if strings.Contains(feedback, forbidden) {
+			t.Fatal(feedback)
+		}
+	}
+	problem := "未 commit の変更があります。"
+	if Feedback(problem) != problem || !IsCheckFailure(raw) {
+		t.Fatal("presentation changed classification")
+	}
+}
+
 func TestDiagnosticDoesNotLeakError(t *testing.T) {
 	t.Parallel()
 	for name, err := range map[string]error{

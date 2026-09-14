@@ -176,7 +176,7 @@ func TestPROwners(t *testing.T) {
 		"default":    {nil, []string{"tak848"}},
 		"empty":      {map[string]string{"CC_STOP_GATE_REQUIRE_PR_OWNERS": ""}, nil},
 		"whitespace": {map[string]string{"CC_STOP_GATE_REQUIRE_PR_OWNERS": " , "}, nil},
-		"override":   {map[string]string{"CC_STOP_GATE_REQUIRE_PR_OWNERS": " LayerXcom, tak848,TAK848 "}, []string{"layerxcom", "tak848"}},
+		"override":   {map[string]string{"CC_STOP_GATE_REQUIRE_PR_OWNERS": " ExampleOrg, example-user,EXAMPLE-USER "}, []string{"exampleorg", "example-user"}},
 	}
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
