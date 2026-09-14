@@ -44,7 +44,7 @@ type lookupEnv func(string) (string, bool)
 func main() {
 	code := run(os.Stdin, os.Stdout, os.LookupEnv, gitstate.CheckStop)
 	if code != 0 {
-		fmt.Fprintln(os.Stderr, "Stop ゲートの判定を出力できませんでした。出力先を確認してください。")
+		fmt.Fprintln(os.Stderr, "作業結果の確認内容を出力できませんでした。出力先の確認が必要です。")
 	}
 	os.Exit(code)
 }
@@ -57,22 +57,22 @@ func run(stdin io.Reader, stdout io.Writer, env lookupEnv, check checkFunc) int 
 
 	data, err := io.ReadAll(io.LimitReader(stdin, maxInputBytes+1))
 	if err != nil || len(data) > maxInputBytes {
-		return emit(stdout, block("Stop 入力を読み取れません。入力サイズと hook の接続を確認してください。"))
+		return emit(stdout, block("作業結果の確認に必要なデータを読み取れません。実行設定の確認が必要です。"))
 	}
 	var in *input
 	if err := json.Unmarshal(data, &in); err != nil || in == nil {
-		return emit(stdout, block("Stop 入力が有効な JSON ではありません。hook の接続を確認してください。"))
+		return emit(stdout, block("作業結果の確認に必要なデータ形式が不正です。実行設定の確認が必要です。"))
 	}
 	if in.Event != "Stop" {
-		return emit(stdout, block("Stop 以外の入力を受け取りました。cc-stop-gate は Stop にだけ登録してください。"))
+		return emit(stdout, block("作業結果を確認するタイミングの設定が不正です。実行設定の確認が必要です。"))
 	}
 	if in.LastMessage == nil {
-		return emit(stdout, block("last_assistant_message が取得できません。古い transcript で代用せず、現在の作業結果を報告し直してください。"))
+		return emit(stdout, block("現在の作業結果の報告文を取得できません。作業結果を報告してください。"))
 	}
 	switch in.Mode {
 	case "plan", "default", "acceptEdits", "auto", "dontAsk", "bypassPermissions":
 	default:
-		return emit(stdout, block("permission_mode を確認できません。計画中に commit を要求しないため、mode が確認できるまで git の検査は実行しません。hook の入力を確認してください。"))
+		return emit(stdout, block("計画中か実装中かを確認できません。誤った Git 操作を要求しないため、現在の実行モードの設定を確認してください。"))
 	}
 
 	message := analyze(*in.LastMessage)
@@ -86,7 +86,7 @@ func run(stdin io.Reader, stdout io.Writer, env lookupEnv, check checkFunc) int 
 	// commit を要求せず、不要なネットワーク照会も行わない。
 	if message.Signature != waiting && in.Mode != "plan" {
 		if !filepath.IsAbs(in.CWD) {
-			f.Issues = []string{gitstate.CheckFailurePrefix + " [input-cwd] 作業ディレクトリを確認できません。cwd が空または相対パスのまま別のリポジトリを検査しないため、hook の入力を確認してください。"}
+			f.Issues = []string{gitstate.CheckFailurePrefix + " [input-cwd] 作業ディレクトリを特定できません。対象ディレクトリの設定を確認してください。"}
 		} else {
 			ctx, cancel := context.WithTimeout(context.Background(), checkTimeout)
 			f.Issues = check(ctx, in.CWD, requiredPROwners(env))
