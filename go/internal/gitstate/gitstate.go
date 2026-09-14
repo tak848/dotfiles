@@ -1,4 +1,5 @@
-// Package gitstate は完了時と push 前の状態を読み取り専用で検査する。
+// Package gitstate は作業ツリーと ref を変更せず、完了時と push 前の状態を検査する。
+// 祖先判定に必要な commit が無い場合は object database だけを fetch で補完する。
 // 検査後の変更（TOCTOU）や別ツール経由の push を完全に防止するものではない。
 package gitstate
 
@@ -535,7 +536,7 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 		covered := false
 		if live != "" {
 			var failure string
-			covered, failure = c.covers(ctx, dir, head, live)
+			covered, failure = c.covers(ctx, dir, d.url, head, live)
 			if failure != "" {
 				reasons = append(reasons, failure)
 				continue
@@ -568,13 +569,6 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 		for _, p := range ps {
 			if p.MergedAt != nil {
 				merged = true
-				included, failure := c.covers(ctx, dir, head, p.Head.SHA)
-				if included {
-					completed = true
-				}
-				if failure != "" {
-					historyFailure = failure
-				}
 			}
 			if p.State == "open" {
 				bases[strings.ToLower(p.Base.Repo.FullName)] = true
@@ -587,6 +581,23 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 		if len(bases) > 1 {
 			reasons = append(reasons, checkFailure("pr-base", nil, "open PR の base リポジトリが複数あり、対象を確定できません。検査対象の対応付けを確認してください。ブランチが積まれていること自体を異常と判定したものではありません。"))
 			continue
+		}
+		// 現在の open PR で確認できるなら、古い PR の commit を取得する必要はない。
+		// 削除済みブランチ、または必要な PR が無い場合にだけ履歴を比較する。
+		if live == "" || !open && ownerRequired(base, owners) {
+			for _, p := range ps {
+				if p.MergedAt == nil {
+					continue
+				}
+				included, failure := c.covers(ctx, dir, d.url, head, p.Head.SHA)
+				if included {
+					completed = true
+					break
+				}
+				if failure != "" {
+					historyFailure = failure
+				}
+			}
 		}
 		if live == "" && merged {
 			if completed {

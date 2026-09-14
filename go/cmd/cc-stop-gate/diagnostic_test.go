@@ -28,6 +28,9 @@ func TestInspectionFailureDoesNotDemandReimplementation(t *testing.T) {
 	if !strings.Contains(d.Reason, "base 変更") || !strings.Contains(d.Reason, "根拠ではない") {
 		t.Fatal("must prevent invented PR restructuring")
 	}
+	if len([]rune(d.Reason)) > 250 {
+		t.Fatal("failure-only feedback is too verbose")
+	}
 	// 修復前に繰り返しても自動解除しない。修復後は通常の完了条件で終了できる。
 	if next := decide(f); next != d {
 		t.Fatal("failure result drifted")

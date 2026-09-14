@@ -6,6 +6,7 @@ import (
 	"errors"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -85,25 +86,45 @@ func TestFailureStages(t *testing.T) {
 	}
 }
 
-func TestMissingRemoteCommitHasFetchDiagnosis(t *testing.T) {
+func TestMissingRemoteCommitIsFetchedSilently(t *testing.T) {
 	t.Parallel()
 	for _, branch := range []string{"main", "topic"} {
 		t.Run(branch, func(t *testing.T) {
 			t.Parallel()
 			f := newFixture()
 			f.branch, f.live = branch, shaB
+			fetches := 0
 			c := Client{Runner: func(ctx context.Context, dir, name string, args ...string) (string, error) {
-				if name == "git" && (args[0] == "merge-base" || args[0] == "cat-file") {
-					return "", exitError(128)
+				if name == "git" {
+					switch args[0] {
+					case "merge-base", "cat-file":
+						if fetches == 0 {
+							return "", exitError(128)
+						}
+						return "", nil
+					case "fetch":
+						fetches++
+						if args[len(args)-1] != shaB || args[len(args)-2] != f.remoteURL {
+							t.Fatalf("wrong fetch target: %v", args)
+						}
+						for _, flag := range []string{"--no-write-fetch-head", "--refmap=", "--no-tags", "--recurse-submodules=no", "--no-auto-maintenance", "--no-write-commit-graph"} {
+							if !contains(args, flag) {
+								t.Fatalf("missing %s: %v", flag, args)
+							}
+						}
+						return "", nil
+					}
 				}
 				return f.runner(ctx, dir, name, args...)
 			}}
-			r := strings.Join(c.CheckStop(context.Background(), t.TempDir(), nil), "\n")
-			if !IsCheckFailure(r) || !strings.Contains(r, "[commit-object]") || !strings.Contains(r, shaB) || !strings.Contains(r, "fetch") {
-				t.Fatal(r)
+			dir := t.TempDir()
+			for range 2 {
+				if reasons := c.CheckStop(context.Background(), dir, nil); len(reasons) != 0 {
+					t.Fatal(reasons)
+				}
 			}
-			if strings.Contains(r, "認証・通信") {
-				t.Fatal("missing object mislabeled as authentication")
+			if fetches != 1 {
+				t.Fatalf("fetches=%d, want 1", fetches)
 			}
 		})
 	}
@@ -127,14 +148,111 @@ func TestMainRemoteAdvanceWithoutFetch(t *testing.T) {
 	if got := g.must(g.work, "status", "--porcelain"); got != "" {
 		t.Fatal("fixture is dirty")
 	}
-	c := Client{Runner: g.runner}
-	r := strings.Join(c.CheckStop(context.Background(), g.work, nil), "\n")
-	if !strings.Contains(r, "[commit-object]") || !strings.Contains(r, next) {
-		t.Fatalf("diagnosis=%s", r)
+	g.must(g.bare, "tag", "remote-only-tag", next)
+	g.must(g.work, "config", "--add", "remote.origin.fetch", "+refs/heads/*:refs/heads/unwanted/*")
+	refs := g.must(g.work, "show-ref")
+	remoteRefs := g.must(g.bare, "show-ref")
+	fetchHeadPath := filepath.Join(g.work, ".git", "FETCH_HEAD")
+	fetchHead, err := os.ReadFile(fetchHeadPath)
+	if err != nil {
+		t.Fatal(err)
 	}
-	g.must(g.work, "fetch", "origin")
+	configPath := filepath.Join(g.work, ".git", "config")
+	config, err := os.ReadFile(configPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	c := Client{Runner: g.runner}
 	if got := c.CheckStop(context.Background(), g.work, nil); len(got) != 0 {
-		t.Fatalf("remote-ahead is not unpushed after fetch: %v", got)
+		t.Fatalf("automatic fetch should resolve silently: %v", got)
+	}
+	g.must(g.work, "cat-file", "-e", next+"^{commit}")
+	if after := g.must(g.work, "show-ref"); after != refs {
+		t.Fatal("local/tracking/tag refs changed")
+	}
+	if after := g.must(g.bare, "show-ref"); after != remoteRefs {
+		t.Fatal("remote refs changed")
+	}
+	if after := strings.TrimSpace(g.must(g.work, "rev-parse", "HEAD")); after != head {
+		t.Fatal("HEAD changed")
+	}
+	if after := g.must(g.work, "status", "--porcelain"); after != "" {
+		t.Fatal("working tree changed")
+	}
+	if after, err := os.ReadFile(fetchHeadPath); err != nil || string(after) != string(fetchHead) {
+		t.Fatal("FETCH_HEAD changed", err)
+	}
+	if after, err := os.ReadFile(configPath); err != nil || string(after) != string(config) {
+		t.Fatal("config changed", err)
+	}
+}
+
+func TestObjectFetchFailureAndRetryLimit(t *testing.T) {
+	t.Parallel()
+	for _, tc := range []struct {
+		name      string
+		fetchErr  error
+		wantStage string
+	}{
+		{"transport", exitError(128), "[fetch-object]"},
+		{"timeout", context.DeadlineExceeded, "[fetch-object]"},
+		{"object still unavailable", nil, "[commit-graph]"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+			fetches := 0
+			c := Client{Runner: func(_ context.Context, _ string, _ string, args ...string) (string, error) {
+				if args[0] == "fetch" {
+					fetches++
+					return "", tc.fetchErr
+				}
+				return "", exitError(128)
+			}}
+			covered, failure := c.covers(context.Background(), t.TempDir(), "https://user:secret@github.com/test/repo.git", shaA, shaB)
+			if covered || fetches != 1 || !IsCheckFailure(failure) || !strings.Contains(failure, tc.wantStage) || strings.Contains(failure, "secret") || strings.Contains(failure, "private URL") {
+				t.Fatal(covered, fetches, failure)
+			}
+			if len([]rune(failure)) > 130 {
+				t.Fatal("fetch failure is too verbose", failure)
+			}
+		})
+	}
+}
+
+func TestFetchedObjectCanStillBeDiverged(t *testing.T) {
+	t.Parallel()
+	fetched := false
+	c := Client{Runner: func(_ context.Context, _ string, _ string, args ...string) (string, error) {
+		if args[0] == "fetch" {
+			fetched = true
+			return "", nil
+		}
+		if args[0] == "merge-base" && fetched {
+			return "", exitError(1)
+		}
+		return "", exitError(128)
+	}}
+	covered, failure := c.covers(context.Background(), t.TempDir(), "/remote.git", shaA, shaB)
+	if covered || failure != "" || !fetched {
+		t.Fatal(covered, failure, fetched)
+	}
+}
+
+func TestCurrentPRDoesNotFetchOldHistory(t *testing.T) {
+	t.Parallel()
+	f := newFixture()
+	f.prs["tak848/project"] = []pull{
+		makePull("tak848/project", "tak848/project", "topic", shaB, "closed", true),
+		makePull("tak848/project", "tak848/project", "topic", shaA, "open", false),
+	}
+	c := Client{Runner: func(ctx context.Context, dir, name string, args ...string) (string, error) {
+		if name == "git" && (args[0] == "fetch" || args[0] == "merge-base") {
+			t.Fatal("irrelevant history inspected")
+		}
+		return f.runner(ctx, dir, name, args...)
+	}}
+	if reasons := c.CheckStop(context.Background(), t.TempDir(), []string{"tak848"}); len(reasons) != 0 {
+		t.Fatal(reasons)
 	}
 }
 
