@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/json"
+	"encoding/json/v2"
 	"os"
 	"runtime"
 	"strings"
@@ -26,7 +26,7 @@ func main() {
 	}
 
 	var input Input
-	if err := json.Unmarshal([]byte(os.Args[len(os.Args)-1]), &input); err != nil {
+	if err := json.Unmarshal([]byte(os.Args[len(os.Args)-1]), &input, json.MatchCaseInsensitiveNames(true)); err != nil {
 		return
 	}
 

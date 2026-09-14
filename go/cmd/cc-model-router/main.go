@@ -16,7 +16,8 @@ package main
 import (
 	"bytes"
 	"context"
-	"encoding/json"
+	"encoding/json/jsontext"
+	"encoding/json/v2"
 	"errors"
 	"flag"
 	"fmt"
@@ -188,13 +189,13 @@ func (r *router) errorHandler(target string) func(http.ResponseWriter, *http.Req
 		r.cfg.logger.Printf("%s %s -> %s upstream error: %v", req.Method, req.URL.Path, target, err)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusBadGateway)
-		_ = json.NewEncoder(w).Encode(map[string]any{
+		_ = json.MarshalEncode(jsontext.NewEncoder(w, jsontext.EscapeForHTML(true), jsontext.EscapeForJS(true)), map[string]any{
 			"type": "error",
 			"error": map[string]string{
 				"type":    "api_error",
 				"message": fmt.Sprintf("cc-model-router: %s upstream unreachable: %v", target, err),
 			},
-		})
+		}, json.Deterministic(true))
 	}
 }
 
@@ -218,7 +219,7 @@ func peekModel(req *http.Request) (string, error) {
 	var probe struct {
 		Model string `json:"model"`
 	}
-	if err := json.Unmarshal(body, &probe); err != nil {
+	if err := json.Unmarshal(body, &probe, json.MatchCaseInsensitiveNames(true)); err != nil {
 		return "", nil
 	}
 	return probe.Model, nil

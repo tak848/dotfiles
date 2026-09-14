@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/json"
+	"encoding/json/v2"
 	"os"
 	"runtime"
 
@@ -10,7 +10,7 @@ import (
 
 func main() {
 	var input struct{}
-	if err := json.NewDecoder(os.Stdin).Decode(&input); err != nil {
+	if err := json.UnmarshalRead(os.Stdin, &input); err != nil {
 		return
 	}
 

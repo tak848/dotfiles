@@ -1,7 +1,8 @@
 package main
 
 import (
-	"encoding/json"
+	"encoding/json/jsontext"
+	"encoding/json/v2"
 	"strings"
 	"testing"
 
@@ -36,7 +37,7 @@ func TestRenderTask(t *testing.T) {
 		Description:       "検索中",
 		Label:             "検索中",
 		Model:             "claude-sonnet-4-5-20250929",
-		Effort:            json.RawMessage(`"high"`),
+		Effort:            jsontext.Value(`"high"`),
 		ContextWindowSize: 200_000,
 		TokenCount:        24_000,
 	}
@@ -54,7 +55,7 @@ func TestRenderTask(t *testing.T) {
 		},
 		// effort が数値のトークン予算で来ることがある。桁が大きいので出さない。
 		"numeric_effort": {
-			mutate:      func(tk *task) { tk.Effort = json.RawMessage(`32000`) },
+			mutate:      func(tk *task) { tk.Effort = jsontext.Value(`32000`) },
 			width:       80,
 			wantContain: []string{"sonnet"},
 			wantAbsent:  []string{"32000"},
@@ -221,6 +222,56 @@ func TestDecodeMixedEffortTypes(t *testing.T) {
 	}
 	if rows := decodeRows(t, renderRows(in)); len(rows) != 3 {
 		t.Errorf("got %d rows, want 3", len(rows))
+	}
+}
+
+func TestRenderRowsJSONLFramingAndEscaping(t *testing.T) {
+	t.Parallel()
+	id := "<id>&\n" + string([]rune{0x2028, 0x2029})
+	in := input{Tasks: []task{{ID: id, Name: "<A>&"}, {ID: "second", Name: "B"}}}
+	out := renderRows(in)
+	if strings.Count(out, "\n") != 2 || !strings.HasSuffix(out, "\n") {
+		t.Fatalf("want exactly two newline-terminated JSON lines, got %q", out)
+	}
+	for _, escaped := range []string{"\\u003c", "\\u003e", "\\u0026", "\\u2028", "\\u2029", "\\n"} {
+		if !strings.Contains(out, escaped) {
+			t.Errorf("missing legacy JSON escaping %q in %q", escaped, out)
+		}
+	}
+	rows := decodeRows(t, out)
+	if len(rows) != 2 || rows[0].ID != id || rows[1].ID != "second" {
+		t.Fatalf("row IDs did not round-trip: %+v", rows)
+	}
+	if !strings.Contains(rows[0].Content, "<A>&") {
+		t.Errorf("escaped content did not round-trip: %q", rows[0].Content)
+	}
+}
+
+func TestDecodeNullAndEmptyTasks(t *testing.T) {
+	t.Parallel()
+	for _, raw := range []string{`{}`, `{"tasks":null}`, `{"tasks":[]}`} {
+		var in input
+		if err := json.UnmarshalRead(strings.NewReader(raw), &in, json.MatchCaseInsensitiveNames(true)); err != nil {
+			t.Fatal(err)
+		}
+		if got := renderRows(in); got != "" {
+			t.Errorf("%s produced %q, want no JSONL rows", raw, got)
+		}
+	}
+}
+
+func TestDecodeCaseAndNullEffort(t *testing.T) {
+	t.Parallel()
+	const raw = `{"COLUMNS":80,"TASKS":[{"ID":"t1","NAME":"A","EFFORT":null,"TOKENCOUNT":null,"CONTEXTWINDOWSIZE":null}]}`
+	var in input
+	if err := json.UnmarshalRead(strings.NewReader(raw), &in, json.MatchCaseInsensitiveNames(true)); err != nil {
+		t.Fatal(err)
+	}
+	if len(in.Tasks) != 1 || in.Tasks[0].ID != "t1" || string(in.Tasks[0].Effort) != "null" {
+		t.Fatalf("case-insensitive fields/raw null did not decode: %+v", in)
+	}
+	if got := effortLevel(in.Tasks[0].Effort); got != "" {
+		t.Errorf("null effort = %q, want no effort label", got)
 	}
 }
 

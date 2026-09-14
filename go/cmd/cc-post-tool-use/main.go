@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/json"
+	"encoding/json/v2"
 	"fmt"
 	"os"
 )
@@ -18,7 +18,7 @@ type Input struct {
 
 func main() {
 	var input Input
-	if err := json.NewDecoder(os.Stdin).Decode(&input); err != nil {
+	if err := json.UnmarshalRead(os.Stdin, &input, json.MatchCaseInsensitiveNames(true)); err != nil {
 		return // gracefully ignore invalid/empty input (e.g. MCP tools)
 	}
 

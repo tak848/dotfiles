@@ -13,7 +13,8 @@
 package main
 
 import (
-	"encoding/json"
+	"encoding/json/jsontext"
+	"encoding/json/v2"
 	"os"
 	"strconv"
 	"strings"
@@ -38,9 +39,9 @@ type task struct {
 	Model       string `json:"model"`
 	// Effort はレベル文字列か数値のトークン予算のどちらかで来る。型を固定すると
 	// 1 タスクの型違いで全行が既定描画に戻るため、生のまま受けて自前で解く。
-	Effort            json.RawMessage `json:"effort"`
-	ContextWindowSize float64         `json:"contextWindowSize"`
-	TokenCount        float64         `json:"tokenCount"`
+	Effort            jsontext.Value `json:"effort"`
+	ContextWindowSize float64        `json:"contextWindowSize"`
+	TokenCount        float64        `json:"tokenCount"`
 }
 
 type input struct {
@@ -71,7 +72,7 @@ func statusColor(status string) string {
 
 // effortLevel は effort をそのまま返す。数値のトークン予算で来た場合は表示
 // しない（桁が大きく、行幅に見合わないため）。
-func effortLevel(raw json.RawMessage) string {
+func effortLevel(raw jsontext.Value) string {
 	var level string
 	if err := json.Unmarshal(raw, &level); err != nil {
 		return ""
@@ -131,7 +132,8 @@ func renderTask(t task, width int) string {
 // 空になったタスクは出さず、既定の描画に任せる。
 func renderRows(in input) string {
 	var b strings.Builder
-	enc := json.NewEncoder(&b)
+	// jsontext.Encoder は各 JSON の末尾に LF を付ける。MarshalWrite では付かない。
+	enc := jsontext.NewEncoder(&b, jsontext.EscapeForHTML(true), jsontext.EscapeForJS(true))
 	for _, t := range in.Tasks {
 		if t.ID == "" {
 			continue
@@ -140,7 +142,7 @@ func renderRows(in input) string {
 		if content == "" {
 			continue
 		}
-		if err := enc.Encode(row{ID: t.ID, Content: content}); err != nil {
+		if err := json.MarshalEncode(enc, row{ID: t.ID, Content: content}); err != nil {
 			return ""
 		}
 	}
@@ -149,7 +151,7 @@ func renderRows(in input) string {
 
 func main() {
 	var in input
-	if err := json.NewDecoder(os.Stdin).Decode(&in); err != nil {
+	if err := json.UnmarshalRead(os.Stdin, &in, json.MatchCaseInsensitiveNames(true)); err != nil {
 		// 何も出さなければ Claude Code は既定の行を描く。
 		return
 	}

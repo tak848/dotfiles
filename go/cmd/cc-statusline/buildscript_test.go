@@ -67,10 +67,9 @@ func TestBuildScriptCoversSources(t *testing.T) {
 	}
 }
 
-// TestBuildScriptBuildsStatuslines は statusline 系のビルド行が消えていない
-// ことを確かめる。settings.jsonnet がバイナリを指しているので、ビルド行が
-// 無いと statusline が丸ごと出なくなる。
-func TestBuildScriptBuildsStatuslines(t *testing.T) {
+// 設定が参照する全バイナリを確認する。include の網羅だけでは
+// build 行そのものの追加忘れを検知できず、hook が配置されない。
+func TestBuildScriptBuildsConfiguredBinaries(t *testing.T) {
 	t.Parallel()
 
 	root := repoRoot(t)
@@ -83,9 +82,21 @@ func TestBuildScriptBuildsStatuslines(t *testing.T) {
 	for _, m := range buildRe.FindAllStringSubmatch(string(data), -1) {
 		built[m[1]] = true
 	}
-	for _, name := range []string{"cc-statusline", "cc-subagent-statusline"} {
+	settings, err := os.ReadFile(filepath.Join(root, "dot_claude", "settings.jsonnet"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	refs := regexp.MustCompile(`~/\.claude/bin/([\w-]+)`).FindAllStringSubmatch(string(settings), -1)
+	if len(refs) == 0 {
+		t.Fatal("settings.jsonnet has no binary references")
+	}
+	for _, ref := range refs {
+		name := ref[1]
 		if !built[name] {
 			t.Errorf("%s does not build ./go/cmd/%s", buildScript, name)
+		}
+		if !strings.Contains(string(data), "-o ~/.claude/bin/"+name+" ./go/cmd/"+name) {
+			t.Errorf("%s does not install ~/.claude/bin/%s", buildScript, name)
 		}
 	}
 }

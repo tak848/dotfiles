@@ -1,15 +1,17 @@
 package main
 
 import (
-	"encoding/json"
+	"encoding/json/jsontext"
+	"encoding/json/v2"
 	"fmt"
+	"io"
 	"os"
 	"strings"
 )
 
 type input struct {
-	ToolName  string          `json:"tool_name"`
-	ToolInput json.RawMessage `json:"tool_input"`
+	ToolName  string         `json:"tool_name"`
+	ToolInput jsontext.Value `json:"tool_input"`
 }
 
 type writeInput struct {
@@ -35,8 +37,15 @@ type hookSpecificOutput struct {
 }
 
 func main() {
+	run(os.Stdin, os.Stdout, os.Stderr)
+}
+
+func run(stdin io.Reader, stdout, stderr io.Writer) {
+	// 不正 UTF-8 も従来どおり U+FFFD として検出する。v2 の既定の拒否では
+	// parse error で無出力になり、文字化けを含む書き込みを許してしまう。
+	opts := json.JoinOptions(json.MatchCaseInsensitiveNames(true), jsontext.AllowInvalidUTF8(true))
 	var in input
-	if err := json.NewDecoder(os.Stdin).Decode(&in); err != nil {
+	if err := json.UnmarshalRead(stdin, &in, opts); err != nil {
 		return
 	}
 
@@ -45,7 +54,7 @@ func main() {
 	switch in.ToolName {
 	case "Write":
 		var ti writeInput
-		if err := json.Unmarshal(in.ToolInput, &ti); err != nil {
+		if err := json.Unmarshal(in.ToolInput, &ti, opts); err != nil {
 			return
 		}
 		if strings.ContainsRune(ti.Content, '\uFFFD') {
@@ -53,7 +62,7 @@ func main() {
 		}
 	case "Edit":
 		var ti editInput
-		if err := json.Unmarshal(in.ToolInput, &ti); err != nil {
+		if err := json.Unmarshal(in.ToolInput, &ti, opts); err != nil {
 			return
 		}
 		if strings.ContainsRune(ti.NewString, '\uFFFD') {
@@ -61,7 +70,7 @@ func main() {
 		}
 	case "MultiEdit":
 		var ti multiEditInput
-		if err := json.Unmarshal(in.ToolInput, &ti); err != nil {
+		if err := json.Unmarshal(in.ToolInput, &ti, opts); err != nil {
 			return
 		}
 		for i, e := range ti.Edits {
@@ -78,7 +87,7 @@ func main() {
 	}
 
 	for _, f := range found {
-		fmt.Fprintf(os.Stderr, "mojibake detected in field: %s\n", f)
+		fmt.Fprintf(stderr, "mojibake detected in field: %s\n", f)
 	}
 
 	out := hookOutput{
@@ -91,5 +100,5 @@ func main() {
 			),
 		},
 	}
-	json.NewEncoder(os.Stdout).Encode(out)
+	_ = json.MarshalEncode(jsontext.NewEncoder(stdout, jsontext.EscapeForHTML(true), jsontext.EscapeForJS(true)), out)
 }

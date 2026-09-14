@@ -3,7 +3,8 @@ package tts
 import (
 	"crypto/md5"
 	"encoding/base64"
-	"encoding/json"
+	"encoding/json/jsontext"
+	"encoding/json/v2"
 	"fmt"
 	"net/http"
 	"os"
@@ -170,7 +171,10 @@ func synthesize(apiKey, text, langCode, voice string) ([]byte, error) {
 		Voice:       ttsVoice{LanguageCode: langCode, Name: voice},
 		AudioConfig: ttsAudioConfig{AudioEncoding: "MP3", SpeakingRate: speed},
 	}
-	body, _ := json.Marshal(payload)
+	body, err := json.Marshal(payload, jsontext.EscapeForHTML(true), jsontext.EscapeForJS(true), jsontext.AllowInvalidUTF8(true))
+	if err != nil {
+		return nil, err
+	}
 
 	req, err := http.NewRequest("POST", apiURL, strings.NewReader(string(body)))
 	if err != nil {
@@ -193,7 +197,7 @@ func synthesize(apiKey, text, langCode, voice string) ([]byte, error) {
 	var result struct {
 		AudioContent string `json:"audioContent"`
 	}
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+	if err := json.UnmarshalRead(resp.Body, &result, json.MatchCaseInsensitiveNames(true)); err != nil {
 		return nil, err
 	}
 	return base64.StdEncoding.DecodeString(result.AudioContent)

@@ -394,6 +394,17 @@ local autoModeRules = import 'auto-mode.libsonnet';
           },
         ],
       },
+      {
+        matcher: 'Bash',
+        hooks: [
+          {
+            type: 'command',
+            command: '~/.claude/bin/cc-push-guard',
+            timeout: 60,
+            statusMessage: 'push 先とマージ済みブランチを確認中',
+          },
+        ],
+      },
     ],
     PermissionRequest: [
       {
@@ -426,6 +437,13 @@ local autoModeRules = import 'auto-mode.libsonnet';
             type: 'command',
             command: '~/.claude/bin/cc-stop',
             async: true,
+          },
+          {
+            // 完遂確認は同期。編集センサーや内部 TODO、transcript には依存しない。
+            type: 'command',
+            command: '~/.claude/bin/cc-stop-gate',
+            timeout: 35,
+            statusMessage: 'plan / 依頼の完遂と git / PR を確認中',
           },
         ],
       },
