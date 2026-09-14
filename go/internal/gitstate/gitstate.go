@@ -69,6 +69,9 @@ func execute(ctx context.Context, dir, name string, args ...string) (string, err
 	cmd.Stdout = &out
 	cmd.Stderr = io.Discard
 	err := cmd.Run()
+	if ctx.Err() != nil {
+		return "", ctx.Err()
+	}
 	if out.overflow {
 		return "", errors.New("output limit")
 	}
@@ -463,7 +466,7 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 	defer cancel()
 	ok, e := c.repository(ctx, dir)
 	if e != nil {
-		return []string{unknown}
+		return []string{checkFailure("worktree", e, "hook 入力の cwd が読み取り可能な作業ツリーか確認してください。別の作業リポジトリの確認結果では代用できません。")}
 	}
 	if !ok {
 		return nil
@@ -471,19 +474,19 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 	var reasons []string
 	status, e := c.git(ctx, dir, "status", "--porcelain=v1", "--untracked-files=normal")
 	if e != nil {
-		return []string{unknown}
+		return []string{checkFailure("worktree-status", e, "hook 入力の cwd で git status を確認してください。変更の有無はまだ判定していません。")}
 	}
 	if strings.TrimSpace(status) != "" {
 		reasons = append(reasons, "未 commit の変更があります。内容を確認し、必要な変更を commit してください。既存の変更を勝手に破棄・commit せず、判断が必要ならユーザーに確認してください。")
 	}
 	branch, e := c.git(ctx, dir, "symbolic-ref", "--quiet", "--short", "HEAD")
 	if e != nil {
-		return append(reasons, "ブランチを確定できません。detached HEAD などの状態を確認してください。")
+		return append(reasons, checkFailure("local-branch", e, "detached HEAD など、hook 入力の cwd のブランチ状態を確認してください。作業用 PR の有無を調べた結果ではありません。"))
 	}
 	branch = strings.TrimSpace(branch)
 	ds, e := c.destinations(ctx, dir, branch, "")
 	if e != nil {
-		return append(reasons, unknown)
+		return append(reasons, checkFailure("push-destination", e, "hook 入力の cwd で pushRemote / remote.pushDefault / remote の URL を確認してください。SSH alias・独自 SSH command・remote helper など、現在のガードで解決できない設定もこの段階で拒否されます。PR の積み方はこの判定に関係ありません。"))
 	}
 	if len(ds) == 0 {
 		return reasons
@@ -491,28 +494,31 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 	head, e := c.git(ctx, dir, "rev-parse", "--verify", "HEAD")
 	head = strings.TrimSpace(head)
 	if e != nil || !validSHA(head) {
-		return append(reasons, "現在の commit を確認できません。未 commit の作業とブランチ状態を確認してください。")
+		return append(reasons, checkFailure("local-head", e, "hook 入力の cwd の HEAD を確認してください。初回 commit 前かどうかを含め、PR 作成ではなくローカル状態の確認が必要です。"))
 	}
 	for _, d := range ds {
 		ref, err := c.stopRef(ctx, dir, branch, d.remote)
 		if err != nil {
-			reasons = append(reasons, unknown)
+			reasons = append(reasons, checkFailure("push-ref", err, "push.default / remote の push refspec / tracking 設定を確認してください。PR はまだ照会していないので、base 変更で修復しようとしないでください。"))
 			continue
 		}
 		targetBranch := strings.TrimPrefix(ref, "refs/heads/")
+		// main / master は名前だけで既定ブランチ扱いが確定する。
+		// PR を要求しないこの経路を、不要な GitHub API の成功に依存させない。
+		isDefault := branch == "main" || branch == "master" || targetBranch == "main" || targetBranch == "master"
 		var info repoInfo
-		if d.repo != "" {
+		if d.repo != "" && !isDefault {
 			info, e = c.info(ctx, dir, d.repo)
 			if e != nil {
-				reasons = append(reasons, unknown)
+				reasons = append(reasons, checkFailure("github-repository", e, "hook と同じ実行環境で対象リポジトリの gh api 応答を確認してください。gh auth status の成功だけでは、この API の権限・SSO・応答形式・名前変更を確認したことにはなりません。PR の有無はまだ判定していません。"))
 				continue
 			}
+			isDefault = branch == info.DefaultBranch || targetBranch == info.DefaultBranch
 		}
-		isDefault := branch == "main" || branch == "master" || branch == info.DefaultBranch || targetBranch == "main" || targetBranch == "master" || targetBranch == info.DefaultBranch
 		if d.repo == "" && !isDefault {
 			s, err := c.git(ctx, dir, "ls-remote", "--symref", d.url, "HEAD")
 			if err != nil {
-				reasons = append(reasons, unknown)
+				reasons = append(reasons, checkFailure("remote-default-branch", err, "送信先の HEAD の照会に失敗しました。hook の非対話環境から送信先へ接続できるか確認してください。"))
 				continue
 			}
 			for _, line := range strings.Split(s, "\n") {
@@ -523,44 +529,36 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 		}
 		live, err := c.live(ctx, dir, d.url, ref)
 		if err != nil {
-			reasons = append(reasons, unknown)
+			reasons = append(reasons, checkFailure("remote-ref", err, "送信先 ref の ls-remote 照会に失敗しました。hook 入力の cwd と実際の push URL に対して確認してください。gh のログイン状態や別リポジトリの照会成功では代用できません。"))
 			continue
 		}
-		if isDefault {
-			if live != head { // ローカルが既定ブランチに含まれるなら push は不要。
-				if live != "" {
-					_, err = c.git(ctx, dir, "merge-base", "--is-ancestor", head, live)
-				}
-				if live != "" && err != nil && !exitIs(err, 1) {
-					reasons = append(reasons, unknown)
-				} else if live == "" || exitIs(err, 1) {
-					reasons = append(reasons, "既定ブランチ（main / master を含む）に未反映の commit があります。main へ直接 push せず、作業ブランチへ移して確認してください。")
-				}
-			}
-			continue
-		}
-		covered := live == head
-		if live != "" && !covered {
-			_, err = c.git(ctx, dir, "merge-base", "--is-ancestor", head, live)
-			if err == nil {
-				covered = true
-			} else if !exitIs(err, 1) {
-				reasons = append(reasons, unknown)
+		covered := false
+		if live != "" {
+			var failure string
+			covered, failure = c.covers(ctx, dir, head, live)
+			if failure != "" {
+				reasons = append(reasons, failure)
 				continue
 			}
+		}
+		if isDefault {
+			if !covered {
+				reasons = append(reasons, "既定ブランチ（main / master を含む）に未反映の commit があります。main へ直接 push せず、作業ブランチへ移して確認してください。")
+			}
+			continue
 		}
 		var ps []pull
 		if d.repo != "" {
 			ps, err = c.pulls(ctx, dir, info, targetBranch)
 			if err != nil {
-				reasons = append(reasons, unknown)
+				reasons = append(reasons, checkFailure("github-pulls", err, "対象の head repository / branch の PR 一覧を読み取れません。API 権限・応答・ページ上限を確認してください。PR 不在や stacked PR の構造異常という判定ではなく、base の変更や不要な PR 作成を求めていません。"))
 				continue
 			}
 		}
 		merged := false
 		completed := false
 		open := false
-		historyUnknown := false
+		historyFailure := ""
 		base := info.FullName
 		if info.Parent != nil {
 			base = info.Parent.FullName
@@ -570,15 +568,12 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 		for _, p := range ps {
 			if p.MergedAt != nil {
 				merged = true
-				if p.Head.SHA == head {
+				included, failure := c.covers(ctx, dir, head, p.Head.SHA)
+				if included {
 					completed = true
-				} else {
-					_, err = c.git(ctx, dir, "merge-base", "--is-ancestor", head, p.Head.SHA)
-					if err == nil {
-						completed = true
-					} else if !exitIs(err, 1) {
-						historyUnknown = true
-					}
+				}
+				if failure != "" {
+					historyFailure = failure
 				}
 			}
 			if p.State == "open" {
@@ -590,15 +585,15 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 			}
 		}
 		if len(bases) > 1 {
-			reasons = append(reasons, "PR の base が複数あり、対象を確定できません。意図する PR を確認してください。")
+			reasons = append(reasons, checkFailure("pr-base", nil, "open PR の base リポジトリが複数あり、対象を確定できません。検査対象の対応付けを確認してください。ブランチが積まれていること自体を異常と判定したものではありません。"))
 			continue
 		}
 		if live == "" && merged {
 			if completed {
 				continue
 			}
-			if historyUnknown {
-				reasons = append(reasons, unknown)
+			if historyFailure != "" {
+				reasons = append(reasons, historyFailure)
 				continue
 			}
 			reasons = append(reasons, "マージ後に削除されたブランチに追加 commit があります。削除ブランチを push で復活させず、新しい作業ブランチで処理してください。")
@@ -610,10 +605,10 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 		if d.repo != "" && ownerRequired(base, owners) && !open && !completed {
 			if len(bases) > 0 {
 				if covered {
-					reasons = append(reasons, "PR の head と送信先の状態が一致しません。PR が存在しないと決めつけず、状態を再確認してください。")
+					reasons = append(reasons, checkFailure("pr-head", nil, "PR は存在しますが、head と送信先の状態が一致しません。反映待ちや照会先を確認してください。PR 不在として作成し直したり、base を変更したりする理由にはなりません。"))
 				}
-			} else if historyUnknown {
-				reasons = append(reasons, unknown)
+			} else if historyFailure != "" {
+				reasons = append(reasons, historyFailure)
 			} else {
 				reasons = append(reasons, "対象 owner のリポジトリに現在の commit を扱う PR がありません。base を確認して draft PR を作成してください。")
 			}
