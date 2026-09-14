@@ -180,6 +180,8 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - `作業待機: <対象>` は Stop 入力の `background_tasks` / `session_crons` に ID のある要素が存在するときだけ許可する。これは稼働中の仕事の存在の確認で、依頼との関連性の証明ではない
 - `permission_mode: plan` では git の照会をしない。計画・説明 HTML の差分に commit / push / PR を要求せず、計画なら ExitPlanMode、判断が必要なら AskUserQuestion を促す。plan mode での完了誓約は無効
 - 通常モードでは `go/internal/gitstate` で未 commit・送信先への未 push・既定ブランチの先行・必要な PR の不足を補助検査する。署名で検査結果を覆せない。取得不能を「問題なし」に変換せず差し戻す。既存 WIP を勝手に commit / 削除して検査を通してはならない
+- `main` / `master` と名前で判定できる経路は GitHub の repo 情報・PR 一覧を照会しない。送信先との一致・祖先関係は検査する。`git status` の `origin/main` はローカルの tracking ref なので、実リモートが進んでも未 fetch なら一致して見える。比較用 commit が手元で確認できない場合は `[commit-object]` と fetch が必要な理由を返す
+- 検査自体の失敗は `【確認不能】 [検査ID]` と安全なエラー分類・対処を返す。stderr / URL / 生の error 文字列は認証情報を含み得るので出さない。これは PR 不在や plan 未完了の判定ではない。失敗だけなら完遂チェックリストの反復を要求せず、検査対象 cwd と段階を示して切り分けを促す。確認不能を根拠に PR の base 変更やブランチ統合をしてはならない
 - `CC_STOP_GATE_REQUIRE_PR_OWNERS` は **PR が無いので作成しろという指示だけ**の対象 owner 一覧。未設定なら `tak848`、設定時はカンマ区切りの一覧で置き換え、空文字は作成要求なし。前後の空白を除き大文字小文字を区別しない。fork は origin の owner だけで判断しない。他の停止チェックと push ガードには適用しない
 - `CC_STOP_GATE=0` / `false` / `off` / `no` で Stop 全体を明示的に無効化できる（最優先）。環境変数の配置はユーザーが決める。モデルが検査を回避するために設定を書き換えてはならない
 - `go/cmd/cc-push-guard` は同期の PreToolUse(Bash)。push 前に実送信先と ref、マージ済み PR の履歴を確認し、削除されたマージ済みブランチの復活を止める。対象が動的・曖昧な push は単独の明確なコマンドに分けるよう差し戻す。`CC_PUSH_GUARD=0` / `false` / `off` / `no` がこのガード専用の opt-out

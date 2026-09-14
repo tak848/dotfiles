@@ -1,8 +1,14 @@
 package main
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/tak848/dotfiles/go/internal/gitstate"
+	"github.com/tak848/dotfiles/go/internal/render"
+)
 
 type facts struct {
+	CWD      string
 	Mode     string
 	Message  message
 	Inflight int
@@ -48,13 +54,30 @@ func decide(f facts) decision {
 	}
 
 	if len(f.Issues) > 0 {
-		// 既存 WIP を勝手に commit / 削除させず、無断の opt-out も促さない。
-		reasons = append(reasons, "【補助チェック未完了】署名だけで次の状態を覆すことはできない。")
+		onlyFailures := true
+		for _, issue := range f.Issues {
+			if !gitstate.IsCheckFailure(issue) {
+				onlyFailures = false
+			}
+		}
+		if onlyFailures {
+			reasons = append(reasons, "【補助チェックの実行失敗】依頼や plan が未完了と判定したのではなく、次の検査自体が完了していない。")
+		} else {
+			reasons = append(reasons, "【補助チェック未完了】観測済みの未処理状態と、【確認不能】の検査失敗を区別しろ。署名だけで状態を覆すことはできない。")
+		}
+		if f.CWD != "" {
+			reasons = append(reasons, "検査対象 cwd: "+render.Sanitize(f.CWD))
+		}
 		for _, issue := range f.Issues {
 			reasons = append(reasons, safeIssue(issue))
 		}
 		joined := clip(strings.Join(reasons, "\n\n"), 5000)
-		return block(joined + "\n\n依頼範囲と既存の変更を確認して片付けろ。全変更を無条件に commit したり、他者の変更を削除して通過したりするな。ユーザー判断が必要なら AskUserQuestion を使え。hook や設定を勝手に無効化するな。\n\n" + completionCheck)
+		if onlyFailures {
+			// 同じ不明理由で plan を照合し直させると、モデルが架空の原因を
+			// 作って PR の構造や依頼範囲を変えてしまう。検査の復旧だけに絞る。
+			return block(joined + "\n\n表示された検査 ID と cwd を基に、その照会だけを切り分けろ。認証済みというだけで全 API の成功と断定するな。同じ失敗が続く場合も、理由を推測してブランチの統合・PR の base 変更・不要な commit / PR 作成を行うな。この確認不能は、それらを変更する根拠ではない。\nplan の完遂確認を繰り返しても、この検査失敗は直らない。必要なユーザー判断はエラー ID と確認した結果を示して AskUserQuestion で求めろ。hook や設定を勝手に無効化するな。")
+		}
+		return block(joined + "\n\n依頼範囲と既存の変更を確認して片付けろ。全変更を無条件に commit したり、他者の変更を削除して通過したりするな。確認不能を根拠に PR の積み方を変えるな。ユーザー判断が必要なら AskUserQuestion を使え。hook や設定を勝手に無効化するな。\n\n" + completionCheck)
 	}
 
 	if f.Message.Signature != unsigned && !f.Message.Tells {

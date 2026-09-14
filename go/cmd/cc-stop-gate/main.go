@@ -77,6 +77,7 @@ func run(stdin io.Reader, stdout io.Writer, env lookupEnv, check checkFunc) int 
 
 	message := analyze(*in.LastMessage)
 	f := facts{
+		CWD:      in.CWD,
 		Mode:     in.Mode,
 		Message:  message,
 		Inflight: inflightCount(in.BackgroundTasks) + inflightCount(in.SessionCrons),
@@ -85,12 +86,12 @@ func run(stdin io.Reader, stdout io.Writer, env lookupEnv, check checkFunc) int 
 	// commit を要求せず、不要なネットワーク照会も行わない。
 	if message.Signature != waiting && in.Mode != "plan" {
 		if !filepath.IsAbs(in.CWD) {
-			f.Issues = []string{"作業ディレクトリを確認できません。cwd が空または相対パスのまま別のリポジトリを検査しないため、hook の入力を確認してください。"}
+			f.Issues = []string{gitstate.CheckFailurePrefix + " [input-cwd] 作業ディレクトリを確認できません。cwd が空または相対パスのまま別のリポジトリを検査しないため、hook の入力を確認してください。"}
 		} else {
 			ctx, cancel := context.WithTimeout(context.Background(), checkTimeout)
 			f.Issues = check(ctx, in.CWD, requiredPROwners(env))
 			if ctx.Err() != nil {
-				f.Issues = append(f.Issues, "git / PR の確認がタイムアウトしました。確認できたことにせず、接続・認証状態を確認してください。")
+				f.Issues = append(f.Issues, gitstate.CheckFailurePrefix+" [deadline] git / PR の検査時間を超過しました。plan の照合では直らないため、先に表示された照会の接続・実行時間を確認してください。")
 			}
 			cancel()
 		}
