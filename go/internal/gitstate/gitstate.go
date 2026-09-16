@@ -22,7 +22,14 @@ import (
 type Runner func(context.Context, string, string, ...string) (string, error)
 
 // Client はグローバル状態を変更せずコマンド実行をテスト用に差し替える。
-type Client struct{ Runner Runner }
+type Client struct {
+	Runner         Runner
+	commandTimeout time.Duration
+}
+
+// PushTimeout は push 前の確認全体の予算。巨大リポジトリの交渉処理を
+// 短い個別タイムアウトで中断しない。外側の hook はこれより長く設定する。
+const PushTimeout = 10 * time.Minute
 
 const splitPush = "push の対象を安全に確認できません。展開や複合処理を分け、リテラルの git push 単独コマンドで再確認してください。"
 const maxOutput = 2 << 20
@@ -54,8 +61,6 @@ func (b *limitedBuffer) Write(p []byte) (int, error) {
 }
 
 func execute(ctx context.Context, dir, name string, args ...string) (string, error) {
-	ctx, cancel := context.WithTimeout(ctx, 12*time.Second)
-	defer cancel()
 	cmd := exec.CommandContext(ctx, name, args...)
 	cmd.Dir = dir
 	cmd.WaitDelay = time.Second
@@ -80,6 +85,12 @@ func execute(ctx context.Context, dir, name string, args ...string) (string, err
 	return out.String(), err
 }
 func (c Client) run(ctx context.Context, dir, name string, args ...string) (string, error) {
+	timeout := c.commandTimeout
+	if timeout == 0 {
+		timeout = 12 * time.Second
+	}
+	ctx, cancel := context.WithTimeout(ctx, timeout)
+	defer cancel()
 	r := c.Runner
 	if r == nil {
 		r = execute
@@ -708,8 +719,11 @@ func parsePorcelain(s string) ([]update, error) {
 }
 
 func (c Client) CheckPush(ctx context.Context, dir string, args []string) error {
-	ctx, cancel := context.WithTimeout(ctx, 45*time.Second)
+	ctx, cancel := context.WithTimeout(ctx, PushTimeout)
 	defer cancel()
+	// 値レシーバーのコピーだけを変更し、Stop 側の予算は変えない。
+	// 各照会もこの全体予算を共有する。12 秒の制限は push 経路に適用しない。
+	c.commandTimeout = PushTimeout
 	explicit, e := validatePush(args)
 	if e != nil {
 		return e

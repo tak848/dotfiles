@@ -10,7 +10,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"time"
 
 	"github.com/tak848/dotfiles/go/internal/gitstate"
 	"github.com/tak848/dotfiles/go/internal/render"
@@ -348,7 +347,7 @@ func writeDeny(w io.Writer, reason string) error {
 	return json.MarshalWrite(w, map[string]any{"hookSpecificOutput": map[string]string{"hookEventName": "PreToolUse", "permissionDecision": "deny", "permissionDecisionReason": reason}})
 }
 func main() {
-	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), gitstate.PushTimeout)
 	defer cancel()
 	if err := run(ctx, os.Stdin, os.Stdout, gitstate.CheckPush); err != nil {
 		fmt.Fprintln(os.Stderr, "push guard の入出力に失敗しました。")
