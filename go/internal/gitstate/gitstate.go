@@ -27,9 +27,13 @@ type Client struct {
 	commandTimeout time.Duration
 }
 
-// PushTimeout は push 前の確認全体の予算。巨大リポジトリの交渉処理を
-// 短い個別タイムアウトで中断しない。外側の hook はこれより長く設定する。
-const PushTimeout = 10 * time.Minute
+// PushTimeout は push 前の確認全体の予算。時間内に確認できない場合は
+// 呼び出し側が通常の実行へ戻す。実際の git push の期限には影響しない。
+const PushTimeout = 5 * time.Second
+
+// ErrMergedBranch は、削除されたマージ済み head の再作成を確認できた場合だけ返す。
+// その他の error は確認失敗であり、push を止める理由として使わない。
+var ErrMergedBranch = errors.New("マージ済み PR の削除された head ブランチを再作成する push は拒否しました。新しい作業ブランチを作成してください。")
 
 const splitPush = "push の対象を安全に確認できません。展開や複合処理を分け、リテラルの git push 単独コマンドで再確認してください。"
 const maxOutput = 2 << 20
@@ -788,7 +792,7 @@ func (c Client) CheckPush(ctx context.Context, dir string, args []string) error 
 			}
 			for _, p := range ps {
 				if p.MergedAt != nil {
-					return errors.New("マージ済み PR の削除された head ブランチを再作成する push は拒否しました。新しい作業ブランチを作成してください。")
+					return ErrMergedBranch
 				}
 			}
 		}
