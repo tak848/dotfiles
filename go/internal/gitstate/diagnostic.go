@@ -56,22 +56,17 @@ func Feedback(reason string) string {
 
 func checkFailure(stage string, err error, action string) string {
 	cause := "応答または設定の検証に失敗"
-	var command *exec.Error
-	var path *os.PathError
-	var exit interface{ ExitCode() int }
-	var push *gitPushError
-	switch {
-	case errors.Is(err, context.DeadlineExceeded):
+	if errors.Is(err, context.DeadlineExceeded) {
 		cause = "照会がタイムアウト"
-	case errors.Is(err, context.Canceled):
+	} else if errors.Is(err, context.Canceled) {
 		cause = "照会がキャンセル"
-	case errors.As(err, &command):
+	} else if _, ok := errors.AsType[*exec.Error](err); ok {
 		cause = "現在の環境で git または gh を起動できない"
-	case errors.As(err, &path):
+	} else if _, ok := errors.AsType[*os.PathError](err); ok {
 		cause = "実行先のディレクトリまたはファイルにアクセスできない"
-	case errors.As(err, &push):
+	} else if push, ok := errors.AsType[*gitPushError](err); ok {
 		cause = push.cause
-	case errors.As(err, &exit):
+	} else if exit, ok := errors.AsType[exitCoder](err); ok {
 		cause = fmt.Sprintf("照会が終了コード %d で失敗", exit.ExitCode())
 	}
 	return CheckFailurePrefix + " [" + stage + "] 状態を確認できません（" + cause + "）。" + action
