@@ -35,6 +35,8 @@ func Feedback(reason string) string {
 		"local-head":            "現在の commit",
 		"push-destination":      "push 送信先",
 		"push-ref":              "push 対象ブランチ",
+		"push-probe":            "git push の事前確認",
+		"push-output":           "git push の確認結果",
 		"github-repository":     "GitHub のリポジトリ情報",
 		"remote-default-branch": "送信先の既定ブランチ",
 		"remote-ref":            "送信先ブランチの commit",
@@ -57,6 +59,7 @@ func checkFailure(stage string, err error, action string) string {
 	var command *exec.Error
 	var path *os.PathError
 	var exit interface{ ExitCode() int }
+	var push *gitPushError
 	switch {
 	case errors.Is(err, context.DeadlineExceeded):
 		cause = "照会がタイムアウト"
@@ -66,6 +69,8 @@ func checkFailure(stage string, err error, action string) string {
 		cause = "現在の環境で git または gh を起動できない"
 	case errors.As(err, &path):
 		cause = "実行先のディレクトリまたはファイルにアクセスできない"
+	case errors.As(err, &push):
+		cause = push.cause
 	case errors.As(err, &exit):
 		cause = fmt.Sprintf("照会が終了コード %d で失敗", exit.ExitCode())
 	}

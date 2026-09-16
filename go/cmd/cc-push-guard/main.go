@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/tak848/dotfiles/go/internal/gitstate"
+	"github.com/tak848/dotfiles/go/internal/render"
 )
 
 const denySyntax = "push の対象を安全に確認できません。動的展開・eval・ブランチ変更などを分け、リテラルの git push 単独コマンドで再確認してください。"
@@ -335,7 +336,11 @@ func runWithEnv(ctx context.Context, r io.Reader, w io.Writer, check checkFunc, 
 		}
 	}
 	if e != nil {
-		return writeDeny(w, e.Error())
+		reason := e.Error()
+		if dir != "" {
+			reason += "\n作業ディレクトリ: " + render.Truncate(render.Sanitize(dir), 300)
+		}
+		return writeDeny(w, reason)
 	}
 	return nil
 }
