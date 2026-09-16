@@ -400,7 +400,8 @@ local autoModeRules = import 'auto-mode.libsonnet';
           {
             type: 'command',
             command: '~/.claude/bin/cc-push-guard',
-            timeout: 60,
+            // 確認処理の10分に、子プロセス終了と結果返却の猶予を足す。
+            timeout: 660,
             statusMessage: 'push 先とマージ済みブランチを確認中',
           },
         ],

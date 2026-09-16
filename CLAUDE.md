@@ -186,6 +186,7 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - `CC_STOP_GATE=0` / `false` / `off` / `no` で Stop 全体を明示的に無効化できる（最優先）。環境変数の配置はユーザーが決める。モデルが検査を回避するために設定を書き換えてはならない
 - `go/cmd/cc-push-guard` は同期の PreToolUse(Bash)。push 前に実送信先と ref、マージ済み PR の履歴を確認し、削除されたマージ済みブランチの復活を止める。対象が動的・曖昧な push は単独の明確なコマンドに分けるよう差し戻す。`CC_PUSH_GUARD=0` / `false` / `off` / `no` がこのガード専用の opt-out
 - push 対象の probe は dry-run。probe にだけ `--verbose` を付ける（`--quiet` のままだと Git が porcelain の更新行を省き、送信先を検査できない）。成功した probe の更新ゼロ件は正常扱い。probe 用の `--no-verify` も含め、本番の push の引数は変更しない。失敗時は操作を区別し、既知の Git 拒否（送信元 ref 不在、upstream 未設定、non-fast-forward）は固定文言で返す。生の stderr は返さない。Bash 外の MCP、外部 wrapper、検査後の変更まで完全に防ぐものではない
+- push 前の確認は `gitstate.PushTimeout`（10分）の全体予算を共有する。巨大リポジトリの交渉・照会を個別の12秒で打ち切らない。外側の hook は終了処理と返答の猶予を含め660秒。呼び出し元がより短い期限を指定した場合はそちらを守る。Stop 側の予算と失敗時の停止判定は変更しない
 - 既存 `cc-stop` は非同期の読み上げで別機能。Stop ゲートに `async` を付けると停止制御できない。ローカル設定に旧ゲートが残っていてもグローバル版で上書きされないので、展開時は二重登録を確認する
 
 ### Go の JSON 処理
