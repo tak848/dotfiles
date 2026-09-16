@@ -30,6 +30,29 @@ type fixture struct {
 	calls                                 []string
 }
 
+func TestExitIs(t *testing.T) {
+	t.Parallel()
+	for name, tc := range map[string]struct {
+		err  error
+		code int
+		want bool
+	}{
+		"nil":            {nil, 0, false},
+		"direct":         {exitError(128), 128, true},
+		"wrapped":        {fmt.Errorf("wrapped: %w", exitError(128)), 128, true},
+		"joined":         {errors.Join(errors.New("other"), exitError(1)), 1, true},
+		"different code": {exitError(1), 128, false},
+		"other error":    {errors.New("other"), 0, false},
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			if got := exitIs(tc.err, tc.code); got != tc.want {
+				t.Fatalf("exitIs=%v, want %v", got, tc.want)
+			}
+		})
+	}
+}
+
 func newFixture() *fixture {
 	return &fixture{branch: "topic", head: shaA, live: shaA, remoteURL: "https://github.com/tak848/project.git", config: map[string]string{}, prs: map[string][]pull{}}
 }
@@ -301,8 +324,7 @@ func (g *localGit) runner(ctx context.Context, dir, name string, args ...string)
 	cmd.Env = g.env
 	out, e := cmd.Output()
 	if len(args) > 0 && args[0] == "push" {
-		var ee *exec.ExitError
-		if errors.As(e, &ee) {
+		if ee, ok := errors.AsType[*exec.ExitError](e); ok {
 			e = classifyPushError(e, string(out), string(ee.Stderr))
 		}
 		g.t.Logf("probe: %q -> %q err=%v", args, string(out), e)

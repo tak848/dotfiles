@@ -93,9 +93,15 @@ func (c Client) run(ctx context.Context, dir, name string, args ...string) (stri
 func (c Client) git(ctx context.Context, dir string, args ...string) (string, error) {
 	return c.run(ctx, dir, "git", args...)
 }
+
+type exitCoder interface {
+	error
+	ExitCode() int
+}
+
 func exitIs(err error, n int) bool {
-	var e interface{ ExitCode() int }
-	return errors.As(err, &e) && e.ExitCode() == n
+	e, ok := errors.AsType[exitCoder](err)
+	return ok && e.ExitCode() == n
 }
 func (c Client) config(ctx context.Context, dir, key string) (string, error) {
 	s, e := c.git(ctx, dir, "config", "--get", key)
