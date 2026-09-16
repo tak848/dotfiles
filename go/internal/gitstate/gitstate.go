@@ -9,7 +9,6 @@ import (
 	"encoding/json/v2"
 	"errors"
 	"fmt"
-	"io"
 	"net/url"
 	"os"
 	"os/exec"
@@ -25,7 +24,6 @@ type Runner func(context.Context, string, string, ...string) (string, error)
 // Client はグローバル状態を変更せずコマンド実行をテスト用に差し替える。
 type Client struct{ Runner Runner }
 
-const unknown = "Git / GitHub の状態を確認できません。認証・通信・送信先設定を確認してから再実行してください。"
 const splitPush = "push の対象を安全に確認できません。展開や複合処理を分け、リテラルの git push 単独コマンドで再確認してください。"
 const maxOutput = 2 << 20
 
@@ -66,15 +64,18 @@ func execute(ctx context.Context, dir, name string, args ...string) (string, err
 	if os.Getenv("GIT_SSH_COMMAND") == "" && os.Getenv("GIT_SSH") == "" {
 		cmd.Env = append(cmd.Env, "GIT_SSH_COMMAND=ssh -oBatchMode=yes -oConnectTimeout=5")
 	}
-	var out limitedBuffer
+	var out, stderr limitedBuffer
 	cmd.Stdout = &out
-	cmd.Stderr = io.Discard
+	cmd.Stderr = &stderr
 	err := cmd.Run()
 	if ctx.Err() != nil {
 		return "", ctx.Err()
 	}
 	if out.overflow {
 		return "", errors.New("output limit")
+	}
+	if name == "git" && len(args) > 0 && args[0] == "push" && !stderr.overflow {
+		err = classifyPushError(err, out.String(), stderr.String())
 	}
 	return out.String(), err
 }
@@ -292,7 +293,7 @@ func (c Client) stopRef(ctx context.Context, dir, branch, remote string) (string
 		return "", err
 	}
 	if custom != "" {
-		out, err := c.git(ctx, dir, "push", "--dry-run", "--porcelain", "--no-verify", "--recurse-submodules=no", remote)
+		out, err := c.git(ctx, dir, "push", "--dry-run", "--porcelain", "--no-verify", "--recurse-submodules=no", "--verbose", remote)
 		if err != nil {
 			return "", err
 		}
@@ -692,8 +693,10 @@ func parsePorcelain(s string) ([]update, error) {
 		}
 		result = append(result, update{refs[0], refs[1], v[0] == "-"})
 	}
-	if !seenTo || !done || len(result) == 0 {
-		return nil, errors.New("empty porcelain")
+	// verbose な probe の完了行だけなら、送信対象がゼロの正常結果。
+	// 更新行がある場合はヘッダも必須。不明な出力は依然として拒否する。
+	if !done || len(result) > 0 && !seenTo {
+		return nil, errors.New("incomplete porcelain")
 	}
 	return result, nil
 }
@@ -707,16 +710,16 @@ func (c Client) CheckPush(ctx context.Context, dir string, args []string) error 
 	}
 	ok, e := c.repository(ctx, dir)
 	if e != nil || !ok {
-		return errors.New(unknown)
+		return pushFailure("worktree", e, "この作業ディレクトリが Git リポジトリか確認してください。")
 	}
 	b, e := c.git(ctx, dir, "symbolic-ref", "--quiet", "--short", "HEAD")
 	if e != nil {
-		return errors.New(unknown)
+		return pushFailure("local-branch", e, "現在のブランチと detached HEAD の状態を確認してください。")
 	}
 	branch := strings.TrimSpace(b)
 	ds, e := c.destinations(ctx, dir, branch, explicit)
 	if e != nil || len(ds) == 0 {
-		return errors.New(unknown)
+		return pushFailure("push-destination", e, "送信先の URL と push 設定を確認してください。PR の base の問題ではありません。")
 	}
 	// -- の直前に検査用フラグを置き、--verify があっても検査中の hook を無効にする。本番 argv は変更しない。
 	probe := []string{"push"}
@@ -728,15 +731,15 @@ func (c Client) CheckPush(ctx context.Context, dir string, args []string) error 
 		}
 	}
 	probe = append(probe, args[:cut]...)
-	probe = append(probe, "--dry-run", "--porcelain", "--no-verify", "--recurse-submodules=no")
+	probe = append(probe, "--dry-run", "--porcelain", "--no-verify", "--recurse-submodules=no", "--verbose")
 	probe = append(probe, args[cut:]...)
 	out, e := c.git(ctx, dir, probe...)
 	if e != nil {
-		return errors.New(unknown)
+		return pushFailure("push-probe", e, "実送信はしていません。送信元・送信先の状態を確認してください。")
 	}
 	updates, e := parsePorcelain(out)
 	if e != nil {
-		return errors.New(unknown)
+		return pushFailure("push-output", e, "Git の確認結果を解釈できません。認証失敗や PR 不在と決めつけないでください。")
 	}
 	for _, d := range ds {
 		var info repoInfo
@@ -747,7 +750,7 @@ func (c Client) CheckPush(ctx context.Context, dir string, args []string) error 
 			}
 			live, err := c.live(ctx, dir, d.url, u.target)
 			if err != nil {
-				return errors.New(unknown)
+				return pushFailure("remote-ref", err, "送信先ブランチを照会できません。接続先と Git のアクセス権を確認してください。")
 			}
 			if live != "" || d.repo == "" {
 				continue
@@ -755,13 +758,13 @@ func (c Client) CheckPush(ctx context.Context, dir string, args []string) error 
 			if !loaded {
 				info, err = c.info(ctx, dir, d.repo)
 				if err != nil {
-					return errors.New(unknown)
+					return pushFailure("github-repository", err, "対象リポジトリの GitHub API の読み取り権限と応答を確認してください。git push の認証とは別です。")
 				}
 				loaded = true
 			}
 			ps, err := c.pulls(ctx, dir, info, strings.TrimPrefix(u.target, "refs/heads/"))
 			if err != nil {
-				return errors.New(unknown)
+				return pushFailure("github-pulls", err, "送信先ブランチのマージ履歴を取得できません。GitHub API の権限と応答を確認してください。PR の積み方を変更する根拠ではありません。")
 			}
 			for _, p := range ps {
 				if p.MergedAt != nil {

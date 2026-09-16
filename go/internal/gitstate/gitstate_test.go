@@ -229,7 +229,7 @@ func TestPaginationBound(t *testing.T) {
 }
 func TestInvalidPorcelain(t *testing.T) {
 	t.Parallel()
-	for _, s := range []string{"", "Done\n", "To secret\nDone\n", "To secret\n!\trefs/heads/a:refs/heads/a\t[rejected]\nDone\n", "To secret\n*\tbad\tbad\nDone\n"} {
+	for _, s := range []string{"", "To secret\n", "*\trefs/heads/a:refs/heads/a\t[new branch]\nDone\n", "To secret\n!\trefs/heads/a:refs/heads/a\t[rejected]\nDone\n", "To secret\n*\tbad\tbad\nDone\n"} {
 		if _, e := parsePorcelain(s); e == nil {
 			t.Fatalf("accepted %q", s)
 		}
@@ -301,6 +301,10 @@ func (g *localGit) runner(ctx context.Context, dir, name string, args ...string)
 	cmd.Env = g.env
 	out, e := cmd.Output()
 	if len(args) > 0 && args[0] == "push" {
+		var ee *exec.ExitError
+		if errors.As(e, &ee) {
+			e = classifyPushError(e, string(out), string(ee.Stderr))
+		}
 		g.t.Logf("probe: %q -> %q err=%v", args, string(out), e)
 	}
 	return string(out), e
