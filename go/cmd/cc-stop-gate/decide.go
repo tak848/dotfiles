@@ -53,31 +53,24 @@ func decide(f facts) decision {
 		return block(strings.Join(reasons, "\n\n"))
 	}
 
-	if len(f.Issues) > 0 {
-		onlyFailures := true
-		for _, issue := range f.Issues {
-			if !gitstate.IsCheckFailure(issue) {
-				onlyFailures = false
-			}
+	// 補助照会の失敗は停止理由にも復旧要求にも使わない。
+	// 確認できた問題は残し、失敗だけなら通常の完遂・署名確認へ進む。
+	var issues []string
+	for _, issue := range f.Issues {
+		if !gitstate.IsCheckFailure(issue) {
+			issues = append(issues, issue)
 		}
-		if onlyFailures {
-			reasons = append(reasons, "Git / GitHub から必要な情報を取得できませんでした。")
-		} else {
-			reasons = append(reasons, "以下の Git / PR の状態を確認して対応してください。情報を取得できなかった項目は、変更や PR が無いという意味ではありません。")
-		}
+	}
+	if len(issues) > 0 {
+		reasons = append(reasons, "以下の Git / PR の状態を確認して対応してください。")
 		if f.CWD != "" {
 			reasons = append(reasons, "作業ディレクトリ: "+render.Sanitize(f.CWD))
 		}
-		for _, issue := range f.Issues {
+		for _, issue := range issues {
 			reasons = append(reasons, safeIssue(gitstate.Feedback(issue)))
 		}
 		joined := clip(strings.Join(reasons, "\n\n"), 5000)
-		if onlyFailures {
-			// 同じ不明理由で plan を照合し直させると、モデルが架空の原因を
-			// 作って PR の構造や依頼範囲を変えてしまう。検査の復旧だけに絞る。
-			return block(joined + "\n\n情報の取得失敗は PR の base 変更や依頼のやり直しを求める根拠ではない。必要な判断だけ AskUserQuestion で確認しろ。")
-		}
-		return block(joined + "\n\n依頼範囲と既存の変更を確認して対応しろ。他者の変更を勝手に commit・削除するな。情報の取得失敗を根拠に PR の積み方を変えるな。ユーザー判断が必要なら AskUserQuestion を使え。\n\n" + completionCheck)
+		return block(joined + "\n\n依頼範囲と既存の変更を確認して対応しろ。他者の変更を勝手に commit・削除するな。ユーザー判断が必要なら AskUserQuestion を使え。\n\n" + completionCheck)
 	}
 
 	if f.Message.Signature != unsigned && !f.Message.Tells {
