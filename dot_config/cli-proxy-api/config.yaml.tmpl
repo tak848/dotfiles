@@ -30,6 +30,16 @@ debug: false
 logging-to-file: false
 usage-statistics-enabled: false
 
+# 429 usage_limit_reached を食らうと、CLIProxyAPI は応答本文の resets_at / resets_in_seconds をそのまま cooldown の
+# 期限にして（parseCodexRetryAfter が resets_at を優先し、過去なら resets_in_seconds に落ちる）、期限が来るまで
+# 上流に投げずにローカルで弾く。usage_limit_reached は hard cooldown 扱いで、期限前に上流へ確認し直す経路は無い
+# （一時的な rate_limit_error はリトライ対象として意図的に除外されている）。credential は Codex の OAuth 1 本だけで
+# failover 先が無いため、cooldown は待ち時間を有効に使うどころか「ChatGPT 側で枠をリセットしても数十時間 503 を
+# 返し続ける」blackout window にしかならない。実際に resets_at が 61 時間先の 429 を 1 回食らい、その後は上流に
+# 一切届かず、プロキシがローカルで 10ms 程度で 503 を返す状態が続いた（本物の 429 は上流往復で 1.2 秒かかる）。
+# 枠が空いたかどうかは毎回上流に聞かせる。上限中なら 429 がそのまま返るが、それは上流の実状態そのもので正しい。
+disable-cooling: true
+
 # Claude Code が Claude の名前で投げてきた場合の逃げ道。claudex は 4 スロットを ANTHROPIC_DEFAULT_*_MODEL で
 # Codex モデルに向けているので通常はここを通らないが、素の Claude 名が漏れたときに Codex 側で受けられるようにする。
 # 序列は Codex の live カタログ（codex debug models）に合わせて astra > sol > terra > luna。
