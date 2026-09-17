@@ -5,6 +5,7 @@ package main
 import (
 	"context"
 	"encoding/json/v2"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -164,7 +165,7 @@ func commandPush(ts []token, depth int) bool {
 	}
 	switch name {
 	case "then", "do", "else", "elif", "if", "while", "until", "!", "{":
-		// 予約語の直後はコマンド位置。複合構文は検知だけ行い、parsePush 側で拒否する。
+		// 予約語の直後はコマンド位置。複合構文は検知だけ行い、parsePush 側で解析エラーにする。
 		return commandPush(ts[1:], depth+1)
 	case "function":
 		for i, a := range ts[1:] {
@@ -215,7 +216,7 @@ func commandPush(ts []token, depth int) bool {
 	return false
 }
 
-// parsePush は echo 'git push' など無関係なコマンドを対象外とする。未対応の push 構文は拒否する。
+// parsePush は echo 'git push' など無関係なコマンドを対象外とする。未対応構文は解析エラーにし、呼び出し側は通常の実行へ戻す。
 func parsePush(cwd, command string) (dir string, args []string, applicable bool, err error) {
 	ts, lexErr := lex(strings.TrimSpace(command))
 	if !potentialPush(ts, 0) {
@@ -302,46 +303,28 @@ func runWithEnv(ctx context.Context, r io.Reader, w io.Writer, check checkFunc, 
 	case "0", "false", "off", "no":
 		return nil
 	}
-	// 壊れた入力を無関係なコマンドとして黙って許可しない。
+	// 確認できない場合は無出力で通常の permission 判定へ戻す。明示的な allow は返さない。
 	data, e := io.ReadAll(io.LimitReader(r, (1<<20)+1))
-	if e != nil {
-		return e
-	}
-	if len(data) > 1<<20 {
-		return writeDeny(w, "push guard の入力が上限を超えました。単独コマンドに分けてください。")
+	if e != nil || len(data) > 1<<20 {
+		return nil
 	}
 	var in input
 	if e = json.Unmarshal(data, &in); e != nil {
-		return writeDeny(w, "push guard の入力を読み取れません。hook 入力を確認してください。")
-	}
-	if in.ToolName == "" {
-		return writeDeny(w, "push guard の tool_name がありません。hook 入力を確認してください。")
-	}
-	if in.ToolName != "Bash" {
 		return nil
 	}
-	if in.ToolInput == nil || in.ToolInput.Command == nil {
-		return writeDeny(w, "push guard の command がありません。hook 入力を確認してください。")
+	if in.ToolName != "Bash" || in.ToolInput == nil || in.ToolInput.Command == nil {
+		return nil
 	}
 	dir, args, applies, e := parsePush(in.CWD, *in.ToolInput.Command)
-	if !applies {
+	if e != nil || !applies || !filepath.IsAbs(dir) || ctx.Err() != nil {
 		return nil
 	}
-	if e == nil {
-		if dir == "" || !filepath.IsAbs(dir) {
-			e = fmt.Errorf("%s", denySyntax)
-		} else {
-			e = check(ctx, dir, args)
-		}
+	e = check(ctx, dir, args)
+	if ctx.Err() != nil || !errors.Is(e, gitstate.ErrMergedBranch) {
+		return nil
 	}
-	if e != nil {
-		reason := e.Error()
-		if dir != "" {
-			reason += "\n作業ディレクトリ: " + render.Truncate(render.Sanitize(dir), 300)
-		}
-		return writeDeny(w, reason)
-	}
-	return nil
+	reason := gitstate.ErrMergedBranch.Error() + "\n作業ディレクトリ: " + render.Truncate(render.Sanitize(dir), 300)
+	return writeDeny(w, reason)
 }
 func writeDeny(w io.Writer, reason string) error {
 	return json.MarshalWrite(w, map[string]any{"hookSpecificOutput": map[string]string{"hookEventName": "PreToolUse", "permissionDecision": "deny", "permissionDecisionReason": reason}})
@@ -349,8 +332,6 @@ func writeDeny(w io.Writer, reason string) error {
 func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), gitstate.PushTimeout)
 	defer cancel()
-	if err := run(ctx, os.Stdin, os.Stdout, gitstate.CheckPush); err != nil {
-		fmt.Fprintln(os.Stderr, "push guard の入出力に失敗しました。")
-		os.Exit(2)
-	}
+	// 出力失敗も exit 2 に変換せず、通常のツール実行を妨げない。
+	_ = run(ctx, os.Stdin, os.Stdout, gitstate.CheckPush)
 }
