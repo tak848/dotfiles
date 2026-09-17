@@ -499,8 +499,11 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 		reasons = append(reasons, "未 commit の変更があります。内容を確認し、必要な変更を commit してください。既存の変更を勝手に破棄・commit せず、判断が必要ならユーザーに確認してください。")
 	}
 	branch, e := c.git(ctx, dir, "symbolic-ref", "--quiet", "--short", "HEAD")
+	if exitIs(e, 1) {
+		return append(reasons, "detached HEAD です。この作業ディレクトリのブランチ状態を確認し、必要な作業を作業ブランチで処理してください。")
+	}
 	if e != nil {
-		return append(reasons, checkFailure("local-branch", e, "detached HEAD など、この作業ディレクトリ のブランチ状態を確認してください。作業用 PR の有無を調べた結果ではありません。"))
+		return append(reasons, checkFailure("local-branch", e, "この作業ディレクトリのブランチ状態を確認してください。作業用 PR の有無を調べた結果ではありません。"))
 	}
 	branch = strings.TrimSpace(branch)
 	ds, e := c.destinations(ctx, dir, branch, "")
@@ -597,7 +600,7 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 			}
 		}
 		if len(bases) > 1 {
-			reasons = append(reasons, checkFailure("pr-base", nil, "open PR の base リポジトリが複数あり、対象を確定できません。検査対象の対応付けを確認してください。ブランチが積まれていること自体を異常と判定したものではありません。"))
+			reasons = append(reasons, "open PR の base リポジトリが複数あり、対象を確定できません。検査対象の対応付けを確認してください。ブランチが積まれていること自体を異常と判定したものではありません。")
 			continue
 		}
 		// 現在の open PR で確認できるなら、古い PR の commit を取得する必要はない。
@@ -634,7 +637,7 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 		if d.repo != "" && ownerRequired(base, owners) && !open && !completed {
 			if len(bases) > 0 {
 				if covered {
-					reasons = append(reasons, checkFailure("pr-head", nil, "PR は存在しますが、head と送信先の状態が一致しません。反映待ちや照会先を確認してください。PR 不在として作成し直したり、base を変更したりする理由にはなりません。"))
+					reasons = append(reasons, "PR は存在しますが、head と送信先の状態が一致しません。反映待ちや照会先を確認してください。PR 不在として作成し直したり、base を変更したりする理由にはなりません。")
 				}
 			} else if historyFailure != "" {
 				reasons = append(reasons, historyFailure)

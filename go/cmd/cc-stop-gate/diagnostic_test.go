@@ -69,7 +69,14 @@ func TestFeedbackNeedsNoHookKnowledge(t *testing.T) {
 
 func TestObservedProblemsRemainBlocking(t *testing.T) {
 	t.Parallel()
-	for _, problem := range []string{"未 commit の変更があります。", "送信先に反映されていません。", "PR がありません。"} {
+	for _, problem := range []string{
+		"未 commit の変更があります。",
+		"送信先に反映されていません。",
+		"PR がありません。",
+		"現在の HEAD は detached HEAD です。",
+		"open PR の base リポジトリが複数あります。",
+		"PR は存在しますが、head と送信先の状態が一致しません。",
+	} {
 		f := facts{CWD: "/repo", Message: message{Signature: pledge}, Issues: []string{problem}}
 		want := decide(f)
 		for _, issues := range [][]string{
@@ -100,6 +107,58 @@ func TestDiagnosticCWDFromHookInput(t *testing.T) {
 	}
 	if code != 0 || d.Decision != "block" || !strings.Contains(d.Reason, "作業ディレクトリ: /repo/checked") || strings.Contains(d.Reason, "commit を確認できません") {
 		t.Fatal(code, d)
+	}
+}
+
+type branchExitError int
+
+func (e branchExitError) Error() string { return "symbolic-ref failed" }
+func (e branchExitError) ExitCode() int { return int(e) }
+
+func TestBranchStateThroughStopHook(t *testing.T) {
+	t.Parallel()
+	for _, tt := range []struct {
+		name    string
+		err     error
+		blocked bool
+	}{
+		{"detached HEAD", branchExitError(1), true},
+		{"execution failure", branchExitError(128), false},
+		{"timeout", context.DeadlineExceeded, false},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+			branchChecked := false
+			client := gitstate.Client{Runner: func(_ context.Context, _ string, name string, args ...string) (string, error) {
+				switch name + " " + strings.Join(args, " ") {
+				case "git rev-parse --is-inside-work-tree":
+					return "true\n", nil
+				case "git status --porcelain=v1 --untracked-files=normal":
+					return "", nil
+				case "git symbolic-ref --quiet --short HEAD":
+					branchChecked = true
+					return "", tt.err
+				default:
+					t.Fatalf("unexpected command: %s %q", name, args)
+					return "", nil
+				}
+			}}
+			payload := `{"hook_event_name":"Stop","permission_mode":"default","cwd":"/repo/checked","last_assistant_message":"完了誓約: 全項目を確認"}`
+			var out bytes.Buffer
+			if code := run(strings.NewReader(payload), &out, envMap(nil), client.CheckStop); code != 0 || !branchChecked {
+				t.Fatalf("code=%d branchChecked=%v", code, branchChecked)
+			}
+			if !tt.blocked {
+				if out.Len() != 0 {
+					t.Fatal(out.String())
+				}
+				return
+			}
+			var d decision
+			if err := json.Unmarshal(out.Bytes(), &d); err != nil || d.Decision != "block" || !strings.Contains(d.Reason, "detached HEAD") {
+				t.Fatalf("decision=%v err=%v", d, err)
+			}
+		})
 	}
 }
 
