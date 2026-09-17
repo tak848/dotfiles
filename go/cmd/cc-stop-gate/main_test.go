@@ -11,6 +11,8 @@ import (
 	"strings"
 	"testing"
 	"unicode/utf8"
+
+	"github.com/tak848/dotfiles/go/internal/gitstate"
 )
 
 func envMap(values map[string]string) lookupEnv {
@@ -40,7 +42,7 @@ func TestRun(t *testing.T) {
 		"tells":                          {mode: "default", text: "続けます", blocked: true, checked: true, contains: "叩き起こし"},
 		"signed tells":                   {mode: "default", text: "次回対応します\n完了誓約: 完了", blocked: true, checked: true, contains: "無効"},
 		"dirty no edit tool":             {mode: "default", text: "完了誓約: 完了", issues: []string{"未 commit"}, blocked: true, checked: true, contains: "未 commit"},
-		"unknown state":                  {mode: "default", text: "完了誓約: 完了", issues: []string{"認証を確認できない"}, blocked: true, checked: true, contains: "確認できない"},
+		"unknown state":                  {mode: "default", text: "完了誓約: 完了", issues: []string{gitstate.CheckFailurePrefix + " [github-repository] 認証を確認できない"}, checked: true},
 		"plan no signature":              {mode: "plan", text: "計画を示しました。", blocked: true, contains: "ExitPlanMode"},
 		"plan pledge":                    {mode: "plan", text: "完了誓約: 完了", blocked: true, contains: "完了誓約は無効"},
 		"plan survey":                    {mode: "plan", text: "調査完了: 調査結果を回答"},
@@ -119,7 +121,6 @@ func TestInvalidInput(t *testing.T) {
 		"unknown mode":    `{"hook_event_name":"Stop","permission_mode":"typo","last_assistant_message":"完了誓約: 終了"}`,
 		"null message":    `{"hook_event_name":"Stop","permission_mode":"default","last_assistant_message":null}`,
 		"wrong event":     `{"hook_event_name":"PostToolUse","last_assistant_message":"完了誓約: 終了"}`,
-		"no cwd":          `{"hook_event_name":"Stop","permission_mode":"default","last_assistant_message":"完了誓約: 終了"}`,
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
@@ -133,6 +134,26 @@ func TestInvalidInput(t *testing.T) {
 				t.Fatalf("output = %s, err = %v", &out, err)
 			}
 		})
+	}
+}
+
+func TestMissingCWDStillChecksMessage(t *testing.T) {
+	t.Parallel()
+	for _, tt := range []struct {
+		text    string
+		blocked bool
+	}{{"完了誓約: 全項目を確認", false}, {"報告のみ", true}} {
+		payload, err := json.Marshal(map[string]string{"hook_event_name": "Stop", "permission_mode": "default", "last_assistant_message": tt.text})
+		if err != nil {
+			t.Fatal(err)
+		}
+		var out bytes.Buffer
+		if code := run(bytes.NewReader(payload), &out, envMap(nil), nil); code != 0 {
+			t.Fatal(code)
+		}
+		if (out.Len() != 0) != tt.blocked || strings.Contains(out.String(), "ディレクトリ") {
+			t.Fatal(out.String())
+		}
 	}
 }
 

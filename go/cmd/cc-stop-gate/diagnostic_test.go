@@ -6,49 +6,40 @@ import (
 	"encoding/json/v2"
 	"strings"
 	"testing"
+	"testing/synctest"
+	"time"
 
 	"github.com/tak848/dotfiles/go/internal/gitstate"
 )
 
-func TestInspectionFailureDoesNotDemandReimplementation(t *testing.T) {
+func TestInspectionFailureDoesNotBlockCompletion(t *testing.T) {
 	t.Parallel()
-	f := facts{
-		CWD:     "/checked/repository",
-		Mode:    "default",
-		Message: message{Signature: pledge},
-		Issues:  []string{gitstate.CheckFailurePrefix + " [github-repository] API を確認できません。"},
-	}
-	d := decide(f)
-	if d.Decision != "block" || !strings.Contains(d.Reason, "必要な情報を取得できませんでした") || !strings.Contains(d.Reason, f.CWD) || !strings.Contains(d.Reason, "GitHub のリポジトリ情報") {
-		t.Fatal(d)
-	}
-	if strings.Contains(d.Reason, completionCheck) || strings.Contains(d.Reason, "【署名の前に全項目") {
-		t.Fatal("API failure must not demand repeating the plan checklist")
-	}
-	if !strings.Contains(d.Reason, "base 変更") || !strings.Contains(d.Reason, "根拠ではない") {
-		t.Fatal("must prevent invented PR restructuring")
-	}
-	if len([]rune(d.Reason)) > 250 {
-		t.Fatal("failure-only feedback is too verbose")
-	}
-	// 修復前に繰り返しても自動解除しない。修復後は通常の完了条件で終了できる。
-	if next := decide(f); next != d {
-		t.Fatal("failure result drifted")
-	}
-	f.Issues = nil
-	if next := decide(f); next.Decision != "" {
-		t.Fatal(next)
+	for _, sig := range []signature{pledge, survey} {
+		f := facts{
+			CWD:     "/checked/repository",
+			Mode:    "default",
+			Message: message{Signature: sig},
+			Issues:  []string{gitstate.CheckFailurePrefix + " [github-repository] API を確認できません。"},
+		}
+		if d := decide(f); d != (decision{}) {
+			t.Fatal(d)
+		}
+		// 回数による解除ではなく、初回から同じ判定にする。
+		if d := decide(f); d != (decision{}) {
+			t.Fatal(d)
+		}
 	}
 }
 
-func TestFailureFeedbackDoesNotTurnIntoScopeChanges(t *testing.T) {
+func TestInspectionFailurePreservesMessageChecks(t *testing.T) {
 	t.Parallel()
-	d := decide(facts{
-		Message: message{Signature: survey, Tells: true},
-		Issues:  []string{gitstate.CheckFailurePrefix + " [github-pulls] 一覧を確認できません。"},
-	})
-	if d.Decision != "block" || strings.Contains(d.Reason, completionCheck) || strings.Contains(d.Reason, "【叩き起こし】") {
-		t.Fatal(d)
+	for _, m := range []message{{}, {Signature: survey, Tells: true}, {Signature: pledge, Tells: true}} {
+		f := facts{Message: m}
+		want := decide(f)
+		f.Issues = []string{gitstate.CheckFailurePrefix + " [github-pulls] 一覧を確認できません。"}
+		if d := decide(f); d.Decision != "block" || d != want {
+			t.Fatalf("failure must not change the message check: got=%v want=%v", d, want)
+		}
 	}
 }
 
@@ -78,12 +69,18 @@ func TestFeedbackNeedsNoHookKnowledge(t *testing.T) {
 
 func TestObservedProblemsRemainBlocking(t *testing.T) {
 	t.Parallel()
-	d := decide(facts{
-		Message: message{Signature: pledge},
-		Issues:  []string{"未 commit の変更があります。", gitstate.CheckFailurePrefix + " [remote-ref] 確認できません。"},
-	})
-	if d.Decision != "block" || !strings.Contains(d.Reason, "未 commit") || !strings.Contains(d.Reason, "送信先ブランチの commit") || !strings.Contains(d.Reason, completionCheck) {
-		t.Fatal(d)
+	for _, problem := range []string{"未 commit の変更があります。", "送信先に反映されていません。", "PR がありません。"} {
+		f := facts{CWD: "/repo", Message: message{Signature: pledge}, Issues: []string{problem}}
+		want := decide(f)
+		for _, issues := range [][]string{
+			{problem, gitstate.CheckFailurePrefix + " [remote-ref] 確認できません。"},
+			{gitstate.CheckFailurePrefix + " [remote-ref] 確認できません。", problem},
+		} {
+			f.Issues = issues
+			if d := decide(f); d.Decision != "block" || d != want || !strings.Contains(d.Reason, problem) {
+				t.Fatalf("confirmed problem lost or failure leaked: %v", d)
+			}
+		}
 	}
 }
 
@@ -95,13 +92,69 @@ func TestDiagnosticCWDFromHookInput(t *testing.T) {
 		if cwd != "/repo/checked" {
 			t.Fatal(cwd)
 		}
-		return []string{gitstate.CheckFailurePrefix + " [commit-object] commit を確認できません。"}
+		return []string{"未 commit の変更があります。", gitstate.CheckFailurePrefix + " [commit-object] commit を確認できません。"}
 	})
 	var d decision
 	if err := json.Unmarshal(out.Bytes(), &d); err != nil {
 		t.Fatal(err)
 	}
-	if code != 0 || d.Decision != "block" || !strings.Contains(d.Reason, "作業ディレクトリ: /repo/checked") {
+	if code != 0 || d.Decision != "block" || !strings.Contains(d.Reason, "作業ディレクトリ: /repo/checked") || strings.Contains(d.Reason, "commit を確認できません") {
 		t.Fatal(code, d)
+	}
+}
+
+func TestGitStatusTimeoutDoesNotBlockCompletion(t *testing.T) {
+	synctest.Test(t, func(t *testing.T) {
+		start := time.Now()
+		statusCalled := false
+		client := gitstate.Client{Runner: func(ctx context.Context, _ string, name string, args ...string) (string, error) {
+			switch name + " " + strings.Join(args, " ") {
+			case "git rev-parse --is-inside-work-tree":
+				return "true\n", nil
+			case "git status --porcelain=v1 --untracked-files=normal":
+				statusCalled = true
+				<-ctx.Done()
+				return "", ctx.Err()
+			default:
+				t.Fatalf("unexpected command: %s %q", name, args)
+				return "", nil
+			}
+		}}
+		payload := `{"hook_event_name":"Stop","permission_mode":"default","cwd":"/repo/checked","last_assistant_message":"完了誓約: 全項目を確認"}`
+		var out bytes.Buffer
+		code := run(strings.NewReader(payload), &out, envMap(nil), client.CheckStop)
+		if code != 0 || out.Len() != 0 || !statusCalled || time.Since(start) != 12*time.Second {
+			t.Fatalf("code=%d output=%s statusCalled=%v elapsed=%v", code, out.String(), statusCalled, time.Since(start))
+		}
+	})
+}
+
+func TestOverallTimeoutPreservesConfirmedProblems(t *testing.T) {
+	for _, problem := range []string{"", "未 commit の変更があります。"} {
+		synctest.Test(t, func(t *testing.T) {
+			start := time.Now()
+			payload := `{"hook_event_name":"Stop","permission_mode":"default","cwd":"/repo/checked","last_assistant_message":"完了誓約: 全項目を確認"}`
+			var out bytes.Buffer
+			code := run(strings.NewReader(payload), &out, envMap(nil), func(ctx context.Context, _ string, _ []string) []string {
+				<-ctx.Done()
+				if problem != "" {
+					return []string{problem}
+				}
+				return nil
+			})
+			if code != 0 || time.Since(start) != checkTimeout {
+				t.Fatalf("code=%d elapsed=%v", code, time.Since(start))
+			}
+			if problem == "" {
+				if out.Len() != 0 {
+					t.Fatal(out.String())
+				}
+				return
+			}
+			var d decision
+			if err := json.Unmarshal(out.Bytes(), &d); err != nil || d.Decision != "block" || !strings.Contains(d.Reason, problem) || strings.Contains(d.Reason, "検査時間") {
+				t.Fatalf("decision=%v err=%v", d, err)
+			}
+		})
 	}
 }
