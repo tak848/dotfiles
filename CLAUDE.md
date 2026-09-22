@@ -119,7 +119,7 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 `dot_claude/agents/gpt-review.md`。`model: gpt-6-astra` の frontmatter を持つので `claudep` / `claudex` の下でしか動かない（素の `claude` では Anthropic に弾かれる）。`codex-review` agent（Codex CLI を `codex exec` で叩くラッパー）とは別物で、こちらは Claude Code のネイティブな subagent として Read / Grep / Glob / Bash / WebFetch / WebSearch / context7 / deepwiki を自分で使ってレビューする。修正はしない。
 
 - `codex-review` の thread_id 方式に当たるものは Claude Code の subagent resume で、修正後の再レビューは同じ agent に `SendMessage` で修正内容を送る（会話が残るので前回指摘と突き合わせられる）。確証バイアスを避ける最終確認は、前回の指摘を渡さずに新しいインスタンスを起動する
-- effort は frontmatter に書かず、`settings.jsonnet` の `modelSettings['gpt-6-astra']`（high）に従う。frontmatter の `effort:` は modelSettings より優先されるので、agent 側で固定したいときだけ書く。Codex の reasoning.effort は low / medium / high / xhigh / max（astra のカタログ `supported_reasoning_levels`）
+- effort は frontmatter に書かず、`settings.jsonnet` の `modelSettings['gpt-6-astra']`（high）に従う。frontmatter の `effort:` は modelSettings より優先されるので、agent 側で固定したいときだけ書く。Codex の reasoning.effort は low / medium / high / xhigh / max / ultra（astra のカタログ `supported_reasoning_levels`。sol も同じで、luna だけ ultra が無い）
 - `tools` は読み取り系に絞っているが Bash は含める（テスト・lint・`git diff` を根拠にさせるため）。ファイルを変える操作は本文で禁止している
 - 出力形式（結論 / 重要度付きの指摘 / 問題なしと判断した点 / 参照ファイル / 未確認事項）は本文で固定し、呼び出し元が全文を読む前提
 - Claude への通信は素の `claude` と同じなので Claude の quota を消費する。`gpt-*` の分だけ ChatGPT 側の quota。上書きは `CLAUDEP_GPT_MODEL` / `CLAUDEP_CONTEXT_TOKENS` / `CLAUDEP_ROUTER_PORT`
