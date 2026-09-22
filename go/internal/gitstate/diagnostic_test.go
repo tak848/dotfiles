@@ -54,20 +54,106 @@ func TestDefaultBranchStillDetectsProblems(t *testing.T) {
 	}
 }
 
+func TestStopObservedProblemsAreNotCheckFailures(t *testing.T) {
+	t.Parallel()
+	for _, tc := range []struct {
+		name, want string
+		setup      func(*fixture)
+	}{
+		{"detached HEAD", "detached HEAD", func(f *fixture) { f.branch = "" }},
+		{"multiple open PR bases", "base リポジトリが複数", func(f *fixture) {
+			f.parent = "external/project"
+			for _, base := range []string{"tak848/project", f.parent} {
+				f.prs[base] = []pull{makePull("tak848/project", base, "topic", shaA, "open", false)}
+			}
+		}},
+		{"stale PR head", "状態が一致しません", func(f *fixture) {
+			f.prs["tak848/project"] = []pull{makePull("tak848/project", "tak848/project", "topic", shaB, "open", false)}
+		}},
+		{"dirty", "未 commit", func(f *fixture) { f.status = " M file\n" }},
+		{"unpushed", "反映されていません", func(f *fixture) { f.live = shaB }},
+		{"default ahead", "既定ブランチ", func(f *fixture) { f.branch, f.live = "main", shaB }},
+		{"missing PR", "PR がありません", func(f *fixture) { f.prs = nil }},
+		{"merged branch with new commit", "追加 commit", func(f *fixture) {
+			f.live = ""
+			f.prs["tak848/project"] = []pull{makePull("tak848/project", "tak848/project", "topic", shaB, "closed", true)}
+		}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+			f := newFixture()
+			f.prs["tak848/project"] = []pull{makePull("tak848/project", "tak848/project", "topic", shaA, "open", false)}
+			tc.setup(f)
+			reasons := (Client{Runner: f.runner}).CheckStop(context.Background(), t.TempDir(), []string{"tak848"})
+			if len(reasons) != 1 || !strings.Contains(reasons[0], tc.want) || IsCheckFailure(reasons[0]) {
+				t.Fatalf("expected an observed problem containing %q, got %v", tc.want, reasons)
+			}
+		})
+	}
+}
+
+func TestStopBranchErrorClassification(t *testing.T) {
+	t.Parallel()
+	for _, tc := range []struct {
+		name        string
+		err         error
+		wantFailure bool
+	}{
+		{"detached", exitError(1), false},
+		{"wrapped detached", errors.Join(errors.New("private detail"), exitError(1)), false},
+		{"fatal", exitError(128), true},
+		{"timeout", context.DeadlineExceeded, true},
+		{"canceled", context.Canceled, true},
+		{"cannot execute", &exec.Error{Name: "secret", Err: exec.ErrNotFound}, true},
+		{"cannot access directory", &os.PathError{Op: "chdir", Path: "secret", Err: os.ErrPermission}, true},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+			f := newFixture()
+			f.status = " M file\n"
+			c := Client{Runner: func(ctx context.Context, dir, name string, args ...string) (string, error) {
+				if name == "git" && args[0] == "symbolic-ref" {
+					return "", tc.err
+				}
+				return f.runner(ctx, dir, name, args...)
+			}}
+			reasons := c.CheckStop(context.Background(), t.TempDir(), nil)
+			if len(reasons) != 2 || IsCheckFailure(reasons[0]) || !strings.Contains(reasons[0], "未 commit") {
+				t.Fatalf("lost observed worktree problem: %v", reasons)
+			}
+			if IsCheckFailure(reasons[1]) != tc.wantFailure {
+				t.Fatalf("IsCheckFailure=%v, want %v: %v", IsCheckFailure(reasons[1]), tc.wantFailure, reasons)
+			}
+			want := "detached HEAD"
+			if tc.wantFailure {
+				want = "[local-branch]"
+			}
+			if !strings.Contains(reasons[1], want) || strings.Contains(reasons[1], "private") || strings.Contains(reasons[1], "secret") {
+				t.Fatalf("incorrect diagnostic: %v", reasons)
+			}
+		})
+	}
+}
+
 func TestFailureStages(t *testing.T) {
 	t.Parallel()
-	for _, stage := range []string{"worktree", "worktree-status", "local-branch", "push-destination", "push-ref", "github-repository", "remote-ref", "github-pulls"} {
+	for _, stage := range []string{"worktree", "worktree-status", "local-branch", "push-destination", "local-head", "push-ref", "github-repository", "remote-default-branch", "remote-ref", "github-pulls"} {
 		t.Run(stage, func(t *testing.T) {
 			t.Parallel()
 			f := newFixture()
+			if stage == "remote-default-branch" {
+				f.remoteURL = "/remote.git"
+			}
 			c := Client{Runner: func(ctx context.Context, dir, name string, args ...string) (string, error) {
 				cmd := strings.Join(args, " ")
 				fail := stage == "worktree" && cmd == "rev-parse --is-inside-work-tree" ||
 					stage == "worktree-status" && args[0] == "status" ||
 					stage == "local-branch" && args[0] == "symbolic-ref" ||
 					stage == "push-destination" && cmd == "remote" ||
+					stage == "local-head" && cmd == "rev-parse --verify HEAD" ||
 					stage == "push-ref" && cmd == "config --get push.default" ||
 					stage == "github-repository" && name == "gh" && args[len(args)-1] == "repos/tak848/project" ||
+					stage == "remote-default-branch" && args[0] == "ls-remote" && args[1] == "--symref" ||
 					stage == "remote-ref" && args[0] == "ls-remote" ||
 					stage == "github-pulls" && name == "gh" && strings.Contains(cmd, "/pulls?")
 				if fail {
