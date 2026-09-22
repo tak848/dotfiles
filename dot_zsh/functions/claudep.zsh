@@ -24,7 +24,7 @@
 #   - router のログ（method / path / model / 転送先 / status / 所要時間のみ）は $XDG_STATE_HOME/cc-model-router/router.log
 #
 # 上書き用の環境変数: CLAUDEP_GPT_MODEL, CLAUDEP_CONTEXT_TOKENS, CLAUDEP_ROUTER_PORT, CLAUDEP_FABLE_MODEL
-#   例) CLAUDEP_GPT_MODEL='gpt-5.6-sol' claudep     # /model の追加候補（と ANTHROPIC_CUSTOM_MODEL_OPTION）を sol にする
+#   例) CLAUDEP_GPT_MODEL='gpt-6-sol' claudep       # /model の追加候補（と ANTHROPIC_CUSTOM_MODEL_OPTION）を sol にする
 #   例) claudeap                                   # fable スロットだけ astra（下の claudeap を参照）
 
 _claudep_router_port() {

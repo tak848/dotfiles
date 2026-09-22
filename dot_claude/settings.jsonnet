@@ -271,7 +271,7 @@ local autoModeRules = import 'auto-mode.libsonnet';
   // 未設定（デフォルト）は true 扱い（cBr() の `!== false` 判定）のため、明示的に false にする必要がある。
   // permissions.disableAutoMode 追加後は冗長だが、二重の保険として残す。
   useAutoModeDuringPlan: false,
-  model: 'claude-opus-5[1m]',
+  model: 'claude-opus-5-5[1m]',
   // model: 'opus',
 
   // 無効らしい
@@ -305,7 +305,7 @@ local autoModeRules = import 'auto-mode.libsonnet';
     MCP_TOOL_TIMEOUT: '600000',
     MAX_MCP_OUTPUT_TOKENS: '100000',  // default: 25000
     // CLAUDE_CODE_AUTO_COMPACT_WINDOW は dot_zshenv.tmpl で export している。
-    // claudex（proxy 経由で GPT-5.6 Sol を使う）が context 長に合わせて上書きするため、
+    // claudex（proxy 経由で GPT-6 Sol を使う）が context 長に合わせて上書きするため、
     // settings.json 側には置かない
     // adaptive thinking (effortLevel) が有効な場合、以下は不要
     // MAX_THINKING_TOKENS: '31199',
@@ -326,7 +326,7 @@ local autoModeRules = import 'auto-mode.libsonnet';
     // 2.1.217 で subagent に 2 つの上限が入った。
     // - 同時実行数の上限（既定 20）。既定のまま明示（暴走防止のため上げすぎない）
     // - subagent からの nested spawn 禁止（既定は深さ 1 相当）。1 段だけネスト委譲を許可する。
-    //   claudex（GPT-5.6 Sol）利用時に subagent が無限に生成されることがあるため深くしない
+    //   claudex（GPT-6 Sol）利用時に subagent が無限に生成されることがあるため深くしない
     CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS: '20',
     CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH: '2',
     // 実験的 Agent Teams は無効化する。teammate（subagent）の permission request が
@@ -337,7 +337,7 @@ local autoModeRules = import 'auto-mode.libsonnet';
   },
   // server-side advisor tool（実験的）。方針を決める前・同じエラーが繰り返すとき・完了を宣言する前などに
   // Claude が第二のモデルへ会話全体を渡して意見を求める。呼ぶタイミングはモデル側が決める。
-  // advisor は main model 以上の能力が要求され、main が Opus 5 だと Fable か Opus 4.7 以降しか受け付けない
+  // advisor は main model 以上の能力が要求され、main が Opus 5.5 だと Fable か同等以上しか受け付けない
   // （Sonnet を指定しても pairing 検証で落ちて advisor 無しで飛ぶ）。
   // プランによっては Fable advisor に usage credits への請求の同意が要る。未同意だと advisor が付かないので、
   // その場合は /model fable で同意する。claudex では advisor は効かない（server tool が proxy を通らず、
