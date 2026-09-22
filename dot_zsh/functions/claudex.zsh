@@ -1,4 +1,4 @@
-# claudex: Claude Code のハーネスのまま、モデルだけ Codex（GPT-5.6 Sol / GPT-6 Astra）にする
+# claudex: Claude Code のハーネスのまま、モデルだけ Codex（GPT-6 Sol / GPT-6 Astra）にする
 #
 # CLIProxyAPI（router-for-me/CLIProxyAPI、mise の github backend で導入）が Anthropic Messages API 互換の
 # プロキシとして立ち、ChatGPT サブスクの OAuth 経由で Codex backend に転送する。ツールループ・サブエージェント・
@@ -104,20 +104,22 @@ claudex() {
         return 1
     fi
 
-    # Codex の live カタログ（codex debug models）上の序列は astra（"Our most capable model"、GPT-6）
-    # > sol（"Reliable agentic workhorse"）> terra（balanced）> luna（fast/affordable）で、Claude 側の
-    # fable > opus > sonnet > haiku というスロットの重みに素直に対応する。primary（--model）は素の Claude の
-    # 既定が Opus であるのに合わせて sol のままにし、fable スロットだけ astra に向ける。
+    # Codex の live カタログ（codex debug models）上の GPT-6 の序列は priority 順に
+    # astra（"Our most capable model"）> sol > luna で、Claude 側の fable > opus > sonnet > haiku という
+    # スロットの重みに対応させる。primary（--model）は素の Claude の既定が Opus であるのに合わせて sol。
+    # GPT-6 世代に terra は無い（terra は 5.6 のみ）。sonnet スロットには 5.6 に落とさず sol を当てる。
+    # カタログの priority は astra(1) > sol(2) > luna(3) > 5.6-sol(4) > 5.6-terra(7) > 5.6-luna(8) で、
+    # gpt-6-luna ですら gpt-5.6-terra より上位に置かれているため、世代を跨いで下げる意味が無い。
     # claudexf 用。CLAUDEX_FAST=1 なら各モデルを <model>-fast（config.yaml の別名。CLIProxyAPI が payload.override で
     # service_tier: priority を付けて素の名前で Codex に送る）に向ける。Claude Code の fast mode（fastMode +
     # speed: fast）は Opus 専用で、gpt-* の primary では speed が送られないことを捕捉サーバーで確認したため、
     # モデル名で tier を分ける方式にした。CLAUDEX_*_MODEL で明示された名前には付けない。
     local suffix=""
     [[ "${CLAUDEX_FAST:-0}" == 1 ]] && suffix="-fast"
-    local model="${CLAUDEX_MODEL:-gpt-5.6-sol${suffix}}"
+    local model="${CLAUDEX_MODEL:-gpt-6-sol${suffix}}"
     local fable_model="${CLAUDEX_FABLE_MODEL:-gpt-6-astra${suffix}}"
-    local mid_model="${CLAUDEX_MID_MODEL:-gpt-5.6-terra${suffix}}"
-    local small_model="${CLAUDEX_SMALL_MODEL:-gpt-5.6-luna${suffix}}"
+    local mid_model="${CLAUDEX_MID_MODEL:-gpt-6-sol${suffix}}"
+    local small_model="${CLAUDEX_SMALL_MODEL:-gpt-6-luna${suffix}}"
 
     # Claude Code は model ID のパターンで effort / thinking 対応を判定するため、gpt-* だとどちらも無効になる。
     # 各スロットの _SUPPORTED_CAPABILITIES で明示する。adaptive_thinking が重要で、これが無いと Claude Code は
@@ -133,7 +135,7 @@ claudex() {
     # カタログの既定は context_window=272000 だが、クライアントは max_context_window まで引き上げてよい
     # （codex 本体も model_context_window をこの値で clamp する）。2026-08 に OpenAI が API key 限定だった
     # 1M context を ChatGPT アカウントにも解禁し、このアカウントの max_context_window は 872000
-    # （2026-08-31 時点。おそらく 1,000,000 から出力 128,000 を引いた値）。astra も同じ 872000。
+    # （2026-08-31 時点。おそらく 1,000,000 から出力 128,000 を引いた値）。GPT-6 の astra / sol / luna も同じ 872000。
     # カタログは過去に 272K ↔ 372K と揺れているので、巻き戻ったら CLAUDEX_CONTEXT_TOKENS で下げる。
     #
     # dot_zshenv.tmpl の CLAUDE_CODE_AUTO_COMPACT_WINDOW=750000 が model context より小さいため、
@@ -151,7 +153,7 @@ claudex() {
     # subagent も、定義側で model を明示しているものはこのスロット経由で解決される。
     #   - ANTHROPIC_DEFAULT_FABLE_MODEL:  fable エイリアス（/model fable、model: fable の subagent）→ astra 系
     #   - ANTHROPIC_DEFAULT_OPUS_MODEL:   opus エイリアス／plan mode の opusplan（plan フェーズ）→ primary と同じ sol 系
-    #   - ANTHROPIC_DEFAULT_SONNET_MODEL: sonnet エイリアス／opusplan の実行フェーズ → terra 系
+    #   - ANTHROPIC_DEFAULT_SONNET_MODEL: sonnet エイリアス／opusplan の実行フェーズ → sol 系（GPT-6 に terra が無いため）
     #   - ANTHROPIC_DEFAULT_HAIKU_MODEL:  haiku エイリアス＋バックグラウンド機能（要約・タイトル生成等）→ luna 系
     #     （旧 ANTHROPIC_SMALL_FAST_MODEL は非推奨: model-config の環境変数表の注記）
     #
