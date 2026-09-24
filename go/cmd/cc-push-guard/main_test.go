@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json/v2"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"os/exec"
@@ -12,6 +13,11 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+	"testing/iotest"
+	"testing/synctest"
+	"time"
+
+	"github.com/tak848/dotfiles/go/internal/gitstate"
 )
 
 func runForTest(ctx context.Context, r io.Reader, w io.Writer, check checkFunc) error {
@@ -101,11 +107,24 @@ func TestParsePush(t *testing.T) {
 func TestHookOutput(t *testing.T) {
 	t.Parallel()
 	for _, tt := range []struct {
-		command        string
+		name, command  string
 		err            error
 		wantCall, deny bool
-	}{{"echo 'git push'", nil, false, false}, {"git push", nil, true, false}, {"git push", errors.New("確認不能"), true, true}, {"git switch topic && git push", nil, false, true}} {
-		t.Run(tt.command+strings.TrimSpace(strings.Repeat("x", btoi(tt.deny))), func(t *testing.T) {
+	}{
+		{"unrelated", "echo 'git push'", nil, false, false},
+		{"normal", "git push", nil, true, false},
+		{"unknown", "git push", errors.New("確認不能"), true, false},
+		{"timeout", "git push", context.DeadlineExceeded, true, false},
+		{"canceled", "git push", context.Canceled, true, false},
+		{"same text is not evidence", "git push", errors.New(gitstate.ErrMergedBranch.Error()), true, false},
+		{"confirmed", "git push", gitstate.ErrMergedBranch, true, true},
+		{"wrapped confirmed", "git push", fmt.Errorf("private details: %w", gitstate.ErrMergedBranch), true, true},
+		{"switch", "git switch topic && git push", nil, false, false},
+		{"pipeline and redirect", "git push origin feature/example 2>&1 | tail -2", nil, false, false},
+		{"dynamic", `git push "$REMOTE"`, nil, false, false},
+		{"unclosed quote", `git push 'origin`, nil, false, false},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			payload, _ := json.Marshal(map[string]any{"cwd": "/repo", "tool_name": "Bash", "tool_input": map[string]string{"command": tt.command}})
 			var out bytes.Buffer
@@ -129,14 +148,11 @@ func TestHookOutput(t *testing.T) {
 			if e = json.Unmarshal(out.Bytes(), &v); e != nil || v.Hook["permissionDecision"] != "deny" || v.Hook["hookEventName"] != "PreToolUse" {
 				t.Fatalf("deny output=%s err=%v", out.String(), e)
 			}
+			if v.Hook["permissionDecisionReason"] != gitstate.ErrMergedBranch.Error()+"\n作業ディレクトリ: /repo" {
+				t.Fatalf("unexpected reason: %s", out.String())
+			}
 		})
 	}
-}
-func btoi(b bool) int {
-	if b {
-		return 1
-	}
-	return 0
 }
 func TestGitCUsesPhysicalDirectory(t *testing.T) {
 	t.Parallel()
@@ -185,12 +201,50 @@ func TestGitCUsesPhysicalDirectory(t *testing.T) {
 		}
 	}
 }
+func TestReadFailureIsSilent(t *testing.T) {
+	t.Parallel()
+	var out bytes.Buffer
+	if err := runForTest(context.Background(), iotest.ErrReader(io.ErrUnexpectedEOF), &out, nil); err != nil || out.Len() != 0 {
+		t.Fatalf("err=%v output=%s", err, out.String())
+	}
+}
+
+func TestUnknownDirectoryIsSilent(t *testing.T) {
+	t.Parallel()
+	for _, cwd := range []string{"", "relative/path"} {
+		payload, _ := json.Marshal(map[string]any{"cwd": cwd, "tool_name": "Bash", "tool_input": map[string]string{"command": "git push"}})
+		var out bytes.Buffer
+		if err := runForTest(context.Background(), bytes.NewReader(payload), &out, nil); err != nil || out.Len() != 0 {
+			t.Fatalf("cwd=%q err=%v output=%s", cwd, err, out.String())
+		}
+	}
+}
+
+func TestExpiredCheckIsSilent(t *testing.T) {
+	for _, result := range []error{context.DeadlineExceeded, gitstate.ErrMergedBranch} {
+		synctest.Test(t, func(t *testing.T) {
+			ctx, cancel := context.WithTimeout(context.Background(), gitstate.PushTimeout)
+			defer cancel()
+			start := time.Now()
+			var out bytes.Buffer
+			payload := `{"cwd":"/repo","tool_name":"Bash","tool_input":{"command":"git push"}}`
+			err := runForTest(ctx, strings.NewReader(payload), &out, func(ctx context.Context, _ string, _ []string) error {
+				<-ctx.Done()
+				return result
+			})
+			if err != nil || out.Len() != 0 || time.Since(start) != 5*time.Second {
+				t.Fatalf("err=%v output=%s elapsed=%v", err, out.String(), time.Since(start))
+			}
+		})
+	}
+}
+
 func TestMalformedInput(t *testing.T) {
 	t.Parallel()
 	for _, s := range []string{"{", "null", "{}", `{"tool_name":"Bash"}`, `{"tool_name":"Bash","tool_input":null}`, `{"tool_name":"Bash","tool_input":{}}`, `{"tool_name":"Bash","tool_input":{"command":null}}`, strings.Repeat("x", (1<<20)+1)} {
 		var out bytes.Buffer
-		if e := runForTest(context.Background(), strings.NewReader(s), &out, nil); e != nil || !strings.Contains(out.String(), `"deny"`) {
-			t.Fatalf("malformed input accepted: %v", e)
+		if e := runForTest(context.Background(), strings.NewReader(s), &out, nil); e != nil || out.Len() != 0 {
+			t.Fatalf("malformed input must fail open: err=%v output=%s", e, out.String())
 		}
 	}
 }

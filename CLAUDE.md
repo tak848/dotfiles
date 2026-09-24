@@ -184,9 +184,9 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - 検査失敗は内部で `【確認不能】 [検査ID]` として分類し、Stop の判定時に除外する。照会の復旧要求や失敗文は agent に返さない。detached HEAD・複数の open PR base・PR head と送信先の不一致は取得した情報から確認できた要確認状態であり、この失敗分類に含めない。`symbolic-ref` の exit 1 と、それ以外の実行失敗も区別する。確認済みの問題と失敗が混在する場合は、確認済みの問題だけで差し戻す。失敗だけで、有効な署名があり離脱宣言も無ければ無出力で終了する。署名不足・離脱宣言・plan mode・作業待機の判定は省略しない。情報の取得失敗を PR 不在や plan 未完了とみなさず、PR の base 変更やブランチ統合も要求しない
 - `CC_STOP_GATE_REQUIRE_PR_OWNERS` は **PR が無いので作成しろという指示だけ**の対象 owner 一覧。未設定なら `tak848`、設定時はカンマ区切りの一覧で置き換え、空文字は作成要求なし。前後の空白を除き大文字小文字を区別しない。fork は origin の owner だけで判断しない。他の停止チェックと push ガードには適用しない
 - `CC_STOP_GATE=0` / `false` / `off` / `no` で Stop 全体を明示的に無効化できる（最優先）。環境変数の配置はユーザーが決める。モデルが検査を回避するために設定を書き換えてはならない
-- `go/cmd/cc-push-guard` は同期の PreToolUse(Bash)。push 前に実送信先と ref、マージ済み PR の履歴を確認し、削除されたマージ済みブランチの復活を止める。対象が動的・曖昧な push は単独の明確なコマンドに分けるよう差し戻す。`CC_PUSH_GUARD=0` / `false` / `off` / `no` がこのガード専用の opt-out
-- push 対象の probe は dry-run。probe にだけ `--verbose` を付ける（`--quiet` のままだと Git が porcelain の更新行を省き、送信先を検査できない）。成功した probe の更新ゼロ件は正常扱い。probe 用の `--no-verify` も含め、本番の push の引数は変更しない。失敗時は操作を区別し、既知の Git 拒否（送信元 ref 不在、upstream 未設定、non-fast-forward）は固定文言で返す。生の stderr は返さない。Bash 外の MCP、外部 wrapper、検査後の変更まで完全に防ぐものではない
-- push 前の確認は `gitstate.PushTimeout`（10分）の全体予算を共有する。巨大リポジトリの交渉・照会を個別の12秒で打ち切らない。外側の hook は終了処理と返答の猶予を含め660秒。呼び出し元がより短い期限を指定した場合はそちらを守る。Stop 側の予算と失敗時の停止判定は変更しない
+- `go/cmd/cc-push-guard` は同期の PreToolUse(Bash)。push 前に実送信先と ref、マージ済み PR の履歴を確認し、削除されたマージ済みブランチの復活を確認できた場合だけ `ErrMergedBranch` を根拠に deny を返す。入力不正・読み取り失敗・未対応構文（pipeline / redirect / 動的展開など）・照会失敗・タイムアウトでは無出力で通常の処理へ戻す。明示的な allow は返さず、既存の permission 判定を迂回しない。`CC_PUSH_GUARD=0` / `false` / `off` / `no` がこのガード専用の opt-out
+- push 対象の probe は dry-run。probe にだけ `--verbose` を付ける（`--quiet` のままだと Git が porcelain の更新行を省き、送信先を検査できない）。成功した probe の更新ゼロ件は正常扱い。probe 用の `--no-verify` も含め、本番の push の引数は変更しない。既知の Git 拒否（送信元 ref 不在、upstream 未設定、non-fast-forward）も hook からは返さず、本来の Git の実行結果に任せる。未対応構文や確認失敗を通す best-effort の確認であり、すべての push を防ぐものではない
+- push 前の確認は `gitstate.PushTimeout`（5秒）の全体予算を共有する。期限内に確認できなければ無出力で通常の処理へ戻す。外側の hook は終了処理と返答の猶予を含め10秒。呼び出し元がより短い期限を指定した場合はそちらを守る。本来の git push の制限時間、Stop 側の予算と失敗時の停止判定は変更しない
 - 既存 `cc-stop` は非同期の読み上げで別機能。Stop ゲートに `async` を付けると停止制御できない。ローカル設定に旧ゲートが残っていてもグローバル版で上書きされないので、展開時は二重登録を確認する
 
 ### Go の JSON 処理
