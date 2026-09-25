@@ -17,7 +17,12 @@ const (
 type message struct {
 	Signature signature
 	Tells     bool
+	// Tell は一致した語、Excerpt はその前後を含む同じ行の抜粋。
+	// 差し戻し文で、本文のどこが一致したかを示すために使う。
+	Tell, Excerpt string
 }
+
+const excerptRunes = 30
 
 // 元のゲートと同じ日英の離脱パターン。意味的な完遂を証明するものではなく、
 // 否定表現にも一致し得る。引用・コード・最終署名行は analyze 側で除く。
@@ -58,8 +63,34 @@ func analyze(text string) message {
 		body.WriteString(line)
 		body.WriteByte('\n')
 	}
-	result.Tells = tellsPattern.MatchString(body.String())
+	checked := body.String()
+	if loc := tellsPattern.FindStringIndex(checked); loc != nil {
+		result.Tells = true
+		result.Tell = checked[loc[0]:loc[1]]
+		result.Excerpt = excerpt(checked, loc[0], loc[1])
+	}
 	return result
+}
+
+// excerpt は一致箇所を含む行を、前後 excerptRunes 文字までに切り詰める。
+func excerpt(text string, start, end int) string {
+	lineStart := strings.LastIndexByte(text[:start], '\n') + 1
+	lineEnd := len(text)
+	if i := strings.IndexByte(text[end:], '\n'); i >= 0 {
+		lineEnd = end + i
+	}
+	before := []rune(text[lineStart:start])
+	after := []rune(text[end:lineEnd])
+	prefix, suffix := "", ""
+	if len(before) > excerptRunes {
+		before = before[len(before)-excerptRunes:]
+		prefix = "…"
+	}
+	if len(after) > excerptRunes {
+		after = after[:excerptRunes]
+		suffix = "…"
+	}
+	return strings.TrimSpace(prefix + string(before) + text[start:end] + string(after) + suffix)
 }
 
 func fence(line string) (byte, int) {
