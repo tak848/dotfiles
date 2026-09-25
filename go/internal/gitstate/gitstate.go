@@ -303,6 +303,78 @@ func (c Client) explicitURL(ctx context.Context, dir, raw string) (string, error
 	return raw, nil
 }
 
+// upstreamMismatch は、push.default が simple でブランチ名と upstream 名が異なる設定。
+// 照会失敗ではなく設定から決まる状態なので、CheckStop は upstream と比べて判定する。
+type upstreamMismatch struct{ mode, merge string }
+
+func (e *upstreamMismatch) Error() string { return "simple name mismatch" }
+
+func short(sha string) string {
+	if len(sha) > 7 {
+		return sha[:7]
+	}
+	return sha
+}
+
+// liveLabel は送信先の ref の状態を、差し戻し文用に短く表す。
+func liveLabel(live string) string {
+	if live == "" {
+		return "存在しない"
+	}
+	return short(live)
+}
+
+func prLabel(p pull) string {
+	base := ""
+	if p.Base.Repo != nil {
+		base = p.Base.Repo.FullName
+	}
+	if p.Number > 0 {
+		return fmt.Sprintf("#%d（base %s）", p.Number, base)
+	}
+	return "（base " + base + "）"
+}
+
+// upstreamReason は、upstream の送信先に HEAD が含まれるかで、push すべきものの有無を判定する。
+func (c Client) upstreamReason(ctx context.Context, dir string, d destination, branch, head string, m *upstreamMismatch) string {
+	live, err := c.live(ctx, dir, d.url, m.merge)
+	if err != nil {
+		return checkFailure("remote-ref", err, "upstream の送信先 ref を照会できません。")
+	}
+	if live != "" {
+		covered, failure := c.covers(ctx, dir, d.url, head, live)
+		if failure != "" {
+			return failure
+		}
+		if covered {
+			return ""
+		}
+	}
+	mode := "push.default が " + m.mode
+	if m.mode == "" {
+		mode = "push.default が未設定（既定の simple）"
+	}
+	upstream := strings.TrimPrefix(m.merge, "refs/heads/")
+	return fmt.Sprintf("ブランチ %s の upstream は %s/%s で、ブランチ名と異なります。%s のため、引数なしの git push では送信先が決まりません。HEAD %s は push 先 %s の %s（%s）に含まれていません。push 先のブランチを明示して push してください。", branch, d.remote, upstream, mode, short(head), d.remote, m.merge, liveLabel(live))
+}
+
+// unpushedReason は未反映の内容と、通常の push で済むか（履歴が分岐しているか）を示す。
+func (c Client) unpushedReason(ctx context.Context, dir string, d destination, branch, ref, head, live string) string {
+	if live == "" {
+		return fmt.Sprintf("ブランチ %s の HEAD %s について、push 先 %s に %s がありません。差分を確認して push してください。", branch, short(head), d.remote, ref)
+	}
+	s := fmt.Sprintf("ブランチ %s の HEAD %s は、push 先 %s の %s（%s）に含まれていません。", branch, short(head), d.remote, ref, short(live))
+	ahead, failure := c.covers(ctx, dir, d.url, live, head)
+	switch {
+	case failure != "":
+		return s + "差分を確認して push してください。"
+	case ahead:
+		return s + "HEAD は送信先より先に進んでいるだけなので、通常の push で反映できます。"
+	default:
+		return s + "送信先の commit は HEAD の祖先ではなく、履歴が分岐しています（rebase など）。通常の push は拒否されます。自分で履歴を書き換えた結果なら --force-with-lease で push し、送信先に自分以外の commit が含まれる可能性があればユーザーに確認してください。"
+	}
+}
+
 // stopRef はマージ後の prune で消える remote-tracking ref に依存せず、現在のブランチの送信先 ref を解決する。
 func (c Client) stopRef(ctx context.Context, dir, branch, remote string) (string, error) {
 	custom, err := c.config(ctx, dir, "remote."+remote+".push")
@@ -354,7 +426,7 @@ func (c Client) stopRef(ctx context.Context, dir, branch, remote string) (string
 		return merge, nil
 	case "", "simple":
 		if tracking == remote && merge != "" && merge != "refs/heads/"+branch {
-			return "", errors.New("simple name mismatch")
+			return "", &upstreamMismatch{mode: mode, merge: merge}
 		}
 		return "refs/heads/" + branch, nil
 	default:
@@ -399,6 +471,7 @@ type repoInfo struct {
 	Parent        *repoInfo `json:"parent"`
 }
 type pull struct {
+	Number   int     `json:"number"`
 	State    string  `json:"state"`
 	MergedAt *string `json:"merged_at"`
 	Head     struct {
@@ -495,12 +568,26 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 	if e != nil {
 		return []string{checkFailure("worktree-status", e, "この作業ディレクトリ で git status を確認してください。変更の有無はまだ判定していません。")}
 	}
-	if strings.TrimSpace(status) != "" {
-		reasons = append(reasons, "未 commit の変更があります。内容を確認し、必要な変更を commit してください。既存の変更を勝手に破棄・commit せず、判断が必要ならユーザーに確認してください。")
+	if lines := strings.Split(strings.TrimRight(status, "\n"), "\n"); strings.TrimSpace(status) != "" {
+		var paths []string
+		for _, line := range lines {
+			if len(line) > 3 && len(paths) < 2 {
+				paths = append(paths, line[3:])
+			}
+		}
+		list := strings.Join(paths, ", ")
+		if len(lines) > len(paths) {
+			list += fmt.Sprintf(", 他 %d 件", len(lines)-len(paths))
+		}
+		reasons = append(reasons, fmt.Sprintf("git status で未 commit の変更が %d 件あります（%s）。内容を確認し、必要な変更を commit してください。既存の変更を勝手に破棄・commit せず、判断が必要ならユーザーに確認してください。", len(lines), list))
 	}
 	branch, e := c.git(ctx, dir, "symbolic-ref", "--quiet", "--short", "HEAD")
 	if exitIs(e, 1) {
-		return append(reasons, "detached HEAD です。この作業ディレクトリのブランチ状態を確認し、必要な作業を作業ブランチで処理してください。")
+		at := ""
+		if h, err := c.git(ctx, dir, "rev-parse", "--verify", "HEAD"); err == nil && validSHA(strings.TrimSpace(h)) {
+			at = "（" + short(strings.TrimSpace(h)) + "）"
+		}
+		return append(reasons, "現在の HEAD"+at+"はブランチを指していません（detached HEAD）。この作業ディレクトリのブランチ状態を確認し、必要な作業を作業ブランチで処理してください。")
 	}
 	if e != nil {
 		return append(reasons, checkFailure("local-branch", e, "この作業ディレクトリのブランチ状態を確認してください。作業用 PR の有無を調べた結果ではありません。"))
@@ -520,6 +607,12 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 	}
 	for _, d := range ds {
 		ref, err := c.stopRef(ctx, dir, branch, d.remote)
+		if m, ok := errors.AsType[*upstreamMismatch](err); ok {
+			if r := c.upstreamReason(ctx, dir, d, branch, head, m); r != "" {
+				reasons = append(reasons, r)
+			}
+			continue
+		}
 		if err != nil {
 			reasons = append(reasons, checkFailure("push-ref", err, "push.default / remote の push refspec / tracking 設定を確認してください。PR はまだ照会していないので、base 変更で修復しようとしないでください。"))
 			continue
@@ -565,7 +658,7 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 		}
 		if isDefault {
 			if !covered {
-				reasons = append(reasons, "既定ブランチ（main / master を含む）に未反映の commit があります。main へ直接 push せず、作業ブランチへ移して確認してください。")
+				reasons = append(reasons, fmt.Sprintf("ブランチ %s の HEAD %s は、既定ブランチである push 先 %s の %s（%s）に含まれていません。既定ブランチへ直接 push せず、この commit を作業ブランチで扱い、push 先もその作業ブランチにしてください。", branch, short(head), d.remote, ref, liveLabel(live)))
 			}
 			continue
 		}
@@ -587,11 +680,15 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 		}
 		// open PR があれば、origin の owner ではなく、その PR の実際の base で判定する。
 		bases := map[string]bool{}
+		var openPRs, openHeads, mergedPRs []string
 		for _, p := range ps {
 			if p.MergedAt != nil {
 				merged = true
+				mergedPRs = append(mergedPRs, prLabel(p))
 			}
 			if p.State == "open" {
+				openPRs = append(openPRs, prLabel(p))
+				openHeads = append(openHeads, prLabel(p)+"の head は "+short(p.Head.SHA))
 				bases[strings.ToLower(p.Base.Repo.FullName)] = true
 				base = p.Base.Repo.FullName
 				if p.Head.SHA == head || covered && p.Head.SHA == live {
@@ -600,7 +697,7 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 			}
 		}
 		if len(bases) > 1 {
-			reasons = append(reasons, "open PR の base リポジトリが複数あり、対象を確定できません。検査対象の対応付けを確認してください。ブランチが積まれていること自体を異常と判定したものではありません。")
+			reasons = append(reasons, fmt.Sprintf("ブランチ %s を head とする open PR が、複数の base リポジトリにあります（%s）。今回の作業でどの PR を対象とするか、ユーザーに確認してください。", targetBranch, strings.Join(openPRs, "、")))
 			continue
 		}
 		// 現在の open PR で確認できるなら、古い PR の commit を取得する必要はない。
@@ -628,21 +725,25 @@ func (c Client) CheckStop(ctx context.Context, dir string, owners []string) []st
 				reasons = append(reasons, historyFailure)
 				continue
 			}
-			reasons = append(reasons, "マージ後に削除されたブランチに追加 commit があります。削除ブランチを push で復活させず、新しい作業ブランチで処理してください。")
+			reasons = append(reasons, fmt.Sprintf("push 先 %s に %s がありません。このブランチはマージ済み PR %s の head です。HEAD %s は、そのマージ済み PR の head 履歴に含まれていません。削除されたブランチを push で作り直さず、新しい作業ブランチを作り、push 先もそのブランチにしてください。", d.remote, ref, strings.Join(mergedPRs, "、"), short(head)))
 			continue
 		}
 		if !covered {
-			reasons = append(reasons, "現在の commit が push 送信先に反映されていません。送信先と差分を確認して push してください。")
+			reasons = append(reasons, c.unpushedReason(ctx, dir, d, branch, ref, head, live))
 		}
 		if d.repo != "" && ownerRequired(base, owners) && !open && !completed {
 			if len(bases) > 0 {
 				if covered {
-					reasons = append(reasons, "PR は存在しますが、head と送信先の状態が一致しません。反映待ちや照会先を確認してください。PR 不在として作成し直したり、base を変更したりする理由にはなりません。")
+					reasons = append(reasons, fmt.Sprintf("open PR %s で、現在の HEAD %s（push 先 %s の %s にも反映済み）と一致しません。GitHub 側の反映を待つか、PR の head ブランチを確認してください。PR の作り直しや base の変更は不要です。", strings.Join(openHeads, "、"), short(head), d.remote, ref))
 				}
 			} else if historyFailure != "" {
 				reasons = append(reasons, historyFailure)
 			} else {
-				reasons = append(reasons, "現在の commit を扱う PR がありません。base リポジトリを確認して draft PR を作成してください。")
+				searched := info.FullName
+				if info.Parent != nil && !strings.EqualFold(info.Parent.FullName, info.FullName) {
+					searched += "・" + info.Parent.FullName
+				}
+				reasons = append(reasons, fmt.Sprintf("%s:%s を head とする PR を %s で探しましたが、HEAD %s を含む PR はありません。draft PR を作成してください。", strings.Split(info.FullName, "/")[0], targetBranch, searched, short(head)))
 			}
 		}
 	}

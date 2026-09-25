@@ -30,16 +30,35 @@ const planCheck = `【plan mode で説明だけして止まるな】
 調査・質問への回答だけで完了する依頼なら、答え切って最終行に「調査完了: <分かったことの1行要約>」と書け。計画作成を求められているのに、この署名で計画提示を省略するな。
 plan mode の計画ファイルや説明用 HTML を commit / push する必要はない。`
 
+const noWaitTarget = "「作業待機」と書かれていますが、実行中の背景タスクも予定済みの cron もありません。待つ対象が無いので、今できる作業を実行してください。"
+
+// resign は、署名の形式を既に使えている場合に完遂確認の全文を繰り返さないための 1 文。
+const resign = "対応後、依頼の全項目を照合し直し、最終行に同じ形式の署名を書け。"
+
+// tellReason は、本文のどこが一致したかを引用する。否定文でも一致し得るため、
+// 残作業がある場合と無い場合の行動を両方示す。
+func tellReason(m message, plan bool) string {
+	s := "本文の「" + render.Sanitize(m.Tell) + "」（" + render.Sanitize(m.Excerpt) + "）が、途中で止める・先送りする表現に一致しました。署名があっても、このままでは終了できません。\n"
+	if plan {
+		return s + "計画がまとまっているなら提示してください。一致が否定文などによる誤りなら、その表現を使わずに書き直してください。"
+	}
+	return s + "実際に残っている作業があれば、今実行してください。残作業が無い（否定文などで一致した）なら、その表現を使わずに事実を書き、署名し直してください。"
+}
+
 func decide(f facts) decision {
+	plan := f.Mode == "plan"
 	if f.Message.Signature == waiting {
 		if f.Inflight > 0 {
 			return decision{}
 		}
-		return block("【作業待機は無効】完了を待つ実行中・予定済みの作業が無く、待つ相手が存在しない。今できる作業を実行しろ。\n\n" + completionCheck)
+		if plan {
+			return block(noWaitTarget + "\n\n" + planCheck)
+		}
+		return block(noWaitTarget + "\n\n" + completionCheck)
 	}
 
 	var reasons []string
-	if f.Mode == "plan" {
+	if plan {
 		if f.Message.Signature == survey && !f.Message.Tells {
 			return decision{}
 		}
@@ -47,7 +66,7 @@ func decide(f facts) decision {
 			reasons = append(reasons, "【完了誓約は無効】plan mode では実装完了の署名で計画提示を代替できない。")
 		}
 		if f.Message.Tells {
-			reasons = append(reasons, "【叩き起こし】本文が離脱宣言のルールに一致している。計画の途中で止まらず、依頼された範囲をやり切れ。署名があってもこの状態では無効。")
+			reasons = append(reasons, tellReason(f.Message, true))
 		}
 		reasons = append(reasons, planCheck)
 		return block(strings.Join(reasons, "\n\n"))
@@ -69,15 +88,21 @@ func decide(f facts) decision {
 		for _, issue := range issues {
 			reasons = append(reasons, safeIssue(gitstate.Feedback(issue)))
 		}
-		joined := clip(strings.Join(reasons, "\n\n"), 5000)
-		return block(joined + "\n\n依頼範囲と既存の変更を確認して対応しろ。他者の変更を勝手に commit・削除するな。ユーザー判断が必要なら AskUserQuestion を使え。\n\n" + completionCheck)
+		joined := clip(strings.Join(reasons, "\n\n"), 5000) + "\n\n依頼範囲と既存の変更を確認して対応しろ。他者の変更を勝手に commit・削除するな。ユーザー判断が必要なら AskUserQuestion を使え。"
+		if f.Message.Tells {
+			return block(joined + "\n\n" + tellReason(f.Message, false) + "\n\n" + completionCheck)
+		}
+		if f.Message.Signature == unsigned {
+			return block(joined + "\n\n" + completionCheck)
+		}
+		return block(joined + "\n\n" + resign)
 	}
 
 	if f.Message.Signature != unsigned && !f.Message.Tells {
 		return decision{}
 	}
 	if f.Message.Tells {
-		reasons = append(reasons, "【叩き起こし】本文が離脱宣言のルールに一致している。続行を宣言するだけで止まったり、残りを勝手に別 PR・次回へ送ったりするな。署名があってもこの状態では無効。文言を消して取り繕わず、実際にやり切れ。")
+		reasons = append(reasons, tellReason(f.Message, false))
 	}
 	reasons = append(reasons, completionCheck)
 	return block(strings.Join(reasons, "\n\n"))
