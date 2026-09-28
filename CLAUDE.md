@@ -62,7 +62,9 @@ mise 2026.9.7 以降、新規に作った lockfile は revision 2 になり、np
 
 - chezmoi はソース内の `.` 始まりのファイル・ディレクトリを無視するため、`dot_config/mise/.mise` は配布されない。そこで `dot_config/mise/.mise` を `dot_mise` への symlink にして、実体を `dot_config/mise/dot_mise/locks/` に置いている。mise は symlink 越しに書き、chezmoi は `dot_mise` を `~/.config/mise/.mise` に配布するので、lockfile の相対パス `.mise/locks/...` は repo でも配布先でも同じ場所を指す。`dot_mise/.gitkeep` は symlink の先を常に存在させるためのもの（`.` 始まりなので配布されない）
 - ワークフローは sidecar ディレクトリも `FILES` に入れて commit する（`commit-via-graphql.sh` はディレクトリ配下の追加・削除を拾う）
-- pipx の依存グラフは uv で解決するので、ワークフローは `mise lock` の前に uv と uv 管理の Python を入れる。snowflake-cli の `install_env`（`UV_PYTHON_PREFERENCE=only-managed`）は lock 時の uv にも渡り、mise は lock 中の uv に Python をダウンロードさせない（`No interpreter found for Python >=3.10 in managed installations` で落ちる）
+- pipx の依存グラフは uv で解決するので、ワークフローは `mise lock` の前に uv を入れる。解決に使う Python は uv が見つけられるものなら何でもよい
+- 依存グラフの install（`uv sync --frozen --no-python-downloads --python <パス>`）で使う Python は、mise の config の `python`、無ければ PATH 上の `python` に固定される（mise の `src/backend/pipx/lock.rs` の `bind_uv_python`）。`install_env` の `UV_PYTHON_PREFERENCE` では変えられず、放っておくと Homebrew 等の素の python を拾う。そのため `dot_config/mise/config.toml` に `python`（3.13。snowflake-cli が固定している `pyyaml==6.0.2` に cp314 の wheel が無いため。Renovate も `allowedVersions: "<3.14"` で留めている）を置いている
+- その python は `[settings]` の `shims.exclude` で python 系のコマンド名を全部外し、shims だけを PATH に入れるシェル（`.zprofile` の `--shims`）からは見えないようにしている。対話シェルの `mise activate` は bin ディレクトリを丸ごと PATH に足すので、対話シェルと、それを引き継ぐ Claude Code の Bash では見える。名前は完全一致なので、バージョン付きの名前も並べる。漏れは CI の `Verify python is not exposed via shims` が python の bin と shims を突き合わせて検出する
 - sidecar の `package.json` / `pyproject.toml` / `uv.lock` は Renovate の `ignorePaths` で除外している。推移的依存の更新は `mise lock` に任せる
 
 ## Architecture
@@ -78,7 +80,7 @@ Homebrew
        ├─ ランタイム管理: go, node, pnpm (core backend)
        ├─ CLI ツール管理: fzf, ripgrep, starship, etc. (aqua backend)
        ├─ 独自ホスティング配布のツール: grok (http backend)
-       ├─ Python 製 CLI: snowflake-cli (pipx backend / 内部で uv tool install)
+       ├─ Python 製 CLI: snowflake-cli (pipx backend / 内部で uv。Python は mise の python 3.13、shims からは除外)
        ├─ npm グローバルパッケージ
        └─ aqua CLI (github backend)
             └─ mise lock で checksum 取得不可のツール
@@ -302,7 +304,7 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 - **環境を直接変更しない。** 変更は必ずこの repo のソース（`dot_` プレフィックス付きファイル等）を編集し、PR 経由で行う。`~/.local/share/chezmoi` 等の repo 外パスや、`~/.claude/` `~/.codex/` `~/.config/` 等のターゲットファイルを直接書き換えてはならない。環境への適用は `chezmoi update` に委ねる（remote main が single source of truth）
 - **chezmoi ソースを編集する。** `~/.claude/CLAUDE.md` 等のターゲットではなく `dot_claude/CLAUDE.md` 等のソースを編集する。ターゲットを直接編集しても `chezmoi update` で上書きされ、PR にも含められない
 - **ツール導入手段として Homebrew を提案しない**（`packages.yaml` への追加・`brew install` を選択肢に挙げない）。mise（aqua / github / go / npm / pipx backend）または aqua CLI で完結させる
-- Python 製 CLI でバイナリ配布が無いものは mise の `pipx` backend で入れる（uv が入っていれば mise は内部で `uv tool install` を使う）。Renovate の mise manager が PyPI datasource として追える。システム Python に引きずられないよう `install_env = { UV_PYTHON_PREFERENCE = "only-managed" }` を付ける
+- Python 製 CLI でバイナリ配布が無いものは mise の `pipx` backend で入れる（uv が入っていれば mise は内部で uv を使う）。Renovate の mise manager が PyPI datasource として追える。lockfile revision 2 では依存グラフの install に mise の `python` が使われるので、`install_env` で Python を選ぼうとしない（効かない）。対応する Python の版は、そのツールの依存に wheel があるかで確かめる
 - mise にツールを追加する際、`mise search` / `mise registry` で見つからなくても [aqua-registry](https://github.com/aquaproj/aqua-registry/tree/main/pkgs) に定義があれば `"aqua:<registry path>" = "<version>"` で追加できる（Renovate 自動更新・checksum 検証に乗る）。`http` backend で URL を手書きするのは aqua-registry にも無い最終手段のみ
 - 例外として、aqua-registry 側の定義が `type: http`（GitHub リリースではなく独自ホスティング配布）のパッケージは `aqua:` で追加しない。mise の aqua backend が lockfile 生成のたびに GitHub のタグ取得を試みて必ず失敗し警告を出すうえ、[Renovate の mise manager も aqua の http パッケージを抽出対象外にしている](https://docs.renovatebot.com/modules/manager/mise/#limitations)ため更新も効かない。この場合は mise の `http` backend で URL を直接指定する（`dot_config/mise/config.toml` の `[tools."http:grok"]` が例）
 - 環境変数（API key 等）の置き場所を勝手に特定ファイル（`.zshrc.local` 等）に指定しない。置き場所はユーザーに委ねる（エラーメッセージやコメントにも特定ファイル名を書かない）

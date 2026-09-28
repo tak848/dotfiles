@@ -71,11 +71,10 @@ jobs:
           # rm -f は削除済みツールのエントリを残さないため（mise lock に prune が無い）。
           # 作り直した lockfile は revision 2 になる。
           # pipx:snowflake-cli の依存グラフは uv で解決するので、mise lock の前に uv を入れておく。
-          # snowflake-cli の install_env（UV_PYTHON_PREFERENCE=only-managed）は lock 時の uv にも渡り、
-          # かつ mise は lock 中の uv に Python をダウンロードさせないため、uv 管理の Python も先に入れる。
+          # 解決に使う Python は uv が見つけられるものなら何でもよい（ランナーの python3 を使う）。
           REGENERATE_CMD: |
             rm -f mise.lock && mise lock
-            ( cd dot_config/mise && mise install aqua:astral-sh/uv && mise exec aqua:astral-sh/uv -- uv python install && rm -f mise.lock && mise lock )
+            ( cd dot_config/mise && mise install aqua:astral-sh/uv && rm -f mise.lock && mise lock )
             # backend が checksum を供給できないツール（http backend や、aqua-registry 側に
             # checksum 定義が無いパッケージ）は mise lock で url しか埋まらない。
             # lockfile を作り直した後に実アーティファクトから sha256 を計算して補う。

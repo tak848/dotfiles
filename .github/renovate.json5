@@ -175,6 +175,15 @@
       minimumReleaseAge: "7 days",
     },
     {
+      // mise の python は snowflake-cli の install にだけ使う（dot_config/mise/config.toml）。
+      // snowflake-cli が pyyaml==6.0.2 を固定しており、6.0.2 には cp314 の wheel が無いため
+      // 3.14 に上げると依存グラフの install が失敗する。固定が外れたらこのルールを消す。
+      description: "mise の python: snowflake-cli の pyyaml 固定のため 3.13 系に留める",
+      matchManagers: ["mise"],
+      matchDepNames: ["python"],
+      allowedVersions: "<3.14",
+    },
+    {
       description: "Use node versioning for Node.js (LTS only)",
       matchPackageNames: ["nodejs/node"],
       versioning: "node",

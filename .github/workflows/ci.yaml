@@ -58,11 +58,40 @@ jobs:
           starship --version
           direnv --version
           nvim --version
+          # lockfile revision 2 の依存グラフ（uv sync）で入ったものが動くか
+          snow --version
           # CLI ツール（aqua）
           export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua/bin:$PATH"
           aws --version
           op --version
           zoxide --version
+
+      # mise の python は snowflake-cli の install 用に置いているだけで、shims には出さない
+      # （dot_config/mise/config.toml の shims.exclude）。python の bin にあるコマンド名が
+      # shims に残っていないかを突き合わせる。名前が足りなければ、漏れた名前を出して落ちる。
+      - name: Verify python is not exposed via shims
+        run: |
+          python_bin="$(mise where python)/bin"
+          shims_dir="${MISE_DATA_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/mise}/shims"
+          if [ ! -d "$python_bin" ] || [ ! -d "$shims_dir" ]; then
+            echo "Error: 検査対象のディレクトリがありません: $python_bin / $shims_dir"
+            exit 1
+          fi
+          echo "=== $python_bin ==="
+          ls "$python_bin"
+          leaked=""
+          for f in "$python_bin"/*; do
+            name=$(basename "$f")
+            if [ -e "$shims_dir/$name" ] || [ -L "$shims_dir/$name" ]; then
+              leaked="$leaked $name"
+            fi
+          done
+          if [ -n "$leaked" ]; then
+            echo "Error: python のコマンドが shims に出ています:$leaked"
+            echo "dot_config/mise/config.toml の shims.exclude に追加してください。"
+            exit 1
+          fi
+          echo "python のコマンドは shims に出ていません。"
 
       - name: Go test & build
         run: |
