@@ -62,7 +62,7 @@ mise 2026.9.7 以降、新規に作った lockfile は revision 2 になり、np
 
 - chezmoi はソース内の `.` 始まりのファイル・ディレクトリを無視するため、`dot_config/mise/.mise` は配布されない。そこで `dot_config/mise/.mise` を `dot_mise` への symlink にして、実体を `dot_config/mise/dot_mise/locks/` に置いている。mise は symlink 越しに書き、chezmoi は `dot_mise` を `~/.config/mise/.mise` に配布するので、lockfile の相対パス `.mise/locks/...` は repo でも配布先でも同じ場所を指す。`dot_mise/.gitkeep` は symlink の先を常に存在させるためのもの（`.` 始まりなので配布されない）
 - ワークフローは sidecar ディレクトリも `FILES` に入れて commit する（`commit-via-graphql.sh` はディレクトリ配下の追加・削除を拾う）
-- pipx の依存グラフは uv で解決するので、ワークフローは `mise lock` の前に uv を入れる
+- pipx の依存グラフは uv で解決するので、ワークフローは `mise lock` の前に uv と uv 管理の Python を入れる。snowflake-cli の `install_env`（`UV_PYTHON_PREFERENCE=only-managed`）は lock 時の uv にも渡り、mise は lock 中の uv に Python をダウンロードさせない（`No interpreter found for Python >=3.10 in managed installations` で落ちる）
 - sidecar の `package.json` / `pyproject.toml` / `uv.lock` は Renovate の `ignorePaths` で除外している。推移的依存の更新は `mise lock` に任せる
 
 ## Architecture
