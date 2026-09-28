@@ -62,6 +62,9 @@ tasks:
   # ツールのバージョンと checksum を固定して再現性を確保
   # -p オプションで全プラットフォームを指定（環境差異を防ぐ）
   # rm -f で古い lockfile を削除してから再生成（古いエントリが残る問題を回避）
+  # 作り直した lockfile は revision 2 になり、npm / pypi ツールの依存グラフを
+  # .mise/locks/ の sidecar に書く。dot_config/mise/.mise は dot_mise への symlink で、
+  # sidecar の実体は dot_config/mise/dot_mise/locks/ に入る（lockfile と一緒に commit する）
   #############################################################################
   mise:lock:root:
     desc: Update root mise.lock

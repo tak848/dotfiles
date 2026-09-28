@@ -61,11 +61,20 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           REPO: ${{ github.repository }}
           BRANCH: ${{ github.ref_name }}
-          FILES: mise.lock dot_config/mise/mise.lock dot_config/aquaproj-aqua/aqua-checksums.json
+          # lockfile revision 2 は npm / pypi ツールの依存グラフを lockfile 横の
+          # .mise/locks/ に sidecar として書き、mise.lock からはパスと digest で参照する。
+          # sidecar が commit されていないと mise install が失敗するので、lockfile と一緒に commit する。
+          # dot_config/mise/.mise は dot_mise への symlink（chezmoi は . 始まりのソースを無視するため、
+          # 実体を dot_mise に置いて ~/.config/mise/.mise に配布させる）なので、実体側のパスを渡す。
+          FILES: mise.lock .mise dot_config/mise/mise.lock dot_config/mise/dot_mise dot_config/aquaproj-aqua/aqua-checksums.json
           MESSAGE: "chore: update mise lockfiles and aqua checksums"
+          # rm -f は削除済みツールのエントリを残さないため（mise lock に prune が無い）。
+          # 作り直した lockfile は revision 2 になる。
+          # pipx:snowflake-cli の依存グラフは uv で解決するので、mise lock の前に uv を入れておく。
+          # 解決に使う Python は uv が見つけられるものなら何でもよい（ランナーの python3 を使う）。
           REGENERATE_CMD: |
             rm -f mise.lock && mise lock
-            ( cd dot_config/mise && rm -f mise.lock && mise lock )
+            ( cd dot_config/mise && mise install aqua:astral-sh/uv && rm -f mise.lock && mise lock )
             # backend が checksum を供給できないツール（http backend や、aqua-registry 側に
             # checksum 定義が無いパッケージ）は mise lock で url しか埋まらない。
             # lockfile を作り直した後に実アーティファクトから sha256 を計算して補う。

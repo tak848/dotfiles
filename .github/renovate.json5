@@ -9,6 +9,23 @@
     ":prHourlyLimitNone",
     "github>aquaproj/aqua-renovate-config#2.13.0",
   ],
+  // mise lockfile revision 2 の sidecar（npm の package.json / aube-lock.yaml、pypi の
+  // pyproject.toml / uv.lock）は mise lock が生成するもので、推移的依存の更新も mise lock に任せる。
+  // Renovate が npm / pep621 / uv manager で拾うと別 PR が立つので除外する。
+  // ignorePaths は mergeable: false で config:recommended（:ignoreModulesAndTests）の値を
+  // 上書きしてしまうため、その既定値も並べておく。
+  ignorePaths: [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**",
+    "**/examples/**",
+    "**/__tests__/**",
+    "**/test/**",
+    "**/tests/**",
+    "**/__fixtures__/**",
+    "**/.mise/locks/**",
+    "dot_config/mise/dot_mise/**",
+  ],
   rangeStrategy: "bump",
   postUpdateOptions: ["gomodTidy"],
   labels: ["renovate"],
@@ -156,6 +173,15 @@
       description: "Azure CLI が使う Python: uv 側の追随を待つため age gate を長めにする",
       matchDatasources: ["python-version"],
       minimumReleaseAge: "7 days",
+    },
+    {
+      // mise の python は snowflake-cli の install にだけ使う（dot_config/mise/config.toml）。
+      // snowflake-cli が pyyaml==6.0.2 を固定しており、6.0.2 には cp314 の wheel が無いため
+      // 3.14 に上げると依存グラフの install が失敗する。固定が外れたらこのルールを消す。
+      description: "mise の python: snowflake-cli の pyyaml 固定のため 3.13 系に留める",
+      matchManagers: ["mise"],
+      matchDepNames: ["python"],
+      allowedVersions: "<3.14",
     },
     {
       description: "Use node versioning for Node.js (LTS only)",
