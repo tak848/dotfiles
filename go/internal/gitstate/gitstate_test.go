@@ -213,7 +213,7 @@ func TestPushMergedLiveChecks(t *testing.T) {
 		name, live string
 		merged     bool
 		fail       error
-		deny       bool
+		wantError  bool
 	}{{"existing", shaA, true, nil, false}, {"new", "", false, nil, false}, {"resurrection", "", true, nil, true}, {"unknown", "", false, exitError(128), true}} {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
@@ -224,8 +224,14 @@ func TestPushMergedLiveChecks(t *testing.T) {
 				f.prs["tak848/project"] = []pull{makePull("tak848/project", "tak848/project", "topic", shaB, "closed", true)}
 			}
 			e := (Client{Runner: f.runner}).CheckPush(context.Background(), t.TempDir(), []string{"origin", "topic"})
-			if (e != nil) != tt.deny {
+			if (e != nil) != tt.wantError {
 				t.Fatalf("err=%v", e)
+			}
+			if errors.Is(e, ErrMergedBranch) != (tt.name == "resurrection") {
+				t.Fatalf("confirmed resurrection must be distinguished from lookup failure: %v", e)
+			}
+			if tt.name == "resurrection" && e.Error() != "push 先 origin の refs/heads/topic は、マージ済み PR #12（base tak848/project） の head で、既に削除されています。この push はそのブランチを作り直すため、実行しませんでした。新しい作業ブランチを作り、push 先もそのブランチ名にしてください。" {
+				t.Fatalf("reason must name the push target and merged PR: %v", e)
 			}
 			if e != nil && strings.Contains(e.Error(), "private URL") {
 				t.Fatal("leaked failure")

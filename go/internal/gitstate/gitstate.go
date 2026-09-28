@@ -27,9 +27,26 @@ type Client struct {
 	commandTimeout time.Duration
 }
 
-// PushTimeout は push 前の確認全体の予算。巨大リポジトリの交渉処理を
-// 短い個別タイムアウトで中断しない。外側の hook はこれより長く設定する。
-const PushTimeout = 10 * time.Minute
+// PushTimeout は push 前の確認全体の制限時間。時間内に確認できない場合は
+// 呼び出し側が通常の実行へ戻す。実際の git push の期限には影響しない。
+const PushTimeout = 30 * time.Second
+
+// ErrMergedBranch は、削除されたマージ済み head の再作成を確認できた場合だけ返す。
+// その他の error は確認失敗であり、push を止める理由として使わない。
+var ErrMergedBranch = errors.New("マージ済み PR の削除された head ブランチを再作成する push は拒否しました。新しい作業ブランチを作成してください。")
+
+// MergedBranchError は ErrMergedBranch の具体的な内容。push 先・ref・マージ済み PR を示し、
+// ローカルのブランチだけでなく push 先も新しいブランチにする必要があることを伝える。
+type MergedBranchError struct {
+	Remote, Ref string
+	PRs         []string
+}
+
+func (e *MergedBranchError) Error() string {
+	return fmt.Sprintf("push 先 %s の %s は、マージ済み PR %s の head で、既に削除されています。この push はそのブランチを作り直すため、実行しませんでした。新しい作業ブランチを作り、push 先もそのブランチ名にしてください。", e.Remote, e.Ref, strings.Join(e.PRs, "、"))
+}
+
+func (e *MergedBranchError) Is(target error) bool { return target == ErrMergedBranch }
 
 const splitPush = "push の対象を安全に確認できません。展開や複合処理を分け、リテラルの git push 単独コマンドで再確認してください。"
 const maxOutput = 2 << 20
@@ -825,8 +842,8 @@ func parsePorcelain(s string) ([]update, error) {
 func (c Client) CheckPush(ctx context.Context, dir string, args []string) error {
 	ctx, cancel := context.WithTimeout(ctx, PushTimeout)
 	defer cancel()
-	// 値レシーバーのコピーだけを変更し、Stop 側の予算は変えない。
-	// 各照会もこの全体予算を共有する。12 秒の制限は push 経路に適用しない。
+	// 値レシーバーのコピーだけを変更し、Stop 側の制限時間は変えない。
+	// 各照会は、この確認全体の制限時間の内側で実行する。12 秒の制限は push 経路に適用しない。
 	c.commandTimeout = PushTimeout
 	explicit, e := validatePush(args)
 	if e != nil {
@@ -890,10 +907,18 @@ func (c Client) CheckPush(ctx context.Context, dir string, args []string) error 
 			if err != nil {
 				return pushFailure("github-pulls", err, "送信先ブランチのマージ履歴を取得できません。GitHub API の権限と応答を確認してください。PR の積み方を変更する根拠ではありません。")
 			}
+			var merged []string
 			for _, p := range ps {
 				if p.MergedAt != nil {
-					return errors.New("マージ済み PR の削除された head ブランチを再作成する push は拒否しました。新しい作業ブランチを作成してください。")
+					label := "（base " + p.Base.Repo.FullName + "）"
+					if p.Number > 0 {
+						label = fmt.Sprintf("#%d%s", p.Number, label)
+					}
+					merged = append(merged, label)
 				}
+			}
+			if len(merged) > 0 {
+				return &MergedBranchError{Remote: d.remote, Ref: u.target, PRs: merged}
 			}
 		}
 	}
