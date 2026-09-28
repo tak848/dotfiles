@@ -323,7 +323,12 @@ func runWithEnv(ctx context.Context, r io.Reader, w io.Writer, check checkFunc, 
 	if ctx.Err() != nil || !errors.Is(e, gitstate.ErrMergedBranch) {
 		return nil
 	}
-	reason := gitstate.ErrMergedBranch.Error() + "\n作業ディレクトリ: " + render.Truncate(render.Sanitize(dir), 300)
+	// 具体的な内容は型付きの error からだけ取り出す。任意の error 文字列は返さない。
+	text := gitstate.ErrMergedBranch.Error()
+	if merged, ok := errors.AsType[*gitstate.MergedBranchError](e); ok {
+		text = render.Sanitize(merged.Error())
+	}
+	reason := text + "\n作業ディレクトリ: " + render.Truncate(render.Sanitize(dir), 300)
 	return writeDeny(w, reason)
 }
 func writeDeny(w io.Writer, reason string) error {

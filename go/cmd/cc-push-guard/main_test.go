@@ -201,6 +201,25 @@ func TestGitCUsesPhysicalDirectory(t *testing.T) {
 		}
 	}
 }
+func TestDenyNamesMergedBranch(t *testing.T) {
+	t.Parallel()
+	merged := &gitstate.MergedBranchError{Remote: "origin", Ref: "refs/heads/feature/example", PRs: []string{"#12（base example-org/example-repo）"}}
+	payload, _ := json.Marshal(map[string]any{"cwd": "/repo", "tool_name": "Bash", "tool_input": map[string]string{"command": "git push"}})
+	var out bytes.Buffer
+	err := runForTest(context.Background(), bytes.NewReader(payload), &out, func(context.Context, string, []string) error {
+		return fmt.Errorf("private details: %w", merged)
+	})
+	var v struct {
+		Hook map[string]string `json:"hookSpecificOutput"`
+	}
+	if err != nil || json.Unmarshal(out.Bytes(), &v) != nil || v.Hook["permissionDecision"] != "deny" {
+		t.Fatalf("err=%v output=%s", err, out.String())
+	}
+	if want := merged.Error() + "\n作業ディレクトリ: /repo"; v.Hook["permissionDecisionReason"] != want {
+		t.Fatalf("reason=%q want %q", v.Hook["permissionDecisionReason"], want)
+	}
+}
+
 func TestReadFailureIsSilent(t *testing.T) {
 	t.Parallel()
 	var out bytes.Buffer

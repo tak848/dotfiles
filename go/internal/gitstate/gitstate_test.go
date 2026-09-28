@@ -126,6 +126,7 @@ func (f *fixture) runner(ctx context.Context, dir, name string, args ...string) 
 }
 func makePull(repo, base, branch, sha, state string, merged bool) pull {
 	var p pull
+	p.Number = 12
 	p.State = state
 	p.Head.Ref = branch
 	p.Head.SHA = sha
@@ -228,6 +229,9 @@ func TestPushMergedLiveChecks(t *testing.T) {
 			}
 			if errors.Is(e, ErrMergedBranch) != (tt.name == "resurrection") {
 				t.Fatalf("confirmed resurrection must be distinguished from lookup failure: %v", e)
+			}
+			if tt.name == "resurrection" && e.Error() != "push 先 origin の refs/heads/topic は、マージ済み PR #12（base tak848/project） の head で、既に削除されています。この push はそのブランチを作り直すため、実行しませんでした。新しい作業ブランチを作り、push 先もそのブランチ名にしてください。" {
+				t.Fatalf("reason must name the push target and merged PR: %v", e)
 			}
 			if e != nil && strings.Contains(e.Error(), "private URL") {
 				t.Fatal("leaked failure")

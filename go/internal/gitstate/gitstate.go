@@ -35,6 +35,19 @@ const PushTimeout = 5 * time.Second
 // その他の error は確認失敗であり、push を止める理由として使わない。
 var ErrMergedBranch = errors.New("マージ済み PR の削除された head ブランチを再作成する push は拒否しました。新しい作業ブランチを作成してください。")
 
+// MergedBranchError は ErrMergedBranch の具体的な内容。push 先・ref・マージ済み PR を示し、
+// ローカルのブランチだけでなく push 先も新しいブランチにする必要があることを伝える。
+type MergedBranchError struct {
+	Remote, Ref string
+	PRs         []string
+}
+
+func (e *MergedBranchError) Error() string {
+	return fmt.Sprintf("push 先 %s の %s は、マージ済み PR %s の head で、既に削除されています。この push はそのブランチを作り直すため、実行しませんでした。新しい作業ブランチを作り、push 先もそのブランチ名にしてください。", e.Remote, e.Ref, strings.Join(e.PRs, "、"))
+}
+
+func (e *MergedBranchError) Is(target error) bool { return target == ErrMergedBranch }
+
 const splitPush = "push の対象を安全に確認できません。展開や複合処理を分け、リテラルの git push 単独コマンドで再確認してください。"
 const maxOutput = 2 << 20
 
@@ -403,6 +416,7 @@ type repoInfo struct {
 	Parent        *repoInfo `json:"parent"`
 }
 type pull struct {
+	Number   int     `json:"number"`
 	State    string  `json:"state"`
 	MergedAt *string `json:"merged_at"`
 	Head     struct {
@@ -790,10 +804,18 @@ func (c Client) CheckPush(ctx context.Context, dir string, args []string) error 
 			if err != nil {
 				return pushFailure("github-pulls", err, "送信先ブランチのマージ履歴を取得できません。GitHub API の権限と応答を確認してください。PR の積み方を変更する根拠ではありません。")
 			}
+			var merged []string
 			for _, p := range ps {
 				if p.MergedAt != nil {
-					return ErrMergedBranch
+					label := "（base " + p.Base.Repo.FullName + "）"
+					if p.Number > 0 {
+						label = fmt.Sprintf("#%d%s", p.Number, label)
+					}
+					merged = append(merged, label)
 				}
+			}
+			if len(merged) > 0 {
+				return &MergedBranchError{Remote: d.remote, Ref: u.target, PRs: merged}
 			}
 		}
 	}
