@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       defuddle:
-        specifier: 0.19.3
-        version: 0.19.3
+        specifier: 0.19.4
+        version: 0.19.4
 
 packages:
 
@@ -40,8 +40,8 @@ packages:
   cssom@0.5.0:
     resolution: {integrity: sha512-iKuQcq+NdHqlAcwUY0o/HL69XQrUaQdMjmStJ8JFmUaiiQErlhrmuigkg/CU4E2J0IyUKUrMAgl36TvN67MqTw==}
 
-  defuddle@0.19.3:
-    resolution: {integrity: sha512-5ZbOQ/B+iiRRqSQWwmCx/zEuqZOA/5q7gxyE2/4O2Bxq7nUC0PgKw9EdyxqWbFF1nrrrYemSeR25jg4TmA2fsA==}
+  defuddle@0.19.4:
+    resolution: {integrity: sha512-Jz98aWlyEeuWcg9u2AavCEKknviI9GijMkrGFPk0wi1Lkfr1DDDw6XM+ak44Ol8kBDmDJsvU9Su2eUY09Fvh3Q==}
     hasBin: true
 
   dom-serializer@2.0.0:
@@ -123,8 +123,7 @@ snapshots:
   '@mixmark-io/domino@2.2.0':
     optional: true
 
-  '@xmldom/xmldom@0.9.12':
-    optional: true
+  '@xmldom/xmldom@0.9.12': {}
 
   boolbase@2.0.0:
     optional: true
@@ -146,12 +145,12 @@ snapshots:
   cssom@0.5.0:
     optional: true
 
-  defuddle@0.19.3:
+  defuddle@0.19.4:
     dependencies:
       commander: 12.1.0
+      mathml-to-latex: 1.8.0
     optionalDependencies:
       linkedom: 0.18.13
-      mathml-to-latex: 1.8.0
       temml: 0.13.5
       turndown: 7.2.4
     transitivePeerDependencies:
@@ -233,7 +232,6 @@ snapshots:
   mathml-to-latex@1.8.0:
     dependencies:
       '@xmldom/xmldom': 0.9.12
-    optional: true
 
   nth-check@3.0.1:
     dependencies:
