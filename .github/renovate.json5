@@ -24,7 +24,7 @@
     "**/tests/**",
     "**/__fixtures__/**",
     "**/.mise/locks/**",
-    "dot_config/mise/dot_mise/**",
+    "dot_config/mise/locks/**",
   ],
   rangeStrategy: "bump",
   postUpdateOptions: ["gomodTidy"],

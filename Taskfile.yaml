@@ -63,8 +63,9 @@ tasks:
   # -p オプションで全プラットフォームを指定（環境差異を防ぐ）
   # rm -f で古い lockfile を削除してから再生成（古いエントリが残る問題を回避）
   # 作り直した lockfile は revision 2 になり、npm / pypi ツールの依存グラフを
-  # .mise/locks/ の sidecar に書く。dot_config/mise/.mise は dot_mise への symlink で、
-  # sidecar の実体は dot_config/mise/dot_mise/locks/ に入る（lockfile と一緒に commit する）
+  # sidecar に書く（lockfile と一緒に commit する）。root は .mise/locks/。
+  # dot_config/mise は配布先（~/.config/mise/locks/）に合わせて locks/ に移す
+  # （.github/scripts/relocate-mise-sidecars.sh を参照）
   #############################################################################
   mise:lock:root:
     desc: Update root mise.lock
@@ -96,6 +97,7 @@ tasks:
           fi
         fi
         rm -f mise.lock && mise lock -p {{.MISE_PLATFORMS}}
+        bash "{{.ROOT_DIR}}/.github/scripts/relocate-mise-sidecars.sh" .
     sources:
       - config.toml
     generates:
