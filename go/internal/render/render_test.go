@@ -409,14 +409,16 @@ func TestShortModel(t *testing.T) {
 		id   string
 		want string
 	}{
-		"opus":        {id: "claude-opus-5", want: "opus"},
-		"sonnet_date": {id: "claude-sonnet-4-5-20250929", want: "sonnet"},
-		"haiku":       {id: "claude-haiku-4-5-20251001", want: "haiku"},
-		"legacy":      {id: "claude-3-5-haiku-20241022", want: "haiku"},
-		"unknown":     {id: "gpt-5.6-sol", want: "gpt"},
-		"bare":        {id: "custom", want: "custom"},
-		"empty":       {id: "", want: ""},
-		"digits_only": {id: "claude-1-2", want: "claude-1-2"},
+		"opus":         {id: "claude-opus-5", want: "opus"},
+		"opus_minor":   {id: "claude-opus-5-5", want: "opus"},
+		"sonnet_date":  {id: "claude-sonnet-4-5-20250929", want: "sonnet"},
+		"haiku":        {id: "claude-haiku-4-5-20251001", want: "haiku"},
+		"legacy":       {id: "claude-3-5-haiku-20241022", want: "haiku"},
+		"unknown":      {id: "gpt-5.6-sol", want: "gpt"},
+		"unknown_gpt6": {id: "gpt-6-sol", want: "gpt"},
+		"bare":         {id: "custom", want: "custom"},
+		"empty":        {id: "", want: ""},
+		"digits_only":  {id: "claude-1-2", want: "claude-1-2"},
 	}
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {

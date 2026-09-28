@@ -6,7 +6,6 @@ import (
 	"context"
 	"encoding/json/jsontext"
 	"encoding/json/v2"
-	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -42,11 +41,8 @@ type checkFunc func(context.Context, string, []string) []string
 type lookupEnv func(string) (string, bool)
 
 func main() {
-	code := run(os.Stdin, os.Stdout, os.LookupEnv, gitstate.CheckStop)
-	if code != 0 {
-		fmt.Fprintln(os.Stderr, "作業結果の確認内容を出力できませんでした。出力先の確認が必要です。")
-	}
-	os.Exit(code)
+	// 出力できなくても exit 2 にしない。Stop の exit 2 は block となり、stderr が AI に渡る。
+	run(os.Stdin, os.Stdout, os.LookupEnv, gitstate.CheckStop)
 }
 
 func run(stdin io.Reader, stdout io.Writer, env lookupEnv, check checkFunc) int {
@@ -55,24 +51,19 @@ func run(stdin io.Reader, stdout io.Writer, env lookupEnv, check checkFunc) int 
 		return 0
 	}
 
+	// 入力の異常は AI の作業では直せないので、差し戻さずに通す。
 	data, err := io.ReadAll(io.LimitReader(stdin, maxInputBytes+1))
 	if err != nil || len(data) > maxInputBytes {
-		return emit(stdout, block("作業結果の確認に必要なデータを読み取れません。実行設定の確認が必要です。"))
+		return 0
 	}
 	var in *input
-	if err := json.Unmarshal(data, &in); err != nil || in == nil {
-		return emit(stdout, block("作業結果の確認に必要なデータ形式が不正です。実行設定の確認が必要です。"))
-	}
-	if in.Event != "Stop" {
-		return emit(stdout, block("作業結果を確認するタイミングの設定が不正です。実行設定の確認が必要です。"))
-	}
-	if in.LastMessage == nil {
-		return emit(stdout, block("現在の作業結果の報告文を取得できません。作業結果を報告してください。"))
+	if err := json.Unmarshal(data, &in); err != nil || in == nil || in.Event != "Stop" || in.LastMessage == nil {
+		return 0
 	}
 	switch in.Mode {
 	case "plan", "default", "acceptEdits", "auto", "dontAsk", "bypassPermissions":
 	default:
-		return emit(stdout, block("計画中か実装中かを確認できません。誤った Git 操作を要求しないため、現在の実行モードの設定を確認してください。"))
+		return 0
 	}
 
 	message := analyze(*in.LastMessage)
@@ -144,9 +135,7 @@ func emit(w io.Writer, d decision) int {
 	if d.Decision == "" {
 		return 0
 	}
-	if err := json.MarshalWrite(w, d); err != nil {
-		return 2
-	}
+	_ = json.MarshalWrite(w, d)
 	return 0
 }
 

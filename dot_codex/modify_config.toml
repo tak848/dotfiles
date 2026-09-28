@@ -133,23 +133,11 @@ tools.aws___get_regional_availability.approval_mode = "approve"
 tools.aws___retrieve_agent_sop.approval_mode = "approve"
 
 [profiles.fast]
-model = "gpt-5.6-sol"
+model = "gpt-6-sol"
 model_reasoning_effort = "medium"
 
 [profiles.xhigh]
-model = "gpt-5.6-sol"
-model_reasoning_effort = "xhigh"
-
-[profiles.codex]
-model = "gpt-5.3-codex"
-model_reasoning_effort = "high"
-
-[profiles.codex-fast]
-model = "gpt-5.3-codex"
-model_reasoning_effort = "medium"
-
-[profiles.codex-xhigh]
-model = "gpt-5.3-codex"
+model = "gpt-6-sol"
 model_reasoning_effort = "xhigh"
 {{- if ne .chezmoi.stdin "" }}
 {{-   $existing := fromToml .chezmoi.stdin }}

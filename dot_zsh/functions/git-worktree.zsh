@@ -209,7 +209,7 @@ gwr() {
 #   gwc ENG-123 --ccp                # --cc と同じ（claudep を明示したいとき用）
 #   gwc ENG-123 --ccap               # 作成後に claudeap（fable スロットだけ GPT-6 Astra、他は Claude）を初期プロンプトで起動
 #   gwc ENG-123 --ccapf              # 作成後に claudeapf（claudeap の Codex priority tier 版）を初期プロンプトで起動
-#   gwc ENG-123 --ccx                # 作成後に claudex（Claude Code のハーネス + GPT-5.6 Sol）を初期プロンプトで起動
+#   gwc ENG-123 --ccx                # 作成後に claudex（Claude Code のハーネス + GPT-6 Sol）を初期プロンプトで起動
 #   gwc ENG-123 --ccxf               # 作成後に claudexf（claudex の Codex fast/priority tier 版）を初期プロンプトで起動
 #   gwc ENG-123 --co                 # 作成後に codexp を初期プロンプトで起動（GWC_CODEX_CLI_INITIAL_PROMPT）
 #   gwc ENG-123 --cc "追加の指示"     # 初期プロンプト + 改行2つ + 追加プロンプトで起動（ref より後ろに置くこと）
@@ -346,7 +346,7 @@ gwc() {
             fi
             ;;
         --ccx | --ccxf)
-            # Claude Code のハーネスを GPT-5.6 Sol で駆動する claudex を起動する。
+            # Claude Code のハーネスを GPT-6 Sol で駆動する claudex を起動する。
             # --ccxf は Codex fast/priority tier 版の claudexf。
             # claudex/claudexf 自身が --model を指定するため launch_model は空のままにする。
             if [ -n "$launch_agent" ] || [ -n "$split_agent" ]; then
