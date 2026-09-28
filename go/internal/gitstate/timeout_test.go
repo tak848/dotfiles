@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func TestPushSucceedsWithinBudget(t *testing.T) {
+func TestPushSucceedsWithinTimeout(t *testing.T) {
 	synctest.Test(t, func(t *testing.T) {
 		f := newFixture()
 		f.live = ""
@@ -35,7 +35,7 @@ func TestPushSucceedsWithinBudget(t *testing.T) {
 	})
 }
 
-func TestPushTotalBudgetStillApplies(t *testing.T) {
+func TestPushTotalTimeoutStillApplies(t *testing.T) {
 	synctest.Test(t, func(t *testing.T) {
 		f := newFixture()
 		start := time.Now()
@@ -56,7 +56,7 @@ func TestPushTotalBudgetStillApplies(t *testing.T) {
 	})
 }
 
-func TestPushSharesBudgetAcrossQueries(t *testing.T) {
+func TestPushTimeoutCoversAllQueries(t *testing.T) {
 	synctest.Test(t, func(t *testing.T) {
 		f := newFixture()
 		f.live = ""
@@ -112,7 +112,7 @@ func TestPushPreservesShorterCallerDeadline(t *testing.T) {
 	})
 }
 
-func TestNonPushCommandBudgetIsUnchanged(t *testing.T) {
+func TestNonPushCommandTimeoutIsUnchanged(t *testing.T) {
 	synctest.Test(t, func(t *testing.T) {
 		start := time.Now()
 		c := Client{Runner: func(ctx context.Context, _, _ string, _ ...string) (string, error) {

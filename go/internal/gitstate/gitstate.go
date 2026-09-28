@@ -27,7 +27,7 @@ type Client struct {
 	commandTimeout time.Duration
 }
 
-// PushTimeout は push 前の確認全体の予算。時間内に確認できない場合は
+// PushTimeout は push 前の確認全体の制限時間。時間内に確認できない場合は
 // 呼び出し側が通常の実行へ戻す。実際の git push の期限には影響しない。
 const PushTimeout = 30 * time.Second
 
@@ -842,8 +842,8 @@ func parsePorcelain(s string) ([]update, error) {
 func (c Client) CheckPush(ctx context.Context, dir string, args []string) error {
 	ctx, cancel := context.WithTimeout(ctx, PushTimeout)
 	defer cancel()
-	// 値レシーバーのコピーだけを変更し、Stop 側の予算は変えない。
-	// 各照会もこの全体予算を共有する。12 秒の制限は push 経路に適用しない。
+	// 値レシーバーのコピーだけを変更し、Stop 側の制限時間は変えない。
+	// 各照会は、この確認全体の制限時間の内側で実行する。12 秒の制限は push 経路に適用しない。
 	c.commandTimeout = PushTimeout
 	explicit, e := validatePush(args)
 	if e != nil {
