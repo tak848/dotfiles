@@ -1579,44 +1579,44 @@ url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/534533568"
 provenance = "github-attestations"
 
 [[tools."github:router-for-me/CLIProxyAPI"]]
-version = "7.3.20"
+version = "8.0.0"
 backend = "github:router-for-me/CLIProxyAPI"
-specifiers = ["v7.3.20"]
+specifiers = ["v8.0.0"]
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-arm64"]
-checksum = "sha256:caa1ae89a8364964f317877913efb7f76365fb51f252455ba929b607552f3769"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v7.3.20/CLIProxyAPI_7.3.20_linux_aarch64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592287811"
+checksum = "sha256:3c08f2bd66756e0b3a3f2d3e58af28c880b72b87e777836544dcf0c98468895d"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.0/CLIProxyAPI_8.0.0_linux_aarch64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592676856"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-arm64-musl"]
-checksum = "sha256:caa1ae89a8364964f317877913efb7f76365fb51f252455ba929b607552f3769"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v7.3.20/CLIProxyAPI_7.3.20_linux_aarch64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592287811"
+checksum = "sha256:3c08f2bd66756e0b3a3f2d3e58af28c880b72b87e777836544dcf0c98468895d"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.0/CLIProxyAPI_8.0.0_linux_aarch64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592676856"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-x64"]
-checksum = "sha256:7050c6ecc68b24493c323d3c51d840a9e4509207f124ea34a8428525e27d9354"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v7.3.20/CLIProxyAPI_7.3.20_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592289464"
+checksum = "sha256:c66d3acd710f7d32b3726b2eb04a14f4885b5c74b32dbd7b3386548f5a47b0e1"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.0/CLIProxyAPI_8.0.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592677736"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-x64-musl"]
-checksum = "sha256:7050c6ecc68b24493c323d3c51d840a9e4509207f124ea34a8428525e27d9354"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v7.3.20/CLIProxyAPI_7.3.20_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592289464"
+checksum = "sha256:c66d3acd710f7d32b3726b2eb04a14f4885b5c74b32dbd7b3386548f5a47b0e1"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.0/CLIProxyAPI_8.0.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592677736"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.macos-arm64"]
-checksum = "sha256:342718b5eba201446899d03f565e8295af74a4136f49abc99237b5caf6d9fdd7"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v7.3.20/CLIProxyAPI_7.3.20_darwin_aarch64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592288117"
+checksum = "sha256:b372014499257b9ec544cd175a153632da5648fb8120806b2dfed8bc726e7e70"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.0/CLIProxyAPI_8.0.0_darwin_aarch64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592677448"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.macos-x64"]
-checksum = "sha256:be5abee80a51a1d0a7dc6621b8261c03792a38de0ddbefc22003f643329fc0d4"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v7.3.20/CLIProxyAPI_7.3.20_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592290265"
+checksum = "sha256:8db425254bf1009223bbab6ffb13bcafa475a2befe09d44844f0c4d2831b134e"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.0/CLIProxyAPI_8.0.0_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592683035"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.windows-x64"]
-checksum = "sha256:f2e240a2c6d0e8ac33bf6b6cb993912b3d8c4129d51f6577b8fc1adfaf6910a7"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v7.3.20/CLIProxyAPI_7.3.20_windows_amd64.zip"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592289181"
+checksum = "sha256:f160ff525d3829d88ec140fd1aeab0b910875c2a478b1971e3efb7c9751dc3ce"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.0/CLIProxyAPI_8.0.0_windows_amd64.zip"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592677927"
 
 [[tools."github:sivchari/golance"]]
 version = "0.7.19"
@@ -1905,7 +1905,7 @@ specifiers = ["0.19.4"]
 version = "3.28.0"
 backend = "pipx:snowflake-cli"
 specifiers = ["3.28.0"]
-uv = { path = "locks/pipx-snowflake-cli/3.28.0", digest = "sha256:5f87ec5658c2e0bf1303705e10be300fc78758a630db9c2f49f99a8d86df69e5" }
+uv = { path = "locks/pipx-snowflake-cli/3.28.0", digest = "sha256:9752916f6c11ae99637fe7c74f898b735d6429022f743c5b3750db35bc029dc5" }
 
 [[tools.pnpm]]
 version = "12.6.0"
