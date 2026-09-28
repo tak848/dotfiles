@@ -381,6 +381,13 @@ local autoModeRules = import 'auto-mode.libsonnet';
             type: 'command',
             command: '~/.claude/bin/cc-post-tool-use',
           },
+          {
+            // CC_STOP_GATE_PAUSE_TOOLS のツールを main agent が呼んだら continue: false で turn を終える。
+            // この終わり方では Stop hook が発火しない。変数が未設定なら stdin も読まずに終わる。
+            type: 'command',
+            command: '~/.claude/bin/cc-stop-gate pause-tool',
+            timeout: 5,
+          },
         ],
       },
     ],

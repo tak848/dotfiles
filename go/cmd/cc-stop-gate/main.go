@@ -1,5 +1,6 @@
 // cc-stop-gate は、応答終了時に plan / 依頼の完遂確認を要求する。
 // 編集履歴、内部 TODO、transcript の読み取りには依存しない。
+// pause-tool サブコマンドは CC_STOP_GATE_PAUSE_TOOLS 用の PostToolUse hook（pause.go）。
 package main
 
 import (
@@ -41,6 +42,10 @@ type checkFunc func(context.Context, string, []string) []string
 type lookupEnv func(string) (string, bool)
 
 func main() {
+	if len(os.Args) > 1 && os.Args[1] == pauseToolCommand {
+		runPause(os.Stdin, os.Stdout, os.LookupEnv)
+		return
+	}
 	// 出力できなくても exit 2 にしない。Stop の exit 2 は block となり、stderr が AI に渡る。
 	run(os.Stdin, os.Stdout, os.LookupEnv, gitstate.CheckStop)
 }
