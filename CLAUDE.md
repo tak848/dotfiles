@@ -58,9 +58,12 @@ mise.lock は実行環境（macOS/Linux）によって結果が異なる[既知�
 
 ### mise.lock の sidecar（lockfile revision 2）
 
-mise 2026.9.7 以降、新規に作った lockfile は revision 2 になり、npm ツール（embedded aube）と pipx / pypi ツール（uv）の推移的依存を lockfile 横の `.mise/locks/<backend-tool>/<version>/` に sidecar として書く。`mise.lock` にはそのパスと digest だけが入り、sidecar が無いと `mise install` は失敗する。ワークフローもタスクも `rm -f mise.lock && mise lock` で作り直すので、常に revision 2 になる。
+mise 2026.9.7 以降、新規に作った lockfile は revision 2 になり、npm ツール（embedded aube）と pipx / pypi ツール（uv）の推移的依存を lockfile 横の `<置き場>/<backend-tool>/<version>/` に sidecar として書く。`mise.lock` にはそのパスと digest だけが入り、sidecar が無いと `mise install` は失敗する。ワークフローもタスクも `rm -f mise.lock && mise lock` で作り直すので、常に revision 2 になる。
 
-- chezmoi はソース内の `.` 始まりのファイル・ディレクトリを無視するため、`dot_config/mise/.mise` は配布されない。そこで `dot_config/mise/.mise` を `dot_mise` への symlink にして、実体を `dot_config/mise/dot_mise/locks/` に置いている。mise は symlink 越しに書き、chezmoi は `dot_mise` を `~/.config/mise/.mise` に配布するので、lockfile の相対パス `.mise/locks/...` は repo でも配布先でも同じ場所を指す。`dot_mise/.gitkeep` は symlink の先を常に存在させるためのもの（`.` 始まりなので配布されない）
+- 置き場は mise が lockfile のパスから決める（mise の `src/lockfile/graph.rs` の `sidecar_root`）。lockfile のディレクトリが `mise` でその親が `.config` なら `<dir>/locks/`、それ以外は `<dir>/.mise/locks/`。root の `mise.lock` は `.mise/locks/`。配布先の `~/.config/mise/mise.lock` は `~/.config/mise/locks/` だが、repo の `dot_config/mise/mise.lock` は親が `dot_config` なので `.mise/locks/` になる
+- mise は lockfile の保存時、置き場の外にある sidecar を置き場へ写してパスを書き換える（読み込み時には拒否しない）。repo の置き場のまま配ると、配布先の `mise install` が保存のたびに `locks/` へ写して `~/.config/mise/mise.lock` を書き換え、`chezmoi update` が `has changed since chezmoi last wrote it?` を出す。そのため `dot_config/mise` は lock の直後に `.github/scripts/relocate-mise-sidecars.sh` で sidecar を `dot_config/mise/locks/` に移し、mise.lock のパスを `locks/...` に書き換える（digest は sidecar の中身から計算されるので変わらない）。`locks` は `.` 始まりでないので chezmoi がそのまま `~/.config/mise/locks/` に配布する。スクリプトは置換漏れ（mise.lock の書式が変わった場合）と参照先の欠けを検出して失敗する
+- 以前（#958）は `dot_config/mise/.mise` を `dot_mise` への symlink にして `~/.config/mise/.mise/locks/` に配布していた。この古い置き場は `.chezmoiremove` で消している
+- 配布先で古いバージョンの sidecar ディレクトリは消えない。chezmoi はソースから消えたファイルを配布先から消さず、mise も merge モード（既定）の保存では参照されなくなった sidecar を消さない。mise.lock が参照するパスしか読まないので実害は無い
 - ワークフローは sidecar ディレクトリも `FILES` に入れて commit する（`commit-via-graphql.sh` はディレクトリ配下の追加・削除を拾う）
 - pipx の依存グラフは uv で解決するので、ワークフローは `mise lock` の前に uv を入れる。解決に使う Python は uv が見つけられるものなら何でもよい
 - 依存グラフの install（`uv sync --frozen --no-python-downloads --python <パス>`）で使う Python は、mise の config の `python`、無ければ PATH 上の `python` に固定される（mise の `src/backend/pipx/lock.rs` の `bind_uv_python`）。`install_env` の `UV_PYTHON_PREFERENCE` では変えられず、放っておくと Homebrew 等の素の python を拾う。そのため `dot_config/mise/config.toml` に `python`（3.13。snowflake-cli が固定している `pyyaml==6.0.2` に cp314 の wheel が無いため。Renovate も `allowedVersions: "<3.14"` で留めている）を置いている

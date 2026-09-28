@@ -121,7 +121,7 @@ python = "3.13.15"
 # uv が入っていれば mise は内部で uv tool install を使うので pipx 自体は不要。
 # Renovate の mise manager は pipx backend を PyPI datasource として追えるので更新も自動で乗る。
 #
-# lockfile revision 2 では依存グラフ（dot_mise/locks/pipx-snowflake-cli/）を uv sync で再現し、
+# lockfile revision 2 では依存グラフ（locks/pipx-snowflake-cli/）を uv sync で再現し、
 # Python には mise の python（ランタイムの節）を使う。以前は install_env の
 # UV_PYTHON_PREFERENCE=only-managed で uv 管理の Python に寄せていたが、graph install では
 # mise が --python でパスを直接渡すので効かない。何も置かないと PATH 上の python（Homebrew 等）を拾う。

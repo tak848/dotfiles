@@ -1,1 +1,6 @@
 .codex/instructions.md
+{{- /*
+  #958 で mise の sidecar（lockfile revision 2 の依存グラフ）を ~/.config/mise/.mise/locks/ に配布していた。
+  mise は ~/.config/mise/mise.lock の sidecar を ~/.config/mise/locks/ に置くので、古い置き場を消す。
+*/}}
+.config/mise/.mise

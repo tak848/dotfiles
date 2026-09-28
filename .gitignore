@@ -19,3 +19,7 @@
 dot_claude/settings.json
 dot_claude/dot_mcp.json
 dot_gemini/settings.json
+
+# mise lock が dot_config/mise の sidecar を一時的に書く場所。
+# relocate-mise-sidecars.sh が locks/ へ移すので、残っていても commit しない
+dot_config/mise/.mise/
