@@ -29,7 +29,7 @@ type Client struct {
 
 // PushTimeout は push 前の確認全体の予算。時間内に確認できない場合は
 // 呼び出し側が通常の実行へ戻す。実際の git push の期限には影響しない。
-const PushTimeout = 5 * time.Second
+const PushTimeout = 30 * time.Second
 
 // ErrMergedBranch は、削除されたマージ済み head の再作成を確認できた場合だけ返す。
 // その他の error は確認失敗であり、push を止める理由として使わない。

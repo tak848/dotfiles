@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func TestPushSucceedsWithinFiveSeconds(t *testing.T) {
+func TestPushSucceedsWithinBudget(t *testing.T) {
 	synctest.Test(t, func(t *testing.T) {
 		f := newFixture()
 		f.live = ""
@@ -56,7 +56,7 @@ func TestPushTotalBudgetStillApplies(t *testing.T) {
 	})
 }
 
-func TestPushSharesFiveSecondBudgetAcrossQueries(t *testing.T) {
+func TestPushSharesBudgetAcrossQueries(t *testing.T) {
 	synctest.Test(t, func(t *testing.T) {
 		f := newFixture()
 		f.live = ""
@@ -66,7 +66,7 @@ func TestPushSharesFiveSecondBudgetAcrossQueries(t *testing.T) {
 		c := Client{Runner: func(ctx context.Context, dir, name string, args ...string) (string, error) {
 			if name == "gh" || name == "git" && (args[0] == "push" || args[0] == "ls-remote") {
 				queries = append(queries, name+" "+args[0])
-				timer := time.NewTimer(2 * time.Second)
+				timer := time.NewTimer(PushTimeout * 2 / 5)
 				defer timer.Stop()
 				select {
 				case <-ctx.Done():
@@ -81,8 +81,8 @@ func TestPushSharesFiveSecondBudgetAcrossQueries(t *testing.T) {
 		if err == nil || !strings.Contains(err.Error(), "タイムアウト") {
 			t.Fatal(err)
 		}
-		if elapsed := time.Since(start); elapsed != 5*time.Second {
-			t.Fatalf("elapsed=%v, want 5s", elapsed)
+		if elapsed := time.Since(start); elapsed != PushTimeout {
+			t.Fatalf("elapsed=%v, want %v", elapsed, PushTimeout)
 		}
 		if got := strings.Join(queries, ", "); got != "git push, git ls-remote, gh api" || completed != 2 {
 			t.Fatalf("queries=%q, completed=%d; want push and ls-remote completed, gh api timed out", got, completed)

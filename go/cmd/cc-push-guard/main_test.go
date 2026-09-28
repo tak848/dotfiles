@@ -251,7 +251,7 @@ func TestExpiredCheckIsSilent(t *testing.T) {
 				<-ctx.Done()
 				return result
 			})
-			if err != nil || out.Len() != 0 || time.Since(start) != 5*time.Second {
+			if err != nil || out.Len() != 0 || time.Since(start) != gitstate.PushTimeout {
 				t.Fatalf("err=%v output=%s elapsed=%v", err, out.String(), time.Since(start))
 			}
 		})
