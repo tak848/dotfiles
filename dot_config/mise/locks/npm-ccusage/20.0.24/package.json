@@ -2,6 +2,6 @@
   "name": "mise-npm-install",
   "private": true,
   "dependencies": {
-    "defuddle": "0.19.3"
+    "ccusage": "20.0.24"
   }
 }
