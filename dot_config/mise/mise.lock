@@ -1879,7 +1879,7 @@ url = "https://nodejs.org/dist/v24.21.0/node-v24.21.0-win-x64.zip"
 
 [[tools."npm:@fission-ai/openspec"]]
 version = "1.12.0"
-aube = { path = ".mise/locks/npm-fission-ai-openspec/1.12.0", digest = "sha256:14a7c3d10142d1b0cf2f691be2413a5d2289dacb4c2d051ab0313eb7c65a9cf5" }
+aube = { path = ".mise/locks/npm-fission-ai-openspec/1.12.0", digest = "sha256:229d6fc38db79964ed69f41838a6dcba5080cf6e29642a7fff166bb6aa785c29" }
 backend = "npm:@fission-ai/openspec"
 specifiers = ["1.12.0"]
 
@@ -1905,7 +1905,7 @@ specifiers = ["0.19.3"]
 version = "3.26.0"
 backend = "pipx:snowflake-cli"
 specifiers = ["3.26.0"]
-uv = { path = ".mise/locks/pipx-snowflake-cli/3.26.0", digest = "sha256:7b00f57ba705e0697dc3267ed05fc1e4755e7f74f30c246d9f7a97cf069c3659" }
+uv = { path = ".mise/locks/pipx-snowflake-cli/3.26.0", digest = "sha256:e98224b661af267a2ab3d22b9b38dce312809f62a8b4d758596e878e6f22a880" }
 
 [[tools.pnpm]]
 version = "12.3.4"
@@ -1952,4 +1952,44 @@ provenance = "github-attestations"
 checksum = "sha256:ada0d8b62adff9884686d473e27d0f57ef2ca4a044d23a7c6782af86b9a8a6cf"
 url = "https://github.com/pnpm/pnpm/releases/download/v12.3.4/pnpm-win32-x64.zip"
 url_api = "https://api.github.com/repos/pnpm/pnpm/releases/assets/544431954"
+provenance = "github-attestations"
+
+[[tools.python]]
+version = "3.13.15"
+backend = "core:python"
+specifiers = ["3.13.15"]
+
+[tools.python."platforms.linux-arm64"]
+checksum = "sha256:5ad58156cbec94e5643c13caa792e92df72a23f33d3a6425d4cbff5c4b7a040c"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260924/cpython-3.13.15+20260924-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"
+provenance = "github-attestations"
+
+[tools.python."platforms.linux-arm64-musl"]
+checksum = "sha256:e919f032be1fbcd7cac8c591f89df461f21749ca6c9c7cee78fbd0909af4cc64"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260924/cpython-3.13.15+20260924-aarch64-unknown-linux-musl-install_only_stripped.tar.gz"
+provenance = "github-attestations"
+
+[tools.python."platforms.linux-x64"]
+checksum = "sha256:d0b640eed27fbdd6f5f2bd33444aee53df2c8863f8b2a96f4094717411e3de9c"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260924/cpython-3.13.15+20260924-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"
+provenance = "github-attestations"
+
+[tools.python."platforms.linux-x64-musl"]
+checksum = "sha256:94c39f6249241858871b9fe9cae8b506076ed8291860b1334210a76c13ac2b65"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260924/cpython-3.13.15+20260924-x86_64-unknown-linux-musl-install_only_stripped.tar.gz"
+provenance = "github-attestations"
+
+[tools.python."platforms.macos-arm64"]
+checksum = "sha256:064afb7c2fc0bbf511d886288adf98696af5105e36c138cdf2c199c0146fcf68"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260924/cpython-3.13.15+20260924-aarch64-apple-darwin-install_only_stripped.tar.gz"
+provenance = "github-attestations"
+
+[tools.python."platforms.macos-x64"]
+checksum = "sha256:327814efd865a0b6a99c149b12a261e9d0ad409183515c745d41bda2d07282e9"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260924/cpython-3.13.15+20260924-x86_64-apple-darwin-install_only_stripped.tar.gz"
+provenance = "github-attestations"
+
+[tools.python."platforms.windows-x64"]
+checksum = "sha256:e42fa944748a50e9ff481cbb817ef8a6e3da6fbcf0cf6f29b554e1acb8c7384d"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260924/cpython-3.13.15+20260924-x86_64-pc-windows-msvc-install_only_stripped.tar.gz"
 provenance = "github-attestations"
