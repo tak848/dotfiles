@@ -360,13 +360,6 @@ local autoModeRules = import 'auto-mode.libsonnet';
   // alwaysThinkingEnabled は adaptive thinking (effortLevel) により不要
   // alwaysThinkingEnabled: true,  // https://github.com/anthropics/claude-code/issues/8780
   hooks: {
-    // Stop ゲートの CC_STOP_GATE_PAUSE_TOOLS 用に、main agent の最後のツールを session ごとに記録する。
-    // 同期で全ツール呼び出しに乗るが、変数が未設定なら stdin も読まずに終わる。
-    local stopPauseMarker = {
-      type: 'command',
-      command: '~/.claude/bin/cc-stop-gate pause-marker',
-      timeout: 5,
-    },
     PostToolUse: [
       {
         matcher: 'Write|Edit|MultiEdit',
@@ -388,20 +381,14 @@ local autoModeRules = import 'auto-mode.libsonnet';
             type: 'command',
             command: '~/.claude/bin/cc-post-tool-use',
           },
-          stopPauseMarker,
+          {
+            // CC_STOP_GATE_PAUSE_TOOLS のツールを main agent が呼んだら continue: false で turn を終える。
+            // この終わり方では Stop hook が発火しない。変数が未設定なら stdin も読まずに終わる。
+            type: 'command',
+            command: '~/.claude/bin/cc-stop-gate pause-tool',
+            timeout: 5,
+          },
         ],
-      },
-    ],
-    // 失敗したツールも「最後に呼ばれたツール」なので、マーカーを消す。
-    PostToolUseFailure: [
-      {
-        matcher: '',
-        hooks: [stopPauseMarker],
-      },
-    ],
-    UserPromptSubmit: [
-      {
-        hooks: [stopPauseMarker],
       },
     ],
     PreToolUse: permissionRules.preToolUseHooks + [
