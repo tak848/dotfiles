@@ -188,7 +188,7 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 
 ### Stop ゲート（cc-stop-gate / cc-push-guard）
 
-`go/cmd/cc-stop-gate` は同期の Stop hook。主眼は「plan があれば今開き直し、ユーザーの依頼を全項目実装・検証したか、勝手な先送りがないか」を確認させること。最終行の `完了誓約: <要約>` / `調査完了: <要約>` と本文の離脱宣言を照合する。署名は自己確認であり、意味的な完遂の証明ではない。編集センサー、PostToolUse のマーカー、内部 TODO の状態検査、transcript の走査は行わない。
+`go/cmd/cc-stop-gate` は同期の Stop hook。主眼は「plan があれば今開き直し、ユーザーの依頼を全項目実装・検証したか、勝手な先送りがないか」を確認させること。最終行の `完了誓約: <要約>` / `調査完了: <要約>` と本文の離脱宣言を照合する。署名は自己確認であり、意味的な完遂の証明ではない。編集センサー、内部 TODO の状態検査、transcript の走査は行わない。PostToolUse のマーカーも使わない方針だったが、後述の `CC_STOP_GATE_PAUSE_TOOLS` の用途に限って改めた。
 
 - `last_assistant_message` を使用し、取得できないときに古い transcript の文章で代用しない。`stop_hook_active` による自動解除はしない
 - 差し戻し文は、その文面だけで「何を確認し、何が分かり、何をすべきか」が分かるように書く。Git / PR の問題にはブランチ・remote 名・ref・短い SHA・PR 番号と base を入れる。push URL は認証情報を含み得るので出さない。離脱表現での差し戻しには、一致した語と同じ行の前後 30 文字を引用する
@@ -201,6 +201,12 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - 検査失敗は内部で `【確認不能】 [検査ID]` として分類し、Stop の判定時に除外する。照会の復旧要求や失敗文は agent に返さない。detached HEAD・複数の open PR base・PR head と送信先の不一致は取得した情報から確認できた要確認状態であり、この失敗分類に含めない。`symbolic-ref` の exit 1 と、それ以外の実行失敗も区別する。確認済みの問題と失敗が混在する場合は、確認済みの問題だけで差し戻す。失敗だけで、有効な署名があり離脱宣言も無ければ無出力で終了する。署名不足・離脱宣言・plan mode・作業待機の判定は省略しない。情報の取得失敗を PR 不在や plan 未完了とみなさず、PR の base 変更やブランチ統合も要求しない
 - `CC_STOP_GATE_REQUIRE_PR_OWNERS` は **PR が無いので作成しろという指示だけ**の対象 owner 一覧。未設定なら `tak848`、設定時はカンマ区切りの一覧で置き換え、空文字は作成要求なし。前後の空白を除き大文字小文字を区別しない。fork は origin の owner だけで判断しない。他の停止チェックと push ガードには適用しない
 - `CC_STOP_GATE=0` / `false` / `off` / `no` で Stop 全体を明示的に無効化できる（最優先）。環境変数の配置はユーザーが決める。モデルが検査を回避するために設定を書き換えてはならない
+- `CC_STOP_GATE_PAUSE_TOOLS` は、ツール呼び出しで turn を終え、その後の再開を外部（ホスト側の確認 UI や別セッションの応答）が担う環境のための設定。カンマ区切りのツール名一覧で、前後の空白を除いて完全一致（大文字小文字も区別）で比較する。main agent の turn で最後に呼ばれたツールがこの一覧に含まれていれば、その Stop は判定をせず無出力で通す。未設定・空なら機能は無効で、Stop もマーカーの置き場に触れない。具体的なツール名はこの repo に入れず、値は使う環境の側で設定する。`CC_STOP_GATE=0` はこちらより優先する
+- Stop 入力には直前のツールが含まれず、Stop 時点の transcript に最後のメッセージが入っている保証も無い（公式 docs の hooks）。そのため、この用途に限って PostToolUse のマーカーを使う。`cc-stop-gate pause-marker` を PostToolUse / PostToolUseFailure（matcher はどちらも全ツール）と UserPromptSubmit に同期 hook として登録している。サブコマンドで分けているのは、機能が無効なときに stdin（PostToolUse では `tool_response` 全体）を読まずに終えるため
+- マーカーは `$XDG_STATE_HOME/cc-stop-gate/pause/<session_id>`（`XDG_STATE_HOME` が絶対パスでなければ `~/.local/state/...`）。一覧のツールの PostToolUse で書き、それ以外のツールの PostToolUse、すべての PostToolUseFailure、UserPromptSubmit で消す。Stop は他の検査より先に消費し、消せたときだけ通す。`agent_id` のある入力（subagent 内のツール）は無視する。Stop は main agent の判定なので、subagent のツールで main のマーカーを書き換えないため。`session_id` に英数字と `.` `_` `-` 以外が含まれる場合は何もしない
+- マーカーの寿命は、書かれてから次のどれかまで。次のツール呼び出しの完了（成功・失敗とも）、プロンプトの送信、その session の Stop。前の turn が Stop を経ずに中断されると残る。プロンプト無しで再開した turn では UserPromptSubmit が発火しないので、ツールを 1 回も呼ばずに止まると、残ったマーカーで 1 回だけ通ってしまう。ツールを 1 回呼べば消える
+- 実行前に拒否された呼び出し（permission の拒否や PreToolUse hook の deny）は PostToolUse も PostToolUseFailure も発火しないので、マーカーを消さない。並列のツール呼び出しでは PostToolUse が並行に走り、書き込みと削除の順は決まらない。ただし、これが起きるのは一覧のツールが最後のバッチに含まれる場合だけなので、どちらの順になっても、通すか、従来どおり判定するかのどちらかになる。本来判定すべき turn を誤って通すことはない
+- マーカーの書き込み・削除の失敗は、他の入力異常と同じく無出力・exit 0。Stop 側でマーカーを消せなかった場合（存在しない以外のエラー）は、マーカーがあったかを確かめられないので通常の判定に進む。置き場の権限の異常などで、変数を設定した全 session のゲートが黙って外れるのを避けるため
 - `go/cmd/cc-push-guard` は同期の PreToolUse(Bash)。push 前に実送信先と ref、マージ済み PR の履歴を確認し、削除されたマージ済みブランチの復活を確認できた場合だけ `ErrMergedBranch` を根拠に deny を返す。入力不正・読み取り失敗・未対応構文（pipeline / redirect / 動的展開など）・照会失敗・タイムアウトでは無出力で通常の処理へ戻す。明示的な allow は返さず、既存の permission 判定を迂回しない。`CC_PUSH_GUARD=0` / `false` / `off` / `no` がこのガード専用の opt-out
 - push 対象の probe は dry-run。probe にだけ `--verbose` を付ける（`--quiet` のままだと Git が porcelain の更新行を省き、送信先を検査できない）。成功した probe の更新ゼロ件は正常扱い。probe 用の `--no-verify` も含め、本番の push の引数は変更しない。既知の Git 拒否（送信元 ref 不在、upstream 未設定、non-fast-forward）も hook からは返さず、本来の Git の実行結果に任せる。未対応構文や確認失敗を通す best-effort の確認であり、すべての push を防ぐものではない
 - push 前の確認は `gitstate.PushTimeout`（30秒）の制限時間内に、すべての照会を行う。期限内に確認できなければ無出力で通常の処理へ戻す。外側の hook は終了処理と返答の猶予を含め40秒。呼び出し元がより短い期限を指定した場合はそちらを守る。本来の git push の制限時間、Stop 側の制限時間と失敗時の停止判定は変更しない
