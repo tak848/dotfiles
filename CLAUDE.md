@@ -56,6 +56,15 @@ mise.lock は実行環境（macOS/Linux）によって結果が異なる[既知�
 - **CI の diff チェックからは除外**（`task check` は mise.lock を検証しない）
 - **mise.lock の更新は GitHub Actions ワークフロー（`lockfiles-and-checksums.yaml`）に任せる**
 
+### mise.lock の sidecar（lockfile revision 2）
+
+mise 2026.9.7 以降、新規に作った lockfile は revision 2 になり、npm ツール（embedded aube）と pipx / pypi ツール（uv）の推移的依存を lockfile 横の `.mise/locks/<backend-tool>/<version>/` に sidecar として書く。`mise.lock` にはそのパスと digest だけが入り、sidecar が無いと `mise install` は失敗する。ワークフローもタスクも `rm -f mise.lock && mise lock` で作り直すので、常に revision 2 になる。
+
+- chezmoi はソース内の `.` 始まりのファイル・ディレクトリを無視するため、`dot_config/mise/.mise` は配布されない。そこで `dot_config/mise/.mise` を `dot_mise` への symlink にして、実体を `dot_config/mise/dot_mise/locks/` に置いている。mise は symlink 越しに書き、chezmoi は `dot_mise` を `~/.config/mise/.mise` に配布するので、lockfile の相対パス `.mise/locks/...` は repo でも配布先でも同じ場所を指す。`dot_mise/.gitkeep` は symlink の先を常に存在させるためのもの（`.` 始まりなので配布されない）
+- ワークフローは sidecar ディレクトリも `FILES` に入れて commit する（`commit-via-graphql.sh` はディレクトリ配下の追加・削除を拾う）
+- pipx の依存グラフは uv で解決するので、ワークフローは `mise lock` の前に uv を入れる
+- sidecar の `package.json` / `pyproject.toml` / `uv.lock` は Renovate の `ignorePaths` で除外している。推移的依存の更新は `mise lock` に任せる
+
 ## Architecture
 
 ### ツール管理の構成

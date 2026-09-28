@@ -9,6 +9,23 @@
     ":prHourlyLimitNone",
     "github>aquaproj/aqua-renovate-config#2.13.0",
   ],
+  // mise lockfile revision 2 の sidecar（npm の package.json / aube-lock.yaml、pypi の
+  // pyproject.toml / uv.lock）は mise lock が生成するもので、推移的依存の更新も mise lock に任せる。
+  // Renovate が npm / pep621 / uv manager で拾うと別 PR が立つので除外する。
+  // ignorePaths は mergeable: false で config:recommended（:ignoreModulesAndTests）の値を
+  // 上書きしてしまうため、その既定値も並べておく。
+  ignorePaths: [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**",
+    "**/examples/**",
+    "**/__tests__/**",
+    "**/test/**",
+    "**/tests/**",
+    "**/__fixtures__/**",
+    "**/.mise/locks/**",
+    "dot_config/mise/dot_mise/**",
+  ],
   rangeStrategy: "bump",
   postUpdateOptions: ["gomodTidy"],
   labels: ["renovate"],
