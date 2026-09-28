@@ -39,19 +39,19 @@ func TestRun(t *testing.T) {
 		"auto":                           {mode: "auto", text: "調査完了: 仕様を確認", checked: true},
 		"no signature":                   {mode: "default", text: "終わりました。", blocked: true, checked: true, contains: "plan があるなら"},
 		"empty text":                     {mode: "default", blocked: true, checked: true, contains: "全項目"},
-		"tells":                          {mode: "default", text: "続けます", blocked: true, checked: true, contains: "叩き起こし"},
-		"signed tells":                   {mode: "default", text: "次回対応します\n完了誓約: 完了", blocked: true, checked: true, contains: "無効"},
+		"tells":                          {mode: "default", text: "続けます", blocked: true, checked: true, contains: "表現に一致しました"},
+		"signed tells":                   {mode: "default", text: "次回対応します\n完了誓約: 完了", blocked: true, checked: true, contains: "終了できません"},
 		"dirty no edit tool":             {mode: "default", text: "完了誓約: 完了", issues: []string{"未 commit"}, blocked: true, checked: true, contains: "未 commit"},
 		"unknown state":                  {mode: "default", text: "完了誓約: 完了", issues: []string{gitstate.CheckFailurePrefix + " [github-repository] 認証を確認できない"}, checked: true},
 		"plan no signature":              {mode: "plan", text: "計画を示しました。", blocked: true, contains: "ExitPlanMode"},
 		"plan pledge":                    {mode: "plan", text: "完了誓約: 完了", blocked: true, contains: "完了誓約は無効"},
 		"plan survey":                    {mode: "plan", text: "調査完了: 調査結果を回答"},
-		"plan survey tells":              {mode: "plan", text: "続きは次回\n調査完了: 完了", blocked: true, contains: "無効"},
+		"plan survey tells":              {mode: "plan", text: "続きは次回\n調査完了: 完了", blocked: true, contains: "終了できません"},
 		"waiting agent":                  {mode: "default", text: "作業待機: agent の完了", tasks: `[{"id":"agent-1","type":"subagent","status":"running"}]`},
 		"waiting cron":                   {mode: "default", text: "作業待機: 予定の通知", crons: `[{"id":"cron-1"}]`},
 		"plan waiting":                   {mode: "plan", text: "作業待機: 調査 agent", tasks: `[{"id":"agent-1"}]`},
-		"fake waiting":                   {mode: "default", text: "作業待機: 自分の作業", blocked: true, contains: "待つ相手が存在しない"},
-		"empty task":                     {mode: "default", text: "作業待機: 作業", tasks: `[null,{},"x"]`, blocked: true, contains: "作業待機は無効"},
+		"fake waiting":                   {mode: "default", text: "作業待機: 自分の作業", blocked: true, contains: "待つ対象が無い"},
+		"empty task":                     {mode: "default", text: "作業待機: 作業", tasks: `[null,{},"x"]`, blocked: true, contains: "待つ対象が無い"},
 		"background alone not exemption": {mode: "default", text: "終了します", tasks: `[{"id":"monitor-1"}]`, blocked: true, checked: true},
 	}
 	for name, tt := range tests {
@@ -129,9 +129,9 @@ func TestInvalidInput(t *testing.T) {
 			if code := run(strings.NewReader(text), &out, envMap(nil), check); code != 0 {
 				t.Fatalf("exit = %d", code)
 			}
-			var got decision
-			if err := json.Unmarshal(out.Bytes(), &got); err != nil || got.Decision != "block" {
-				t.Fatalf("output = %s, err = %v", &out, err)
+			// AI の作業では直せない入力の異常なので、差し戻さずに通す。
+			if out.Len() != 0 {
+				t.Fatalf("output = %s", &out)
 			}
 		})
 	}
@@ -165,7 +165,7 @@ func TestV2RejectsDuplicateMembers(t *testing.T) {
 		t.Fatal("duplicate JSON must be rejected before git checks")
 		return nil
 	}
-	if code := run(strings.NewReader(data), &out, envMap(nil), check); code != 0 || !strings.Contains(out.String(), "block") {
+	if code := run(strings.NewReader(data), &out, envMap(nil), check); code != 0 || out.Len() != 0 {
 		t.Fatalf("exit = %d, output = %q", code, out.String())
 	}
 }
@@ -224,7 +224,7 @@ func TestPROwners(t *testing.T) {
 
 func TestBoundedReasons(t *testing.T) {
 	t.Parallel()
-	got := decide(facts{Message: message{Signature: pledge}, Issues: []string{strings.Repeat("長い理由", 10000) + "\x1b[31m\x00"}})
+	got := decide(facts{Message: message{}, Issues: []string{strings.Repeat("長い理由", 10000) + "\x1b[31m\x00"}})
 	if len(got.Reason) > maxReasonBytes || !utf8.ValidString(got.Reason) {
 		t.Fatal("invalid bounded reason")
 	}
@@ -247,10 +247,12 @@ func (failingWriter) Write([]byte) (int, error) { return 0, errors.New("write fa
 func TestIOErrors(t *testing.T) {
 	t.Parallel()
 	var out bytes.Buffer
-	if code := run(failingReader{}, &out, envMap(nil), nil); code != 0 || !strings.Contains(out.String(), "block") {
-		t.Fatal("read failure must block")
+	if code := run(failingReader{}, &out, envMap(nil), nil); code != 0 || out.Len() != 0 {
+		t.Fatal("read failure must pass without output")
 	}
-	if code := run(strings.NewReader("{"), failingWriter{}, envMap(nil), nil); code != 2 {
+	// Stop の exit 2 は block になり stderr が AI に渡るので、出力失敗でも 0 で終える。
+	payload := `{"hook_event_name":"Stop","permission_mode":"plan","last_assistant_message":"報告のみ"}`
+	if code := run(strings.NewReader(payload), failingWriter{}, envMap(nil), nil); code != 0 {
 		t.Fatalf("write failure exit = %d", code)
 	}
 	if code := emit(io.Discard, decision{}); code != 0 {

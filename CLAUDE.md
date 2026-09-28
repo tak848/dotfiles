@@ -177,6 +177,9 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 `go/cmd/cc-stop-gate` は同期の Stop hook。主眼は「plan があれば今開き直し、ユーザーの依頼を全項目実装・検証したか、勝手な先送りがないか」を確認させること。最終行の `完了誓約: <要約>` / `調査完了: <要約>` と本文の離脱宣言を照合する。署名は自己確認であり、意味的な完遂の証明ではない。編集センサー、PostToolUse のマーカー、内部 TODO の状態検査、transcript の走査は行わない。
 
 - `last_assistant_message` を使用し、取得できないときに古い transcript の文章で代用しない。`stop_hook_active` による自動解除はしない
+- 差し戻し文は、その文面だけで「何を確認し、何が分かり、何をすべきか」が分かるように書く。Git / PR の問題にはブランチ・remote 名・ref・短い SHA・PR 番号と base を入れる。push URL は認証情報を含み得るので出さない。離脱表現での差し戻しには、一致した語と同じ行の前後 30 文字を引用する
+- 入力の異常（読み取り失敗・形式不正・イベント違い・モード不明・報告文なし）と出力失敗は、AI の作業では直せないので無出力・exit 0 で通す。Stop の exit 2 は block になり、stderr が AI に渡る
+- push.default が simple（未設定を含む）で upstream の名前がブランチ名と異なる設定は、照会失敗ではなく設定から決まる状態として扱う。HEAD が upstream の送信先に含まれていれば何も返さず、含まれていなければ具体的に差し戻す
 - `作業待機: <対象>` は Stop 入力の `background_tasks` / `session_crons` に ID のある要素が存在するときだけ許可する。これは稼働中の仕事の存在の確認で、依頼との関連性の証明ではない
 - `permission_mode: plan` では git の照会をしない。計画・説明 HTML の差分に commit / push / PR を要求せず、計画なら ExitPlanMode、判断が必要なら AskUserQuestion を促す。plan mode での完了誓約は無効
 - 通常モードでは `go/internal/gitstate` で未 commit・送信先への未 push・既定ブランチの先行・必要な PR の不足を補助検査する。署名で確認済みの問題を覆せない。照会失敗・タイムアウト・照会対象 cwd の取得不能は停止理由にせず、通常の完遂・署名確認へ進む。これは Git / PR が正常と確認できたという意味ではない。既存 WIP を勝手に commit / 削除して検査を通してはならない

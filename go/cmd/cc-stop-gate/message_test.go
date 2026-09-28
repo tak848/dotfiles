@@ -1,6 +1,29 @@
 package main
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
+
+func TestTellQuotesMatchedPhrase(t *testing.T) {
+	t.Parallel()
+	m := analyze("修正しました。残りは別 PR で対応します。\n完了誓約: 完了")
+	if m.Tell != "残りは" {
+		t.Fatalf("Tell = %q", m.Tell)
+	}
+	d := decide(facts{Message: m})
+	if !strings.Contains(d.Reason, "「残りは」（修正しました。残りは別 PR で対応します。）") || !strings.Contains(d.Reason, "残作業が無い") {
+		t.Fatal(d.Reason)
+	}
+	long := analyze(strings.Repeat("あ", 200) + "続けます" + strings.Repeat("い", 200))
+	if long.Excerpt != "…"+strings.Repeat("あ", excerptRunes)+"続けます"+strings.Repeat("い", excerptRunes)+"…" {
+		t.Fatalf("excerpt = %q", long.Excerpt)
+	}
+	multi := analyze("前の行\n続けます\n次の行")
+	if multi.Excerpt != "続けます" {
+		t.Fatalf("excerpt must stay on the matched line: %q", multi.Excerpt)
+	}
+}
 
 func TestAnalyze(t *testing.T) {
 	t.Parallel()
@@ -39,7 +62,8 @@ func TestAnalyze(t *testing.T) {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			if got := analyze(tt.text); got != tt.want {
+			got := analyze(tt.text)
+			if got.Signature != tt.want.Signature || got.Tells != tt.want.Tells || (got.Tell != "") != got.Tells {
 				t.Fatalf("analyze() = %#v, want %#v", got, tt.want)
 			}
 		})

@@ -126,6 +126,7 @@ func (f *fixture) runner(ctx context.Context, dir, name string, args ...string) 
 }
 func makePull(repo, base, branch, sha, state string, merged bool) pull {
 	var p pull
+	p.Number = 12
 	p.State = state
 	p.Head.Ref = branch
 	p.Head.SHA = sha
@@ -145,14 +146,14 @@ func TestStopStates(t *testing.T) {
 		owners    []string
 		want, not string
 	}{
-		{"missing PR", nil, []string{"tak848"}, "PR がありません", ""},
+		{"missing PR", nil, []string{"tak848"}, "tak848:topic を head とする PR を tak848/project で探しましたが、HEAD aaaaaaa を含む PR はありません", ""},
 		{"empty owners", nil, []string{}, "", ""},
 		{"dirty", func(f *fixture) { f.status = " M existing.txt\n" }, nil, "未 commit", ""},
 		{"detached", func(f *fixture) { f.branch = "" }, nil, "detached HEAD", ""},
-		{"unpushed", func(f *fixture) { f.live = shaB }, nil, "反映されていません", ""},
-		{"missing ref", func(f *fixture) { f.live = "" }, nil, "反映されていません", ""},
+		{"unpushed", func(f *fixture) { f.live = shaB }, nil, "は、push 先 origin の refs/heads/topic（bbbbbbb）に含まれていません", ""},
+		{"missing ref", func(f *fixture) { f.live = "" }, nil, "push 先 origin に refs/heads/topic がありません", ""},
 		{"api failure even owners empty", func(f *fixture) { f.apiErr = exitError(1) }, nil, "確認できません", "private URL"},
-		{"transport failure", func(f *fixture) { f.liveErr = exitError(128) }, nil, "確認できません", "反映されていません"},
+		{"transport failure", func(f *fixture) { f.liveErr = exitError(128) }, nil, "確認できません", "含まれていません"},
 		{"merged deleted", func(f *fixture) {
 			f.live = ""
 			f.prs["tak848/project"] = []pull{makePull("tak848/project", "tak848/project", "topic", shaA, "closed", true)}
@@ -163,23 +164,23 @@ func TestStopStates(t *testing.T) {
 		}, nil, "新しい作業ブランチ", "guard の確認を通して push"},
 		{"merged new commit live", func(f *fixture) {
 			f.prs["tak848/project"] = []pull{makePull("tak848/project", "tak848/project", "topic", shaB, "closed", true)}
-		}, []string{"tak848"}, "PR がありません", ""},
+		}, []string{"tak848"}, "を含む PR はありません", ""},
 		{"open current", func(f *fixture) {
 			f.prs["tak848/project"] = []pull{makePull("tak848/project", "tak848/project", "topic", shaA, "open", false)}
 		}, []string{" TAK848 "}, "", ""},
 		{"stale open", func(f *fixture) {
 			f.prs["tak848/project"] = []pull{makePull("tak848/project", "tak848/project", "topic", shaB, "open", false)}
-		}, []string{"tak848"}, "状態が一致しません", "PR がありません"},
+		}, []string{"tak848"}, "と一致しません", "を含む PR はありません"},
 		{"foreign base fork", func(f *fixture) { f.parent = "external/project" }, []string{"tak848"}, "", ""},
-		{"required parent fork", func(f *fixture) { f.parent = "external/project" }, []string{"external"}, "PR がありません", ""},
+		{"required parent fork", func(f *fixture) { f.parent = "external/project" }, []string{"external"}, "を含む PR はありません", ""},
 		{"actual open fork base", func(f *fixture) {
 			f.parent = "external/project"
 			f.prs["tak848/project"] = []pull{makePull("tak848/project", "tak848/project", "topic", shaB, "open", false)}
-		}, []string{"tak848"}, "状態が一致しません", "PR がありません"},
+		}, []string{"tak848"}, "と一致しません", "を含む PR はありません"},
 		{"other head repo", func(f *fixture) {
 			f.prs["tak848/project"] = []pull{makePull("other/project", "tak848/project", "topic", shaA, "open", false)}
-		}, []string{"tak848"}, "PR がありません", ""},
-		{"default ahead", func(f *fixture) { f.branch = "main"; f.live = shaB }, []string{"tak848"}, "main へ直接 push せず", "guard の確認"},
+		}, []string{"tak848"}, "を含む PR はありません", ""},
+		{"default ahead", func(f *fixture) { f.branch = "main"; f.live = shaB }, []string{"tak848"}, "既定ブランチへ直接 push せず", "guard の確認"},
 		{"default clean", func(f *fixture) { f.branch = "main" }, []string{"tak848"}, "", ""},
 		{"upstream target name", func(f *fixture) {
 			f.config["push.default"] = "upstream"
@@ -422,7 +423,7 @@ func TestLocalPrunedMergedBranch(t *testing.T) {
 		t.Fatalf("missing=%q %v", sha, e)
 	}
 	g.must(g.work, "fetch", "--prune", "origin")
-	if r := c.CheckStop(context.Background(), g.work, nil); !strings.Contains(strings.Join(r, "\n"), "反映されていません") {
+	if r := c.CheckStop(context.Background(), g.work, nil); !strings.Contains(strings.Join(r, "\n"), "push 先 origin に refs/heads/topic がありません") {
 		t.Fatal(r)
 	}
 }
@@ -437,6 +438,38 @@ func TestLocalStopUpstreamDifferentName(t *testing.T) {
 	c := Client{Runner: g.runner}
 	if r := c.CheckStop(context.Background(), g.work, nil); len(r) != 0 {
 		t.Fatal(r)
+	}
+}
+
+// push.default 未設定で upstream がブランチ名と異なる（origin/main を追跡する）設定。
+func TestLocalStopSimpleUpstreamMismatch(t *testing.T) {
+	t.Parallel()
+	for _, ahead := range []bool{false, true} {
+		t.Run(fmt.Sprint("ahead=", ahead), func(t *testing.T) {
+			t.Parallel()
+			g := newLocalGit(t)
+			g.must(g.work, "config", "--unset", "push.default")
+			g.must(g.work, "config", "branch.topic.remote", "origin")
+			g.must(g.work, "config", "branch.topic.merge", "refs/heads/main")
+			g.must(g.bare, "fetch", g.work, strings.TrimSpace(g.must(g.work, "rev-parse", "HEAD"))+":refs/heads/main")
+			if ahead {
+				g.must(g.work, "commit", "--allow-empty", "-m", "local")
+			}
+			r := (Client{Runner: g.runner}).CheckStop(context.Background(), g.work, nil)
+			if !ahead {
+				if len(r) != 0 {
+					t.Fatal(r)
+				}
+				return
+			}
+			s := strings.Join(r, "\n")
+			head := short(strings.TrimSpace(g.must(g.work, "rev-parse", "HEAD")))
+			for _, want := range []string{"ブランチ topic の upstream は origin/main", "push.default が未設定（既定の simple） のため", "HEAD " + head + " は push 先 origin の refs/heads/main", "push 先のブランチを明示"} {
+				if len(r) != 1 || IsCheckFailure(r[0]) || !strings.Contains(s, want) {
+					t.Fatalf("missing %q: %q", want, r)
+				}
+			}
+		})
 	}
 }
 func TestLocalMultiplePushDestinations(t *testing.T) {
@@ -474,7 +507,7 @@ func TestAncestorAndMissingObject(t *testing.T) {
 				if code == 0 && len(reasons) != 0 {
 					t.Fatal(reasons)
 				}
-				if code == 128 && (!strings.Contains(s, "確認できません") || strings.Contains(s, "未反映") || strings.Contains(s, "反映されていません")) {
+				if code == 128 && (!strings.Contains(s, "確認できません") || strings.Contains(s, "未反映") || strings.Contains(s, "含まれていません")) {
 					t.Fatal(reasons)
 				}
 			})
@@ -493,7 +526,7 @@ func TestUnknownMergedObjectDoesNotInventAdditionalCommits(t *testing.T) {
 		return f.runner(ctx, dir, name, args...)
 	}}
 	reasons := strings.Join(c.CheckStop(context.Background(), t.TempDir(), nil), "\n")
-	if !strings.Contains(reasons, "確認できません") || strings.Contains(reasons, "追加 commit") {
+	if !strings.Contains(reasons, "確認できません") || strings.Contains(reasons, "マージ済み PR #12") {
 		t.Fatal(reasons)
 	}
 }

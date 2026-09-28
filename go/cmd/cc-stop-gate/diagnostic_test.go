@@ -138,6 +138,8 @@ func TestBranchStateThroughStopHook(t *testing.T) {
 				case "git symbolic-ref --quiet --short HEAD":
 					branchChecked = true
 					return "", tt.err
+				case "git rev-parse --verify HEAD":
+					return strings.Repeat("a", 40) + "\n", nil
 				default:
 					t.Fatalf("unexpected command: %s %q", name, args)
 					return "", nil

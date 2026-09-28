@@ -61,20 +61,20 @@ func TestStopObservedProblemsAreNotCheckFailures(t *testing.T) {
 		setup      func(*fixture)
 	}{
 		{"detached HEAD", "detached HEAD", func(f *fixture) { f.branch = "" }},
-		{"multiple open PR bases", "base リポジトリが複数", func(f *fixture) {
+		{"multiple open PR bases", "複数の base リポジトリ", func(f *fixture) {
 			f.parent = "external/project"
 			for _, base := range []string{"tak848/project", f.parent} {
 				f.prs[base] = []pull{makePull("tak848/project", base, "topic", shaA, "open", false)}
 			}
 		}},
-		{"stale PR head", "状態が一致しません", func(f *fixture) {
+		{"stale PR head", "と一致しません", func(f *fixture) {
 			f.prs["tak848/project"] = []pull{makePull("tak848/project", "tak848/project", "topic", shaB, "open", false)}
 		}},
 		{"dirty", "未 commit", func(f *fixture) { f.status = " M file\n" }},
-		{"unpushed", "反映されていません", func(f *fixture) { f.live = shaB }},
+		{"unpushed", "含まれていません", func(f *fixture) { f.live = shaB }},
 		{"default ahead", "既定ブランチ", func(f *fixture) { f.branch, f.live = "main", shaB }},
-		{"missing PR", "PR がありません", func(f *fixture) { f.prs = nil }},
-		{"merged branch with new commit", "追加 commit", func(f *fixture) {
+		{"missing PR", "を含む PR はありません", func(f *fixture) { f.prs = nil }},
+		{"merged branch with new commit", "マージ済み PR #12", func(f *fixture) {
 			f.live = ""
 			f.prs["tak848/project"] = []pull{makePull("tak848/project", "tak848/project", "topic", shaB, "closed", true)}
 		}},
@@ -89,6 +89,68 @@ func TestStopObservedProblemsAreNotCheckFailures(t *testing.T) {
 				t.Fatalf("expected an observed problem containing %q, got %v", tc.want, reasons)
 			}
 		})
+	}
+}
+
+func TestStopReasonsNameWhatWasChecked(t *testing.T) {
+	t.Parallel()
+	for _, tc := range []struct {
+		name  string
+		setup func(*fixture)
+		want  []string
+	}{
+		{"dirty", func(f *fixture) { f.status = " M a.go\n?? b.go\n M c.go\n" }, []string{"未 commit の変更が 3 件", "a.go, b.go, 他 1 件"}},
+		{"detached", func(f *fixture) { f.branch = "" }, []string{"HEAD（aaaaaaa）", "detached HEAD"}},
+		{"diverged", func(f *fixture) { f.live = shaB }, []string{"ブランチ topic の HEAD aaaaaaa", "push 先 origin の refs/heads/topic（bbbbbbb）", "履歴が分岐", "--force-with-lease"}},
+		{"multiple bases", func(f *fixture) {
+			f.parent = "external/project"
+			for _, base := range []string{"tak848/project", f.parent} {
+				f.prs[base] = []pull{makePull("tak848/project", base, "topic", shaA, "open", false)}
+			}
+		}, []string{"#12（base tak848/project）", "#12（base external/project）", "ユーザーに確認"}},
+		{"stale PR head", func(f *fixture) {
+			f.prs["tak848/project"] = []pull{makePull("tak848/project", "tak848/project", "topic", shaB, "open", false)}
+		}, []string{"#12（base tak848/project）の head は bbbbbbb", "HEAD aaaaaaa"}},
+		{"merged deleted", func(f *fixture) {
+			f.live = ""
+			f.prs["tak848/project"] = []pull{makePull("tak848/project", "tak848/project", "topic", shaB, "closed", true)}
+		}, []string{"push 先 origin に refs/heads/topic がありません", "マージ済み PR #12（base tak848/project）", "HEAD aaaaaaa"}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+			f := newFixture()
+			f.remoteURL = "https://user:secret-token@github.com/tak848/project.git"
+			tc.setup(f)
+			s := strings.Join((Client{Runner: f.runner}).CheckStop(context.Background(), t.TempDir(), []string{"tak848"}), "\n")
+			for _, want := range tc.want {
+				if !strings.Contains(s, want) {
+					t.Fatalf("missing %q in %q", want, s)
+				}
+			}
+			if strings.Contains(s, "secret-token") {
+				t.Fatal("push URL leaked")
+			}
+		})
+	}
+}
+
+func TestUnpushedAheadUsesPlainPush(t *testing.T) {
+	t.Parallel()
+	f := newFixture()
+	f.live = shaB
+	c := Client{Runner: func(ctx context.Context, dir, name string, args ...string) (string, error) {
+		// 送信先 shaB は HEAD の祖先、HEAD は送信先に含まれない。
+		if name == "git" && args[0] == "merge-base" {
+			if args[2] == shaB && args[3] == shaA {
+				return "", nil
+			}
+			return "", exitError(1)
+		}
+		return f.runner(ctx, dir, name, args...)
+	}}
+	s := strings.Join(c.CheckStop(context.Background(), t.TempDir(), nil), "\n")
+	if !strings.Contains(s, "通常の push で反映できます") || strings.Contains(s, "force") {
+		t.Fatal(s)
 	}
 }
 
