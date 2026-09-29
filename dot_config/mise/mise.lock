@@ -1367,50 +1367,50 @@ url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/565570059"
 provenance = "github-attestations"
 
 [[tools."github:endevco/aube"]]
-version = "2.5.0"
+version = "2.5.1"
 backend = "github:endevco/aube"
-specifiers = ["v2.5.0"]
+specifiers = ["v2.5.1"]
 
 [tools."github:endevco/aube"."platforms.linux-arm64"]
-checksum = "sha256:478cc5c1a34a0df8d6ffa89e7cff8eff835cf480775eff9f3eb649f6daf557b7"
-url = "https://github.com/endevco/aube/releases/download/v2.5.0/aube-v2.5.0-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/591922450"
+checksum = "sha256:f9d03a3b49be9a51275917fe63676330c59d90d77bebe6fc17ec322a3571b7c0"
+url = "https://github.com/endevco/aube/releases/download/v2.5.1/aube-v2.5.1-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/593313215"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-arm64-musl"]
-checksum = "sha256:dad68ccd45221c30d2d5d8a96ea40ccd344893673bff19175d9c425d4552747e"
-url = "https://github.com/endevco/aube/releases/download/v2.5.0/aube-v2.5.0-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/591895658"
+checksum = "sha256:343febcb1c4117d485b235a6efa2c3d090115661b1ccdf3cc7adbb0127a4b65a"
+url = "https://github.com/endevco/aube/releases/download/v2.5.1/aube-v2.5.1-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/593289690"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64"]
-checksum = "sha256:15c5371d4f847da83dd51b4d182cd0928dcd52a9d5cea36d07fb44f3776ee72e"
-url = "https://github.com/endevco/aube/releases/download/v2.5.0/aube-v2.5.0-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/591897724"
+checksum = "sha256:16801e5a48272f3aa62533e626f18688ea97d8ee090fb5faac2e04900d374566"
+url = "https://github.com/endevco/aube/releases/download/v2.5.1/aube-v2.5.1-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/593290895"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64-musl"]
-checksum = "sha256:335c0ccd4e2ee4faa1875132ffdd7c21534760021e944e5e638e2a0547421643"
-url = "https://github.com/endevco/aube/releases/download/v2.5.0/aube-v2.5.0-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/591897237"
+checksum = "sha256:27c5b0f41dc11b5a8108983ca968cdd36fc3809a14ec841444587d73854d65ce"
+url = "https://github.com/endevco/aube/releases/download/v2.5.1/aube-v2.5.1-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/593287149"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.macos-arm64"]
-checksum = "sha256:cb40e0e58092ae9aa1781127b0770e73995562dc570113179d17705289517495"
-url = "https://github.com/endevco/aube/releases/download/v2.5.0/aube-v2.5.0-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/591916160"
+checksum = "sha256:68ccd6badf7c6c891467680dfdd5545ba44c64dacd98b508dcd5de3a611a49aa"
+url = "https://github.com/endevco/aube/releases/download/v2.5.1/aube-v2.5.1-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/593312468"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.macos-x64"]
-checksum = "sha256:31536fa098cf21a0e5a0c88d989aa682b3d6f20c52d48b1dfac91ec079269ebb"
-url = "https://github.com/endevco/aube/releases/download/v2.5.0/libaube-x86_64-apple-darwin.dylib"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/591910094"
+checksum = "sha256:341461a31f0305daa45efaf06d707c2a746c08c740c3e43f51856ce053cf6d1e"
+url = "https://github.com/endevco/aube/releases/download/v2.5.1/libaube-x86_64-apple-darwin.dylib"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/593315507"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.windows-x64"]
-checksum = "sha256:4d39e74cc45bf418f9cdf0bd81ac846aefc8b7045077afe8cf3226366dc091fe"
-url = "https://github.com/endevco/aube/releases/download/v2.5.0/aube-v2.5.0-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/591918853"
+checksum = "sha256:aa5ee899ab63ad192de7cd3790fbfb4dd8debfb104f7e57972504b980c05e589"
+url = "https://github.com/endevco/aube/releases/download/v2.5.1/aube-v2.5.1-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/593316177"
 provenance = "github-attestations"
 
 [[tools."github:git-ecosystem/git-credential-manager"]]
@@ -1539,44 +1539,44 @@ url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/534533568"
 provenance = "github-attestations"
 
 [[tools."github:router-for-me/CLIProxyAPI"]]
-version = "8.0.0"
+version = "8.0.3"
 backend = "github:router-for-me/CLIProxyAPI"
-specifiers = ["v8.0.0"]
+specifiers = ["v8.0.3"]
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-arm64"]
-checksum = "sha256:3c08f2bd66756e0b3a3f2d3e58af28c880b72b87e777836544dcf0c98468895d"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.0/CLIProxyAPI_8.0.0_linux_aarch64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592676856"
+checksum = "sha256:2a42b30ef6e981fea9296a64040bd99dade90ceb05c920387cad85a426d9b634"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.3/CLIProxyAPI_8.0.3_linux_aarch64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/594070227"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-arm64-musl"]
-checksum = "sha256:3c08f2bd66756e0b3a3f2d3e58af28c880b72b87e777836544dcf0c98468895d"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.0/CLIProxyAPI_8.0.0_linux_aarch64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592676856"
+checksum = "sha256:2a42b30ef6e981fea9296a64040bd99dade90ceb05c920387cad85a426d9b634"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.3/CLIProxyAPI_8.0.3_linux_aarch64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/594070227"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-x64"]
-checksum = "sha256:c66d3acd710f7d32b3726b2eb04a14f4885b5c74b32dbd7b3386548f5a47b0e1"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.0/CLIProxyAPI_8.0.0_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592677736"
+checksum = "sha256:0556446ae0d5941c019252631987cc3b738c6608b855328ece979ab2188ed6dd"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.3/CLIProxyAPI_8.0.3_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/594071227"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-x64-musl"]
-checksum = "sha256:c66d3acd710f7d32b3726b2eb04a14f4885b5c74b32dbd7b3386548f5a47b0e1"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.0/CLIProxyAPI_8.0.0_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592677736"
+checksum = "sha256:0556446ae0d5941c019252631987cc3b738c6608b855328ece979ab2188ed6dd"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.3/CLIProxyAPI_8.0.3_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/594071227"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.macos-arm64"]
-checksum = "sha256:b372014499257b9ec544cd175a153632da5648fb8120806b2dfed8bc726e7e70"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.0/CLIProxyAPI_8.0.0_darwin_aarch64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592677448"
+checksum = "sha256:01c424674ad4ceacfe86a1faa32e194ba8e278e8ec22c8b5d606d67c3c56a858"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.3/CLIProxyAPI_8.0.3_darwin_aarch64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/594070058"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.macos-x64"]
-checksum = "sha256:8db425254bf1009223bbab6ffb13bcafa475a2befe09d44844f0c4d2831b134e"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.0/CLIProxyAPI_8.0.0_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592683035"
+checksum = "sha256:236e2ba36a6f78b940022d250deb6498536db4395d161407aa1179c85fc529ae"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.3/CLIProxyAPI_8.0.3_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/594072002"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.windows-x64"]
-checksum = "sha256:f160ff525d3829d88ec140fd1aeab0b910875c2a478b1971e3efb7c9751dc3ce"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.0/CLIProxyAPI_8.0.0_windows_amd64.zip"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/592677927"
+checksum = "sha256:8f804c1a67c77bc520a574c3f3007c45d9976909e8efdde142469daec35558c5"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.3/CLIProxyAPI_8.0.3_windows_amd64.zip"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/594072304"
 
 [[tools."github:sivchari/golance"]]
 version = "0.7.19"
@@ -1883,10 +1883,10 @@ backend = "npm:@typescript/native-preview"
 specifiers = ["7.0.0-dev.20260707.2"]
 
 [[tools."npm:ccusage"]]
-version = "20.0.24"
-aube = { path = "locks/npm-ccusage/20.0.24", digest = "sha256:64818813523b1aef4a4c85a23b772e054a0f8adda7a341a0a005975226ac8cfe" }
+version = "20.0.26"
+aube = { path = "locks/npm-ccusage/20.0.26", digest = "sha256:e1229ed145ebbaaaa3e6116f5a729c75f32a6fc901a681ad0febc7451f529025" }
 backend = "npm:ccusage"
-specifiers = ["20.0.24"]
+specifiers = ["20.0.26"]
 
 [[tools."npm:defuddle"]]
 version = "0.19.4"
@@ -1898,7 +1898,7 @@ specifiers = ["0.19.4"]
 version = "3.28.0"
 backend = "pipx:snowflake-cli"
 specifiers = ["3.28.0"]
-uv = { path = "locks/pipx-snowflake-cli/3.28.0", digest = "sha256:4005fbbd36edc6f4ac7d1ede8d4a09cfff436679af8475e867928a8f0a9d57e9" }
+uv = { path = "locks/pipx-snowflake-cli/3.28.0", digest = "sha256:58c7ae26f114f0cea87a44a35c9e3a95f65ec6505261d83fc5d5fa4ffa55844d" }
 
 [[tools.pnpm]]
 version = "12.6.0"
