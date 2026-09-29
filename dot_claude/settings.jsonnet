@@ -352,7 +352,11 @@ local autoModeRules = import 'auto-mode.libsonnet';
   // Haiku 4.5 は effort 自体に非対応なので書かない。
   // gpt-* のような未認識 ID もキーに書けば primary / subagent の両方で output_config.effort に反映される
   // （捕捉サーバーで確認済み）。ただし未認識 ID には alias 展開が無いので、-fast 別名は別エントリが要る。
+  // Opus 5.5 は上の effortLevel を無視して launch-default の medium で起動した（2.1.280 で観測）。
+  // 2.1.280 のリリースノートで launch-default を settings より優先するのをやめたのは Opus 4.7 / 4.8 / Fable 5 だけで、
+  // Opus 5.5 は対象外。モデル別のエントリで xhigh を明示する。
   modelSettings: {
+    'claude-opus-5-5': { effortLevel: 'xhigh' },
     'claude-fable-5-1': { effortLevel: 'high' },
     'gpt-6-astra': { effortLevel: 'high' },
     'gpt-6-astra-fast': { effortLevel: 'high' },
