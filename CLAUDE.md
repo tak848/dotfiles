@@ -222,6 +222,7 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - PostToolBatch で検出して書き直させる構成は [podlayer/message-drop-sentinel](https://github.com/podlayer/message-drop-sentinel)（MIT）を参考にしたが、コードは流用していない
 - 検証: 記録済みの transcript（Opus 5.5 の要約ブロックを含む）を入力に与えると検出できる。2.1.284 の対話セッションと `-p` で、要約が起きなかった batch に何も出さないことも確認した。対話セッションで要約が起きたその場で PostToolBatch が該当メッセージを読めるか（transcript の書き込みが間に合うか）は、試行中に要約が起きなかったため未確認
 - 質問の判断材料はこの hook では救えない（ユーザーが答えるまで最後の text が来ない）。そちらは Stop ゲートの `質問予告` で扱う
+- `dot_claude/CLAUDE.md` には振る舞い（途中の text に大事なことを書かない、質問は `質問予告` を経て AskUserQuestion で行う等）だけを書き、hook の名前・仕組み・出典は書かない。hook の存在を知らせると、何か起きたときにモデルが本来の作業から離れて hook の調査に向かうため。仕組みと出典はこのファイル・コードのコメント・PR に置く
 
 ### Go の JSON 処理
 
