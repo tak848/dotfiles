@@ -343,20 +343,24 @@ local autoModeRules = import 'auto-mode.libsonnet';
   // その場合は /model fable で同意する。claudex では advisor は効かない（server tool が proxy を通らず、
   // 未認識モデルにはそもそも attach されない）。
   advisorModel: 'fable',
-  // 保存済みの effort を持たないモデルの既定値。値は low / medium / high / xhigh のみで、
-  // max は effortLevel でも modelSettings でも受け付けない（--effort max / /effort max のセッション単位のみ）。
+  // 値は low / medium / high / xhigh のみで、max は effortLevel でも modelSettings でも受け付けない
+  // （--effort max / /effort max のセッション単位のみ）。
+  // ユーザー設定（~/.claude/settings.json）の top-level effortLevel は、/effort がモデル別になる前の旧形式として
+  // 扱われ、CC のバイナリに埋め込まれた既存モデルの一覧（claude-opus-5 / claude-sonnet-5 / claude-fable-5-1 まで）
+  // と未認識 ID（gpt-* など）にしか効かない。以降に出たモデルは各モデルの既定 effort で起動する
+  // （2.1.280 の "no longer apply to newly released models" の実体。2.1.284 のバイナリで確認）。
+  // 新しいモデルは下の modelSettings に明示すること。
   effortLevel: 'xhigh',
-  // モデル別の effort（CC 2.1.251+）。同一ファイル内では effortLevel より優先される。
+  // モデル別の effort（CC 2.1.251+）。上の effortLevel より優先され、/effort もここに書き込む。
   // キーは canonical name で書けば、その alias・日付サフィックス付き・[1m] 付きの ID も同じエントリにマッチする。
-  // Fable 5.1 と GPT-6 Astra（claudex / claudeap / gpt-review が使う）は high に下げ、残りは上の xhigh に任せる。
+  // Fable 5.1 と GPT-6 Astra（claudex / claudeap / gpt-review が使う）は high に下げる。
+  // Opus 5.5 / Sonnet 5.5 は上の effortLevel が効かず、モデルの既定の medium で起動していたので xhigh を明示する。
   // Haiku 4.5 は effort 自体に非対応なので書かない。
   // gpt-* のような未認識 ID もキーに書けば primary / subagent の両方で output_config.effort に反映される
   // （捕捉サーバーで確認済み）。ただし未認識 ID には alias 展開が無いので、-fast 別名は別エントリが要る。
-  // Opus 5.5 は上の effortLevel を無視して launch-default の medium で起動した（2.1.280 で観測）。
-  // 2.1.280 のリリースノートで launch-default を settings より優先するのをやめたのは Opus 4.7 / 4.8 / Fable 5 だけで、
-  // Opus 5.5 は対象外。モデル別のエントリで xhigh を明示する。
   modelSettings: {
     'claude-opus-5-5': { effortLevel: 'xhigh' },
+    'claude-sonnet-5-5': { effortLevel: 'xhigh' },
     'claude-fable-5-1': { effortLevel: 'high' },
     'gpt-6-astra': { effortLevel: 'high' },
     'gpt-6-astra-fast': { effortLevel: 'high' },
