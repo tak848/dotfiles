@@ -142,11 +142,16 @@
       extractVersion: "^rust-v(?<version>.+)$",
     },
     {
-      description: "opencode: independent PR, no age gate",
+      // Renovate の mise manager は aqua backend を github-tags で引くが、opencode は
+      // GitHub Release を出す前にタグだけ打つことがある（v2.0.x がタグのみで Release 0 件だった）。
+      // mise lock は Release の asset から URL を取るので、タグだけのバージョンに上げると
+      // lockfile に URL が入らず CI の mise install（--locked）が失敗する。Release だけを追う。
+      description: "opencode: independent PR, no age gate. Release の出たバージョンだけを追う",
       matchPackageNames: ["anomalyco/opencode"],
       matchManagers: ["mise"],
       groupName: "opencode",
       minimumReleaseAge: "0 hours",
+      overrideDatasource: "github-releases",
     },
     {
       description: "ccgate: 自作ツールなので age gate なし",
