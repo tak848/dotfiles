@@ -168,7 +168,7 @@ python = "3.13.15"
 "aqua:anthropics/claude-code" = "2.1.284"
 "github:google-antigravity/antigravity-cli" = "1.2.12" # agy: Gemini CLI の後継
 "aqua:openai/codex" = "0.158.0"
-"aqua:anomalyco/opencode" = "1.18.25"
+# opencode は http backend で管理（末尾の [tools."http:opencode"] を参照）
 # Grok Build CLI (xAI) は http backend で管理（末尾の [tools."http:grok"] を参照）
 # Claude Code のハーネスを ChatGPT サブスクの Codex backend に向ける Anthropic 互換プロキシ。claudex から使う
 "github:router-for-me/CLIProxyAPI" = "v8.0.0"
@@ -194,3 +194,22 @@ bin = "grok"
 # windows のアーティファクトだけ .exe が付くため個別に上書きする
 [tools."http:grok".platforms]
 windows-x64 = { url = 'https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-{{ version }}-windows-x86_64.exe' }
+
+# ============================================
+# opencode
+# ============================================
+# v2 系は GitHub Release を出さずにタグだけ打ち、バイナリは opencode.ai/files/bin/<version>/ で配布している
+# （anomalyco/homebrew-tap の opencode-v2.rb も同じ URL を指す）。aqua backend は Release の asset を
+# 引くので v2 を入れられず、http backend で URL を直接指定する。checksum ファイルは公開されていないため、
+# lockfile の checksum は fill-lockfile-checksums.sh が実アーティファクトから計算する。
+# 更新は Renovate の regex manager が GitHub のタグ（v2.x）で追う。
+# renovate: datasource=github-tags depName=anomalyco/opencode
+[tools."http:opencode"]
+version = "2.0.19"
+url = 'https://opencode.ai/files/bin/{{ version }}/opencode-{{ os(macos="darwin") }}-{{ arch() }}.zip'
+bin = "opencode"
+
+# linux のアーティファクトだけ tar.gz なので個別に上書きする
+[tools."http:opencode".platforms]
+linux-x64 = { url = 'https://opencode.ai/files/bin/{{ version }}/opencode-linux-x64.tar.gz' }
+linux-arm64 = { url = 'https://opencode.ai/files/bin/{{ version }}/opencode-linux-arm64.tar.gz' }

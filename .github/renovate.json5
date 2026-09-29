@@ -57,6 +57,19 @@
       versioningTemplate: "semver",
     },
     {
+      // opencode v2 は GitHub Release が無く opencode.ai から配布されるため http backend で入れている。
+      // バージョンは GitHub のタグ（v2.0.19 等）で追い、先頭の v を落として config.toml と比べる。
+      // 同じ repo に vscode-v0.0.13 のような拡張機能のタグもあるので、v の直後が数字のものに限る。
+      description: "opencode: http backend のバージョンを GitHub のタグで追う",
+      customType: "regex",
+      managerFilePatterns: ["/^dot_config/mise/config\\.toml$/"],
+      matchStrings: [
+        '# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n\\[tools\\."http:opencode"\\]\\nversion = "(?<currentValue>[^"]+)"',
+      ],
+      extractVersionTemplate: "^v(?<version>\\d.*)$",
+      versioningTemplate: "semver",
+    },
+    {
       // Azure CLI の tarball は Python を同梱しないため run_onchange スクリプトで uv python install
       // する。mise manager が見るのは config.toml のツール定義だけなので、スクリプト側は regex で追う。
       description: "Azure CLI が使う Python: run_onchange スクリプトのバージョンを追う",
@@ -144,7 +157,6 @@
     {
       description: "opencode: independent PR, no age gate",
       matchPackageNames: ["anomalyco/opencode"],
-      matchManagers: ["mise"],
       groupName: "opencode",
       minimumReleaseAge: "0 hours",
     },
