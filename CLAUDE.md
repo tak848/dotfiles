@@ -195,6 +195,7 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - 入力の異常（読み取り失敗・形式不正・イベント違い・モード不明・報告文なし）と出力失敗は、AI の作業では直せないので無出力・exit 0 で通す。Stop の exit 2 は block になり、stderr が AI に渡る
 - push.default が simple（未設定を含む）で upstream の名前がブランチ名と異なる設定は、照会失敗ではなく設定から決まる状態として扱う。HEAD が upstream の送信先に含まれていれば何も返さず、含まれていなければ具体的に差し戻す
 - `作業待機: <対象>` は Stop 入力の `background_tasks` / `session_crons` に ID のある要素が存在するときだけ許可する。これは稼働中の仕事の存在の確認で、依頼との関連性の証明ではない
+- `質問予告: <問いの要約>` は、判断材料を text で見せてから AskUserQuestion で質問するための署名。モードや Git の状態、離脱表現に関係なく必ず差し戻し、text を書かずに AskUserQuestion だけを呼ばせる。tool 呼び出しの前に書いた text はサーバー側で要約されてユーザーに届かないことがある（後述の cc-narration-check）が、ターン最後の text は届くので、判断材料はそこに書かせる。必ず差し戻すので、text の質問でターンが終わることは無い。質問後は通常どおり完遂・署名の判定を受ける。`CC_STOP_GATE=0` で無効化しているときは差し戻しが起きず、質問予告の text でターンが終わる。仕組みは [jorgenswiderski/fable-message-drop-fix](https://github.com/jorgenswiderski/fable-message-drop-fix)（Unlicense）の Stop hook と同じで、コードは流用していない
 - `permission_mode: plan` では git の照会をしない。計画・説明 HTML の差分に commit / push / PR を要求せず、計画なら ExitPlanMode、判断が必要なら AskUserQuestion を促す。plan mode での完了誓約は無効
 - 通常モードでは `go/internal/gitstate` で未 commit・送信先への未 push・既定ブランチの先行・必要な PR の不足を補助検査する。署名で確認済みの問題を覆せない。照会失敗・タイムアウト・照会対象 cwd の取得不能は停止理由にせず、通常の完遂・署名確認へ進む。これは Git / PR が正常と確認できたという意味ではない。既存 WIP を勝手に commit / 削除して検査を通してはならない
 - `main` / `master` と名前で判定できる経路は GitHub の repo 情報・PR 一覧を照会しない。送信先との一致・祖先関係は検査する。`git status` の `origin/main` はローカルの tracking ref なので、実リモートが進んでも未 fetch なら一致して見える。比較用 commit が手元に無い場合は、解決済み送信先から対象 SHA だけを hook 内で fetch して再判定する。refmap・タグ追従・submodule・maintenance・commit-graph 書き出しを無効にし、作業ツリー・refs・`FETCH_HEAD` は変更しない。成功時はこの取得について何も返さない。取得失敗時だけ `[fetch-object]` を返す
@@ -208,6 +209,18 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - push 対象の probe は dry-run。probe にだけ `--verbose` を付ける（`--quiet` のままだと Git が porcelain の更新行を省き、送信先を検査できない）。成功した probe の更新ゼロ件は正常扱い。probe 用の `--no-verify` も含め、本番の push の引数は変更しない。既知の Git 拒否（送信元 ref 不在、upstream 未設定、non-fast-forward）も hook からは返さず、本来の Git の実行結果に任せる。未対応構文や確認失敗を通す best-effort の確認であり、すべての push を防ぐものではない
 - push 前の確認は `gitstate.PushTimeout`（30秒）の制限時間内に、すべての照会を行う。期限内に確認できなければ無出力で通常の処理へ戻す。外側の hook は終了処理と返答の猶予を含め40秒。呼び出し元がより短い期限を指定した場合はそちらを守る。本来の git push の制限時間、Stop 側の制限時間と失敗時の停止判定は変更しない
 - 既存 `cc-stop` は非同期の読み上げで別機能。Stop ゲートに `async` を付けると停止制御できない。ローカル設定に旧ゲートが残っていてもグローバル版で上書きされないので、展開時は二重登録を確認する
+
+### 途中の text の要約検出（cc-narration-check）
+
+`go/cmd/cc-narration-check` は PostToolBatch hook。Opus 5.5 / Sonnet 5.5 / Fable 5 / Fable 5.1 など（Opus 5 でも観測）では、tool の結果を受けた後、次の tool を呼ぶ前に書いた text がサーバー側で要約され、thinking ブロックに置き換わる（[anthropics/claude-code#74558](https://github.com/anthropics/claude-code/issues/74558)、公式 docs [Progress updates between tool calls](https://platform.claude.com/docs/en/build-with-claude/thinking#progress-updates)）。原文は画面にも transcript にも残らないが、モデル側の context には残るので、モデルは伝えたつもりでいる。この hook はそれを検出し、`additionalContext` で「読む必要のある内容ならターン最後の text で書き直せ」と伝える。
+
+- 要約されたブロックは、signature を base64 デコードした先頭付近に `narration` という種別が入る（通常の推論は `thinking`）。形（thinking が 2 つ並ぶ等）で推測するより誤検知が無い。この判別方法は [#74558 の aultra 氏のコメント](https://github.com/anthropics/claude-code/issues/74558#issuecomment-5388846744) による。手元の transcript でも Opus 5.5 の要約ブロックがこの種別を持つことを確認した
+- 対象は batch の `tool_use_id` を含む assistant メッセージだけ。状態ファイルを持たずに 1 回だけ知らせられる。transcript は非同期に書かれるので、該当メッセージがまだ書かれていなければ何も出さない（取りこぼしは許容する）。transcript は末尾 16 MB だけを読む
+- 要約ブロックの `thinking` に画面に出た要約文が入っていれば、それも添える（thinking の display が `updates` のとき。手元の Opus 5.5 の対話セッションでは入っていた）。`omitted` なら空で、画面には何も出ていない
+- subagent（`agent_id` あり）の途中の text はもともとユーザーに見せる場所ではないので対象外。`CC_NARRATION_CHECK=0` / `false` / `off` / `no` で無効化できる
+- 入力・transcript の異常は無出力・exit 0 で通す。モデルの作業では直せないため
+- PostToolBatch で検出して書き直させる構成は [podlayer/message-drop-sentinel](https://github.com/podlayer/message-drop-sentinel)（MIT）を参考にしたが、コードは流用していない
+- 質問の判断材料はこの hook では救えない（ユーザーが答えるまで最後の text が来ない）。そちらは Stop ゲートの `質問予告` で扱う
 
 ### Go の JSON 処理
 

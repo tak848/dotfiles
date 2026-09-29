@@ -78,9 +78,9 @@ func run(stdin io.Reader, stdout io.Writer, env lookupEnv, check checkFunc) int 
 		Message:  message,
 		Inflight: inflightCount(in.BackgroundTasks) + inflightCount(in.SessionCrons),
 	}
-	// 待機と plan mode は git より先。背景作業中や計画作成中の差分に
+	// 待機・質問予告と plan mode は git より先。背景作業中・質問中・計画作成中の差分に
 	// commit を要求せず、不要なネットワーク照会も行わない。
-	if message.Signature != waiting && in.Mode != "plan" {
+	if message.Signature != waiting && message.Signature != question && in.Mode != "plan" {
 		if !filepath.IsAbs(in.CWD) {
 			f.Issues = []string{gitstate.CheckFailurePrefix + " [input-cwd] 作業ディレクトリを特定できません。対象ディレクトリの設定を確認してください。"}
 		} else {

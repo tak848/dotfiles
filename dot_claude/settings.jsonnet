@@ -391,6 +391,20 @@ local autoModeRules = import 'auto-mode.libsonnet';
         ],
       },
     ],
+    // tool 呼び出しの前に書いた text がサーバー側で要約され、原文がユーザーに届かなかったことを
+    // 検出して、ターン最後の text で書き直すようモデルに伝える（anthropics/claude-code#74558）。
+    // PostToolBatch は matcher を持たず、並列の tool 呼び出しでも 1 回だけ発火する。
+    PostToolBatch: [
+      {
+        hooks: [
+          {
+            type: 'command',
+            command: '~/.claude/bin/cc-narration-check',
+            timeout: 10,
+          },
+        ],
+      },
+    ],
     PreToolUse: permissionRules.preToolUseHooks + [
       {
         matcher: 'Write|Edit|MultiEdit',

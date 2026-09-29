@@ -25,6 +25,23 @@ func TestTellQuotesMatchedPhrase(t *testing.T) {
 	}
 }
 
+// 質問予告への返答は AskUserQuestion の呼び出しだけを求める。完遂確認や離脱表現の差し戻しを
+// 混ぜると、モデルが判断材料を書き直して再び tool 呼び出し前の text に置いてしまう。
+func TestQuestionAsksOnly(t *testing.T) {
+	t.Parallel()
+	for _, mode := range []string{"default", "plan"} {
+		d := decide(facts{Mode: mode, Message: analyze("残りは B 案の判断だけです。\n質問予告: B 案にするか"), Issues: []string{"未 commit"}})
+		if d.Decision != "block" || d.Reason != askNow {
+			t.Fatalf("%s: reason = %q", mode, d.Reason)
+		}
+	}
+	for _, text := range []string{completionCheck, planCheck} {
+		if !strings.Contains(text, "質問予告: <問いの要約>") {
+			t.Fatalf("question procedure missing: %s", text)
+		}
+	}
+}
+
 func TestAnalyze(t *testing.T) {
 	t.Parallel()
 	tests := map[string]struct {
@@ -37,6 +54,10 @@ func TestAnalyze(t *testing.T) {
 		"pledge":                          {"実装と検証を完了しました。\n完了誓約: 全項目完了\n\n", message{Signature: pledge}},
 		"survey fullwidth":                {"調査完了：仕様を確認", message{Signature: survey}},
 		"waiting":                         {"作業待機: agent の完了", message{Signature: waiting}},
+		"question":                        {"| 案 | 影響 |\n|---|---|\n質問予告: どちらの案にするか", message{Signature: question}},
+		"question fullwidth":              {"質問予告：どちらの案にするか", message{Signature: question}},
+		"question empty summary":          {"質問予告: ", message{}},
+		"question tells still analyzed":   {"残りは判断だけ\n質問予告: 方針", message{Signature: question, Tells: true}},
 		"CRLF":                            {"確認しました。\r\n完了誓約: 全項目完了\r\n", message{Signature: pledge}},
 		"empty summary":                   {"完了誓約: \t", message{}},
 		"not final":                       {"完了誓約: 完了\n追加の説明", message{}},

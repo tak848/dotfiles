@@ -53,6 +53,11 @@ func TestRun(t *testing.T) {
 		"fake waiting":                   {mode: "default", text: "作業待機: 自分の作業", blocked: true, contains: "待つ対象が無い"},
 		"empty task":                     {mode: "default", text: "作業待機: 作業", tasks: `[null,{},"x"]`, blocked: true, contains: "待つ対象が無い"},
 		"background alone not exemption": {mode: "default", text: "終了します", tasks: `[{"id":"monitor-1"}]`, blocked: true, checked: true},
+		"question":                       {mode: "default", text: "| 案 | 影響 |\n|---|---|\n| A | 小 |\n質問予告: A と B のどちらにするか", blocked: true, contains: "今すぐ AskUserQuestion を呼べ"},
+		"question skips tells":           {mode: "default", text: "残りは B 案の判断だけです。\n質問予告: B 案にするか", blocked: true, contains: "質問予告を受け付けた"},
+		"question skips git issues":      {mode: "acceptEdits", text: "質問予告: どちらにするか", issues: []string{"未 commit"}, blocked: true, contains: "判断材料を繰り返すな"},
+		"plan question":                  {mode: "plan", text: "質問予告: 方針を選んでもらう", blocked: true, contains: "今すぐ AskUserQuestion を呼べ"},
+		"question not final":             {mode: "default", text: "質問予告: どちらにするか\n補足", blocked: true, checked: true, contains: "質問予告: <問いの要約>"},
 	}
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
