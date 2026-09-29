@@ -71,6 +71,11 @@ oauth-model-alias:
       alias: "sonnet"
       fork: true
     - name: "gpt-6-sol"
+      alias: "claude-sonnet-5-5"
+      fork: true
+    # 旧 ID。Claude Code 2.1.284 で sonnet エイリアスの既定は claude-sonnet-5-5 になったが、
+    # 保存済みセッションやプロジェクト側の settings に残った名前が漏れてきたときの逃げ道として残す
+    - name: "gpt-6-sol"
       alias: "claude-sonnet-5"
       fork: true
     - name: "gpt-6-luna"

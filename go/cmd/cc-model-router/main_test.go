@@ -182,7 +182,7 @@ func TestRoutingRules(t *testing.T) {
 	}{
 		{"gpt prefix is case-insensitive", http.MethodPost, "/v1/messages", `{"model":"GPT-5.6-Sol"}`, "codex"},
 		{"count_tokens follows the model", http.MethodPost, "/v1/messages/count_tokens", `{"model":"gpt-6-astra"}`, "codex"},
-		{"claude model", http.MethodPost, "/v1/messages", `{"model":"claude-sonnet-5"}`, "anthropic"},
+		{"claude model", http.MethodPost, "/v1/messages", `{"model":"claude-sonnet-5-5"}`, "anthropic"},
 		{"model with gpt in the middle", http.MethodPost, "/v1/messages", `{"model":"claude-gpt-x"}`, "anthropic"},
 		{"no model field", http.MethodPost, "/v1/messages", `{"messages":[]}`, "anthropic"},
 		{"model key is case-insensitive", http.MethodPost, "/v1/messages", `{"MODEL":"gpt-6-astra"}`, "codex"},
