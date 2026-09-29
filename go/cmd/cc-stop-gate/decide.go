@@ -15,20 +15,33 @@ type facts struct {
 	Issues   []string
 }
 
+// askQuestion は、質問の手順を示す 1 文。完遂確認・plan mode・Git の差し戻しで共通に使う。
+// tool 呼び出しの前に書いた text はサーバー側で要約されてユーザーに届かないことがある
+// （anthropics/claude-code#74558）。ターン最後の text は届くので、判断材料はそこに書かせ、
+// AskUserQuestion は Stop の差し戻し（askNow）の後に text 無しで呼ばせる。質問予告は必ず差し戻すので、
+// text の質問でターンが終わることは無い。
+const askQuestion = "ユーザーの判断が本当に必要なら、質問は必ず AskUserQuestion で行え。判断材料を先に見せる必要があるときは、判断材料を text に書いて最終行を「質問予告: <問いの要約>」にしろ。このゲートが必ず差し戻して AskUserQuestion を呼ばせるので、ターンは終わらない。判断材料が要らない質問なら AskUserQuestion を直接呼べ。"
+
 const completionCheck = `【署名の前に全項目を照合しろ】
 1. plan があるなら、記憶で済ませず今開き直せ。無ければユーザーの依頼を読み直せ。
 2. 依頼された全項目を一つずつ、実装した内容と実際に行った検証結果に照合しろ。
 3. やり残しを勝手に「別 PR」「次回」「対象外」にしていないか確認しろ。
-一つでも終わっていなければ、その作業を今実行しろ。ユーザーの判断が本当に必要なら AskUserQuestion を使え。
+一つでも終わっていなければ、その作業を今実行しろ。` + askQuestion + `
 全項目を終えた場合だけ、最終行に装飾なしで次の署名を書け。
 完了誓約: <実装・検証を全項目終えた内容の1行要約>
 調査完了: <依頼された調査・回答を終えた内容の1行要約>
 実行中または予定済みの作業の完了を待つ必要がある場合は「作業待機: <待つ対象>」と書け。`
 
 const planCheck = `【plan mode で説明だけして止まるな】
-計画がまとまったなら ExitPlanMode で提示しろ。却下されたなら修正内容をユーザーに説明し、同じターンで再提示しろ。判断が必要なら AskUserQuestion を使え。
+計画がまとまったなら ExitPlanMode で提示しろ。却下されたなら、何をどう変えたかを plan 本文の冒頭に書いて同じターンで再提示しろ。` + askQuestion + `
 調査・質問への回答だけで完了する依頼なら、答え切って最終行に「調査完了: <分かったことの1行要約>」と書け。計画作成を求められているのに、この署名で計画提示を省略するな。
 plan mode の計画ファイルや説明用 HTML を commit / push する必要はない。`
+
+// askNow は「質問予告」への返答。直前の text はターン最後の text なのでユーザーに表示済み。
+// ここで差し戻して、text を含まない AskUserQuestion だけの応答を出させる。
+const askNow = `【質問予告を受け付けた】判断材料はユーザーに表示済み。今すぐ AskUserQuestion を呼べ。
+AskUserQuestion の前に text を書くな（tool 呼び出しの前の text は要約されてユーザーに届かないことがある）。
+question と選択肢は直前に書いた問いに合わせ、判断材料を繰り返すな。`
 
 const noWaitTarget = "「作業待機」と書かれていますが、実行中の背景タスクも予定済みの cron もありません。待つ対象が無いので、今できる作業を実行してください。"
 
@@ -47,6 +60,11 @@ func tellReason(m message, plan bool) string {
 
 func decide(f facts) decision {
 	plan := f.Mode == "plan"
+	// 質問はユーザーに判断を委ねる正当な中断なので、離脱表現も Git の状態も問わない。
+	// 判断材料には「残りは」「次のステップ」のような語が自然に入る。
+	if f.Message.Signature == question {
+		return block(askNow)
+	}
 	if f.Message.Signature == waiting {
 		if f.Inflight > 0 {
 			return decision{}
@@ -88,7 +106,7 @@ func decide(f facts) decision {
 		for _, issue := range issues {
 			reasons = append(reasons, safeIssue(gitstate.Feedback(issue)))
 		}
-		joined := clip(strings.Join(reasons, "\n\n"), 5000) + "\n\n依頼範囲と既存の変更を確認して対応しろ。他者の変更を勝手に commit・削除するな。ユーザー判断が必要なら AskUserQuestion を使え。"
+		joined := clip(strings.Join(reasons, "\n\n"), 5000) + "\n\n依頼範囲と既存の変更を確認して対応しろ。他者の変更を勝手に commit・削除するな。" + askQuestion
 		if f.Message.Tells {
 			return block(joined + "\n\n" + tellReason(f.Message, false) + "\n\n" + completionCheck)
 		}

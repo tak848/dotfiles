@@ -9,6 +9,7 @@ set -e
 # {{ include "go/cmd/cc-stop-gate/message.go" | sha256sum }}
 # {{ include "go/cmd/cc-stop-gate/decide.go" | sha256sum }}
 # {{ include "go/cmd/cc-stop-gate/pause.go" | sha256sum }}
+# {{ include "go/cmd/cc-narration-check/main.go" | sha256sum }}
 # {{ include "go/cmd/cc-push-guard/main.go" | sha256sum }}
 # {{ include "go/internal/gitstate/gitstate.go" | sha256sum }}
 # {{ include "go/internal/gitstate/diagnostic.go" | sha256sum }}
@@ -44,6 +45,7 @@ go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-post-tool-use ./go/cmd/cc-post-too
 go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-notification ./go/cmd/cc-notification
 go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-stop ./go/cmd/cc-stop
 go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-stop-gate ./go/cmd/cc-stop-gate
+go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-narration-check ./go/cmd/cc-narration-check
 go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-push-guard ./go/cmd/cc-push-guard
 go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-check-mojibake ./go/cmd/cc-check-mojibake
 go build -C "$SOURCE_DIR" -o ~/.claude/bin/cc-model-router ./go/cmd/cc-model-router

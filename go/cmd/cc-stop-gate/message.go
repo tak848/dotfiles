@@ -12,6 +12,9 @@ const (
 	pledge
 	survey
 	waiting
+	// question は、質問の判断材料をこのターン最後の text に書き終えたという署名。
+	// Stop を差し戻して AskUserQuestion だけを呼ばせる（decide.go の askNow）。
+	question
 )
 
 type message struct {
@@ -112,6 +115,7 @@ func parseSignature(line string) signature {
 		{"完了誓約", pledge},
 		{"調査完了", survey},
 		{"作業待機", waiting},
+		{"質問予告", question},
 	} {
 		for _, colon := range []string{":", "："} {
 			if summary, ok := strings.CutPrefix(line, item.word+colon); ok && strings.TrimSpace(summary) != "" {
