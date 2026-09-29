@@ -83,46 +83,6 @@ url = "https://github.com/DataDog/pup/releases/download/v1.23.4/pup_1.23.4_Darwi
 url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/589412166"
 provenance = "cosign"
 
-[[tools."aqua:anomalyco/opencode"]]
-version = "1.18.25"
-backend = "aqua:anomalyco/opencode"
-specifiers = ["1.18.25"]
-
-[tools."aqua:anomalyco/opencode"."platforms.linux-arm64"]
-checksum = "sha256:35ef77897425e41b5183a2c21ac4fb1d4d944d82a94e3c920f57b5490af11ac5"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.25/opencode-linux-arm64.tar.gz"
-url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/533313415"
-
-[tools."aqua:anomalyco/opencode"."platforms.linux-arm64-musl"]
-checksum = "sha256:e9144dca084c2cce87a0868e120e57cdcffc17bd0b68df6a92e18af2c2f52de0"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.25/opencode-linux-arm64-musl.tar.gz"
-url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/533313414"
-
-[tools."aqua:anomalyco/opencode"."platforms.linux-x64"]
-checksum = "sha256:58a3729a6f3432dd6d2917fcc4a949788891a035818646ad480e12c947f56e78"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.25/opencode-linux-x64.tar.gz"
-url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/533313461"
-
-[tools."aqua:anomalyco/opencode"."platforms.linux-x64-musl"]
-checksum = "sha256:2bcc1cce8ef98e6ac3d7a4b8703429fa070b9b5969b247dacfa1bef1f5b6ed44"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.25/opencode-linux-x64-musl.tar.gz"
-url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/533313483"
-
-[tools."aqua:anomalyco/opencode"."platforms.macos-arm64"]
-checksum = "sha256:606b09722d98069605e16037fb8c3c7c8ebbfed9ba713079a5efb2e5b065ae27"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.25/opencode-darwin-arm64.zip"
-url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/533313310"
-
-[tools."aqua:anomalyco/opencode"."platforms.macos-x64"]
-checksum = "sha256:6c5c569f779b197e1df6390c62278bbdf0e73e7cc248a429648680c63a6f3f1c"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.25/opencode-darwin-x64.zip"
-url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/533313312"
-
-[tools."aqua:anomalyco/opencode"."platforms.windows-x64"]
-checksum = "sha256:831e213e5f454d6e8b26f0fb24c7b3d42b40e47d73d154672a9192702eb08416"
-url = "https://github.com/anomalyco/opencode/releases/download/v1.18.25/opencode-windows-x64.zip"
-url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/533315557"
-
 [[tools."aqua:anthropics/anthropic-cli"]]
 version = "1.35.0"
 backend = "aqua:anthropics/anthropic-cli"
@@ -1844,6 +1804,39 @@ url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.1
 checksum = "sha256:bf43dc75f5478a106eab1e86d422c963e4dbe9666cf14dab363733d27bf1e672"
 url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.13-windows-x86_64.exe"
 
+[[tools."http:opencode"]]
+version = "2.0.19"
+backend = "http:opencode"
+specifiers = ["2.0.19"]
+
+[tools."http:opencode"."platforms.linux-arm64"]
+checksum = "sha256:d0138dd9b43910c28166cfc4da4a53a1b99b07931a37afa749bde812cd02e5a4"
+url = "https://opencode.ai/files/bin/2.0.19/opencode-linux-arm64.tar.gz"
+
+[tools."http:opencode"."platforms.linux-arm64-musl"]
+checksum = "sha256:d0138dd9b43910c28166cfc4da4a53a1b99b07931a37afa749bde812cd02e5a4"
+url = "https://opencode.ai/files/bin/2.0.19/opencode-linux-arm64.tar.gz"
+
+[tools."http:opencode"."platforms.linux-x64"]
+checksum = "sha256:1a9f7184292035a56b6cf22439762930b3a3ed13812f7360c33bb7ae07ef4075"
+url = "https://opencode.ai/files/bin/2.0.19/opencode-linux-x64.tar.gz"
+
+[tools."http:opencode"."platforms.linux-x64-musl"]
+checksum = "sha256:1a9f7184292035a56b6cf22439762930b3a3ed13812f7360c33bb7ae07ef4075"
+url = "https://opencode.ai/files/bin/2.0.19/opencode-linux-x64.tar.gz"
+
+[tools."http:opencode"."platforms.macos-arm64"]
+checksum = "sha256:42e0bd7c4d16197e29be6b0eb8fa6cc54621792fd9c384a78cf9e607f4027a62"
+url = "https://opencode.ai/files/bin/2.0.19/opencode-darwin-arm64.zip"
+
+[tools."http:opencode"."platforms.macos-x64"]
+checksum = "sha256:066053e8874576c1934a569cfe16b6d42ef344fb793e7ff674c75cf29e0835b3"
+url = "https://opencode.ai/files/bin/2.0.19/opencode-darwin-x64.zip"
+
+[tools."http:opencode"."platforms.windows-x64"]
+checksum = "sha256:c8c62f6712b54e8fb9a4cb1d8cebc1b3703656a818d839b319cf423a3825b2e7"
+url = "https://opencode.ai/files/bin/2.0.19/opencode-windows-x64.zip"
+
 [[tools.node]]
 version = "24.21.0"
 backend = "core:node"
@@ -1905,7 +1898,7 @@ specifiers = ["0.19.4"]
 version = "3.28.0"
 backend = "pipx:snowflake-cli"
 specifiers = ["3.28.0"]
-uv = { path = "locks/pipx-snowflake-cli/3.28.0", digest = "sha256:43b7be64bff02d6f131b0a1f42f5e2f7d8d851aa03c0d4a099e86c85b79bbad9" }
+uv = { path = "locks/pipx-snowflake-cli/3.28.0", digest = "sha256:4005fbbd36edc6f4ac7d1ede8d4a09cfff436679af8475e867928a8f0a9d57e9" }
 
 [[tools.pnpm]]
 version = "12.6.0"
