@@ -80,19 +80,14 @@
 - 基本は model 無指定（セッションの既定モデルがそのまま使われる）。model パラメータは基本的に指定しないこと
 - 本当に軽微なタスクに限り `sonnet` を指定してもよい
 
-## tool 呼び出しの前に書いた text はユーザーに届かない前提で書く
+## tool 呼び出しの前に書いた text はユーザーに届かないことがある
 
-Opus 5.5 / Sonnet 5.5 / Fable 5 / Fable 5.1 など（Opus 5 でも観測されている）では、tool の結果を受けた後、次の tool を呼ぶ前に書いた text（progress update）がサーバー側で要約され、thinking ブロックに置き換わる。原文はユーザーの画面にも transcript にも残らず、画面には要約が出るか、何も出ない。モデル側の context には原文が残るので、書いた側は伝えたつもりになる。公式 docs に仕様として載っており、設定では戻せない。確実に届くのは、ターン最後の text と tool の入力だけ。
+tool の結果を受けた後、次の tool を呼ぶ前に書いた text は、要約されて原文がユーザーに届かないことがある。確実に届くのはターン最後の text と tool の入力だけ。
 
-- tool 呼び出しの前の text は、失われても困らない短い進捗報告に限る。調査結果・判断の根拠・質問の材料はそこに書かない
-- 結論・報告はターン最後の text に書く。途中で書いたつもりの内容も最後にまとめ直す。途中の text がユーザーに届いていないと知らされたら、ユーザーが読む必要のある内容をターン最後の text で書き直す
-- 質問は必ず AskUserQuestion で行う。text で質問してターンを終えない
-  - 判断材料（表・比較・経緯）を先に見せる必要があるときは、判断材料を text に書き、最終行を装飾なしの `質問予告: <問いの要約>` にする。この応答には tool 呼び出しを含めない。ターン最後の text になるので、判断材料はそのままユーザーに表示される。その後は text を書かずに AskUserQuestion だけを呼ぶ。ターンは終わらず、ユーザーは説明の下に出た選択肢にそのまま答えられる
-  - 判断材料が要らない質問は、AskUserQuestion を直接呼ぶ。AskUserQuestion の直前に説明の text を書かない。判断材料を AskUserQuestion の question や選択肢の説明に詰め込まない
-- ExitPlanMode の変更点・却下への応答は、直前の text ではなく plan 本文（冒頭）に書く
-- 「表示されたはず」を前提にしない。ユーザーが直前の出力に言及せず噛み合わないときは、要約で消えた可能性を疑い、ターン最後の text で出し直す
-
-参考: [anthropics/claude-code#74558](https://github.com/anthropics/claude-code/issues/74558)、公式 docs [Progress updates between tool calls](https://platform.claude.com/docs/en/build-with-claude/thinking#progress-updates)
+- 調査結果・判断の根拠・報告は、ターン最後の text に書く
+- 質問は必ず AskUserQuestion で行う。判断材料を先に見せるときは、判断材料を text に書いて最終行を装飾なしの `質問予告: <問いの要約>` にし、その応答には tool 呼び出しを含めない。その後、text を書かずに AskUserQuestion を呼ぶ。判断材料を question や選択肢の説明に詰め込まない
+- ExitPlanMode の変更点・却下への応答は plan 本文に書く
+- ユーザーとの話が噛み合わないときは、途中の text が届いていない可能性を疑い、ターン最後の text で出し直す
 
 ## Git 許可設定
 
