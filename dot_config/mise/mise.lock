@@ -1872,25 +1872,25 @@ url = "https://nodejs.org/dist/v24.21.0/node-v24.21.0-win-x64.zip"
 
 [[tools."npm:@fission-ai/openspec"]]
 version = "1.13.2"
-aube = { path = ".mise/locks/npm-fission-ai-openspec/1.13.2", digest = "sha256:3dd5bf5f76026adff7b5a63ed3ac4e42f650b8b7e9b18191049f71c1a7db8158" }
+aube = { path = "locks/npm-fission-ai-openspec/1.13.2", digest = "sha256:3dd5bf5f76026adff7b5a63ed3ac4e42f650b8b7e9b18191049f71c1a7db8158" }
 backend = "npm:@fission-ai/openspec"
 specifiers = ["1.13.2"]
 
 [[tools."npm:@typescript/native-preview"]]
 version = "7.0.0-dev.20260707.2"
-aube = { path = ".mise/locks/npm-typescript-native-preview/7.0.0-dev.20260707.2", digest = "sha256:a45a98c540ad73f14a677ee62351ea6f8e1d714903f7dfe7f0d2f3bddc6133fb" }
+aube = { path = "locks/npm-typescript-native-preview/7.0.0-dev.20260707.2", digest = "sha256:a45a98c540ad73f14a677ee62351ea6f8e1d714903f7dfe7f0d2f3bddc6133fb" }
 backend = "npm:@typescript/native-preview"
 specifiers = ["7.0.0-dev.20260707.2"]
 
 [[tools."npm:ccusage"]]
 version = "20.0.26"
-aube = { path = ".mise/locks/npm-ccusage/20.0.26", digest = "sha256:e1229ed145ebbaaaa3e6116f5a729c75f32a6fc901a681ad0febc7451f529025" }
+aube = { path = "locks/npm-ccusage/20.0.26", digest = "sha256:e1229ed145ebbaaaa3e6116f5a729c75f32a6fc901a681ad0febc7451f529025" }
 backend = "npm:ccusage"
 specifiers = ["20.0.26"]
 
 [[tools."npm:defuddle"]]
 version = "0.19.4"
-aube = { path = ".mise/locks/npm-defuddle/0.19.4", digest = "sha256:dacc23de81cf133131d228f68e3836f5f0aad865a4fdfb90c04afa197b11ebe4" }
+aube = { path = "locks/npm-defuddle/0.19.4", digest = "sha256:dacc23de81cf133131d228f68e3836f5f0aad865a4fdfb90c04afa197b11ebe4" }
 backend = "npm:defuddle"
 specifiers = ["0.19.4"]
 
@@ -1898,7 +1898,7 @@ specifiers = ["0.19.4"]
 version = "3.28.0"
 backend = "pipx:snowflake-cli"
 specifiers = ["3.28.0"]
-uv = { path = ".mise/locks/pipx-snowflake-cli/3.28.0", digest = "sha256:4005fbbd36edc6f4ac7d1ede8d4a09cfff436679af8475e867928a8f0a9d57e9" }
+uv = { path = "locks/pipx-snowflake-cli/3.28.0", digest = "sha256:58c7ae26f114f0cea87a44a35c9e3a95f65ec6505261d83fc5d5fa4ffa55844d" }
 
 [[tools.pnpm]]
 version = "12.6.0"
