@@ -7,7 +7,7 @@ resolution-markers = [
 ]
 
 [options]
-exclude-newer = "2026-09-29T03:29:16.466177998Z"
+exclude-newer = "2026-09-29T04:07:52.288212333Z"
 
 [[package]]
 name = "annotated-types"
