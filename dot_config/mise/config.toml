@@ -49,8 +49,8 @@ AZ_PYTHON = '{{ env.XDG_DATA_HOME | default(value=env.HOME ~ "/.local/share") }}
 # ランタイム（core backend）
 # ============================================
 node = "24.21.0"
-pnpm = "12.6.0"
-"github:endevco/aube" = "v2.5.1" # 高速な Node.js パッケージマネージャ
+pnpm = "12.8.1"
+"github:endevco/aube" = "v2.6.0" # 高速な Node.js パッケージマネージャ
 go = "1.27.1"
 # snowflake-cli（pipx backend）の install にだけ使う。lockfile revision 2 では pipx / pypi ツールの
 # 依存グラフを uv sync で再現し、その Python は mise の config の python（無ければ PATH 上の python）に
@@ -79,7 +79,7 @@ python = "3.13.15"
 # zoxide は aqua CLI で管理（mise lock で checksum 取得不可）
 
 # 検索・ファイル操作
-"aqua:twpayne/chezmoi" = "2.72.2"
+"aqua:twpayne/chezmoi" = "2.73.0"
 "aqua:BurntSushi/ripgrep" = "15.2.0"
 "aqua:phiresky/ripgrep-all" = "0.10.10"
 # rga依存: ドキュメント変換（docx, epub, odt等）
@@ -99,7 +99,7 @@ python = "3.13.15"
 "aqua:arl/gitmux" = "0.11.5"
 
 # Python ツール
-"aqua:astral-sh/uv" = "0.12.19"
+"aqua:astral-sh/uv" = "0.12.20"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = "1.35.0"
@@ -144,7 +144,7 @@ python = "3.13.15"
 "github:sorafujitani/ccsession" = "v1.3.0"
 
 # Anthropic API CLI
-"aqua:anthropics/anthropic-cli" = "1.35.0"
+"aqua:anthropics/anthropic-cli" = "1.36.0"
 
 # Language Server
 "go:golang.org/x/tools/gopls" = "v0.23.0"
@@ -152,15 +152,15 @@ python = "3.13.15"
 # gopls-lazy の後継。gopls に依存せず go/parser + go/types で自前に実装した LSP サーバーで、
 # workspace 全体を一度だけ index してディスクに永続化するためメモリ使用量が workspace サイズに依存しない。
 # gopls-lazy はまだ動くので、golance が同等に使えると確認できるまで両方入れておく。
-"github:sivchari/golance" = "v0.7.19"
+"github:sivchari/golance" = "v0.7.20"
 "aqua:rust-lang/rust-analyzer" = "2025-12-01"
 "aqua:tamasfe/taplo" = "0.10.0"
 
 # その他（1password/cli は aqua CLI で管理）
 "aqua:temporalio/cli" = "1.9.1"
-"aqua:jdx/usage" = "6.11.1"
+"aqua:jdx/usage" = "6.12.0"
 # Datadog の AI エージェント向け CLI コンパニオン
-"aqua:DataDog/pup" = "1.23.4"
+"aqua:DataDog/pup" = "1.23.5"
 
 # ============================================
 # npm グローバルパッケージ
@@ -171,7 +171,7 @@ python = "3.13.15"
 # opencode は http backend で管理（末尾の [tools."http:opencode"] を参照）
 # Grok Build CLI (xAI) は http backend で管理（末尾の [tools."http:grok"] を参照）
 # Claude Code のハーネスを ChatGPT サブスクの Codex backend に向ける Anthropic 互換プロキシ。claudex から使う
-"github:router-for-me/CLIProxyAPI" = "v8.0.3"
+"github:router-for-me/CLIProxyAPI" = "v8.0.4"
 "npm:ccusage" = "20.0.26"
 "npm:@typescript/native-preview" = "7.0.0-dev.20260707.2"
 "npm:@fission-ai/openspec" = "1.13.2"
