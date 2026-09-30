@@ -1,4 +1,4 @@
-# claudex: Claude Code のハーネスのまま、モデルだけ Codex（GPT-6 Sol / GPT-6 Astra）にする
+# claudex: Claude Code のハーネスのまま、モデルだけ Codex（GPT-6.1 Sol / GPT-6 Astra）にする
 #
 # CLIProxyAPI（router-for-me/CLIProxyAPI、mise の github backend で導入）が Anthropic Messages API 互換の
 # プロキシとして立ち、ChatGPT サブスクの OAuth 経由で Codex backend に転送する。ツールループ・サブエージェント・
@@ -104,11 +104,12 @@ claudex() {
         return 1
     fi
 
-    # Codex の live カタログ（codex debug models）上の GPT-6 の序列は priority 順に
-    # astra（"Our most capable model"）> sol > luna で、Claude 側の fable > opus > sonnet > haiku という
-    # スロットの重みに対応させる。primary（--model）は素の Claude の既定が Opus であるのに合わせて sol。
+    # Codex のカタログ上の GPT-6 世代は astra（"Our most capable model"）> sol > luna で、Claude 側の
+    # fable > opus > sonnet > haiku というスロットの重みに対応させる。primary（--model）は素の Claude の既定が
+    # Opus であるのに合わせて sol。sol は 2026-09-29 に出た gpt-6.1-sol を使う。カタログの priority は
+    # 6.1-sol(1) > astra(2) > 6-sol(3) > luna(4) > 5.6-sol(5) > 5.6-terra(8) > 5.6-luna(9) で 6.1-sol が astra より
+    # 上に並ぶが、カタログの紹介文が "near-Astra performance at a lower cost" なので fable スロットは astra のまま。
     # GPT-6 世代に terra は無い（terra は 5.6 のみ）。sonnet スロットには 5.6 に落とさず sol を当てる。
-    # カタログの priority は astra(1) > sol(2) > luna(3) > 5.6-sol(4) > 5.6-terra(7) > 5.6-luna(8) で、
     # gpt-6-luna ですら gpt-5.6-terra より上位に置かれているため、世代を跨いで下げる意味が無い。
     # claudexf 用。CLAUDEX_FAST=1 なら各モデルを <model>-fast（config.yaml の別名。CLIProxyAPI が payload.override で
     # service_tier: priority を付けて素の名前で Codex に送る）に向ける。Claude Code の fast mode（fastMode +
@@ -116,9 +117,9 @@ claudex() {
     # モデル名で tier を分ける方式にした。CLAUDEX_*_MODEL で明示された名前には付けない。
     local suffix=""
     [[ "${CLAUDEX_FAST:-0}" == 1 ]] && suffix="-fast"
-    local model="${CLAUDEX_MODEL:-gpt-6-sol${suffix}}"
+    local model="${CLAUDEX_MODEL:-gpt-6.1-sol${suffix}}"
     local fable_model="${CLAUDEX_FABLE_MODEL:-gpt-6-astra${suffix}}"
-    local mid_model="${CLAUDEX_MID_MODEL:-gpt-6-sol${suffix}}"
+    local mid_model="${CLAUDEX_MID_MODEL:-gpt-6.1-sol${suffix}}"
     local small_model="${CLAUDEX_SMALL_MODEL:-gpt-6-luna${suffix}}"
 
     # Claude Code は model ID のパターンで effort / thinking 対応を判定するため、gpt-* だとどちらも無効になる。
