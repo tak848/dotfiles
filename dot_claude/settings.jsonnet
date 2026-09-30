@@ -305,7 +305,7 @@ local autoModeRules = import 'auto-mode.libsonnet';
     MCP_TOOL_TIMEOUT: '600000',
     MAX_MCP_OUTPUT_TOKENS: '100000',  // default: 25000
     // CLAUDE_CODE_AUTO_COMPACT_WINDOW は dot_zshenv.tmpl で export している。
-    // claudex（proxy 経由で GPT-6 Sol を使う）が context 長に合わせて上書きするため、
+    // claudex（proxy 経由で GPT-6.1 Sol を使う）が context 長に合わせて上書きするため、
     // settings.json 側には置かない
     // adaptive thinking (effortLevel) が有効な場合、以下は不要
     // MAX_THINKING_TOKENS: '31199',
@@ -326,7 +326,7 @@ local autoModeRules = import 'auto-mode.libsonnet';
     // 2.1.217 で subagent に 2 つの上限が入った。
     // - 同時実行数の上限（既定 20）。既定のまま明示（暴走防止のため上げすぎない）
     // - subagent からの nested spawn 禁止（既定は深さ 1 相当）。1 段だけネスト委譲を許可する。
-    //   claudex（GPT-6 Sol）利用時に subagent が無限に生成されることがあるため深くしない
+    //   claudex（GPT-6.1 Sol）利用時に subagent が無限に生成されることがあるため深くしない
     CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS: '20',
     CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH: '2',
     // 実験的 Agent Teams は無効化する。teammate（subagent）の permission request が
