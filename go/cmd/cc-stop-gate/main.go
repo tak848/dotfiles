@@ -1,6 +1,6 @@
 // cc-stop-gate は、応答終了時に plan / 依頼の完遂確認を要求する。
 // 編集履歴、内部 TODO、transcript の読み取りには依存しない。
-// pause-marker サブコマンドは CC_STOP_GATE_PAUSE_TOOLS 用のマーカーだけを扱う（pause.go）。
+// pause-tool サブコマンドは CC_STOP_GATE_PAUSE_TOOLS 用の PostToolUse hook（pause.go）。
 package main
 
 import (
@@ -25,7 +25,6 @@ const (
 
 type input struct {
 	Event           string           `json:"hook_event_name"`
-	SessionID       string           `json:"session_id"`
 	Mode            string           `json:"permission_mode"`
 	CWD             string           `json:"cwd"`
 	LastMessage     *string          `json:"last_assistant_message"`
@@ -43,8 +42,8 @@ type checkFunc func(context.Context, string, []string) []string
 type lookupEnv func(string) (string, bool)
 
 func main() {
-	if len(os.Args) > 1 && os.Args[1] == pauseMarkerCommand {
-		runMarker(os.Stdin, os.LookupEnv)
+	if len(os.Args) > 1 && os.Args[1] == pauseToolCommand {
+		runPause(os.Stdin, os.Stdout, os.LookupEnv)
 		return
 	}
 	// 出力できなくても exit 2 にしない。Stop の exit 2 は block となり、stderr が AI に渡る。
@@ -63,12 +62,7 @@ func run(stdin io.Reader, stdout io.Writer, env lookupEnv, check checkFunc) int 
 		return 0
 	}
 	var in *input
-	if err := json.Unmarshal(data, &in); err != nil || in == nil || in.Event != "Stop" {
-		return 0
-	}
-	// 一覧のツールで終わった turn は外部の応答を待って止まるので判定しない。
-	// 入力の不備で通す場合にもマーカーを次の turn に残さないよう、他の検査より先に消費する。
-	if consumePause(env, in.SessionID) || in.LastMessage == nil {
+	if err := json.Unmarshal(data, &in); err != nil || in == nil || in.Event != "Stop" || in.LastMessage == nil {
 		return 0
 	}
 	switch in.Mode {
