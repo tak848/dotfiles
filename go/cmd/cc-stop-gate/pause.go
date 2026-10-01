@@ -14,7 +14,7 @@ import (
 // その Stop では判定をしない。Stop 入力には直前のツールが含まれないため、
 // PostToolUse でマーカーを書き、Stop で消費する。
 // PostToolUse で continue: false を返して turn を終える方式は使わない。ツール結果の直後に
-// 締めの発話なしで turn が終わり、発話で終わる turn を前提にするホストが扱えないため。
+// 締めの発話なしで turn が終わり、発話で終わる turn を前提にするホストでは turn が失敗しうるため。
 const pauseToolsEnv = "CC_STOP_GATE_PAUSE_TOOLS"
 
 // pauseMarkerCommand は PostToolUse / PostToolUseFailure / UserPromptSubmit に
