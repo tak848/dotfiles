@@ -205,7 +205,7 @@ windows-x64 = { url = 'https://storage.googleapis.com/grok-build-public-artifact
 # 更新は Renovate の regex manager が GitHub のタグ（v2.x）で追う。
 # renovate: datasource=github-tags depName=anomalyco/opencode
 [tools."http:opencode"]
-version = "2.0.19"
+version = "2.0.22"
 url = 'https://opencode.ai/files/bin/{{ version }}/opencode-{{ os(macos="darwin") }}-{{ arch() }}.zip'
 bin = "opencode"
 
