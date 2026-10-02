@@ -1805,37 +1805,37 @@ checksum = "sha256:0f2ab84fb066d60f99b861f1030984cd190754de28e7982a859b25d82fa52
 url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.44-windows-x86_64.exe"
 
 [[tools."http:opencode"]]
-version = "2.0.19"
+version = "2.0.22"
 backend = "http:opencode"
-specifiers = ["2.0.19"]
+specifiers = ["2.0.22"]
 
 [tools."http:opencode"."platforms.linux-arm64"]
-checksum = "sha256:d0138dd9b43910c28166cfc4da4a53a1b99b07931a37afa749bde812cd02e5a4"
-url = "https://opencode.ai/files/bin/2.0.19/opencode-linux-arm64.tar.gz"
+checksum = "sha256:3f4df7efe28a53830777666e160984cf8247938e68f105b8ae1f9b4778febc2d"
+url = "https://opencode.ai/files/bin/2.0.22/opencode-linux-arm64.tar.gz"
 
 [tools."http:opencode"."platforms.linux-arm64-musl"]
-checksum = "sha256:d0138dd9b43910c28166cfc4da4a53a1b99b07931a37afa749bde812cd02e5a4"
-url = "https://opencode.ai/files/bin/2.0.19/opencode-linux-arm64.tar.gz"
+checksum = "sha256:3f4df7efe28a53830777666e160984cf8247938e68f105b8ae1f9b4778febc2d"
+url = "https://opencode.ai/files/bin/2.0.22/opencode-linux-arm64.tar.gz"
 
 [tools."http:opencode"."platforms.linux-x64"]
-checksum = "sha256:1a9f7184292035a56b6cf22439762930b3a3ed13812f7360c33bb7ae07ef4075"
-url = "https://opencode.ai/files/bin/2.0.19/opencode-linux-x64.tar.gz"
+checksum = "sha256:91abc832b36f619ae2e4c21a33c9887bbc861e95c1492003ab7970e9484d1ef1"
+url = "https://opencode.ai/files/bin/2.0.22/opencode-linux-x64.tar.gz"
 
 [tools."http:opencode"."platforms.linux-x64-musl"]
-checksum = "sha256:1a9f7184292035a56b6cf22439762930b3a3ed13812f7360c33bb7ae07ef4075"
-url = "https://opencode.ai/files/bin/2.0.19/opencode-linux-x64.tar.gz"
+checksum = "sha256:91abc832b36f619ae2e4c21a33c9887bbc861e95c1492003ab7970e9484d1ef1"
+url = "https://opencode.ai/files/bin/2.0.22/opencode-linux-x64.tar.gz"
 
 [tools."http:opencode"."platforms.macos-arm64"]
-checksum = "sha256:42e0bd7c4d16197e29be6b0eb8fa6cc54621792fd9c384a78cf9e607f4027a62"
-url = "https://opencode.ai/files/bin/2.0.19/opencode-darwin-arm64.zip"
+checksum = "sha256:b152ebd6ae63790e1f4751494d9db35266e7d06118e3a79afb4f65d549441db6"
+url = "https://opencode.ai/files/bin/2.0.22/opencode-darwin-arm64.zip"
 
 [tools."http:opencode"."platforms.macos-x64"]
-checksum = "sha256:066053e8874576c1934a569cfe16b6d42ef344fb793e7ff674c75cf29e0835b3"
-url = "https://opencode.ai/files/bin/2.0.19/opencode-darwin-x64.zip"
+checksum = "sha256:bbe286a836de8c27ded4e147c88a32c709997753a1fbd4e78daea2edc8a9f4b5"
+url = "https://opencode.ai/files/bin/2.0.22/opencode-darwin-x64.zip"
 
 [tools."http:opencode"."platforms.windows-x64"]
-checksum = "sha256:c8c62f6712b54e8fb9a4cb1d8cebc1b3703656a818d839b319cf423a3825b2e7"
-url = "https://opencode.ai/files/bin/2.0.19/opencode-windows-x64.zip"
+checksum = "sha256:59777d55a95b3bec562f195affe1b76109425fc3a1bfd3fe927b63c01ecc69b8"
+url = "https://opencode.ai/files/bin/2.0.22/opencode-windows-x64.zip"
 
 [[tools.node]]
 version = "24.21.0"
@@ -1898,7 +1898,7 @@ specifiers = ["0.19.4"]
 version = "3.28.0"
 backend = "pipx:snowflake-cli"
 specifiers = ["3.28.0"]
-uv = { path = "locks/pipx-snowflake-cli/3.28.0", digest = "sha256:641070000f0b00da4b3d7b6737b6a5faeb825a00f6929262642b7c1bd5f2c42e" }
+uv = { path = "locks/pipx-snowflake-cli/3.28.0", digest = "sha256:ccd7d684a57cd24121971c9805ce14006459d6af1cd42df133db5cd2c676f561" }
 
 [[tools.pnpm]]
 version = "12.8.1"
