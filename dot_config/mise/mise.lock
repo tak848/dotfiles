@@ -13,9 +13,9 @@ url = "https://github.com/BurntSushi/ripgrep/releases/download/15.2.0/ripgrep-15
 url_api = "https://api.github.com/repos/BurntSushi/ripgrep/releases/assets/478119579"
 
 [tools."aqua:BurntSushi/ripgrep"."platforms.linux-arm64-musl"]
-checksum = "sha256:800b1e7206afe799dfb5a6901f23147cfaabe0e52210538100f61e86e1740915"
-url = "https://github.com/BurntSushi/ripgrep/releases/download/15.2.0/ripgrep-15.2.0-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/BurntSushi/ripgrep/releases/assets/478120060"
+checksum = "sha256:a740b91c82eaf9914cfedd353572f2791cbe0162c84101ee0951058f4dcbc90d"
+url = "https://github.com/BurntSushi/ripgrep/releases/download/15.2.0/ripgrep-15.2.0-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/BurntSushi/ripgrep/releases/assets/478119579"
 
 [tools."aqua:BurntSushi/ripgrep"."platforms.linux-x64"]
 checksum = "sha256:33e15bcf1624b25cdd2a55813a47a2f95dbe126268203e76aa6a585d1e7b149c"
@@ -963,6 +963,11 @@ checksum = "sha256:2cd875ab6c78b27e4830b5bca92c570a8a8dcfb368bc71b189b65ac01fbc3
 url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgrep_all-v0.10.10-aarch64-unknown-linux-gnu.tar.gz"
 url_api = "https://api.github.com/repos/phiresky/ripgrep-all/releases/assets/314433031"
 
+[tools."aqua:phiresky/ripgrep-all"."platforms.linux-arm64-musl"]
+checksum = "sha256:2cd875ab6c78b27e4830b5bca92c570a8a8dcfb368bc71b189b65ac01fbc3020"
+url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgrep_all-v0.10.10-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/phiresky/ripgrep-all/releases/assets/314433031"
+
 [tools."aqua:phiresky/ripgrep-all"."platforms.linux-x64"]
 checksum = "sha256:a969c25b182ac84aa672518313b5f741091decf7d93d03a020bcfe517b9ff4e8"
 url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgrep_all-v0.10.10-x86_64-unknown-linux-musl.tar.gz"
@@ -993,15 +998,20 @@ checksum = "sha256:f0465c6b32508de20583ebd3b8edda08137cd4beaca22919c29701bbc8823
 url = "https://github.com/rust-lang/rust-analyzer/releases/download/2025-12-01/rust-analyzer-aarch64-unknown-linux-gnu.gz"
 url_api = "https://api.github.com/repos/rust-lang/rust-analyzer/releases/assets/322820371"
 
+[tools."aqua:rust-lang/rust-analyzer"."platforms.linux-arm64-musl"]
+checksum = "sha256:f0465c6b32508de20583ebd3b8edda08137cd4beaca22919c29701bbc88238eb"
+url = "https://github.com/rust-lang/rust-analyzer/releases/download/2025-12-01/rust-analyzer-aarch64-unknown-linux-gnu.gz"
+url_api = "https://api.github.com/repos/rust-lang/rust-analyzer/releases/assets/322820371"
+
 [tools."aqua:rust-lang/rust-analyzer"."platforms.linux-x64"]
 checksum = "sha256:94ff40db699ef41500c1ae9a9bdb153662364bf6f4a30a362ff565ef8ab6af6e"
 url = "https://github.com/rust-lang/rust-analyzer/releases/download/2025-12-01/rust-analyzer-x86_64-unknown-linux-gnu.gz"
 url_api = "https://api.github.com/repos/rust-lang/rust-analyzer/releases/assets/322820455"
 
 [tools."aqua:rust-lang/rust-analyzer"."platforms.linux-x64-musl"]
-checksum = "sha256:037da33202cd9fad925ae15eac71e52303dd8571fd9c42a2470ac3eaa2bfca9f"
-url = "https://github.com/rust-lang/rust-analyzer/releases/download/2025-12-01/rust-analyzer-x86_64-unknown-linux-musl.gz"
-url_api = "https://api.github.com/repos/rust-lang/rust-analyzer/releases/assets/322820458"
+checksum = "sha256:94ff40db699ef41500c1ae9a9bdb153662364bf6f4a30a362ff565ef8ab6af6e"
+url = "https://github.com/rust-lang/rust-analyzer/releases/download/2025-12-01/rust-analyzer-x86_64-unknown-linux-gnu.gz"
+url_api = "https://api.github.com/repos/rust-lang/rust-analyzer/releases/assets/322820455"
 
 [tools."aqua:rust-lang/rust-analyzer"."platforms.macos-arm64"]
 checksum = "sha256:8c60788fa0143fc4cbe6ff101c1e6d146c6c5ce6fb2fbed3e5da86f89ff81e17"
@@ -1184,9 +1194,9 @@ url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.6.
 url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/515415350"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-arm64-musl"]
-checksum = "sha256:63c6918a4f3f1c612770cdc6ec630d1280b06fe62703a48a744cd2baf3e06ac6"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.6.0/postgresql-18.6.0-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/515294670"
+checksum = "sha256:5d2b5e8be9e96bfc3d7f22090057a836ec36d5d092542d8d3b93cc145cf4ee13"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.6.0/postgresql-18.6.0-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/515415350"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-x64"]
 checksum = "sha256:bb3d09f876b2383e25a8c9ce09e32d185a03656a23d074f5195542b1b1b3ca61"
@@ -1194,9 +1204,9 @@ url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.6.
 url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/515276039"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-x64-musl"]
-checksum = "sha256:c864af924c32dadfeaca61585fc7092679c8b6374162e62e96e33d9ece0d55c2"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.6.0/postgresql-18.6.0-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/515216004"
+checksum = "sha256:bb3d09f876b2383e25a8c9ce09e32d185a03656a23d074f5195542b1b1b3ca61"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.6.0/postgresql-18.6.0-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/515276039"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.macos-arm64"]
 checksum = "sha256:a257bcdb8aa3301a13d6a5bcec48f8c9517045b7cbae71e50788b2615539e95b"
@@ -1237,9 +1247,9 @@ url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/59627098
 provenance = "cosign"
 
 [tools."aqua:twpayne/chezmoi"."platforms.linux-x64-musl"]
-checksum = "sha256:09559524c5c724df9d452f1e78cfeca063d68c18a38b3bebb8bf48e9b13249b7"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.73.0/chezmoi_2.73.0_linux-musl_amd64.tar.gz"
-url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/596271005"
+checksum = "sha256:b597729b687af4488a848240134cb633de8ca0f04e0d26d48f400ee2ac338ffa"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.73.0/chezmoi_2.73.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/596270752"
 provenance = "cosign"
 
 [tools."aqua:twpayne/chezmoi"."platforms.macos-arm64"]
@@ -1872,25 +1882,25 @@ url = "https://nodejs.org/dist/v24.21.0/node-v24.21.0-win-x64.zip"
 
 [[tools."npm:@fission-ai/openspec"]]
 version = "1.14.0"
-aube = { path = ".mise/locks/npm-fission-ai-openspec/1.14.0", digest = "sha256:1ddc80772d2348cd2f1eaa6bb35f7e338fea9088f9948908326d373ceb7def2a" }
+aube = { path = "locks/npm-fission-ai-openspec/1.14.0", digest = "sha256:1ddc80772d2348cd2f1eaa6bb35f7e338fea9088f9948908326d373ceb7def2a" }
 backend = "npm:@fission-ai/openspec"
 specifiers = ["1.14.0"]
 
 [[tools."npm:@typescript/native-preview"]]
 version = "7.0.0-dev.20260707.2"
-aube = { path = ".mise/locks/npm-typescript-native-preview/7.0.0-dev.20260707.2", digest = "sha256:a45a98c540ad73f14a677ee62351ea6f8e1d714903f7dfe7f0d2f3bddc6133fb" }
+aube = { path = "locks/npm-typescript-native-preview/7.0.0-dev.20260707.2", digest = "sha256:a45a98c540ad73f14a677ee62351ea6f8e1d714903f7dfe7f0d2f3bddc6133fb" }
 backend = "npm:@typescript/native-preview"
 specifiers = ["7.0.0-dev.20260707.2"]
 
 [[tools."npm:ccusage"]]
 version = "20.0.26"
-aube = { path = ".mise/locks/npm-ccusage/20.0.26", digest = "sha256:e1229ed145ebbaaaa3e6116f5a729c75f32a6fc901a681ad0febc7451f529025" }
+aube = { path = "locks/npm-ccusage/20.0.26", digest = "sha256:e1229ed145ebbaaaa3e6116f5a729c75f32a6fc901a681ad0febc7451f529025" }
 backend = "npm:ccusage"
 specifiers = ["20.0.26"]
 
 [[tools."npm:defuddle"]]
 version = "0.19.4"
-aube = { path = ".mise/locks/npm-defuddle/0.19.4", digest = "sha256:dacc23de81cf133131d228f68e3836f5f0aad865a4fdfb90c04afa197b11ebe4" }
+aube = { path = "locks/npm-defuddle/0.19.4", digest = "sha256:dacc23de81cf133131d228f68e3836f5f0aad865a4fdfb90c04afa197b11ebe4" }
 backend = "npm:defuddle"
 specifiers = ["0.19.4"]
 
@@ -1898,7 +1908,7 @@ specifiers = ["0.19.4"]
 version = "3.28.0"
 backend = "pipx:snowflake-cli"
 specifiers = ["3.28.0"]
-uv = { path = ".mise/locks/pipx-snowflake-cli/3.28.0", digest = "sha256:641070000f0b00da4b3d7b6737b6a5faeb825a00f6929262642b7c1bd5f2c42e" }
+uv = { path = "locks/pipx-snowflake-cli/3.28.0", digest = "sha256:e5d8fe1ba3d700f1dd981c9bb7d9559fa6918c6395efa9885a670cda48f046ca" }
 
 [[tools.pnpm]]
 version = "12.9.0"
