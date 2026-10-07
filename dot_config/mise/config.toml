@@ -91,7 +91,7 @@ python = "3.13.15"
 "aqua:jesseduffield/lazydocker" = "0.25.2"
 # Git credential helper（.NET self-contained。tar.gz を全展開し本体+DLL を同居させる。
 # symbols 版を除外するため matching_regex で末尾を絞り、createdump 等は filter_bins で隠す）
-"github:git-ecosystem/git-credential-manager" = { version = "v2.9.1", matching_regex = '[0-9]\.tar\.gz$', filter_bins = "git-credential-manager" }
+"github:git-ecosystem/git-credential-manager" = { version = "v3.0.1", matching_regex = '[0-9]\.tar\.gz$', filter_bins = "git-credential-manager" }
 
 # エディタ・ターミナル
 "aqua:neovim/neovim" = "0.12.5"
