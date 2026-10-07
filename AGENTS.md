@@ -3,6 +3,7 @@
 ## Language
 
 Always respond in Japanese(常に日本語で答えること).
+GitHub に書き込む本文（PR description/body、issue/PR コメント、レビュー返信）も日本語で書くこと。ユーザーが明示的に別言語を指定した場合を除き、PR テンプレートの見出しが英語でも本文は日本語にする。
 
 # Repository Guidelines
 
@@ -38,6 +39,7 @@ Always respond in Japanese(常に日本語で答えること).
 - PR titles must also use the same Conventional Commits prefix style (e.g., `feat:`, `fix:`, `chore:`). Do not add agent-name prefixes such as `[codex]` or `[claude]`.
 - Include generated artifacts when relevant (e.g., `mise.lock`, `aqua-checksums.json`) and run `task` after changing tool configs.
 - PRs: explain What/Why, note impacted paths (e.g., `dot_zsh/`, `dot_config/aquaproj-aqua/`), and paste a `chezmoi diff` snippet if user-facing.
+- PR description/body は日本語で書くこと。テンプレート見出しが英語でも本文は日本語にし、英語本文をデフォルトにしない。
 - **PR 作成時の注意**: GitHub MCP の `body` パラメータに改行を含める際、リテラル `\n` ではなく実際の改行文字を使うこと（リテラル `\n` はエスケープされて壊れる）。
 - レビューコメントの指摘に対して修正を行った場合は、必ず該当コメントに reply すること。修正した commit へのリンク（`https://github.com/{owner}/{repo}/commit/{sha}` 形式）を含めること。
 - issue/PR にコメント・返信する際は、本文末尾に `(by <agent name>)` を付与すること（例: `(by Codex)`, `(by Claude Code)`）。
