@@ -1898,7 +1898,7 @@ specifiers = ["0.19.4"]
 version = "3.28.0"
 backend = "pipx:snowflake-cli"
 specifiers = ["3.28.0"]
-uv = { path = "locks/pipx-snowflake-cli/3.28.0", digest = "sha256:3dfa15d51a67e2c1872c01042630bbae528a8f02c31e7b8bb49ce9036559c14b" }
+uv = { path = "locks/pipx-snowflake-cli/3.28.0", digest = "sha256:f328b1e2e904e7d92539ffd2c33961e9c3c5c6c59dded7ce6aa8fda40831364d" }
 
 [[tools.pnpm]]
 version = "12.8.1"
