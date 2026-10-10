@@ -165,7 +165,7 @@ python = "3.13.15"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"aqua:anthropics/claude-code" = "2.1.292"
+"aqua:anthropics/claude-code" = "2.1.296"
 "github:google-antigravity/antigravity-cli" = "1.2.12" # agy: Gemini CLI の後継
 "aqua:openai/codex" = "0.159.3"
 # opencode は http backend で管理（末尾の [tools."http:opencode"] を参照）
