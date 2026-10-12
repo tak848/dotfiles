@@ -3,23 +3,26 @@
 # 時間のかかっている箇所を出す。.github/workflows/zsh-startup.yaml と手元の両方で使う。
 # ${ZDOTDIR:-$HOME} に置かれた実際の設定を読む。計測するだけで、合否は判定しない。
 #
-# 使い方: measure-zsh-startup.zsh [回数（既定 5）]
+# 使い方: measure-zsh-startup.zsh [--markdown <ファイル>] [回数（既定 5）]
+#   --markdown  同じ結果を Markdown でこのファイルに書く（ワークフローが job summary と PR コメントに使う）
 #
 # 時間のかかっている箇所は、PS4 に時刻を入れた xtrace を取り、次の行に進むまでの時間が長い順に出す。
 # 関数やプラグインの中の行も出るので、.zshrc のどの行から呼ばれたかは前後の行で判断する。
 # xtrace 自体の負荷があるので、ここに出る秒数は起動時間の計測より長めになる。
-# GITHUB_STEP_SUMMARY があれば、同じ結果を job summary にも書く。
 # zsh -c で起動するシェルは履歴ファイルを書き換えない。
 
 emulate -L zsh
 zmodload zsh/datetime zsh/mathfunc
 
+usage="usage: measure-zsh-startup.zsh [--markdown <ファイル>] [回数（1 以上の整数）]"
+zparseopts -D -E -F -- -markdown:=opt_markdown 2>/dev/null || { print -u2 -r -- "$usage"; exit 2; }
+markdown=${opt_markdown[-1]:-}
 runs=${1:-5}
 top=15
 zshrc="${ZDOTDIR:-$HOME}/.zshrc"
 
 if [[ $runs != <1-> ]]; then
-  print -u2 -r -- "usage: measure-zsh-startup.zsh [回数（1 以上の整数）]"
+  print -u2 -r -- "$usage"
   exit 2
 fi
 if [[ ! -r $zshrc ]]; then
@@ -56,16 +59,18 @@ print -r -- ""
 print -r -- "=== 次の行に進むまでの時間が長い箇所（上位 $top 件。左が秒、右がその間に実行していた行） ==="
 print -r -- "$slow"
 
-if [[ -n ${GITHUB_STEP_SUMMARY:-} ]]; then
+if [[ -n $markdown ]]; then
   {
-    print -r -- "## zsh の起動時間（$(uname -sm)）"
+    print -r -- "### $(uname -sm)"
     print -r -- ""
     print -r -- "\`zsh -lic exit\` の中央値: **${median_ms} ms**（$runs 回: ${(j:, :)times_ms} ms）"
     print -r -- ""
-    print -r -- "### 次の行に進むまでの時間が長い箇所（上位 $top 件。xtrace の負荷込み）"
+    print -r -- "<details><summary>次の行に進むまでの時間が長い箇所（上位 $top 件。xtrace の負荷込み）</summary>"
     print -r -- ""
     print -r -- '```'
     print -r -- "$slow"
     print -r -- '```'
-  } >> "$GITHUB_STEP_SUMMARY"
+    print -r -- ""
+    print -r -- "</details>"
+  } > "$markdown"
 fi

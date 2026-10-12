@@ -299,7 +299,7 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 `fill-lockfile-checksums.sh` は、`mise lock` では checksum が埋まらないツールを補う。mise は backend が checksum を供給できる場合しか lockfile に書き込まないため、`http` backend のツールや aqua-registry 側に checksum 定義が無いパッケージ（`anthropics/claude-code`, `tamasfe/taplo`, `http:grok`, `http:opencode`）は url だけが残り、install 時の整合性検証が働かない。そこで実アーティファクトを取得して sha256 を計算し、lockfile に追記する。checksum のあるエントリは触らないので冪等。アーティファクトを丸ごとダウンロードする都合上、対象が増えるほど CI 時間は延びる（現状で合計 2 GB 強）。
 | `mise-bootstrap.yaml` | push（`.mise-bootstrap-version` 変更時） | `mise generate bootstrap` |
 | `lazy-lock.yaml` | nvim 設定変更 / 週次 cron | Lazy.nvim lockfile 更新（PR 作成 or Renovate PR へコミット） |
-| `zsh-startup.yaml` | push（zsh の設定・mise / aqua の設定の変更時）/ 手動 | macOS と Linux で zsh の起動時間を測り、時間のかかっている箇所とあわせて job summary に出す（合否は判定しない） |
+| `zsh-startup.yaml` | PR（zsh の設定・mise / aqua の設定の変更時）/ 手動 | macOS と Linux で zsh の起動時間を測り、時間のかかっている箇所とあわせて job summary と PR のコメントに出す（合否は判定しない。コメントは 1 件を書き換える） |
 
 ### zsh 設定の読み込み順序
 
@@ -313,7 +313,7 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 
 - 履歴の変数（`HISTFILE` / `HISTSIZE` / `SAVEHIST`）は `.zshrc` に置く。`.zshenv` に置くと macOS の `/etc/zshrc` に上書きされ、履歴が 1000 件に切り詰められる（#309 で `.zshenv` に移して実際に起きた）
 - 出力の大きいコマンドを `.zshrc` で `eval` しない。出力は起動のたびに構文解析される（pup の補完 3.7MB の eval で起動に 10 秒かかっていた）。補完なら `run_onchange_after_12-zsh-completions.sh.tmpl` のように apply 時にファイルへ書き出して zcompile し、`.zshrc` では `compdef` で登録する
-- 起動時間は `zsh-startup.yaml`（計測専用で合否を判定しないワークフロー。required ではない）が macOS と Linux で測り、時間のかかっている箇所とあわせて job summary に出す。手元では `.github/scripts/measure-zsh-startup.zsh` で同じ計測ができる
+- 起動時間は `zsh-startup.yaml`（計測専用で合否を判定しないワークフロー。required ではない）が macOS と Linux で測り、時間のかかっている箇所とあわせて job summary と PR のコメントに出す。PR のコメントは 1 件だけで、push のたびに書き換える（編集は通知されない）。手元では `.github/scripts/measure-zsh-startup.zsh` で同じ計測ができる
 
 ## Conventions
 
