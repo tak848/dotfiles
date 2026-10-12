@@ -1,10 +1,11 @@
 name: zsh startup
 
-# zsh の login の対話シェルの起動時間を macOS と Linux で測り、時間のかかっている箇所とあわせて job summary に出す。
-# 計測するだけで合否は判定しない（required にもしない）。起動時間は .zshrc が読み込むツールの版でも
-# 変わる（pup の補完が肥大化して 10 秒かかっていた）ので、mise の config.toml の変更でも走らせる。
+# zsh の login の対話シェルの起動時間を macOS と Linux で測り、時間のかかっている箇所とあわせて
+# job summary と PR のコメントに出す。計測するだけで合否は判定しない（required にもしない）。
+# 起動時間は .zshrc が読み込むツールの版でも変わる（pup の補完が肥大化して 10 秒かかっていた）ので、
+# mise / aqua の設定の変更でも走らせる。
 on:
-  push:
+  pull_request:
     paths:
       - dot_zshenv.tmpl
       - dot_zprofile.tmpl
@@ -16,6 +17,14 @@ on:
       - .github/scripts/measure-zsh-startup.zsh
       - .github/workflows/zsh-startup.yaml
   workflow_dispatch:
+
+permissions:
+  contents: read
+
+# 同じ PR で push が続いたら古い計測は止める。古い結果で新しいコメントを上書きしないようにするため
+concurrency:
+  group: zsh-startup-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   measure:
@@ -80,4 +89,65 @@ jobs:
           git clone --depth 1 https://github.com/zdharma-continuum/zinit.git "${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git"
 
       - name: Measure zsh startup
-        run: .github/scripts/measure-zsh-startup.zsh
+        env:
+          REPORT: ${{ runner.temp }}/zsh-startup/${{ matrix.os }}.md
+        run: |
+          mkdir -p "$(dirname "$REPORT")"
+          .github/scripts/measure-zsh-startup.zsh --markdown "$REPORT"
+          { echo "## zsh の起動時間"; echo; cat "$REPORT"; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload report
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: zsh-startup-${{ matrix.os }}
+          path: ${{ runner.temp }}/zsh-startup/${{ matrix.os }}.md
+          retention-days: 1
+
+  # 両 OS の結果を 1 件のコメントにまとめる。push のたびにコメントが増えないよう、2 回目以降は同じコメントを
+  # 書き換える（編集は通知されない）。cancel された計測（新しい push で止めたもの）ではコメントしない。
+  comment:
+    needs: measure
+    if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Download reports
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: zsh-startup-*
+          merge-multiple: true
+          path: reports
+
+      - name: Comment on PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          MEASURE_RESULT: ${{ needs.measure.result }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          marker='<!-- zsh-startup -->'
+          {
+            echo "$marker"
+            echo "## zsh の起動時間"
+            echo
+            echo "${HEAD_SHA:0:7} で計測した（[実行ログ]($RUN_URL)）。計測だけで合否は判定しない。このコメントは計測のたびに書き換える。"
+            if [ "$MEASURE_RESULT" != "success" ]; then
+              echo
+              echo "一部の OS で計測に失敗した。実行ログを参照。"
+            fi
+            for f in reports/*.md; do
+              [ -f "$f" ] || continue
+              echo
+              cat "$f"
+            done
+          } > body.md
+          ids=$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" \
+            --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | startswith(\"$marker\"))) | .id")
+          id=${ids%%$'\n'*}
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$id" -F body=@body.md > /dev/null
+          else
+            gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" -F body=@body.md > /dev/null
+          fi
