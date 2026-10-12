@@ -56,9 +56,9 @@ mise.lock は実行環境（macOS/Linux）によって結果が異なる[既知�
 - **CI の diff チェックからは除外**（`task check` は mise.lock を検証しない）
 - **mise.lock の更新は GitHub Actions ワークフロー（`lockfiles-and-checksums.yaml`）に任せる**
 
-### mise.lock の sidecar（lockfile revision 2）
+### mise.lock の sidecar（lockfile revision 2 以降）
 
-mise 2026.9.7 以降、新規に作った lockfile は revision 2 になり、npm ツール（embedded aube）と pipx / pypi ツール（uv）の推移的依存を lockfile 横の `<置き場>/<backend-tool>/<version>/` に sidecar として書く。`mise.lock` にはそのパスと digest だけが入り、sidecar が無いと `mise install` は失敗する。ワークフローもタスクも `rm -f mise.lock && mise lock` で作り直すので、常に revision 2 になる。
+mise 2026.9.7 で入った lockfile revision 2 以降、npm ツール（embedded aube）と pipx / pypi ツール（uv）の推移的依存を lockfile 横の `<置き場>/<backend-tool>/<version>/` に sidecar として書く。現在の lockfile は version 3。`mise.lock` にはそのパスと digest だけが入り、sidecar が無いと `mise install` は失敗する。ワークフローもタスクも既存の lockfile を残して `mise lock` し、変更のない依存グラフを再利用する。全削除して作り直すと `uv.lock` の `exclude-newer` が実行時刻に変わり、digest も変わって無関係な Renovate PR 間で競合する。full `mise lock` は削除済みツールと旧バージョンを自動で整理するので、事前削除は不要。
 
 - 置き場は mise が lockfile のパスから決める（mise の `src/lockfile/graph.rs` の `sidecar_root`）。lockfile のディレクトリが `mise` でその親が `.config` なら `<dir>/locks/`、それ以外は `<dir>/.mise/locks/`。root の `mise.lock` は `.mise/locks/`。配布先の `~/.config/mise/mise.lock` は `~/.config/mise/locks/` だが、repo の `dot_config/mise/mise.lock` は親が `dot_config` なので `.mise/locks/` になる
 - mise は lockfile の保存時、置き場の外にある sidecar を置き場へ写してパスを書き換える（読み込み時には拒否しない）。repo の置き場のまま配ると、配布先の `mise install` が保存のたびに `locks/` へ写して `~/.config/mise/mise.lock` を書き換え、`chezmoi update` が `has changed since chezmoi last wrote it?` を出す。そのため `dot_config/mise` は lock の直後に `.github/scripts/relocate-mise-sidecars.sh` で sidecar を `dot_config/mise/locks/` に移し、mise.lock のパスを `locks/...` に書き換える（digest は sidecar の中身から計算されるので変わらない）。`locks` は `.` 始まりでないので chezmoi がそのまま `~/.config/mise/locks/` に配布する。スクリプトは置換漏れ（mise.lock の書式が変わった場合）と参照先の欠けを検出して失敗する
@@ -68,7 +68,7 @@ mise 2026.9.7 以降、新規に作った lockfile は revision 2 になり、np
 - pipx の依存グラフは uv で解決するので、ワークフローは `mise lock` の前に uv を入れる。解決に使う Python は uv が見つけられるものなら何でもよい
 - 依存グラフの install（`uv sync --frozen --no-python-downloads --python <パス>`）で使う Python は、mise の config の `python`、無ければ PATH 上の `python` に固定される（mise の `src/backend/pipx/lock.rs` の `bind_uv_python`）。`install_env` の `UV_PYTHON_PREFERENCE` では変えられず、放っておくと Homebrew 等の素の python を拾う。そのため `dot_config/mise/config.toml` に `python`（3.13。snowflake-cli が固定している `pyyaml==6.0.2` に cp314 の wheel が無いため。Renovate も `allowedVersions: "<3.14"` で留めている）を置いている
 - その python は `[settings]` の `shims.exclude` で python 系のコマンド名を全部外し、shims だけを PATH に入れるシェル（`.zprofile` の `--shims`）からは見えないようにしている。対話シェルの `mise activate` は bin ディレクトリを丸ごと PATH に足すので、対話シェルと、それを引き継ぐ Claude Code の Bash では見える。名前は完全一致なので、バージョン付きの名前も並べる。漏れは CI の `Verify python is not exposed via shims` が python の bin と shims を突き合わせて検出する
-- sidecar の `package.json` / `pyproject.toml` / `uv.lock` は Renovate の `ignorePaths` で除外している。推移的依存の更新は `mise lock` に任せる
+- sidecar の `package.json` / `pyproject.toml` / `uv.lock` は Renovate の `ignorePaths` で除外している。通常の `mise lock` は既存の依存グラフを再利用し、ツールのバージョンやオプションが変わったときだけ再解決する。同じバージョンのまま推移的依存を更新するときは、対象を指定して `mise lock --bump pipx:snowflake-cli` などを実行し、`dot_config/mise` では続けて sidecar の移設スクリプトを実行する
 
 ## Architecture
 

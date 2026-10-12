@@ -68,20 +68,21 @@ jobs:
           # （relocate-mise-sidecars.sh を参照）。
           FILES: mise.lock .mise dot_config/mise/mise.lock dot_config/mise/locks dot_config/aquaproj-aqua/aqua-checksums.json
           MESSAGE: "chore: update mise lockfiles and aqua checksums"
-          # rm -f は削除済みツールのエントリを残さないため（mise lock に prune が無い）。
-          # 作り直した lockfile は revision 2 になる。
+          # 既存 lockfile を残し、変更のない npm / pipx の依存グラフを再利用する。
+          # 全削除して作り直すと uv.lock の exclude-newer と digest が毎回変わり、無関係な PR が競合する。
+          # full mise lock は削除済みツールと旧バージョンを自動で整理するので、事前削除は不要。
           # pipx:snowflake-cli の依存グラフは uv で解決するので、mise lock の前に uv を入れておく。
           # 解決に使う Python は uv が見つけられるものなら何でもよい（ランナーの python3 を使う）。
           REGENERATE_CMD: |
-            rm -f mise.lock && mise lock
-            ( cd dot_config/mise && mise install aqua:astral-sh/uv && rm -f mise.lock && mise lock )
+            mise lock
+            ( cd dot_config/mise && mise install aqua:astral-sh/uv && mise lock )
             # mise は repo の dot_config/mise では sidecar を .mise/locks/ に書くが、配布先の
             # ~/.config/mise/mise.lock では locks/ を置き場にする。そのまま配ると配布先の mise が
             # 保存のたびに locks/ へ移して mise.lock を書き換えるので、配布先の置き場に揃えておく。
             bash .github/scripts/relocate-mise-sidecars.sh dot_config/mise
             # backend が checksum を供給できないツール（http backend や、aqua-registry 側に
             # checksum 定義が無いパッケージ）は mise lock で url しか埋まらない。
-            # lockfile を作り直した後に実アーティファクトから sha256 を計算して補う。
+            # lockfile の更新後に実アーティファクトから sha256 を計算して補う。
             bash .github/scripts/fill-lockfile-checksums.sh mise.lock dot_config/mise/mise.lock
             ( cd dot_config/aquaproj-aqua && aqua update-checksum --prune )
         run: bash .github/scripts/commit-via-graphql.sh
