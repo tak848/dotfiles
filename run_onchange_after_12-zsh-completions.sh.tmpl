@@ -1,0 +1,34 @@
+#!/bin/bash
+set -euo pipefail
+
+# 起動時に eval すると遅い zsh の補完を、ファイルに書き出して zcompile しておく。
+#
+# pup の補完は 3.7MB あり、.zshrc で eval "$(pup completions zsh)" すると起動のたびに 10 秒近く
+# 構文解析していた。zcompile も同じくらい（手元で 9 秒）かかるので、シェルの起動中ではなく
+# pup のバージョンが変わったときにここで一度だけ作る。.zshrc はこのファイルを fpath に足して
+# compdef で登録し、補完を使うときに .zwc から読み込む（.zwc なら読み込みは一瞬で終わる）。
+#
+# 次の行は、pup のバージョンが変わったときだけこのスクリプトを走らせるためのもの。
+# pup: {{ include "dot_config/mise/config.toml" | regexFind `(?m)^"aqua:DataDog/pup".*$` }}
+#
+# 置き場所は XDG_CACHE_HOME ではなく XDG_DATA_HOME にしている。次にバージョンが変わるまで作り直さないので、
+# キャッシュとして消されると、それまで補完が無くなるため。
+
+{{ template "path-setup.tmpl" . }}
+
+comp_dir="${XDG_DATA_HOME}/zsh/completions"
+
+if command -v pup &> /dev/null && command -v zsh &> /dev/null; then
+    echo "pup の zsh 補完を生成中..."
+    mkdir -p "$comp_dir"
+    tmp_dir="$(mktemp -d "${comp_dir}/.tmp.XXXXXX")"
+    trap 'rm -rf -- "$tmp_dir"' EXIT
+    pup completions zsh > "${tmp_dir}/_pup"
+    zsh -fc 'zcompile "$1"' zcompile "${tmp_dir}/_pup"
+    # zsh は _pup と _pup.zwc のうち新しいほうを読む。.zwc は _pup より後に作られていて、mv は mtime を
+    # 保つので、.zwc を先に置き換えれば、置き換えの途中でも新しい .zwc が読まれる
+    mv -f "${tmp_dir}/_pup.zwc" "${comp_dir}/_pup.zwc"
+    mv -f "${tmp_dir}/_pup" "${comp_dir}/_pup"
+else
+    rm -f "${comp_dir}/_pup" "${comp_dir}/_pup.zwc"
+fi

@@ -22,6 +22,14 @@ fi
 bindkey -d # キーバインドをリセット
 bindkey -e # emacsモードで使う
 
+# ヒストリー
+# macOS の /etc/zshrc が HISTSIZE=2000 / SAVEHIST=1000 を代入し、~/.zshenv より後に読まれる。
+# .zshenv に書くと対話シェルでは上書きされ、履歴が 1000 件に切り詰められるので、ここで設定する。
+# 対話シェルでしか使わないので export しない（子の bash が HISTFILE を引き継いで zsh の履歴に書き込まないように）
+HISTFILE=~/.zsh_history
+HISTSIZE=1000000
+SAVEHIST=1000000
+
 # シェルオプション
 setopt auto_pushd
 setopt pushd_ignore_dups
@@ -101,9 +109,14 @@ if command -v temporal &> /dev/null; then
   eval "$(temporal completion zsh)"
 fi
 
-# pup completion (遅延ロード)
-if command -v pup &> /dev/null; then
-  eval "$(pup completions zsh)"
+# pup completion
+# 3.7MB あり、eval すると起動のたびに 10 秒近くかかる。run_onchange_after_12-zsh-completions が
+# 書き出して zcompile したものを、補完を使うときだけ読み込む。compinit -C は既存の .zcompdump を
+# 信用して fpath の新しいファイルを拾わないので、compdef で直接登録する
+if [[ -r "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/completions/_pup.zwc" ]]; then
+  fpath=("${XDG_DATA_HOME:-$HOME/.local/share}/zsh/completions" $fpath)
+  autoload -Uz _pup
+  compdef _pup pup
 fi
 
 # fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches

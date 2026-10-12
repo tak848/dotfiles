@@ -271,6 +271,7 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 |-----------|---------|------|
 | `run_once_before_00-install-essentials.sh.tmpl` | 初回のみ | Homebrew, zinit, cursor-agent インストール |
 | `run_onchange_after_10-mise-install.sh.tmpl` | `config.toml` 変更時 | `mise install` |
+| `run_onchange_after_12-zsh-completions.sh.tmpl` | `config.toml` の pup のバージョン変更時 | pup の zsh 補完を `~/.local/share/zsh/completions/` に書き出して zcompile |
 | `run_onchange_after_20-aqua-install.sh.tmpl` | `aqua.yaml` 変更時 | `aqua install` |
 | `run_onchange_after_30-install-packages.sh.tmpl` | `packages.yaml` 変更時 | `brew install`（macOS） |
 | `run_onchange_after_40-generate-jsonnet.sh.tmpl` | jsonnet ファイル変更時 | jsonnet → JSON 生成（`~/.claude/settings.json`, `~/.gemini/antigravity-cli/{settings,mcp_config}.json`） |
@@ -304,9 +305,14 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 ```
 ~/.zshenv      # PATH, 環境変数（非インタラクティブ含む）
 ~/.zprofile    # mise shims（IDE 連携用）
+/etc/zshrc     # macOS のシステム設定。HISTFILE / HISTSIZE=2000 / SAVEHIST=1000 を代入する
 ~/.zshrc       # インタラクティブ設定、プラグイン、エイリアス
 ~/.zshrc.local # マシン固有設定（Git 管理外）
 ```
+
+- 履歴の変数（`HISTFILE` / `HISTSIZE` / `SAVEHIST`）は `.zshrc` に置く。`.zshenv` に置くと macOS の `/etc/zshrc` に上書きされ、履歴が 1000 件に切り詰められる（#309 で `.zshenv` に移して実際に起きた）
+- 出力の大きいコマンドを `.zshrc` で `eval` しない。出力は起動のたびに構文解析される（pup の補完 3.7MB の eval で起動に 10 秒かかっていた）。補完なら `run_onchange_after_12-zsh-completions.sh.tmpl` のように apply 時にファイルへ書き出して zcompile し、`.zshrc` では `compdef` で登録する
+- CI の macOS ジョブは `.github/scripts/check-zsh-startup.zsh` で、上の 2 点と起動時間（中央値 3 秒以内）を検査する。手元でも同じスクリプトで測れ、しきい値を超えたときは遅い箇所を時刻付きの xtrace で出す
 
 ## Conventions
 
