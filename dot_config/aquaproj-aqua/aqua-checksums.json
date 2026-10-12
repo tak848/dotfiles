@@ -36,23 +36,23 @@
       "algorithm": "sha256"
     },
     {
-      "id": "http/cache.agilebits.com/dist/1P/op2/pkg/v2.39.0/op_darwin_amd64_v2.39.0.zip",
-      "checksum": "753FBF56B00996426EDBB8439D2F3C0BE9227B9557CDFF468FB144CD3621AA6E",
+      "id": "http/cache.agilebits.com/dist/1P/op2/pkg/v2.40.0/op_darwin_amd64_v2.40.0.zip",
+      "checksum": "A435E0257EA35DB77EFCA2C668D0FAEC20502D4C7E1F250A8DEE59A10A5D985C",
       "algorithm": "sha256"
     },
     {
-      "id": "http/cache.agilebits.com/dist/1P/op2/pkg/v2.39.0/op_darwin_arm64_v2.39.0.zip",
-      "checksum": "05391D3388A0C0B4F602691BEDC1AB368541C487B6F14D2E3399743B4682AF67",
+      "id": "http/cache.agilebits.com/dist/1P/op2/pkg/v2.40.0/op_darwin_arm64_v2.40.0.zip",
+      "checksum": "43B9E7C245B48207C789BA1B8A481CCF4A658F60DBED8CC8B70D36044548A994",
       "algorithm": "sha256"
     },
     {
-      "id": "http/cache.agilebits.com/dist/1P/op2/pkg/v2.39.0/op_linux_amd64_v2.39.0.zip",
-      "checksum": "6FBA7F376B6C6DEC49F41B06408930A43AD064CCE103C6A2CE5B3D0413A86434",
+      "id": "http/cache.agilebits.com/dist/1P/op2/pkg/v2.40.0/op_linux_amd64_v2.40.0.zip",
+      "checksum": "74277219E8DA60958C00F9AEE9D2023225E98FDDA8BFD2156A5D9E85E0EDAAB3",
       "algorithm": "sha256"
     },
     {
-      "id": "http/cache.agilebits.com/dist/1P/op2/pkg/v2.39.0/op_linux_arm64_v2.39.0.zip",
-      "checksum": "829BAEFF1C07E055CFA132031B1D9F2282CCDF5076258E482CAF2FDA70AEA5D0",
+      "id": "http/cache.agilebits.com/dist/1P/op2/pkg/v2.40.0/op_linux_arm64_v2.40.0.zip",
+      "checksum": "0E8AC99EE93D661AA725DC24A5EF8BF344741D224064A5DFB469DC689FAEC86A",
       "algorithm": "sha256"
     },
     {
