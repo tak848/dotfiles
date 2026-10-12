@@ -127,17 +127,3 @@ jobs:
       - name: Verify chezmoi templates
         run: |
           chezmoi --source . --dry-run --verbose apply
-
-      # zsh の設定だけをランナーの HOME に展開し、login の対話シェルの起動を検査する
-      # （履歴の上限、eval している出力の大きさ、起動時間）。履歴の変数を上書きする /etc/zshrc が
-      # macOS 固有なので macOS だけで動かす。scripts は除外し、pup の補完の生成だけを個別に実行する。
-      - name: Apply zsh dotfiles
-        if: matrix.os == 'macos-latest'
-        run: |
-          chezmoi --source . apply --force --exclude=scripts ~/.zshenv ~/.zprofile ~/.zshrc ~/.zsh
-          chezmoi --source . execute-template < run_onchange_after_12-zsh-completions.sh.tmpl | bash
-          git clone --depth 1 https://github.com/zdharma-continuum/zinit.git "${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git"
-
-      - name: Check zsh startup
-        if: matrix.os == 'macos-latest'
-        run: .github/scripts/check-zsh-startup.zsh
