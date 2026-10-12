@@ -87,7 +87,7 @@ python = "3.13.16"
 "aqua:jqlang/jq" = "1.8.1"
 "aqua:mikefarah/yq" = "4.54.1"
 "aqua:x-motemen/ghq" = "1.11.2"
-"aqua:jesseduffield/lazygit" = "0.66.0"
+"aqua:jesseduffield/lazygit" = "0.66.1"
 "aqua:jesseduffield/lazydocker" = "0.25.2"
 # Git credential helper（.NET self-contained。tar.gz を全展開し本体+DLL を同居させる。
 # symbols 版を除外するため matching_regex で末尾を絞り、createdump 等は filter_bins で隠す）
