@@ -61,9 +61,10 @@ tasks:
   # mise.lock 生成
   # ツールのバージョンと checksum を固定して再現性を確保
   # -p オプションで全プラットフォームを指定（環境差異を防ぐ）
-  # rm -f で古い lockfile を削除してから再生成（古いエントリが残る問題を回避）
-  # 作り直した lockfile は revision 2 になり、npm / pypi ツールの依存グラフを
-  # sidecar に書く（lockfile と一緒に commit する）。root は .mise/locks/。
+  # 既存 lockfile を残し、変更のない npm / pypi ツールの依存グラフを再利用する。
+  # 全削除すると uv.lock の日時と digest が毎回変わり、無関係な PR が競合する。
+  # full mise lock が削除済みツールと旧バージョンを整理するので、事前削除は不要。
+  # revision 2 以降の依存グラフは sidecar に書く（lockfile と一緒に commit する）。root は .mise/locks/。
   # dot_config/mise は配布先（~/.config/mise/locks/）に合わせて locks/ に移す
   # （.github/scripts/relocate-mise-sidecars.sh を参照）
   #############################################################################
@@ -78,7 +79,7 @@ tasks:
             export MISE_GITHUB_TOKEN="$token"
           fi
         fi
-        rm -f mise.lock && mise lock -p {{.MISE_PLATFORMS}}
+        mise lock -p {{.MISE_PLATFORMS}}
     sources:
       - .mise.toml
     generates:
@@ -96,7 +97,7 @@ tasks:
             export MISE_GITHUB_TOKEN="$token"
           fi
         fi
-        rm -f mise.lock && mise lock -p {{.MISE_PLATFORMS}}
+        mise lock -p {{.MISE_PLATFORMS}}
         bash "{{.ROOT_DIR}}/.github/scripts/relocate-mise-sidecars.sh" .
     sources:
       - config.toml
