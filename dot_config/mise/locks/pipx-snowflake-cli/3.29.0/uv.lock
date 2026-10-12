@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.10"
 resolution-markers = [
     "python_full_version >= '3.14'",
@@ -8,7 +8,7 @@ resolution-markers = [
 ]
 
 [options]
-exclude-newer = "2026-10-11T08:16:09.896573405Z"
+exclude-newer = "2026-10-11T08:28:39.064762738Z"
 
 [[package]]
 name = "annotated-types"
@@ -770,7 +770,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "snowflake-cli", specifier = "==3.28.0" }]
+requires-dist = [{ name = "snowflake-cli", specifier = "==3.29.0" }]
 
 [[package]]
 name = "more-itertools"
@@ -1222,7 +1222,7 @@ wheels = [
 
 [[package]]
 name = "snowflake-cli"
-version = "3.28.0"
+version = "3.29.0"
 source = { registry = "https://pypi.org/simple/" }
 dependencies = [
     { name = "click" },
@@ -1249,9 +1249,9 @@ dependencies = [
     { name = "urllib3" },
     { name = "websocket-client" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e7/a5/2f9f0690f22610a151dd9dfeee8e5c6afb8c63b6e45f3c86dfe2e204fabb/snowflake_cli-3.28.0.tar.gz", hash = "sha256:c7a9b20d6dba9b6ab76946870ad67f02f6565ce56288352892a11ab852b63a84", size = 2972901, upload-time = "2026-09-24T15:04:32.799Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/76/ff/f5eae9e3f872e9444d2ac16075366b0dffb9154ef2019c9c3bcf802ca2de/snowflake_cli-3.29.0.tar.gz", hash = "sha256:130bd84095247de5fb214ac1c411bed4e474938a16dec4a973e3b7c320c38171", size = 3219599, upload-time = "2026-10-07T23:20:48.255Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e9/62/8115fb888077ee6b184da3cc27fdd4e59280cd817e34c199d273be6f663f/snowflake_cli-3.28.0-py3-none-any.whl", hash = "sha256:c525d8c6006bcaed9bfe652fde3a00248e6770f5c29a1bf09ee2ee446ea34538", size = 933095, upload-time = "2026-09-24T15:04:31.016Z" },
+    { url = "https://files.pythonhosted.org/packages/84/83/577c8691eb63d0255b4091a28ebaadf2c154c711416aa5834f4735996349/snowflake_cli-3.29.0-py3-none-any.whl", hash = "sha256:0b87ca36c91430952a55bd56aee4f418679be827950c7af410d2a70c7cc3d292", size = 1060603, upload-time = "2026-10-07T23:20:46.698Z" },
 ]
 
 [[package]]
