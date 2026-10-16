@@ -43,44 +43,44 @@ url = "https://github.com/BurntSushi/ripgrep/releases/download/15.2.0/ripgrep-15
 url_api = "https://api.github.com/repos/BurntSushi/ripgrep/releases/assets/478119643"
 
 [[tools."aqua:DataDog/pup"]]
-version = "1.26.0"
+version = "2.0.0"
 backend = "aqua:DataDog/pup"
-specifiers = ["1.26.0"]
+specifiers = ["2.0.0"]
 
 [tools."aqua:DataDog/pup"."platforms.linux-arm64"]
-checksum = "sha256:602912dc6a4ae4b5806d13156e33958c9702a13bab03825059c3a4e3534b1d42"
-url = "https://github.com/DataDog/pup/releases/download/v1.26.0/pup_1.26.0_Linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/623068839"
+checksum = "sha256:411f8dcb59de9d4ead7d50db3d146ec2192d26a9b7163333ec1ce78983931829"
+url = "https://github.com/DataDog/pup/releases/download/v2.0.0/pup_2.0.0_Linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/644432940"
 provenance = "cosign"
 
 [tools."aqua:DataDog/pup"."platforms.linux-arm64-musl"]
-checksum = "sha256:602912dc6a4ae4b5806d13156e33958c9702a13bab03825059c3a4e3534b1d42"
-url = "https://github.com/DataDog/pup/releases/download/v1.26.0/pup_1.26.0_Linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/623068839"
+checksum = "sha256:411f8dcb59de9d4ead7d50db3d146ec2192d26a9b7163333ec1ce78983931829"
+url = "https://github.com/DataDog/pup/releases/download/v2.0.0/pup_2.0.0_Linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/644432940"
 provenance = "cosign"
 
 [tools."aqua:DataDog/pup"."platforms.linux-x64"]
-checksum = "sha256:40459bac784a9991df44685f0286b14d79ad3f33fd01445aa4b2858d22770061"
-url = "https://github.com/DataDog/pup/releases/download/v1.26.0/pup_1.26.0_Linux_x86_64.tar.gz"
-url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/623068857"
+checksum = "sha256:2f3eed56d39779424d61bcbb43113edcb891dfb87f683a19914de0681baf1f6e"
+url = "https://github.com/DataDog/pup/releases/download/v2.0.0/pup_2.0.0_Linux_x86_64.tar.gz"
+url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/644432966"
 provenance = "cosign"
 
 [tools."aqua:DataDog/pup"."platforms.linux-x64-musl"]
-checksum = "sha256:40459bac784a9991df44685f0286b14d79ad3f33fd01445aa4b2858d22770061"
-url = "https://github.com/DataDog/pup/releases/download/v1.26.0/pup_1.26.0_Linux_x86_64.tar.gz"
-url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/623068857"
+checksum = "sha256:2f3eed56d39779424d61bcbb43113edcb891dfb87f683a19914de0681baf1f6e"
+url = "https://github.com/DataDog/pup/releases/download/v2.0.0/pup_2.0.0_Linux_x86_64.tar.gz"
+url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/644432966"
 provenance = "cosign"
 
 [tools."aqua:DataDog/pup"."platforms.macos-arm64"]
-checksum = "sha256:73635a547142f5b40dc7255af2555419d0f6ab52991a1974f9ee5e3397e57aa2"
-url = "https://github.com/DataDog/pup/releases/download/v1.26.0/pup_1.26.0_Darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/623068837"
+checksum = "sha256:aa8d4f32e712f7eef940345662e0e9f71932bc02327ed32349cf130249dca848"
+url = "https://github.com/DataDog/pup/releases/download/v2.0.0/pup_2.0.0_Darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/644432939"
 provenance = "cosign"
 
 [tools."aqua:DataDog/pup"."platforms.macos-x64"]
-checksum = "sha256:1e1ff5e689302d152121e12336823d91552ed4d8c7d492c658b324c61f86c94a"
-url = "https://github.com/DataDog/pup/releases/download/v1.26.0/pup_1.26.0_Darwin_x86_64.tar.gz"
-url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/623068840"
+checksum = "sha256:f767f14276457360ac93b3c8c709dd6b787e348513b15281c72ac0fea17c58f0"
+url = "https://github.com/DataDog/pup/releases/download/v2.0.0/pup_2.0.0_Darwin_x86_64.tar.gz"
+url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/644432941"
 provenance = "cosign"
 
 [[tools."aqua:anthropics/anthropic-cli"]]
