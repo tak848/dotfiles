@@ -160,7 +160,7 @@ python = "3.13.16"
 "aqua:temporalio/cli" = "1.9.1"
 "aqua:jdx/usage" = "6.12.1"
 # Datadog の AI エージェント向け CLI コンパニオン
-"aqua:DataDog/pup" = "1.26.0"
+"aqua:DataDog/pup" = "2.0.0"
 
 # ============================================
 # npm グローバルパッケージ
