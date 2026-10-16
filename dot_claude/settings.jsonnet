@@ -55,8 +55,8 @@ local autoModeRules = import 'auto-mode.libsonnet';
   },
   enabledPlugins: {
     'github@claude-plugins-official': true,
-    // Claude Security は既定で無効。使うときだけ明示的に有効化する。
-    'claude-security@claude-plugins-official': false,
+    // Claude Security は一律有効化せず、使うときだけ明示的に有効化する。
+    // 'claude-security@claude-plugins-official': true,
     // context7 の公式プラグインは `npx -y @upstash/context7-mcp` を起動する。registry からの
     // 都度取得は permission-rules.libsonnet の deny 方針（npx / pnpm dlx 禁止）と衝突するため、
     // remote MCP（https://mcp.context7.com/mcp）を指す自前プラグインへ差し替える。
