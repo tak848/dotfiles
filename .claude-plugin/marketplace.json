@@ -40,6 +40,18 @@
       "version": "1.0.0",
       "source": "./claude-plugins/context7",
       "category": "development"
+    },
+    {
+      "name": "security-uv",
+      "description": "公式の固定 commit からローカル生成する、Python の入口を uv run に統一した Claude Security",
+      "source": {
+        "source": "command",
+        "command": "\"$HOME/.claude/bin/cc-claude-security-source\"",
+        "timeout": 180,
+        "mode": "copy"
+      },
+      "category": "security",
+      "defaultEnabled": false
     }
   ]
 }
