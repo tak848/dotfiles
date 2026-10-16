@@ -263,6 +263,15 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 | `dot_claude/settings.jsonnet` の `extraKnownMarketplaces` | マーケットプレイス登録 |
 | `dot_claude/settings.jsonnet` の `enabledPlugins` | プラグイン有効化 |
 
+#### Claude Security（uv 専用のローカル加工版）
+
+`security-uv@tak848-plugins` だけを使い、公式版とは二重導入しない。`claude-` は第三者プラグインの予約プレフィックスなので、生成 manifest と内部の namespace も `security-uv` に揃える。本体は公開 repo に vendor せず、`go/cmd/cc-claude-security-source` が `anthropics/claude-plugins-official` の固定 SHA `ea10b213686c90bb1984b2016937310e05336cf3` から `plugins/claude-security/` を取得・加工する。取得したコード・setup・hooks は生成時には実行せず、LICENSE/NOTICE は保持する。
+
+- command source は `"$HOME/.claude/bin/cc-claude-security-source"`（timeout 180 秒、mode `copy`）。`run_onchange_after_45-build-statusline.sh.tmpl` がバイナリをビルドし、50 のスクリプトが user scope にインストールする。両スクリプトは生成処理のソース変更も検知する
+- catalog と生成 manifest の `defaultEnabled: false` で初回無効にする。settings に強制的な false は追加せず、必要なときだけ明示的に有効化する
+- プラグインが管理する Python の入口は `uv run --no-project --no-config --python 3.13 python3` に統一し、直呼びへの fallback はしない。保証範囲はプラグイン内の入口であり、スキャン先の任意 repo の make/shell 内部まで保証するものではない
+- pin や変換処理を更新するときは `go test ./go/...` に加え、専用一時ディレクトリで固定 SHA の実データの取得・変換だけを検証する。hook/manifest の JSON、Python 直呼びの残存、初回無効を確認し、スキャン・実環境への install/enable や chezmoi update/apply は検証として実行しない
+
 ### chezmoi apply 時の自動実行スクリプト
 
 `chezmoi apply` 時にターゲットディレクトリで実行されるスクリプト。リポジトリ内にはファイルを生成しない。
