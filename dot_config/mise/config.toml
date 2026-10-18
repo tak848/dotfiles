@@ -158,7 +158,7 @@ python = "3.13.16"
 
 # その他（1password/cli は aqua CLI で管理）
 "aqua:temporalio/cli" = "1.9.1"
-"aqua:jdx/usage" = "6.12.1"
+"aqua:jdx/usage" = "7.0.2"
 # Datadog の AI エージェント向け CLI コンパニオン
 "aqua:DataDog/pup" = "1.26.0"
 
