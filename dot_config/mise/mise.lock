@@ -1810,37 +1810,37 @@ checksum = "sha256:86c6c766b7961597c2a327f77e43a7b73cbc44f5cee9da6dd74ba73b45ae8
 url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.62-windows-x86_64.exe"
 
 [[tools."http:opencode"]]
-version = "2.0.32"
+version = "2.1.1"
 backend = "http:opencode"
-specifiers = ["2.0.32"]
+specifiers = ["2.1.1"]
 
 [tools."http:opencode"."platforms.linux-arm64"]
-checksum = "sha256:c2e4f6c94f2e58a2df99cc647bd37285569600d7435e3796152825d8c9d10382"
-url = "https://opencode.ai/files/bin/2.0.32/opencode-linux-arm64.tar.gz"
+checksum = "sha256:7f387077e0ba7d26964d19b9b31fac784ec4edb759f2b5fe34878aeb4b0545b1"
+url = "https://opencode.ai/files/bin/2.1.1/opencode-linux-arm64.tar.gz"
 
 [tools."http:opencode"."platforms.linux-arm64-musl"]
-checksum = "sha256:c2e4f6c94f2e58a2df99cc647bd37285569600d7435e3796152825d8c9d10382"
-url = "https://opencode.ai/files/bin/2.0.32/opencode-linux-arm64.tar.gz"
+checksum = "sha256:7f387077e0ba7d26964d19b9b31fac784ec4edb759f2b5fe34878aeb4b0545b1"
+url = "https://opencode.ai/files/bin/2.1.1/opencode-linux-arm64.tar.gz"
 
 [tools."http:opencode"."platforms.linux-x64"]
-checksum = "sha256:ba3f5d9dd983f12f06981b5b9eb966c03db63266afab28adc4000bbad6adc33c"
-url = "https://opencode.ai/files/bin/2.0.32/opencode-linux-x64.tar.gz"
+checksum = "sha256:b7070ffb7c255b9633f69dee8b068f4f3ac35bdc33d44841dde67deb88ff4853"
+url = "https://opencode.ai/files/bin/2.1.1/opencode-linux-x64.tar.gz"
 
 [tools."http:opencode"."platforms.linux-x64-musl"]
-checksum = "sha256:ba3f5d9dd983f12f06981b5b9eb966c03db63266afab28adc4000bbad6adc33c"
-url = "https://opencode.ai/files/bin/2.0.32/opencode-linux-x64.tar.gz"
+checksum = "sha256:b7070ffb7c255b9633f69dee8b068f4f3ac35bdc33d44841dde67deb88ff4853"
+url = "https://opencode.ai/files/bin/2.1.1/opencode-linux-x64.tar.gz"
 
 [tools."http:opencode"."platforms.macos-arm64"]
-checksum = "sha256:e431e369025ba9554445d0ea8ad65457fbca59aa385ca790724ec6ab488d271b"
-url = "https://opencode.ai/files/bin/2.0.32/opencode-darwin-arm64.zip"
+checksum = "sha256:a8b4ab1e95f2b3928cdaec781bac14bb4bd1b1619a41b0d55e6f185490488551"
+url = "https://opencode.ai/files/bin/2.1.1/opencode-darwin-arm64.zip"
 
 [tools."http:opencode"."platforms.macos-x64"]
-checksum = "sha256:1b2d6d58741db617d02ab2cd589de8bc5c829d8b0093226e813a10d044f4ede9"
-url = "https://opencode.ai/files/bin/2.0.32/opencode-darwin-x64.zip"
+checksum = "sha256:0e28bd76128f0e8f0a94fcf513d8710a93e7da3d15d53955eb467c834786533e"
+url = "https://opencode.ai/files/bin/2.1.1/opencode-darwin-x64.zip"
 
 [tools."http:opencode"."platforms.windows-x64"]
-checksum = "sha256:51ce4d910795ce1365131c3185abda99157f0776acaa643bdf631a804c1495ce"
-url = "https://opencode.ai/files/bin/2.0.32/opencode-windows-x64.zip"
+checksum = "sha256:b9b12ae96d6cfdc41383256ae7c1e815d1ed3fffc73351142842f51350b4d340"
+url = "https://opencode.ai/files/bin/2.1.1/opencode-windows-x64.zip"
 
 [[tools.node]]
 version = "24.21.0"
