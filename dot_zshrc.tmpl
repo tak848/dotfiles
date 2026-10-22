@@ -110,37 +110,37 @@ command -v mise &> /dev/null && eval "$(mise activate zsh)"
 #   mise / aqua の backend はバージョンごとに別のパスに入るので、ツールを更新すればキーが変わる
 zmodload -F zsh/stat b:zstat
 _zshrc_cached_init() {
-  local name=$1 extra=$2 cmd=${commands[$3]} cache line out
-  local -a st
-  shift 2
-  [[ -n $cmd ]] || return 1
-  zstat -A st +mtime -- ${cmd:A} 2>/dev/null || st=(-)
-  local key="v1 $cmd ${cmd:A}:$st[1] ${(q-)@} $extra"
-  cache=${XDG_CACHE_HOME:-$HOME/.cache}/zsh/init/$name.zsh
-  if [[ -r $cache ]] && IFS= read -r line < $cache && [[ $line == "# $key" ]]; then
-    REPLY="source ${(q)cache}"
-    return
-  fi
-  # 失敗したときはキャッシュせず、従来の eval "$(...)" と同じく出力をそのまま使う
-  if ! out=$("$@"); then
-    REPLY=$out
-    return
-  fi
-  if mkdir -p -- ${cache:h} && print -r -- "# $key"$'\n'"$out" >| $cache.$$ && mv -f -- $cache.$$ $cache; then
-    REPLY="source ${(q)cache}"
-  else
-    rm -f -- $cache.$$
-    REPLY=$out
-  fi
+    local name=$1 extra=$2 cmd=${commands[$3]} cache line out
+    local -a st
+    shift 2
+    [[ -n $cmd ]] || return 1
+    zstat -A st +mtime -- ${cmd:A} 2>/dev/null || st=(-)
+    local key="v1 $cmd ${cmd:A}:$st[1] ${(q-)@} $extra"
+    cache=${XDG_CACHE_HOME:-$HOME/.cache}/zsh/init/$name.zsh
+    if [[ -r $cache ]] && IFS= read -r line < $cache && [[ $line == "# $key" ]]; then
+        REPLY="source ${(q)cache}"
+        return
+    fi
+    # 失敗したときはキャッシュせず、従来の eval "$(...)" と同じく出力をそのまま使う
+    if ! out=$("$@"); then
+        REPLY=$out
+        return
+    fi
+    if mkdir -p -- ${cache:h} && print -r -- "# $key"$'\n'"$out" >| $cache.$$ && mv -f -- $cache.$$ $cache; then
+        REPLY="source ${(q)cache}"
+    else
+        rm -f -- $cache.$$
+        REPLY=$out
+    fi
 }
 # 引数のファイルのパスと mtime を REPLY に並べる（キャッシュのキー用）
 _zshrc_stamp() {
-  local f
-  local -a st
-  REPLY=
-  for f; do
-    zstat -A st +mtime -- $f 2>/dev/null && REPLY+="$f:$st[1] "
-  done
+    local f
+    local -a st
+    REPLY=
+    for f; do
+        zstat -A st +mtime -- $f 2>/dev/null && REPLY+="$f:$st[1] "
+    done
 }
 
 _zshrc_cached_init direnv '' direnv hook zsh && eval "$REPLY"
@@ -159,14 +159,14 @@ unset -f _zshrc_cached_init _zshrc_stamp
 # compinit -C は既存の .zcompdump を信用して fpath の新しいファイルを拾わないので、compdef で直接登録する
 _zsh_comp_dir="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/completions"
 if [[ -d $_zsh_comp_dir ]]; then
-  fpath=("$_zsh_comp_dir" $fpath)
-  for _zsh_comp_cmd in pup task temporal mise; do
-    if [[ -r $_zsh_comp_dir/_$_zsh_comp_cmd.zwc ]]; then
-      autoload -Uz _$_zsh_comp_cmd
-      compdef _$_zsh_comp_cmd $_zsh_comp_cmd
-    fi
-  done
-  unset _zsh_comp_cmd
+    fpath=("$_zsh_comp_dir" $fpath)
+    for _zsh_comp_cmd in pup task temporal mise; do
+        if [[ -r $_zsh_comp_dir/_$_zsh_comp_cmd.zwc ]]; then
+            autoload -Uz _$_zsh_comp_cmd
+            compdef _$_zsh_comp_cmd $_zsh_comp_cmd
+        fi
+    done
+    unset _zsh_comp_cmd
 fi
 unset _zsh_comp_dir
 
