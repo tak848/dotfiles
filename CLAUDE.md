@@ -280,7 +280,7 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 |-----------|---------|------|
 | `run_once_before_00-install-essentials.sh.tmpl` | 初回のみ | Homebrew, zinit, cursor-agent インストール |
 | `run_onchange_after_10-mise-install.sh.tmpl` | `config.toml` 変更時 | `mise install` |
-| `run_onchange_after_12-zsh-completions.sh.tmpl` | `config.toml` の pup のバージョン変更時 | pup の zsh 補完を `~/.local/share/zsh/completions/` に書き出して zcompile |
+| `run_onchange_after_12-zsh-completions.sh.tmpl` | pup / task / temporal / mise のバージョン変更時 | 各ツールの zsh 補完を `~/.local/share/zsh/completions/` に書き出して zcompile |
 | `run_onchange_after_20-aqua-install.sh.tmpl` | `aqua.yaml` 変更時 | `aqua install` |
 | `run_onchange_after_30-install-packages.sh.tmpl` | `packages.yaml` 変更時 | `brew install`（macOS） |
 | `run_onchange_after_40-generate-jsonnet.sh.tmpl` | jsonnet ファイル変更時 | jsonnet → JSON 生成（`~/.claude/settings.json`, `~/.gemini/antigravity-cli/{settings,mcp_config}.json`） |
@@ -322,6 +322,9 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 
 - 履歴の変数（`HISTFILE` / `HISTSIZE` / `SAVEHIST`）は `.zshrc` に置く。`.zshenv` に置くと macOS の `/etc/zshrc` に上書きされ、履歴が 1000 件に切り詰められる（#309 で `.zshenv` に移して実際に起きた）
 - 出力の大きいコマンドを `.zshrc` で `eval` しない。出力は起動のたびに構文解析される（pup の補完 3.7MB の eval で起動に 10 秒かかっていた）。補完なら `run_onchange_after_12-zsh-completions.sh.tmpl` のように apply 時にファイルへ書き出して zcompile し、`.zshrc` では `compdef` で登録する
+- `.zshrc` で `eval "$(<コマンド>)"` を増やさない。小さい出力でもコマンドの起動だけで 1 つあたり数〜60 ms かかる。補完は上と同じく apply 時に書き出す。init 系（direnv / starship / fzf / zoxide）は `.zshrc` の `_zshrc_cached_init` が `$XDG_CACHE_HOME/zsh/init/` にキャッシュし、キー（PATH 上のパス・実体のパスと mtime・引数・呼び出し側が足す文字列）が変わったときだけ作り直す。出力を左右する環境変数や設定ファイルは必ずキーに入れる（zoxide は `_ZO_ECHO` / `_ZO_RESOLVE_SYMLINKS` と aqua の設定の mtime）。`mise activate` は出力にその時点の PATH が焼き込まれるのでキャッシュしない
+- `brew shellenv` は `.zprofile` に apply 時の出力を埋め込む。brew は PATH が `<prefix>/bin:<prefix>/sbin` で始まっていると何も出さないので、テンプレートでは PATH を固定して呼ぶ
+- `compinit` の再構築判定は glob qualifier を配列への代入で評価する。`[[ ]]` の中ではファイル名生成が起きない（`(#q...)` は extended_glob が要る）。full の `compinit` は fpath が変わらなければ `.zcompdump` を書き直さないので、再構築したら `touch` で mtime を更新する
 - 起動時間は `zsh-startup.yaml`（計測専用で合否を判定しないワークフロー。required ではない）が macOS と Linux で測り、時間のかかっている箇所とあわせて job summary と PR のコメントに出す。PR のコメントは 1 件だけで、push のたびに書き換える（編集は通知されない）。手元では `.github/scripts/measure-zsh-startup.zsh` で同じ計測ができる
 
 ## Conventions

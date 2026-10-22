@@ -1,23 +1,32 @@
 # ヒストリーの自動バックアップ（週1回、.local/share に保存）
+# 古さは glob qualifier（m+7 は find -mtime +7 と同じ）で調べ、起動のたびに find を起動しない
 _zsh_history_backup="${XDG_DATA_HOME:-$HOME/.local/share}/zsh_history_backup"
 if [[ -f ~/.zsh_history ]]; then
-  if [[ ! -f "$_zsh_history_backup" ]] || [[ $(find "$_zsh_history_backup" -mtime +7 2>/dev/null) ]]; then
+  _zsh_history_backup_old=( "$_zsh_history_backup"(N.m+7) )
+  if [[ ! -f "$_zsh_history_backup" ]] || (( $#_zsh_history_backup_old )); then
     cp ~/.zsh_history "$_zsh_history_backup"
   fi
 fi
-unset _zsh_history_backup
+unset _zsh_history_backup _zsh_history_backup_old
 
 # OPENSPEC:START
 fpath=("$HOME/.zsh/completions" $fpath)
 # OPENSPEC:END
 
 # compinit キャッシュ化（24時間に1回のみ再構築）
+# [[ ]] の中ではファイル名生成が起きず、(#q...) も extended_glob 無しでは使えないので、配列への代入で調べる。
+# 以前の [[ -n ~/.zcompdump(#qN.mh+24) ]] は文字列のまま常に真になり、毎回 compaudit 付きで再構築していた。
+# compinit は fpath の中身が変わっていなければ .zcompdump を書き直さないので、mtime は自分で更新する
+# （しないと、24 時間後からは毎回再構築になる）
 autoload -Uz compinit
-if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
-  compinit
-else
+_zcompdump_fresh=( "${ZDOTDIR:-$HOME}/.zcompdump"(N.mh-24) )
+if (( $#_zcompdump_fresh )); then
   compinit -C
+else
+  compinit
+  touch -- "${ZDOTDIR:-$HOME}/.zcompdump"
 fi
+unset _zcompdump_fresh
 
 bindkey -d # キーバインドをリセット
 bindkey -e # emacsモードで使う
@@ -86,38 +95,79 @@ chpwd() {
 }
 
 # mise activate (インタラクティブ用)
+# 出力にその時点の PATH が焼き込まれるので、下の init と違ってキャッシュできない
 command -v mise &> /dev/null && eval "$(mise activate zsh)"
 
-# ツール連携（eval系）
-command -v direnv &> /dev/null && eval "$(direnv hook zsh)"
-command -v starship &> /dev/null && eval "$(starship init zsh)"
-command -v fzf &> /dev/null && source <(fzf --zsh)
-command -v zoxide &> /dev/null && eval "$(zoxide init zsh)"
+# ツール連携（init 系）
+# 出力をキャッシュして、起動のたびにツールを起動しない（1 つあたり数〜30 ms かかっていた）。
+# _zshrc_cached_init <名前> <キーに足す文字列> <コマンド> <引数...>
+#   コマンドが PATH に無ければ 1 を返す。あれば、REPLY に eval する文字列（キャッシュを source する文、
+#   書き込めなかったときは出力そのもの）を入れる。eval は呼び出し側でトップレベルに置く。関数の中で source
+#   すると、読み込んだスクリプトの typeset が関数のローカル変数になるため。
+#   キャッシュは「# <キー>」の 1 行目が今のキーと同じ間だけ使う。キーはコマンドの PATH 上のパス・実体の
+#   パスと mtime・引数・呼び出し側が足す文字列で、出力を左右するものは全部ここに入れること。
+#   mise / aqua の backend はバージョンごとに別のパスに入るので、ツールを更新すればキーが変わる
+zmodload -F zsh/stat b:zstat
+_zshrc_cached_init() {
+  local name=$1 extra=$2 cmd=${commands[$3]} cache line out
+  local -a st
+  shift 2
+  [[ -n $cmd ]] || return 1
+  zstat -A st +mtime -- ${cmd:A} 2>/dev/null || st=(-)
+  local key="v1 $cmd ${cmd:A}:$st[1] ${(q-)@} $extra"
+  cache=${XDG_CACHE_HOME:-$HOME/.cache}/zsh/init/$name.zsh
+  if [[ -r $cache ]] && IFS= read -r line < $cache && [[ $line == "# $key" ]]; then
+    REPLY="source ${(q)cache}"
+    return
+  fi
+  # 失敗したときはキャッシュせず、従来の eval "$(...)" と同じく出力をそのまま使う
+  if ! out=$("$@"); then
+    REPLY=$out
+    return
+  fi
+  if mkdir -p -- ${cache:h} && print -r -- "# $key"$'\n'"$out" >| $cache.$$ && mv -f -- $cache.$$ $cache; then
+    REPLY="source ${(q)cache}"
+  else
+    rm -f -- $cache.$$
+    REPLY=$out
+  fi
+}
+# 引数のファイルのパスと mtime を REPLY に並べる（キャッシュのキー用）
+_zshrc_stamp() {
+  local f
+  local -a st
+  REPLY=
+  for f; do
+    zstat -A st +mtime -- $f 2>/dev/null && REPLY+="$f:$st[1] "
+  done
+}
 
-# task completion (遅延ロード)
-if command -v task &> /dev/null; then
-  eval "$(task --completion zsh)"
-fi
+_zshrc_cached_init direnv '' direnv hook zsh && eval "$REPLY"
+# starship は PATH 上の starship のパスを焼き込む（キーの $commands[starship] と同じ）
+_zshrc_cached_init starship '' starship init zsh && eval "$REPLY"
+_zshrc_cached_init fzf '' fzf --zsh && eval "$REPLY"
+# zoxide は aqua CLI 管理で、PATH 上は aqua-proxy なのでバージョンがパスに出ない。aqua の設定の mtime で
+# 更新を拾う。_ZO_ECHO / _ZO_RESOLVE_SYMLINKS は init の出力に焼き込まれる（zoxide の src/cmd/init.rs）
+_zshrc_stamp ${(s.:.)AQUA_GLOBAL_CONFIG}
+_zshrc_cached_init zoxide "$REPLY _ZO_ECHO=${_ZO_ECHO-} _ZO_RESOLVE_SYMLINKS=${_ZO_RESOLVE_SYMLINKS-}" zoxide init zsh && eval "$REPLY"
+unset -f _zshrc_cached_init _zshrc_stamp
 
-# mise completion (遅延ロード)
-if command -v mise &> /dev/null; then
-  eval "$(mise completion zsh)"
+# 補完（pup / task / temporal / mise）
+# run_onchange_after_12-zsh-completions が書き出して zcompile したものを、補完を使うときだけ読み込む。
+# 起動のたびに生成すると、pup は 3.7MB の eval で 10 秒近く、ほかも起動だけで 1 つあたり 10〜60 ms かかる。
+# compinit -C は既存の .zcompdump を信用して fpath の新しいファイルを拾わないので、compdef で直接登録する
+_zsh_comp_dir="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/completions"
+if [[ -d $_zsh_comp_dir ]]; then
+  fpath=("$_zsh_comp_dir" $fpath)
+  for _zsh_comp_cmd in pup task temporal mise; do
+    if [[ -r $_zsh_comp_dir/_$_zsh_comp_cmd.zwc ]]; then
+      autoload -Uz _$_zsh_comp_cmd
+      compdef _$_zsh_comp_cmd $_zsh_comp_cmd
+    fi
+  done
+  unset _zsh_comp_cmd
 fi
-
-# temporal completion (遅延ロード)
-if command -v temporal &> /dev/null; then
-  eval "$(temporal completion zsh)"
-fi
-
-# pup completion
-# 3.7MB あり、eval すると起動のたびに 10 秒近くかかる。run_onchange_after_12-zsh-completions が
-# 書き出して zcompile したものを、補完を使うときだけ読み込む。compinit -C は既存の .zcompdump を
-# 信用して fpath の新しいファイルを拾わないので、compdef で直接登録する
-if [[ -r "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/completions/_pup.zwc" ]]; then
-  fpath=("${XDG_DATA_HOME:-$HOME/.local/share}/zsh/completions" $fpath)
-  autoload -Uz _pup
-  compdef _pup pup
-fi
+unset _zsh_comp_dir
 
 # fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
 fbr() {
