@@ -17,14 +17,15 @@ fpath=("$HOME/.zsh/completions" $fpath)
 # [[ ]] の中ではファイル名生成が起きず、(#q...) も extended_glob 無しでは使えないので、配列への代入で調べる。
 # 以前の [[ -n ~/.zcompdump(#qN.mh+24) ]] は文字列のまま常に真になり、毎回 compaudit 付きで再構築していた。
 # compinit は fpath の中身が変わっていなければ .zcompdump を書き直さないので、mtime は自分で更新する
-# （しないと、24 時間後からは毎回再構築になる）
+# （しないと、24 時間後からは毎回再構築になる）。compaudit が安全でないディレクトリを見つけて中断したとき
+# （端末が無いと確認できずに中断する）は dump が書かれないので、成功したときに既存の dump だけを touch する。
+# 空の dump を作ると、次からの compinit -C がそれを読んで compdef すら定義されなくなる
 autoload -Uz compinit
 _zcompdump_fresh=( "${ZDOTDIR:-$HOME}/.zcompdump"(N.mh-24) )
 if (( $#_zcompdump_fresh )); then
   compinit -C
 else
-  compinit
-  touch -- "${ZDOTDIR:-$HOME}/.zcompdump"
+  compinit && touch -c -- "${ZDOTDIR:-$HOME}/.zcompdump"
 fi
 unset _zcompdump_fresh
 
