@@ -324,7 +324,7 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 - 出力の大きいコマンドを `.zshrc` で `eval` しない。出力は起動のたびに構文解析される（pup の補完 3.7MB の eval で起動に 10 秒かかっていた）。補完なら `run_onchange_after_12-zsh-completions.sh.tmpl` のように apply 時にファイルへ書き出して zcompile し、`.zshrc` では `compdef` で登録する
 - `.zshrc` で `eval "$(<コマンド>)"` を増やさない。小さい出力でもコマンドの起動だけで 1 つあたり数〜60 ms かかる。補完は上と同じく apply 時に書き出す。init 系（direnv / starship / fzf / zoxide）は `.zshrc` の `_zshrc_cached_init` が `$XDG_CACHE_HOME/zsh/init/` にキャッシュし、キー（PATH 上のパス・実体のパスと mtime・引数・呼び出し側が足す文字列）が変わったときだけ作り直す。出力を左右する環境変数や設定ファイルは必ずキーに入れる（zoxide は `_ZO_ECHO` / `_ZO_RESOLVE_SYMLINKS` と aqua の設定の mtime）。`mise activate` は出力にその時点の PATH が焼き込まれるのでキャッシュしない
 - `brew shellenv` は `.zprofile` に apply 時の出力を埋め込む。brew は PATH が `<prefix>/bin:<prefix>/sbin` で始まっていると何も出さないので、テンプレートでは PATH を固定して呼ぶ
-- `compinit` の再構築判定は glob qualifier を配列への代入で評価する。`[[ ]]` の中ではファイル名生成が起きない（`(#q...)` は extended_glob が要る）。full の `compinit` は fpath が変わらなければ `.zcompdump` を書き直さないので、再構築したら `touch` で mtime を更新する
+- `compinit` の再構築判定は glob qualifier を配列への代入で評価する。`[[ ]]` の中ではファイル名生成が起きない（`(#q...)` は extended_glob が要る）。full の `compinit` は fpath が変わらなければ `.zcompdump` を書き直さないので、成功したら `touch -c` で mtime を更新する（compaudit が安全でないディレクトリを見つけて中断したときに touch で空の dump を作ると、以降の `compinit -C` で compdef すら定義されなくなる）
 - 起動時間は `zsh-startup.yaml`（計測専用で合否を判定しないワークフロー。required ではない）が macOS と Linux で測り、時間のかかっている箇所とあわせて job summary と PR のコメントに出す。PR のコメントは 1 件だけで、push のたびに書き換える（編集は通知されない）。手元では `.github/scripts/measure-zsh-startup.zsh` で同じ計測ができる
 
 ## Conventions
