@@ -1,9 +1,17 @@
 # Homebrew shellenv (ログイン時1回のみ、macOS のみ)
+# brew の起動（ログインのたびに 40 ms 近く）を避けるため、chezmoi apply 時の `brew shellenv zsh` の出力を
+# 埋め込む。出力は Homebrew の prefix だけで決まる。ただし brew は PATH が <prefix>/bin:<prefix>/sbin で
+# 始まっていると何も出さない（Homebrew の Library/Homebrew/cmd/shellenv.sh）ので、PATH を固定して呼ぶ。
+# brew がまだ無いときは従来どおり eval する
 {{- if eq .chezmoi.os "darwin" }}
+{{-   $brew := "/usr/local/bin/brew" }}
 {{-   if eq .chezmoi.arch "arm64" }}
-[[ -x "/opt/homebrew/bin/brew" ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+{{-     $brew = "/opt/homebrew/bin/brew" }}
+{{-   end }}
+{{-   if stat $brew }}
+{{ output "/usr/bin/env" "PATH=/usr/bin:/bin" $brew "shellenv" "zsh" | trim }}
 {{-   else }}
-[[ -x "/usr/local/bin/brew" ]] && eval "$(/usr/local/bin/brew shellenv)"
+[[ -x "{{ $brew }}" ]] && eval "$({{ $brew }} shellenv)"
 {{-   end }}
 {{- end }}
 

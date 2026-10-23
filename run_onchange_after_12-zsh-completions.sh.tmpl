@@ -8,8 +8,15 @@ set -euo pipefail
 # pup のバージョンが変わったときにここで一度だけ作る。.zshrc はこのファイルを fpath に足して
 # compdef で登録し、補完を使うときに .zwc から読み込む（.zwc なら読み込みは一瞬で終わる）。
 #
-# 次の行は、pup のバージョンが変わったときだけこのスクリプトを走らせるためのもの。
+# task / temporal / mise の補完は小さいが、生成のためにコマンドを起動するだけで 1 つあたり
+# 10〜60 ms かかっていた（PR の zsh-startup の計測）。出力はツールのバージョンだけで決まるので、
+# pup と同じくここで書き出し、.zshrc では使うときに読み込む。
+#
+# 次の行は、各ツールのバージョンが変わったときだけこのスクリプトを走らせるためのもの。
 # pup: {{ include "dot_config/mise/config.toml" | regexFind `(?m)^"aqua:DataDog/pup".*$` }}
+# task: {{ include "dot_config/mise/config.toml" | regexFind `(?m)^"aqua:go-task/task".*$` }}
+# temporal: {{ include "dot_config/mise/config.toml" | regexFind `(?m)^"aqua:temporalio/cli".*$` }}
+# mise: {{ include ".mise-bootstrap-version" | regexFind `(?m)^MISE_VERSION=.*$` }}
 #
 # 置き場所は XDG_CACHE_HOME ではなく XDG_DATA_HOME にしている。次にバージョンが変わるまで作り直さないので、
 # キャッシュとして消されると、それまで補完が無くなるため。
@@ -17,18 +24,29 @@ set -euo pipefail
 {{ template "path-setup.tmpl" . }}
 
 comp_dir="${XDG_DATA_HOME}/zsh/completions"
+mkdir -p "$comp_dir"
+tmp_dir="$(mktemp -d "${comp_dir}/.tmp.XXXXXX")"
+trap 'rm -rf -- "$tmp_dir"' EXIT
 
-if command -v pup &> /dev/null && command -v zsh &> /dev/null; then
-    echo "pup の zsh 補完を生成中..."
-    mkdir -p "$comp_dir"
-    tmp_dir="$(mktemp -d "${comp_dir}/.tmp.XXXXXX")"
-    trap 'rm -rf -- "$tmp_dir"' EXIT
-    pup completions zsh > "${tmp_dir}/_pup"
-    zsh -fc 'zcompile "$1"' zcompile "${tmp_dir}/_pup"
-    # zsh は _pup と _pup.zwc のうち新しいほうを読む。.zwc は _pup より後に作られていて、mv は mtime を
-    # 保つので、.zwc を先に置き換えれば、置き換えの途中でも新しい .zwc が読まれる
-    mv -f "${tmp_dir}/_pup.zwc" "${comp_dir}/_pup.zwc"
-    mv -f "${tmp_dir}/_pup" "${comp_dir}/_pup"
-else
-    rm -f "${comp_dir}/_pup" "${comp_dir}/_pup.zwc"
-fi
+# 使い方: generate <補完関数の名前> <コマンド> <引数...>
+# コマンドが無ければ、前に書き出したものを消す
+generate() {
+    local name="$1"
+    shift
+    if command -v "$1" &> /dev/null && command -v zsh &> /dev/null; then
+        echo "$1 の zsh 補完を生成中..."
+        "$@" > "${tmp_dir}/${name}"
+        zsh -fc 'zcompile "$1"' zcompile "${tmp_dir}/${name}"
+        # zsh は _xxx と _xxx.zwc のうち新しいほうを読む。.zwc は _xxx より後に作られていて、mv は mtime を
+        # 保つので、.zwc を先に置き換えれば、置き換えの途中でも新しい .zwc が読まれる
+        mv -f "${tmp_dir}/${name}.zwc" "${comp_dir}/${name}.zwc"
+        mv -f "${tmp_dir}/${name}" "${comp_dir}/${name}"
+    else
+        rm -f "${comp_dir}/${name}" "${comp_dir}/${name}.zwc"
+    fi
+}
+
+generate _pup pup completions zsh
+generate _task task --completion zsh
+generate _temporal temporal completion zsh
+generate _mise mise completion zsh
