@@ -488,7 +488,7 @@ snapshots:
       fast-string-width: 3.0.2
 
   fdir@6.5.0(picomatch@4.0.7):
-    dependencies:
+    optionalDependencies:
       picomatch: 4.0.7
 
   get-east-asian-width@1.7.0: {}
