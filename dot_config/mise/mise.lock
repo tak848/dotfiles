@@ -84,44 +84,44 @@ url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/660742520"
 provenance = "cosign"
 
 [[tools."aqua:anthropics/anthropic-cli"]]
-version = "1.44.0"
+version = "2.2.0"
 backend = "aqua:anthropics/anthropic-cli"
-specifiers = ["1.44.0"]
+specifiers = ["2.2.0"]
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.linux-arm64"]
-checksum = "sha256:094bde4aaa6999b0dec68934a6b1f21c77d0a71258754e4ae93765fd6b45683b"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.44.0/ant_1.44.0_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/660734824"
+checksum = "sha256:10b9b956226c5aefa40cd04e1155c72cb056a22f377cf961d4437f808d04688c"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.2.0/ant_2.2.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/669227258"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.linux-arm64-musl"]
-checksum = "sha256:094bde4aaa6999b0dec68934a6b1f21c77d0a71258754e4ae93765fd6b45683b"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.44.0/ant_1.44.0_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/660734824"
+checksum = "sha256:10b9b956226c5aefa40cd04e1155c72cb056a22f377cf961d4437f808d04688c"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.2.0/ant_2.2.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/669227258"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.linux-x64"]
-checksum = "sha256:27ad6f23aacea79a252d69702dc1e4f9c68d7cd35b89f799e0a7836e487728e6"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.44.0/ant_1.44.0_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/660734816"
+checksum = "sha256:aa9e000a65528e0a7bcffd238a78cd680e96c2a16ecf8309aa0eaf525af41a61"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.2.0/ant_2.2.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/669227255"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.linux-x64-musl"]
-checksum = "sha256:27ad6f23aacea79a252d69702dc1e4f9c68d7cd35b89f799e0a7836e487728e6"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.44.0/ant_1.44.0_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/660734816"
+checksum = "sha256:aa9e000a65528e0a7bcffd238a78cd680e96c2a16ecf8309aa0eaf525af41a61"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.2.0/ant_2.2.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/669227255"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.macos-arm64"]
-checksum = "sha256:b66383881d63db34c82e256effbb14c88ebf1a11271af3e8905f3cc2b8a1cdc2"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.44.0/ant_1.44.0_macos_arm64.zip"
-url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/660734907"
+checksum = "sha256:7dfc193079087ced28b08fdf7a99c9a82498b863c2967f3cf59d2ae3785451ad"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.2.0/ant_2.2.0_macos_arm64.zip"
+url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/669227305"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.macos-x64"]
-checksum = "sha256:95016784debe2a2636ab91d7284ddf66e895cc5bcaa0f74932aff46c0dd7e395"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.44.0/ant_1.44.0_macos_amd64.zip"
-url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/660734912"
+checksum = "sha256:de8a0e56fd298ddd6ed2c9e783fd2d8dd1a28f953b84f3d00ee8b612d5ac1e17"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.2.0/ant_2.2.0_macos_amd64.zip"
+url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/669227309"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.windows-x64"]
-checksum = "sha256:abb6b322f889adfbfc1529288006fb0dc717c8a7ca206fa652c8d2969424dfca"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v1.44.0/ant_1.44.0_windows_amd64.zip"
-url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/660734922"
+checksum = "sha256:5e6942cf334d4fe3ab30a1d863229b7dc026d1df8841752ccdd38d61facfcac9"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.2.0/ant_2.2.0_windows_amd64.zip"
+url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/669227318"
 
 [[tools."aqua:anthropics/claude-code"]]
 version = "2.1.307"
