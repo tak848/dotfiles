@@ -1,26 +1,43 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 # {{ include "dot_claude/settings.jsonnet" | sha256sum }}
 # {{ include "dot_claude/permission-rules.libsonnet" | sha256sum }}
 # {{ include "dot_claude/auto-mode.libsonnet" | sha256sum }}
 # {{ include "dot_gemini/antigravity-cli/settings.jsonnet" | sha256sum }}
 # {{ include "dot_gemini/antigravity-cli/mcp_config.jsonnet" | sha256sum }}
+# {{ include ".chezmoidata/mcp-auto-approve.yaml" | sha256sum }}
 # jsonnet ファイルが変更された時のみ JSON を生成する
 
 {{ template "path-setup.tmpl" . }}
 
-if command -v jsonnet &> /dev/null; then
-    echo "Jsonnet から JSON を生成中..."
-
-    # ディレクトリが存在しない場合は作成
-    mkdir -p ~/.claude ~/.gemini/antigravity-cli
-
-    # Jsonnet から JSON を生成
-    jsonnet "{{ .chezmoi.sourceDir }}/dot_claude/settings.jsonnet" > ~/.claude/settings.json
-    jsonnet "{{ .chezmoi.sourceDir }}/dot_gemini/antigravity-cli/settings.jsonnet" > ~/.gemini/antigravity-cli/settings.json
-    jsonnet "{{ .chezmoi.sourceDir }}/dot_gemini/antigravity-cli/mcp_config.jsonnet" > ~/.gemini/antigravity-cli/mcp_config.json
-
-    echo "JSON 生成完了"
-else
-    echo "警告: jsonnet コマンドが見つかりません。JSON ファイルは生成されません。"
+# jsonnet は 10 の mise install で入る。見つからないときに exit 0 で抜けると chezmoi は成功として
+# 記録し、jsonnet ファイルが変わるまで再実行しないので、異常終了させて次の apply で再試行させる。
+if ! command -v jsonnet &> /dev/null; then
+    echo "エラー: jsonnet コマンドが見つかりません。JSON ファイルを生成できません。" >&2
+    exit 1
 fi
+
+# 一時ファイルに書いてから置き換える。出力先へ直接リダイレクトすると、jsonnet が失敗したときに
+# 空のファイルが残り、Claude Code が hooks も permissions も無い状態で起動してしまう。
+generate() {
+    local src="$1" dst="$2" tmp
+    tmp="$(mktemp "${dst}.XXXXXX")"
+    if ! jsonnet "$src" > "$tmp"; then
+        rm -f "$tmp"
+        echo "エラー: $src から $dst を生成できませんでした。既存の $dst はそのまま残します。" >&2
+        return 1
+    fi
+    chmod 644 "$tmp"
+    mv "$tmp" "$dst"
+}
+
+echo "Jsonnet から JSON を生成中..."
+
+# ディレクトリが存在しない場合は作成
+mkdir -p ~/.claude ~/.gemini/antigravity-cli
+
+generate "{{ .chezmoi.sourceDir }}/dot_claude/settings.jsonnet" ~/.claude/settings.json
+generate "{{ .chezmoi.sourceDir }}/dot_gemini/antigravity-cli/settings.jsonnet" ~/.gemini/antigravity-cli/settings.json
+generate "{{ .chezmoi.sourceDir }}/dot_gemini/antigravity-cli/mcp_config.jsonnet" ~/.gemini/antigravity-cli/mcp_config.json
+
+echo "JSON 生成完了"

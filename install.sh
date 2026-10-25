@@ -16,7 +16,7 @@ set -e
 # `could not open a new TTY` で失敗して冪等でなくなる。remote main が
 # single source of truth なので、ローカル変更を上書きするのは意図通り。
 
-cd "$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+cd "$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)"
 
 if command -v chezmoi >/dev/null 2>&1; then
   exec chezmoi init --apply --force tak848

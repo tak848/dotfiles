@@ -3,9 +3,21 @@ name: CI
 on:
   push:
 
+# 書き込みは何もしないので読み取りだけにする（リポジトリ既定の権限が write でも、ここで絞る）
+permissions:
+  contents: read
+
+# main 以外のブランチでは、新しい push が来たら古い run を止める。Renovate の commit に lockfile や
+# bootstrap の bot commit が続くと、そのたびに 2 OS 分が走り直し、意味を持つのは最後の 1 回だけになる
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    # 既定の 360 分だと、ツールの導入やテストが止まったときに macOS ランナーを長く占有する
+    timeout-minutes: 30
     strategy:
       matrix:
         # macOS と Ubuntu の両方でテスト
@@ -17,15 +29,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       # mise bootstrap と同じバージョンを使用することで、task check の結果を一致させる
       - name: Read mise version from .mise-bootstrap-version
         run: |
           source .mise-bootstrap-version
-          echo "MISE_VERSION=$MISE_VERSION" >> $GITHUB_ENV
+          echo "MISE_VERSION=$MISE_VERSION" >> "$GITHUB_ENV"
 
       - name: Setup mise
-        uses: jdx/mise-action@fc42bcc7ddbf51124c30f95a877a0c5168a3bfde # v5.2.1
+        uses: jdx/mise-action@82a612c5ab8bcda7cc5db6b7e81a8e7584c3dc6e # v5.2.3
         with:
           version: ${{ env.MISE_VERSION }}
           cache: true
@@ -98,14 +112,48 @@ jobs:
           go test ./go/...
           go build ./go/...
 
+      # Go の静的解析。設定は .golangci.yml。結果は OS に依存しないので Ubuntu だけで実行する
+      - name: Lint Go
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          unformatted="$(gofmt -l go)"
+          if [ -n "$unformatted" ]; then
+            echo "Error: gofmt されていないファイルがあります:"
+            echo "$unformatted"
+            exit 1
+          fi
+          golangci-lint run ./go/...
+
+      # シェルスクリプトと workflow の静的解析。run_ スクリプトはテンプレートで OS ごとに中身が変わるので、
+      # 両 OS で描画した結果を検査する。actionlint は workflow の run: も shellcheck にかける
+      - name: Lint shell scripts and workflows
+        run: |
+          shellcheck .github/scripts/*.sh install.sh \
+            dot_local/bin/executable_snowx dot_local/bin/executable_codex-review-exec dot_local/bin/executable_gtts
+          rendered="$RUNNER_TEMP/rendered"
+          mkdir -p "$rendered"
+          for f in run_*.sh.tmpl; do
+            chezmoi --source . execute-template < "$f" > "$rendered/${f%.tmpl}"
+          done
+          shellcheck "$rendered"/*.sh
+          actionlint
+
+      # zsh の関数ファイルの構文。Ubuntu のランナーには zsh が入っていないので macOS だけで実行する
+      - name: Check zsh syntax
+        if: matrix.os == 'macos-latest'
+        run: |
+          for f in dot_zsh/functions/*.zsh; do
+            zsh -n "$f"
+          done
+
       # Jsonnet ソースファイルの構文チェック
       # 構文エラーがあればビルドを失敗させる（Requirement 4.2, 4.3）
       - name: Check Jsonnet syntax
         run: |
           echo "=== Checking Jsonnet syntax ==="
-          for f in $(find dot_claude dot_gemini -name '*.jsonnet'); do
+          find dot_claude dot_codex dot_gemini -name '*.jsonnet' -print0 | while IFS= read -r -d '' f; do
             echo "Checking $f..."
-            jsonnet "$f" > /dev/null || exit 1
+            jsonnet "$f" > /dev/null
           done
           echo "All Jsonnet files are valid."
 
@@ -127,3 +175,31 @@ jobs:
       - name: Verify chezmoi templates
         run: |
           chezmoi --source . --dry-run --verbose apply
+
+      # リポジトリ専用のファイル（文書・jsonnet のソース・Go のソース等）が配布対象に入っていないか。
+      # .chezmoiignore は配布先のパスに照合するので、ソース側のパスで書くと黙って効かずに配布される。
+      # 配布先で読むもの（~/.claude/CLAUDE.md、ccgate の jsonnet 等）は除外リストで許す。
+      - name: Verify repository-only files are not distributed
+        run: |
+          managed="$(chezmoi --source . --destination "$RUNNER_TEMP/chezmoi-home" managed --include files,symlinks)"
+          leaked="$(printf '%s\n' "$managed" \
+            | grep -E '(^|/)(CLAUDE\.md|AGENTS\.md|README\.md|REVIEW\.md|LICENSE|install\.sh|Taskfile\.yaml|go\.(mod|sum))$|\.(jsonnet|libsonnet)$|^(go|claude-plugins)/' \
+            | grep -v -x -E '\.claude/CLAUDE\.md|\.codex/AGENTS\.md|\.config/tmux/README\.md|\.claude/ccgate\.jsonnet|\.codex/ccgate\.jsonnet|ccgate\.libsonnet' \
+            || true)"
+          if [ -n "$leaked" ]; then
+            echo "Error: リポジトリ専用のファイルが配布対象に入っています。.chezmoiignore に配布先のパスで追加してください:"
+            echo "$leaked"
+            exit 1
+          fi
+          echo "リポジトリ専用のファイルは配布対象に入っていません。"
+
+      # marketplace.json と各プラグインの manifest を検証する。version を書かない方針
+      # （CLAUDE.md「Claude Code カスタムマーケットプレイス」）と icon 等の提出向けの warning があるので、
+      # --strict は付けずエラーだけで落とす。結果は OS に依存しないので Ubuntu だけで実行する。
+      - name: Validate Claude Code plugins
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          claude plugin validate .
+          for dir in claude-plugins/*/; do
+            claude plugin validate "$dir"
+          done

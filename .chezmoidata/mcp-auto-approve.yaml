@@ -1,0 +1,50 @@
+# 確認なしで実行してよい MCP のツール。Claude Code（dot_claude/settings.jsonnet の permissions.allow、
+# std.parseYaml で読む）と Codex（dot_codex/modify_config.toml の tools.<name>.approval_mode = "approve"、
+# chezmoi のテンプレートデータとして読む）が両方ここを読むので、二重に書かない。
+# キーは Codex の [mcp_servers.<key>] の名前、claude は Claude Code での mcp__<claude>__<tool> の <claude>。
+# ツール名は実際のサーバーが公開している名前に合わせる（改名されると古い名前は黙って効かなくなる）。
+mcpAutoApprove:
+  context7:
+    claude: plugin_context7_context7
+    tools:
+      - resolve-library-id
+      - query-docs
+  github:
+    claude: plugin_github_github
+    tools:
+      # read 系
+      - get_me
+      - list_issues
+      - search_issues
+      - issue_read
+      - list_pull_requests
+      - search_pull_requests
+      - pull_request_read
+      - get_file_contents
+      - list_commits
+      - get_commit
+      - list_branches
+      - list_releases
+      - list_tags
+      - search_code
+      - get_repository_tree
+      - list_notifications
+      - get_notification_details
+      # write 系はコメント・Issue だけ（PR の作成・更新は都度確認）
+      - add_issue_comment
+      - issue_write
+      - add_reply_to_pull_request_comment
+  devin:
+    claude: devin
+    tools:
+      - ask_wiki_question
+      - read_wiki_contents
+      - read_wiki_structure
+  aws-knowledge:
+    claude: plugin_aws-knowledge_aws-knowledge
+    tools:
+      - aws___search_documentation
+      - aws___read_documentation
+      - aws___list_regions
+      - aws___get_regional_availability
+      - aws___retrieve_skill

@@ -130,7 +130,7 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 
 ### gpt-review（GPT-6 Astra で動くレビュー専用 subagent）
 
-`dot_claude/agents/gpt-review.md`。`model: gpt-6-astra` の frontmatter を持つので `claudep` / `claudex` の下でしか動かない（素の `claude` では Anthropic に弾かれる）。`codex-review` agent（Codex CLI を `codex exec` で叩くラッパー）とは別物で、こちらは Claude Code のネイティブな subagent として Read / Grep / Glob / Bash / WebFetch / WebSearch / context7 / deepwiki を自分で使ってレビューする。修正はしない。
+`dot_claude/agents/gpt-review.md`。`model: gpt-6-astra` の frontmatter を持つので `claudep` / `claudex` の下でしか動かない（素の `claude` では Anthropic に弾かれる）。`codex-review` agent（Codex CLI を `codex exec` で叩くラッパー）とは別物で、こちらは Claude Code のネイティブな subagent として Read / Grep / Glob / Bash / WebFetch / WebSearch などを自分で使ってレビューする。修正はしない。
 
 - `codex-review` の thread_id 方式に当たるものは Claude Code の subagent resume で、修正後の再レビューは同じ agent に `SendMessage` で修正内容を送る（会話が残るので前回指摘と突き合わせられる）。確証バイアスを避ける最終確認は、前回の指摘を渡さずに新しいインスタンスを起動する
 - effort は frontmatter に書かず、`settings.jsonnet` の `modelSettings['gpt-6-astra']`（high）に従う。frontmatter の `effort:` は modelSettings より優先されるので、agent 側で固定したいときだけ書く。Codex の reasoning.effort は low / medium / high / xhigh / max / ultra（astra のカタログ `supported_reasoning_levels`。sol も同じで、luna だけ ultra が無い）
@@ -224,6 +224,26 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - 質問の判断材料はこの hook では救えない（ユーザーが答えるまで最後の text が来ない）。そちらは Stop ゲートの `質問予告` で扱う
 - `dot_claude/CLAUDE.md` には、全 agent が守る振る舞い（大事なことはターン最後の text に書く、質問は `質問予告` を経て AskUserQuestion で行う等）だけを書く。背景・対象モデル・hook の名前や仕組み・出典は書かない。全 agent に不要な情報であり、hook の存在を知らせると、何か起きたときにモデルが本来の作業から離れて hook の調査に向かうため。これらはこのファイル・コードのコメント・PR に置く。hook の差し戻し文や additionalContext は、それ自体で何をすべきか分かるように書く
 
+### deny hint（cc-deny-hint）
+
+`go/cmd/cc-deny-hint` は PreToolUse(Bash) hook。`dot_claude/permission-rules.libsonnet` の Bash ルールのうち `reason` を持つものを引数の JSON で受け取り、コマンドが当たったルールの `reason` だけを `additionalContext` で返す。拒否そのものは `permissions.deny` が行い、この hook は理由をモデルに伝えるだけ。
+
+- hooks の `if` で絞らないのは、コマンド名より先まで指定したパターン（`Bash(git commit*--amend*)` など）だと `$()`・バッククォート・`$VAR` を含むだけで常に hook が実行されるため（公式 docs hooks "How if patterns match Bash commands"。仕様でありリグレッションではない）。以前は `if` 付きの printf hook をルールごとに置いていて、`$` を含む Bash のたびに全ルール（21 件）の理由が注入されていた
+- コマンドは `mvdan.cc/sh/v3/syntax`（shfmt のパーサ）で bash として構文解析し、構文木の単純コマンド（`CallExpr`）だけを照合する。bash として読めなければ zsh として試す（Bash ツールのコマンドはユーザーのシェルで実行されるため。mvdan.cc/sh の zsh 対応は実験的）。引用・コメント・heredoc・case のパターン・算術式・配列の要素・リダイレクト先は構文上コマンドにならず、コマンド置換・プロセス置換・展開される heredoc の本文の中は辿る。照合の前に `env` / `sudo` などのラッパー（値を取るオプションは値ごと）を外し、`bash -c`・`eval` の中身は改めて解析する。`command -v` の対象はコマンドとして扱わない。解析できない入力には何も返さない（`$((cmd); cmd)` のように `$(` と `(` をくっつけた書き方は算術式として読まれて失敗する。POSIX も空白で分けるよう求めている）
+- 以前は手書きの字句解析だったが、bot のレビューのたびに bash の文法の隅（heredoc の中の括弧、行継続、算術式の `<<` など）の取りこぼしが見つかったので、パーサに置き換えた。この repo で唯一の外部依存で、45 のスクリプトがビルドするときにモジュールを取得する（`go.sum` で checksum を固定）
+- Agent / EnterWorktree のルールは `if` で正しく絞れるので、従来どおり `if` と printf で返す
+
+### book-to-skill（第三者 skill の uv 加工版）
+
+`dot_claude/skills/book-to-skill/` は [virgiliojr94/book-to-skill](https://github.com/virgiliojr94/book-to-skill)（MIT）を固定 commit で取り込んだもの。本や文書（PDF / EPUB / DOCX / HTML / Markdown など）からテキストを抽出し、章ごとのファイルを持つ skill を生成する。chezmoi が `~/.claude/skills/book-to-skill/` に配り、`/book-to-skill <path>` で呼ぶ。取り込んだ commit・取得日・改変点は SKILL.md の frontmatter のコメントにある。
+
+- 取り込んだのは実行に要るファイル（SKILL.md、LICENSE.md、`scripts/extract.py`、`book_to_skill/`、`tools/scan_generated_skill.py`）だけ。tests・docs・`pyproject.toml` は入れていない。`pyproject.toml` を置くと Renovate の pep621 manager（既定で `pyproject.toml` に一致）が拾う
+- Python のコードは未改変。SKILL.md だけ、Python の入口を `uv run --no-project --no-config --python 3.13 … python3 -I` に、`extract.py` の探索を `${CLAUDE_SKILL_DIR}` に置き換えた。上流は `python3` を直接呼び、足りない抽出器を実行中の Python に `pip install` で入れようとするため。`--install-missing no` を渡して、スクリプト自身にも pip を呼ばせない。`${CLAUDE_SKILL_DIR}` は Claude Code の置換変数なので、この版は Claude Code 専用
+- 抽出器の依存は `--with` で渡す。上流の extras の `all` から docling を除いたもの（pypdf / pdfminer.six / pdf-inspector / ebooklib / beautifulsoup4 / python-docx / striprtf / trafilatura）で、docling は PyTorch を引くので technical mode のときだけ足す。版は固定せず、`--exclude-newer "24 hours"` で直近 24 時間に上がったファイルを候補から外す（Renovate の `minimumReleaseAge` と同じ 24 時間）。Python 3.13 で Linux x86_64 / macOS arm64 とも wheel だけで解決できることは `uv pip compile --only-binary :all:` で確認した
+- `-I` は `PYTHONPATH` とカレントディレクトリを `sys.path` から外すため（snowx と同じ問題を避ける）。スクリプトは自分の置き場を `sys.path` に足すので `book_to_skill` は import できる。`-I` の下でも `--with` の依存が import できることは確認した
+- 生成された skill は上流の既定どおり `~/.agents/skills/<slug>/` に書かれ、`~/.claude/skills/<slug>` に symlink が張られる。`dot_claude/skills` は `exact_` ではないので chezmoi はこれらを消さない。生成物は chezmoi の管理外
+- 更新は手動。上流の新しい commit から同じファイルを取り直し、frontmatter のコメントにある改変を当て直して、commit SHA と取得日を書き換える。上流には悪意ある再アップロード（`Leutenegger/book-to-skill`）が出たことがある（上流の SECURITY-NOTICE.md）ので、取得元は `virgiliojr94/book-to-skill` に限り、Python の差分は読んでから取り込む
+
 ### Go の JSON 処理
 
 コード・テストとも `encoding/json/v2` を使用する。raw JSON は `encoding/json/jsontext.Value`、JSONL は `jsontext.Encoder` と `json.MarshalEncode` を使う。Go 1.27.1 で利用でき、追加の外部依存は持たない。v1 import への戻りは `go/cmd/cc-statusline/jsonv2_test.go` が検出する。既存プロトコルの入力・出力の互換性は局所的な option とテストで確認し、新規コードへ一律の寛容な option を付けない。
@@ -251,6 +271,8 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 
 `~/.claude.json` と `~/.codex/config.toml` はツールが自動的に書き込むため、jsonnet で全体生成せず modify テンプレートで管理対象キーのみ差分適用する。
 
+確認なしで実行してよい MCP のツールは `.chezmoidata/mcp-auto-approve.yaml` にまとめてある。`dot_claude/settings.jsonnet` は `std.parseYaml(importstr ...)` で読んで `permissions.allow` を作り、`dot_codex/modify_config.toml` は chezmoi のテンプレートデータとして読んで `tools.<name>.approval_mode = "approve"` を作る。MCP サーバーがツールを改名すると古い名前は黙って効かなくなるので、ツール名は実際のサーバーが公開している名前に合わせる。
+
 ### Claude Code カスタムマーケットプレイス
 
 dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak848-plugins`) として機能する。MCP サーバーは `claude-plugins/` 配下にプラグインとして定義。
@@ -263,11 +285,14 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 | `dot_claude/settings.jsonnet` の `extraKnownMarketplaces` | マーケットプレイス登録 |
 | `dot_claude/settings.jsonnet` の `enabledPlugins` | プラグイン有効化 |
 
+`marketplace.json` のエントリと各 `plugin.json` には `version` を書かない。書くとその値で固定され、中身を変えても `claude plugin update` が更新しない（公式 docs plugins/loading "Versions and updates"）。書かなければ install 時点のマーケットプレイス（このリポジトリ）の HEAD の commit SHA が version になり（plugin ディレクトリを最後に変えた commit ではない。隔離した `CLAUDE_CONFIG_DIR` で確認）、50 のスクリプトの `claude plugin update` が変更を取り込む。このマーケットプレイスは auto-update が既定で無効なので、update が走るのは 50 が実行されたときだけ。`claude plugin validate` は version が無いと warning を出すので、CI は `--strict` を付けずにエラーだけで落とす（`--strict` は icon や privacy policy URL の欠如でも落ちる）。
+
 #### Claude Security（uv 専用のローカル加工版）
 
 `security-uv@tak848-plugins` だけを使い、公式版とは二重導入しない。`claude-` は第三者プラグインの予約プレフィックスなので、生成 manifest と内部の namespace も `security-uv` に揃える。本体は公開 repo に vendor せず、`go/cmd/cc-claude-security-source` が `anthropics/claude-plugins-official` の固定 SHA `ea10b213686c90bb1984b2016937310e05336cf3` から `plugins/claude-security/` を取得・加工する。取得したコード・setup・hooks は生成時には実行せず、LICENSE/NOTICE は保持する。
 
 - command source は `"$HOME/.claude/bin/cc-claude-security-source"`（timeout 180 秒、mode `copy`）。`run_onchange_after_45-build-statusline.sh.tmpl` がバイナリをビルドし、50 のスクリプトが user scope にインストールする。両スクリプトは生成処理のソース変更も検知する
+- command source の version は生成物の内容のハッシュで決まる（manifest に version があれば `<version>-<ハッシュ>`。marketplace エントリの version は無視される。公式 docs plugins/loading "How Claude Code computes the version"）。生成 manifest に上流の version を残しても更新は止まらない。導入済みへの install は command を実行せず、セッションごとの再実行は有効なプラグインにしか走らないので、既定で無効な security-uv を更新するのは 50 の `claude plugin update security-uv@tak848-plugins` だけ
 - catalog と生成 manifest の `defaultEnabled: false` で初回無効にする。settings に強制的な false は追加せず、必要なときだけ明示的に有効化する
 - プラグインが管理する Python の入口は `uv run --no-project --no-config --python 3.13 python3` に統一し、直呼びへの fallback はしない。保証範囲はプラグイン内の入口であり、スキャン先の任意 repo の make/shell 内部まで保証するものではない
 - pin や変換処理を更新するときは `go test ./go/...` に加え、専用一時ディレクトリで固定 SHA の実データの取得・変換だけを検証する。hook/manifest の JSON、Python 直呼びの残存、初回無効を確認し、スキャン・実環境への install/enable や chezmoi update/apply は検証として実行しない
@@ -285,7 +310,10 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 | `run_onchange_after_30-install-packages.sh.tmpl` | `packages.yaml` 変更時 | `brew install`（macOS） |
 | `run_onchange_after_40-generate-jsonnet.sh.tmpl` | jsonnet ファイル変更時 | jsonnet → JSON 生成（`~/.claude/settings.json`, `~/.gemini/antigravity-cli/{settings,mcp_config}.json`） |
 | `run_onchange_after_45-build-statusline.sh.tmpl` | Go ソース変更時 | `~/.claude/bin/` と `~/.codex/bin/` へ Go バイナリをビルド |
-| `run_onchange_after_50-claude-plugins.sh.tmpl` | プラグイン定義変更時 | `claude plugin marketplace update` + `install` |
+| `run_onchange_after_50-claude-plugins.sh.tmpl` | プラグイン定義変更時 | `claude plugin marketplace update` + `install` + `update` |
+| `run_once_after_61-remove-misdeployed-files.sh.tmpl` | 初回のみ | `.chezmoiignore` の誤りで配布されていたファイル（`~/REVIEW.md`、配布先の jsonnet ソース等）を削除 |
+
+run_ スクリプトは、必要なツールが見つからないときや処理に失敗したときに非ゼロで終える。警告だけ出して exit 0 で抜けると chezmoi は成功として記録し、スクリプトの内容が変わるまで再実行しない。非ゼロで終えれば次の apply で再試行される。
 
 ### Chezmoi ファイル命名規則
 
@@ -302,13 +330,15 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 
 | ワークフロー | トリガー | 処理 |
 |-------------|---------|------|
-| `ci.yaml` | push | `task check` で自動生成ファイルの diff チェック |
-| `lockfiles-and-checksums.yaml` | push（`.mise.toml` / `dot_config/mise/config.toml` / `dot_config/aquaproj-aqua/aqua.yaml` 変更時、`main` / `lazy-lock-update` ブランチを除く） | `mise lock`（ルート + `dot_config/mise/`）→ `fill-lockfile-checksums.sh` → `aqua update-checksum --prune` を Renovate PR ブランチへ commit |
-
-`fill-lockfile-checksums.sh` は、`mise lock` では checksum が埋まらないツールを補う。mise は backend が checksum を供給できる場合しか lockfile に書き込まないため、`http` backend のツールや aqua-registry 側に checksum 定義が無いパッケージ（`anthropics/claude-code`, `tamasfe/taplo`, `http:grok`, `http:opencode`）は url だけが残り、install 時の整合性検証が働かない。そこで実アーティファクトを取得して sha256 を計算し、lockfile に追記する。checksum のあるエントリは触らないので冪等。アーティファクトを丸ごとダウンロードする都合上、対象が増えるほど CI 時間は延びる（現状で合計 2 GB 強）。
+| `ci.yaml` | push | ツールの導入確認、Go のテストと lint（gofmt / golangci-lint、設定は `.golangci.yml`）、シェルスクリプト・描画した run_ スクリプト・workflow の lint（shellcheck / actionlint）、zsh の構文（macOS のみ）、jsonnet の評価、`task check`（自動生成ファイルの diff）、chezmoi テンプレートの描画 |
+| `lockfiles-and-checksums.yaml` | push（`.mise.toml` / `.mise-bootstrap-version` / `dot_config/mise/config.toml` / `dot_config/aquaproj-aqua/aqua.yaml` 変更時、`main` / `lazy-lock-update` ブランチを除く） | `mise lock`（ルート + `dot_config/mise/`）→ `fill-lockfile-checksums.sh` → `aqua update-checksum --prune` を Renovate PR ブランチへ commit |
 | `mise-bootstrap.yaml` | push（`.mise-bootstrap-version` 変更時） | `mise generate bootstrap` |
 | `lazy-lock.yaml` | nvim 設定変更 / 週次 cron | Lazy.nvim lockfile 更新（PR 作成 or Renovate PR へコミット） |
 | `zsh-startup.yaml` | PR（zsh の設定・mise / aqua の設定の変更時）/ 手動 | macOS と Linux で zsh の起動時間を測り、時間のかかっている箇所とあわせて job summary と PR のコメントに出す（合否は判定しない。コメントは 1 件を書き換える） |
+
+`fill-lockfile-checksums.sh` は、`mise lock` では checksum が埋まらないツールを補う。mise は backend が checksum を供給できる場合しか lockfile に書き込まないため、`http` backend のツールや aqua-registry 側に checksum 定義が無いパッケージ（`anthropics/claude-code`, `tamasfe/taplo`, `http:grok`, `http:opencode`）は url だけが残り、install 時の整合性検証が働かない。そこで実アーティファクトを取得して sha256 を計算し、lockfile に追記する。checksum のあるエントリは触らないので冪等。アーティファクトを丸ごとダウンロードする都合上、対象が増えるほど CI 時間は延びる（現状で合計 2 GB 強）。
+
+lockfile / bootstrap / lazy-lock の再生成は外部のコード（mise lock の依存解決、Lazy のプラグインの build hook など）を動かすので、書き込みできる GitHub App token を作る前の step で行い、commit の step でだけ App token を使う。GITHUB_TOKEN は読み取りに絞る（lazy-lock の週次 PR の作成だけ書き込みを付ける）。checkout は push 時点の SHA ではなくブランチの先頭を取り、token を `.git/config` に残さない。`commit-via-graphql.sh` は再生成をしない。生成中に別の commit でブランチの先頭が進んで commit が拒否されたら、新しい先頭を取り直し、その間に `FILES` が変わっていなければ生成物を新しい先頭に載せ直して commit する。`FILES` が変わっていれば上書きせずに異常終了する。生成の入力を変える push は paths に当たってその workflow を起動し、古い run を止めて新しい先頭から作り直す。concurrency の group は workflow ごとに分ける。group を共有すると待機できる run が 1 件だけなので、別 workflow の待機中の run が取り消され、生成物だけの commit では起動し直さない。待機枠を増やす `concurrency.queue: max` は actionlint（1.7.12）が未知のキーとして弾くので使わない。週次の lazy-lock PR はブランチの push だけを App token で行う（GITHUB_TOKEN の push では `ci.yaml` が起動せず、必須チェックが付かない）。
 
 ### zsh 設定の読み込み順序
 

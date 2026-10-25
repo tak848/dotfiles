@@ -4,30 +4,41 @@ on:
   schedule:
     - cron: "0 0 * * 0" # 毎週日曜 0:00 UTC
   workflow_dispatch:
+  # この workflow 自体の変更では走らせない。Renovate が action の版を上げると全 workflow を書き換えるので、
+  # 自分を paths に入れていると無関係な PR に lazy-lock.json の commit が入っていた。
+  # workflow を変えたときは workflow_dispatch で試す。
   pull_request:
     paths:
       - "dot_config/nvim/**"
       - ".chezmoidata/packages.yaml"
-      - ".github/workflows/lazy-lock.yaml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
+# commit は Lazy の同期の後で作る GitHub App token で行うので、既定は読み取りだけにする。
+# PR を作る update-scheduled だけ job 側で書き込みを足す
+permissions:
+  contents: read
 
 jobs:
   # 週次更新: PR を作成
   update-scheduled:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # PR の作成とラベル付けは GITHUB_TOKEN で行う（ブランチへの push だけ App token）
     permissions:
       contents: write
       pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Setup mise
-        uses: jdx/mise-action@fc42bcc7ddbf51124c30f95a877a0c5168a3bfde # v5.2.1
+        uses: jdx/mise-action@82a612c5ab8bcda7cc5db6b7e81a8e7584c3dc6e # v5.2.3
         with:
           cache: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -48,6 +59,7 @@ jobs:
             --force \
             --interactive=false
 
+      # プラグインの build hook など外部のコードが動くので、App token はこの後で作る
       - name: Sync plugins and generate lockfile
         run: |
           # 1回目: LazyVim 本体をインストール
@@ -56,24 +68,10 @@ jobs:
           nvim --headless "+Lazy! sync" +qa
           cp ~/.config/nvim/lazy-lock.json dot_config/nvim/
 
-      - name: Create PR
-        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore(nvim): update lazy-lock.json"
-          title: "chore(nvim): update lazy-lock.json"
-          branch: lazy-lock-update
-          add-paths: dot_config/nvim/lazy-lock.json
-          labels: dependencies
-
-  # PR 時: lockfile を PR に直接コミット
-  update-on-pr:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
+      # GITHUB_TOKEN で push すると push の workflow（ci.yaml）が起動せず、必須チェックが付かないまま
+      # PR がマージできなくなる（#363 が 2026-01 から止まっていた）。ブランチの push だけを App token で
+      # 行えば起動する。PR の作成・ラベル付けは従来どおり GITHUB_TOKEN（App の権限は commit 用の範囲しか
+      # 確かめていないため）
       - name: Generate GitHub App Token
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
         id: app-token
@@ -81,14 +79,34 @@ jobs:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
+      - name: Create PR
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch-token: ${{ steps.app-token.outputs.token }}
+          commit-message: "chore(nvim): update lazy-lock.json"
+          title: "chore(nvim): update lazy-lock.json"
+          branch: lazy-lock-update
+          add-paths: dot_config/nvim/lazy-lock.json
+          labels: dependencies
+
+  # PR 時: lockfile を PR に直接コミット
+  # lazy-lock-update は週次更新で作った PR なので、ここで作り直さない
+  update-on-pr:
+    if: github.event_name == 'pull_request' && github.head_ref != 'lazy-lock-update'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # 同じブランチに commit する lockfiles-and-checksums.yaml / mise-bootstrap.yaml とは group を共有しない
+    # （lockfiles-and-checksums.yaml の concurrency を参照）。この workflow 同士は先頭の concurrency で 1 本に絞る
+    steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          token: ${{ steps.app-token.outputs.token }}
           ref: ${{ github.head_ref }}
+          persist-credentials: false
 
       - name: Setup mise
-        uses: jdx/mise-action@fc42bcc7ddbf51124c30f95a877a0c5168a3bfde # v5.2.1
+        uses: jdx/mise-action@82a612c5ab8bcda7cc5db6b7e81a8e7584c3dc6e # v5.2.3
         with:
           cache: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -101,18 +119,28 @@ jobs:
           fi
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
-      - name: Sync plugins and commit lockfile via GraphQL
+      # プラグインの build hook など外部のコードが動くので、App token はこの後で作る
+      - name: Sync plugins and generate lockfile
+        run: |
+          chezmoi apply --source "$GITHUB_WORKSPACE" --exclude=scripts --force --interactive=false
+          # 1回目: LazyVim 本体をインストール
+          nvim --headless "+Lazy! sync" +qa
+          # 2回目: LazyVim の依存プラグインをインストール
+          nvim --headless "+Lazy! sync" +qa
+          cp ~/.config/nvim/lazy-lock.json dot_config/nvim/
+
+      - name: Generate GitHub App Token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        id: app-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Commit lockfile via GraphQL
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           REPO: ${{ github.repository }}
           BRANCH: ${{ github.head_ref }}
           FILES: dot_config/nvim/lazy-lock.json
           MESSAGE: "chore(nvim): update lazy-lock.json"
-          REGENERATE_CMD: |
-            chezmoi apply --source "$GITHUB_WORKSPACE" --exclude=scripts --force --interactive=false
-            # 1回目: LazyVim 本体をインストール
-            nvim --headless "+Lazy! sync" +qa
-            # 2回目: LazyVim の依存プラグインをインストール
-            nvim --headless "+Lazy! sync" +qa
-            cp ~/.config/nvim/lazy-lock.json dot_config/nvim/
         run: bash .github/scripts/commit-via-graphql.sh

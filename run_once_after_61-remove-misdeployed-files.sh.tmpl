@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e
+# .chezmoiignore の否定パターンをソース側のパスで書いていた・* が / を越えない、といった誤りで
+# 配布されていた、配布先では使わないファイルを一度だけ削除する。
+# .chezmoiignore で無視しているパスは .chezmoiremove に書いても chezmoi が消さず、ソースが残って
+# いるパスを ignore せずに .chezmoiremove に書くと apply が inconsistent state で失敗するので、
+# ここで消す。jsonnet のソースは run_onchange_after_40 がソースディレクトリから読むので、
+# 配布先のコピーはどこからも読まれていない。
+
+rm -f \
+    "{{ .chezmoi.homeDir }}/REVIEW.md" \
+    "{{ .chezmoi.homeDir }}/.claude/README.md" \
+    "{{ .chezmoi.homeDir }}/.claude/pre_tool_use.py" \
+    "{{ .chezmoi.homeDir }}/.claude/settings.jsonnet" \
+    "{{ .chezmoi.homeDir }}/.claude/auto-mode.libsonnet" \
+    "{{ .chezmoi.homeDir }}/.claude/permission-rules.libsonnet" \
+    "{{ .chezmoi.homeDir }}/.gemini/antigravity-cli/settings.jsonnet" \
+    "{{ .chezmoi.homeDir }}/.gemini/antigravity-cli/mcp_config.jsonnet"
