@@ -268,7 +268,7 @@ func commands(s string, depth int) (cmds []string, ok bool) {
 			expectDelim = true
 		case (c == '<' || c == '>') && i+1 < len(s) && s[i+1] == '(':
 			// プロセス置換。中はコマンドとして読み、外側では引数の 1 単語として扱う
-			end, ok := matchParen(s, i+2)
+			end, ok := matchParen(s, i+2, true)
 			if !ok {
 				return nil, false
 			}
@@ -514,7 +514,7 @@ func dollarParen(s string, i int) (end int, subs []string, ok bool) {
 	if e, sub, ok := doubleParen(s, i+1); ok {
 		return e, sub, true
 	}
-	end, ok = matchParen(s, i+2)
+	end, ok = matchParen(s, i+2, true)
 	if !ok {
 		return 0, nil, false
 	}
@@ -527,7 +527,7 @@ func doubleParen(s string, i int) (end int, subs []string, ok bool) {
 	if !strings.HasPrefix(s[i:], "((") {
 		return 0, nil, false
 	}
-	inner, ok := matchParen(s, i+2)
+	inner, ok := matchParen(s, i+2, false)
 	if !ok || inner+1 >= len(s) || s[inner+1] != ')' {
 		return 0, nil, false
 	}
@@ -581,20 +581,51 @@ func scanExpansions(s string, start int, quote bool) (end int, text string, subs
 	return len(s), b.String(), subs, true
 }
 
-// matchParen は start から読み、対応する ')' の位置を返す。中の引用とコメントは読み飛ばす。
-func matchParen(s string, start int) (int, bool) {
+// matchParen は start から読み、対応する ')' の位置を返す。中の引用は読み飛ばす。cmd が true なら中身はコマンドなので、
+// コメントと heredoc の本文も読み飛ばす（算術式では # も << も式の一部）。
+func matchParen(s string, start int, cmd bool) (int, bool) {
 	depth := 1
+	boundary := true // 直前が単語の区切りか。エスケープされた空白は区切りではない
+	var docs []heredoc
 	for i := start; i < len(s); i++ {
+		sep := false
 		switch s[i] {
 		case '\\':
 			i++
 		case '#':
 			// 単語の先頭の # からはコメント（$# や ${#x} や 16#ff の # は単語の途中）
-			if i == start || strings.IndexByte(" \t\r\n;&|()", s[i-1]) >= 0 {
+			if cmd && boundary {
 				for i+1 < len(s) && s[i+1] != '\n' {
 					i++
 				}
 			}
+		case '<':
+			switch {
+			case strings.HasPrefix(s[i:], "<<<"):
+				i += 2
+			case cmd && strings.HasPrefix(s[i:], "<<"):
+				d, j := heredoc{}, i+2
+				if j < len(s) && s[j] == '-' {
+					d.stripTabs = true
+					j++
+				}
+				for j < len(s) && (s[j] == ' ' || s[j] == '\t') {
+					j++
+				}
+				d.delim, d.quoted, j = heredocDelimiter(s, j)
+				docs = append(docs, d)
+				i = j - 1
+			}
+			sep = true
+		case '\n':
+			if len(docs) > 0 {
+				next, _ := skipHeredocs(s, i+1, docs)
+				i = next - 1
+				docs = nil
+			}
+			sep = true
+		case ' ', '\t', '\r', ';', '&', '|':
+			sep = true
 		case '\'':
 			j := strings.IndexByte(s[i+1:], '\'')
 			if j < 0 {
@@ -609,14 +640,44 @@ func matchParen(s string, start int) (int, bool) {
 			i = end
 		case '(':
 			depth++
+			sep = true
 		case ')':
 			depth--
 			if depth == 0 {
 				return i, true
 			}
+			sep = true
 		}
+		boundary = sep
 	}
 	return 0, false
+}
+
+// heredocDelimiter は s[i] から heredoc の終端語を読み、引用を外した終端語・引用されていたか・終端語の次の位置を返す。
+func heredocDelimiter(s string, i int) (delim string, quoted bool, end int) {
+	var b strings.Builder
+	for ; i < len(s); i++ {
+		c := s[i]
+		switch {
+		case strings.IndexByte(" \t\r\n;&|()<>", c) >= 0:
+			return b.String(), quoted, i
+		case c == '\\' && i+1 < len(s):
+			b.WriteByte(s[i+1])
+			quoted = true
+			i++
+		case c == '\'' || c == '"':
+			j := strings.IndexByte(s[i+1:], c)
+			if j < 0 {
+				return b.String(), quoted, len(s)
+			}
+			b.WriteString(s[i+1 : i+1+j])
+			quoted = true
+			i += j + 1
+		default:
+			b.WriteByte(c)
+		}
+	}
+	return b.String(), quoted, i
 }
 
 // skipHeredocs は start から heredoc の本文を読み飛ばし、最後の終端行の次の位置と、展開される本文
