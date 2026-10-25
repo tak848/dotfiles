@@ -187,6 +187,15 @@
       minimumReleaseAge: "7 days",
     },
     {
+      // Azure CLI の tarball に入っているのは libexec/lib/python3.14/site-packages だけで、
+      // ランチャーは config.toml の AZ_PYTHON（.../python3.14）で起動する。3.15 に上げると
+      // 新しいマシンでは python3.15 しか入らず az が起動しなくなる（#988 で実際に上がった）。
+      // tarball が python3.15 に移ったら、このルールを外し AZ_PYTHON も同時に上げる。
+      description: "Azure CLI が使う Python: tarball の site-packages に合わせて 3.14 系に留める",
+      matchFileNames: ["run_onchange_after_15-azure-cli-python.sh.tmpl"],
+      allowedVersions: "<3.15",
+    },
+    {
       // mise の python は snowflake-cli の install にだけ使う（dot_config/mise/config.toml）。
       // snowflake-cli が pyyaml==6.0.2 を固定しており、6.0.2 には cp314 の wheel が無いため
       // 3.14 に上げると依存グラフの install が失敗する。固定が外れたらこのルールを消す。

@@ -21,12 +21,18 @@ set -euo pipefail
 # uv は Python のダウンロード metadata をバイナリに焼き込んでいるため、CPython のパッチが出ても
 # uv 自体が更新されるまでは入れられない。Renovate 側で age gate を長めに取って追随を待つ
 # （.github/renovate.json5 の packageRules を参照）。
+# マイナーバージョンは tarball の libexec/lib/python3.X と AZ_PYTHON に合わせる。Renovate は
+# 3.14 系に留めており、go/cmd/cc-statusline/azurepython_test.go が AZ_PYTHON との一致を検証する。
 # renovate: datasource=python-version depName=python
-AZURE_CLI_PYTHON_VERSION="3.15.0"
+AZURE_CLI_PYTHON_VERSION="3.14.8"
 
-if command -v uv &> /dev/null; then
-    export UV_PYTHON_BIN_DIR="${XDG_DATA_HOME}/azure-cli/python"
-    echo "Azure CLI 用の Python ${AZURE_CLI_PYTHON_VERSION} を用意中..."
-    uv python install "${AZURE_CLI_PYTHON_VERSION}"
+# uv は 10 の mise install で入る。見つからないときに exit 0 で抜けると chezmoi は成功として記録し、
+# このスクリプトの内容が変わるまで再実行しないので、異常終了させて次の apply で再試行させる。
+if ! command -v uv &> /dev/null; then
+    echo "エラー: uv が見つかりません。Azure CLI 用の Python を用意できません。" >&2
+    exit 1
 fi
+export UV_PYTHON_BIN_DIR="${XDG_DATA_HOME}/azure-cli/python"
+echo "Azure CLI 用の Python ${AZURE_CLI_PYTHON_VERSION} を用意中..."
+uv python install "${AZURE_CLI_PYTHON_VERSION}"
 {{- end }}
