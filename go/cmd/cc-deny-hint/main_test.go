@@ -110,9 +110,10 @@ func TestHints(t *testing.T) {
 		{"last clause without ;;", "case foo in\nnpm) echo ok\nesac\nnpx foo", []string{"npx"}},
 		{"substitution in case word", "case $(npm -v) in a) echo;; esac", []string{"npm"}},
 		{"substitution in arithmetic", "echo $(( $(npm ls | wc -l) + 1 ))", []string{"npm"}},
-		{"subshell in substitution", "echo $((npm test); echo x)", []string{"npm"}},
+		{"subshell in substitution", "echo $( (npm test); echo x)", []string{"npm"}},
+		{"case in substitution", "echo $(case x in a) npm test;; esac)", []string{"npm"}},
 		{"arithmetic for", "for ((i=0; i<3; i++)); do npm test; done", []string{"npm"}},
-		{"nested subshells", "((cd x) && npm test)", []string{"npm"}},
+		{"nested subshells", "( (cd x) && npm test )", []string{"npm"}},
 		{"substitution in array", `tools=(a "$(npx foo)")`, []string{"npx"}},
 		{"substitution in heredoc", "cat <<EOF\n$(npm test)\nEOF", []string{"npm"}},
 		{"backticks in heredoc", "cat <<EOF\n`npx foo`\nEOF", []string{"npx"}},
@@ -153,6 +154,11 @@ func TestHints(t *testing.T) {
 		{"array append", "tools+=(npm)", nil},
 		{"multi-line array", "tools=(\n  npm # comment\n  npx\n)\necho ok", nil},
 		{"process substitution then argument", "diff <(printf x) python3", nil},
+
+		{"case pattern in substitution", "echo $(case x in npm) echo;; esac)", nil},
+		{"escaped command name", `np\m install`, []string{"npm"}},
+		// POSIX は "$(" と "(" を空白で分けるよう求めており、くっつけると算術式として読まれて解析できない
+		{"unspaced subshell in substitution", "echo $((npm test); echo x)", nil},
 
 		{"unbalanced quote", `echo "npm install`, nil},
 		{"unbalanced substitution", "echo $(npm ls", nil},

@@ -229,7 +229,8 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 `go/cmd/cc-deny-hint` は PreToolUse(Bash) hook。`dot_claude/permission-rules.libsonnet` の Bash ルールのうち `reason` を持つものを引数の JSON で受け取り、コマンドが当たったルールの `reason` だけを `additionalContext` で返す。拒否そのものは `permissions.deny` が行い、この hook は理由をモデルに伝えるだけ。
 
 - hooks の `if` で絞らないのは、コマンド名より先まで指定したパターン（`Bash(git commit*--amend*)` など）だと `$()`・バッククォート・`$VAR` を含むだけで常に hook が実行されるため（公式 docs hooks "How if patterns match Bash commands"。仕様でありリグレッションではない）。以前は `if` 付きの printf hook をルールごとに置いていて、`$` を含む Bash のたびに全ルール（21 件）の理由が注入されていた
-- コマンドは `&&` / `;` / パイプ / サブシェルで単純コマンドに分け、先頭の変数代入と `env` / `sudo` などのラッパー（値を取るオプションは値ごと）を外してから照合する。`$()`・バッククォート・プロセス置換・`bash -c`・`eval` の中身も調べ、引用された引数・リダイレクト先・case のパターン・配列の要素・`command -v` の対象はコマンドとして扱わない。算術式（`$(( ))` / `(( ))`）と、終端語を引用していない heredoc の本文は、中のコマンド置換だけを調べる。引用やコマンド置換が閉じていないなど解析できない入力には何も返さない
+- コマンドは `mvdan.cc/sh/v3/syntax`（shfmt のパーサ）で bash として構文解析し、構文木の単純コマンド（`CallExpr`）だけを照合する。bash として読めなければ zsh として試す（Bash ツールのコマンドはユーザーのシェルで実行されるため。mvdan.cc/sh の zsh 対応は実験的）。引用・コメント・heredoc・case のパターン・算術式・配列の要素・リダイレクト先は構文上コマンドにならず、コマンド置換・プロセス置換・展開される heredoc の本文の中は辿る。照合の前に `env` / `sudo` などのラッパー（値を取るオプションは値ごと）を外し、`bash -c`・`eval` の中身は改めて解析する。`command -v` の対象はコマンドとして扱わない。解析できない入力には何も返さない（`$((cmd); cmd)` のように `$(` と `(` をくっつけた書き方は算術式として読まれて失敗する。POSIX も空白で分けるよう求めている）
+- 以前は手書きの字句解析だったが、bot のレビューのたびに bash の文法の隅（heredoc の中の括弧、行継続、算術式の `<<` など）の取りこぼしが見つかったので、パーサに置き換えた。この repo で唯一の外部依存で、45 のスクリプトがビルドするときにモジュールを取得する（`go.sum` で checksum を固定）
 - Agent / EnterWorktree のルールは `if` で正しく絞れるので、従来どおり `if` と printf で返す
 
 ### Go の JSON 処理
