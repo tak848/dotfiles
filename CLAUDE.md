@@ -251,6 +251,8 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 
 `~/.claude.json` と `~/.codex/config.toml` はツールが自動的に書き込むため、jsonnet で全体生成せず modify テンプレートで管理対象キーのみ差分適用する。
 
+確認なしで実行してよい MCP のツールは `.chezmoidata/mcp-auto-approve.yaml` にまとめてある。`dot_claude/settings.jsonnet` は `std.parseYaml(importstr ...)` で読んで `permissions.allow` を作り、`dot_codex/modify_config.toml` は chezmoi のテンプレートデータとして読んで `tools.<name>.approval_mode = "approve"` を作る。MCP サーバーがツールを改名すると古い名前は黙って効かなくなるので、ツール名は実際のサーバーが公開している名前に合わせる。
+
 ### Claude Code カスタムマーケットプレイス
 
 dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak848-plugins`) として機能する。MCP サーバーは `claude-plugins/` 配下にプラグインとして定義。

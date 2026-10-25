@@ -1,7 +1,9 @@
 local base = {
   provider: {
     name: 'anthropic',
-    model: 'claude-haiku-4-5',
+    // Haiku 4.5 の 1/10 の単価。ccgate は reasoning_effort の既定（none）で thinking: disabled だけを送り、
+    // effort を送らないので、Haiku 5.5 の既定 effort（medium）のまま disabled が受け付けられる。
+    model: 'claude-haiku-5-5',
     timeout_ms: 10000,
   },
 

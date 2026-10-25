@@ -5,6 +5,7 @@ set -e
 # {{ include "dot_claude/auto-mode.libsonnet" | sha256sum }}
 # {{ include "dot_gemini/antigravity-cli/settings.jsonnet" | sha256sum }}
 # {{ include "dot_gemini/antigravity-cli/mcp_config.jsonnet" | sha256sum }}
+# {{ include ".chezmoidata/mcp-auto-approve.yaml" | sha256sum }}
 # jsonnet ファイルが変更された時のみ JSON を生成する
 
 {{ template "path-setup.tmpl" . }}

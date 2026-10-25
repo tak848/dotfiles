@@ -1,5 +1,12 @@
 local permissionRules = import 'permission-rules.libsonnet';
 local autoModeRules = import 'auto-mode.libsonnet';
+// 確認なしで実行してよい MCP のツールは Codex（dot_codex/modify_config.toml）と共通のデータから作る。
+local mcpAutoApprove = std.parseYaml(importstr '../.chezmoidata/mcp-auto-approve.yaml').mcpAutoApprove;
+local mcpAllow = [
+  'mcp__%s__%s' % [mcpAutoApprove[server].claude, tool]
+  for server in std.objectFields(mcpAutoApprove)
+  for tool in mcpAutoApprove[server].tools
+];
 
 {
   language: 'japanese',
@@ -208,7 +215,6 @@ local autoModeRules = import 'auto-mode.libsonnet';
       // 'mcp__playwright__browser_tab_list',
       // 'mcp__playwright__browser_resize',
 
-      'mcp__o3__o3-search',
       // 'mcp__gemini-cli__googleSearch',  // gemini-cli は廃止し agy へ移行
 
       'WebSearch',
@@ -216,47 +222,9 @@ local autoModeRules = import 'auto-mode.libsonnet';
       'WebFetch(domain:docs.devin.ai)',
       'WebFetch(domain:devin.ai)',
       'WebFetch(domain:developers.openai.com)',
-      'mcp__plugin_context7_context7__resolve-library-id',
-      'mcp__plugin_context7_context7__query-docs',
-      'mcp__deepwiki__read_wiki_structure',
-      'mcp__deepwiki__read_wiki_contents',
-      'mcp__deepwiki__ask_question',
-      // Devin MCP (直接定義 — プラグインでは env var 展開が未対応)
-      'mcp__devin__ask_question',
-      'mcp__devin__read_wiki_contents',
-      // AWS Knowledge Plugin (tak848-plugins)
-      'mcp__plugin_aws-knowledge_aws-knowledge__aws___search_documentation',
-      'mcp__plugin_aws-knowledge_aws-knowledge__aws___read_documentation',
-      'mcp__plugin_aws-knowledge_aws-knowledge__aws___recommend',
-      'mcp__plugin_aws-knowledge_aws-knowledge__aws___list_regions',
-      'mcp__plugin_aws-knowledge_aws-knowledge__aws___get_regional_availability',
-      'mcp__plugin_aws-knowledge_aws-knowledge__aws___retrieve_agent_sop',
-      // GitHub Plugin - read 系
-      'mcp__plugin_github_github__get_me',
-      'mcp__plugin_github_github__list_issues',
-      'mcp__plugin_github_github__search_issues',
-      'mcp__plugin_github_github__issue_read',
-      'mcp__plugin_github_github__list_pull_requests',
-      'mcp__plugin_github_github__search_pull_requests',
-      'mcp__plugin_github_github__pull_request_read',
-      'mcp__plugin_github_github__get_file_contents',
-      'mcp__plugin_github_github__list_commits',
-      'mcp__plugin_github_github__get_commit',
-      'mcp__plugin_github_github__list_branches',
-      'mcp__plugin_github_github__list_releases',
-      'mcp__plugin_github_github__list_tags',
-      'mcp__plugin_github_github__search_code',
-      'mcp__plugin_github_github__get_repository_tree',
-      'mcp__plugin_github_github__list_notifications',
-      'mcp__plugin_github_github__get_notification_details',
-      // GitHub Plugin - write 系（コメント・Issue のみ自動許可）
-      'mcp__plugin_github_github__add_issue_comment',
-      'mcp__plugin_github_github__issue_write',
-      'mcp__plugin_github_github__add_reply_to_pull_request_comment',
-      // GitHub Plugin - PR write 系（都度確認のためコメントアウト）
-      // 'mcp__plugin_github_github__create_pull_request',
-      // 'mcp__plugin_github_github__update_pull_request',
-    ],
+      // MCP のツール（context7 / GitHub / Devin / AWS Knowledge）は .chezmoidata/mcp-auto-approve.yaml から作る。
+      // GitHub の PR 作成・更新（create_pull_request / update_pull_request）は都度確認のため入れていない。
+    ] + mcpAllow,
     deny: permissionRules.permissionsDeny,
   },
   // permissions.disableAutoMode により auto mode 自体が無効なので、以下の autoMode
