@@ -234,7 +234,12 @@ func stripWrapper(words []string) []string {
 		w := words[0]
 		switch {
 		case w == "--":
-			return words[1:]
+			words = words[1:]
+			// env はオプションの後に NAME=VALUE を取る（[OPTION]... [-] [NAME=VALUE]... [COMMAND [ARG]...]）
+			for name == "env" && len(words) > 0 && isAssignment(words[0]) {
+				words = words[1:]
+			}
+			return words
 		case isAssignment(w):
 			words = words[1:]
 		case !strings.HasPrefix(w, "-"):
@@ -250,7 +255,7 @@ func stripWrapper(words []string) []string {
 			}
 			if opt == "-S" || opt == "--split-string" {
 				// env -S の値はコマンド行そのものなので、引用を解釈して分け、残りの単語の前に戻す
-				fields, ok := splitWords(value)
+				fields, ok := splitEnvString(value)
 				if !ok {
 					fields = strings.Fields(value)
 				}
@@ -277,46 +282,71 @@ func valueOption(wrapper, w string) (opt, value string, attached, ok bool) {
 	return "", "", false, false
 }
 
-// splitWords は env -S の値を単語に分ける。単一引用符・二重引用符・バックスラッシュを解釈し、
-// 引用が閉じていなければ ok = false を返す。
-func splitWords(s string) (words []string, ok bool) {
+// envEscapes は env -S の値で使えるエスケープ（GNU coreutils のマニュアルの "-S/--split-string syntax"）。
+// \_ と \c は位置によって意味が変わるので splitEnvString で扱う。
+var envEscapes = map[byte]byte{
+	'f': '\f', 'n': '\n', 'r': '\r', 't': '\t', 'v': '\v', '#': '#', '$': '$', '"': '"', '\'': '\'', '\\': '\\',
+}
+
+// splitEnvString は env -S の値を、GNU env の規則で単語に分ける。空白（タブ・改行なども含む）と、引用の外の
+// \_ が区切りになる。単一引用符の中で使えるエスケープは \' と \\ だけ。引用の外で単語の先頭の # から後と、
+// \c から後は無視される。引用が閉じていない、または知らないエスケープがあれば ok = false を返す。
+func splitEnvString(s string) (words []string, ok bool) {
 	var (
 		word   strings.Builder
 		inWord bool
+		quote  byte
 	)
+	endWord := func() {
+		if inWord {
+			words = append(words, word.String())
+			word.Reset()
+			inWord = false
+		}
+	}
 	for i := 0; i < len(s); i++ {
 		c := s[i]
 		switch {
-		case c == ' ' || c == '\t' || c == '\r' || c == '\n':
-			if inWord {
-				words = append(words, word.String())
-				word.Reset()
-				inWord = false
-			}
-		case c == '\\' && i+1 < len(s):
-			word.WriteByte(s[i+1])
+		case quote == 0 && strings.IndexByte(" \t\n\r\v\f", c) >= 0:
+			endWord()
+		case quote == 0 && c == '#' && !inWord:
+			return words, true
+		case c == quote:
+			quote = 0
+		case quote == 0 && (c == '\'' || c == '"'):
+			quote = c
 			inWord = true
+		case c == '\\' && i+1 < len(s):
 			i++
-		case c == '\'' || c == '"':
-			j := strings.IndexByte(s[i+1:], c)
-			if j < 0 {
+			e := s[i]
+			switch {
+			case quote == '\'' && e != '\'' && e != '\\':
+				word.WriteByte('\\')
+				word.WriteByte(e)
+			case e == '_' && quote == 0:
+				endWord()
+			case e == '_':
+				word.WriteByte(' ')
+			case e == 'c' && quote == 0:
+				endWord()
+				return words, true
+			case envEscapes[e] != 0:
+				word.WriteByte(envEscapes[e])
+			default:
 				return nil, false
 			}
-			text := s[i+1 : i+1+j]
-			if c == '"' {
-				text = unescape(text, true)
+			if e != '_' || quote != 0 {
+				inWord = true
 			}
-			word.WriteString(text)
-			inWord = true
-			i += j + 1
 		default:
 			word.WriteByte(c)
 			inWord = true
 		}
 	}
-	if inWord {
-		words = append(words, word.String())
+	if quote != 0 {
+		return nil, false
 	}
+	endWord()
 	return words, true
 }
 
