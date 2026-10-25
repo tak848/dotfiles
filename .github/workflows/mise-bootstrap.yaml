@@ -9,35 +9,32 @@ on:
       - ".mise-bootstrap-version"
       - ".github/workflows/mise-bootstrap.yaml"
 
+# commit は再生成の後で作る GitHub App token で行うので、GITHUB_TOKEN は読み取りだけでよい
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
+# group は workflow ごとに分ける（lockfiles-and-checksums.yaml の concurrency を参照）
 concurrency:
-  group: auto-update-${{ github.ref_name }}
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   update-bootstrap:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - name: Generate GitHub App Token
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
-        id: app-token
-        with:
-          app-id: ${{ vars.APP_ID }}
-          private-key: ${{ secrets.APP_PRIVATE_KEY }}
-
+      # push 時点の SHA ではなくブランチの先頭を取る（lockfiles-and-checksums.yaml の同じ step を参照）
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          token: ${{ steps.app-token.outputs.token }}
+          ref: ${{ github.ref }}
+          persist-credentials: false
 
       - name: Read version
         run: |
           source .mise-bootstrap-version
           # v プレフィックスを除去（mise generate bootstrap -V は v なしのバージョンを期待）
-          echo "MISE_VERSION=${MISE_VERSION#v}" >> $GITHUB_ENV
+          echo "MISE_VERSION=${MISE_VERSION#v}" >> "$GITHUB_ENV"
 
       - name: Setup mise
         uses: jdx/mise-action@8418fedb1110381a0d3ba51a7a415d7c1b884550 # v5.2.2
@@ -46,14 +43,23 @@ jobs:
           install: false
           cache: true
 
-      # .mise-bootstrap-version のバージョンで bootstrap を生成し、変更があれば API 経由で commit する
-      - name: Regenerate and commit via GraphQL
+      # .mise-bootstrap-version のバージョンで bootstrap を生成する。App token はこの後で作る
+      - name: Regenerate bootstrap
+        run: mise generate bootstrap -V "$MISE_VERSION" -w ./dot_local/bin/executable_mise
+
+      - name: Generate GitHub App Token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        id: app-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      # 変更があれば API 経由で commit する
+      - name: Commit via GraphQL
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           REPO: ${{ github.repository }}
           BRANCH: ${{ github.ref_name }}
           FILES: dot_local/bin/executable_mise
           MESSAGE: "chore: update mise bootstrap to ${{ env.MISE_VERSION }}"
-          REGENERATE_CMD: |
-            mise generate bootstrap -V "$MISE_VERSION" -w ./dot_local/bin/executable_mise
         run: bash .github/scripts/commit-via-graphql.sh

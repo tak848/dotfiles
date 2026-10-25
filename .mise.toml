@@ -22,6 +22,9 @@ pnpm = "12.15.0"
 # このリポジトリで使う CLI ツール
 "aqua:google/go-jsonnet" = "0.22.0"
 "aqua:go-task/task" = "3.54.0"
+# ci.yaml の lint で使う（actionlint は workflow の run: を shellcheck にかける）
+"aqua:rhysd/actionlint" = "1.7.12"
+"aqua:koalaman/shellcheck" = "0.11.0"
 
 # install.sh からの bootstrap で使う。dot_config/mise/config.toml と揃える
 "aqua:twpayne/chezmoi" = "2.73.3"

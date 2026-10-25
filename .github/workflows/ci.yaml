@@ -3,9 +3,21 @@ name: CI
 on:
   push:
 
+# 書き込みは何もしないので読み取りだけにする（リポジトリ既定の権限が write でも、ここで絞る）
+permissions:
+  contents: read
+
+# main 以外のブランチでは、新しい push が来たら古い run を止める。Renovate の commit に lockfile や
+# bootstrap の bot commit が続くと、そのたびに 2 OS 分が走り直し、意味を持つのは最後の 1 回だけになる
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    # 既定の 360 分だと、ツールの導入やテストが止まったときに macOS ランナーを長く占有する
+    timeout-minutes: 30
     strategy:
       matrix:
         # macOS と Ubuntu の両方でテスト
@@ -17,12 +29,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       # mise bootstrap と同じバージョンを使用することで、task check の結果を一致させる
       - name: Read mise version from .mise-bootstrap-version
         run: |
           source .mise-bootstrap-version
-          echo "MISE_VERSION=$MISE_VERSION" >> $GITHUB_ENV
+          echo "MISE_VERSION=$MISE_VERSION" >> "$GITHUB_ENV"
 
       - name: Setup mise
         uses: jdx/mise-action@8418fedb1110381a0d3ba51a7a415d7c1b884550 # v5.2.2
@@ -98,14 +112,48 @@ jobs:
           go test ./go/...
           go build ./go/...
 
+      # Go の静的解析。設定は .golangci.yml。結果は OS に依存しないので Ubuntu だけで実行する
+      - name: Lint Go
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          unformatted="$(gofmt -l go)"
+          if [ -n "$unformatted" ]; then
+            echo "Error: gofmt されていないファイルがあります:"
+            echo "$unformatted"
+            exit 1
+          fi
+          golangci-lint run ./go/...
+
+      # シェルスクリプトと workflow の静的解析。run_ スクリプトはテンプレートで OS ごとに中身が変わるので、
+      # 両 OS で描画した結果を検査する。actionlint は workflow の run: も shellcheck にかける
+      - name: Lint shell scripts and workflows
+        run: |
+          shellcheck .github/scripts/*.sh install.sh \
+            dot_local/bin/executable_snowx dot_local/bin/executable_codex-review-exec dot_local/bin/executable_gtts
+          rendered="$RUNNER_TEMP/rendered"
+          mkdir -p "$rendered"
+          for f in run_*.sh.tmpl; do
+            chezmoi --source . execute-template < "$f" > "$rendered/${f%.tmpl}"
+          done
+          shellcheck "$rendered"/*.sh
+          actionlint
+
+      # zsh の関数ファイルの構文。Ubuntu のランナーには zsh が入っていないので macOS だけで実行する
+      - name: Check zsh syntax
+        if: matrix.os == 'macos-latest'
+        run: |
+          for f in dot_zsh/functions/*.zsh; do
+            zsh -n "$f"
+          done
+
       # Jsonnet ソースファイルの構文チェック
       # 構文エラーがあればビルドを失敗させる（Requirement 4.2, 4.3）
       - name: Check Jsonnet syntax
         run: |
           echo "=== Checking Jsonnet syntax ==="
-          for f in $(find dot_claude dot_gemini -name '*.jsonnet'); do
+          find dot_claude dot_codex dot_gemini -name '*.jsonnet' -print0 | while IFS= read -r -d '' f; do
             echo "Checking $f..."
-            jsonnet "$f" > /dev/null || exit 1
+            jsonnet "$f" > /dev/null
           done
           echo "All Jsonnet files are valid."
 

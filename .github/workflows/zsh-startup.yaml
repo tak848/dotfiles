@@ -29,6 +29,7 @@ concurrency:
 jobs:
   measure:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
     strategy:
       # 片方の OS で失敗しても、もう片方の計測は最後まで走らせる
       fail-fast: false
@@ -41,11 +42,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Read mise version from .mise-bootstrap-version
         run: |
           source .mise-bootstrap-version
-          echo "MISE_VERSION=$MISE_VERSION" >> $GITHUB_ENV
+          echo "MISE_VERSION=$MISE_VERSION" >> "$GITHUB_ENV"
 
       - name: Setup mise
         uses: jdx/mise-action@8418fedb1110381a0d3ba51a7a415d7c1b884550 # v5.2.2
@@ -109,6 +112,7 @@ jobs:
     needs: measure
     if: ${{ !cancelled() && github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       pull-requests: write
     steps:

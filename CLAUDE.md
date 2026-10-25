@@ -318,13 +318,15 @@ run_ スクリプトは、必要なツールが見つからないときや処理
 
 | ワークフロー | トリガー | 処理 |
 |-------------|---------|------|
-| `ci.yaml` | push | `task check` で自動生成ファイルの diff チェック |
-| `lockfiles-and-checksums.yaml` | push（`.mise.toml` / `dot_config/mise/config.toml` / `dot_config/aquaproj-aqua/aqua.yaml` 変更時、`main` / `lazy-lock-update` ブランチを除く） | `mise lock`（ルート + `dot_config/mise/`）→ `fill-lockfile-checksums.sh` → `aqua update-checksum --prune` を Renovate PR ブランチへ commit |
-
-`fill-lockfile-checksums.sh` は、`mise lock` では checksum が埋まらないツールを補う。mise は backend が checksum を供給できる場合しか lockfile に書き込まないため、`http` backend のツールや aqua-registry 側に checksum 定義が無いパッケージ（`anthropics/claude-code`, `tamasfe/taplo`, `http:grok`, `http:opencode`）は url だけが残り、install 時の整合性検証が働かない。そこで実アーティファクトを取得して sha256 を計算し、lockfile に追記する。checksum のあるエントリは触らないので冪等。アーティファクトを丸ごとダウンロードする都合上、対象が増えるほど CI 時間は延びる（現状で合計 2 GB 強）。
+| `ci.yaml` | push | ツールの導入確認、Go のテストと lint（gofmt / golangci-lint、設定は `.golangci.yml`）、シェルスクリプト・描画した run_ スクリプト・workflow の lint（shellcheck / actionlint）、zsh の構文（macOS のみ）、jsonnet の評価、`task check`（自動生成ファイルの diff）、chezmoi テンプレートの描画 |
+| `lockfiles-and-checksums.yaml` | push（`.mise.toml` / `.mise-bootstrap-version` / `dot_config/mise/config.toml` / `dot_config/aquaproj-aqua/aqua.yaml` 変更時、`main` / `lazy-lock-update` ブランチを除く） | `mise lock`（ルート + `dot_config/mise/`）→ `fill-lockfile-checksums.sh` → `aqua update-checksum --prune` を Renovate PR ブランチへ commit |
 | `mise-bootstrap.yaml` | push（`.mise-bootstrap-version` 変更時） | `mise generate bootstrap` |
 | `lazy-lock.yaml` | nvim 設定変更 / 週次 cron | Lazy.nvim lockfile 更新（PR 作成 or Renovate PR へコミット） |
 | `zsh-startup.yaml` | PR（zsh の設定・mise / aqua の設定の変更時）/ 手動 | macOS と Linux で zsh の起動時間を測り、時間のかかっている箇所とあわせて job summary と PR のコメントに出す（合否は判定しない。コメントは 1 件を書き換える） |
+
+`fill-lockfile-checksums.sh` は、`mise lock` では checksum が埋まらないツールを補う。mise は backend が checksum を供給できる場合しか lockfile に書き込まないため、`http` backend のツールや aqua-registry 側に checksum 定義が無いパッケージ（`anthropics/claude-code`, `tamasfe/taplo`, `http:grok`, `http:opencode`）は url だけが残り、install 時の整合性検証が働かない。そこで実アーティファクトを取得して sha256 を計算し、lockfile に追記する。checksum のあるエントリは触らないので冪等。アーティファクトを丸ごとダウンロードする都合上、対象が増えるほど CI 時間は延びる（現状で合計 2 GB 強）。
+
+lockfile / bootstrap / lazy-lock の再生成は外部のコード（mise lock の依存解決、Lazy のプラグインの build hook など）を動かすので、書き込みできる GitHub App token を作る前の step で行い、commit の step でだけ App token を使う。GITHUB_TOKEN は読み取りに絞る（lazy-lock の週次 PR の作成だけ書き込みを付ける）。checkout は push 時点の SHA ではなくブランチの先頭を取り、token を `.git/config` に残さない。`commit-via-graphql.sh` は再生成をしない。生成中に別の commit でブランチの先頭が進んで commit が拒否されたら、新しい先頭を取り直し、その間に `FILES` が変わっていなければ生成物を新しい先頭に載せ直して commit する。`FILES` が変わっていれば上書きせずに異常終了する。生成の入力を変える push は paths に当たってその workflow を起動し、古い run を止めて新しい先頭から作り直す。concurrency の group は workflow ごとに分ける。group を共有すると待機できる run が 1 件だけなので、別 workflow の待機中の run が取り消され、生成物だけの commit では起動し直さない。待機枠を増やす `concurrency.queue: max` は actionlint（1.7.12）が未知のキーとして弾くので使わない。週次の lazy-lock PR はブランチの push だけを App token で行う（GITHUB_TOKEN の push では `ci.yaml` が起動せず、必須チェックが付かない）。
 
 ### zsh 設定の読み込み順序
 

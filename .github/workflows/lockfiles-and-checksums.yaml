@@ -7,33 +7,39 @@ on:
       - lazy-lock-update
     paths:
       - ".mise.toml"
+      # mise の版が変わると lock に書かれる asset も変わる（下の Read mise version のコメント）
+      - ".mise-bootstrap-version"
       - "dot_config/mise/config.toml"
       - "dot_config/aquaproj-aqua/aqua.yaml"
       - ".github/workflows/lockfiles-and-checksums.yaml"
 
+# commit は再生成の後で作る GitHub App token で行うので、GITHUB_TOKEN は読み取りだけでよい
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
+# group は workflow ごとに分け、同じブランチで同じ workflow の新しい run が来たら古い run を止める
+# （新しい run がブランチの先頭から作り直す）。mise-bootstrap / lazy-lock と group を共有すると、
+# 待機できる run が group に 1 件だけなので、後から来た別 workflow の run が待機中の run を取り消し、
+# 取り消された側は生成物だけの commit では再び起動しない。並行して先に commit された分は
+# commit-via-graphql.sh が新しい先頭に載せ直す
 concurrency:
-  group: auto-update-${{ github.ref_name }}
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   update-lockfiles-and-checksums:
     runs-on: ubuntu-latest
+    # fill-lockfile-checksums.sh が実アーティファクト（合計 2 GB 強）を落とすので長めに取る
+    timeout-minutes: 30
     steps:
-      - name: Generate GitHub App Token
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
-        id: app-token
-        with:
-          app-id: ${{ vars.APP_ID }}
-          private-key: ${{ secrets.APP_PRIVATE_KEY }}
-
+      # push 時点の SHA ではなくブランチの先頭を取る。同じブランチに先に commit した workflow
+      # （mise-bootstrap 等）があると、push 時点の SHA を親にした commit が expectedHeadOid の不一致で
+      # 必ず 1 回失敗し、再生成を丸ごとやり直していた。公開リポジトリなので token なしで取れる。
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          token: ${{ steps.app-token.outputs.token }}
+          ref: ${{ github.ref }}
+          persist-credentials: false
 
       # mise は aqua-registry のスナップショットをバイナリに焼き込んでいるため、
       # lock 生成と CI で mise のバージョンが異なると、lock に書かれる asset と
@@ -42,7 +48,7 @@ jobs:
       - name: Read mise version from .mise-bootstrap-version
         run: |
           source .mise-bootstrap-version
-          echo "MISE_VERSION=$MISE_VERSION" >> $GITHUB_ENV
+          echo "MISE_VERSION=$MISE_VERSION" >> "$GITHUB_ENV"
 
       - name: Setup mise
         uses: jdx/mise-action@8418fedb1110381a0d3ba51a7a415d7c1b884550 # v5.2.2
@@ -56,33 +62,49 @@ jobs:
         with:
           aqua_version: v2.65.2
 
-      - name: Regenerate and commit via GraphQL
+      # 再生成（mise lock の依存解決、aqua の checksum 取得、アーティファクトのダウンロード）は外部の
+      # コードやファイルを扱うので、書き込みできる App token がまだ存在しない状態で行う。API のレート制限
+      # よけには読み取り専用の GITHUB_TOKEN を渡す（mise も aqua も GITHUB_TOKEN を読み、GH_TOKEN は読まない）。
+      #
+      # lockfile revision 2 は npm / pypi ツールの依存グラフを lockfile 横に sidecar として書き、
+      # mise.lock からはパスと digest で参照する。sidecar が commit されていないと mise install が
+      # 失敗するので、lockfile と一緒に commit する。root の mise.lock の sidecar は .mise/locks/、
+      # dot_config/mise/mise.lock の sidecar は配布先（~/.config/mise/locks/）に合わせて locks/ に置く
+      # （relocate-mise-sidecars.sh を参照）。
+      # 既存 lockfile を残し、変更のない npm / pipx の依存グラフを再利用する。
+      # 全削除して作り直すと uv.lock の exclude-newer と digest が毎回変わり、無関係な PR が競合する。
+      # full mise lock は削除済みツールと旧バージョンを自動で整理するので、事前削除は不要。
+      # pipx:snowflake-cli の依存グラフは uv で解決するので、mise lock の前に uv を入れておく。
+      # 解決に使う Python は uv が見つけられるものなら何でもよい（ランナーの python3 を使う）。
+      - name: Regenerate lockfiles and checksums
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mise lock
+          ( cd dot_config/mise && mise install aqua:astral-sh/uv && mise lock )
+          # mise は repo の dot_config/mise では sidecar を .mise/locks/ に書くが、配布先の
+          # ~/.config/mise/mise.lock では locks/ を置き場にする。そのまま配ると配布先の mise が
+          # 保存のたびに locks/ へ移して mise.lock を書き換えるので、配布先の置き場に揃えておく。
+          bash .github/scripts/relocate-mise-sidecars.sh dot_config/mise
+          # backend が checksum を供給できないツール（http backend や、aqua-registry 側に
+          # checksum 定義が無いパッケージ）は mise lock で url しか埋まらない。
+          # lockfile の更新後に実アーティファクトから sha256 を計算して補う。
+          bash .github/scripts/fill-lockfile-checksums.sh mise.lock dot_config/mise/mise.lock
+          ( cd dot_config/aquaproj-aqua && aqua update-checksum --prune )
+
+      - name: Generate GitHub App Token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        id: app-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Commit via GraphQL
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           REPO: ${{ github.repository }}
           BRANCH: ${{ github.ref_name }}
-          # lockfile revision 2 は npm / pypi ツールの依存グラフを lockfile 横に sidecar として書き、
-          # mise.lock からはパスと digest で参照する。sidecar が commit されていないと mise install が
-          # 失敗するので、lockfile と一緒に commit する。root の mise.lock の sidecar は .mise/locks/、
-          # dot_config/mise/mise.lock の sidecar は配布先（~/.config/mise/locks/）に合わせて locks/ に置く
-          # （relocate-mise-sidecars.sh を参照）。
           FILES: mise.lock .mise dot_config/mise/mise.lock dot_config/mise/locks dot_config/aquaproj-aqua/aqua-checksums.json
           MESSAGE: "chore: update mise lockfiles and aqua checksums"
-          # 既存 lockfile を残し、変更のない npm / pipx の依存グラフを再利用する。
-          # 全削除して作り直すと uv.lock の exclude-newer と digest が毎回変わり、無関係な PR が競合する。
-          # full mise lock は削除済みツールと旧バージョンを自動で整理するので、事前削除は不要。
-          # pipx:snowflake-cli の依存グラフは uv で解決するので、mise lock の前に uv を入れておく。
-          # 解決に使う Python は uv が見つけられるものなら何でもよい（ランナーの python3 を使う）。
-          REGENERATE_CMD: |
-            mise lock
-            ( cd dot_config/mise && mise install aqua:astral-sh/uv && mise lock )
-            # mise は repo の dot_config/mise では sidecar を .mise/locks/ に書くが、配布先の
-            # ~/.config/mise/mise.lock では locks/ を置き場にする。そのまま配ると配布先の mise が
-            # 保存のたびに locks/ へ移して mise.lock を書き換えるので、配布先の置き場に揃えておく。
-            bash .github/scripts/relocate-mise-sidecars.sh dot_config/mise
-            # backend が checksum を供給できないツール（http backend や、aqua-registry 側に
-            # checksum 定義が無いパッケージ）は mise lock で url しか埋まらない。
-            # lockfile の更新後に実アーティファクトから sha256 を計算して補う。
-            bash .github/scripts/fill-lockfile-checksums.sh mise.lock dot_config/mise/mise.lock
-            ( cd dot_config/aquaproj-aqua && aqua update-checksum --prune )
         run: bash .github/scripts/commit-via-graphql.sh
