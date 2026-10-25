@@ -18,7 +18,7 @@ Always respond in 日本語(japanese).
 - 新機能や最新のベストプラクティス
 - 知識のカットオフ以降の情報
 
-公式ドキュメント・リポジトリのソース・リリースノートを、web search や GitHub MCP で直接読む。GitHub の操作（Issue・PR・コード検索等）は GitHub MCP で行う。
+公式ドキュメント・リポジトリのソース・リリースノートを、web search や GitHub MCP / `gh` で直接読む。ライブラリのドキュメントを引くときは context7 MCP も使える。GitHub の操作（Issue・PR・コード検索等）は GitHub MCP でも `gh` でもよい。
 
 **禁止事項:**
 - 一次ソースで確認せずに「〜だと思います」「おそらく〜」と回答すること
