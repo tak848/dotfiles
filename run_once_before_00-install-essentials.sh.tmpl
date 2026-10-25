@@ -79,7 +79,10 @@ fi
 if [ ! -x "$BREW_PATH" ]; then
   if [ "$HAS_SUDO" = true ]; then
     echo "Installing Homebrew..."
-    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # 取得と実行を分けて、curl の失敗を set -e で止める。bash -c "$(curl ...)" だと curl が失敗しても
+    # bash -c "" が 0 を返し、run_once が成功として記録されて二度と再試行されない。
+    brew_installer="$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    NONINTERACTIVE=1 /bin/bash -c "$brew_installer"
   else
     echo "[skip] Homebrew が未インストールですが sudo が使えないためスキップします。"
   fi
@@ -103,7 +106,10 @@ fi
 {{- if eq .chezmoi.os "darwin" }}
 if ! command -v cursor-agent &> /dev/null; then
   echo "Installing cursor-agent..."
-  curl https://cursor.com/install -fsS | bash
+  # Homebrew と同じ理由で取得と実行を分ける（pipefail が無いので curl | bash では curl の失敗を拾えない）。
+  # curl | bash のときと同じく、インストーラに端末の標準入力を渡さない。
+  cursor_installer="$(curl -fsS https://cursor.com/install)"
+  bash -c "$cursor_installer" </dev/null
 fi
 {{- end }}
 

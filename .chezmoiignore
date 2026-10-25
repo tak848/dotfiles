@@ -1,33 +1,42 @@
+# パターンは doublestar で配布先（target）のパスに照合する。ソース側の名前（dot_ 付き）では書かない。
+# `!dot_claude/ccgate.jsonnet` のように書くと何にも一致しない。* は / を越えないので、`*.jsonnet` は
+# ~/*.jsonnet だけに当たり、~/.claude/settings.jsonnet には当たらない。
+#
 # パターンの先頭に / を付けないこと。chezmoi 2.72.0 の path 検証強化で絶対パス扱いになり
-# `invalid path` で apply 全体が落ちる。パターンは doublestar で target path 全体に対して
-# 照合されるので、先頭スラッシュ無しでも root 直下だけに当たる（`mise.lock` は
+# `invalid path` で apply 全体が落ちる。先頭スラッシュ無しでも root 直下だけに当たる（`mise.lock` は
 # ~/mise.lock だけを無視し、~/.config/mise/mise.lock は無視しない）。
+#
+# ソースディレクトリでドットから始まるもの（.github, .envrc, .claude-plugin 等）は chezmoi が
+# 元から読まないので、ここに書く必要は無い。
+#
+# ここに足したパスは、既に配布済みのマシンからは消えない（.chezmoiremove も ignore 済みのパスは
+# 消さない）。消す必要があるなら run_once_after_61-remove-misdeployed-files.sh.tmpl のように消す。
+
+# リポジトリの文書・開発用のファイル
 CLAUDE.md
-README.md
-LICENSE
-.git
-.gitignore
-install.sh
-*.jsonnet
-!dot_claude/ccgate.jsonnet
-aqua.yaml
-aqua-checksums.json
-!dot_config/aquaproj-aqua/aqua.yaml
-!dot_config/aquaproj-aqua/aqua-checksums.json
-.task
-.github
-renovate.json5
-.envrc
 AGENTS.md
+README.md
+REVIEW.md
+LICENSE
+install.sh
 Taskfile.yaml
-create_dot_zsh
 mise.lock
-.cursorrules
 go.mod
+go.sum
 go/
-.claude/bin
-.codex/bin
-.claude-plugin
-.claude-plugin/**
 claude-plugins
 claude-plugins/**
+
+# jsonnet のソースは run_onchange_after_40 がソースディレクトリから読んで JSON を生成するので配らない。
+# ~/.claude/ccgate.jsonnet・~/.codex/ccgate.jsonnet と、それらが import する ~/ccgate.libsonnet は
+# ccgate が配布先で読むので配る。
+.claude/settings.jsonnet
+.claude/*.libsonnet
+.gemini/antigravity-cli/*.jsonnet
+
+# ソース側の説明用の文書
+.claude/README.md
+
+# run_onchange_after_45 がビルドしたバイナリの置き場
+.claude/bin
+.codex/bin

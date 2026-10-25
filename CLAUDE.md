@@ -273,11 +273,14 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 | `dot_claude/settings.jsonnet` の `extraKnownMarketplaces` | マーケットプレイス登録 |
 | `dot_claude/settings.jsonnet` の `enabledPlugins` | プラグイン有効化 |
 
+`marketplace.json` のエントリと各 `plugin.json` には `version` を書かない。書くとその値で固定され、中身を変えても `claude plugin update` が更新しない（公式 docs plugins/loading "Versions and updates"）。書かなければ install 時点のマーケットプレイス（このリポジトリ）の HEAD の commit SHA が version になり（plugin ディレクトリを最後に変えた commit ではない。隔離した `CLAUDE_CONFIG_DIR` で確認）、50 のスクリプトの `claude plugin update` が変更を取り込む。このマーケットプレイスは auto-update が既定で無効なので、update が走るのは 50 が実行されたときだけ。`claude plugin validate` は version が無いと warning を出すので、CI は `--strict` を付けずにエラーだけで落とす（`--strict` は icon や privacy policy URL の欠如でも落ちる）。
+
 #### Claude Security（uv 専用のローカル加工版）
 
 `security-uv@tak848-plugins` だけを使い、公式版とは二重導入しない。`claude-` は第三者プラグインの予約プレフィックスなので、生成 manifest と内部の namespace も `security-uv` に揃える。本体は公開 repo に vendor せず、`go/cmd/cc-claude-security-source` が `anthropics/claude-plugins-official` の固定 SHA `ea10b213686c90bb1984b2016937310e05336cf3` から `plugins/claude-security/` を取得・加工する。取得したコード・setup・hooks は生成時には実行せず、LICENSE/NOTICE は保持する。
 
 - command source は `"$HOME/.claude/bin/cc-claude-security-source"`（timeout 180 秒、mode `copy`）。`run_onchange_after_45-build-statusline.sh.tmpl` がバイナリをビルドし、50 のスクリプトが user scope にインストールする。両スクリプトは生成処理のソース変更も検知する
+- command source の version は生成物の内容のハッシュで決まる（manifest に version があれば `<version>-<ハッシュ>`。marketplace エントリの version は無視される。公式 docs plugins/loading "How Claude Code computes the version"）。生成 manifest に上流の version を残しても更新は止まらない。導入済みへの install は command を実行せず、セッションごとの再実行は有効なプラグインにしか走らないので、既定で無効な security-uv を更新するのは 50 の `claude plugin update security-uv@tak848-plugins` だけ
 - catalog と生成 manifest の `defaultEnabled: false` で初回無効にする。settings に強制的な false は追加せず、必要なときだけ明示的に有効化する
 - プラグインが管理する Python の入口は `uv run --no-project --no-config --python 3.13 python3` に統一し、直呼びへの fallback はしない。保証範囲はプラグイン内の入口であり、スキャン先の任意 repo の make/shell 内部まで保証するものではない
 - pin や変換処理を更新するときは `go test ./go/...` に加え、専用一時ディレクトリで固定 SHA の実データの取得・変換だけを検証する。hook/manifest の JSON、Python 直呼びの残存、初回無効を確認し、スキャン・実環境への install/enable や chezmoi update/apply は検証として実行しない
@@ -295,7 +298,10 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 | `run_onchange_after_30-install-packages.sh.tmpl` | `packages.yaml` 変更時 | `brew install`（macOS） |
 | `run_onchange_after_40-generate-jsonnet.sh.tmpl` | jsonnet ファイル変更時 | jsonnet → JSON 生成（`~/.claude/settings.json`, `~/.gemini/antigravity-cli/{settings,mcp_config}.json`） |
 | `run_onchange_after_45-build-statusline.sh.tmpl` | Go ソース変更時 | `~/.claude/bin/` と `~/.codex/bin/` へ Go バイナリをビルド |
-| `run_onchange_after_50-claude-plugins.sh.tmpl` | プラグイン定義変更時 | `claude plugin marketplace update` + `install` |
+| `run_onchange_after_50-claude-plugins.sh.tmpl` | プラグイン定義変更時 | `claude plugin marketplace update` + `install` + `update` |
+| `run_once_after_61-remove-misdeployed-files.sh.tmpl` | 初回のみ | `.chezmoiignore` の誤りで配布されていたファイル（`~/REVIEW.md`、配布先の jsonnet ソース等）を削除 |
+
+run_ スクリプトは、必要なツールが見つからないときや処理に失敗したときに非ゼロで終える。警告だけ出して exit 0 で抜けると chezmoi は成功として記録し、スクリプトの内容が変わるまで再実行しない。非ゼロで終えれば次の apply で再試行される。
 
 ### Chezmoi ファイル命名規則
 
