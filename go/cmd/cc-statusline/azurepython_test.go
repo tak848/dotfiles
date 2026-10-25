@@ -7,17 +7,17 @@ import (
 	"testing"
 )
 
-// Azure CLI 用の Python は run_onchange スクリプトが uv で入れ、mise の [env] AZ_PYTHON が
-// その実行ファイルを指す。Renovate がスクリプト側のマイナーバージョンだけを上げると、
-// 新しいマシンでは AZ_PYTHON の指す python3.X が存在せず az が起動しない。既存のマシンは
-// 古い版が残っているので気づけないため、ここで両者のマイナーバージョンと置き場所の一致を検証する。
+// Azure CLI 用の Python は run_onchange スクリプトが uv で UV_PYTHON_BIN_DIR に入れ、版を含まない
+// リンクをそこへ張る。mise の [env] AZ_PYTHON はそのリンクを指す。片方だけ置き場所やリンク名を
+// 変えると az が起動しなくなるが、既存のマシンには古いリンクやファイルが残っていて気づけないため、
+// ここで両者の一致を検証する。
 const azurePythonScript = "run_onchange_after_15-azure-cli-python.sh.tmpl"
 
 var (
-	azurePythonVersionRe = regexp.MustCompile(`(?m)^AZURE_CLI_PYTHON_VERSION="(\d+\.\d+)\.\d+"`)
-	azurePythonBinDirRe  = regexp.MustCompile(`(?m)^export UV_PYTHON_BIN_DIR="\$\{XDG_DATA_HOME\}(/[^"]*)"`)
+	azurePythonBinDirRe = regexp.MustCompile(`(?m)^export UV_PYTHON_BIN_DIR="\$\{XDG_DATA_HOME\}(/[^"]*)"`)
+	azurePythonLinkRe   = regexp.MustCompile(`(?m)^ln -sfn "python\$\{py_ver\}" "\$\{UV_PYTHON_BIN_DIR\}/([^"/]+)"`)
 	// XDG_DATA_HOME は mise のテンプレート（{{ env.XDG_DATA_HOME | default(...) }}）なので、その後ろを比べる
-	azPythonEnvRe = regexp.MustCompile(`(?m)^AZ_PYTHON = '\{\{[^}]*\}\}(/[^']*)/python(\d+\.\d+)'`)
+	azPythonEnvRe = regexp.MustCompile(`(?m)^AZ_PYTHON = '\{\{[^}]*\}\}(/[^']*)/([^'/]+)'`)
 )
 
 func TestAzurePythonMatchesAZPython(t *testing.T) {
@@ -33,28 +33,28 @@ func TestAzurePythonMatchesAZPython(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	m := azurePythonVersionRe.FindSubmatch(script)
-	if m == nil {
-		t.Fatalf("%s has no AZURE_CLI_PYTHON_VERSION=\"X.Y.Z\" line", azurePythonScript)
-	}
-	installed := string(m[1])
-
-	m = azurePythonBinDirRe.FindSubmatch(script)
+	m := azurePythonBinDirRe.FindSubmatch(script)
 	if m == nil {
 		t.Fatalf("%s has no export UV_PYTHON_BIN_DIR=\"${XDG_DATA_HOME}/...\" line", azurePythonScript)
 	}
 	binDir := string(m[1])
 
+	m = azurePythonLinkRe.FindSubmatch(script)
+	if m == nil {
+		t.Fatalf("%s has no ln -sfn \"python${py_ver}\" \"${UV_PYTHON_BIN_DIR}/<name>\" line", azurePythonScript)
+	}
+	link := string(m[1])
+
 	m = azPythonEnvRe.FindSubmatch(config)
 	if m == nil {
-		t.Fatal("dot_config/mise/config.toml has no AZ_PYTHON = '{{ env.XDG_DATA_HOME ... }}/.../pythonX.Y' line")
+		t.Fatal("dot_config/mise/config.toml has no AZ_PYTHON = '{{ env.XDG_DATA_HOME ... }}/.../<name>' line")
 	}
-	expectedDir, expected := string(m[1]), string(m[2])
+	expectedDir, expectedLink := string(m[1]), string(m[2])
 
-	if installed != expected {
-		t.Errorf("%s installs Python %s but AZ_PYTHON points to python%s", azurePythonScript, installed, expected)
-	}
 	if binDir != expectedDir {
 		t.Errorf("%s installs Python into $XDG_DATA_HOME%s but AZ_PYTHON points into $XDG_DATA_HOME%s", azurePythonScript, binDir, expectedDir)
+	}
+	if link != expectedLink {
+		t.Errorf("%s links %s but AZ_PYTHON points to %s", azurePythonScript, link, expectedLink)
 	}
 }

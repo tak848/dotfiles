@@ -176,6 +176,15 @@ jobs:
         run: |
           chezmoi --source . --dry-run --verbose apply
 
+      # Azure CLI の tarball は Python を同梱しない。run_onchange_after_15 がランチャーの PY_VER を読んで
+      # 入れた Python で、AZ_PYTHON 経由で起動できるかを両 OS で確かめる
+      - name: Verify Azure CLI runs
+        run: |
+          script="$RUNNER_TEMP/azure-cli-python.sh"
+          chezmoi --source . execute-template < run_onchange_after_15-azure-cli-python.sh.tmpl > "$script"
+          bash "$script"
+          mise exec -- az version
+
       # リポジトリ専用のファイル（文書・jsonnet のソース・Go のソース等）が配布対象に入っていないか。
       # .chezmoiignore は配布先のパスに照合するので、ソース側のパスで書くと黙って効かずに配布される。
       # 配布先で読むもの（~/.claude/CLAUDE.md、ccgate の jsonnet 等）は除外リストで許す。
