@@ -346,43 +346,36 @@ specifiers = ["2026.10.3"]
 
 [tools."aqua:cloudflare/cloudflared"."platforms.linux-arm64"]
 checksum = "sha256:89297ebfb9e8c99c0dc013a1140601453cf3798d8306c5591651f4a3f5210be8"
-checksum_source = "mise-versions"
 url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.3/cloudflared-linux-arm64"
 url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/662571615"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.linux-arm64-musl"]
 checksum = "sha256:89297ebfb9e8c99c0dc013a1140601453cf3798d8306c5591651f4a3f5210be8"
-checksum_source = "mise-versions"
 url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.3/cloudflared-linux-arm64"
 url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/662571615"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.linux-x64"]
 checksum = "sha256:053b80b0a23031a038fdbf3c073f59f82b8f1f152aa67971d7383ffafc0dbab0"
-checksum_source = "mise-versions"
 url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.3/cloudflared-linux-amd64"
 url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/662570969"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.linux-x64-musl"]
 checksum = "sha256:053b80b0a23031a038fdbf3c073f59f82b8f1f152aa67971d7383ffafc0dbab0"
-checksum_source = "mise-versions"
 url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.3/cloudflared-linux-amd64"
 url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/662570969"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.macos-arm64"]
 checksum = "sha256:1165d14b6f6360a3b8c283d7d1100024d6ec7cd9bc9e32519e96150645f3ec55"
-checksum_source = "mise-versions"
 url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.3/cloudflared-darwin-arm64.tgz"
 url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/662573250"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.macos-x64"]
 checksum = "sha256:81b7b85f2376815c4f59b1aa323887b62e16ce8b67555c2e1577dc23f2a82000"
-checksum_source = "mise-versions"
 url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.3/cloudflared-darwin-amd64.tgz"
 url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/662572905"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.windows-x64"]
 checksum = "sha256:76b2805253d0d6ffacb092a7acfbee99e7af6917835c0c5410e23f3ef5052da2"
-checksum_source = "mise-versions"
 url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.3/cloudflared-windows-amd64.exe"
 url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/662573817"
 
@@ -595,43 +588,36 @@ specifiers = ["7.1.1"]
 
 [tools."aqua:jdx/usage"."platforms.linux-arm64"]
 checksum = "sha256:596a2a7a2d460d6a80ef4328ffb7c56e4577fe2e4dba942d036f90d14354534d"
-checksum_source = "mise-versions"
 url = "https://github.com/jdx/usage/releases/download/v7.1.1/usage-aarch64-unknown-linux-gnu.tar.gz"
 url_api = "https://api.github.com/repos/jdx/usage/releases/assets/665441851"
 
 [tools."aqua:jdx/usage"."platforms.linux-arm64-musl"]
 checksum = "sha256:5f5d8ed6295130fb82df9a5ee0fabb226c80a7085eda849c18edb561b76f4d97"
-checksum_source = "mise-versions"
 url = "https://github.com/jdx/usage/releases/download/v7.1.1/usage-aarch64-unknown-linux-musl.tar.gz"
 url_api = "https://api.github.com/repos/jdx/usage/releases/assets/665439837"
 
 [tools."aqua:jdx/usage"."platforms.linux-x64"]
 checksum = "sha256:dcc37cb5fb59088bab82e6f5f752c002a526dd9b35909be76d8459f46b4c30ca"
-checksum_source = "mise-versions"
 url = "https://github.com/jdx/usage/releases/download/v7.1.1/usage-x86_64-unknown-linux-gnu.tar.gz"
 url_api = "https://api.github.com/repos/jdx/usage/releases/assets/665441647"
 
 [tools."aqua:jdx/usage"."platforms.linux-x64-musl"]
 checksum = "sha256:afea9fb0636305e011860ce2f3de26b5702c7bc8ffce8eb32aa9c95ff7f5804f"
-checksum_source = "mise-versions"
 url = "https://github.com/jdx/usage/releases/download/v7.1.1/usage-x86_64-unknown-linux-musl.tar.gz"
 url_api = "https://api.github.com/repos/jdx/usage/releases/assets/665441625"
 
 [tools."aqua:jdx/usage"."platforms.macos-arm64"]
 checksum = "sha256:50234db60947885bf87cda5ce28ee9c13924b6694528737bf6a7327e980f3bcd"
-checksum_source = "mise-versions"
 url = "https://github.com/jdx/usage/releases/download/v7.1.1/usage-universal-apple-darwin.tar.gz"
 url_api = "https://api.github.com/repos/jdx/usage/releases/assets/665441882"
 
 [tools."aqua:jdx/usage"."platforms.macos-x64"]
 checksum = "sha256:50234db60947885bf87cda5ce28ee9c13924b6694528737bf6a7327e980f3bcd"
-checksum_source = "mise-versions"
 url = "https://github.com/jdx/usage/releases/download/v7.1.1/usage-universal-apple-darwin.tar.gz"
 url_api = "https://api.github.com/repos/jdx/usage/releases/assets/665441882"
 
 [tools."aqua:jdx/usage"."platforms.windows-x64"]
 checksum = "sha256:75659545f16f84474c32cebb6ee3e304aedf63286c31ec73c3cab695fb56a6aa"
-checksum_source = "mise-versions"
 url = "https://github.com/jdx/usage/releases/download/v7.1.1/usage-x86_64-pc-windows-msvc.zip"
 url_api = "https://api.github.com/repos/jdx/usage/releases/assets/665443307"
 
@@ -1477,43 +1463,36 @@ specifiers = ["1.4.7"]
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-arm64"]
 checksum = "sha256:b273c791b7647f680598fa1dbdf9c8086bdc42374b2276fa70e900bf8120e1d5"
-checksum_source = "mise-versions"
 url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.4.7/agy_cli_linux_arm64.tar.gz"
 url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/671080004"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-arm64-musl"]
 checksum = "sha256:7d35cda0cb6a620894740ddaf9b55c3d9484b992a564e15ea348bd6cdd9c3c3f"
-checksum_source = "mise-versions"
 url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.4.7/agy_cli_linux_arm64_musl.tar.gz"
 url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/671080003"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-x64"]
 checksum = "sha256:67fd4e70be739b1f8b18f90b511da8cd2a7aef24e888e5837402e025bf7fdbfc"
-checksum_source = "mise-versions"
 url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.4.7/agy_cli_linux_x64.tar.gz"
 url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/671080002"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-x64-musl"]
 checksum = "sha256:bdb527a0f7370c524f5e07b694c290c8acbd68b6b3ed61550ca9fb2fca8a5327"
-checksum_source = "mise-versions"
 url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.4.7/agy_cli_linux_x64_musl.tar.gz"
 url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/671080005"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.macos-arm64"]
 checksum = "sha256:9fed7bfe90cb158ac00b5b2da64dd54af732f7c062259e68ebd060b827fd0d88"
-checksum_source = "mise-versions"
 url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.4.7/agy_cli_mac_arm64.tar.gz"
 url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/671080158"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.macos-x64"]
 checksum = "sha256:0ac94431f774659e71928019c26c649e5711179629b86968e96cb9193e2ec557"
-checksum_source = "mise-versions"
 url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.4.7/agy_cli_mac_x64.tar.gz"
 url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/671080006"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.windows-x64"]
 checksum = "sha256:b82fc615941c1ef1c0692186510e4f620004ee08017c9e94ec1ac61046b9cc66"
-checksum_source = "mise-versions"
 url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.4.7/agy_cli_windows_x64.zip"
 url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/671080164"
 
@@ -1571,43 +1550,36 @@ specifiers = ["v8.0.41"]
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-arm64"]
 checksum = "sha256:5121a57c64627cb76cb19853b5e88cc0f056b66adf31d1128dbea2ac60817bb7"
-checksum_source = "mise-versions"
 url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.41/CLIProxyAPI_8.0.41_linux_aarch64.tar.gz"
 url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/670003441"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-arm64-musl"]
 checksum = "sha256:5121a57c64627cb76cb19853b5e88cc0f056b66adf31d1128dbea2ac60817bb7"
-checksum_source = "mise-versions"
 url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.41/CLIProxyAPI_8.0.41_linux_aarch64.tar.gz"
 url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/670003441"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-x64"]
 checksum = "sha256:99b9ca69753b2fa16290edecae4d19011299ecd7bfbad17a411b5470288d8b4a"
-checksum_source = "mise-versions"
 url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.41/CLIProxyAPI_8.0.41_linux_amd64.tar.gz"
 url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/670004163"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-x64-musl"]
 checksum = "sha256:99b9ca69753b2fa16290edecae4d19011299ecd7bfbad17a411b5470288d8b4a"
-checksum_source = "mise-versions"
 url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.41/CLIProxyAPI_8.0.41_linux_amd64.tar.gz"
 url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/670004163"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.macos-arm64"]
 checksum = "sha256:aa6f88d7e27bacea8250802bf44b22c2e33ecb6e2a8f2c7d94f0b383ba6958bc"
-checksum_source = "mise-versions"
 url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.41/CLIProxyAPI_8.0.41_darwin_aarch64.tar.gz"
 url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/670003448"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.macos-x64"]
 checksum = "sha256:82c791b7f67680b7bf14a3336fef1d13a48b7ff55fe67ff79cfa36f013eabfde"
-checksum_source = "mise-versions"
 url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.41/CLIProxyAPI_8.0.41_darwin_amd64.tar.gz"
 url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/670007952"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.windows-x64"]
 checksum = "sha256:81bba2e24e2979741a7d224164b7d3aa4bc53f38704e46cab1f10ad8dc877bd7"
-checksum_source = "mise-versions"
 url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.41/CLIProxyAPI_8.0.41_windows_amd64.zip"
 url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/670005276"
 
@@ -1905,25 +1877,25 @@ url = "https://nodejs.org/dist/v24.22.1/node-v24.22.1-win-x64.zip"
 
 [[tools."npm:@fission-ai/openspec"]]
 version = "1.15.0"
-aube = { path = ".mise/locks/npm-fission-ai-openspec/1.15.0", digest = "sha256:e1f07c5a8ec5c0d9894b12754eb66e99223f29d1723604b631cbd82b151f2ef0" }
+aube = { path = "locks/npm-fission-ai-openspec/1.15.0", digest = "sha256:e1f07c5a8ec5c0d9894b12754eb66e99223f29d1723604b631cbd82b151f2ef0" }
 backend = "npm:@fission-ai/openspec"
 specifiers = ["1.15.0"]
 
 [[tools."npm:@typescript/native-preview"]]
 version = "7.0.0-dev.20260707.2"
-aube = { path = ".mise/locks/npm-typescript-native-preview/7.0.0-dev.20260707.2", digest = "sha256:a45a98c540ad73f14a677ee62351ea6f8e1d714903f7dfe7f0d2f3bddc6133fb" }
+aube = { path = "locks/npm-typescript-native-preview/7.0.0-dev.20260707.2", digest = "sha256:a45a98c540ad73f14a677ee62351ea6f8e1d714903f7dfe7f0d2f3bddc6133fb" }
 backend = "npm:@typescript/native-preview"
 specifiers = ["7.0.0-dev.20260707.2"]
 
 [[tools."npm:ccusage"]]
 version = "20.0.42"
-aube = { path = ".mise/locks/npm-ccusage/20.0.42", digest = "sha256:dc218766e71667c5a58690dd2566ead023d7fd21bc6f3c673d693155aa51863f" }
+aube = { path = "locks/npm-ccusage/20.0.42", digest = "sha256:dc218766e71667c5a58690dd2566ead023d7fd21bc6f3c673d693155aa51863f" }
 backend = "npm:ccusage"
 specifiers = ["20.0.42"]
 
 [[tools."npm:defuddle"]]
 version = "0.19.5"
-aube = { path = ".mise/locks/npm-defuddle/0.19.5", digest = "sha256:95c13b92718fac26a7bb5cdcaf2989ce9e417d26210265e1b8d0550c1ac5aa41" }
+aube = { path = "locks/npm-defuddle/0.19.5", digest = "sha256:d40596619e17c038dbe0b19d35a86468e1161ea6f7eb3087b7f81f5c248155f7" }
 backend = "npm:defuddle"
 specifiers = ["0.19.5"]
 
@@ -1931,6 +1903,7 @@ specifiers = ["0.19.5"]
 version = "3.31.0"
 backend = "pipx:snowflake-cli"
 specifiers = ["3.31.0"]
+uv = { path = "locks/pipx-snowflake-cli/3.31.0", digest = "sha256:1882dfa918b8ba7aac058983c3a7e4ca822011298556d9ad5990ede6901beb6d" }
 
 [[tools.pnpm]]
 version = "12.15.0"
