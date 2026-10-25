@@ -127,3 +127,31 @@ jobs:
       - name: Verify chezmoi templates
         run: |
           chezmoi --source . --dry-run --verbose apply
+
+      # リポジトリ専用のファイル（文書・jsonnet のソース・Go のソース等）が配布対象に入っていないか。
+      # .chezmoiignore は配布先のパスに照合するので、ソース側のパスで書くと黙って効かずに配布される。
+      # 配布先で読むもの（~/.claude/CLAUDE.md、ccgate の jsonnet 等）は除外リストで許す。
+      - name: Verify repository-only files are not distributed
+        run: |
+          managed="$(chezmoi --source . --destination "$RUNNER_TEMP/chezmoi-home" managed --include files,symlinks)"
+          leaked="$(printf '%s\n' "$managed" \
+            | grep -E '(^|/)(CLAUDE\.md|AGENTS\.md|README\.md|REVIEW\.md|LICENSE|install\.sh|Taskfile\.yaml|go\.(mod|sum))$|\.(jsonnet|libsonnet)$|^(go|claude-plugins)/' \
+            | grep -v -x -E '\.claude/CLAUDE\.md|\.codex/AGENTS\.md|\.config/tmux/README\.md|\.claude/ccgate\.jsonnet|\.codex/ccgate\.jsonnet|ccgate\.libsonnet' \
+            || true)"
+          if [ -n "$leaked" ]; then
+            echo "Error: リポジトリ専用のファイルが配布対象に入っています。.chezmoiignore に配布先のパスで追加してください:"
+            echo "$leaked"
+            exit 1
+          fi
+          echo "リポジトリ専用のファイルは配布対象に入っていません。"
+
+      # marketplace.json と各プラグインの manifest を検証する。version を書かない方針
+      # （CLAUDE.md「Claude Code カスタムマーケットプレイス」）と icon 等の提出向けの warning があるので、
+      # --strict は付けずエラーだけで落とす。結果は OS に依存しないので Ubuntu だけで実行する。
+      - name: Validate Claude Code plugins
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          claude plugin validate .
+          for dir in claude-plugins/*/; do
+            claude plugin validate "$dir"
+          done

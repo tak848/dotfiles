@@ -30,9 +30,11 @@ set -e
 
 {{ template "path-setup.tmpl" . }}
 
+# go は 10 の mise install で入る。見つからないときに exit 0 で抜けると chezmoi は成功として記録し、
+# Go ソースが変わるまで再実行しないので、異常終了させて次の apply で再試行させる。
 if ! command -v go &> /dev/null; then
-    echo "警告: go コマンドが見つかりません。Go バイナリはビルドされません。"
-    exit 0
+    echo "エラー: go コマンドが見つかりません。Go バイナリをビルドできません。" >&2
+    exit 1
 fi
 
 SOURCE_DIR="{{ .chezmoi.sourceDir }}"

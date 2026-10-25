@@ -21,9 +21,10 @@ set -euo pipefail
 
 {{ template "path-setup.tmpl" . }}
 
+# claude は 10 の mise install で入る。見つからないときも上と同じ理由で exit 0 にせず異常終了させる。
 if ! command -v claude &> /dev/null; then
-    echo "WARN: claude CLI not found, skipping plugin setup" >&2
-    exit 0
+    echo "エラー: claude CLI が見つかりません。プラグインを設定できません。" >&2
+    exit 1
 fi
 
 echo "Claude Code プラグインを更新中..."
@@ -35,8 +36,12 @@ claude plugin marketplace add tak848/dotfiles
 # ~/.claude/plugins/marketplaces/tak848-plugins が古いまま残り、新しく追加したプラグインが
 # install 時に "not found in marketplace" になる。明示的に update して clone を最新にする。
 claude plugin marketplace update tak848-plugins
+# install は導入済みなら何もしない（exit 0）ので、中身の変更は update で取り込む。marketplace.json に
+# version を書かず、Claude Code が plugin ディレクトリの commit SHA を version にするので、変更が
+# あれば update が検出する。このマーケットプレイスは auto-update が既定で無効なのでここで呼ぶ。
 for plugin in aws-knowledge context7; do
     claude plugin install "${plugin}@tak848-plugins"
+    claude plugin update "${plugin}@tak848-plugins"
 done
 # 初回は defaultEnabled: false で無効。--yes はこの command source の実行承認にだけ使う。
 claude plugin install security-uv@tak848-plugins --scope user --yes
