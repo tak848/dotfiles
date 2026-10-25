@@ -34,7 +34,7 @@ jobs:
         run: |
           source .mise-bootstrap-version
           # v プレフィックスを除去（mise generate bootstrap -V は v なしのバージョンを期待）
-          echo "MISE_VERSION=${MISE_VERSION#v}" >> $GITHUB_ENV
+          echo "MISE_VERSION=${MISE_VERSION#v}" >> "$GITHUB_ENV"
 
       - name: Setup mise
         uses: jdx/mise-action@fc42bcc7ddbf51124c30f95a877a0c5168a3bfde # v5.2.1
