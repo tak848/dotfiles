@@ -23,7 +23,8 @@ export PATH="${AQUA_ROOT_DIR}/bin:$PATH"
 # 無条件に足すと深さごとに値が伸び、この値をキーに含む .zshrc の zoxide init キャッシュが作り直され続ける
 _aqua_global_config="${XDG_CONFIG_HOME}/aquaproj-aqua/aqua.yaml"
 case ":${AQUA_GLOBAL_CONFIG:-}:" in
-    *":${_aqua_global_config}:"*) ;;
+    # 既に入っていても export されていない（同じシェルで代入だけされた）ことがあるので export はする
+    *":${_aqua_global_config}:"*) export AQUA_GLOBAL_CONFIG ;;
     *) export AQUA_GLOBAL_CONFIG="${AQUA_GLOBAL_CONFIG:+${AQUA_GLOBAL_CONFIG}:}${_aqua_global_config}" ;;
 esac
 unset _aqua_global_config
