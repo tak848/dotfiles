@@ -306,6 +306,7 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 | `run_once_before_00-install-essentials.sh.tmpl` | 初回のみ | Homebrew, zinit, cursor-agent インストール |
 | `run_onchange_after_10-mise-install.sh.tmpl` | `config.toml` 変更時 | `mise install` |
 | `run_onchange_after_12-zsh-completions.sh.tmpl` | pup / task / temporal / mise のバージョン変更時 | 各ツールの zsh 補完を `~/.local/share/zsh/completions/` に書き出して zcompile |
+| `run_onchange_after_15-azure-cli-python.sh.tmpl` | azure-cli / uv のバージョン変更時 | Azure CLI のランチャー（`libexec/bin/az`）の `PY_VER` が示す Python を uv で入れ、`AZ_PYTHON` が指すリンク `az-python` を張り替える |
 | `run_onchange_after_20-aqua-install.sh.tmpl` | `aqua.yaml` 変更時 | `aqua install` |
 | `run_onchange_after_30-install-packages.sh.tmpl` | `packages.yaml` 変更時 | `brew install`（macOS） |
 | `run_onchange_after_40-generate-jsonnet.sh.tmpl` | jsonnet ファイル変更時 | jsonnet → JSON 生成（`~/.claude/settings.json`, `~/.gemini/antigravity-cli/{settings,mcp_config}.json`） |

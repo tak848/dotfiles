@@ -1311,6 +1311,45 @@ backend = "github:Azure/azure-cli"
 specifiers = ["2.91.0"]
 
 [tools."github:Azure/azure-cli".options]
+matching_regex = '\.tar\.gz$'
+version_prefix = "azure-cli-"
+
+[tools."github:Azure/azure-cli"."platforms.linux-arm64"]
+checksum = "sha256:1d0a008190aa39d26c6cb6a4ab818e7f7b0fd96258f96b49952d91411a64b01b"
+url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.91.0/azure-cli-2.91.0-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/613899811"
+
+[tools."github:Azure/azure-cli"."platforms.linux-arm64-musl"]
+checksum = "sha256:1d0a008190aa39d26c6cb6a4ab818e7f7b0fd96258f96b49952d91411a64b01b"
+url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.91.0/azure-cli-2.91.0-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/613899811"
+
+[tools."github:Azure/azure-cli"."platforms.linux-x64"]
+checksum = "sha256:26bbdd9bf46cdbe03dcbdbbe37b2301608e29518ae32fbdfcf1eb143d41d9f38"
+url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.91.0/azure-cli-2.91.0-linux-x86_64.tar.gz"
+url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/613899860"
+
+[tools."github:Azure/azure-cli"."platforms.linux-x64-musl"]
+checksum = "sha256:26bbdd9bf46cdbe03dcbdbbe37b2301608e29518ae32fbdfcf1eb143d41d9f38"
+url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.91.0/azure-cli-2.91.0-linux-x86_64.tar.gz"
+url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/613899860"
+
+[tools."github:Azure/azure-cli"."platforms.macos-arm64"]
+checksum = "sha256:dc28a3eef40d0b20f266f1e76b7a91f7a8ecdeaa28d0c855459eaa74edacbae6"
+url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.91.0/azure-cli-2.91.0-macos-arm64.tar.gz"
+url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/613899707"
+
+[tools."github:Azure/azure-cli"."platforms.macos-x64"]
+checksum = "sha256:b8c51c518c526d9ee0fd47716236f91804b578f9d560a2d8f60266fac7b67d6f"
+url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.91.0/azure-cli-2.91.0-macos-x86_64.tar.gz"
+url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/613899766"
+
+[[tools."github:Azure/azure-cli"]]
+version = "2.91.0"
+backend = "github:Azure/azure-cli"
+specifiers = ["2.91.0"]
+
+[tools."github:Azure/azure-cli".options]
 matching_regex = "macos"
 version_prefix = "azure-cli-"
 

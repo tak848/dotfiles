@@ -4,29 +4,53 @@ set -euo pipefail
 # Azure CLI が実行に使う Python を用意する。
 #
 # Azure CLI の tarball（dot_config/mise/config.toml の github:Azure/azure-cli）は Python を
-# 同梱しておらず、bash ランチャーが AZ_PYTHON の指す Python 3.14 で azure.cli を起動する。
+# 同梱しておらず、bash ランチャー（libexec/bin/az）が AZ_PYTHON の指す Python で azure.cli を起動する。
+# 必要な Python の版は Azure CLI の版で決まり、ランチャー冒頭の PY_VER="3.14" に書かれている
+# （site-packages も libexec/lib/python<PY_VER> にある）。そこで版はこのリポジトリに書かず、
+# 入っている Azure CLI のランチャーから読んで uv で入れる。
+#
 # mise の python backend で入れると PATH に python / python3 が生えて Azure CLI 以外からも
 # 使えてしまうため使わない。uv も既定では実行ファイルを ~/.local/bin（uv python dir --bin）に
 # 置いて PATH に生やすので、UV_PYTHON_BIN_DIR で azure-cli 専用ディレクトリに閉じ込める。
-# 置き場所は config.toml の [env] AZ_PYTHON と一致させること。
+# AZ_PYTHON は版を含まないリンク az-python を指し、ここでそれを python<PY_VER> に張り替える。
+# 置き場所とリンク名は config.toml の [env] AZ_PYTHON と一致させること
+# （go/cmd/cc-statusline/azurepython_test.go が検証する）。
 #
 # mise の postinstall ではなくここに置いている理由は、postinstall がシステムの PATH で実行され、
 # mise 管理の uv を解決できないため。実際 postinstall 内の uv は Homebrew の古い版が使われ、
 # 新しい CPython パッチを知らず `No download found for request` で失敗した。
 # path-setup.tmpl は mise shims を Homebrew より前に置くので、ここでは mise 管理の uv が使われる。
+#
+# Azure CLI の版が変わると必要な Python の版が変わりうるので、再実行する。
+# uv の版が変わったときも、uv が新しいパッチを知っていれば上げられるので再実行する。
+# azure-cli: {{ include "dot_config/mise/config.toml" | regexFind `(?m)^"github:Azure/azure-cli".*$` }}
+# uv: {{ include "dot_config/mise/config.toml" | regexFind `(?m)^"aqua:astral-sh/uv".*$` }}
 
 {{ template "path-setup.tmpl" . }}
 
-{{- if eq .chezmoi.os "darwin" }}
-# uv は Python のダウンロード metadata をバイナリに焼き込んでいるため、CPython のパッチが出ても
-# uv 自体が更新されるまでは入れられない。Renovate 側で age gate を長めに取って追随を待つ
-# （.github/renovate.json5 の packageRules を参照）。
-# renovate: datasource=python-version depName=python
-AZURE_CLI_PYTHON_VERSION="3.15.0"
+# mise と uv は 10 の mise install までに入っている。見つからないときに exit 0 で抜けると chezmoi は
+# 成功として記録し、このスクリプトの内容が変わるまで再実行しないので、異常終了させて次の apply で再試行させる。
+for cmd in mise uv; do
+    if ! command -v "$cmd" &> /dev/null; then
+        echo "エラー: $cmd が見つかりません。Azure CLI 用の Python を用意できません。" >&2
+        exit 1
+    fi
+done
 
-if command -v uv &> /dev/null; then
-    export UV_PYTHON_BIN_DIR="${XDG_DATA_HOME}/azure-cli/python"
-    echo "Azure CLI 用の Python ${AZURE_CLI_PYTHON_VERSION} を用意中..."
-    uv python install "${AZURE_CLI_PYTHON_VERSION}"
+launcher="$(mise where "github:Azure/azure-cli")/libexec/bin/az"
+py_ver="$(sed -n 's/^PY_VER="\([0-9][0-9]*\.[0-9][0-9]*\)"$/\1/p' "$launcher")"
+if [[ -z "$py_ver" ]]; then
+    echo "エラー: ${launcher} から Python の版（PY_VER=\"X.Y\"）を読めません。ランチャーの書式が変わった可能性があります。" >&2
+    exit 1
 fi
-{{- end }}
+
+export UV_PYTHON_BIN_DIR="${XDG_DATA_HOME}/azure-cli/python"
+echo "Azure CLI 用の Python ${py_ver} を用意中..."
+# --upgrade は、uv が知っている最新のパッチまで上げる（入っていなければ入れる）。
+# python<PY_VER> のリンクも uv が最新のパッチへ張り替える。古いパッチは uv の方針で残る。
+uv python install --upgrade "$py_ver"
+if [[ ! -x "${UV_PYTHON_BIN_DIR}/python${py_ver}" ]]; then
+    echo "エラー: uv python install の後に ${UV_PYTHON_BIN_DIR}/python${py_ver} がありません。" >&2
+    exit 1
+fi
+ln -sfn "python${py_ver}" "${UV_PYTHON_BIN_DIR}/az-python"
