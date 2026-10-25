@@ -11,7 +11,7 @@ __mise_bootstrap() {
       "~/"*) mise_data_dir=$HOME/${mise_data_dir#\~/} ;;
     esac
     local cache_home="${XDG_CACHE_HOME:-$HOME/.cache}/mise"
-    local mise_version="${MISE_VERSION:-2026.10.17}"
+    local mise_version="${MISE_VERSION:-2026.10.18}"
     mise_version="${mise_version#v}"
     # Only a defaulted path may fall back: an explicit MISE_INSTALL_PATH wins even while its file
     # does not exist yet.
@@ -198,28 +198,28 @@ __mise_bootstrap() {
           os=$2
           arch=$3
           ext=$4
-          current_version="v2026.10.17"
+          current_version="v2026.10.18"
           current_version="${current_version#v}"
 
           # For current version use static checksum otherwise
           # use checksum from releases
           if [ "$version" = "$current_version" ]; then
-            checksum_linux_x86_64="17565e268c5542d8ce944321e17af81e0b741b65af4aa7e8e010ee77376a4aa3  ./mise-v2026.10.17-linux-x64.tar.gz"
-            checksum_linux_x86_64_musl="54dc5f1a0de14bddf70a4d8273603647c140eedd8b9d083a8f73ca13a9a82f53  ./mise-v2026.10.17-linux-x64-musl.tar.gz"
-            checksum_linux_arm64="cac510e51793ad45e65fe92305bdbe4309c9c60b5907badbc7eba111738ab08f  ./mise-v2026.10.17-linux-arm64.tar.gz"
-            checksum_linux_arm64_musl="745a1a5401c42090953a8da493243d5c666fffc2c98f9a3dee33bd8afc77a9ee  ./mise-v2026.10.17-linux-arm64-musl.tar.gz"
-            checksum_linux_armv7="13bded64461a2ef09677b6eba40ba47adf62d347bd64d54449accaac8f91c409  ./mise-v2026.10.17-linux-armv7.tar.gz"
-            checksum_linux_armv7_musl="0bcee7594cd7ab4a06855f6a57758bfb73d24ec31dc60e5b99979d3b8e9dcb8f  ./mise-v2026.10.17-linux-armv7-musl.tar.gz"
-            checksum_macos_x86_64="e42418100e2f781f9be00b9feaa60378e77551741faececc2bf360992c5410c8  ./mise-v2026.10.17-macos-x64.tar.gz"
-            checksum_macos_arm64="d7c50c1683524a764260986ccc9c41c0de5e1fcd491714b5640b657b76781af6  ./mise-v2026.10.17-macos-arm64.tar.gz"
-            checksum_linux_x86_64_zstd="149221df8c937bfb89aef773d11d2440df7c010f0145b62e6708560f86b32cc7  ./mise-v2026.10.17-linux-x64.tar.zst"
-            checksum_linux_x86_64_musl_zstd="6bd8587e46abb72627f45ba2852823fe4c4f83eb06fd00f80988624f444f3e26  ./mise-v2026.10.17-linux-x64-musl.tar.zst"
-            checksum_linux_arm64_zstd="68acecb5079a36914c1a86435eeac3c1cafd223e696f4b46e3b8094e5c51512c  ./mise-v2026.10.17-linux-arm64.tar.zst"
-            checksum_linux_arm64_musl_zstd="3c46253e49924b0b47125c5c2ce92a9f705e1a49880801983e71150409f9028a  ./mise-v2026.10.17-linux-arm64-musl.tar.zst"
-            checksum_linux_armv7_zstd="239bdfd0fee73beff7c6ce30dcbeed5000af9dbcd0c0dba6e5b93959df741877  ./mise-v2026.10.17-linux-armv7.tar.zst"
-            checksum_linux_armv7_musl_zstd="a0caa12a393c6a6bde07d9b99a786467e4631280dc30e33f88c1d97863d882d1  ./mise-v2026.10.17-linux-armv7-musl.tar.zst"
-            checksum_macos_x86_64_zstd="7622d2eba3f886215b79803d9f806a8685fefee984b1c9d2eaabb6aae377e4ef  ./mise-v2026.10.17-macos-x64.tar.zst"
-            checksum_macos_arm64_zstd="1c9b099c0eac519901dc3d35c161846a220c16ddbaa5fdc7cb7a696870184bc3  ./mise-v2026.10.17-macos-arm64.tar.zst"
+            checksum_linux_x86_64="0d41b60745a6273a80089c86f80d8729042d2f57f87fda70aecc7d1c3ffbd3be  ./mise-v2026.10.18-linux-x64.tar.gz"
+            checksum_linux_x86_64_musl="bb2f31a377789e85df9358f23aaadb4283e2d760cf657ca7449856f92c4230c4  ./mise-v2026.10.18-linux-x64-musl.tar.gz"
+            checksum_linux_arm64="c5a49a47f8184f5649f3d8685b408bd72325a823f41cf618c60f3ffc303090a1  ./mise-v2026.10.18-linux-arm64.tar.gz"
+            checksum_linux_arm64_musl="88bbc1480e196c45c67194b653a08170b9e45e6573e5036f643f288eee95120e  ./mise-v2026.10.18-linux-arm64-musl.tar.gz"
+            checksum_linux_armv7="a2f89a66477963d27c0f8c24ea18162a6d332dde77b5f5afafd3cbfc29b031c5  ./mise-v2026.10.18-linux-armv7.tar.gz"
+            checksum_linux_armv7_musl="9bff09baeec40db1397895b180b5e56132b5863da41e143ee094a97cbc5465eb  ./mise-v2026.10.18-linux-armv7-musl.tar.gz"
+            checksum_macos_x86_64="81931f325cfc97481faa558297dbd1595aa9c4e745fd09c02479593449e082c0  ./mise-v2026.10.18-macos-x64.tar.gz"
+            checksum_macos_arm64="1b1cd6ad4a6176db5ddaf03bf71e131b26324af09cfcf14d7d7038bee60be85d  ./mise-v2026.10.18-macos-arm64.tar.gz"
+            checksum_linux_x86_64_zstd="2e9cefffe790a486452ca34dfed5dd6ec1ea54cae65cc1509b259937d3440d31  ./mise-v2026.10.18-linux-x64.tar.zst"
+            checksum_linux_x86_64_musl_zstd="9a7b9605b7a7f76b98d835322251229567e28c3e1de4be1bd6c3772ab1020c28  ./mise-v2026.10.18-linux-x64-musl.tar.zst"
+            checksum_linux_arm64_zstd="7b3a5f6592de46feddc4de03909e4191e6d838288047387867da077baf735731  ./mise-v2026.10.18-linux-arm64.tar.zst"
+            checksum_linux_arm64_musl_zstd="bd9bbbc03cb07bc69fd62d34ab8e3d2ac6abf69c90c3dd9994ae792addb44b15  ./mise-v2026.10.18-linux-arm64-musl.tar.zst"
+            checksum_linux_armv7_zstd="5ed6ad9f7ad90e604903979274b5bdea7f4b498dc4dd258b7ad0b42c4d97a836  ./mise-v2026.10.18-linux-armv7.tar.zst"
+            checksum_linux_armv7_musl_zstd="d72939cee2cf6f155a3b2b64fcd102c4053cf73b4764ed2710198677bf40d103  ./mise-v2026.10.18-linux-armv7-musl.tar.zst"
+            checksum_macos_x86_64_zstd="206f2d9fbcd0667afebd4dda01f7274d284593d9f815ab02d440aee3dcc8b7fe  ./mise-v2026.10.18-macos-x64.tar.zst"
+            checksum_macos_arm64_zstd="d141bc1b221f42f7b4d793d883a0cabf5ec8ec09faa2af9f5334c198b1ec835f  ./mise-v2026.10.18-macos-arm64.tar.zst"
 
             # TODO: refactor this, it's a bit messy
             if [ "$ext" = "tar.zst" ]; then
@@ -304,7 +304,7 @@ __mise_bootstrap() {
 
           if command -v curl >/dev/null 2>&1; then
             debug ">" curl -#fLo "$file" "$url"
-            curl -#fLo "$file" "$url" || return 1
+            curl -#fLo "$file" "$url" >&2 || return 1
           else
             if command -v wget >/dev/null 2>&1; then
               debug ">" wget -qO "$file" "$url"
@@ -380,7 +380,7 @@ __mise_bootstrap() {
         install_mise() {
           version="$(resolve_release)"
           version="${version#v}"
-          current_version="v2026.10.17"
+          current_version="v2026.10.18"
           current_version="${current_version#v}"
           os="${MISE_INSTALL_OS:-$(get_os)}"
           arch="${MISE_INSTALL_ARCH:-$(get_arch)}"
