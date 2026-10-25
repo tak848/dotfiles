@@ -232,6 +232,17 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - コマンドは `&&` / `;` / パイプ / サブシェルで単純コマンドに分け、先頭の変数代入と `env` / `sudo` などのラッパーを外してから照合する。`$()`・バッククォート・`bash -c`・`eval` の中身も調べ、引用された引数・heredoc の本文・リダイレクト先はコマンドとして扱わない。引用やコマンド置換が閉じていないなど解析できない入力には何も返さない
 - Agent / EnterWorktree のルールは `if` で正しく絞れるので、従来どおり `if` と printf で返す
 
+### book-to-skill（第三者 skill の uv 加工版）
+
+`dot_claude/skills/book-to-skill/` は [virgiliojr94/book-to-skill](https://github.com/virgiliojr94/book-to-skill)（MIT）を固定 commit で取り込んだもの。本や文書（PDF / EPUB / DOCX / HTML / Markdown など）からテキストを抽出し、章ごとのファイルを持つ skill を生成する。chezmoi が `~/.claude/skills/book-to-skill/` に配り、`/book-to-skill <path>` で呼ぶ。取り込んだ commit・取得日・改変点は SKILL.md の frontmatter のコメントにある。
+
+- 取り込んだのは実行に要るファイル（SKILL.md、LICENSE.md、`scripts/extract.py`、`book_to_skill/`、`tools/scan_generated_skill.py`）だけ。tests・docs・`pyproject.toml` は入れていない。`pyproject.toml` を置くと Renovate の pep621 manager（既定で `pyproject.toml` に一致）が拾う
+- Python のコードは未改変。SKILL.md だけ、Python の入口を `uv run --no-project --no-config --python 3.13 … python3 -I` に、`extract.py` の探索を `${CLAUDE_SKILL_DIR}` に置き換えた。上流は `python3` を直接呼び、足りない抽出器を実行中の Python に `pip install` で入れようとするため。`--install-missing no` を渡して、スクリプト自身にも pip を呼ばせない。`${CLAUDE_SKILL_DIR}` は Claude Code の置換変数なので、この版は Claude Code 専用
+- 抽出器の依存は `--with` で渡す。上流の extras の `all` から docling を除いたもの（pypdf / pdfminer.six / pdf-inspector / ebooklib / beautifulsoup4 / python-docx / striprtf / trafilatura）で、docling は PyTorch を引くので technical mode のときだけ足す。版は固定せず、`--exclude-newer "24 hours"` で直近 24 時間に上がったファイルを候補から外す（Renovate の `minimumReleaseAge` と同じ 24 時間）。Python 3.13 で Linux x86_64 / macOS arm64 とも wheel だけで解決できることは `uv pip compile --only-binary :all:` で確認した
+- `-I` は `PYTHONPATH` とカレントディレクトリを `sys.path` から外すため（snowx と同じ問題を避ける）。スクリプトは自分の置き場を `sys.path` に足すので `book_to_skill` は import できる。`-I` の下でも `--with` の依存が import できることは確認した
+- 生成された skill は上流の既定どおり `~/.agents/skills/<slug>/` に書かれ、`~/.claude/skills/<slug>` に symlink が張られる。`dot_claude/skills` は `exact_` ではないので chezmoi はこれらを消さない。生成物は chezmoi の管理外
+- 更新は手動。上流の新しい commit から同じファイルを取り直し、frontmatter のコメントにある改変を当て直して、commit SHA と取得日を書き換える。上流には悪意ある再アップロード（`Leutenegger/book-to-skill`）が出たことがある（上流の SECURITY-NOTICE.md）ので、取得元は `virgiliojr94/book-to-skill` に限り、Python の差分は読んでから取り込む
+
 ### Go の JSON 処理
 
 コード・テストとも `encoding/json/v2` を使用する。raw JSON は `encoding/json/jsontext.Value`、JSONL は `jsontext.Encoder` と `json.MarshalEncode` を使う。Go 1.27.1 で利用でき、追加の外部依存は持たない。v1 import への戻りは `go/cmd/cc-statusline/jsonv2_test.go` が検出する。既存プロトコルの入力・出力の互換性は局所的な option とテストで確認し、新規コードへ一律の寛容な option を付けない。
