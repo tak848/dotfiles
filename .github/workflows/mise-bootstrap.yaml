@@ -9,9 +9,9 @@ on:
       - ".mise-bootstrap-version"
       - ".github/workflows/mise-bootstrap.yaml"
 
+# commit は再生成の後で作る GitHub App token で行うので、GITHUB_TOKEN は読み取りだけでよい
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 concurrency:
   group: auto-update-${{ github.ref_name }}
@@ -20,18 +20,14 @@ concurrency:
 jobs:
   update-bootstrap:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - name: Generate GitHub App Token
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
-        id: app-token
-        with:
-          app-id: ${{ vars.APP_ID }}
-          private-key: ${{ secrets.APP_PRIVATE_KEY }}
-
+      # push 時点の SHA ではなくブランチの先頭を取る（lockfiles-and-checksums.yaml の同じ step を参照）
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          token: ${{ steps.app-token.outputs.token }}
+          ref: ${{ github.ref }}
+          persist-credentials: false
 
       - name: Read version
         run: |
@@ -46,14 +42,23 @@ jobs:
           install: false
           cache: true
 
-      # .mise-bootstrap-version のバージョンで bootstrap を生成し、変更があれば API 経由で commit する
-      - name: Regenerate and commit via GraphQL
+      # .mise-bootstrap-version のバージョンで bootstrap を生成する。App token はこの後で作る
+      - name: Regenerate bootstrap
+        run: mise generate bootstrap -V "$MISE_VERSION" -w ./dot_local/bin/executable_mise
+
+      - name: Generate GitHub App Token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        id: app-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      # 変更があれば API 経由で commit する
+      - name: Commit via GraphQL
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           REPO: ${{ github.repository }}
           BRANCH: ${{ github.ref_name }}
           FILES: dot_local/bin/executable_mise
           MESSAGE: "chore: update mise bootstrap to ${{ env.MISE_VERSION }}"
-          REGENERATE_CMD: |
-            mise generate bootstrap -V "$MISE_VERSION" -w ./dot_local/bin/executable_mise
         run: bash .github/scripts/commit-via-graphql.sh

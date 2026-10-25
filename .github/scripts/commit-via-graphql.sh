@@ -12,7 +12,11 @@
 #   MESSAGE      commit headline
 #
 # Optional env:
-#   REGENERATE_CMD  shell snippet run before each attempt (must (re)produce $FILES)
+#   REGENERATE_CMD  shell snippet run before each attempt (must (re)produce $FILES).
+#                   Without it, a failed mutation is not retried: resetting to the
+#                   refetched branch would discard the files generated beforehand.
+#                   Workflows regenerate in an earlier step so that third-party code
+#                   never runs while the App token exists.
 #   MAX_ATTEMPTS    integer, defaults to 3
 
 set -euo pipefail
@@ -110,6 +114,12 @@ while :; do
 
   if gh api graphql --input - <"$payload_file"; then
     exit 0
+  fi
+
+  if [ -z "$REGENERATE_CMD" ]; then
+    echo "createCommitOnBranch failed. Not retrying without REGENERATE_CMD: refetching would discard the generated files." >&2
+    echo "If origin/$BRANCH moved during this run, the run triggered by that push (or a re-run) regenerates on the new head." >&2
+    exit 1
   fi
 
   if [ "$attempt" -ge "$MAX_ATTEMPTS" ]; then

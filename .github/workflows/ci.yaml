@@ -3,9 +3,21 @@ name: CI
 on:
   push:
 
+# 書き込みは何もしないので読み取りだけにする（リポジトリ既定の権限が write でも、ここで絞る）
+permissions:
+  contents: read
+
+# main 以外のブランチでは、新しい push が来たら古い run を止める。Renovate の commit に lockfile や
+# bootstrap の bot commit が続くと、そのたびに 2 OS 分が走り直し、意味を持つのは最後の 1 回だけになる
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    # 既定の 360 分だと、ツールの導入やテストが止まったときに macOS ランナーを長く占有する
+    timeout-minutes: 30
     strategy:
       matrix:
         # macOS と Ubuntu の両方でテスト
@@ -17,6 +29,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       # mise bootstrap と同じバージョンを使用することで、task check の結果を一致させる
       - name: Read mise version from .mise-bootstrap-version
