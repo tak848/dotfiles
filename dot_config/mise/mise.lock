@@ -1777,37 +1777,37 @@ backend = "go:golang.org/x/tools/gopls"
 specifiers = ["v0.24.0"]
 
 [[tools."http:grok"]]
-version = "1.0.67"
+version = "1.0.70"
 backend = "http:grok"
-specifiers = ["1.0.67"]
+specifiers = ["1.0.70"]
 
 [tools."http:grok"."platforms.linux-arm64"]
-checksum = "sha256:089a0acc2c1b570efcd791c5cd0f8aa074f6e8ab82c00ab78af0b934acdb6386"
-url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.67-linux-aarch64"
+checksum = "sha256:3aa36883574b263088e5addffe241f55430e8daaee1a0c4934b02180007a9761"
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.70-linux-aarch64"
 
 [tools."http:grok"."platforms.linux-arm64-musl"]
-checksum = "sha256:089a0acc2c1b570efcd791c5cd0f8aa074f6e8ab82c00ab78af0b934acdb6386"
-url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.67-linux-aarch64"
+checksum = "sha256:3aa36883574b263088e5addffe241f55430e8daaee1a0c4934b02180007a9761"
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.70-linux-aarch64"
 
 [tools."http:grok"."platforms.linux-x64"]
-checksum = "sha256:ce33b1a29e37901f56fe59916cda7a1149e6fd377118f918e90d89f9abb52a51"
-url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.67-linux-x86_64"
+checksum = "sha256:22d281c5964c5444147328096ba2a221f3f0874c6858e27c825656a80f6e58e9"
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.70-linux-x86_64"
 
 [tools."http:grok"."platforms.linux-x64-musl"]
-checksum = "sha256:ce33b1a29e37901f56fe59916cda7a1149e6fd377118f918e90d89f9abb52a51"
-url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.67-linux-x86_64"
+checksum = "sha256:22d281c5964c5444147328096ba2a221f3f0874c6858e27c825656a80f6e58e9"
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.70-linux-x86_64"
 
 [tools."http:grok"."platforms.macos-arm64"]
-checksum = "sha256:036a47ce2987adae04de827f7803bf0cc460bf169b640db168f18ec7acb734db"
-url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.67-macos-aarch64"
+checksum = "sha256:5c8a688251bf61e35370b828b6a353b0a20fcc3f64000de8a91d426039f29cec"
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.70-macos-aarch64"
 
 [tools."http:grok"."platforms.macos-x64"]
-checksum = "sha256:24a951871bfb7b3f6036fc1e1cd2442c664e2b2eeba58de9e8f47de4c633a03e"
-url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.67-macos-x86_64"
+checksum = "sha256:d9ecd462f1f3c3b40a7a131944987ee7ed1c38069b7009cc4107398ab767f484"
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.70-macos-x86_64"
 
 [tools."http:grok"."platforms.windows-x64"]
-checksum = "sha256:9891863f48c0cd973930d1e54fb28b02adb10521b2704d0ba7a3c625c26bb94d"
-url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.67-windows-x86_64.exe"
+checksum = "sha256:1e03c16cf2bd4626a79d6b1ea1430f88c38e0c8ec75edd283a60de11296ba326"
+url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.70-windows-x86_64.exe"
 
 [[tools."http:opencode"]]
 version = "2.1.4"
