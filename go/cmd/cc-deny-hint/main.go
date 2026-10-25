@@ -138,6 +138,7 @@ func commands(s string, depth int) (cmds []string, ok bool) {
 		expectDelim bool
 		skipWord    bool
 		inArray     bool
+		arraySep    int // 配列の中で、最後に要素の区切り（引用もエスケープもされていない空白か開き括弧）があった位置
 		caseDepth   int
 		inPattern   bool
 	)
@@ -154,12 +155,13 @@ func commands(s string, depth int) (cmds []string, ok bool) {
 			expectDelim, stripTabs = false, false
 		case skipWord:
 			skipWord = false
-		case caseDepth > 0 && len(words) == 0 && w == "esac":
+		case caseDepth > 0 && len(words) == 0 && w == "esac" && !q:
+			// 引用した "esac" はパターンで、予約語ではない
 			caseDepth--
 			inPattern = false
 		default:
 			words = append(words, w)
-			if n := len(words); !inPattern && w == "in" && n >= 3 && words[n-3] == "case" && onlyKeywords(words[:n-3]) {
+			if n := len(words); !inPattern && w == "in" && !q && n >= 3 && words[n-3] == "case" && onlyKeywords(words[:n-3]) {
 				// case の対象の単語は展開されるがコマンドではない。中のコマンド置換は nested に入っている
 				words = nil
 				caseDepth++
@@ -225,13 +227,14 @@ func commands(s string, depth int) (cmds []string, ok bool) {
 			word.WriteString(s[i : end+1])
 			inWord = true
 			i = end
-		case c == '#' && (!inWord || (inArray && strings.IndexByte(" \t\r\n(", s[i-1]) >= 0)):
+		case c == '#' && (!inWord || (inArray && arraySep == i-1)):
 			for i+1 < len(s) && s[i+1] != '\n' {
 				i++
 			}
 		case inArray && (c == ' ' || c == '\t' || c == '\r' || c == '\n'):
 			// 配列の要素は代入の単語の一部として持ち、コマンドとして扱わない
 			word.WriteByte(' ')
+			arraySep = i
 		case inArray && c == ')':
 			word.WriteByte(c)
 			inArray = false
@@ -291,6 +294,7 @@ func commands(s string, depth int) (cmds []string, ok bool) {
 		case c == '(' && inWord && strings.HasSuffix(word.String(), "=") && isAssignment(word.String()):
 			word.WriteByte(c)
 			inArray = true
+			arraySep = i
 		case c == ';' || c == '&' || c == '|' || c == '(' || c == ')':
 			n := len(words)
 			if n > 0 && words[n-1] == "for" {
@@ -394,8 +398,12 @@ func stripWrapper(words []string) []string {
 				value, words = words[0], words[1:]
 			}
 			if opt == "-S" || opt == "--split-string" {
-				// env -S の値はコマンド行そのものなので、分けて残りの単語の前に戻す
-				words = append(strings.Fields(value), words...)
+				// env -S の値はコマンド行そのものなので、引用を解釈して分け、残りの単語の前に戻す
+				fields, ok := splitWords(value)
+				if !ok {
+					fields = strings.Fields(value)
+				}
+				words = append(fields, words...)
 			}
 		}
 	}
@@ -416,6 +424,52 @@ func valueOption(wrapper, w string) (opt, value string, attached, ok bool) {
 		}
 	}
 	return "", "", false, false
+}
+
+// splitWords は s を単一引用符・二重引用符・バックスラッシュを解釈して単語に分ける。引用が閉じていなければ ok = false。
+func splitWords(s string) (words []string, ok bool) {
+	var (
+		word   strings.Builder
+		inWord bool
+	)
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		switch {
+		case c == ' ' || c == '\t' || c == '\r' || c == '\n':
+			if inWord {
+				words = append(words, word.String())
+				word.Reset()
+				inWord = false
+			}
+		case c == '\\' && i+1 < len(s):
+			word.WriteByte(s[i+1])
+			inWord = true
+			i++
+		case c == '\'':
+			j := strings.IndexByte(s[i+1:], '\'')
+			if j < 0 {
+				return nil, false
+			}
+			word.WriteString(s[i+1 : i+1+j])
+			inWord = true
+			i += j + 1
+		case c == '"':
+			end, text, _, ok := scanDouble(s, i+1)
+			if !ok {
+				return nil, false
+			}
+			word.WriteString(text)
+			inWord = true
+			i = end
+		default:
+			word.WriteByte(c)
+			inWord = true
+		}
+	}
+	if inWord {
+		words = append(words, word.String())
+	}
+	return words, true
 }
 
 // queriesCommand は command の引数のオプションに -v / -V があるか。
@@ -527,13 +581,20 @@ func scanExpansions(s string, start int, quote bool) (end int, text string, subs
 	return len(s), b.String(), subs, true
 }
 
-// matchParen は start から読み、対応する ')' の位置を返す。中の引用は読み飛ばす。
+// matchParen は start から読み、対応する ')' の位置を返す。中の引用とコメントは読み飛ばす。
 func matchParen(s string, start int) (int, bool) {
 	depth := 1
 	for i := start; i < len(s); i++ {
 		switch s[i] {
 		case '\\':
 			i++
+		case '#':
+			// 単語の先頭の # からはコメント（$# や ${#x} や 16#ff の # は単語の途中）
+			if i == start || strings.IndexByte(" \t\r\n;&|()", s[i-1]) >= 0 {
+				for i+1 < len(s) && s[i+1] != '\n' {
+					i++
+				}
+			}
 		case '\'':
 			j := strings.IndexByte(s[i+1:], '\'')
 			if j < 0 {
