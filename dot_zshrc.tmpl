@@ -50,8 +50,6 @@ setopt inc_append_history
 setopt extended_history     # 実行時間も保存
 setopt hist_reduce_blanks   # 余分なスペースを削除してヒストリに保存
 
-set nrformats=hex,bin
-
 # zinit (クローン処理は run_once_before_ に移動済み)
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 source "${ZINIT_HOME}/zinit.zsh"
@@ -220,21 +218,21 @@ export CPPFLAGS="-I{{ $brewPrefix }}/opt/mysql-client/include"
 {{-   end }}
 {{- end }}
 
+# カスタム関数の読み込み
+if [ -d ~/.zsh/functions ]; then
+    for file in ~/.zsh/functions/*.zsh(N); do
+        source "$file"
+    done
+fi
+
 # ローカル設定の読み込み（最後に実行）
-# これらのファイルはGit管理されません
+# これらのファイルはGit管理されません。共有の関数・alias より後に読むので、ここで上書きできる
 if [ -f ~/.zshrc.local ]; then
     source ~/.zshrc.local
 fi
 
 if [ -d ~/.zsh/local ]; then
     for file in ~/.zsh/local/*.zsh(N); do
-        source "$file"
-    done
-fi
-
-# カスタム関数の読み込み
-if [ -d ~/.zsh/functions ]; then
-    for file in ~/.zsh/functions/*.zsh(N); do
         source "$file"
     done
 fi
