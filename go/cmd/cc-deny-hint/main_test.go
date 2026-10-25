@@ -96,6 +96,8 @@ func TestHints(t *testing.T) {
 		{"heredoc with paren in process substitution", "cat <(cat <<EOF\n(\nEOF\nnpm test\n)", []string{"npm"}},
 		{"heredoc with paren in substitution", "git commit -m \"$(cat <<'EOF'\nfix (x\nEOF\n)\" && npm test", []string{"npm"}},
 		{"arithmetic shift", "x=$((1 << 2))\nnpm test", []string{"npm"}},
+		{"arithmetic shift in process substitution", "cat <(\n echo $((1 << 2))\n npm test\n)", []string{"npm"}},
+		{"arithmetic command shift in substitution", "echo $(\n(( x = 1 << 2 ))\nnpm ls\n)", []string{"npm"}},
 		{"nice adjustment", "nice -n 10 npm test", []string{"npm"}},
 		{"sudo long option with equals", "sudo --user=npm npm test", []string{"npm"}},
 		{"time -p", "time -p npm test", []string{"npm"}},

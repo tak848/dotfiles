@@ -592,6 +592,13 @@ func matchParen(s string, start int, cmd bool) (int, bool) {
 		switch s[i] {
 		case '\\':
 			i++
+		case '$':
+			// 算術展開は丸ごと飛ばす。中の << はシフトで、heredoc ではない
+			if cmd {
+				if e, _, ok := doubleParen(s, i+1); ok {
+					i = e
+				}
+			}
 		case '#':
 			// 単語の先頭の # からはコメント（$# や ${#x} や 16#ff の # は単語の途中）
 			if cmd && boundary {
@@ -639,8 +646,15 @@ func matchParen(s string, start int, cmd bool) (int, bool) {
 			}
 			i = end
 		case '(':
-			depth++
 			sep = true
+			// 単語の先頭の (( 式 )) は算術コマンドなので丸ごと飛ばす
+			if cmd && boundary {
+				if e, _, ok := doubleParen(s, i); ok {
+					i = e
+					break
+				}
+			}
+			depth++
 		case ')':
 			depth--
 			if depth == 0 {
