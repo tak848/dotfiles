@@ -99,6 +99,7 @@ func TestHints(t *testing.T) {
 		{"arithmetic shift in process substitution", "cat <(\n echo $((1 << 2))\n npm test\n)", []string{"npm"}},
 		{"line continuation before comment in process substitution", "cat <( \\\n# note (\nnpm test\n)", []string{"npm"}},
 		{"line continuation before comment in array", "tools=(a \\\n# note (\n)\nnpm test", []string{"npm"}},
+		{"line continuation in heredoc delimiter in process substitution", "cat <(cat <<\\\nEOF\nx\nEOF\nnpm test\n)", []string{"npm"}},
 		{"arithmetic command shift in substitution", "echo $(\n(( x = 1 << 2 ))\nnpm ls\n)", []string{"npm"}},
 		{"nice adjustment", "nice -n 10 npm test", []string{"npm"}},
 		{"sudo long option with equals", "sudo --user=npm npm test", []string{"npm"}},

@@ -683,6 +683,9 @@ func heredocDelimiter(s string, i int) (delim string, quoted bool, end int) {
 		switch {
 		case strings.IndexByte(" \t\r\n;&|()<>", c) >= 0:
 			return b.String(), quoted, i
+		case c == '\\' && i+1 < len(s) && s[i+1] == '\n':
+			// 行継続は無かったものとして扱う
+			i++
 		case c == '\\' && i+1 < len(s):
 			b.WriteByte(s[i+1])
 			quoted = true
