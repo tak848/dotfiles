@@ -3,8 +3,9 @@
 //
 // hooks の `if` で同じことをすると、コマンド名より先まで指定したパターンは `$()`・バッククォート・`$VAR` を
 // 含むだけで常に hook が実行される（公式 docs の hooks "How if patterns match Bash commands"）。そのため
-// 無関係なコマンドにも全ルールの理由が注入されていた。ここではコマンドを個々の単純コマンドに分けて照合し、
-// 当たったルールの理由だけを返す。実際の拒否は permissions.deny が行うので、解析できないときは何も返さない。
+// 無関係なコマンドにも全ルールの理由が注入されていた。ここではコマンドを構文解析して実行される単純コマンドを
+// 集めて照合し、当たったルールの理由だけを返す。実際の拒否は permissions.deny が行うので、解析できないときは
+// 何も返さない。
 package main
 
 import (
@@ -12,7 +13,10 @@ import (
 	"io"
 	"os"
 	"regexp"
+	"slices"
 	"strings"
+
+	"mvdan.cc/sh/v3/syntax"
 )
 
 const (
@@ -32,6 +36,20 @@ type input struct {
 	ToolInput *struct {
 		Command *string `json:"command"`
 	} `json:"tool_input"`
+}
+
+// wrappers は後ろの単語をコマンドとして実行するラッパー。オプションと一緒に外してから照合する。
+var wrappers = map[string]bool{
+	"command": true, "builtin": true, "exec": true, "nohup": true, "sudo": true, "env": true, "nice": true, "time": true,
+}
+
+// wrapperValueOptions は値を取るラッパーのオプション。値はコマンドではないので、オプションと一緒に外す。
+// env は BSD と GNU の man、sudo と nice は man、exec は bash の man で確認した。
+var wrapperValueOptions = map[string][]string{
+	"env":  {"-u", "--unset", "-C", "--chdir", "-P", "-S", "--split-string", "-a", "--argv0"},
+	"sudo": {"-C", "--close-from", "-D", "--chdir", "-g", "--group", "-h", "--host", "-p", "--prompt", "-R", "--chroot", "-T", "--command-timeout", "-u", "--user", "-U", "--other-user"},
+	"nice": {"-n", "--adjustment"},
+	"exec": {"-a"},
 }
 
 func main() {
@@ -91,164 +109,99 @@ func patternRegexp(pattern string) *regexp.Regexp {
 	return regexp.MustCompile(`^(?s:` + strings.Join(parts, ".*") + `)$`)
 }
 
-// commands は s を単純コマンドに分け、それぞれを単語の空白区切りで返す。引用は外し、コマンド置換・
-// バッククォート・bash -c・eval の中身も調べる。heredoc の本文とリダイレクト先はコマンドとして扱わない。
-// 引用やコマンド置換が閉じていない場合は ok = false を返す。
+// commands は s をシェルの構文として解析し、実行される単純コマンドをそれぞれ単語の空白区切りで返す。
+// 構文木を辿るので、引用・コメント・heredoc・case のパターン・算術式・配列の要素・リダイレクト先はコマンドに
+// ならず、コマンド置換・プロセス置換・展開される heredoc の本文の中は調べる。bash -c と eval の中身は、
+// 文字列として改めて解析する。解析できなければ ok = false を返す。
 func commands(s string, depth int) (cmds []string, ok bool) {
 	if depth > maxDepth {
 		return nil, true
 	}
-	var (
-		words       []string
-		word        strings.Builder
-		inWord      bool
-		nested      []string
-		heredocs    []string
-		stripTabs   bool
-		expectDelim bool
-		skipWord    bool
-	)
-	endWord := func() {
-		if !inWord {
-			return
-		}
-		w := word.String()
-		word.Reset()
-		inWord = false
-		switch {
-		case expectDelim:
-			heredocs = append(heredocs, w)
-			expectDelim = false
-		case skipWord:
-			skipWord = false
-		default:
-			words = append(words, w)
-		}
+	file, err := parse(s)
+	if err != nil {
+		return nil, false
 	}
-	endCmd := func() {
-		endWord()
-		skipWord = false
-		if len(words) > 0 {
-			sub, ok := simpleCommand(words, depth)
-			if ok {
-				cmds = append(cmds, sub...)
-			}
-			words = nil
+	syntax.Walk(file, func(node syntax.Node) bool {
+		call, isCall := node.(*syntax.CallExpr)
+		if !isCall || len(call.Args) == 0 {
+			return true
 		}
-	}
-
-	for i := 0; i < len(s); i++ {
-		c := s[i]
-		switch {
-		case c == '\\':
-			if i+1 < len(s) {
-				if s[i+1] != '\n' {
-					word.WriteByte(s[i+1])
-					inWord = true
-				}
-				i++
-			}
-		case c == '\'':
-			j := strings.IndexByte(s[i+1:], '\'')
-			if j < 0 {
-				return nil, false
-			}
-			word.WriteString(s[i+1 : i+1+j])
-			inWord = true
-			i += j + 1
-		case c == '"':
-			end, text, subs, ok := scanDouble(s, i+1)
-			if !ok {
-				return nil, false
-			}
-			word.WriteString(text)
-			inWord = true
-			nested = append(nested, subs...)
-			i = end
-		case c == '`':
-			j := strings.IndexByte(s[i+1:], '`')
-			if j < 0 {
-				return nil, false
-			}
-			nested = append(nested, s[i+1:i+1+j])
-			word.WriteString(s[i : i+2+j])
-			inWord = true
-			i += j + 1
-		case c == '$' && i+1 < len(s) && s[i+1] == '(':
-			end, ok := matchParen(s, i+2)
-			if !ok {
-				return nil, false
-			}
-			nested = append(nested, s[i+2:end])
-			word.WriteString(s[i : end+1])
-			inWord = true
-			i = end
-		case c == '#' && !inWord:
-			for i+1 < len(s) && s[i+1] != '\n' {
-				i++
-			}
-		case c == ' ' || c == '\t' || c == '\r':
-			endWord()
-		case c == '\n':
-			endCmd()
-			if len(heredocs) > 0 {
-				i = skipHeredocs(s, i+1, heredocs, stripTabs) - 1
-				heredocs = nil
-				stripTabs = false
-			}
-		case c == '<' && strings.HasPrefix(s[i:], "<<<"):
-			endWord()
-			i += 2
-			skipWord = true
-		case c == '<' && strings.HasPrefix(s[i:], "<<"):
-			endWord()
-			i++
-			if i+1 < len(s) && s[i+1] == '-' {
-				i++
-				stripTabs = true
-			}
-			expectDelim = true
-		case c == '<' || c == '>' || (c == '&' && i+1 < len(s) && s[i+1] == '>'):
-			// リダイレクト。2>&1 の数字は直前の単語として残るが、照合には影響しない。
-			// <(...) / >(...) はプロセス置換で、中はコマンドとして読む
-			endWord()
-			for i+1 < len(s) && (s[i+1] == '>' || s[i+1] == '&' || s[i+1] == '|') {
-				i++
-			}
-			skipWord = i+1 >= len(s) || s[i+1] != '('
-		case c == ';' || c == '&' || c == '|' || c == '(' || c == ')':
-			endCmd()
-		default:
-			word.WriteByte(c)
-			inWord = true
+		words := make([]string, len(call.Args))
+		for i, w := range call.Args {
+			words[i] = wordString(w)
 		}
-	}
-	endCmd()
-
-	for _, n := range nested {
-		sub, ok := commands(n, depth+1)
-		if ok {
+		if sub, ok := simpleCommand(words, depth); ok {
 			cmds = append(cmds, sub...)
 		}
-	}
+		return true
+	})
 	return cmds, true
 }
 
-// simpleCommand は先頭の変数代入・予約語・ラッパーを外し、bash -c と eval は中身を解析する。
+// parse は s を bash として解析し、だめなら zsh として解析する。Bash ツールのコマンドはユーザーのシェルで
+// 実行されるので、zsh の構文が来ることがある（mvdan.cc/sh の zsh 対応は実験的なので、予備にとどめる）。
+func parse(s string) (*syntax.File, error) {
+	file, err := syntax.NewParser(syntax.Variant(syntax.LangBash)).Parse(strings.NewReader(s), "")
+	if err == nil {
+		return file, nil
+	}
+	return syntax.NewParser(syntax.Variant(syntax.LangZsh)).Parse(strings.NewReader(s), "")
+}
+
+// wordString は単語の引用とエスケープを外した文字列を返す。展開（$VAR・$(…)・$((…)) など）は書かれたまま残す。
+func wordString(w *syntax.Word) string {
+	var b strings.Builder
+	for _, part := range w.Parts {
+		switch p := part.(type) {
+		case *syntax.Lit:
+			b.WriteString(unescape(p.Value, false))
+		case *syntax.SglQuoted:
+			b.WriteString(p.Value)
+		case *syntax.DblQuoted:
+			for _, q := range p.Parts {
+				if lit, ok := q.(*syntax.Lit); ok {
+					b.WriteString(unescape(lit.Value, true))
+				} else {
+					_ = syntax.NewPrinter().Print(&b, q)
+				}
+			}
+		default:
+			_ = syntax.NewPrinter().Print(&b, part)
+		}
+	}
+	return b.String()
+}
+
+// unescape はバックスラッシュによるエスケープを外す。行継続は取り除く。二重引用符の中では、
+// バックスラッシュは $ ` " \ と改行の前でだけ特別な意味を持つ（bash の man の QUOTING）。
+func unescape(s string, inDouble bool) string {
+	if !strings.Contains(s, `\`) {
+		return s
+	}
+	var b strings.Builder
+	for i := 0; i < len(s); i++ {
+		if s[i] != '\\' || i+1 >= len(s) || (inDouble && strings.IndexByte("$`\"\\\n", s[i+1]) < 0) {
+			b.WriteByte(s[i])
+			continue
+		}
+		i++
+		if s[i] != '\n' {
+			b.WriteByte(s[i])
+		}
+	}
+	return b.String()
+}
+
+// simpleCommand は先頭のラッパーを外し、bash -c と eval は中身を解析する。
 func simpleCommand(words []string, depth int) ([]string, bool) {
 	for len(words) > 0 {
 		w := words[0]
 		switch {
-		case isAssignment(w):
-			words = words[1:]
-		case w == "!" || w == "{" || w == "if" || w == "then" || w == "elif" || w == "else" ||
-			w == "do" || w == "while" || w == "until" || w == "time":
-			words = words[1:]
-		case w == "command" || w == "builtin" || w == "exec" || w == "nohup" || w == "sudo" || w == "env" || w == "nice":
-			words = words[1:]
-			for len(words) > 0 && (strings.HasPrefix(words[0], "-") || isAssignment(words[0])) {
-				words = words[1:]
-			}
+		case w == "command" && queriesCommand(words[1:]):
+			// command -v / -V は対象を実行せず、説明を出すだけ（bash の man）
+			return expand(words, depth)
+		case wrappers[w]:
+			words = stripWrapper(words)
 		default:
 			return expand(words, depth)
 		}
@@ -273,8 +226,146 @@ func expand(words []string, depth int) ([]string, bool) {
 	return []string{line}, true
 }
 
+// stripWrapper は words[0] のラッパーを、そのオプション（値を含む）と変数代入ごと外す。
+func stripWrapper(words []string) []string {
+	name := words[0]
+	words = words[1:]
+	for len(words) > 0 {
+		w := words[0]
+		switch {
+		case w == "--":
+			words = words[1:]
+			// env はオプションの後に NAME=VALUE を取る（[OPTION]... [-] [NAME=VALUE]... [COMMAND [ARG]...]）
+			for name == "env" && len(words) > 0 && isAssignment(words[0]) {
+				words = words[1:]
+			}
+			return words
+		case isAssignment(w):
+			words = words[1:]
+		case !strings.HasPrefix(w, "-"):
+			return words
+		default:
+			words = words[1:]
+			opt, value, attached, ok := valueOption(name, w)
+			if !ok {
+				continue
+			}
+			if !attached && len(words) > 0 {
+				value, words = words[0], words[1:]
+			}
+			if opt == "-S" || opt == "--split-string" {
+				// env -S の値はコマンド行そのものなので、引用を解釈して分け、残りの単語の前に戻す
+				fields, ok := splitEnvString(value)
+				if !ok {
+					fields = strings.Fields(value)
+				}
+				words = append(fields, words...)
+			}
+		}
+	}
+	return words
+}
+
+// valueOption は w がラッパーの値を取るオプションなら、その名前と、同じ単語に書かれた値を返す。
+// 短いオプションはまとめて書けるので、値を取る文字の後ろが値になる（無ければ次の単語が値）。
+func valueOption(wrapper, w string) (opt, value string, attached, ok bool) {
+	values := wrapperValueOptions[wrapper]
+	if strings.HasPrefix(w, "--") {
+		opt, value, attached = strings.Cut(w, "=")
+		return opt, value, attached, slices.Contains(values, opt)
+	}
+	for i := 1; i < len(w); i++ {
+		if opt := "-" + w[i:i+1]; slices.Contains(values, opt) {
+			return opt, w[i+1:], i+1 < len(w), true
+		}
+	}
+	return "", "", false, false
+}
+
+// envEscapes は env -S の値で使えるエスケープ（GNU coreutils のマニュアルの "-S/--split-string syntax"）。
+// \_ と \c は位置によって意味が変わるので splitEnvString で扱う。
+var envEscapes = map[byte]byte{
+	'f': '\f', 'n': '\n', 'r': '\r', 't': '\t', 'v': '\v', '#': '#', '$': '$', '"': '"', '\'': '\'', '\\': '\\',
+}
+
+// splitEnvString は env -S の値を、GNU env の規則で単語に分ける。空白（タブ・改行なども含む）と、引用の外の
+// \_ が区切りになる。単一引用符の中で使えるエスケープは \' と \\ だけ。引用の外で単語の先頭の # から後と、
+// \c から後は無視される。引用が閉じていない、または知らないエスケープがあれば ok = false を返す。
+func splitEnvString(s string) (words []string, ok bool) {
+	var (
+		word   strings.Builder
+		inWord bool
+		quote  byte
+	)
+	endWord := func() {
+		if inWord {
+			words = append(words, word.String())
+			word.Reset()
+			inWord = false
+		}
+	}
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		switch {
+		case quote == 0 && strings.IndexByte(" \t\n\r\v\f", c) >= 0:
+			endWord()
+		case quote == 0 && c == '#' && !inWord:
+			return words, true
+		case c == quote:
+			quote = 0
+		case quote == 0 && (c == '\'' || c == '"'):
+			quote = c
+			inWord = true
+		case c == '\\' && i+1 < len(s):
+			i++
+			e := s[i]
+			switch {
+			case quote == '\'' && e != '\'' && e != '\\':
+				word.WriteByte('\\')
+				word.WriteByte(e)
+			case e == '_' && quote == 0:
+				endWord()
+			case e == '_':
+				word.WriteByte(' ')
+			case e == 'c' && quote == 0:
+				endWord()
+				return words, true
+			case envEscapes[e] != 0:
+				word.WriteByte(envEscapes[e])
+			default:
+				return nil, false
+			}
+			if e != '_' || quote != 0 {
+				inWord = true
+			}
+		default:
+			word.WriteByte(c)
+			inWord = true
+		}
+	}
+	if quote != 0 {
+		return nil, false
+	}
+	endWord()
+	return words, true
+}
+
+// queriesCommand は command の引数のオプションに -v / -V があるか。
+func queriesCommand(args []string) bool {
+	for _, a := range args {
+		if a == "--" || !strings.HasPrefix(a, "-") {
+			return false
+		}
+		if strings.ContainsAny(a, "vV") {
+			return true
+		}
+	}
+	return false
+}
+
 func isAssignment(w string) bool {
 	name, _, found := strings.Cut(w, "=")
+	name = strings.TrimSuffix(name, "+")
 	if !found || name == "" {
 		return false
 	}
@@ -284,95 +375,4 @@ func isAssignment(w string) bool {
 		}
 	}
 	return true
-}
-
-// scanDouble は二重引用符の中を読み、閉じ引用符の位置・引用を外した文字列・中のコマンド置換を返す。
-func scanDouble(s string, start int) (end int, text string, subs []string, ok bool) {
-	var b strings.Builder
-	for i := start; i < len(s); i++ {
-		c := s[i]
-		switch {
-		case c == '"':
-			return i, b.String(), subs, true
-		case c == '\\' && i+1 < len(s) && strings.IndexByte("$`\"\\\n", s[i+1]) >= 0:
-			if s[i+1] != '\n' {
-				b.WriteByte(s[i+1])
-			}
-			i++
-		case c == '`':
-			j := strings.IndexByte(s[i+1:], '`')
-			if j < 0 {
-				return 0, "", nil, false
-			}
-			subs = append(subs, s[i+1:i+1+j])
-			b.WriteString(s[i : i+2+j])
-			i += j + 1
-		case c == '$' && i+1 < len(s) && s[i+1] == '(':
-			e, ok := matchParen(s, i+2)
-			if !ok {
-				return 0, "", nil, false
-			}
-			subs = append(subs, s[i+2:e])
-			b.WriteString(s[i : e+1])
-			i = e
-		default:
-			b.WriteByte(c)
-		}
-	}
-	return 0, "", nil, false
-}
-
-// matchParen は start から読み、対応する ')' の位置を返す。中の引用は読み飛ばす。
-func matchParen(s string, start int) (int, bool) {
-	depth := 1
-	for i := start; i < len(s); i++ {
-		switch s[i] {
-		case '\\':
-			i++
-		case '\'':
-			j := strings.IndexByte(s[i+1:], '\'')
-			if j < 0 {
-				return 0, false
-			}
-			i += j + 1
-		case '"':
-			end, _, _, ok := scanDouble(s, i+1)
-			if !ok {
-				return 0, false
-			}
-			i = end
-		case '(':
-			depth++
-		case ')':
-			depth--
-			if depth == 0 {
-				return i, true
-			}
-		}
-	}
-	return 0, false
-}
-
-// skipHeredocs は start から heredoc の本文を読み飛ばし、最後の終端行の次の位置を返す。
-func skipHeredocs(s string, start int, delims []string, stripTabs bool) int {
-	i := start
-	for _, d := range delims {
-		for i < len(s) {
-			end := strings.IndexByte(s[i:], '\n')
-			line := s[i:]
-			next := len(s)
-			if end >= 0 {
-				line = s[i : i+end]
-				next = i + end + 1
-			}
-			i = next
-			if stripTabs {
-				line = strings.TrimLeft(line, "\t")
-			}
-			if line == d {
-				break
-			}
-		}
-	}
-	return i
 }
