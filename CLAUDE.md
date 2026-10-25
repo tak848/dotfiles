@@ -229,7 +229,7 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 `go/cmd/cc-deny-hint` は PreToolUse(Bash) hook。`dot_claude/permission-rules.libsonnet` の Bash ルールのうち `reason` を持つものを引数の JSON で受け取り、コマンドが当たったルールの `reason` だけを `additionalContext` で返す。拒否そのものは `permissions.deny` が行い、この hook は理由をモデルに伝えるだけ。
 
 - hooks の `if` で絞らないのは、コマンド名より先まで指定したパターン（`Bash(git commit*--amend*)` など）だと `$()`・バッククォート・`$VAR` を含むだけで常に hook が実行されるため（公式 docs hooks "How if patterns match Bash commands"。仕様でありリグレッションではない）。以前は `if` 付きの printf hook をルールごとに置いていて、`$` を含む Bash のたびに全ルール（21 件）の理由が注入されていた
-- コマンドは `&&` / `;` / パイプ / サブシェルで単純コマンドに分け、先頭の変数代入と `env` / `sudo` などのラッパーを外してから照合する。`$()`・バッククォート・`bash -c`・`eval` の中身も調べ、引用された引数・heredoc の本文・リダイレクト先はコマンドとして扱わない。引用やコマンド置換が閉じていないなど解析できない入力には何も返さない
+- コマンドは `&&` / `;` / パイプ / サブシェルで単純コマンドに分け、先頭の変数代入と `env` / `sudo` などのラッパー（値を取るオプションは値ごと）を外してから照合する。`$()`・バッククォート・プロセス置換・`bash -c`・`eval` の中身も調べ、引用された引数・リダイレクト先・case のパターン・配列の要素・`command -v` の対象はコマンドとして扱わない。算術式（`$(( ))` / `(( ))`）と、終端語を引用していない heredoc の本文は、中のコマンド置換だけを調べる。引用やコマンド置換が閉じていないなど解析できない入力には何も返さない
 - Agent / EnterWorktree のルールは `if` で正しく絞れるので、従来どおり `if` と printf で返す
 
 ### Go の JSON 処理
