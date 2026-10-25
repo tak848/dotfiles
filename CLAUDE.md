@@ -310,7 +310,7 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 
 `fill-lockfile-checksums.sh` は、`mise lock` では checksum が埋まらないツールを補う。mise は backend が checksum を供給できる場合しか lockfile に書き込まないため、`http` backend のツールや aqua-registry 側に checksum 定義が無いパッケージ（`anthropics/claude-code`, `tamasfe/taplo`, `http:grok`, `http:opencode`）は url だけが残り、install 時の整合性検証が働かない。そこで実アーティファクトを取得して sha256 を計算し、lockfile に追記する。checksum のあるエントリは触らないので冪等。アーティファクトを丸ごとダウンロードする都合上、対象が増えるほど CI 時間は延びる（現状で合計 2 GB 強）。
 
-lockfile / bootstrap / lazy-lock の再生成は外部のコード（mise lock の依存解決、Lazy のプラグインの build hook など）を動かすので、書き込みできる GitHub App token を作る前の step で行い、commit の step でだけ App token を使う。GITHUB_TOKEN は読み取りに絞る（lazy-lock の週次 PR の作成だけ書き込みを付ける）。checkout は push 時点の SHA ではなくブランチの先頭を取り、token を `.git/config` に残さない。`commit-via-graphql.sh` は `REGENERATE_CMD` 無しで呼ぶと、commit の失敗時に再試行せず異常終了する（取り直すと生成物が消えるため）。週次の lazy-lock PR はブランチの push だけを App token で行う（GITHUB_TOKEN の push では `ci.yaml` が起動せず、必須チェックが付かない）。
+lockfile / bootstrap / lazy-lock の再生成は外部のコード（mise lock の依存解決、Lazy のプラグインの build hook など）を動かすので、書き込みできる GitHub App token を作る前の step で行い、commit の step でだけ App token を使う。GITHUB_TOKEN は読み取りに絞る（lazy-lock の週次 PR の作成だけ書き込みを付ける）。checkout は push 時点の SHA ではなくブランチの先頭を取り、token を `.git/config` に残さない。`commit-via-graphql.sh` は再生成をしない。生成中に別の commit でブランチの先頭が進んで commit が拒否されたら、新しい先頭を取り直し、その間に `FILES` が変わっていなければ生成物を新しい先頭に載せ直して commit する。`FILES` が変わっていれば上書きせずに異常終了する。生成の入力を変える push は paths に当たってその workflow を起動し、古い run を止めて新しい先頭から作り直す。concurrency の group は workflow ごとに分ける。group を共有すると待機できる run が 1 件だけなので、別 workflow の待機中の run が取り消され、生成物だけの commit では起動し直さない。待機枠を増やす `concurrency.queue: max` は actionlint（1.7.12）が未知のキーとして弾くので使わない。週次の lazy-lock PR はブランチの push だけを App token で行う（GITHUB_TOKEN の push では `ci.yaml` が起動せず、必須チェックが付かない）。
 
 ### zsh 設定の読み込み順序
 

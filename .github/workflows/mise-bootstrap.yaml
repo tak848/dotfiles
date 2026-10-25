@@ -13,9 +13,10 @@ on:
 permissions:
   contents: read
 
+# group は workflow ごとに分ける（lockfiles-and-checksums.yaml の concurrency を参照）
 concurrency:
-  group: auto-update-${{ github.ref_name }}
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   update-bootstrap:

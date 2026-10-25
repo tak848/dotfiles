@@ -17,9 +17,14 @@ on:
 permissions:
   contents: read
 
+# group は workflow ごとに分け、同じブランチで同じ workflow の新しい run が来たら古い run を止める
+# （新しい run がブランチの先頭から作り直す）。mise-bootstrap / lazy-lock と group を共有すると、
+# 待機できる run が group に 1 件だけなので、後から来た別 workflow の run が待機中の run を取り消し、
+# 取り消された側は生成物だけの commit では再び起動しない。並行して先に commit された分は
+# commit-via-graphql.sh が新しい先頭に載せ直す
 concurrency:
-  group: auto-update-${{ github.ref_name }}
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   update-lockfiles-and-checksums:

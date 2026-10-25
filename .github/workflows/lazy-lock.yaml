@@ -96,10 +96,8 @@ jobs:
     if: github.event_name == 'pull_request' && github.head_ref != 'lazy-lock-update'
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    # 同じブランチに commit する lockfiles-and-checksums.yaml / mise-bootstrap.yaml と順番に走らせる
-    concurrency:
-      group: auto-update-${{ github.head_ref }}
-      cancel-in-progress: false
+    # 同じブランチに commit する lockfiles-and-checksums.yaml / mise-bootstrap.yaml とは group を共有しない
+    # （lockfiles-and-checksums.yaml の concurrency を参照）。この workflow 同士は先頭の concurrency で 1 本に絞る
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
