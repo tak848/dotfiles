@@ -236,7 +236,7 @@ if [ "$*" = 'plugin install security-uv@tak848-plugins --scope user --yes' ] && 
 			} else if err != nil {
 				t.Fatalf("%v: %s", err, out)
 			}
-			want := "plugin marketplace add tak848/dotfiles\nplugin marketplace update tak848-plugins\nplugin install aws-knowledge@tak848-plugins\nplugin install context7@tak848-plugins\nplugin install security-uv@tak848-plugins --scope user --yes\n"
+			want := "plugin marketplace add tak848/dotfiles\nplugin marketplace update tak848-plugins\nplugin install aws-knowledge@tak848-plugins\nplugin update aws-knowledge@tak848-plugins\nplugin install context7@tak848-plugins\nplugin update context7@tak848-plugins\nplugin install security-uv@tak848-plugins --scope user --yes\n"
 			if got := read(t, log); got != want {
 				t.Fatalf("CLI calls = %q, want %q", got, want)
 			}
