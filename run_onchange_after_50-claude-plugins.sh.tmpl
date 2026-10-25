@@ -45,3 +45,7 @@ for plugin in aws-knowledge context7; do
 done
 # 初回は defaultEnabled: false で無効。--yes はこの command source の実行承認にだけ使う。
 claude plugin install security-uv@tak848-plugins --scope user --yes
+# command source の version は生成物の内容のハッシュ（manifest に version があれば "<version>-<ハッシュ>"）
+# なので、生成コマンドを変えて出力が変われば update が入れ直す。導入済みへの install は command を実行せず、
+# セッションごとの再実行は有効なプラグインにしか走らない。既定で無効な security-uv はここで update する。
+claude plugin update security-uv@tak848-plugins --scope user --yes

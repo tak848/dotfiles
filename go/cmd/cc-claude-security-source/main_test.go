@@ -210,33 +210,51 @@ func TestFetchRejectsOtherRevision(t *testing.T) {
 }
 
 func TestInstallScriptWithFakeClaude(t *testing.T) {
-	for _, fail := range []bool{false, true} {
-		t.Run(map[bool]string{false: "success", true: "failure"}[fail], func(t *testing.T) {
+	const (
+		install = "plugin install security-uv@tak848-plugins --scope user --yes"
+		update  = "plugin update security-uv@tak848-plugins --scope user --yes"
+	)
+	calls := []string{
+		"plugin marketplace add tak848/dotfiles",
+		"plugin marketplace update tak848-plugins",
+		"plugin install aws-knowledge@tak848-plugins",
+		"plugin update aws-knowledge@tak848-plugins",
+		"plugin install context7@tak848-plugins",
+		"plugin update context7@tak848-plugins",
+		install,
+		update,
+	}
+	for _, tt := range []struct {
+		name   string
+		failAt string // この引数の呼び出しだけ exit 17 にする。空なら全部成功させる
+		calls  int    // 失敗した呼び出しまでの件数
+	}{
+		{"success", "", len(calls)},
+		{"install failure", install, len(calls) - 1},
+		{"update failure", update, len(calls)},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
 			dir := t.TempDir()
 			log := filepath.Join(dir, "calls")
 			put(t, filepath.Join(dir, "bin", "claude"), `#!/bin/sh
 printf '%s\n' "$*" >>"$TRACE_FILE"
-if [ "$*" = 'plugin install security-uv@tak848-plugins --scope user --yes' ] && [ "$FAIL_SECURITY" = yes ]; then exit 17; fi
+if [ -n "$FAIL_AT" ] && [ "$*" = "$FAIL_AT" ]; then exit 17; fi
 `, 0o700)
 			text := read(t, filepath.Join("..", "..", "..", "run_onchange_after_50-claude-plugins.sh.tmpl"))
 			text = strings.ReplaceAll(text, `{{ template "path-setup.tmpl" . }}`, "")
 			script := filepath.Join(dir, "install.sh")
 			put(t, script, text, 0o700)
 			cmd := exec.Command("/bin/bash", script)
-			failure := "no"
-			if fail {
-				failure = "yes"
-			}
-			cmd.Env = []string{"PATH=" + filepath.Join(dir, "bin") + ":/usr/bin:/bin", "HOME=" + dir, "TRACE_FILE=" + log, "FAIL_SECURITY=" + failure}
+			cmd.Env = []string{"PATH=" + filepath.Join(dir, "bin") + ":/usr/bin:/bin", "HOME=" + dir, "TRACE_FILE=" + log, "FAIL_AT=" + tt.failAt}
 			out, err := cmd.CombinedOutput()
-			if fail {
+			if tt.failAt != "" {
 				if exit, ok := err.(*exec.ExitError); !ok || exit.ExitCode() != 17 {
-					t.Fatalf("導入失敗を伝えていません: %v, %s", err, out)
+					t.Fatalf("失敗を伝えていません: %v, %s", err, out)
 				}
 			} else if err != nil {
 				t.Fatalf("%v: %s", err, out)
 			}
-			want := "plugin marketplace add tak848/dotfiles\nplugin marketplace update tak848-plugins\nplugin install aws-knowledge@tak848-plugins\nplugin update aws-knowledge@tak848-plugins\nplugin install context7@tak848-plugins\nplugin update context7@tak848-plugins\nplugin install security-uv@tak848-plugins --scope user --yes\n"
+			want := strings.Join(calls[:tt.calls], "\n") + "\n"
 			if got := read(t, log); got != want {
 				t.Fatalf("CLI calls = %q, want %q", got, want)
 			}
