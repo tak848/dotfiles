@@ -1,12 +1,14 @@
 local shellSingleQuote(s) =
   "'" + std.strReplace(s, "'", "'\"'\"'") + "'";
 
-// Claude Code v2.1.105 以降、hooks[].if の評価が shell expansion ($(...), $$, ${VAR} 等) を
-// 含むコマンドで fall-open するリグレッションがあり、deny を返すと暴発で大量の false positive
-// deny が発生してコマンド実行が阻害される。
-// そこで permissionDecision は指定せず additionalContext のみで reason を Claude に届ける暫定措置。
-// 本物の deny 判定は permissions.deny 側 (permissionsDeny に同じ spec を登録済み) に完全委任する。
-// 上流修正が入ったら permissionDecision: 'deny' 方式に戻す。
+// reason を持つルールは、PreToolUse hook で reason を additionalContext として Claude に渡す。
+// 拒否そのものは permissions.deny（permissionsDeny に同じ spec を登録済み）が行う。
+//
+// Bash のルールは hooks[].if で絞らず、cc-deny-hint（go/cmd/cc-deny-hint）がコマンドを単純コマンドに
+// 分けて照合する。if はコマンド名より先まで指定したパターンだと、$()・バッククォート・$VAR を含む
+// コマンドで常に hook を実行する（公式 docs の hooks "How if patterns match Bash commands"。仕様で
+// あってリグレッションではない）。そのため無関係なコマンドにも全ルールの reason が注入されていた。
+// Agent / EnterWorktree のルールは if で正しく絞れるので、従来どおり if と printf で返す。
 local preToolResponse(reason) = {
   hookSpecificOutput: {
     hookEventName: 'PreToolUse',
@@ -159,10 +161,32 @@ local rules = [
   },
 ];
 
+local hinted = [rule for rule in rules if std.objectHas(rule, 'reason')];
+
+// 'Bash(<pattern>)' から pattern を取り出す。
+local bashPattern(spec) =
+  assert std.startsWith(spec, 'Bash(') && std.endsWith(spec, ')') : 'unexpected Bash spec: ' + spec;
+  std.substr(spec, std.length('Bash('), std.length(spec) - std.length('Bash()'));
+
 {
   rules: rules,
   permissionsDeny: [rule.spec for rule in rules],
   preToolUseHooks: [
+    {
+      matcher: 'Bash',
+      hooks: [
+        {
+          type: 'command',
+          command: '~/.claude/bin/cc-deny-hint ' + shellSingleQuote(std.manifestJsonMinified([
+            { pattern: bashPattern(rule.spec), reason: rule.reason }
+            for rule in hinted
+            if rule.matcher == 'Bash'
+          ])),
+          timeout: 5,
+        },
+      ],
+    },
+  ] + [
     {
       matcher: rule.matcher,
       hooks: [
@@ -173,7 +197,7 @@ local rules = [
         },
       ],
     }
-    for rule in rules
-    if std.objectHas(rule, 'reason')
+    for rule in hinted
+    if rule.matcher != 'Bash'
   ],
 }

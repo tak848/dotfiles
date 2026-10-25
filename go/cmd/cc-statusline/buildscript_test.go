@@ -82,13 +82,17 @@ func TestBuildScriptBuildsConfiguredBinaries(t *testing.T) {
 	for _, m := range buildRe.FindAllStringSubmatch(string(data), -1) {
 		built[m[1]] = true
 	}
-	settings, err := os.ReadFile(filepath.Join(root, "dot_claude", "settings.jsonnet"))
-	if err != nil {
-		t.Fatal(err)
+	// hook の一部は settings.jsonnet が import する permission-rules.libsonnet で組み立てている。
+	var refs [][]string
+	for _, name := range []string{"settings.jsonnet", "permission-rules.libsonnet"} {
+		data, err := os.ReadFile(filepath.Join(root, "dot_claude", name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		refs = append(refs, regexp.MustCompile(`~/\.claude/bin/([\w-]+)`).FindAllStringSubmatch(string(data), -1)...)
 	}
-	refs := regexp.MustCompile(`~/\.claude/bin/([\w-]+)`).FindAllStringSubmatch(string(settings), -1)
 	if len(refs) == 0 {
-		t.Fatal("settings.jsonnet has no binary references")
+		t.Fatal("settings.jsonnet and permission-rules.libsonnet have no binary references")
 	}
 	for _, ref := range refs {
 		name := ref[1]
