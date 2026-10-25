@@ -19,7 +19,7 @@
    - 上記に当たるライブラリ・フレームワーク・SDK・CLI のドキュメントを引くときはここから入る
    - 特定バージョンが必要な場合は `resolve-library-id` でバージョン付きIDを取得
 
-2. **deepwiki**（devin MCP の `mcp__devin__ask_question`, `mcp__devin__read_wiki_contents`, `mcp__devin__read_wiki_structure`）
+2. **deepwiki**（devin MCP の `mcp__devin__ask_wiki_question`, `mcp__devin__read_wiki_contents`, `mcp__devin__read_wiki_structure`）
    - context7 で見つからない場合、または自然言語での解説・GitHub リポジトリの構造理解が必要な場合に使用
 
 3. 一次ソースが公式ドキュメントで、直接読むほうが速い・忠実な場合は WebFetch / `defuddle`（後述）でよい。MCP を経由すること自体が目的ではない
