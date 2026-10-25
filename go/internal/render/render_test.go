@@ -29,6 +29,10 @@ func TestSanitize(t *testing.T) {
 		"bel":          {in: "a\x07b", want: "ab"},
 		"del":          {in: "a\x7fb", want: "ab"},
 		"osc_terminal": {in: "\033]8;;evil\x07x", want: "]8;;evilx"},
+		"c1_csi":       {in: "a\u009b31mb", want: "a31mb"},
+		"c1_osc":       {in: "\u009d8;;evil\u009cx", want: "8;;evilx"},
+		"c1_edges":     {in: "a\u0080\u009fb", want: "ab"},
+		"latin1":       {in: "café  ", want: "café  "},
 		"japanese":     {in: "検索中", want: "検索中"},
 	}
 	for name, tt := range tests {

@@ -21,10 +21,11 @@ import (
 // Sanitize は外部由来の文字列から制御文字を取り除く。session_name・PR の
 // タイトル・subagent の description などはユーザー入力や GitHub 由来なので、
 // 改行が 1 個混ざるだけで行数が狂い、ESC が混ざれば色や OSC 8 の終端を
-// 乗っ取られる。表示に使う前に必ず通す。
+// 乗っ取られる。C1（U+0080〜U+009F）も落とす。U+009B（CSI）・U+009D（OSC）を
+// ESC [ / ESC ] と同じに解釈する端末があるため。表示に使う前に必ず通す。
 func Sanitize(s string) string {
 	return strings.Map(func(r rune) rune {
-		if r < 0x20 || r == 0x7f {
+		if r < 0x20 || r == 0x7f || (r >= 0x80 && r <= 0x9f) {
 			return -1
 		}
 		return r
