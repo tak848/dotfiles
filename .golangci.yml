@@ -1,0 +1,8 @@
+version: "2"
+
+linters:
+  exclusions:
+    # Close / Flush / stdout・stderr への書き込み / fmt.Fprint* などの戻り値の無視は errcheck の対象から外す。
+    # hook や statusline は出力の失敗を扱いようがなく、従来からこれらを無視している
+    presets:
+      - std-error-handling

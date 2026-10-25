@@ -302,7 +302,7 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 
 | ワークフロー | トリガー | 処理 |
 |-------------|---------|------|
-| `ci.yaml` | push | `task check` で自動生成ファイルの diff チェック |
+| `ci.yaml` | push | ツールの導入確認、Go のテストと lint（gofmt / golangci-lint、設定は `.golangci.yml`）、シェルスクリプト・描画した run_ スクリプト・workflow の lint（shellcheck / actionlint）、zsh の構文（macOS のみ）、jsonnet の評価、`task check`（自動生成ファイルの diff）、chezmoi テンプレートの描画 |
 | `lockfiles-and-checksums.yaml` | push（`.mise.toml` / `.mise-bootstrap-version` / `dot_config/mise/config.toml` / `dot_config/aquaproj-aqua/aqua.yaml` 変更時、`main` / `lazy-lock-update` ブランチを除く） | `mise lock`（ルート + `dot_config/mise/`）→ `fill-lockfile-checksums.sh` → `aqua update-checksum --prune` を Renovate PR ブランチへ commit |
 | `mise-bootstrap.yaml` | push（`.mise-bootstrap-version` 変更時） | `mise generate bootstrap` |
 | `lazy-lock.yaml` | nvim 設定変更 / 週次 cron | Lazy.nvim lockfile 更新（PR 作成 or Renovate PR へコミット） |
