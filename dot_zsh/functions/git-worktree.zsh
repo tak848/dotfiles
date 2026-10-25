@@ -573,7 +573,10 @@ gwc() {
             (git for-each-ref --format='[R] %(refname:short)%09%(refname)%09remote' 'refs/remotes' | grep -v '/HEAD$')
     )
     local used_refs=$(git worktree list --porcelain | grep '^branch ' | awk '{print $2}')
-    local available_branches_meta=$(grep -v -F -f <(echo "$used_refs") <(echo "$all_branches_meta"))
+    # 使用中の ref は 2 列目（full ref）との完全一致で除く。grep -F -f の部分一致だと main が使用中のとき
+    # main-old も消え、used_refs が空（全 worktree が detached HEAD）だと空パターンが全行に当たって一覧が空になる
+    local available_branches_meta=$(awk -F'\t' 'NR == FNR { if ($0 != "") used[$0] = 1; next } NF && !($2 in used)' \
+        <(print -r -- "$used_refs") <(print -r -- "$all_branches_meta"))
 
     # --- 2. fzfでユーザーに選択させる ---
     local header="[Enter] 選択 | [Option+Enter] 新規作成"
@@ -605,7 +608,8 @@ gwc() {
             git worktree add "$worktree_path" "$local_branch_name"
             worktree_add_status=$?
         elif [ "$branch_type" = "remote" ]; then
-            local_branch_name=$(echo "$full_ref" | sed 's:^refs/remotes/[^/]\+/::')
+            # refs/remotes/<remote>/ を落とす。sed の \+ は GNU 拡張で macOS の sed では置換されないので使わない
+            local_branch_name="${full_ref#refs/remotes/*/}"
             local dir_name="${project_name}-$(echo "$local_branch_name" | sed 's/\//-/g')"
             worktree_path="${root_dir}/../${dir_name}"
             echo "Creating new local branch '$local_branch_name' to track '$display_name'..."
