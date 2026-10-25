@@ -186,9 +186,13 @@ func commands(s string, depth int) (cmds []string, ok bool) {
 		switch {
 		case c == '\\':
 			if i+1 < len(s) {
-				if s[i+1] != '\n' {
+				switch {
+				case s[i+1] != '\n':
 					word.WriteByte(s[i+1])
 					inWord, quoted = true, true
+				case inArray && arraySep == i-1:
+					// 行継続は無かったものとして扱うので、直前の要素の区切りを引き継ぐ
+					arraySep = i + 1
 				}
 				i++
 			}
@@ -591,6 +595,10 @@ func matchParen(s string, start int, cmd bool) (int, bool) {
 		sep := false
 		switch s[i] {
 		case '\\':
+			if i+1 < len(s) && s[i+1] == '\n' {
+				// 行継続は無かったものとして扱うので、直前の単語の区切りを引き継ぐ
+				sep = boundary
+			}
 			i++
 		case '$':
 			// 算術展開は丸ごと飛ばす。中の << はシフトで、heredoc ではない
