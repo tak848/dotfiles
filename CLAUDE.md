@@ -263,7 +263,7 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 | `dot_claude/settings.jsonnet` の `extraKnownMarketplaces` | マーケットプレイス登録 |
 | `dot_claude/settings.jsonnet` の `enabledPlugins` | プラグイン有効化 |
 
-`marketplace.json` のエントリと各 `plugin.json` には `version` を書かない。書くとその値で固定され、中身を変えても `claude plugin update` が更新しない（公式 docs plugins/loading "Versions and updates"）。書かなければ plugin ディレクトリの commit SHA が version になり、50 のスクリプトの `claude plugin update` が変更を取り込む。`claude plugin validate` は version が無いと warning を出すので、CI は `--strict` を付けずにエラーだけで落とす（`--strict` は icon や privacy policy URL の欠如でも落ちる）。
+`marketplace.json` のエントリと各 `plugin.json` には `version` を書かない。書くとその値で固定され、中身を変えても `claude plugin update` が更新しない（公式 docs plugins/loading "Versions and updates"）。書かなければ install 時点のマーケットプレイス（このリポジトリ）の HEAD の commit SHA が version になり（plugin ディレクトリを最後に変えた commit ではない。隔離した `CLAUDE_CONFIG_DIR` で確認）、50 のスクリプトの `claude plugin update` が変更を取り込む。このマーケットプレイスは auto-update が既定で無効なので、update が走るのは 50 が実行されたときだけ。`claude plugin validate` は version が無いと warning を出すので、CI は `--strict` を付けずにエラーだけで落とす（`--strict` は icon や privacy policy URL の欠如でも落ちる）。
 
 #### Claude Security（uv 専用のローカル加工版）
 

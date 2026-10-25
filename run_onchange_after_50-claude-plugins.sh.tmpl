@@ -37,8 +37,8 @@ claude plugin marketplace add tak848/dotfiles
 # install 時に "not found in marketplace" になる。明示的に update して clone を最新にする。
 claude plugin marketplace update tak848-plugins
 # install は導入済みなら何もしない（exit 0）ので、中身の変更は update で取り込む。marketplace.json に
-# version を書かず、Claude Code が plugin ディレクトリの commit SHA を version にするので、変更が
-# あれば update が検出する。このマーケットプレイスは auto-update が既定で無効なのでここで呼ぶ。
+# version を書かず、Claude Code がマーケットプレイスの commit SHA を version にするので、update が
+# 新しい commit を検出する。このマーケットプレイスは auto-update が既定で無効なのでここで呼ぶ。
 for plugin in aws-knowledge context7; do
     claude plugin install "${plugin}@tak848-plugins"
     claude plugin update "${plugin}@tak848-plugins"
