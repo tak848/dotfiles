@@ -224,6 +224,14 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - 質問の判断材料はこの hook では救えない（ユーザーが答えるまで最後の text が来ない）。そちらは Stop ゲートの `質問予告` で扱う
 - `dot_claude/CLAUDE.md` には、全 agent が守る振る舞い（大事なことはターン最後の text に書く、質問は `質問予告` を経て AskUserQuestion で行う等）だけを書く。背景・対象モデル・hook の名前や仕組み・出典は書かない。全 agent に不要な情報であり、hook の存在を知らせると、何か起きたときにモデルが本来の作業から離れて hook の調査に向かうため。これらはこのファイル・コードのコメント・PR に置く。hook の差し戻し文や additionalContext は、それ自体で何をすべきか分かるように書く
 
+### deny hint（cc-deny-hint）
+
+`go/cmd/cc-deny-hint` は PreToolUse(Bash) hook。`dot_claude/permission-rules.libsonnet` の Bash ルールのうち `reason` を持つものを引数の JSON で受け取り、コマンドが当たったルールの `reason` だけを `additionalContext` で返す。拒否そのものは `permissions.deny` が行い、この hook は理由をモデルに伝えるだけ。
+
+- hooks の `if` で絞らないのは、コマンド名より先まで指定したパターン（`Bash(git commit*--amend*)` など）だと `$()`・バッククォート・`$VAR` を含むだけで常に hook が実行されるため（公式 docs hooks "How if patterns match Bash commands"。仕様でありリグレッションではない）。以前は `if` 付きの printf hook をルールごとに置いていて、`$` を含む Bash のたびに全ルール（21 件）の理由が注入されていた
+- コマンドは `&&` / `;` / パイプ / サブシェルで単純コマンドに分け、先頭の変数代入と `env` / `sudo` などのラッパーを外してから照合する。`$()`・バッククォート・`bash -c`・`eval` の中身も調べ、引用された引数・heredoc の本文・リダイレクト先はコマンドとして扱わない。引用やコマンド置換が閉じていないなど解析できない入力には何も返さない
+- Agent / EnterWorktree のルールは `if` で正しく絞れるので、従来どおり `if` と printf で返す
+
 ### Go の JSON 処理
 
 コード・テストとも `encoding/json/v2` を使用する。raw JSON は `encoding/json/jsontext.Value`、JSONL は `jsontext.Encoder` と `json.MarshalEncode` を使う。Go 1.27.1 で利用でき、追加の外部依存は持たない。v1 import への戻りは `go/cmd/cc-statusline/jsonv2_test.go` が検出する。既存プロトコルの入力・出力の互換性は局所的な option とテストで確認し、新規コードへ一律の寛容な option を付けない。
