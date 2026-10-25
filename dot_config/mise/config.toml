@@ -144,7 +144,7 @@ python = "3.13.16"
 "github:sorafujitani/ccsession" = "v1.6.0"
 
 # Anthropic API CLI
-"aqua:anthropics/anthropic-cli" = "1.44.0"
+"aqua:anthropics/anthropic-cli" = "2.3.0"
 
 # Language Server
 "go:golang.org/x/tools/gopls" = "v0.24.0"
