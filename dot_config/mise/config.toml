@@ -166,7 +166,7 @@ python = "3.13.17"
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.311"
 "github:google-antigravity/antigravity-cli" = "1.4.7" # agy: Gemini CLI の後継
-"aqua:openai/codex" = "0.164.0"
+"aqua:openai/codex" = "0.165.0"
 # opencode は http backend で管理（末尾の [tools."http:opencode"] を参照）
 # Grok Build CLI (xAI) は http backend で管理（末尾の [tools."http:grok"] を参照）
 # Claude Code のハーネスを ChatGPT サブスクの Codex backend に向ける Anthropic 互換プロキシ。claudex から使う
