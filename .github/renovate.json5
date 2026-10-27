@@ -7,7 +7,7 @@
     ":separateMultipleMajorReleases",
     ":prConcurrentLimitNone",
     ":prHourlyLimitNone",
-    "github>aquaproj/aqua-renovate-config#2.13.0",
+    "github>aquaproj/aqua-renovate-config#2.14.0",
   ],
   // mise lockfile revision 2 の sidecar（npm の package.json / aube-lock.yaml、pypi の
   // pyproject.toml / uv.lock）は mise lock が生成するもので、推移的依存の更新も mise lock に任せる。
