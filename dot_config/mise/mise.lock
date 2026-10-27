@@ -124,44 +124,44 @@ url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.3.0/ant_
 url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/670792874"
 
 [[tools."aqua:anthropics/claude-code"]]
-version = "2.1.310"
+version = "2.1.311"
 backend = "aqua:anthropics/claude-code"
-specifiers = ["2.1.310"]
+specifiers = ["2.1.311"]
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64"]
-checksum = "sha256:97ab45a42fdb141dc37d3b12973638ebd8fda59163eca51b02aa2eded0630874"
-url = "https://github.com/anthropics/claude-code/releases/download/v2.1.310/claude-linux-arm64.tar.gz"
-url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/670426481"
+checksum = "sha256:f464c31d01cd364d1d5df529dc4c202ce9a05c7a87b9fd4fefebb0a8ffe1ecb5"
+url = "https://github.com/anthropics/claude-code/releases/download/v2.1.311/claude-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/679248780"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-arm64-musl"]
-checksum = "sha256:9f233d46cd396f97260825a7e68c3410288ca6976a7f4a6a5b3caead4a5e785a"
-url = "https://github.com/anthropics/claude-code/releases/download/v2.1.310/claude-linux-arm64-musl.tar.gz"
-url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/670426478"
+checksum = "sha256:916fe5c7e0593f42982ae8491a04a51f3d840bb06e54c68bdd8a731e421c4473"
+url = "https://github.com/anthropics/claude-code/releases/download/v2.1.311/claude-linux-arm64-musl.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/679248779"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64"]
-checksum = "sha256:5bea9e13ac07ea6804c24e6263ec7e5b3d13f81d3f681c92f9784c534425fae1"
-url = "https://github.com/anthropics/claude-code/releases/download/v2.1.310/claude-linux-x64.tar.gz"
-url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/670426847"
+checksum = "sha256:1e506d1d4466d854f0a2ea662f04122c77475e8c71a680bbbdc1c99fefff3fa7"
+url = "https://github.com/anthropics/claude-code/releases/download/v2.1.311/claude-linux-x64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/679248991"
 
 [tools."aqua:anthropics/claude-code"."platforms.linux-x64-musl"]
-checksum = "sha256:6ddc4f6666aa87629f416b9eb6e6dce9e9abcfa749fbfbdc81758d4d6a9c442b"
-url = "https://github.com/anthropics/claude-code/releases/download/v2.1.310/claude-linux-x64-musl.tar.gz"
-url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/670426482"
+checksum = "sha256:21cf8759ce58e9040457a0dafb6ad36a855b57c350337a3bd865f42d7e69f377"
+url = "https://github.com/anthropics/claude-code/releases/download/v2.1.311/claude-linux-x64-musl.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/679248775"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-arm64"]
-checksum = "sha256:cf47d30004ff26e5cfed6004a29ca94e05ad53d6f890ee1be8bb582e8ce2a5b5"
-url = "https://github.com/anthropics/claude-code/releases/download/v2.1.310/claude-darwin-arm64.tar.gz"
-url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/670426479"
+checksum = "sha256:28dc437c4530e4fbd5e4f8924119cb001c332b64de5e817b35898c39ec107155"
+url = "https://github.com/anthropics/claude-code/releases/download/v2.1.311/claude-darwin-arm64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/679248777"
 
 [tools."aqua:anthropics/claude-code"."platforms.macos-x64"]
-checksum = "sha256:4c62f49341f7d902bb92186d67eee2adbf014faba9ab617729de52d7b719e1c4"
-url = "https://github.com/anthropics/claude-code/releases/download/v2.1.310/claude-darwin-x64.tar.gz"
-url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/670426480"
+checksum = "sha256:d35c77b739797451772b8179c076bd7230f456239bf538890fbc0b38ca209bde"
+url = "https://github.com/anthropics/claude-code/releases/download/v2.1.311/claude-darwin-x64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/679248778"
 
 [tools."aqua:anthropics/claude-code"."platforms.windows-x64"]
-checksum = "sha256:a9419b5c4942b919cb048d3f3288e19d2bec55f843615d652636f7cb638abb80"
-url = "https://github.com/anthropics/claude-code/releases/download/v2.1.310/claude-win32-x64.zip"
-url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/670426878"
+checksum = "sha256:d5ceb396733c2b96c163b925149abce37ed075adac9a3d94208279986e4546ed"
+url = "https://github.com/anthropics/claude-code/releases/download/v2.1.311/claude-win32-x64.zip"
+url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/679249047"
 
 [[tools."aqua:arl/gitmux"]]
 version = "0.11.5"
@@ -1333,25 +1333,6 @@ url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/61389986
 checksum = "sha256:26bbdd9bf46cdbe03dcbdbbe37b2301608e29518ae32fbdfcf1eb143d41d9f38"
 url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.91.0/azure-cli-2.91.0-linux-x86_64.tar.gz"
 url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/613899860"
-
-[tools."github:Azure/azure-cli"."platforms.macos-arm64"]
-checksum = "sha256:dc28a3eef40d0b20f266f1e76b7a91f7a8ecdeaa28d0c855459eaa74edacbae6"
-url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.91.0/azure-cli-2.91.0-macos-arm64.tar.gz"
-url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/613899707"
-
-[tools."github:Azure/azure-cli"."platforms.macos-x64"]
-checksum = "sha256:b8c51c518c526d9ee0fd47716236f91804b578f9d560a2d8f60266fac7b67d6f"
-url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.91.0/azure-cli-2.91.0-macos-x86_64.tar.gz"
-url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/613899766"
-
-[[tools."github:Azure/azure-cli"]]
-version = "2.91.0"
-backend = "github:Azure/azure-cli"
-specifiers = ["2.91.0"]
-
-[tools."github:Azure/azure-cli".options]
-matching_regex = "macos"
-version_prefix = "azure-cli-"
 
 [tools."github:Azure/azure-cli"."platforms.macos-arm64"]
 checksum = "sha256:dc28a3eef40d0b20f266f1e76b7a91f7a8ecdeaa28d0c855459eaa74edacbae6"
