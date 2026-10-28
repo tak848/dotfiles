@@ -1064,39 +1064,39 @@ url = "https://github.com/starship/starship/releases/download/v1.27.0/starship-x
 url_api = "https://api.github.com/repos/starship/starship/releases/assets/650074470"
 
 [[tools."aqua:tak848/ccgate"]]
-version = "0.11.0"
+version = "0.11.1"
 backend = "aqua:tak848/ccgate"
-specifiers = ["0.11.0"]
+specifiers = ["0.11.1"]
 
 [tools."aqua:tak848/ccgate"."platforms.linux-arm64"]
-checksum = "sha256:02bfbe0ea851059977a2f46da32fe06b314d1babdb96d0bdde0c316e95c176d4"
-url = "https://github.com/tak848/ccgate/releases/download/v0.11.0/ccgate-linux-arm64.tar.gz"
-url_api = "https://api.github.com/repos/tak848/ccgate/releases/assets/583015340"
+checksum = "sha256:88cc13f1acac03f3b1fd2303964f0bc37d15fa5e7ae4aaac5b06b0f10d371341"
+url = "https://github.com/tak848/ccgate/releases/download/v0.11.1/ccgate-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/tak848/ccgate/releases/assets/683318062"
 
 [tools."aqua:tak848/ccgate"."platforms.linux-arm64-musl"]
-checksum = "sha256:02bfbe0ea851059977a2f46da32fe06b314d1babdb96d0bdde0c316e95c176d4"
-url = "https://github.com/tak848/ccgate/releases/download/v0.11.0/ccgate-linux-arm64.tar.gz"
-url_api = "https://api.github.com/repos/tak848/ccgate/releases/assets/583015340"
+checksum = "sha256:88cc13f1acac03f3b1fd2303964f0bc37d15fa5e7ae4aaac5b06b0f10d371341"
+url = "https://github.com/tak848/ccgate/releases/download/v0.11.1/ccgate-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/tak848/ccgate/releases/assets/683318062"
 
 [tools."aqua:tak848/ccgate"."platforms.linux-x64"]
-checksum = "sha256:892b1ff67949715c42ac6a2e713a3da2f68015fab8cfacc8ff50954fa81f0f39"
-url = "https://github.com/tak848/ccgate/releases/download/v0.11.0/ccgate-linux-amd64.tar.gz"
-url_api = "https://api.github.com/repos/tak848/ccgate/releases/assets/583015336"
+checksum = "sha256:9220336e865dd84c55dfe51e11f69ad2faa151a04eabc18aeb71d16a3714fd9b"
+url = "https://github.com/tak848/ccgate/releases/download/v0.11.1/ccgate-linux-amd64.tar.gz"
+url_api = "https://api.github.com/repos/tak848/ccgate/releases/assets/683318061"
 
 [tools."aqua:tak848/ccgate"."platforms.linux-x64-musl"]
-checksum = "sha256:892b1ff67949715c42ac6a2e713a3da2f68015fab8cfacc8ff50954fa81f0f39"
-url = "https://github.com/tak848/ccgate/releases/download/v0.11.0/ccgate-linux-amd64.tar.gz"
-url_api = "https://api.github.com/repos/tak848/ccgate/releases/assets/583015336"
+checksum = "sha256:9220336e865dd84c55dfe51e11f69ad2faa151a04eabc18aeb71d16a3714fd9b"
+url = "https://github.com/tak848/ccgate/releases/download/v0.11.1/ccgate-linux-amd64.tar.gz"
+url_api = "https://api.github.com/repos/tak848/ccgate/releases/assets/683318061"
 
 [tools."aqua:tak848/ccgate"."platforms.macos-arm64"]
-checksum = "sha256:c358b82db962c396fb909eb9cae0a090e0209337d8093771c5eb6e5b37215cb1"
-url = "https://github.com/tak848/ccgate/releases/download/v0.11.0/ccgate-darwin-arm64.tar.gz"
-url_api = "https://api.github.com/repos/tak848/ccgate/releases/assets/583015337"
+checksum = "sha256:5e07fb3e7fa63470391cc70da804afca10dcb306ea80a70088ea620c5aab7e99"
+url = "https://github.com/tak848/ccgate/releases/download/v0.11.1/ccgate-darwin-arm64.tar.gz"
+url_api = "https://api.github.com/repos/tak848/ccgate/releases/assets/683318063"
 
 [tools."aqua:tak848/ccgate"."platforms.macos-x64"]
-checksum = "sha256:817ee6a55b9cfdeffaef9794865bfbd2eaa41fc40a6e25a388f2d5fe1b88bf86"
-url = "https://github.com/tak848/ccgate/releases/download/v0.11.0/ccgate-darwin-amd64.tar.gz"
-url_api = "https://api.github.com/repos/tak848/ccgate/releases/assets/583015338"
+checksum = "sha256:e3e3f103bb8a8d4d3c593aea1bb33e4896ac458a42eeeaac3f4cfac25295ab71"
+url = "https://github.com/tak848/ccgate/releases/download/v0.11.1/ccgate-darwin-amd64.tar.gz"
+url_api = "https://api.github.com/repos/tak848/ccgate/releases/assets/683318074"
 
 [[tools."aqua:tamasfe/taplo"]]
 version = "0.10.0"
