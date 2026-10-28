@@ -137,7 +137,7 @@ python = "3.13.17"
 "aqua:grafana/jsonnet-language-server" = "0.17.0"
 
 # Claude Code permission gate
-"aqua:tak848/ccgate" = "0.11.0"
+"aqua:tak848/ccgate" = "0.11.1"
 
 # Claude Code セッション選択（claude --resume の fzf フロントエンド）
 "github:sorafujitani/ccsession" = "v1.6.0"
