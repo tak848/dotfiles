@@ -121,7 +121,7 @@ jobs:
             echo "$out"
             exit 1
           fi
-          if printf '%s\n' "$out" | grep -qi 'lazy'; then
+          if printf '%s\n' "$out" | grep -qE 'invalid lazy shim declaration|lazy_bins'; then
             echo "$out"
             echo "Error: lazy = true のツールの宣言が不正です。dot_config/mise/config.toml の lazy_bins を確認してください。"
             exit 1

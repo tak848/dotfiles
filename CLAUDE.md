@@ -98,7 +98,7 @@ Homebrew
 `dot_config/mise/config.toml` のツールの多くは `lazy = true` にしてあり、`mise install` では入らず、そのコマンドを初めて実行したときに入る（aqua の `aqua i -l` に当たる。mise 2026.9.0 で入った機能。公式 docs の dev-tools/shims "Lazy tools"）。`chezmoi update` で Renovate の更新がまとめて来ても、使っていないツールはダウンロードしない。
 
 - 明示 backend（`aqua:` / `github:` / `npm:` / `go:` / `pipx:` / `http:`）では mise の registry にある bin 名を使えない（mise の `src/args/backend_arg.rs` の `registry_tool` が明示 backend に `None` を返す）ので、初回の実行で入れるきっかけにするコマンド名を `lazy_bins` に書く。`lazy_bins` に無いコマンドを実行しても入らない。`lazy_bins` の無い宣言を mise は警告だけで飛ばし、apply は成功する
-- CI の `Verify lazy tool shims` が、`mise reshim` の警告（`lazy_bins` の書き忘れ）と、実行ファイルに解決できない shim（`lazy_bins` の名前の誤り）を検出する。CI の `mise install` は `--include-lazy` で全部入れ、Renovate の更新でも全ツールが両 OS で入ることを確かめている
+- CI の `Verify lazy tool shims` が、`mise reshim` の警告（`lazy_bins` の書き忘れ）と、実行ファイルに解決できない shim（`lazy_bins` の名前の誤り）を検出する。CI の `mise install` は `--include-lazy` で全部入れ、Renovate の更新でも全ツールが両 OS で入ることを確かめている。`zsh-startup.yaml` は `ci.yaml` と同じ `cache_key` を使うので、`--include-lazy` を揃えている
 - lazy にしないものと理由は config.toml の lazy tools の節に書いてある。要点は「chezmoi の apply で呼ぶもの」「シェルの起動で呼ぶもの」「ほかのプログラムが裏で呼ぶもの（hook・git の credential helper・起動を短時間しか待たないもの）」「ほかのツールの実行や install に使うランタイム」の 4 つ。新しいツールは、どれにも当たらなければ lazy にする
 - 初回の実行は mise の shim を経由する。`auto_install = false`（`not_found_auto_install` も false になる）でも lazy の install は動く（mise の `src/cli/shim.rs`。隔離環境で確認した）
 - 対話シェルの PATH も変わる。lazy の宣言が 1 つでもあると、`mise activate` は shims ディレクトリを PATH に残す（mise の `src/cli/hook_env.rs` の `retain_shims`）。位置は mise が入れたツールの bin の後ろ、Homebrew やシステムの前。lazy の宣言が無かったころは、`auto_install = false` のため対話シェルの PATH に shims ディレクトリは無かった。shim がツールに解決できないとき（lazy の install の失敗、config に無いツールの古い shim）は `not_found_system_fallback`（既定 true）で PATH の後ろにある同名のコマンドが黙って使われる
