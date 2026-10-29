@@ -13,6 +13,10 @@ if command -v mise &> /dev/null; then
         fi
     fi
 
+    # lazy = true のツールは mise install では入らず、初めて実行したときに入る（config.toml の lazy tools の節）。
+    # その入口になる shim は lazy の宣言から作られる。公式ドキュメントは config を手で書き換えたら
+    # mise reshim を実行するよう求めているので、lazy の宣言だけが変わったときのために明示的に作り直す。
     echo "mise install を実行中..."
     mise install
+    mise reshim
 fi
