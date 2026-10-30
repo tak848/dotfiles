@@ -224,7 +224,7 @@ python = "3.13.18"
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.312"
 "github:google-antigravity/antigravity-cli" = { version = "1.4.9", lazy = true, lazy_bins = ["antigravity"] } # agy: Gemini CLI の後継
-"aqua:openai/codex" = { version = "0.165.0", lazy = true, lazy_bins = ["codex"] }
+"aqua:openai/codex" = { version = "0.166.0", lazy = true, lazy_bins = ["codex"] }
 # opencode は http backend で管理（末尾の [tools."http:opencode"] を参照）
 # Grok Build CLI (xAI) は http backend で管理（末尾の [tools."http:grok"] を参照）
 # Claude Code のハーネスを ChatGPT サブスクの Codex backend に向ける Anthropic 互換プロキシ。claudex から使う
