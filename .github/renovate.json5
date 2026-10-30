@@ -129,6 +129,15 @@
       skipArtifactsUpdate: true,
     },
     {
+      // mise 本体（.mise-bootstrap-version）の更新は lockfiles-and-checksums.yaml の mise lock の版も変える。
+      // mise lock の挙動が変わって lock の生成が失敗すると、group:allNonMajor の一括 PR に入っている
+      // ほかの更新まで巻き添えで止まる（2026.10.19 で git-credential-manager の lock が失敗し、数日止まった）。
+      // mise-action も合わせて単独 PR にする。
+      description: "mise: 本体の更新で mise lock の挙動が変わることがあるため単独 PR にする",
+      matchPackageNames: ["jdx/mise", "jdx/mise-action"],
+      groupName: "mise",
+    },
+    {
       description: "Claude Code: independent PR, no age gate",
       matchPackageNames: ["anthropics/claude-code"],
       groupName: "claude-code",
