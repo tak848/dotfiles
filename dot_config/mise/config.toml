@@ -65,7 +65,7 @@ AZ_PYTHON = '{{ env.XDG_DATA_HOME | default(value=env.HOME ~ "/.local/share") }}
 # ============================================
 # ランタイム（core backend）
 # ============================================
-node = "24.22.2"
+node = "26.13.0"
 pnpm = { version = "12.16.1", lazy = true, lazy_bins = ["pnpm", "pnpx", "pn", "pnx"] }
 "github:endevco/aube" = { version = "v2.8.4", lazy = true, lazy_bins = ["aube", "aubr", "aubx"] } # 高速な Node.js パッケージマネージャ
 go = "1.27.3"
