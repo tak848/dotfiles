@@ -83,6 +83,53 @@ url = "https://github.com/DataDog/pup/releases/download/v2.3.5/pup_2.3.5_Darwin_
 url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/683597160"
 provenance = "cosign"
 
+[[tools."aqua:ajeetdsouza/zoxide"]]
+version = "0.10.0"
+backend = "aqua:ajeetdsouza/zoxide"
+specifiers = ["0.10.0"]
+
+[tools."aqua:ajeetdsouza/zoxide"."platforms.linux-arm64"]
+checksum = "sha256:f1f16c5d6298d63dee467eedea1cdcd8490e43e493bea43acd416dc9033ef641"
+checksum_source = "mise-versions"
+url = "https://github.com/ajeetdsouza/zoxide/releases/download/v0.10.0/zoxide-0.10.0-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/ajeetdsouza/zoxide/releases/assets/466316402"
+
+[tools."aqua:ajeetdsouza/zoxide"."platforms.linux-arm64-musl"]
+checksum = "sha256:f1f16c5d6298d63dee467eedea1cdcd8490e43e493bea43acd416dc9033ef641"
+checksum_source = "mise-versions"
+url = "https://github.com/ajeetdsouza/zoxide/releases/download/v0.10.0/zoxide-0.10.0-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/ajeetdsouza/zoxide/releases/assets/466316402"
+
+[tools."aqua:ajeetdsouza/zoxide"."platforms.linux-x64"]
+checksum = "sha256:2d93385b99f3e82cf2701609a1bffcad863fbeb75aa3fe7eb6be4d29be68b1ae"
+checksum_source = "mise-versions"
+url = "https://github.com/ajeetdsouza/zoxide/releases/download/v0.10.0/zoxide-0.10.0-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/ajeetdsouza/zoxide/releases/assets/466316293"
+
+[tools."aqua:ajeetdsouza/zoxide"."platforms.linux-x64-musl"]
+checksum = "sha256:2d93385b99f3e82cf2701609a1bffcad863fbeb75aa3fe7eb6be4d29be68b1ae"
+checksum_source = "mise-versions"
+url = "https://github.com/ajeetdsouza/zoxide/releases/download/v0.10.0/zoxide-0.10.0-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/ajeetdsouza/zoxide/releases/assets/466316293"
+
+[tools."aqua:ajeetdsouza/zoxide"."platforms.macos-arm64"]
+checksum = "sha256:b55ae6f2f5f23d0a6ccb3bd4eeb2af9c7e0a6556e5255c82100e40305129bbb0"
+checksum_source = "mise-versions"
+url = "https://github.com/ajeetdsouza/zoxide/releases/download/v0.10.0/zoxide-0.10.0-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/ajeetdsouza/zoxide/releases/assets/466316174"
+
+[tools."aqua:ajeetdsouza/zoxide"."platforms.macos-x64"]
+checksum = "sha256:18ab7ae2633ad6e2ab79a4e665cbba1e95b7c872d44523326efb793202451dad"
+checksum_source = "mise-versions"
+url = "https://github.com/ajeetdsouza/zoxide/releases/download/v0.10.0/zoxide-0.10.0-x86_64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/ajeetdsouza/zoxide/releases/assets/466316167"
+
+[tools."aqua:ajeetdsouza/zoxide"."platforms.windows-x64"]
+checksum = "sha256:f465ae548f8754c8e7edbc60b45fbf58c92bfe123db83d790252d6810fa5daf1"
+checksum_source = "mise-versions"
+url = "https://github.com/ajeetdsouza/zoxide/releases/download/v0.10.0/zoxide-0.10.0-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/ajeetdsouza/zoxide/releases/assets/466316769"
+
 [[tools."aqua:anthropics/anthropic-cli"]]
 version = "2.4.0"
 backend = "aqua:anthropics/anthropic-cli"
@@ -244,6 +291,35 @@ checksum = "sha256:a2a8820d5eea32f08ef467ef3b7f66883a9b076d5737a2fc2fbb5f458d1bb
 url = "https://github.com/astral-sh/uv/releases/download/0.13.6/uv-x86_64-pc-windows-msvc.zip"
 url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/679980629"
 provenance = "github-attestations"
+
+[[tools."aqua:aws/aws-cli"]]
+version = "2.39.1"
+backend = "aqua:aws/aws-cli"
+specifiers = ["2.39.1"]
+
+[tools."aqua:aws/aws-cli"."platforms.linux-arm64"]
+checksum = "sha256:5adf0b5052843e542b55a846d49ba2a2b3f3fb4960f35c11df9ac7c395cffaaf"
+url = "https://awscli.amazonaws.com/awscli-exe-linux-aarch64-2.39.1.zip"
+
+[tools."aqua:aws/aws-cli"."platforms.linux-arm64-musl"]
+checksum = "sha256:5adf0b5052843e542b55a846d49ba2a2b3f3fb4960f35c11df9ac7c395cffaaf"
+url = "https://awscli.amazonaws.com/awscli-exe-linux-aarch64-2.39.1.zip"
+
+[tools."aqua:aws/aws-cli"."platforms.linux-x64"]
+checksum = "sha256:5b6c10e0a8ccdcf30c84bd643fea511f103d257a4787a7cef878691d63169804"
+url = "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.39.1.zip"
+
+[tools."aqua:aws/aws-cli"."platforms.linux-x64-musl"]
+checksum = "sha256:5b6c10e0a8ccdcf30c84bd643fea511f103d257a4787a7cef878691d63169804"
+url = "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.39.1.zip"
+
+[tools."aqua:aws/aws-cli"."platforms.macos-arm64"]
+checksum = "sha256:2a0e523fc3f58efe7d35914b3cf6a35adc5820002489b7a4a65e006b2f4073de"
+url = "https://awscli.amazonaws.com/AWSCLIV2-2.39.1.pkg"
+
+[tools."aqua:aws/aws-cli"."platforms.macos-x64"]
+checksum = "sha256:2a0e523fc3f58efe7d35914b3cf6a35adc5820002489b7a4a65e006b2f4073de"
+url = "https://awscli.amazonaws.com/AWSCLIV2-2.39.1.pkg"
 
 [[tools."aqua:bufbuild/buf"]]
 version = "1.75.0"
@@ -1828,6 +1904,39 @@ url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.7
 [tools."http:grok"."platforms.windows-x64"]
 checksum = "sha256:1e03c16cf2bd4626a79d6b1ea1430f88c38e0c8ec75edd283a60de11296ba326"
 url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-1.0.70-windows-x86_64.exe"
+
+[[tools."http:op"]]
+version = "2.41.1"
+backend = "http:op"
+specifiers = ["2.41.1"]
+
+[tools."http:op"."platforms.linux-arm64"]
+checksum = "sha256:89abd60c17d5c614066c20e6abed816449eb018c5e0679ed63d57071c7bee85e"
+url = "https://cache.agilebits.com/dist/1P/op2/pkg/v2.41.1/op_linux_arm64_v2.41.1.zip"
+
+[tools."http:op"."platforms.linux-arm64-musl"]
+checksum = "sha256:89abd60c17d5c614066c20e6abed816449eb018c5e0679ed63d57071c7bee85e"
+url = "https://cache.agilebits.com/dist/1P/op2/pkg/v2.41.1/op_linux_arm64_v2.41.1.zip"
+
+[tools."http:op"."platforms.linux-x64"]
+checksum = "sha256:e52476700cba9202ac7469bdfb2648ecdbf3438ac85822010f77230139e74966"
+url = "https://cache.agilebits.com/dist/1P/op2/pkg/v2.41.1/op_linux_amd64_v2.41.1.zip"
+
+[tools."http:op"."platforms.linux-x64-musl"]
+checksum = "sha256:e52476700cba9202ac7469bdfb2648ecdbf3438ac85822010f77230139e74966"
+url = "https://cache.agilebits.com/dist/1P/op2/pkg/v2.41.1/op_linux_amd64_v2.41.1.zip"
+
+[tools."http:op"."platforms.macos-arm64"]
+checksum = "sha256:2289771b68b521ee3dc1d63a013a6a1c5691e0c53e4c4fe79af8042b6ad3c7f5"
+url = "https://cache.agilebits.com/dist/1P/op2/pkg/v2.41.1/op_darwin_arm64_v2.41.1.zip"
+
+[tools."http:op"."platforms.macos-x64"]
+checksum = "sha256:e77fc9a8ebb23c176fed7c56ea6e4a7184d2b89957e9a5d9a2feb724e7e0574b"
+url = "https://cache.agilebits.com/dist/1P/op2/pkg/v2.41.1/op_darwin_amd64_v2.41.1.zip"
+
+[tools."http:op"."platforms.windows-x64"]
+checksum = "sha256:7c7ab33e0c1096db62645b72bdf3e284e8734cd39ee0175922ef7ab2a18370da"
+url = "https://cache.agilebits.com/dist/1P/op2/pkg/v2.41.1/op_windows_amd64_v2.41.1.zip"
 
 [[tools."http:opencode"]]
 version = "2.2.2"
