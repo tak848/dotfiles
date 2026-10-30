@@ -105,6 +105,10 @@ python = "3.13.18"
 "aqua:x-motemen/ghq" = { version = "1.11.2", lazy = true, lazy_bins = ["ghq"] }
 "aqua:jesseduffield/lazygit" = { version = "0.66.2", lazy = true, lazy_bins = ["lazygit"] }
 "aqua:jesseduffield/lazydocker" = { version = "0.25.2", lazy = true, lazy_bins = ["lazydocker"] }
+# rsync。macOS の /usr/bin/rsync は openrsync（protocol 29。rsync 2.6.9 相当）なので、上流の rsync を入れる。
+# mise の registry にも aqua-registry にも定義が無く、上流（RsyncProject/rsync）のリリースはソースの tarball だけなので、
+# conda-forge のビルドを conda backend で入れる。conda-forge に Windows 向けのビルドは無いので os で外す。
+"conda:rsync" = { version = "3.5.1", os = ["linux", "macos"], lazy = true, lazy_bins = ["rsync", "rsync-ssl"] }
 # Git credential helper（.NET self-contained。tar.gz を全展開し本体+DLL を同居させる。
 # symbols 版を除外するため matching_regex で末尾を絞り、createdump 等は filter_bins で隠す）
 # Windows 向けは zip しか無く matching_regex に当たらない。mise 2026.10.19 以降の mise lock は当たる asset が
