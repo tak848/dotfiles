@@ -53,16 +53,31 @@ mise ls-remote <backend>:<tool> | tail -5
 
 既存ツールとの重複をチェックすること。
 
-### 5. Lockfile生成
+### 5. lazy の設定
+config.toml の lazy tools の節にある例外（chezmoi の apply で呼ぶもの・シェルの起動で呼ぶもの・ほかのプログラムが裏で呼ぶもの・ほかのツールに使うランタイム）に当たらなければ、初回の実行で入れる lazy にする：
+
+```toml
+"aqua:org/repo" = { version = "version", lazy = true, lazy_bins = ["cmd"] }
+```
+
+`lazy_bins` には直接実行するコマンド名を全部書く（プラットフォーム名の付いた別名は除く）。明示 backend では mise がコマンド名を知らないので、`lazy_bins` に無いコマンドを実行しても入らない。名前はツールを入れてから確かめる：
+
+```bash
+mise install <backend>:<tool>
+ls "$(mise bin-paths <backend>:<tool>)"
+```
+
+### 6. Lockfile生成
 ```bash
 task mise:lock
 ```
 
-### 6. Checksum確認（github backendの場合）
+### 7. Checksum確認（github backendの場合）
 lockfile（`dot_config/mise/mise.lock`）を確認し、追加したツールにchecksumがあるか確認。
 checksumがなければ、aqua backendで再試行。
 
 ## 出力
 - 追加したツール名とバージョン
 - 使用したbackend
+- lazy にしたか（しない場合は当たる例外）
 - 変更したファイル一覧

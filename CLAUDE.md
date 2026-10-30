@@ -93,6 +93,20 @@ Homebrew
 - **mise** (`dot_config/mise/`, `dot_local/bin/executable_mise`): ランタイム、CLI ツール、npm パッケージの統合管理。bootstrap 方式でインストール
 - **aqua** (`dot_config/aquaproj-aqua/`): mise lock で checksum が取得できないツールを管理。aqua CLI 自体は mise でインストール
 
+### mise の lazy tools（初回の実行で入れる）
+
+`dot_config/mise/config.toml` のツールの多くは `lazy = true` にしてあり、`mise install` では入らず、そのコマンドを初めて実行したときに入る（aqua の `aqua i -l` に当たる。mise 2026.9.0 で入った機能。公式 docs の dev-tools/shims "Lazy tools"）。`chezmoi update` で Renovate の更新がまとめて来ても、使っていないツールはダウンロードしない。
+
+- 明示 backend（`aqua:` / `github:` / `npm:` / `go:` / `pipx:` / `http:`）では mise の registry にある bin 名を使えない（mise の `src/args/backend_arg.rs` の `registry_tool` が明示 backend に `None` を返す）ので、初回の実行で入れるきっかけにするコマンド名を `lazy_bins` に書く。`lazy_bins` に無いコマンドを実行しても入らない。`lazy_bins` の無い宣言を mise は警告だけで飛ばし、apply は成功する
+- CI の `Verify lazy tool shims` が、`mise reshim` の警告（`lazy_bins` の書き忘れ）と、実行ファイルに解決できない shim（`lazy_bins` の名前の誤り）を検出する。CI の `mise install` は `--include-lazy` で全部入れ、Renovate の更新でも全ツールが両 OS で入ることを確かめている。`zsh-startup.yaml` は `ci.yaml` と同じ `cache_key` を使うので、`--include-lazy` を揃えている
+- lazy にしないものと理由は config.toml の lazy tools の節に書いてある。要点は「chezmoi の apply で呼ぶもの」「シェルの起動で呼ぶもの」「ほかのプログラムが裏で呼ぶもの（hook・git の credential helper・起動を短時間しか待たないもの）」「ほかのツールの実行や install に使うランタイム」の 4 つ。新しいツールは、どれにも当たらなければ lazy にする
+- 初回の実行は mise の shim を経由する。`auto_install = false`（`not_found_auto_install` も false になる）でも lazy の install は動く（mise の `src/cli/shim.rs`。隔離環境で確認した）
+- 対話シェルの PATH も変わる。lazy の宣言が 1 つでもあると、`mise activate` は shims ディレクトリを PATH に残す（mise の `src/cli/hook_env.rs` の `retain_shims`）。位置は mise が入れたツールの bin の後ろ、Homebrew やシステムの前。lazy の宣言が無かったころは、`auto_install = false` のため対話シェルの PATH に shims ディレクトリは無かった。shim がツールに解決できないとき（lazy の install の失敗、config に無いツールの古い shim）は `not_found_system_fallback`（既定 true）で PATH の後ろにある同名のコマンドが黙って使われる
+- `mise install` は lazy のツールを入れないが、lazy の宣言から shim は作る。`run_onchange_after_10` は公式 docs の「config を手で書き換えたら `mise reshim`」に従い、続けて `mise reshim` も実行する
+- `mise lock` は lazy のツールも lock する。初回の実行での install は、すべてのツールが入った lockfile を書き換えない。pipx の snowflake-cli と npm のツールも、初回の実行での install で mise の python / node を使う（いずれも隔離環境で確認した）
+- Renovate がバージョンを上げると、新しいバージョンは次に実行したときに入る。古いバージョンが残るのは以前と同じ
+- mise 2026.10.21 より前の `mise doctor` は、入っていない lazy のツールを問題として出す
+
 ### claudex（Claude Code を Codex のモデルで駆動する）
 
 `dot_zsh/functions/claudex.zsh` が提供する `claudex` コマンドは、Claude Code のハーネス（ツールループ・サブエージェント・hooks・MCP）をそのままに、推論するモデルだけを GPT-6.1 Sol / GPT-6 Astra に差し替える。CLIProxyAPI（`router-for-me/CLIProxyAPI`、mise の `github:` backend で導入、バイナリ名は `cli-proxy-api`）が Anthropic Messages API 互換のプロキシとして `127.0.0.1:8317` に立ち、ChatGPT サブスクの OAuth 経由で Codex backend に転送する。設定は `dot_config/cli-proxy-api/config.yaml.tmpl`（`$XDG_CONFIG_HOME/cli-proxy-api/config.yaml`）。初回のみ `cli-proxy-api --config "$XDG_CONFIG_HOME/cli-proxy-api/config.yaml" --codex-login` が必要で、トークンとログは `$XDG_STATE_HOME/cli-proxy-api/` に置かれる。CLIProxyAPI は設定内で環境変数を展開しない（`~` のみ）ため、auth-dir は chezmoi apply 時の `XDG_STATE_HOME` をテンプレートで焼き込んでいる。`XDG_STATE_HOME` は `dot_zshenv.tmpl` で他の XDG 変数と同様に export している。
@@ -377,6 +391,7 @@ lockfile / bootstrap / lazy-lock の再生成は外部のコード（mise lock �
 - **ツール導入手段として Homebrew を提案しない**（`packages.yaml` への追加・`brew install` を選択肢に挙げない）。mise（aqua / github / go / npm / pipx backend）または aqua CLI で完結させる
 - Python 製 CLI でバイナリ配布が無いものは mise の `pipx` backend で入れる（uv が入っていれば mise は内部で uv を使う）。Renovate の mise manager が PyPI datasource として追える。lockfile revision 2 では依存グラフの install に mise の `python` が使われるので、`install_env` で Python を選ぼうとしない（効かない）。対応する Python の版は、そのツールの依存に wheel があるかで確かめる
 - mise にツールを追加する際、`mise search` / `mise registry` で見つからなくても [aqua-registry](https://github.com/aquaproj/aqua-registry/tree/main/pkgs) に定義があれば `"aqua:<registry path>" = "<version>"` で追加できる（Renovate 自動更新・checksum 検証に乗る）。`http` backend で URL を手書きするのは aqua-registry にも無い最終手段のみ
+- mise に追加するツールは、config.toml の lazy tools の節にある例外に当たらなければ `lazy = true` にし、`lazy_bins` に直接実行するコマンド名を全部書く（プラットフォーム名の付いた別名は除く）。名前はツールを入れた後に `mise bin-paths <backend>:<tool>` の中身で確かめる
 - 例外として、aqua-registry 側の定義が `type: http`（GitHub リリースではなく独自ホスティング配布）のパッケージは `aqua:` で追加しない。mise の aqua backend が lockfile 生成のたびに GitHub のタグ取得を試みて必ず失敗し警告を出すうえ、[Renovate の mise manager も aqua の http パッケージを抽出対象外にしている](https://docs.renovatebot.com/modules/manager/mise/#limitations)ため更新も効かない。この場合は mise の `http` backend で URL を直接指定する（`dot_config/mise/config.toml` の `[tools."http:grok"]` が例）
 - 環境変数（API key 等）の置き場所を勝手に特定ファイル（`.zshrc.local` 等）に指定しない。置き場所はユーザーに委ねる（エラーメッセージやコメントにも特定ファイル名を書かない）
 - `~/.codex/config.toml` 等の modify テンプレート（`dot_codex/modify_config.toml`）は、出力で再出力しないキーを `chezmoi apply` 時に削除する。ツールが書き込む既存キー（`projects` / `notice` / `hooks.state` 等）は保持ブロックに追加すること
