@@ -197,16 +197,6 @@ ulimit -n 65536
 export PATH="/opt/homebrew/opt/tcl-tk/bin:$PATH"
 {{- end }}
 
-# MySQL clientの設定（Homebrewとmysql-clientが存在する場合のみ）
-{{- if lookPath "brew" }}
-{{-   $brewPrefix := output "brew" "--prefix" | trim }}
-{{-   if stat (joinPath $brewPrefix "opt/mysql-client") }}
-export PATH="{{ $brewPrefix }}/opt/mysql-client/bin:$PATH"
-export LDFLAGS="-L{{ $brewPrefix }}/opt/mysql-client/lib"
-export CPPFLAGS="-I{{ $brewPrefix }}/opt/mysql-client/include"
-{{-   end }}
-{{- end }}
-
 # カスタム関数の読み込み
 if [ -d ~/.zsh/functions ]; then
     for file in ~/.zsh/functions/*.zsh(N); do
