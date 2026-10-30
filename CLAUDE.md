@@ -80,6 +80,7 @@ Homebrew
        ├─ CLI ツール管理: fzf, ripgrep, starship, etc. (aqua backend)
        ├─ 独自ホスティング配布のツール: grok, opencode v2, 1Password CLI (http backend)
        ├─ Python 製 CLI: snowflake-cli (pipx backend / 内部で uv。Python は mise の python 3.13、shims からは除外)
+       ├─ 上流がソースしか配らない CLI: rsync (conda backend / conda-forge のビルド)
        ├─ npm グローバルパッケージ
        └─ aqua CLI (github backend。repo ごとの aqua.yaml 用)
 ```
@@ -380,9 +381,10 @@ lockfile / bootstrap / lazy-lock の再生成は外部のコード（mise lock �
 - **要求スコープを厳守する。** ユーザーが「A の代替として B を作る」等と明示したら、その範囲だけに絞る。隣接レイヤー（前段・後段・類似機能）の改修を勝手に計画へ足さない。関連改善は本線の計画を立てた上で別途質問する
 - **環境を直接変更しない。** 変更は必ずこの repo のソース（`dot_` プレフィックス付きファイル等）を編集し、PR 経由で行う。`~/.local/share/chezmoi` 等の repo 外パスや、`~/.claude/` `~/.codex/` `~/.config/` 等のターゲットファイルを直接書き換えてはならない。環境への適用は `chezmoi update` に委ねる（remote main が single source of truth）
 - **chezmoi ソースを編集する。** `~/.claude/CLAUDE.md` 等のターゲットではなく `dot_claude/CLAUDE.md` 等のソースを編集する。ターゲットを直接編集しても `chezmoi update` で上書きされ、PR にも含められない
-- **ツール導入手段として Homebrew を提案しない**（`packages.yaml` への追加・`brew install` を選択肢に挙げない）。mise（aqua / github / go / npm / pipx / http backend）で完結させる。aqua CLI は repo ごとの aqua.yaml 用で、グローバルのツールを aqua で入れない
+- **ツール導入手段として Homebrew を提案しない**（`packages.yaml` への追加・`brew install` を選択肢に挙げない）。mise（aqua / github / go / npm / pipx / conda / http backend）で完結させる。aqua CLI は repo ごとの aqua.yaml 用で、グローバルのツールを aqua で入れない
 - Python 製 CLI でバイナリ配布が無いものは mise の `pipx` backend で入れる（uv が入っていれば mise は内部で uv を使う）。Renovate の mise manager が PyPI datasource として追える。lockfile revision 2 では依存グラフの install に mise の `python` が使われるので、`install_env` で Python を選ぼうとしない（効かない）。対応する Python の版は、そのツールの依存に wheel があるかで確かめる
 - mise にツールを追加する際、`mise search` / `mise registry` で見つからなくても [aqua-registry](https://github.com/aquaproj/aqua-registry/tree/main/pkgs) に定義があれば `"aqua:<registry path>" = "<version>"` で追加できる（Renovate 自動更新・checksum 検証に乗る）。`http` backend で URL を手書きするのは aqua-registry にも無い最終手段のみ
+- 上流がバイナリを配らず（ソースの tarball だけ）、aqua-registry にも無いツールは、conda-forge にビルドがあれば `"conda:<package>"` で入れる（`conda:rsync` が例）。mise がパッケージと依存を解決し、`mise lock` が依存ごと URL と checksum を書く。Renovate の mise manager も conda datasource で追える。conda-forge に無いプラットフォーム（`mise lock` の `-p` にある windows-x64 など）は `os` で外す
 - mise に追加するツールは、config.toml の lazy tools の節にある例外に当たらなければ `lazy = true` にし、`lazy_bins` に直接実行するコマンド名を全部書く（プラットフォーム名の付いた別名は除く）。名前はツールを入れた後に `mise bin-paths <backend>:<tool>` の中身で確かめる
 - 例外として、aqua-registry 側の定義が `type: http`（GitHub リリースではなく独自ホスティング配布）で `repo_owner` / `repo_name` を持たないパッケージは `aqua:` で追加しない。mise の aqua backend が lockfile 生成のたびに GitHub のタグ取得を試みて必ず失敗し警告を出すうえ、[Renovate の mise manager も aqua の http パッケージを抽出対象外にしている](https://docs.renovatebot.com/modules/manager/mise/#limitations)ため更新も効かない。この場合は mise の `http` backend で URL を直接指定する（`dot_config/mise/config.toml` の `[tools."http:grok"]` / `[tools."http:op"]` が例）。`repo_owner` / `repo_name` を持つ `type: http` のパッケージ（aws/aws-cli）は警告が出ず、http backend では扱えない macOS の .pkg も aqua backend なら展開できるので `aqua:` で入れ、Renovate 用に regex manager を足す（`.github/renovate.json5`）
 - 環境変数（API key 等）の置き場所を勝手に特定ファイル（`.zshrc.local` 等）に指定しない。置き場所はユーザーに委ねる（エラーメッセージやコメントにも特定ファイル名を書かない）
