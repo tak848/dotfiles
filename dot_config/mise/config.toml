@@ -192,6 +192,28 @@ python = "3.13.18"
   "vacuumdb",
   "vacuumlo",
 ] }
+# MySQL のクライアント。aqua-registry に定義が無く、上流の cdn.mysql.com の tarball はサーバー込み
+# （9.7.0 で macOS arm64 が約 180 MB、Linux x86_64 が約 980 MB）で、http backend にすると Renovate の regex manager と
+# fill-lockfile-checksums.sh での全ダウンロードが要るので、mise の registry の mysql-client と同じく conda-forge のビルドを入れる。
+# libmysqlclient のヘッダとライブラリは入らない（.zshrc の Homebrew の mysql-client の LDFLAGS / CPPFLAGS とは別）。
+"conda:mysql-client" = { version = "9.7.4", lazy = true, lazy_bins = [
+  "myisam_ftdump",
+  "myisamchk",
+  "myisamlog",
+  "myisampack",
+  "mysql",
+  "mysql_config_editor",
+  "mysql_migrate_keyring",
+  "mysql_secure_installation",
+  "mysql_tzinfo_to_sql",
+  "mysqladmin",
+  "mysqlbinlog",
+  "mysqlcheck",
+  "mysqldump",
+  "mysqlimport",
+  "mysqlshow",
+  "mysqlslap",
+] }
 
 # Jsonnet
 "aqua:google/go-jsonnet" = "0.22.0"
