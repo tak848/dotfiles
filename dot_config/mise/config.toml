@@ -108,7 +108,9 @@ python = "3.13.17"
 "aqua:jesseduffield/lazydocker" = { version = "0.25.2", lazy = true, lazy_bins = ["lazydocker"] }
 # Git credential helper（.NET self-contained。tar.gz を全展開し本体+DLL を同居させる。
 # symbols 版を除外するため matching_regex で末尾を絞り、createdump 等は filter_bins で隠す）
-"github:git-ecosystem/git-credential-manager" = { version = "v3.0.1", matching_regex = '[0-9]\.tar\.gz$', filter_bins = "git-credential-manager" }
+# Windows 向けは zip しか無く matching_regex に当たらない。mise 2026.10.19 以降の mise lock は当たる asset が
+# 無いと失敗するので、os で Windows を外す（os で外したプラットフォームは 2026.10.20 以降の mise lock が解決しない）
+"github:git-ecosystem/git-credential-manager" = { version = "v3.0.1", matching_regex = '[0-9]\.tar\.gz$', filter_bins = "git-credential-manager", os = ["linux", "macos"] }
 
 # エディタ・ターミナル
 "aqua:neovim/neovim" = { version = "0.12.6", lazy = true, lazy_bins = ["nvim"] }
