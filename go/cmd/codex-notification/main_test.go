@@ -34,3 +34,14 @@ func TestSummarizeAssistantMessageTruncates(t *testing.T) {
 		t.Fatalf("got %q, want %q", got, want)
 	}
 }
+
+func TestDisabled(t *testing.T) {
+	t.Parallel()
+
+	for v, want := range map[string]bool{"": false, "0": false, "false": false, "1": true, "true": true, " TRUE ": true} {
+		got := disabled(func(string) string { return v })
+		if got != want {
+			t.Fatalf("CODEX_NOTIFICATION_DISABLED=%q: got %v, want %v", v, got, want)
+		}
+	}
+}

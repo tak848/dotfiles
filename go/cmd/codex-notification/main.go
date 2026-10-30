@@ -20,6 +20,11 @@ func main() {
 		return
 	}
 
+	// 裏で回す codex exec（レビューやエージェントからの呼び出し）では読み上げない
+	if disabled(os.Getenv) {
+		return
+	}
+
 	// Codex passes notification payload as the last CLI argument
 	if len(os.Args) < 2 {
 		return
@@ -39,6 +44,15 @@ func main() {
 	}
 
 	tts.SpeakInBackground(notificationMessage(input), tts.DefaultVoices)
+}
+
+// disabled は CODEX_NOTIFICATION_DISABLED が 1 か true なら真を返す。
+func disabled(getenv func(string) string) bool {
+	switch strings.ToLower(strings.TrimSpace(getenv("CODEX_NOTIFICATION_DISABLED"))) {
+	case "1", "true":
+		return true
+	}
+	return false
 }
 
 func notificationMessage(input Input) string {
