@@ -10,12 +10,13 @@ set -euo pipefail
 #
 # task / temporal / mise の補完は小さいが、生成のためにコマンドを起動するだけで 1 つあたり
 # 10〜60 ms かかっていた（PR の zsh-startup の計測）。出力はツールのバージョンだけで決まるので、
-# pup と同じくここで書き出し、.zshrc では使うときに読み込む。
+# pup と同じくここで書き出し、.zshrc では使うときに読み込む。gh も同じ理由でここで書き出す。
 #
 # 次の行は、各ツールのバージョンが変わったときだけこのスクリプトを走らせるためのもの。
 # pup: {{ include "dot_config/mise/config.toml" | regexFind `(?m)^"aqua:DataDog/pup".*$` }}
 # task: {{ include "dot_config/mise/config.toml" | regexFind `(?m)^"aqua:go-task/task".*$` }}
 # temporal: {{ include "dot_config/mise/config.toml" | regexFind `(?m)^"aqua:temporalio/cli".*$` }}
+# gh: {{ include "dot_config/mise/config.toml" | regexFind `(?m)^"aqua:cli/cli".*$` }}
 # mise: {{ include ".mise-bootstrap-version" | regexFind `(?m)^MISE_VERSION=.*$` }}
 #
 # 置き場所は XDG_CACHE_HOME ではなく XDG_DATA_HOME にしている。次にバージョンが変わるまで作り直さないので、
@@ -49,4 +50,5 @@ generate() {
 generate _pup pup completions zsh
 generate _task task --completion zsh
 generate _temporal temporal completion zsh
+generate _gh gh completion -s zsh
 generate _mise mise completion zsh

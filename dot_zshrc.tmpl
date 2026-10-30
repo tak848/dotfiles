@@ -140,14 +140,14 @@ _zshrc_cached_init fzf '' fzf --zsh && eval "$REPLY"
 _zshrc_cached_init zoxide "_ZO_ECHO=${_ZO_ECHO-} _ZO_RESOLVE_SYMLINKS=${_ZO_RESOLVE_SYMLINKS-}" zoxide init zsh && eval "$REPLY"
 unset -f _zshrc_cached_init
 
-# 補完（pup / task / temporal / mise）
+# 補完（pup / task / temporal / gh / mise）
 # run_onchange_after_12-zsh-completions が書き出して zcompile したものを、補完を使うときだけ読み込む。
 # 起動のたびに生成すると、pup は 3.7MB の eval で 10 秒近く、ほかも起動だけで 1 つあたり 10〜60 ms かかる。
 # compinit -C は既存の .zcompdump を信用して fpath の新しいファイルを拾わないので、compdef で直接登録する
 _zsh_comp_dir="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/completions"
 if [[ -d $_zsh_comp_dir ]]; then
     fpath=("$_zsh_comp_dir" $fpath)
-    for _zsh_comp_cmd in pup task temporal mise; do
+    for _zsh_comp_cmd in pup task temporal gh mise; do
         if [[ -r $_zsh_comp_dir/_$_zsh_comp_cmd.zwc ]]; then
             autoload -Uz _$_zsh_comp_cmd
             compdef _$_zsh_comp_cmd $_zsh_comp_cmd
