@@ -1,4 +1,4 @@
-name: Update mise lockfiles and aqua checksums
+name: Update mise lockfiles and checksums
 
 on:
   push:
@@ -10,7 +10,6 @@ on:
       # mise の版が変わると lock に書かれる asset も変わる（下の Read mise version のコメント）
       - ".mise-bootstrap-version"
       - "dot_config/mise/config.toml"
-      - "dot_config/aquaproj-aqua/aqua.yaml"
       - ".github/workflows/lockfiles-and-checksums.yaml"
 
 # commit は再生成の後で作る GitHub App token で行うので、GITHUB_TOKEN は読み取りだけでよい
@@ -57,14 +56,9 @@ jobs:
           install: false
           cache: true
 
-      - name: Install aqua
-        uses: aquaproj/aqua-installer@611554c6f0137ba41c8dd15aca8bee82504ea461 # v4.1.1
-        with:
-          aqua_version: v2.65.2
-
-      # 再生成（mise lock の依存解決、aqua の checksum 取得、アーティファクトのダウンロード）は外部の
+      # 再生成（mise lock の依存解決、アーティファクトのダウンロード）は外部の
       # コードやファイルを扱うので、書き込みできる App token がまだ存在しない状態で行う。API のレート制限
-      # よけには読み取り専用の GITHUB_TOKEN を渡す（mise も aqua も GITHUB_TOKEN を読み、GH_TOKEN は読まない）。
+      # よけには読み取り専用の GITHUB_TOKEN を渡す（mise は GITHUB_TOKEN を読み、GH_TOKEN は読まない）。
       #
       # lockfile revision 2 は npm / pypi ツールの依存グラフを lockfile 横に sidecar として書き、
       # mise.lock からはパスと digest で参照する。sidecar が commit されていないと mise install が
@@ -91,7 +85,6 @@ jobs:
           # checksum 定義が無いパッケージ）は mise lock で url しか埋まらない。
           # lockfile の更新後に実アーティファクトから sha256 を計算して補う。
           bash .github/scripts/fill-lockfile-checksums.sh mise.lock dot_config/mise/mise.lock
-          ( cd dot_config/aquaproj-aqua && aqua update-checksum --prune )
 
       - name: Generate GitHub App Token
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
@@ -105,6 +98,6 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           REPO: ${{ github.repository }}
           BRANCH: ${{ github.ref_name }}
-          FILES: mise.lock .mise dot_config/mise/mise.lock dot_config/mise/locks dot_config/aquaproj-aqua/aqua-checksums.json
-          MESSAGE: "chore: update mise lockfiles and aqua checksums"
+          FILES: mise.lock .mise dot_config/mise/mise.lock dot_config/mise/locks
+          MESSAGE: "chore: update mise lockfiles and checksums"
         run: bash .github/scripts/commit-via-graphql.sh

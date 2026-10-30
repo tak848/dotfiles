@@ -3,7 +3,7 @@ name: zsh startup
 # zsh の login の対話シェルの起動時間を macOS と Linux で測り、時間のかかっている箇所とあわせて
 # job summary と PR のコメントに出す。計測するだけで合否は判定しない（required にもしない）。
 # 起動時間は .zshrc が読み込むツールの版でも変わる（pup の補完が肥大化して 10 秒かかっていた）ので、
-# mise / aqua の設定の変更でも走らせる。
+# mise の設定の変更でも走らせる。
 on:
   pull_request:
     paths:
@@ -13,7 +13,6 @@ on:
       - dot_zsh/**
       - run_onchange_after_12-zsh-completions.sh.tmpl
       - dot_config/mise/config.toml
-      - dot_config/aquaproj-aqua/aqua.yaml
       - .github/scripts/measure-zsh-startup.zsh
       - .github/workflows/zsh-startup.yaml
   workflow_dispatch:
@@ -36,9 +35,8 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
     env:
-      # mise/aqua の設定ファイルパスを指定（ci.yaml と同じ）
+      # mise の設定ファイルパスを指定（ci.yaml と同じ）
       MISE_CONFIG_FILE: ${{ github.workspace }}/dot_config/mise/config.toml
-      AQUA_GLOBAL_CONFIG: ${{ github.workspace }}/dot_config/aquaproj-aqua/aqua.yaml
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -59,17 +57,6 @@ jobs:
           install_args: --include-lazy
           cache: true
           cache_key: "mise-v1-${{ runner.os }}-${{ runner.arch }}-${{ env.MISE_VERSION }}-${{ hashFiles('dot_config/mise/config.toml', 'dot_config/mise/mise.lock') }}"
-
-      - name: Cache aqua tools
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ~/.local/share/aquaproj-aqua
-          key: aqua-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('dot_config/aquaproj-aqua/aqua.yaml', 'dot_config/aquaproj-aqua/aqua-checksums.json') }}
-          restore-keys: |
-            aqua-v1-${{ runner.os }}-${{ runner.arch }}-
-
-      - name: Install aqua tools
-        run: aqua install --all
 
       # macOS は /bin/zsh が OS に入っているが、Ubuntu のランナーには入っていない
       - name: Install zsh

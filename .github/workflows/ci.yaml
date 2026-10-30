@@ -23,9 +23,8 @@ jobs:
         # macOS と Ubuntu の両方でテスト
         os: [ubuntu-latest, macos-latest]
     env:
-      # mise/aqua の設定ファイルパスを指定
+      # mise の設定ファイルパスを指定
       MISE_CONFIG_FILE: ${{ github.workspace }}/dot_config/mise/config.toml
-      AQUA_GLOBAL_CONFIG: ${{ github.workspace }}/dot_config/aquaproj-aqua/aqua.yaml
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -48,17 +47,6 @@ jobs:
           cache: true
           cache_key: "mise-v1-${{ runner.os }}-${{ runner.arch }}-${{ env.MISE_VERSION }}-${{ hashFiles('dot_config/mise/config.toml', 'dot_config/mise/mise.lock') }}"
 
-      - name: Cache aqua tools
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ~/.local/share/aquaproj-aqua
-          key: aqua-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('dot_config/aquaproj-aqua/aqua.yaml', 'dot_config/aquaproj-aqua/aqua-checksums.json') }}
-          restore-keys: |
-            aqua-v1-${{ runner.os }}-${{ runner.arch }}-
-
-      - name: Install aqua tools
-        run: aqua install --all
-
       - name: Verify installed tools
         run: |
           echo "=== Checking installed tools ==="
@@ -77,8 +65,7 @@ jobs:
           nvim --version
           # lockfile revision 2 の依存グラフ（uv sync）で入ったものが動くか
           snow --version
-          # CLI ツール（aqua）
-          export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua/bin:$PATH"
+          # aqua の type: http の定義（aws-cli。macOS は .pkg）と http backend（op）で入れたもの
           aws --version
           op --version
           zoxide --version
@@ -191,7 +178,7 @@ jobs:
           echo "All Jsonnet files are valid."
 
       # 自動生成ファイルの diff チェック
-      # - jsonnet, aqua-checksums, mise bootstrap が最新かどうかを検証
+      # - mise bootstrap が最新かどうかを検証
       # - mise.lock は実行環境（macOS/Linux）で結果が異なる既知の問題があるため除外
       #   参考: https://github.com/jdx/mise/discussions/6942
       # - Ubuntu のみで実行（両 OS で実行しても同じ結果になるため）

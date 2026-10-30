@@ -256,53 +256,6 @@ url = "https://github.com/twpayne/chezmoi/releases/download/v2.73.3/chezmoi_2.73
 url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/659666208"
 provenance = "cosign"
 
-[[tools."github:aquaproj/aqua"]]
-version = "2.65.2"
-backend = "github:aquaproj/aqua"
-specifiers = ["v2.65.2"]
-
-[tools."github:aquaproj/aqua"."platforms.linux-arm64"]
-checksum = "sha256:7abd3d2c27efad797c3284ab1ff21875b143daba28aecb2088917115b7f9cc81"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.65.2/aqua_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/665751208"
-provenance = "github-attestations"
-
-[tools."github:aquaproj/aqua"."platforms.linux-arm64-musl"]
-checksum = "sha256:7abd3d2c27efad797c3284ab1ff21875b143daba28aecb2088917115b7f9cc81"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.65.2/aqua_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/665751208"
-provenance = "github-attestations"
-
-[tools."github:aquaproj/aqua"."platforms.linux-x64"]
-checksum = "sha256:971abaccd16d0521fdb8e45990dba2aea17587f476aa075b621aeb972f52a61f"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.65.2/aqua_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/665751155"
-provenance = "github-attestations"
-
-[tools."github:aquaproj/aqua"."platforms.linux-x64-musl"]
-checksum = "sha256:971abaccd16d0521fdb8e45990dba2aea17587f476aa075b621aeb972f52a61f"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.65.2/aqua_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/665751155"
-provenance = "github-attestations"
-
-[tools."github:aquaproj/aqua"."platforms.macos-arm64"]
-checksum = "sha256:74096ac247be24ec3340e134b9ecdae37465009d7bd1acca934a14a5beeb3314"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.65.2/aqua_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/665751122"
-provenance = "github-attestations"
-
-[tools."github:aquaproj/aqua"."platforms.macos-x64"]
-checksum = "sha256:6552dc8cd3b4e51f781b4341cc3bb396028755080c6927f5a6d20b8ada85d4d1"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.65.2/aqua_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/665751117"
-provenance = "github-attestations"
-
-[tools."github:aquaproj/aqua"."platforms.windows-x64"]
-checksum = "sha256:d22e7710ccfd45ba7dccf582240e0a0089ed0a47092b7d3037acb3829ba2027f"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.65.2/aqua_windows_amd64.zip"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/665751231"
-provenance = "github-attestations"
-
 [[tools.node]]
 version = "26.13.0"
 backend = "core:node"
