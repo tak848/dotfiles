@@ -39,8 +39,7 @@ Homebrew
        ├─ ランタイム: go, node, pnpm
        ├─ CLI ツール: fzf, ripgrep, starship, direnv, etc.
        ├─ npm グローバルパッケージ
-       └─ aqua CLI
-            └─ mise lock で checksum 取得不可: aws-cli, 1password/cli, zoxide
+       └─ aqua CLI（repo ごとの aqua.yaml 用）
 ```
 
 ### 今後の予定
@@ -75,12 +74,9 @@ Homebrew
 ├── .local/bin/
 │   └── mise              # mise bootstrap スクリプト
 ├── .config/
-│   ├── mise/             # mise 設定
-│   │   ├── config.toml
-│   │   └── mise.lock
-│   └── aquaproj-aqua/    # aqua 設定（mise 管理外ツール用）
-│       ├── aqua.yaml
-│       └── aqua-checksums.json
+│   └── mise/             # mise 設定
+│       ├── config.toml
+│       └── mise.lock
 ├── .zsh/
 │   ├── functions/        # 共有関数（Git 管理）
 │   └── local/            # ローカル関数（Git 管理外）

@@ -9,17 +9,17 @@
 - **トリガー**: Pull Request、mainブランチへのプッシュ
 - **動作**:
   - Ubuntu/macOSでのマトリックステスト
-  - mise/aqua によるツールのインストール確認
+  - mise によるツールのインストール確認
   - Jsonnet 構文チェック
   - `task check` で自動生成ファイルの diff チェック（Ubuntu のみ、mise.lock 除外）
   - chezmoiテンプレートの検証
 
 ### lockfiles-and-checksums.yaml
-- **目的**: Renovate/Dependabot が mise / aqua 設定を更新した際に、自動的に mise.lock と aqua-checksums.json を更新
-- **トリガー**: `.mise.toml` / `dot_config/mise/config.toml` / `dot_config/aquaproj-aqua/aqua.yaml` への変更を含む Push（bot ブランチ含む）
+- **目的**: Renovate/Dependabot が mise 設定を更新した際に、自動的に mise.lock を更新
+- **トリガー**: `.mise.toml` / `dot_config/mise/config.toml` への変更を含む Push（bot ブランチ含む）
 - **動作**:
   - mise lock で lockfile を再生成（root / dot_config/mise）
-  - `aqua update-checksum --prune` で checksum を更新
+  - `fill-lockfile-checksums.sh` で checksum の欠けを実アーティファクトから埋める
   - 変更があればコミットしてプッシュ
 
 ### mise-bootstrap.yaml

@@ -13,21 +13,13 @@ export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 {{-   end }}
 {{- end }}
+# aqua はグローバルのツールには使わず、repo ごとの aqua.yaml のためだけに置いている（aqua CLI は mise で入れる）。
 # aqua root は home 配下に固定する（環境側の AQUA_ROOT_DIR が書き込み不可な
 # パスを指していると aqua install が permission denied で落ちるため）
 export AQUA_ROOT_DIR="${XDG_DATA_HOME}/aquaproj-aqua"
 export PATH="${AQUA_ROOT_DIR}/bin:$PATH"
 
-# aqua/mise 設定
-# .zshenv は入れ子のシェル（tmux のペイン、exec zsh -l 等）のたびに読まれるので、既に入っていれば足さない。
-# 無条件に足すと深さごとに値が伸び、この値をキーに含む .zshrc の zoxide init キャッシュが作り直され続ける
-_aqua_global_config="${XDG_CONFIG_HOME}/aquaproj-aqua/aqua.yaml"
-case ":${AQUA_GLOBAL_CONFIG:-}:" in
-    # 既に入っていても export されていない（同じシェルで代入だけされた）ことがあるので export はする
-    *":${_aqua_global_config}:"*) export AQUA_GLOBAL_CONFIG ;;
-    *) export AQUA_GLOBAL_CONFIG="${AQUA_GLOBAL_CONFIG:+${AQUA_GLOBAL_CONFIG}:}${_aqua_global_config}" ;;
-esac
-unset _aqua_global_config
+# mise 設定
 export MISE_GLOBAL_CONFIG_FILE="${XDG_CONFIG_HOME}/mise/config.toml"
 
 # Claude Code auto updater を無効化

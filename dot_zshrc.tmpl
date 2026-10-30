@@ -105,7 +105,7 @@ command -v mise &> /dev/null && eval "$(mise activate zsh)"
 #   すると、読み込んだスクリプトの typeset が関数のローカル変数になるため。
 #   キャッシュは「# <キー>」の 1 行目が今のキーと同じ間だけ使う。キーはコマンドの PATH 上のパス・実体の
 #   パスと mtime・引数・呼び出し側が足す文字列で、出力を左右するものは全部ここに入れること。
-#   mise / aqua の backend はバージョンごとに別のパスに入るので、ツールを更新すればキーが変わる
+#   mise の backend はバージョンごとに別のパスに入るので、ツールを更新すればキーが変わる
 zmodload -F zsh/stat b:zstat
 _zshrc_cached_init() {
     local name=$1 extra=$2 cmd=${commands[$3]} cache line out
@@ -131,25 +131,14 @@ _zshrc_cached_init() {
         REPLY=$out
     fi
 }
-# 引数のファイルのパスと mtime を REPLY に並べる（キャッシュのキー用）
-_zshrc_stamp() {
-    local f
-    local -a st
-    REPLY=
-    for f; do
-        zstat -A st +mtime -- $f 2>/dev/null && REPLY+="$f:$st[1] "
-    done
-}
 
 _zshrc_cached_init direnv '' direnv hook zsh && eval "$REPLY"
 # starship は PATH 上の starship のパスを焼き込む（キーの $commands[starship] と同じ）
 _zshrc_cached_init starship '' starship init zsh && eval "$REPLY"
 _zshrc_cached_init fzf '' fzf --zsh && eval "$REPLY"
-# zoxide は aqua CLI 管理で、PATH 上は aqua-proxy なのでバージョンがパスに出ない。aqua の設定の mtime で
-# 更新を拾う。_ZO_ECHO / _ZO_RESOLVE_SYMLINKS は init の出力に焼き込まれる（zoxide の src/cmd/init.rs）
-_zshrc_stamp ${(s.:.)AQUA_GLOBAL_CONFIG}
-_zshrc_cached_init zoxide "$REPLY _ZO_ECHO=${_ZO_ECHO-} _ZO_RESOLVE_SYMLINKS=${_ZO_RESOLVE_SYMLINKS-}" zoxide init zsh && eval "$REPLY"
-unset -f _zshrc_cached_init _zshrc_stamp
+# _ZO_ECHO / _ZO_RESOLVE_SYMLINKS は init の出力に焼き込まれる（zoxide の src/cmd/init.rs）
+_zshrc_cached_init zoxide "_ZO_ECHO=${_ZO_ECHO-} _ZO_RESOLVE_SYMLINKS=${_ZO_RESOLVE_SYMLINKS-}" zoxide init zsh && eval "$REPLY"
+unset -f _zshrc_cached_init
 
 # 補完（pup / task / temporal / mise）
 # run_onchange_after_12-zsh-completions が書き出して zcompile したものを、補完を使うときだけ読み込む。

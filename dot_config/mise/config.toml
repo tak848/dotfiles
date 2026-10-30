@@ -57,7 +57,7 @@ AZ_PYTHON = '{{ env.XDG_DATA_HOME | default(value=env.HOME ~ "/.local/share") }}
 # 次のものは lazy にしない。
 # - chezmoi の apply で呼ぶもの（apply の途中で入るので lazy にしても得が無い）: chezmoi, aqua, gh, uv,
 #   Azure CLI（run_onchange_after_15 が mise where で場所を引く）, pup, task, temporal, jsonnet, go, claude
-# - シェルの起動で呼ぶもの: direnv, starship, fzf
+# - シェルの起動で呼ぶもの: direnv, starship, fzf, zoxide
 # - ほかのプログラムが裏で呼ぶもの: ccgate と jq（Claude Code / Codex の hook）, gh と git-credential-manager
 #   （git の credential helper）, CLIProxyAPI（claudex / claudep は起動を 5 秒しか待たない）
 # - ほかのツールの実行や install に使うランタイム: node（npm backend のツール）, python（後述）
@@ -79,8 +79,7 @@ python = "3.13.18"
 # ============================================
 # aqua CLI（github backend）
 # ============================================
-# mise の aqua backend で問題のあるツール（aws-cli, 1password/cli, gopls）は
-# aqua CLI で直接管理する
+# repo ごとの aqua.yaml（仕事の repo 等）のために入れる。グローバルのツールは aqua では入れない
 "github:aquaproj/aqua" = "v2.65.2"
 
 # ============================================
@@ -93,7 +92,7 @@ python = "3.13.18"
 "aqua:junegunn/fzf" = "0.74.5"
 "aqua:starship/starship" = "1.27.0"
 "aqua:direnv/direnv" = "2.38.2"
-# zoxide は aqua CLI で管理（mise lock で checksum 取得不可）
+"aqua:ajeetdsouza/zoxide" = "0.10.0"
 
 # 検索・ファイル操作
 "aqua:twpayne/chezmoi" = "2.73.3"
@@ -120,7 +119,7 @@ python = "3.13.18"
 # Python ツール
 "aqua:astral-sh/uv" = "0.13.6"
 
-# クラウド・インフラ（aws-cli は aqua CLI で管理）
+# クラウド・インフラ（aws-cli は末尾の [tools."aqua:aws/aws-cli"] を参照）
 "aqua:kubernetes/kubectl" = { version = "1.35.0", lazy = true, lazy_bins = ["kubectl"] }
 "aqua:cloudflare/cloudflared" = { version = "2026.10.5", lazy = true, lazy_bins = ["cloudflared"] }
 # Azure CLI。aqua-registry に Azure/azure-cli の定義が無いため github backend で入れる。
@@ -213,7 +212,7 @@ python = "3.13.18"
 "aqua:rust-lang/rust-analyzer" = { version = "2025-12-01", lazy = true, lazy_bins = ["rust-analyzer"] }
 "aqua:tamasfe/taplo" = { version = "0.10.0", lazy = true, lazy_bins = ["taplo"] }
 
-# その他（1password/cli は aqua CLI で管理）
+# その他（1Password CLI は末尾の [tools."http:op"] を参照）
 "aqua:temporalio/cli" = "1.9.1"
 "aqua:jdx/usage" = { version = "7.1.3", lazy = true, lazy_bins = ["usage"] }
 # Datadog の AI エージェント向け CLI コンパニオン
@@ -274,3 +273,34 @@ lazy_bins = ["opencode"]
 [tools."http:opencode".platforms]
 linux-x64 = { url = 'https://opencode.ai/files/bin/{{ version }}/opencode-linux-x64.tar.gz' }
 linux-arm64 = { url = 'https://opencode.ai/files/bin/{{ version }}/opencode-linux-arm64.tar.gz' }
+
+# ============================================
+# AWS CLI
+# ============================================
+# aqua-registry の定義は type: http（awscli.amazonaws.com から配布。macOS は .pkg）。mise の aqua backend は
+# repo_owner / repo_name を持つこの定義なら警告を出さずに lock でき、.pkg も展開できる。symlink_bins は
+# mise の registry（aws-cli）が付けているもので、本体を配布物のディレクトリから起動させるため。
+# 配布元が checksum を公開していないので、lockfile の checksum は fill-lockfile-checksums.sh が埋める。
+# Renovate の mise manager は aqua の http パッケージを抽出しないので、regex manager が GitHub のタグで追う。
+# regex がこの並びを前提にしているので、[tools."aqua:aws/aws-cli"] の直後に version を置く。
+# renovate: datasource=github-tags depName=aws/aws-cli
+[tools."aqua:aws/aws-cli"]
+version = "2.39.1"
+symlink_bins = true
+lazy = true
+lazy_bins = ["aws", "aws_completer"]
+
+# ============================================
+# 1Password CLI
+# ============================================
+# aqua-registry の 1password/cli は cache.agilebits.com から配布する type: http で repo_owner / repo_name を
+# 持たず、mise の aqua backend では lock のたびに GitHub のタグ取得に失敗して警告が出る（grok と同じ）ので、
+# http backend で URL を直接指定する。checksum は fill-lockfile-checksums.sh が埋める。
+# 更新は Renovate の regex manager が 1Password の update check endpoint（custom datasource）で追う。
+# renovate: datasource=custom.1password-cli depName=1password-cli
+[tools."http:op"]
+version = "2.41.1"
+url = 'https://cache.agilebits.com/dist/1P/op2/pkg/v{{ version }}/op_{{ os(macos="darwin") }}_{{ arch(x64="amd64") }}_v{{ version }}.zip'
+bin = "op"
+lazy = true
+lazy_bins = ["op"]

@@ -13,14 +13,11 @@ Chezmoi で管理している個人用 dotfiles リポジトリ。macOS/Linux �
 ```bash
 # mise ツールをインストール
 mise install
-
-# aqua ツールをインストール（mise 管理外のツール用）
-aqua install
 ```
 
 ## Taskfile（自動生成ファイル管理）
 
-自動生成ファイル（mise.lock, aqua-checksums, mise bootstrap）を統一的に管理するための Task ランナー。
+自動生成ファイル（mise.lock, mise bootstrap）を統一的に管理するための Task ランナー。
 jsonnet からの JSON 生成は `chezmoi apply` 時に run_onchange スクリプトで実行される。
 
 ### 基本コマンド
@@ -34,7 +31,6 @@ task lock
 
 # 個別タスク
 task mise:lock      # mise lockfile のみ
-task aqua:checksum  # aqua checksum のみ
 task mise:bootstrap # bootstrap のみ
 
 # CI用: 生成後に diff チェック（mise.lock, JSON 除外）
@@ -82,16 +78,14 @@ Homebrew
   └─ mise (統合ツール管理)
        ├─ ランタイム管理: go, node, pnpm (core backend)
        ├─ CLI ツール管理: fzf, ripgrep, starship, etc. (aqua backend)
-       ├─ 独自ホスティング配布のツール: grok, opencode v2 (http backend)
+       ├─ 独自ホスティング配布のツール: grok, opencode v2, 1Password CLI (http backend)
        ├─ Python 製 CLI: snowflake-cli (pipx backend / 内部で uv。Python は mise の python 3.13、shims からは除外)
        ├─ npm グローバルパッケージ
-       └─ aqua CLI (github backend)
-            └─ mise lock で checksum 取得不可のツール
-                 └─ aws-cli, 1password/cli, zoxide
+       └─ aqua CLI (github backend。repo ごとの aqua.yaml 用)
 ```
 
 - **mise** (`dot_config/mise/`, `dot_local/bin/executable_mise`): ランタイム、CLI ツール、npm パッケージの統合管理。bootstrap 方式でインストール
-- **aqua** (`dot_config/aquaproj-aqua/`): mise lock で checksum が取得できないツールを管理。aqua CLI 自体は mise でインストール
+- **aqua**: グローバルのツールには使わない。仕事の repo などにある repo ごとの aqua.yaml のために、aqua CLI を mise で入れ、`.zshenv` で `AQUA_ROOT_DIR` と aqua の bin を PATH に置いている。以前はグローバルの aqua.yaml（`dot_config/aquaproj-aqua/`）で aws-cli / 1password/cli / zoxide を入れていた。当時は mise lock でこれらの checksum が取れなかったが、今は zoxide は mise lock で取れ、aws-cli と 1Password CLI は `fill-lockfile-checksums.sh` が埋めるので、mise に移した。配布先に残るグローバルの設定は `.chezmoiremove` で消す
 
 ### mise の lazy tools（初回の実行で入れる）
 
@@ -268,7 +262,6 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 |---------|--------|---------|
 | `mise.lock` | `.mise.toml` | `task mise:lock` |
 | `dot_config/mise/mise.lock` | `dot_config/mise/config.toml` | `task mise:lock` |
-| `dot_config/aquaproj-aqua/aqua-checksums.json` | `dot_config/aquaproj-aqua/aqua.yaml` | `task aqua:checksum` |
 | `dot_local/bin/executable_mise` | `.mise-bootstrap-version` | `task mise:bootstrap` |
 
 ### chezmoi apply 時の自動管理ファイル
@@ -321,7 +314,6 @@ dotfiles リポジトリ自体がカスタムマーケットプレイス (`tak84
 | `run_onchange_after_10-mise-install.sh.tmpl` | `config.toml` 変更時 | `mise install` |
 | `run_onchange_after_12-zsh-completions.sh.tmpl` | pup / task / temporal / mise のバージョン変更時 | 各ツールの zsh 補完を `~/.local/share/zsh/completions/` に書き出して zcompile |
 | `run_onchange_after_15-azure-cli-python.sh.tmpl` | azure-cli / uv のバージョン変更時 | Azure CLI のランチャー（`libexec/bin/az`）の `PY_VER` が示す Python を uv で入れ、`AZ_PYTHON` が指すリンク `az-python` を張り替える |
-| `run_onchange_after_20-aqua-install.sh.tmpl` | `aqua.yaml` 変更時 | `aqua install` |
 | `run_onchange_after_30-install-packages.sh.tmpl` | `packages.yaml` 変更時 | `brew install`（macOS） |
 | `run_onchange_after_40-generate-jsonnet.sh.tmpl` | jsonnet ファイル変更時 | jsonnet → JSON 生成（`~/.claude/settings.json`, `~/.gemini/antigravity-cli/{settings,mcp_config}.json`） |
 | `run_onchange_after_45-build-statusline.sh.tmpl` | Go ソース変更時 | `~/.claude/bin/` と `~/.codex/bin/` へ Go バイナリをビルド |
@@ -346,12 +338,12 @@ run_ スクリプトは、必要なツールが見つからないときや処理
 | ワークフロー | トリガー | 処理 |
 |-------------|---------|------|
 | `ci.yaml` | push | ツールの導入確認、Go のテストと lint（gofmt / golangci-lint、設定は `.golangci.yml`）、シェルスクリプト・描画した run_ スクリプト・workflow の lint（shellcheck / actionlint）、zsh の構文（macOS のみ）、jsonnet の評価、`task check`（自動生成ファイルの diff）、chezmoi テンプレートの描画 |
-| `lockfiles-and-checksums.yaml` | push（`.mise.toml` / `.mise-bootstrap-version` / `dot_config/mise/config.toml` / `dot_config/aquaproj-aqua/aqua.yaml` 変更時、`main` / `lazy-lock-update` ブランチを除く） | `mise lock`（ルート + `dot_config/mise/`）→ `fill-lockfile-checksums.sh` → `aqua update-checksum --prune` を Renovate PR ブランチへ commit |
+| `lockfiles-and-checksums.yaml` | push（`.mise.toml` / `.mise-bootstrap-version` / `dot_config/mise/config.toml` 変更時、`main` / `lazy-lock-update` ブランチを除く） | `mise lock`（ルート + `dot_config/mise/`）→ `fill-lockfile-checksums.sh` を Renovate PR ブランチへ commit |
 | `mise-bootstrap.yaml` | push（`.mise-bootstrap-version` 変更時） | `mise generate bootstrap` |
 | `lazy-lock.yaml` | nvim 設定変更 / 週次 cron | Lazy.nvim lockfile 更新（PR 作成 or Renovate PR へコミット） |
-| `zsh-startup.yaml` | PR（zsh の設定・mise / aqua の設定の変更時）/ 手動 | macOS と Linux で zsh の起動時間を測り、時間のかかっている箇所とあわせて job summary と PR のコメントに出す（合否は判定しない。コメントは 1 件を書き換える） |
+| `zsh-startup.yaml` | PR（zsh の設定・mise の設定の変更時）/ 手動 | macOS と Linux で zsh の起動時間を測り、時間のかかっている箇所とあわせて job summary と PR のコメントに出す（合否は判定しない。コメントは 1 件を書き換える） |
 
-`fill-lockfile-checksums.sh` は、`mise lock` では checksum が埋まらないツールを補う。mise は backend が checksum を供給できる場合しか lockfile に書き込まないため、`http` backend のツールや aqua-registry 側に checksum 定義が無いパッケージ（`anthropics/claude-code`, `tamasfe/taplo`, `http:grok`, `http:opencode`）は url だけが残り、install 時の整合性検証が働かない。そこで実アーティファクトを取得して sha256 を計算し、lockfile に追記する。checksum のあるエントリは触らないので冪等。アーティファクトを丸ごとダウンロードする都合上、対象が増えるほど CI 時間は延びる（現状で合計 2 GB 強）。
+`fill-lockfile-checksums.sh` は、`mise lock` では checksum が埋まらないツールを補う。mise は backend が checksum を供給できる場合しか lockfile に書き込まないため、`http` backend のツールや aqua-registry 側に checksum 定義が無いパッケージ（`anthropics/claude-code`, `tamasfe/taplo`, `aws/aws-cli`, `http:grok`, `http:opencode`, `http:op`）は url だけが残り、install 時の整合性検証が働かない。そこで実アーティファクトを取得して sha256 を計算し、lockfile に追記する。checksum のあるエントリは触らないので冪等。アーティファクトを丸ごとダウンロードする都合上、対象が増えるほど CI 時間は延びる（現状で合計 2 GB 強）。
 
 lockfile / bootstrap / lazy-lock の再生成は外部のコード（mise lock の依存解決、Lazy のプラグインの build hook など）を動かすので、書き込みできる GitHub App token を作る前の step で行い、commit の step でだけ App token を使う。GITHUB_TOKEN は読み取りに絞る（lazy-lock の週次 PR の作成だけ書き込みを付ける）。checkout は push 時点の SHA ではなくブランチの先頭を取り、token を `.git/config` に残さない。`commit-via-graphql.sh` は再生成をしない。生成中に別の commit でブランチの先頭が進んで commit が拒否されたら、新しい先頭を取り直し、その間に `FILES` が変わっていなければ生成物を新しい先頭に載せ直して commit する。`FILES` が変わっていれば上書きせずに異常終了する。生成の入力を変える push は paths に当たってその workflow を起動し、古い run を止めて新しい先頭から作り直す。concurrency の group は workflow ごとに分ける。group を共有すると待機できる run が 1 件だけなので、別 workflow の待機中の run が取り消され、生成物だけの commit では起動し直さない。待機枠を増やす `concurrency.queue: max` は actionlint（1.7.12）が未知のキーとして弾くので使わない。週次の lazy-lock PR はブランチの push だけを App token で行う（GITHUB_TOKEN の push では `ci.yaml` が起動せず、必須チェックが付かない）。
 
@@ -367,7 +359,7 @@ lockfile / bootstrap / lazy-lock の再生成は外部のコード（mise lock �
 
 - 履歴の変数（`HISTFILE` / `HISTSIZE` / `SAVEHIST`）は `.zshrc` に置く。`.zshenv` に置くと macOS の `/etc/zshrc` に上書きされ、履歴が 1000 件に切り詰められる（#309 で `.zshenv` に移して実際に起きた）
 - 出力の大きいコマンドを `.zshrc` で `eval` しない。出力は起動のたびに構文解析される（pup の補完 3.7MB の eval で起動に 10 秒かかっていた）。補完なら `run_onchange_after_12-zsh-completions.sh.tmpl` のように apply 時にファイルへ書き出して zcompile し、`.zshrc` では `compdef` で登録する
-- `.zshrc` で `eval "$(<コマンド>)"` を増やさない。小さい出力でもコマンドの起動だけで 1 つあたり数〜60 ms かかる。補完は上と同じく apply 時に書き出す。init 系（direnv / starship / fzf / zoxide）は `.zshrc` の `_zshrc_cached_init` が `$XDG_CACHE_HOME/zsh/init/` にキャッシュし、キー（PATH 上のパス・実体のパスと mtime・引数・呼び出し側が足す文字列）が変わったときだけ作り直す。出力を左右する環境変数や設定ファイルは必ずキーに入れる（zoxide は `_ZO_ECHO` / `_ZO_RESOLVE_SYMLINKS` と aqua の設定の mtime）。`mise activate` は出力にその時点の PATH が焼き込まれるのでキャッシュしない
+- `.zshrc` で `eval "$(<コマンド>)"` を増やさない。小さい出力でもコマンドの起動だけで 1 つあたり数〜60 ms かかる。補完は上と同じく apply 時に書き出す。init 系（direnv / starship / fzf / zoxide）は `.zshrc` の `_zshrc_cached_init` が `$XDG_CACHE_HOME/zsh/init/` にキャッシュし、キー（PATH 上のパス・実体のパスと mtime・引数・呼び出し側が足す文字列）が変わったときだけ作り直す。出力を左右する環境変数や設定ファイルは必ずキーに入れる（zoxide は `_ZO_ECHO` / `_ZO_RESOLVE_SYMLINKS`）。`mise activate` は出力にその時点の PATH が焼き込まれるのでキャッシュしない
 - `brew shellenv` は `.zprofile` に apply 時の出力を埋め込む。brew は PATH が `<prefix>/bin:<prefix>/sbin` で始まっていると何も出さないので、テンプレートでは PATH を固定して呼ぶ
 - `compinit` の再構築判定は glob qualifier を配列への代入で評価する。`[[ ]]` の中ではファイル名生成が起きない（`(#q...)` は extended_glob が要る）。full の `compinit` は fpath が変わらなければ `.zcompdump` を書き直さないので、成功したら `touch -c` で mtime を更新する（compaudit が安全でないディレクトリを見つけて中断したときに touch で空の dump を作ると、以降の `compinit -C` で compdef すら定義されなくなる）
 - 起動時間は `zsh-startup.yaml`（計測専用で合否を判定しないワークフロー。required ではない）が macOS と Linux で測り、時間のかかっている箇所とあわせて job summary と PR のコメントに出す。PR のコメントは 1 件だけで、push のたびに書き換える（編集は通知されない）。手元では `.github/scripts/measure-zsh-startup.zsh` で同じ計測ができる
@@ -388,10 +380,10 @@ lockfile / bootstrap / lazy-lock の再生成は外部のコード（mise lock �
 - **要求スコープを厳守する。** ユーザーが「A の代替として B を作る」等と明示したら、その範囲だけに絞る。隣接レイヤー（前段・後段・類似機能）の改修を勝手に計画へ足さない。関連改善は本線の計画を立てた上で別途質問する
 - **環境を直接変更しない。** 変更は必ずこの repo のソース（`dot_` プレフィックス付きファイル等）を編集し、PR 経由で行う。`~/.local/share/chezmoi` 等の repo 外パスや、`~/.claude/` `~/.codex/` `~/.config/` 等のターゲットファイルを直接書き換えてはならない。環境への適用は `chezmoi update` に委ねる（remote main が single source of truth）
 - **chezmoi ソースを編集する。** `~/.claude/CLAUDE.md` 等のターゲットではなく `dot_claude/CLAUDE.md` 等のソースを編集する。ターゲットを直接編集しても `chezmoi update` で上書きされ、PR にも含められない
-- **ツール導入手段として Homebrew を提案しない**（`packages.yaml` への追加・`brew install` を選択肢に挙げない）。mise（aqua / github / go / npm / pipx backend）または aqua CLI で完結させる
+- **ツール導入手段として Homebrew を提案しない**（`packages.yaml` への追加・`brew install` を選択肢に挙げない）。mise（aqua / github / go / npm / pipx / http backend）で完結させる。aqua CLI は repo ごとの aqua.yaml 用で、グローバルのツールを aqua で入れない
 - Python 製 CLI でバイナリ配布が無いものは mise の `pipx` backend で入れる（uv が入っていれば mise は内部で uv を使う）。Renovate の mise manager が PyPI datasource として追える。lockfile revision 2 では依存グラフの install に mise の `python` が使われるので、`install_env` で Python を選ぼうとしない（効かない）。対応する Python の版は、そのツールの依存に wheel があるかで確かめる
 - mise にツールを追加する際、`mise search` / `mise registry` で見つからなくても [aqua-registry](https://github.com/aquaproj/aqua-registry/tree/main/pkgs) に定義があれば `"aqua:<registry path>" = "<version>"` で追加できる（Renovate 自動更新・checksum 検証に乗る）。`http` backend で URL を手書きするのは aqua-registry にも無い最終手段のみ
 - mise に追加するツールは、config.toml の lazy tools の節にある例外に当たらなければ `lazy = true` にし、`lazy_bins` に直接実行するコマンド名を全部書く（プラットフォーム名の付いた別名は除く）。名前はツールを入れた後に `mise bin-paths <backend>:<tool>` の中身で確かめる
-- 例外として、aqua-registry 側の定義が `type: http`（GitHub リリースではなく独自ホスティング配布）のパッケージは `aqua:` で追加しない。mise の aqua backend が lockfile 生成のたびに GitHub のタグ取得を試みて必ず失敗し警告を出すうえ、[Renovate の mise manager も aqua の http パッケージを抽出対象外にしている](https://docs.renovatebot.com/modules/manager/mise/#limitations)ため更新も効かない。この場合は mise の `http` backend で URL を直接指定する（`dot_config/mise/config.toml` の `[tools."http:grok"]` が例）
+- 例外として、aqua-registry 側の定義が `type: http`（GitHub リリースではなく独自ホスティング配布）で `repo_owner` / `repo_name` を持たないパッケージは `aqua:` で追加しない。mise の aqua backend が lockfile 生成のたびに GitHub のタグ取得を試みて必ず失敗し警告を出すうえ、[Renovate の mise manager も aqua の http パッケージを抽出対象外にしている](https://docs.renovatebot.com/modules/manager/mise/#limitations)ため更新も効かない。この場合は mise の `http` backend で URL を直接指定する（`dot_config/mise/config.toml` の `[tools."http:grok"]` / `[tools."http:op"]` が例）。`repo_owner` / `repo_name` を持つ `type: http` のパッケージ（aws/aws-cli）は警告が出ず、http backend では扱えない macOS の .pkg も aqua backend なら展開できるので `aqua:` で入れ、Renovate 用に regex manager を足す（`.github/renovate.json5`）
 - 環境変数（API key 等）の置き場所を勝手に特定ファイル（`.zshrc.local` 等）に指定しない。置き場所はユーザーに委ねる（エラーメッセージやコメントにも特定ファイル名を書かない）
 - `~/.codex/config.toml` 等の modify テンプレート（`dot_codex/modify_config.toml`）は、出力で再出力しないキーを `chezmoi apply` 時に削除する。ツールが書き込む既存キー（`projects` / `notice` / `hooks.state` 等）は保持ブロックに追加すること

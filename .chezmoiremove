@@ -4,3 +4,9 @@
   mise は ~/.config/mise/mise.lock の sidecar を ~/.config/mise/locks/ に置くので、古い置き場を消す。
 */}}
 .config/mise/.mise
+{{- /*
+  グローバルの aqua.yaml で入れていた aws-cli / 1password/cli / zoxide は mise に移した。
+  配布していたグローバルの設定を消す。aqua 本体と ~/.local/share/aquaproj-aqua は repo ごとの aqua.yaml で使うので残す。
+*/}}
+.config/aquaproj-aqua/aqua.yaml
+.config/aquaproj-aqua/aqua-checksums.json

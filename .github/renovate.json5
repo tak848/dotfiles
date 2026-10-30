@@ -7,7 +7,6 @@
     ":separateMultipleMajorReleases",
     ":prConcurrentLimitNone",
     ":prHourlyLimitNone",
-    "github>aquaproj/aqua-renovate-config#2.14.0",
   ],
   // mise lockfile revision 2 の sidecar（npm の package.json / aube-lock.yaml、pypi の
   // pyproject.toml / uv.lock）は mise lock が生成するもので、推移的依存の更新も mise lock に任せる。
@@ -69,6 +68,29 @@
       extractVersionTemplate: "^v(?<version>\\d.*)$",
       versioningTemplate: "semver",
     },
+    {
+      // aqua-registry の aws/aws-cli は type: http で、mise manager は aqua の http パッケージを抽出しない
+      // （mise manager の Limitations）。GitHub のタグ（2.39.1 等。v が付かない）で追う。
+      description: "AWS CLI: aqua の http パッケージは mise manager が拾わないため regex で拾う",
+      customType: "regex",
+      managerFilePatterns: ["/^dot_config/mise/config\\.toml$/"],
+      matchStrings: [
+        '# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n\\[tools\\."aqua:aws/aws-cli"\\]\\nversion = "(?<currentValue>[^"]+)"',
+      ],
+      versioningTemplate: "semver",
+    },
+    {
+      // 1Password CLI は http backend で入れている。custom datasource はバージョンに v を付けて返すので、
+      // 先頭の v を落として config.toml と比べる。
+      description: "1Password CLI: http backend のバージョンを 1Password の update check endpoint で追う",
+      customType: "regex",
+      managerFilePatterns: ["/^dot_config/mise/config\\.toml$/"],
+      matchStrings: [
+        '# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n\\[tools\\."http:op"\\]\\nversion = "(?<currentValue>[^"]+)"',
+      ],
+      extractVersionTemplate: "^v(?<version>\\d.*)$",
+      versioningTemplate: "semver",
+    },
   ],
   customDatasources: {
     "1password-cli": {
@@ -88,13 +110,6 @@
       matchPackageNames: ["**"],
       minimumReleaseAge: "24 hours",
     },
-    {
-      description: "1Password CLI: use official update check endpoint for aqua HTTP package",
-      matchPackageNames: ["1password/cli"],
-      overrideDatasource: "custom.1password-cli",
-      overridePackageName: "1password-cli",
-      versioning: "semver",
-    },
     // custom datasource（xAI の stable channel / 1Password の update check endpoint）は
     // バージョン番号しか返さず releaseTimestamp を持たない。Renovate 42 以降は
     // minimumReleaseAgeBehaviour の既定が timestamp-required で、timestamp の無い
@@ -108,7 +123,7 @@
     // groupName を与えて単独 PR に分離する。
     {
       description: "1Password CLI: releaseTimestamp が無く age gate が効かないため単独 PR にする",
-      matchPackageNames: ["1password/cli", "1password-cli"],
+      matchPackageNames: ["1password-cli"],
       minimumReleaseAgeBehaviour: "timestamp-optional",
       groupName: "1password-cli",
     },
