@@ -17,7 +17,13 @@ export PATH="/usr/local/bin:$PATH"
 # aqua root は home 配下に固定する（環境側の AQUA_ROOT_DIR が書き込み不可な
 # パスを指していると aqua install が permission denied で落ちるため）
 export AQUA_ROOT_DIR="${XDG_DATA_HOME}/aquaproj-aqua"
-export PATH="${AQUA_ROOT_DIR}/bin:$PATH"
+# aqua の bin と mise の shims は、PATH にまだ無いときだけ先頭に足し、mise の shims を aqua の bin より前に置く。
+# aqua の bin には過去に aqua で入れていたツール（aws / op / zoxide 等）の aqua-proxy が残り続け、
+# そのツールを定義する aqua.yaml が無い場所では command is not found で落ちる。入れ子のシェル（zsh -c や
+# zsh のスクリプト）で無条件に先頭へ足し直すと、親のシェルで mise activate が前に並べた mise のツールを
+# それらが隠す。親から PATH を受け継がない非ログインシェルでも、mise の shims が先に見つかる。
+[[ ":$PATH:" == *":${AQUA_ROOT_DIR}/bin:"* ]] || export PATH="${AQUA_ROOT_DIR}/bin:$PATH"
+[[ ":$PATH:" == *":${XDG_DATA_HOME}/mise/shims:"* ]] || export PATH="${XDG_DATA_HOME}/mise/shims:$PATH"
 
 # mise 設定
 export MISE_GLOBAL_CONFIG_FILE="${XDG_CONFIG_HOME}/mise/config.toml"

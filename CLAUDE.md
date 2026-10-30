@@ -85,7 +85,7 @@ Homebrew
 ```
 
 - **mise** (`dot_config/mise/`, `dot_local/bin/executable_mise`): ランタイム、CLI ツール、npm パッケージの統合管理。bootstrap 方式でインストール
-- **aqua**: グローバルのツールには使わない。仕事の repo などにある repo ごとの aqua.yaml のために、aqua CLI を mise で入れ、`.zshenv` で `AQUA_ROOT_DIR` と aqua の bin を PATH に置いている。以前はグローバルの aqua.yaml（`dot_config/aquaproj-aqua/`）で aws-cli / 1password/cli / zoxide を入れていた。当時は mise lock でこれらの checksum が取れなかったが、今は zoxide は mise lock で取れ、aws-cli と 1Password CLI は `fill-lockfile-checksums.sh` が埋めるので、mise に移した。配布先に残るグローバルの設定は `.chezmoiremove` で消す
+- **aqua**: グローバルのツールには使わない。仕事の repo などにある repo ごとの aqua.yaml のために、aqua CLI を mise で入れ、`AQUA_ROOT_DIR` と aqua の bin を PATH に置いている（zsh は `.zshenv`、bash のログインシェルと run_ スクリプトは `path-setup.tmpl`）。aqua の bin には過去に aqua で入れたツールの aqua-proxy が残り、定義する aqua.yaml が無い場所では落ちるので、どちらも mise の shims を aqua の bin より前に置く。`.zshenv` は入れ子のシェル（`zsh -c` 等）で親の並びを崩さないよう、PATH にまだ無いときだけ足す。以前はグローバルの aqua.yaml（`dot_config/aquaproj-aqua/`）で aws-cli / 1password/cli / zoxide を入れていた。当時は mise lock でこれらの checksum が取れなかったが、今は zoxide は mise lock で取れ、aws-cli と 1Password CLI は `fill-lockfile-checksums.sh` が埋めるので、mise に移した。配布先に残るグローバルの設定は `.chezmoiremove` で消す
 
 ### mise の lazy tools（初回の実行で入れる）
 
