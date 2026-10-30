@@ -65,16 +65,16 @@ AZ_PYTHON = '{{ env.XDG_DATA_HOME | default(value=env.HOME ~ "/.local/share") }}
 # ============================================
 # ランタイム（core backend）
 # ============================================
-node = "24.22.1"
-pnpm = { version = "12.15.0", lazy = true, lazy_bins = ["pnpm", "pnpx", "pn", "pnx"] }
-"github:endevco/aube" = { version = "v2.8.2", lazy = true, lazy_bins = ["aube", "aubr", "aubx"] } # 高速な Node.js パッケージマネージャ
+node = "24.22.2"
+pnpm = { version = "12.16.1", lazy = true, lazy_bins = ["pnpm", "pnpx", "pn", "pnx"] }
+"github:endevco/aube" = { version = "v2.8.4", lazy = true, lazy_bins = ["aube", "aubr", "aubx"] } # 高速な Node.js パッケージマネージャ
 go = "1.27.3"
 # snowflake-cli（pipx backend）の install にだけ使う。lockfile revision 2 では pipx / pypi ツールの
 # 依存グラフを uv sync で再現し、その Python は mise の config の python（無ければ PATH 上の python）に
 # 固定される。install_env の UV_PYTHON_PREFERENCE では変えられないため、mise で python を持つ。
 # snowflake-cli が pyyaml==6.0.2（cp314 の wheel が無い）を固定しているので 3.13 に留める。
 # shims からは外している（[settings] の shims.exclude）ので、lazy にしても初回の実行で入れる shim が作られない。
-python = "3.13.17"
+python = "3.13.18"
 
 # ============================================
 # aqua CLI（github backend）
@@ -87,7 +87,7 @@ python = "3.13.17"
 # CLI ツール（aqua backend）
 # ============================================
 # GitHub CLI
-"aqua:cli/cli" = "2.103.2"
+"aqua:cli/cli" = "2.103.3"
 
 # シェル関連
 "aqua:junegunn/fzf" = "0.74.5"
@@ -100,7 +100,7 @@ python = "3.13.17"
 "aqua:BurntSushi/ripgrep" = { version = "15.2.0", lazy = true, lazy_bins = ["rg"] }
 "aqua:phiresky/ripgrep-all" = { version = "0.10.10", lazy = true, lazy_bins = ["rga", "rga-fzf", "rga-fzf-open"] }
 # rga依存: ドキュメント変換（docx, epub, odt等）
-"github:jgm/pandoc" = { version = "3.12.1", lazy = true, lazy_bins = ["pandoc", "pandoc-lua", "pandoc-server"] }
+"github:jgm/pandoc" = { version = "3.13", lazy = true, lazy_bins = ["pandoc", "pandoc-lua", "pandoc-server"] }
 "aqua:jqlang/jq" = "1.8.1"
 "aqua:mikefarah/yq" = { version = "4.54.1", lazy = true, lazy_bins = ["yq"] }
 "aqua:x-motemen/ghq" = { version = "1.11.2", lazy = true, lazy_bins = ["ghq"] }
@@ -110,7 +110,7 @@ python = "3.13.17"
 # symbols 版を除外するため matching_regex で末尾を絞り、createdump 等は filter_bins で隠す）
 # Windows 向けは zip しか無く matching_regex に当たらない。mise 2026.10.19 以降の mise lock は当たる asset が
 # 無いと失敗するので、os で Windows を外す（os で外したプラットフォームは 2026.10.20 以降の mise lock が解決しない）
-"github:git-ecosystem/git-credential-manager" = { version = "v3.0.1", matching_regex = '[0-9]\.tar\.gz$', filter_bins = "git-credential-manager", os = ["linux", "macos"] }
+"github:git-ecosystem/git-credential-manager" = { version = "v3.0.2", matching_regex = '[0-9]\.tar\.gz$', filter_bins = "git-credential-manager", os = ["linux", "macos"] }
 
 # エディタ・ターミナル
 "aqua:neovim/neovim" = { version = "0.12.6", lazy = true, lazy_bins = ["nvim"] }
@@ -118,11 +118,11 @@ python = "3.13.17"
 "aqua:arl/gitmux" = { version = "0.11.5", lazy = true, lazy_bins = ["gitmux"] }
 
 # Python ツール
-"aqua:astral-sh/uv" = "0.13.5"
+"aqua:astral-sh/uv" = "0.13.6"
 
 # クラウド・インフラ（aws-cli は aqua CLI で管理）
 "aqua:kubernetes/kubectl" = { version = "1.35.0", lazy = true, lazy_bins = ["kubectl"] }
-"aqua:cloudflare/cloudflared" = { version = "2026.10.3", lazy = true, lazy_bins = ["cloudflared"] }
+"aqua:cloudflare/cloudflared" = { version = "2026.10.5", lazy = true, lazy_bins = ["cloudflared"] }
 # Azure CLI。aqua-registry に Azure/azure-cli の定義が無いため github backend で入れる。
 # リリースアセットは macOS と Linux の tarball（azure-cli-<version>-{macos,linux}-{arm64,x86_64}.tar.gz）と
 # Windows の msi/zip。Windows は os で外し、matching_regex で tarball に絞って、OS とアーキテクチャは
@@ -201,7 +201,7 @@ python = "3.13.17"
 "github:sorafujitani/ccsession" = { version = "v1.6.0", lazy = true, lazy_bins = ["ccsession"] }
 
 # Anthropic API CLI
-"aqua:anthropics/anthropic-cli" = { version = "2.3.0", lazy = true, lazy_bins = ["ant"] }
+"aqua:anthropics/anthropic-cli" = { version = "2.4.0", lazy = true, lazy_bins = ["ant"] }
 
 # Language Server
 "go:golang.org/x/tools/gopls" = { version = "v0.24.0", lazy = true, lazy_bins = ["gopls"] }
@@ -215,24 +215,24 @@ python = "3.13.17"
 
 # その他（1password/cli は aqua CLI で管理）
 "aqua:temporalio/cli" = "1.9.1"
-"aqua:jdx/usage" = { version = "7.1.2", lazy = true, lazy_bins = ["usage"] }
+"aqua:jdx/usage" = { version = "7.1.3", lazy = true, lazy_bins = ["usage"] }
 # Datadog の AI エージェント向け CLI コンパニオン
-"aqua:DataDog/pup" = "2.3.0"
+"aqua:DataDog/pup" = "2.3.5"
 
 # ============================================
 # npm グローバルパッケージ
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.312"
-"github:google-antigravity/antigravity-cli" = { version = "1.4.7", lazy = true, lazy_bins = ["antigravity"] } # agy: Gemini CLI の後継
+"github:google-antigravity/antigravity-cli" = { version = "1.4.9", lazy = true, lazy_bins = ["antigravity"] } # agy: Gemini CLI の後継
 "aqua:openai/codex" = { version = "0.165.0", lazy = true, lazy_bins = ["codex"] }
 # opencode は http backend で管理（末尾の [tools."http:opencode"] を参照）
 # Grok Build CLI (xAI) は http backend で管理（末尾の [tools."http:grok"] を参照）
 # Claude Code のハーネスを ChatGPT サブスクの Codex backend に向ける Anthropic 互換プロキシ。claudex から使う
-"github:router-for-me/CLIProxyAPI" = "v8.0.41"
-"npm:ccusage" = { version = "20.0.42", lazy = true, lazy_bins = ["ccusage"] }
+"github:router-for-me/CLIProxyAPI" = "v8.0.47"
+"npm:ccusage" = { version = "20.0.45", lazy = true, lazy_bins = ["ccusage"] }
 "npm:@typescript/native-preview" = { version = "7.0.0-dev.20260707.2", lazy = true, lazy_bins = ["tsgo"] }
 "npm:@fission-ai/openspec" = { version = "1.15.0", lazy = true, lazy_bins = ["openspec"] }
-"npm:defuddle" = { version = "0.19.5", lazy = true, lazy_bins = ["defuddle"] } # WebFetch の代替: URL 本文をモデル要約を挟まず clean な Markdown で取得
+"npm:defuddle" = { version = "0.19.6", lazy = true, lazy_bins = ["defuddle"] } # WebFetch の代替: URL 本文をモデル要約を挟まず clean な Markdown で取得
 
 # ============================================
 # Grok Build CLI (xAI のターミナル向けコーディングエージェント)
