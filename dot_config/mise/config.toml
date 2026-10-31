@@ -247,7 +247,7 @@ python = "3.13.18"
 # ============================================
 # npm グローバルパッケージ
 # ============================================
-"aqua:anthropics/claude-code" = "2.1.314"
+"aqua:anthropics/claude-code" = "2.1.316"
 "github:google-antigravity/antigravity-cli" = { version = "1.4.9", lazy = true, lazy_bins = ["antigravity"] } # agy: Gemini CLI の後継
 "aqua:openai/codex" = { version = "0.166.0", lazy = true, lazy_bins = ["codex"] }
 # opencode は http backend で管理（末尾の [tools."http:opencode"] を参照）
