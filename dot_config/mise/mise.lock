@@ -3087,25 +3087,25 @@ url = "https://nodejs.org/dist/v26.13.0/node-v26.13.0-win-x64.zip"
 
 [[tools."npm:@fission-ai/openspec"]]
 version = "1.15.0"
-aube = { path = ".mise/locks/npm-fission-ai-openspec/1.15.0", digest = "sha256:ef1eed1791a47001d18dda66f988299e4011504c14b8356d3a546f60c3aaad01" }
+aube = { path = "locks/npm-fission-ai-openspec/1.15.0", digest = "sha256:692965a9f65bee6f82a282bc9f95f257d7a7bc6f7bfca43e616ef62523a261f7" }
 backend = "npm:@fission-ai/openspec"
 specifiers = ["1.15.0"]
 
 [[tools."npm:@typescript/native-preview"]]
 version = "7.0.0-dev.20260707.2"
-aube = { path = ".mise/locks/npm-typescript-native-preview/7.0.0-dev.20260707.2", digest = "sha256:a45a98c540ad73f14a677ee62351ea6f8e1d714903f7dfe7f0d2f3bddc6133fb" }
+aube = { path = "locks/npm-typescript-native-preview/7.0.0-dev.20260707.2", digest = "sha256:a45a98c540ad73f14a677ee62351ea6f8e1d714903f7dfe7f0d2f3bddc6133fb" }
 backend = "npm:@typescript/native-preview"
 specifiers = ["7.0.0-dev.20260707.2"]
 
 [[tools."npm:ccusage"]]
 version = "20.0.45"
-aube = { path = ".mise/locks/npm-ccusage/20.0.45", digest = "sha256:c18adf825375bf31196ace6f23b765f88ef8eea7e99c3d666f387be6f23379f5" }
+aube = { path = "locks/npm-ccusage/20.0.45", digest = "sha256:c18adf825375bf31196ace6f23b765f88ef8eea7e99c3d666f387be6f23379f5" }
 backend = "npm:ccusage"
 specifiers = ["20.0.45"]
 
 [[tools."npm:defuddle"]]
 version = "0.19.6"
-aube = { path = ".mise/locks/npm-defuddle/0.19.6", digest = "sha256:e36bcc488c68303e0924304d8592e234b3eb20ca419754097cb7285f0e914e07" }
+aube = { path = "locks/npm-defuddle/0.19.6", digest = "sha256:e36bcc488c68303e0924304d8592e234b3eb20ca419754097cb7285f0e914e07" }
 backend = "npm:defuddle"
 specifiers = ["0.19.6"]
 
@@ -3113,7 +3113,6 @@ specifiers = ["0.19.6"]
 version = "3.31.0"
 backend = "pipx:snowflake-cli"
 specifiers = ["3.31.0"]
-uv = { path = ".mise/locks/pipx-snowflake-cli/3.31.0", digest = "sha256:6cc7abdc5949590da3cc00477b035a505ef63f361e89531b25fd72093d9d2a49" }
 
 [[tools.pnpm]]
 version = "12.16.1"
