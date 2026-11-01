@@ -115,7 +115,7 @@ Homebrew
 - 認証状態は `/v1/models` に `gpt-*` が出るかで判定する。CLIProxyAPI は認証済みプロバイダのモデルしか一覧に出さないので、空なら未認証かトークン失効。ログイン後は auth-dir の file watcher が拾うのでプロキシの再起動は要らない
 - `claudexf` は 4 スロットとも `<model>-fast`（config.yaml の `oauth-model-alias` で `fork: true` の別名。既定のスロットは 3 モデルなので `gpt-6-astra-fast` / `gpt-6.1-sol-fast` / `gpt-6-luna-fast` の 3 本）に向け、CLIProxyAPI の `payload.override`（`gpt-*-fast` に `service_tier: priority`）で Codex の priority tier に送る。以前は Claude Code の fast mode（`fastMode: true` + `CLAUDE_CODE_SKIP_FAST_MODE_ORG_CHECK=1`）で `speed: fast` を送らせる作りだったが、fast mode は Opus 専用で、`gpt-*` の primary では `speed` がそもそも付かないことを Codex の代わりに立てた捕捉サーバーで確認したため作り直した。別名方式で上流 payload に `"service_tier":"priority"` が入ることは CLIProxyAPI の `request-log` で確認済み（素の名前では null）。`payload.override` の `name` はクライアント指定名と解決後の上流名の両方に照合されるので、別名側のパターンで書いてある
 - `claudex` は `CLAUDE_CODE_MAX_CONTEXT_TOKENS` で Codex モデルの実 context 長（872K）を宣言する。値の根拠は ChatGPT アカウントに配られる Codex の live カタログの `max_context_window` で、`codex debug models` で確認できる。カタログは過去に 272K ↔ 372K と揺れているため、巻き戻ったら `CLAUDEX_CONTEXT_TOKENS` で下げる
-- `dot_zshenv.tmpl` で export している `CLAUDE_CODE_AUTO_COMPACT_WINDOW=750000` は、素の Claude（Opus 5.5[1m]）でも `claudex`（872K）でも model context より小さいので、そのまま compaction 閾値として効く
+- `CLAUDE_CODE_AUTO_COMPACT_WINDOW` は設定しておらず（`dot_zshenv.tmpl` でコメントアウト）、compaction は Claude Code の既定の閾値で走る。コメントを外して model context より小さい値（例: 750000）にすれば、素の Claude（Opus 5.5[1m]）でも `claudex`（872K）でも閾値として効く
 
 これは既に有効化されている `codex@openai-codex` プラグイン（Claude Code から Codex CLI に作業を委譲する）とは別物で、両立する。
 

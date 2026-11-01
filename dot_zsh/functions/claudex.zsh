@@ -139,8 +139,8 @@ claudex() {
     # （2026-08-31 時点。おそらく 1,000,000 から出力 128,000 を引いた値）。GPT-6 の astra / sol / luna も同じ 872000。
     # カタログは過去に 272K ↔ 372K と揺れているので、巻き戻ったら CLAUDEX_CONTEXT_TOKENS で下げる。
     #
-    # dot_zshenv.tmpl の CLAUDE_CODE_AUTO_COMPACT_WINDOW=750000 が model context より小さいため、
-    # 約 122K を残して compaction が先に走る。これがカタログ巻き戻り時の保険にもなる。
+    # compaction は Claude Code の既定の閾値で走る。カタログが巻き戻ったときに早めに compaction させたいなら、
+    # dot_zshenv.tmpl でコメントアウトしてある CLAUDE_CODE_AUTO_COMPACT_WINDOW を model context より小さい値で戻す。
     #
     # settings ファイルの env は OS 環境変数に勝つため、プロジェクトの .claude/settings.json が同じ変数を
     # 設定していても上書きできるよう --settings で渡す。優先順位は Managed > Command-line > Local >

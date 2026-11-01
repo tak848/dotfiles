@@ -41,6 +41,6 @@ if [[ -n "${CMUX_BUNDLED_CLI_PATH:-}" && "$CMUX_BUNDLED_CLI_PATH" != "$HOME/.loc
   export CMUX_BUNDLED_CLI_PATH="$HOME/.local/bin/cmux-hook-cli"
 fi
 
-# 1M context 前提の auto-compact 閾値。素の Claude（Opus 5.5[1m]）でも claudex（gpt-6.1-sol の
-# 872K）でも model context より小さいので、そのまま閾値として効く
-export CLAUDE_CODE_AUTO_COMPACT_WINDOW=750000
+# auto-compact の閾値は設定せず、Claude Code の既定に任せる。早めに compaction させたいときはコメントを外す
+# （model context より小さい値なら、素の Claude（Opus 5.5[1m]）でも claudex（gpt-6.1-sol の 872K）でも閾値として効く）
+# export CLAUDE_CODE_AUTO_COMPACT_WINDOW=750000
