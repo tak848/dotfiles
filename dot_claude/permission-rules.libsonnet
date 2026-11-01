@@ -8,13 +8,15 @@ local shellSingleQuote(s) =
 // 分けて照合する。if はコマンド名より先まで指定したパターンだと、$()・バッククォート・$VAR を含む
 // コマンドで常に hook を実行する（公式 docs の hooks "How if patterns match Bash commands"。仕様で
 // あってリグレッションではない）。そのため無関係なコマンドにも全ルールの reason が注入されていた。
-// Agent / EnterWorktree のルールは if で正しく絞れるので、従来どおり if と printf で返す。
+// Bash 以外のルールに reason を付けたときは、if で正しく絞れるので if と printf で返す。
 local preToolResponse(reason) = {
   hookSpecificOutput: {
     hookEventName: 'PreToolUse',
     additionalContext: '[deny hint] このコマンドは permissions.deny にマッチする可能性があります。背景: ' + reason,
   },
 };
+
+local worktreeReason = 'worktree は git worktree コマンドではなく、EnterWorktree か subagent の isolation: worktree で作ってください（.worktreeinclude のコピーと後片付けが効きます）。ユーザーが作った worktree は消したり動かしたりしないでください。一覧（git worktree list）は使えます。';
 
 local rules = [
   {
@@ -40,31 +42,30 @@ local rules = [
     matcher: 'Bash',
     spec: 'Bash(git reset*--hard*)',
   },
+  // AI が worktree を作るのは EnterWorktree と subagent の isolation: worktree だけにする。Claude Code が
+  // git で作る worktree（<repo>/.claude/worktrees/<name>）には .worktreeinclude のコピーと後片付け（変更の
+  // 無い subagent の worktree の削除、定期の sweep）が効くが、Bash の git worktree add で作ったものには効かない。
+  // remove / move / prune は、ユーザーが gwc で作った worktree を消したり動かしたりしないよう止める。
+  // git worktree list は通す。
   {
     matcher: 'Bash',
-    spec: 'Bash(git worktree*)',
-    reason: 'git worktree の操作は禁止です。worktree の管理はユーザーが行います。',
+    spec: 'Bash(git worktree add*)',
+    reason: worktreeReason,
   },
   {
-    // subagent を isolation: worktree で起動する経路を禁止する。Bash(git worktree*) は
-    // シェル経由の git worktree コマンドしか止められず、Agent/Task ツールが内部で worktree を
-    // 作る経路（isolation: 'worktree'）を素通りさせていたため、意図せず worktree で agent が
-    // 起動されるインシデントが発生した。worktree の管理はユーザーが行う方針に合わせ、
-    // subagent の worktree 隔離だけをピンポイントで deny する（ユーザーの `claude --worktree` や
-    // EnterWorktree は影響を受けない）。
-    // ref: https://code.claude.com/docs/en/permissions#match-by-input-parameter
-    matcher: 'Agent',
-    spec: 'Agent(isolation:worktree)',
-    reason: 'subagent を isolation: worktree で起動することは禁止です。worktree の管理はユーザーが行います。isolation を外して起動してください。',
+    matcher: 'Bash',
+    spec: 'Bash(git worktree remove*)',
+    reason: worktreeReason,
   },
   {
-    // Claude がセッション内でその場に worktree を作って入る EnterWorktree ツールを禁止する。
-    // 「work in a worktree」等で worktree に移動する経路。worktree の管理はユーザーが行う方針に
-    // 従い、worktree 操作は一切禁止する。ExitWorktree（worktree から抜ける／後始末）は逃げ道
-    // として残す。
-    matcher: 'EnterWorktree',
-    spec: 'EnterWorktree',
-    reason: 'worktree の操作は一切禁止です。worktree の作成・移動はユーザーが行います。現在の作業ディレクトリのまま作業してください。',
+    matcher: 'Bash',
+    spec: 'Bash(git worktree move*)',
+    reason: worktreeReason,
+  },
+  {
+    matcher: 'Bash',
+    spec: 'Bash(git worktree prune*)',
+    reason: worktreeReason,
   },
   {
     matcher: 'Bash',

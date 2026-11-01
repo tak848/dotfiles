@@ -205,12 +205,12 @@
 
     // worktree 境界保護。session 開始した worktree 外（primary checkout / sibling worktree）への
     // アクセスを全 tool で全面禁止。package cache / /tmp / 別 repo は対象外で別ルールへ。
-    'Sibling Checkout Access (ABSOLUTE): When the session runs inside a git worktree, accessing paths under the primary checkout or other sibling worktrees of the SAME repository is forbidden regardless of tool. This does NOT cover package/module caches, /tmp, or unrelated repositories (handled elsewhere).',
+    'Sibling Checkout Access (ABSOLUTE): When the session runs inside a git worktree, accessing paths under the primary checkout that are outside the current worktree, or under other sibling worktrees of the SAME repository, is forbidden regardless of tool. The current worktree itself is never covered, even when it lives inside the primary checkout (for example <primary>/.claude/worktrees/<name>). This does NOT cover package/module caches, /tmp, or unrelated repositories (handled elsewhere).',
 
     // --add-dir で明示認可されていない別 git repo への read/write を禁止。
     // ~/repos/* / ~/src/* / ~/work/* / ~/code/* / ~/ghq/* 配下で、
     // current repo root 外かつ package/module cache 以外は private source repo 扱い。
-    'Unrelated Repository Access: Reading or writing files inside a DIFFERENT git repository the user has NOT explicitly authorized via --add-dir. Paths under ~/repos/*, ~/src/*, ~/work/*, ~/code/*, ~/ghq/* that are not under the current repo root and not a package/module cache should be treated as private source repos.',
+    'Unrelated Repository Access: Writing files inside a DIFFERENT git repository the user has NOT explicitly authorized via --add-dir, or reading one the user did not ask to look at. Paths under ~/repos/*, ~/src/*, ~/work/*, ~/code/*, ~/ghq/* that are not under the current repo root and not a package/module cache should be treated as private source repos.',
 
     // 単発 package runner (npx / pnpx / pnx / pnpm dlx / bunx 等) と pnpm exec による scripts 迂回を禁止。
     // package.json の script を pnpm run <script> または pnpm <script> で実行すること。$() / pipe / loop 等で組み立てたケースも含む。

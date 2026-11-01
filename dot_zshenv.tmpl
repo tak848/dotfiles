@@ -35,10 +35,10 @@ export DISABLE_AUTOUPDATER=1
 # cmux の Claude wrapper が hook から呼ぶ cmux を shim（~/.local/bin/cmux-hook-cli）に向ける。
 # shim は Feed の PermissionRequest hook（最大 120 秒待ち、ccgate の判定の反映を止める）だけ即答し、
 # それ以外は本物の cmux に渡す。入れ子のシェルで shim のパスを退避し直さないよう、shim を指して
-# いないときだけ置き換える。cmux の外（haro などのクラウドを含む）では CMUX_BUNDLED_CLI_PATH が無いので何もしない
+# いないときだけ置き換える。cmux の外（クラウドの環境を含む）では CMUX_BUNDLED_CLI_PATH が無いので何もしない
 if [[ -n "${CMUX_BUNDLED_CLI_PATH:-}" && "$CMUX_BUNDLED_CLI_PATH" != "$HOME/.local/bin/cmux-hook-cli" && -x "$HOME/.local/bin/cmux-hook-cli" ]]; then
-  export CMUX_REAL_BUNDLED_CLI_PATH="$CMUX_BUNDLED_CLI_PATH"
-  export CMUX_BUNDLED_CLI_PATH="$HOME/.local/bin/cmux-hook-cli"
+    export CMUX_REAL_BUNDLED_CLI_PATH="$CMUX_BUNDLED_CLI_PATH"
+    export CMUX_BUNDLED_CLI_PATH="$HOME/.local/bin/cmux-hook-cli"
 fi
 
 # auto-compact の閾値は設定せず、Claude Code の既定に任せる。早めに compaction させたいときはコメントを外す

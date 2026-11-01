@@ -25,8 +25,8 @@ local config(opts) = base {
 
   deny: [
     'Git Destructive: force push (--force), deleting remote branches (push --delete), or rewriting published history. ' + opts.intentContext + ' deny_message: Destructive git operation. Confirm explicit user instruction.',
-    'Sibling Checkout Access (ABSOLUTE): When is_worktree is true, ANY access to paths under primary_checkout_root or under other sibling worktree checkouts of the SAME repository MUST be denied. This does NOT apply to package/module caches, system temp, or unrelated repositories. deny_message: Accessing another checkout of the same repository is forbidden. Stay within this worktree.',
-    'Unrelated Repository Access: Reading or writing files inside a DIFFERENT git repository the user has NOT explicitly authorized via --add-dir is forbidden. A path under ~/repos/*, ~/src/*, ~/work/*, ~/code/*, ~/ghq/*, or similar source-hosting roots that is NOT under repo_root and NOT a package/module cache should be denied. If the path is clearly a package/module cache or system temp, this rule does NOT apply. When genuinely uncertain whether a path is a private repo or a cache, fall through. deny_message: Reading outside authorized repositories. Ask the user to --add-dir this path if intentional.',
+    'Sibling Checkout Access (ABSOLUTE): When is_worktree is true, access to paths that are under primary_checkout_root but NOT under repo_root, or under other sibling worktree checkouts of the SAME repository, MUST be denied. repo_root is the current worktree: paths under repo_root are NEVER covered by this rule, even when the worktree itself lives inside primary_checkout_root (for example primary_checkout_root/.claude/worktrees/<name>, where Claude Code creates worktrees). This does NOT apply to package/module caches, system temp, or unrelated repositories. deny_message: Accessing another checkout of the same repository is forbidden. Stay within this worktree.',
+    'Unrelated Repository Access: WRITING files inside a DIFFERENT git repository the user has NOT explicitly authorized via --add-dir is forbidden. READING files in a different repository is allowed when recent_transcript shows the user asked to look at that repository (or a path inside it); otherwise reading is forbidden too. A path under ~/repos/*, ~/src/*, ~/work/*, ~/code/*, ~/ghq/*, or similar source-hosting roots that is NOT under repo_root and NOT a package/module cache counts as a different repository. If the path is clearly a package/module cache or system temp, this rule does NOT apply. When genuinely uncertain whether a path is a private repo or a cache, fall through. deny_message: Accessing another repository the user did not ask for. Ask the user to point to it (or --add-dir it) if intentional.',
     'Direct Tool Invocation: Running tools directly via one-shot package runners (npx, pnpx, pnx, pnpm dlx, bunx, etc.) or bypassing package.json scripts with `pnpm exec`. Use package.json scripts via `pnpm run <script>` or `pnpm <script>` instead. deny_message: Direct package runner or script bypass not allowed. Use package.json scripts.',
     'Download and Execute: Piping downloaded content to a shell (curl|bash, wget|sh, etc.), or executing remote scripts without review. deny_message: Download-and-execute not allowed.',
     'Out-of-Repo Deletion: rm -rf or destructive file operations targeting paths outside the current repository. Deletion within the repository for build artifacts is fine. deny_message: Deletion outside repository not allowed.',
@@ -41,7 +41,9 @@ local config(opts) = base {
 
 {
   claude: config({
-    extraAllowBefore: [],
+    extraAllowBefore: [
+      'Session Scratchpad Writes: Fetching into or writing files under the session scratchpad (see the Session scratchpad environment note) is investigation, not implementation. Allow it in every permission mode, including plan mode.',
+    ],
     readOnlyOperations: 'Read, Glob, Grep, Bash inspection commands, GET requests, read-only API calls, or queries',
     draftField: 'tool_input_raw',
     gitBranchContext: 'For switch -c / checkout -b, the target branch is in the command; context.branch_name is the pre-command branch.',
