@@ -102,6 +102,18 @@ Homebrew
 - Renovate がバージョンを上げると、新しいバージョンは次に実行したときに入る。古いバージョンが残るのは以前と同じ
 - mise 2026.10.21 より前の `mise doctor` は、入っていない lazy のツールを問題として出す
 
+### AI が作る worktree と起動時の permission mode
+
+以前は AI による worktree の作成を全部 deny していた（`Bash(git worktree*)` #550、`Agent(isolation:worktree)` #835、`EnterWorktree` #836）。理由は「worktree の持ち主は gwc（Linear issue と 1:1）」「AI が切った worktree には環境（ローカルファイル・依存）が無い」で、どれも人のタスクの単位を守る話だった。今は subagent の並行・試作（`isolation: worktree`）を使えるようにし、タスクの単位は今まで通り gwc が持つ。
+
+- AI が worktree を作るのは `EnterWorktree` と subagent の `isolation: worktree` だけ。Claude Code が git で作る worktree（`<repo>/.claude/worktrees/<name>`、ブランチ `worktree-<name>`）には `.worktreeinclude`（gitignore されたファイルのコピー、リポジトリごとに置く）と後片付けが効く。変更の無い subagent の worktree は終了時に消え、`claude -w` / `EnterWorktree` のセッションは抜けるときに消すか聞かれる。Bash の `git worktree add` で作ったものには効かないので、`git worktree add` / `remove` / `move` / `prune` は deny のまま（`remove` などはユーザーが作った worktree を守るため）。`git worktree list` は通す
+- `worktree.baseRef: 'head'`（`settings.jsonnet`）。既定の `fresh` は `origin/<既定ブランチ>` から切るので、feature ブランチで進めた commit が subagent に渡らない。未 commit の変更はどちらでも渡らない
+- `cleanupPeriodDays: 3650` が定期 sweep の期限も兼ねるので、変更を持って残った worktree は実質ずっと残る。`gwr` は `git worktree list` を見るので `.claude/worktrees/` の下も消せるが、ブランチ `worktree-<name>` は残るので完全に掃除するならブランチも消す
+- `WorktreeCreate` hook は使わない。作成を丸ごと置き換えるので、`.worktreeinclude` が効かなくなり、subagent の worktree が終了時に消されず、sweep の対象からも外れ、ブランチも残る（公式 docs hooks の WorktreeCreate / WorktreeRemove）。兄弟に並べたい・準備まで自動にしたいリポジトリが出たら、そのリポジトリの設定で opt-in する
+- ccgate の `Sibling Checkout Access` は、`repo_root`（今いる worktree）配下を対象外にしてある。`.claude/worktrees/<name>` は本体の中にあり、ccgate の `primary_checkout_root` は本体を指すので、書き分けないと自分の worktree まで deny に読める
+- `.claude/worktrees/` は `dot_config/git/ignore` で全リポジトリで ignore している
+- 起動時の permission mode は `acceptEdits`。gwc の Claude 起動だけ `--permission-mode plan` を付ける（Linear issue 起点の調査 → plan → 承認が契約のため）。`defaultMode` を消すと 2.1.284 からの既定（auto mode）に倒れるので明示している
+
 ### claudex（Claude Code を Codex のモデルで駆動する）
 
 `dot_zsh/functions/claudex.zsh` が提供する `claudex` コマンドは、Claude Code のハーネス（ツールループ・サブエージェント・hooks・MCP）をそのままに、推論するモデルだけを GPT-6.1 Sol / GPT-6 Astra に差し替える。CLIProxyAPI（`router-for-me/CLIProxyAPI`、mise の `github:` backend で導入、バイナリ名は `cli-proxy-api`）が Anthropic Messages API 互換のプロキシとして `127.0.0.1:8317` に立ち、ChatGPT サブスクの OAuth 経由で Codex backend に転送する。設定は `dot_config/cli-proxy-api/config.yaml.tmpl`（`$XDG_CONFIG_HOME/cli-proxy-api/config.yaml`）。初回のみ `cli-proxy-api --config "$XDG_CONFIG_HOME/cli-proxy-api/config.yaml" --codex-login` が必要で、トークンとログは `$XDG_STATE_HOME/cli-proxy-api/` に置かれる。CLIProxyAPI は設定内で環境変数を展開しない（`~` のみ）ため、auth-dir は chezmoi apply 時の `XDG_STATE_HOME` をテンプレートで焼き込んでいる。`XDG_STATE_HOME` は `dot_zshenv.tmpl` で他の XDG 変数と同様に export している。
@@ -146,7 +158,7 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - `tools` は読み取り系に絞っているが Bash は含める（テスト・lint・`git diff` を根拠にさせるため）。ファイルを変える操作は本文で禁止している
 - 出力形式（結論 / 重要度付きの指摘 / 問題なしと判断した点 / 参照ファイル / 未確認事項）は本文で固定し、呼び出し元が全文を読む前提
 - Claude への通信は素の `claude` と同じなので Claude の quota を消費する。`gpt-*` の分だけ ChatGPT 側の quota。上書きは `CLAUDEP_GPT_MODEL` / `CLAUDEP_CONTEXT_TOKENS` / `CLAUDEP_ROUTER_PORT`
-- `gwc` の `--cc` / `--ccp` / `--ccf` / `--cco` / `--ccs` は `claude` ではなく `claudep` を起動する（`--model` はそのまま渡る）。claudep は素の claude に gpt-* の subagent を足すだけで Claude 側の挙動は変わらないため。Codex 未認証のマシンでは claudep がエラーで止まる。`--ccap` は `claudeap`。`--ccco` は従来通り素の `claude`。`--` 以降の引数は起動するエージェントにそのまま渡る（`--model` の後、プロンプトの前に置く。`--ccco` では claude と codexp の両方に渡る）
+- `gwc` の `--cc` / `--ccp` / `--ccf` / `--cco` / `--ccs` は `claude` ではなく `claudep` を起動する（`--model` はそのまま渡る）。claudep は素の claude に gpt-* の subagent を足すだけで Claude 側の挙動は変わらないため。Codex 未認証のマシンでは claudep がエラーで止まる。`--ccap` は `claudeap`。`--ccco` は従来通り素の `claude`。`--` 以降の引数は起動するエージェントにそのまま渡る（`--model` の後、プロンプトの前に置く。`--ccco` では claude と codexp の両方に渡る）。Claude Code の起動には `--permission-mode plan` を付ける（`--` 以降の `--permission-mode` がその後ろに付く）
 - `claudeap` は claudep の fable スロットだけを GPT-6 Astra に向けた版。`ANTHROPIC_DEFAULT_FABLE_MODEL=gpt-6-astra` と `--model fable` で起動し、opus / sonnet / haiku のスロットは触らない。`--model fable` を明示するのは、`ANTHROPIC_DEFAULT_FABLE_MODEL` が効くのが `fable` エイリアスだけで、settings.json の `model` に入っている `claude-fable-5-1[1m]` のような full ID には効かないため。`"$@"` より前に置いてあるので、呼び出し側の `--model opus` が勝つ。実機で確認済み: primary が `gpt-6-astra` になる、`claudeap --model opus` は Claude の opus エイリアスに解決される（確認時は `claude-opus-5`。2.1.280 で `claude-opus-5-5` が既定の Opus になったので現在はそちらになるはずだが未再確認）、`model: sonnet` の subagent は `claude-sonnet-5`（確認時。2.1.284 で `claude-sonnet-5-5` が既定の Sonnet になったので現在はそちらになるはずだが未再確認）、`model: fable` の subagent は `gpt-6-astra` に振り分けられる。上書きは `CLAUDEP_FABLE_MODEL`
 - `claudeapf` は claudeap の fable スロットを `gpt-6-astra-fast`（Codex の priority tier。claudexf と同じ別名方式）に向けた版。`gwc --ccapf` から起動できる。Claude 側は通常速度のまま。実機で `gpt-6-astra-fast` として router を通り、CLIProxyAPI の request-log で上流に `service_tier: priority` が付くことを確認済み
 
@@ -178,7 +190,7 @@ cmux には Feed の hook だけを止める設定が無い。`CMUX_CLAUDE_HOOKS
 
 - wrapper は hook から呼ぶ cmux のパスを `CMUX_BUNDLED_CLI_PATH` から決める（wrapper の `resolve_hook_cmux_bin`）。`dot_zshenv.tmpl` がこの値を `CMUX_REAL_BUNDLED_CLI_PATH` に退避し、`CMUX_BUNDLED_CLI_PATH` を `~/.local/bin/cmux-hook-cli`（`dot_local/bin/executable_cmux-hook-cli`）に向ける。入れ子のシェルで shim のパスを退避し直さないよう、shim を指していないときだけ置き換える
 - shim は引数がちょうど `hooks feed --source claude` のときだけ stdin を読み捨てて `{}`（判定なし）を返し、それ以外は本物の cmux に `exec` で渡す。引数の形が変わったら（`--socket` が前に付くなど）一致しなくなり、元の待つ動きに戻るだけで壊れはしない
-- cmux の外（haro などのクラウドを含む）では `CMUX_BUNDLED_CLI_PATH` が無いので何もしない。既に起動している claude には効かず、新しく開いたターミナルから効く
+- cmux の外（クラウドの環境を含む）では `CMUX_BUNDLED_CLI_PATH` が無いので何もしない。既に起動している claude には効かず、新しく開いたターミナルから効く
 - Codex の Feed の hook（`--source codex`）は cmux 側で非同期なので触らない
 
 ### statusline（cc-statusline / cc-subagent-statusline）

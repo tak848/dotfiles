@@ -215,7 +215,8 @@ gwr() {
 #   gwc ENG-123 --cc "追加の指示"     # 初期プロンプト + 改行2つ + 追加プロンプトで起動（ref より後ろに置くこと）
 #   gwc ENG-123 --ccco               # cmux 限定: claude を現在ペイン、codexp を右 split で同時起動
 #   gwc ENG-123 --ccco "追加の指示"   # 追加プロンプトは claude / codexp 両方に渡る
-#   gwc ENG-123 --cc "追加の指示" -- --resume --permission-mode plan  # -- 以降は起動するエージェントにそのまま渡る（--ccco では両方に渡る）
+#   gwc ENG-123 --cc "追加の指示" -- --resume --permission-mode acceptEdits  # -- 以降は起動するエージェントにそのまま渡る（--ccco では両方に渡る）
+#                                    # Claude Code は --permission-mode plan で起動する（-- 以降の --permission-mode が後ろに付いて勝つ）
 #   export GWC_COPY_FILES=".env.test,config.local.json"  # 環境変数で事前設定
 #   export GWC_PNPM_EXTRA_DIRS="apps/foo,apps/bar"  # root 以外で pnpm install するディレクトリ（worktree root からの相対パス、カンマ区切り）
 #   export GWC_LINEAR_API_KEY="lin_api_..."  # Linear モードに必要（環境変数として設定）
@@ -819,9 +820,11 @@ gwc() {
                 echo "警告: '$launch_agent' コマンドが見つかりません。起動をスキップします。" >&2
             else
                 local agent_base=""
+                local claude_harness=false
                 # claudep / claudeap / claudeapf / claudex / claudexf は Claude Code のハーネスなので claude と同じ初期プロンプトを使う
                 if [ "$launch_agent" = "claude" ] || [ "$launch_agent" = "claudep" ] || [ "$launch_agent" = "claudeap" ] || [ "$launch_agent" = "claudeapf" ] || [ "$launch_agent" = "claudex" ] || [ "$launch_agent" = "claudexf" ]; then
                     agent_base="$GWC_CLAUDE_CODE_INITIAL_PROMPT"
+                    claude_harness=true
                 else
                     agent_base="$GWC_CODEX_CLI_INITIAL_PROMPT"
                 fi
@@ -836,6 +839,11 @@ gwc() {
                 local launch_args=()
                 if [ -n "$launch_model" ]; then
                     launch_args+=(--model "$launch_model")
+                fi
+                # Claude Code は plan mode で起動する。settings.json の既定は acceptEdits だが、gwc の起動は Linear issue の
+                # 調査 → plan → 承認を契約にしている（初期プロンプトと Stop ゲート）ため。-- 以降の --permission-mode で上書きできる
+                if $claude_harness; then
+                    launch_args+=(--permission-mode plan)
                 fi
                 # -- 以降の引数は --model の後、プロンプトの前に置く（同じオプションがあれば後ろが勝つ）
                 launch_args+=("${agent_args[@]}")

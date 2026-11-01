@@ -54,11 +54,29 @@ prefix_rule(
     justification="git reset --hard は禁止です。git restore や git revert を使用してください。",
 )
 
-# git worktree は禁止
+# git worktree の作成・削除・移動・掃除は禁止（ユーザーが作った worktree を消さないため）。git worktree list は通す
 prefix_rule(
-    pattern=["git", "worktree"],
+    pattern=["git", "worktree", "add"],
     decision="forbidden",
-    justification="git worktree の操作は禁止です。worktree の管理はユーザーが行います。",
+    justification="git worktree の作成は禁止です。ユーザーが作った worktree の中で作業してください。一覧（git worktree list）は使えます。",
+)
+
+prefix_rule(
+    pattern=["git", "worktree", "remove"],
+    decision="forbidden",
+    justification="git worktree の削除は禁止です。ユーザーが作った worktree を消さないでください。",
+)
+
+prefix_rule(
+    pattern=["git", "worktree", "move"],
+    decision="forbidden",
+    justification="git worktree の移動は禁止です。ユーザーが作った worktree を動かさないでください。",
+)
+
+prefix_rule(
+    pattern=["git", "worktree", "prune"],
+    decision="forbidden",
+    justification="git worktree prune は禁止です。worktree の後片付けはユーザーが行います。",
 )
 
 # git squash は禁止

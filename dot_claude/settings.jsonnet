@@ -11,6 +11,14 @@ local mcpAllow = [
 {
   language: 'japanese',
   plansDirectory: '.claude/plans',
+  // AI が作る worktree（subagent の isolation: worktree / EnterWorktree）を、今いる commit から切る。
+  // 既定の fresh は origin/<既定ブランチ> から切る（fetch は最後の fetch から 24 時間を過ぎたときだけ）ので、
+  // feature ブランチで進めた commit が subagent に渡らない。未 commit の変更はどちらでも渡らない。
+  // 新しいタスクを最新の main から始めるのは gwc でやる。
+  // ref: https://code.claude.com/docs/en/worktrees#choose-the-base-branch
+  worktree: {
+    baseRef: 'head',
+  },
   // ccusage が読む ~/.claude/projects/**/*.jsonl の自動削除を実質無効化（デフォルト30日 → 10年）。
   // 過去の利用量集計が日々消えないようにするため。0 は無効値なので大きい値を指定する。
   cleanupPeriodDays: 3650,
@@ -99,7 +107,10 @@ local mcpAllow = [
     command: '~/.claude/bin/cc-subagent-statusline',
   },
   permissions: {
-    defaultMode: 'plan',
+    // 起動は acceptEdits。計画が要るときは /plan か Shift+Tab で plan mode に入る。gwc の Claude 起動
+    // （Linear issue 起点で plan の承認を契約にしている）は git-worktree.zsh が --permission-mode plan を付ける。
+    // 消すと 2.1.284 からの既定（auto mode）に倒れるので値は明示する。
+    defaultMode: 'acceptEdits',
     // auto mode を全面無効化する。許可判定は ccgate（PermissionRequest hook）に一本化しており、
     // auto mode 中は hook が発火せず classifier が代わりに判定してしまうため、classifier を
     // 一切走らせない。CC 2.1.233 で確認した挙動として、この設定を入れると:

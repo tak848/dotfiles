@@ -16,6 +16,7 @@ z/
 .codex/
 .codex-reviews/
 .claude/plans/
+.claude/worktrees/
 .gemini/
 GEMINI.md
 AGENTS.override.md
