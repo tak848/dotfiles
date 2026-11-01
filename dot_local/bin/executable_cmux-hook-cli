@@ -4,8 +4,9 @@
 # cmux のターミナルで claude を起動すると、cmux の wrapper（cmux.app 同梱の cmux-claude-wrapper）が
 # --settings で hook を足す。その中の PermissionRequest の hook `cmux hooks feed --source claude`
 # （timeout 125 秒）は、確認を cmux の Feed（右サイドバー）に送り、Allow / Deny が押されるまで最大
-# 120 秒待つ（cmux の docs/feed.md）。Claude Code は同じイベントの hook を並列に走らせるので、ccgate
-# （PermissionRequest hook）が数秒で判定しても、Feed の hook が返るまで確認ダイアログが残る。
+# 120 秒待つ（cmux の docs/feed.md）。Claude Code は同じイベントの hook を並列に走らせる。ccgate
+# （PermissionRequest hook）が数秒で判定しても確認ダイアログが残り、しばらくして消えた後に判定が反映される
+# ので、Feed の hook が返るまで待たされていると読める（全 hook の終了を待つことは docs に明記が無い）。
 # cmux には Feed の hook だけを止める設定が無く、CMUX_CLAUDE_HOOKS_DISABLED=1 は wrapper を丸ごと
 # 素通しにするので、サイドバーの状態表示・通知・セッションの復元も止まる。
 #
