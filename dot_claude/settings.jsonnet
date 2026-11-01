@@ -107,8 +107,9 @@ local mcpAllow = [
     command: '~/.claude/bin/cc-subagent-statusline',
   },
   permissions: {
-    // 起動は acceptEdits。計画が要るときは /plan か Shift+Tab で plan mode に入る。gwc が初期プロンプト
-    // （調査 → plan → 承認を契約にしている）を渡して Claude を起動するときは、git-worktree.zsh が --permission-mode plan を付ける。
+    // 起動は acceptEdits。計画が要るときは /plan か Shift+Tab で plan mode に入る。丁寧に計画させたいリポジトリは、
+    // そのリポジトリの .claude/settings.local.json（または .claude/settings.json）で permissions.defaultMode を plan にする
+    // （Local / Project は User より優先される）。
     // 消すと 2.1.284 からの既定（auto mode）に倒れるので値は明示する。
     defaultMode: 'acceptEdits',
     // auto mode を全面無効化する。許可判定は ccgate（PermissionRequest hook）に一本化しており、
