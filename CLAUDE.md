@@ -112,7 +112,7 @@ Homebrew
 - `WorktreeCreate` hook は使わない。作成を丸ごと置き換えるので、`.worktreeinclude` が効かなくなり、subagent の worktree が終了時に消されず、sweep の対象からも外れ、ブランチも残る（公式 docs hooks の WorktreeCreate / WorktreeRemove）。兄弟に並べたい・準備まで自動にしたいリポジトリが出たら、そのリポジトリの設定で opt-in する
 - ccgate の `Sibling Checkout Access` は、`repo_root`（今いる worktree）配下を対象外にしてある。`.claude/worktrees/<name>` は本体の中にあり、ccgate の `primary_checkout_root` は本体を指すので、書き分けないと自分の worktree まで deny に読める
 - `.claude/worktrees/` は `dot_config/git/ignore` で全リポジトリで ignore している
-- 起動時の permission mode は `acceptEdits`。gwc の Claude 起動だけ `--permission-mode plan` を付ける（Linear issue 起点の調査 → plan → 承認が契約のため）。`defaultMode` を消すと 2.1.284 からの既定（auto mode）に倒れるので明示している
+- 起動時の permission mode は `acceptEdits`。gwc が初期プロンプト（`GWC_CLAUDE_CODE_INITIAL_PROMPT`）を渡して Claude を起動するときだけ `--permission-mode plan` を付ける（初期プロンプトが調査 → plan → 承認を契約にしているため）。`-- --permission-mode acceptEdits` で上書きできる（同じオプションは後勝ち。後ろに不正な値を渡すとその値でエラーになることで確認した）。`defaultMode` を消すと 2.1.284 からの既定（auto mode）に倒れるので明示している
 
 ### claudex（Claude Code を Codex のモデルで駆動する）
 
@@ -158,7 +158,7 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - `tools` は読み取り系に絞っているが Bash は含める（テスト・lint・`git diff` を根拠にさせるため）。ファイルを変える操作は本文で禁止している
 - 出力形式（結論 / 重要度付きの指摘 / 問題なしと判断した点 / 参照ファイル / 未確認事項）は本文で固定し、呼び出し元が全文を読む前提
 - Claude への通信は素の `claude` と同じなので Claude の quota を消費する。`gpt-*` の分だけ ChatGPT 側の quota。上書きは `CLAUDEP_GPT_MODEL` / `CLAUDEP_CONTEXT_TOKENS` / `CLAUDEP_ROUTER_PORT`
-- `gwc` の `--cc` / `--ccp` / `--ccf` / `--cco` / `--ccs` は `claude` ではなく `claudep` を起動する（`--model` はそのまま渡る）。claudep は素の claude に gpt-* の subagent を足すだけで Claude 側の挙動は変わらないため。Codex 未認証のマシンでは claudep がエラーで止まる。`--ccap` は `claudeap`。`--ccco` は従来通り素の `claude`。`--` 以降の引数は起動するエージェントにそのまま渡る（`--model` の後、プロンプトの前に置く。`--ccco` では claude と codexp の両方に渡る）。Claude Code の起動には `--permission-mode plan` を付ける（`--` 以降の `--permission-mode` がその後ろに付く）
+- `gwc` の `--cc` / `--ccp` / `--ccf` / `--cco` / `--ccs` は `claude` ではなく `claudep` を起動する（`--model` はそのまま渡る）。claudep は素の claude に gpt-* の subagent を足すだけで Claude 側の挙動は変わらないため。Codex 未認証のマシンでは claudep がエラーで止まる。`--ccap` は `claudeap`。`--ccco` は従来通り素の `claude`。`--` 以降の引数は起動するエージェントにそのまま渡る（`--model` の後、プロンプトの前に置く。`--ccco` では claude と codexp の両方に渡る）。初期プロンプトを渡す Claude Code の起動には `--permission-mode plan` を付ける（`--` 以降の `--permission-mode` がその後ろに付く）
 - `claudeap` は claudep の fable スロットだけを GPT-6 Astra に向けた版。`ANTHROPIC_DEFAULT_FABLE_MODEL=gpt-6-astra` と `--model fable` で起動し、opus / sonnet / haiku のスロットは触らない。`--model fable` を明示するのは、`ANTHROPIC_DEFAULT_FABLE_MODEL` が効くのが `fable` エイリアスだけで、settings.json の `model` に入っている `claude-fable-5-1[1m]` のような full ID には効かないため。`"$@"` より前に置いてあるので、呼び出し側の `--model opus` が勝つ。実機で確認済み: primary が `gpt-6-astra` になる、`claudeap --model opus` は Claude の opus エイリアスに解決される（確認時は `claude-opus-5`。2.1.280 で `claude-opus-5-5` が既定の Opus になったので現在はそちらになるはずだが未再確認）、`model: sonnet` の subagent は `claude-sonnet-5`（確認時。2.1.284 で `claude-sonnet-5-5` が既定の Sonnet になったので現在はそちらになるはずだが未再確認）、`model: fable` の subagent は `gpt-6-astra` に振り分けられる。上書きは `CLAUDEP_FABLE_MODEL`
 - `claudeapf` は claudeap の fable スロットを `gpt-6-astra-fast`（Codex の priority tier。claudexf と同じ別名方式）に向けた版。`gwc --ccapf` から起動できる。Claude 側は通常速度のまま。実機で `gpt-6-astra-fast` として router を通り、CLIProxyAPI の request-log で上流に `service_tier: priority` が付くことを確認済み
 
@@ -184,7 +184,7 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 
 ### cmux の Feed の hook（cmux-hook-cli）
 
-cmux のターミナルで `claude` を起動すると、cmux の Claude wrapper（cmux.app 同梱の `cmux-claude-wrapper`）が `--settings` で hook を十数個足す（状態表示・通知・セッションの復元・workspace の自動命名など）。その中の PermissionRequest の hook `cmux hooks feed --source claude`（timeout 125 秒）は、確認を cmux の Feed（右サイドバー）に送り、Allow / Deny が押されるまで最大 120 秒待つ（cmux の `docs/feed.md`）。Claude Code は同じイベントの hook を並列に走らせるので、ccgate が 2〜3 秒で判定しても、Feed の hook が返るまで確認ダイアログが残り、判定も反映されない。2026-11 のセッションでは、Feed に送られた確認 131 件が 1 件も答えられずに期限切れになっていた（`~/.cmuxterm/workstream.jsonl`、期限切れまでの中央値 115 秒）。
+cmux のターミナルで `claude` を起動すると、cmux の Claude wrapper（cmux.app 同梱の `cmux-claude-wrapper`）が `--settings` で hook を十数個足す（状態表示・通知・セッションの復元・workspace の自動命名など）。その中の PermissionRequest の hook `cmux hooks feed --source claude`（timeout 125 秒）は、確認を cmux の Feed（右サイドバー）に送り、Allow / Deny が押されるまで最大 120 秒待つ（cmux の `docs/feed.md`）。Claude Code は同じイベントの hook を並列に走らせる（公式 docs hooks）。ccgate は 2〜3 秒で判定しているのに、確認ダイアログが残り、しばらくして消えた後に「Allowed by PermissionRequest hook」と出ていたので、Feed の hook が返るまで判定が反映されていないと読める（全 hook の終了を待つことは docs に明記が無い）。2026-11 のセッションでは、Feed に送られた確認 131 件が 1 件も答えられずに期限切れになっていた（`~/.cmuxterm/workstream.jsonl`、期限切れまでの中央値 115 秒）。
 
 cmux には Feed の hook だけを止める設定が無い。`CMUX_CLAUDE_HOOKS_DISABLED=1` は wrapper を丸ごと素通しにするので、Feed 以外の連携も止まる。そこで次の形で Feed の hook だけを即答させている。
 
@@ -263,7 +263,7 @@ cmux には Feed の hook だけを止める設定が無い。`CMUX_CLAUDE_HOOKS
 - hooks の `if` で絞らないのは、コマンド名より先まで指定したパターン（`Bash(git commit*--amend*)` など）だと `$()`・バッククォート・`$VAR` を含むだけで常に hook が実行されるため（公式 docs hooks "How if patterns match Bash commands"。仕様でありリグレッションではない）。以前は `if` 付きの printf hook をルールごとに置いていて、`$` を含む Bash のたびに全ルール（21 件）の理由が注入されていた
 - コマンドは `mvdan.cc/sh/v3/syntax`（shfmt のパーサ）で bash として構文解析し、構文木の単純コマンド（`CallExpr`）だけを照合する。bash として読めなければ zsh として試す（Bash ツールのコマンドはユーザーのシェルで実行されるため。mvdan.cc/sh の zsh 対応は実験的）。引用・コメント・heredoc・case のパターン・算術式・配列の要素・リダイレクト先は構文上コマンドにならず、コマンド置換・プロセス置換・展開される heredoc の本文の中は辿る。照合の前に `env` / `sudo` などのラッパー（値を取るオプションは値ごと）を外し、`bash -c`・`eval` の中身は改めて解析する。`command -v` の対象はコマンドとして扱わない。解析できない入力には何も返さない（`$((cmd); cmd)` のように `$(` と `(` をくっつけた書き方は算術式として読まれて失敗する。POSIX も空白で分けるよう求めている）
 - 以前は手書きの字句解析だったが、bot のレビューのたびに bash の文法の隅（heredoc の中の括弧、行継続、算術式の `<<` など）の取りこぼしが見つかったので、パーサに置き換えた。この repo で唯一の外部依存で、45 のスクリプトがビルドするときにモジュールを取得する（`go.sum` で checksum を固定）
-- Agent / EnterWorktree のルールは `if` で正しく絞れるので、従来どおり `if` と printf で返す
+- Bash 以外のルールに `reason` を付けたときは、`if` で正しく絞れるので `if` と printf で返す
 
 ### book-to-skill（第三者 skill の uv 加工版）
 
