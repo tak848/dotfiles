@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# cmux-hook-cli: cmux の Claude wrapper が hook から呼ぶ cmux の CLI の前に挟む shim
+#
+# cmux のターミナルで claude を起動すると、cmux の wrapper（cmux.app 同梱の cmux-claude-wrapper）が
+# --settings で hook を足す。その中の PermissionRequest の hook `cmux hooks feed --source claude`
+# （timeout 125 秒）は、確認を cmux の Feed（右サイドバー）に送り、Allow / Deny が押されるまで最大
+# 120 秒待つ（cmux の docs/feed.md）。Claude Code は同じイベントの hook を並列に走らせるので、ccgate
+# （PermissionRequest hook）が数秒で判定しても、Feed の hook が返るまで確認ダイアログが残る。
+# cmux には Feed の hook だけを止める設定が無く、CMUX_CLAUDE_HOOKS_DISABLED=1 は wrapper を丸ごと
+# 素通しにするので、サイドバーの状態表示・通知・セッションの復元も止まる。
+#
+# wrapper は hook から呼ぶ cmux のパスを CMUX_BUNDLED_CLI_PATH から決める（resolve_hook_cmux_bin）。
+# .zshenv が元の値を CMUX_REAL_BUNDLED_CLI_PATH に退避して CMUX_BUNDLED_CLI_PATH をこのスクリプトに
+# 向けるので、ここで `hooks feed --source claude` だけ入力を読み捨てて `{}`（判定なし）を即座に返し、
+# それ以外は本物の cmux に渡す。Feed 以外の cmux の機能はそのまま動く。
+
+set -euo pipefail
+
+if [ "$#" -eq 4 ] && [ "$1" = hooks ] && [ "$2" = feed ] && [ "$3" = --source ] && [ "$4" = claude ]; then
+    cat > /dev/null
+    printf '{}\n'
+    exit 0
+fi
+
+real="${CMUX_REAL_BUNDLED_CLI_PATH:-}"
+# 退避した値が無い・このスクリプト自身を指している（exec が自分に戻って止まらなくなる）ときは、
+# cmux.app の既定の場所を使う
+if [ -z "$real" ] || [ ! -x "$real" ] || [ "$real" -ef "$0" ]; then
+    real=/Applications/cmux.app/Contents/Resources/bin/cmux
+fi
+if [ ! -x "$real" ]; then
+    echo "cmux-hook-cli: 本物の cmux が見つかりません（CMUX_REAL_BUNDLED_CLI_PATH が未設定で、/Applications/cmux.app にもありません）。" >&2
+    exit 127
+fi
+
+exec "$real" "$@"
