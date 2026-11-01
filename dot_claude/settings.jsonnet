@@ -274,9 +274,9 @@ local mcpAllow = [
     MCP_TIMEOUT: '600000',
     MCP_TOOL_TIMEOUT: '600000',
     MAX_MCP_OUTPUT_TOKENS: '100000',  // default: 25000
-    // CLAUDE_CODE_AUTO_COMPACT_WINDOW は dot_zshenv.tmpl で export している。
-    // claudex（proxy 経由で GPT-6.1 Sol を使う）が context 長に合わせて上書きするため、
-    // settings.json 側には置かない
+    // CLAUDE_CODE_AUTO_COMPACT_WINDOW は設定しない（Claude Code の既定に任せる。dot_zshenv.tmpl でコメントアウト）。
+    // 戻すときも、claudex（proxy 経由で GPT-6.1 Sol を使う）が context 長に合わせて上書きできるよう、
+    // settings.json 側ではなく dot_zshenv.tmpl に置く
     // adaptive thinking (effortLevel) が有効な場合、以下は不要
     // MAX_THINKING_TOKENS: '31199',
     // CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING: '1',  // これを設定すると MAX_THINKING_TOKENS に戻る
