@@ -149,7 +149,8 @@ jobs:
       - name: Lint shell scripts and workflows
         run: |
           shellcheck .github/scripts/*.sh install.sh \
-            dot_local/bin/executable_snowx dot_local/bin/executable_codex-review-exec dot_local/bin/executable_gtts
+            dot_local/bin/executable_snowx dot_local/bin/executable_codex-review-exec dot_local/bin/executable_gtts \
+            dot_local/bin/executable_cmux-hook-cli
           rendered="$RUNNER_TEMP/rendered"
           mkdir -p "$rendered"
           for f in run_*.sh.tmpl; do

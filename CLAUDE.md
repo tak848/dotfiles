@@ -170,6 +170,17 @@ claude ─→ cc-model-router（127.0.0.1:8318、go/cmd/cc-model-router）
 - `snow` の実体は「PATH → `mise/shims/snow` → `mise which snow`」の順で解決する。非対話シェルには mise の PATH が通っていないことがあるため
 - 素の `snow` は残してあり、`PYTHONPATH` を汚していない場所ではそのまま使える
 
+### cmux の Feed の hook（cmux-hook-cli）
+
+cmux のターミナルで `claude` を起動すると、cmux の Claude wrapper（cmux.app 同梱の `cmux-claude-wrapper`）が `--settings` で hook を十数個足す（状態表示・通知・セッションの復元・workspace の自動命名など）。その中の PermissionRequest の hook `cmux hooks feed --source claude`（timeout 125 秒）は、確認を cmux の Feed（右サイドバー）に送り、Allow / Deny が押されるまで最大 120 秒待つ（cmux の `docs/feed.md`）。Claude Code は同じイベントの hook を並列に走らせるので、ccgate が 2〜3 秒で判定しても、Feed の hook が返るまで確認ダイアログが残り、判定も反映されない。2026-11 のセッションでは、Feed に送られた確認 131 件が 1 件も答えられずに期限切れになっていた（`~/.cmuxterm/workstream.jsonl`、期限切れまでの中央値 115 秒）。
+
+cmux には Feed の hook だけを止める設定が無い。`CMUX_CLAUDE_HOOKS_DISABLED=1` は wrapper を丸ごと素通しにするので、Feed 以外の連携も止まる。そこで次の形で Feed の hook だけを即答させている。
+
+- wrapper は hook から呼ぶ cmux のパスを `CMUX_BUNDLED_CLI_PATH` から決める（wrapper の `resolve_hook_cmux_bin`）。`dot_zshenv.tmpl` がこの値を `CMUX_REAL_BUNDLED_CLI_PATH` に退避し、`CMUX_BUNDLED_CLI_PATH` を `~/.local/bin/cmux-hook-cli`（`dot_local/bin/executable_cmux-hook-cli`）に向ける。入れ子のシェルで shim のパスを退避し直さないよう、shim を指していないときだけ置き換える
+- shim は引数がちょうど `hooks feed --source claude` のときだけ stdin を読み捨てて `{}`（判定なし）を返し、それ以外は本物の cmux に `exec` で渡す。引数の形が変わったら（`--socket` が前に付くなど）一致しなくなり、元の待つ動きに戻るだけで壊れはしない
+- cmux の外（haro などのクラウドを含む）では `CMUX_BUNDLED_CLI_PATH` が無いので何もしない。既に起動している claude には効かず、新しく開いたターミナルから効く
+- Codex の Feed の hook（`--source codex`）は cmux 側で非同期なので触らない
+
 ### statusline（cc-statusline / cc-subagent-statusline）
 
 `go/cmd/cc-statusline` が画面下部の statusline を 3 行で描き、`go/cmd/cc-subagent-statusline` が subagent 実行中だけプロンプト下に出るパネルの各行を描く。両者は別設定・別コマンドで、後者を設定しなければ Claude Code 組み込みの `name · description · token count` が使われる。表示ロジックは `go/internal/render` に集約している。
