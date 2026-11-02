@@ -155,7 +155,7 @@ claudep() {
 
     # ANTHROPIC_AUTH_TOKEN / ANTHROPIC_API_KEY は設定した瞬間サブスクのログインが使われなくなる（API 課金か認証失敗）
     # ので、呼び出し元のシェルに入っていても継承しないよう明示的に外す。
-    # claudex が付けている ANTHROPIC_DEFAULT_*_MODEL / CLAUDE_CODE_SUBAGENT_MODEL / ENABLE_TOOL_SEARCH 等は
+    # claudex が付けている ANTHROPIC_DEFAULT_*_MODEL / CLAUDE_CODE_SUBAGENT_MODEL 等は
     # 「primary が gpt-*」前提の調整なので、Claude が primary の claudep では付けない
     env -u ANTHROPIC_AUTH_TOKEN -u ANTHROPIC_API_KEY \
     ANTHROPIC_BASE_URL="http://127.0.0.1:${rport}" \
