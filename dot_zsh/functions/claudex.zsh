@@ -161,6 +161,16 @@ claudex() {
     # CLAUDE_CODE_ALWAYS_ENABLE_EFFORT は _SUPPORTED_CAPABILITIES で effort を宣言していれば冗長だが、
     # --model に渡した名前がどのスロットにも一致しないとき（CLAUDEX_MODEL で独自指定した場合）の保険として付ける。
     #
+    # ENABLE_TOOL_SEARCH は設定しない（tool search を既定どおり有効にする）。2.1.304 から ANTHROPIC_BASE_URL の
+    # 先でも tool search が既定で有効になり、gpt-* のような認識できない model ID でも有効になる（2.1.314 を捕捉
+    # サーバーに向けて確認。MCP ツールや WebFetch などは最初の tools に載らず、ToolSearch で読み込まれる）。
+    # 読み込んだツールは次のリクエストから tools[] に定義ごと defer_loading: true 付きで載り、CLIProxyAPI の
+    # Claude→Codex 変換が defer_loading を消して普通の function として Codex に渡す。ToolSearch の結果
+    # （tool_reference だけの tool_result）は JSON 文字列のまま function_call_output になる
+    # （v8.0.47 の internal/translator/codex/claude/codex_claude_request.go）。
+    # ツールを読み込むたびに tools[] の途中が変わるので、Codex のプロンプトキャッシュはそのたびに外れうる。
+    # 問題が出たら ENABLE_TOOL_SEARCH=false を戻す（全ツールを最初から載せる）。
+    #
     # CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC は settings.jsonnet と同様に設定しない
     # （remote-control の eligibility チェックがブロックされるため）。無駄なモデル呼び出し自体は
     # settings.jsonnet の DISABLE_NON_ESSENTIAL_MODEL_CALLS で既に止まっている
@@ -179,7 +189,6 @@ claudex() {
     CLAUDE_CODE_SUBAGENT_MODEL="${model%\[*}" \
     CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY=3 \
     CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK=1 \
-    ENABLE_TOOL_SEARCH=false \
         claude --model "$model" --settings "$settings" "$@"
 }
 
