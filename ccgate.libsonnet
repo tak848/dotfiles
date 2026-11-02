@@ -11,6 +11,17 @@ local base = {
   metrics_max_size: 100 * 1024 * 1024,
 };
 
+// リポジトリをまたぐ作業を許すかを、セッションの環境変数で切り替える。ccgate は設定の評価時に環境変数を読める
+// （std.native('env')、未設定なら空文字）が、--add-dir の一覧は受け取らないので、add-dir で許可を伝えることはできない。
+// CCGATE_CROSS_REPO=1 で起動したセッションでは、ソース置き場のほかのリポジトリへの読み書きを今のリポジトリと同じに扱う。
+// 素の jsonnet（CI の評価など）には env の native が無く std.native が null を返すので、そのときは無効として扱う
+local envNative = std.native('env');
+local crossRepo = envNative != null && envNative('CCGATE_CROSS_REPO') == '1';
+
+local unrelatedRepositoryRule = 'Unrelated Repository Access: WRITING files inside a DIFFERENT git repository is forbidden unless the user asked for that work. READING files in a different repository is allowed. ccgate does NOT receive the --add-dir list, so never reason about whether a path was added with --add-dir. A path under ~/repos/*, ~/src/*, ~/work/*, ~/code/*, ~/ghq/*, or similar source-hosting roots that is NOT under repo_root and NOT a package/module cache counts as a different repository. Tool state and configuration directories are NOT repositories for this rule, even when they contain a .git directory: ~/.claude/** (plugins, marketplaces, projects, session tool-results), ~/.codex/**, ~/.cmuxterm/**, ~/.config/**, ~/.local/state/**, ~/.local/share/**. If the path is clearly a package/module cache or system temp, this rule does NOT apply. When genuinely uncertain whether a path is a private repo or a cache, fall through. deny_message: Writing to another repository the user did not ask for. Ask the user first, or start the session with CCGATE_CROSS_REPO=1.';
+
+local crossRepoEnvironment = 'Cross-repository session: the user started this session with CCGATE_CROSS_REPO=1. Repositories under the source-hosting roots (~/repos/*, ~/src/*, ~/work/*, ~/code/*, ~/ghq/*) are part of the working set: treat reading and writing files there like the current repository. The other deny rules (Git Destructive, Out-of-Repo Deletion, and the rest) still apply.';
+
 local config(opts) = base {
   allow: opts.extraAllowBefore + [
     'Read-Only Operations: ' + opts.readOnlyOperations + ' that do not modify state.',
@@ -26,17 +37,17 @@ local config(opts) = base {
   deny: [
     'Git Destructive: force push (--force), deleting remote branches (push --delete), or rewriting published history. ' + opts.intentContext + ' deny_message: Destructive git operation. Confirm explicit user instruction.',
     'Sibling Checkout Access (ABSOLUTE): When is_worktree is true, access to paths that are under primary_checkout_root but NOT under repo_root, or under other sibling worktree checkouts of the SAME repository, MUST be denied. repo_root is the current worktree: paths under repo_root are NEVER covered by this rule, even when the worktree itself lives inside primary_checkout_root (for example primary_checkout_root/.claude/worktrees/<name>, where Claude Code creates worktrees). This does NOT apply to package/module caches, system temp, or unrelated repositories. deny_message: Accessing another checkout of the same repository is forbidden. Stay within this worktree.',
-    'Unrelated Repository Access: WRITING files inside a DIFFERENT git repository the user has NOT explicitly authorized via --add-dir is forbidden. READING files in a different repository is allowed when recent_transcript shows the user asked to look at that repository (or a path inside it); otherwise reading is forbidden too. A path under ~/repos/*, ~/src/*, ~/work/*, ~/code/*, ~/ghq/*, or similar source-hosting roots that is NOT under repo_root and NOT a package/module cache counts as a different repository. If the path is clearly a package/module cache or system temp, this rule does NOT apply. When genuinely uncertain whether a path is a private repo or a cache, fall through. deny_message: Accessing another repository the user did not ask for. Ask the user to point to it (or --add-dir it) if intentional.',
+  ] + (if crossRepo then [] else [unrelatedRepositoryRule]) + [
     'Direct Tool Invocation: Running tools directly via one-shot package runners (npx, pnpx, pnx, pnpm dlx, bunx, etc.) or bypassing package.json scripts with `pnpm exec`. Use package.json scripts via `pnpm run <script>` or `pnpm <script>` instead. deny_message: Direct package runner or script bypass not allowed. Use package.json scripts.',
     'Download and Execute: Piping downloaded content to a shell (curl|bash, wget|sh, etc.), or executing remote scripts without review. deny_message: Download-and-execute not allowed.',
     'Out-of-Repo Deletion: rm -rf or destructive file operations targeting paths outside the current repository. Deletion within the repository for build artifacts is fine. deny_message: Deletion outside repository not allowed.',
-    'Redundant cd to Current Directory: A command whose first action is to cd via an ABSOLUTE path into the directory that is already context.cwd, and then run the real work (e.g. `cd /abs/path && <cmd>` or `cd /abs/path; <cmd>` where /abs/path resolves to cwd). The leading cd is pointless because the shell already runs in cwd — wherever that is. Scope: this rule ONLY matches when the cd target resolves to cwd itself. A cd to any OTHER directory is out of scope for THIS rule and is NOT thereby allowed — it remains subject to the other rules (Sibling Checkout Access and Unrelated Repository Access still forbid cross-worktree and unauthorized-repository access). deny_message: Unnecessary cd — you are already in this directory. Drop the leading `cd <abs-path> &&` and run the command directly.',
+    'Redundant cd to Current Directory: A command whose first action is to cd via an ABSOLUTE path into the directory that is already context.cwd, and then run the real work (e.g. `cd /abs/path && <cmd>` or `cd /abs/path; <cmd>` where /abs/path resolves to cwd). The leading cd is pointless because the shell already runs in cwd — wherever that is. Scope: this rule ONLY matches when the cd target resolves to cwd itself. A cd to any OTHER directory is out of scope for THIS rule and is NOT thereby allowed — it remains subject to the other rules (Sibling Checkout Access, and Unrelated Repository Access when present, still apply). deny_message: Unnecessary cd — you are already in this directory. Drop the leading `cd <abs-path> &&` and run the command directly.',
   ],
 
   environment: [
     'Trusted repo: the git repository the session started in is the trust boundary.',
     'Current worktree context: prefer the current worktree and its own files over sibling checkouts unless the user clearly asks otherwise.',
-  ] + opts.extraEnvironment,
+  ] + (if crossRepo then [crossRepoEnvironment] else []) + opts.extraEnvironment,
 };
 
 {
@@ -47,7 +58,7 @@ local config(opts) = base {
     readOnlyOperations: 'Read, Glob, Grep, Bash inspection commands, GET requests, read-only API calls, or queries',
     draftField: 'tool_input_raw',
     gitBranchContext: 'For switch -c / checkout -b, the target branch is in the command; context.branch_name is the pre-command branch.',
-    intentContext: 'Check recent_transcript and tool_input.description; if the user explicitly requested the operation, fall through instead of deny.',
+    intentContext: 'Check recent_transcript and tool_input.description; if the user explicitly requested this exact operation, allow instead of deny.',
     extraEnvironment: [
       'Session scratchpad: Claude Code gives every session a private temp directory and tells the agent to use it for temporary files: /tmp/claude-<uid>/<project-slug>/<session-id>/scratchpad (/private/tmp/... on macOS). <project-slug> is the repo path with slashes replaced by dashes (e.g. -Users-me-repos-github-com-org-repo), so the path LOOKS like a source-hosting path but it is NOT a repository. Treat it as system temp that belongs to the current session, and judge the operation itself by the other rules as usual.',
     ],

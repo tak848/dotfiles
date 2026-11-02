@@ -264,6 +264,16 @@ cmux には Feed の hook だけを止める設定が無い。`CMUX_CLAUDE_HOOKS
 - 以前は手書きの字句解析だったが、bot のレビューのたびに bash の文法の隅（heredoc の中の括弧、行継続、算術式の `<<` など）の取りこぼしが見つかったので、パーサに置き換えた。この repo で唯一の外部依存で、45 のスクリプトがビルドするときにモジュールを取得する（`go.sum` で checksum を固定）
 - Bash 以外のルールに `reason` を付けたときは、`if` で正しく絞れるので `if` と printf で返す
 
+### ccgate の切り替え（CCGATE_CROSS_REPO / CCGATE）
+
+ccgate（`ccgate.libsonnet`）の判定は自然文のルールを LLM が読む方式で、決定的な照合はできない。ただし設定の評価時に環境変数を読める（`std.native('env')`、未設定なら空文字）ので、セッションの起動時の環境変数でルールを切り替えている。
+
+- 既定では、別リポジトリの読み取りは通し、書き込みはユーザーが頼んだときだけ通す（`Unrelated Repository Access`）。ccgate は `--add-dir` の一覧を受け取らない（ccgate の docs rule-tuning）ので、add-dir で許可を伝えることはできない。`~/.claude`・`~/.codex`・`~/.cmuxterm`・`~/.config`・`~/.local/state`・`~/.local/share` はツールの状態・設定の置き場で、`.git` があってもリポジトリとして扱わない
+- `CCGATE_CROSS_REPO=1` で起動したセッションは、このルールを外し、ソース置き場（`~/repos/*` など）のリポジトリへの読み書きを今のリポジトリと同じに扱う。ほかの deny（Git Destructive、Out-of-Repo Deletion など）は残る
+- `CCGATE=0` で起動したセッションは ccgate を呼ばず、Claude Code の通常の確認に戻る（`settings.jsonnet` の PermissionRequest の hook）
+- Git Destructive は、ユーザーがその操作を明示的に頼んだと recent_transcript から分かれば allow（Claude のみ。Codex は transcript が無いので fallthrough のまま）
+- 素の jsonnet（CI の評価）には `env` の native が無く `std.native` が null を返すので、そのときは無効として評価する。切り替えの確認は、一時 HOME に設定を置いて本物の ccgate に読ませ、ログのシステムプロンプトでルールの有無を見る
+
 ### book-to-skill（第三者 skill の uv 加工版）
 
 `dot_claude/skills/book-to-skill/` は [virgiliojr94/book-to-skill](https://github.com/virgiliojr94/book-to-skill)（MIT）を固定 commit で取り込んだもの。本や文書（PDF / EPUB / DOCX / HTML / Markdown など）からテキストを抽出し、章ごとのファイルを持つ skill を生成する。chezmoi が `~/.claude/skills/book-to-skill/` に配り、`/book-to-skill <path>` で呼ぶ。取り込んだ commit・取得日・改変点は SKILL.md の frontmatter のコメントにある。
