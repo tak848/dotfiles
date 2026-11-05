@@ -325,7 +325,7 @@ lazy_bins = ["aws", "aws_completer"]
 # 更新は Renovate の regex manager が 1Password の update check endpoint（custom datasource）で追う。
 # renovate: datasource=custom.1password-cli depName=1password-cli
 [tools."http:op"]
-version = "2.41.1"
+version = "2.42.0"
 url = 'https://cache.agilebits.com/dist/1P/op2/pkg/v{{ version }}/op_{{ os(macos="darwin") }}_{{ arch(x64="amd64") }}_v{{ version }}.zip'
 bin = "op"
 lazy = true
