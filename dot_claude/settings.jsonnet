@@ -376,6 +376,7 @@ local mcpAllow = [
           },
           {
             // CC_STOP_GATE_PAUSE_TOOLS のツールを main agent が呼んだら continue: false で turn を終える。
+            // CC_STOP_GATE_PAUSE_REJECT_KEYS のキーが false の結果では止めない。
             // この終わり方では Stop hook が発火しない。変数が未設定なら stdin も読まずに終わる。
             type: 'command',
             command: '~/.claude/bin/cc-stop-gate pause-tool',

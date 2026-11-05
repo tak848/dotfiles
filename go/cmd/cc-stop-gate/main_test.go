@@ -29,10 +29,12 @@ func TestRun(t *testing.T) {
 		text     string
 		tasks    string
 		crons    string
+		env      map[string]string
 		issues   []string
 		blocked  bool
 		checked  bool
 		contains string
+		excludes string
 	}{
 		"normal complete":                {mode: "default", text: "完了誓約: 全項目を検証", checked: true},
 		"no plan file":                   {mode: "acceptEdits", text: "完了誓約: 依頼を完了", checked: true},
@@ -53,11 +55,20 @@ func TestRun(t *testing.T) {
 		"fake waiting":                   {mode: "default", text: "作業待機: 自分の作業", blocked: true, contains: "待つ対象が無い"},
 		"empty task":                     {mode: "default", text: "作業待機: 作業", tasks: `[null,{},"x"]`, blocked: true, contains: "待つ対象が無い"},
 		"background alone not exemption": {mode: "default", text: "終了します", tasks: `[{"id":"monitor-1"}]`, blocked: true, checked: true},
-		"question":                       {mode: "default", text: "| 案 | 影響 |\n|---|---|\n| A | 小 |\n質問予告: A と B のどちらにするか", blocked: true, contains: "今すぐ AskUserQuestion を呼べ"},
-		"question skips tells":           {mode: "default", text: "残りは B 案の判断だけです。\n質問予告: B 案にするか", blocked: true, contains: "質問予告を受け付けた"},
-		"question skips git issues":      {mode: "acceptEdits", text: "質問予告: どちらにするか", issues: []string{"未 commit"}, blocked: true, contains: "判断材料を繰り返すな"},
-		"plan question":                  {mode: "plan", text: "質問予告: 方針を選んでもらう", blocked: true, contains: "今すぐ AskUserQuestion を呼べ"},
-		"question not final":             {mode: "default", text: "質問予告: どちらにするか\n補足", blocked: true, checked: true, contains: "質問予告: <問いの要約>"},
+		// ホストが turn の外の出来事を新しい turn として届ける環境の待ち（CC_STOP_GATE_EXTERNAL_WAIT）。
+		"external wait unset":           {mode: "default", text: "作業待機: 任せた作業の結果", blocked: true, contains: "待つ対象が無い"},
+		"external wait not enabled":     {mode: "default", text: "作業待機: 任せた作業の結果", env: map[string]string{externalWaitEnv: "anything"}, blocked: true, contains: "待つ対象が無い"},
+		"external wait":                 {mode: "default", text: "作業待機: 任せた作業の結果", env: map[string]string{externalWaitEnv: "1"}},
+		"external wait skips git":       {mode: "acceptEdits", text: "作業待機: 承認の結果", env: map[string]string{externalWaitEnv: " TRUE "}, issues: []string{"未 commit"}},
+		"external wait plan":            {mode: "plan", text: "作業待機: 任せた調査の結果", env: map[string]string{externalWaitEnv: "yes"}},
+		"external wait empty target":    {mode: "default", text: "作業待機: ", env: map[string]string{externalWaitEnv: "on"}, blocked: true, checked: true, contains: "plan があるなら", excludes: "待つ対象が無い"},
+		"external wait signed tells":    {mode: "default", text: "続きは次回\n作業待機: 任せた作業の結果", env: map[string]string{externalWaitEnv: "1"}},
+		"external wait other signature": {mode: "default", text: "終わりました。", env: map[string]string{externalWaitEnv: "1"}, blocked: true, checked: true, contains: "plan があるなら"},
+		"question":                      {mode: "default", text: "| 案 | 影響 |\n|---|---|\n| A | 小 |\n質問予告: A と B のどちらにするか", blocked: true, contains: "今すぐ AskUserQuestion を呼べ"},
+		"question skips tells":          {mode: "default", text: "残りは B 案の判断だけです。\n質問予告: B 案にするか", blocked: true, contains: "質問予告を受け付けた"},
+		"question skips git issues":     {mode: "acceptEdits", text: "質問予告: どちらにするか", issues: []string{"未 commit"}, blocked: true, contains: "判断材料を繰り返すな"},
+		"plan question":                 {mode: "plan", text: "質問予告: 方針を選んでもらう", blocked: true, contains: "今すぐ AskUserQuestion を呼べ"},
+		"question not final":            {mode: "default", text: "質問予告: どちらにするか\n補足", blocked: true, checked: true, contains: "質問予告: <問いの要約>"},
 	}
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
@@ -90,7 +101,7 @@ func TestRun(t *testing.T) {
 				return tt.issues
 			}
 			var out bytes.Buffer
-			if code := run(bytes.NewReader(data), &out, envMap(nil), check); code != 0 {
+			if code := run(bytes.NewReader(data), &out, envMap(tt.env), check); code != 0 {
 				t.Fatalf("exit = %d", code)
 			}
 			if checked != tt.checked {
@@ -112,7 +123,24 @@ func TestRun(t *testing.T) {
 			if !strings.Contains(got.Reason, tt.contains) {
 				t.Errorf("reason missing %q: %s", tt.contains, got.Reason)
 			}
+			if tt.excludes != "" && strings.Contains(got.Reason, tt.excludes) {
+				t.Errorf("reason must not contain %q: %s", tt.excludes, got.Reason)
+			}
 		})
+	}
+}
+
+func TestEnabled(t *testing.T) {
+	t.Parallel()
+	for _, value := range []string{"1", "true", "TRUE", " on ", "Yes"} {
+		if !enabled(value) {
+			t.Errorf("enabled(%q) = false", value)
+		}
+	}
+	for _, value := range []string{"", " ", "0", "false", "off", "no", "anything", "2"} {
+		if enabled(value) {
+			t.Errorf("enabled(%q) = true", value)
+		}
 	}
 }
 
