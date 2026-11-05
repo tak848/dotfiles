@@ -771,44 +771,44 @@ url = "https://github.com/BurntSushi/ripgrep/releases/download/15.2.0/ripgrep-15
 url_api = "https://api.github.com/repos/BurntSushi/ripgrep/releases/assets/478119643"
 
 [[tools."aqua:DataDog/pup"]]
-version = "2.3.5"
+version = "2.4.1"
 backend = "aqua:DataDog/pup"
-specifiers = ["2.3.5"]
+specifiers = ["2.4.1"]
 
 [tools."aqua:DataDog/pup"."platforms.linux-arm64"]
-checksum = "sha256:2189285512ee1bc327ecbca444b14fb49bf634ccf693ac6ac8d87b6ebd1ea602"
-url = "https://github.com/DataDog/pup/releases/download/v2.3.5/pup_2.3.5_Linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/683597163"
+checksum = "sha256:4a3b0e8aa6425a0e29be31bf18ca36e50ae87941ae74c73a8e0596632b62b69a"
+url = "https://github.com/DataDog/pup/releases/download/v2.4.1/pup_2.4.1_Linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/706540063"
 provenance = "cosign"
 
 [tools."aqua:DataDog/pup"."platforms.linux-arm64-musl"]
-checksum = "sha256:2189285512ee1bc327ecbca444b14fb49bf634ccf693ac6ac8d87b6ebd1ea602"
-url = "https://github.com/DataDog/pup/releases/download/v2.3.5/pup_2.3.5_Linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/683597163"
+checksum = "sha256:4a3b0e8aa6425a0e29be31bf18ca36e50ae87941ae74c73a8e0596632b62b69a"
+url = "https://github.com/DataDog/pup/releases/download/v2.4.1/pup_2.4.1_Linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/706540063"
 provenance = "cosign"
 
 [tools."aqua:DataDog/pup"."platforms.linux-x64"]
-checksum = "sha256:a79544bb49a2311a2090c112515c53db5828e686f38beafbe6b44e9abc38f9cf"
-url = "https://github.com/DataDog/pup/releases/download/v2.3.5/pup_2.3.5_Linux_x86_64.tar.gz"
-url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/683597181"
+checksum = "sha256:f84f72ade2b92cb46cf02e063467caaf00c63d0f8f9d5c1232ca558b42e971b1"
+url = "https://github.com/DataDog/pup/releases/download/v2.4.1/pup_2.4.1_Linux_x86_64.tar.gz"
+url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/706540111"
 provenance = "cosign"
 
 [tools."aqua:DataDog/pup"."platforms.linux-x64-musl"]
-checksum = "sha256:a79544bb49a2311a2090c112515c53db5828e686f38beafbe6b44e9abc38f9cf"
-url = "https://github.com/DataDog/pup/releases/download/v2.3.5/pup_2.3.5_Linux_x86_64.tar.gz"
-url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/683597181"
+checksum = "sha256:f84f72ade2b92cb46cf02e063467caaf00c63d0f8f9d5c1232ca558b42e971b1"
+url = "https://github.com/DataDog/pup/releases/download/v2.4.1/pup_2.4.1_Linux_x86_64.tar.gz"
+url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/706540111"
 provenance = "cosign"
 
 [tools."aqua:DataDog/pup"."platforms.macos-arm64"]
-checksum = "sha256:f158394796f2c81081201af93fe4325680fcfe435f5b86027a9579d33996b5a5"
-url = "https://github.com/DataDog/pup/releases/download/v2.3.5/pup_2.3.5_Darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/683597159"
+checksum = "sha256:d5352a80bba8052750ba1f5fb63fcc1ea1c8fd7f104f8772a519a555bfe73a5d"
+url = "https://github.com/DataDog/pup/releases/download/v2.4.1/pup_2.4.1_Darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/706540062"
 provenance = "cosign"
 
 [tools."aqua:DataDog/pup"."platforms.macos-x64"]
-checksum = "sha256:00a0febf62dbf6fe7c4a62375b487a03ad72afd53d050ab69e5c5e68a9021dd0"
-url = "https://github.com/DataDog/pup/releases/download/v2.3.5/pup_2.3.5_Darwin_x86_64.tar.gz"
-url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/683597160"
+checksum = "sha256:4185c86ae3c98f2835dfdd31d87fa57e82aeb75509504dd838a88c02f4d9ea69"
+url = "https://github.com/DataDog/pup/releases/download/v2.4.1/pup_2.4.1_Darwin_x86_64.tar.gz"
+url_api = "https://api.github.com/repos/DataDog/pup/releases/assets/706540061"
 provenance = "cosign"
 
 [[tools."aqua:ajeetdsouza/zoxide"]]
@@ -859,44 +859,51 @@ url = "https://github.com/ajeetdsouza/zoxide/releases/download/v0.10.0/zoxide-0.
 url_api = "https://api.github.com/repos/ajeetdsouza/zoxide/releases/assets/466316769"
 
 [[tools."aqua:anthropics/anthropic-cli"]]
-version = "2.4.0"
+version = "2.6.0"
 backend = "aqua:anthropics/anthropic-cli"
-specifiers = ["2.4.0"]
+specifiers = ["2.6.0"]
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.linux-arm64"]
-checksum = "sha256:88cc2d3d582e20a5aa17234f2409596a70b5e8afd6a35372d6a784e7a708c5a3"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.4.0/ant_2.4.0_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/682383210"
+checksum = "sha256:9bd8e6e7fccda6879de713b4726b42a4d18a4cf2571bd96d9911ea47774e52f5"
+checksum_source = "mise-versions"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.6.0/ant_2.6.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/710876676"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.linux-arm64-musl"]
-checksum = "sha256:88cc2d3d582e20a5aa17234f2409596a70b5e8afd6a35372d6a784e7a708c5a3"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.4.0/ant_2.4.0_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/682383210"
+checksum = "sha256:9bd8e6e7fccda6879de713b4726b42a4d18a4cf2571bd96d9911ea47774e52f5"
+checksum_source = "mise-versions"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.6.0/ant_2.6.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/710876676"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.linux-x64"]
-checksum = "sha256:45434d2721f801638340cc6f12277af32791c8cf3707134f690557e58a14d447"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.4.0/ant_2.4.0_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/682383229"
+checksum = "sha256:0dedb855c97fbee9934f8d067ddcae0592083615b577d128bc4311a03eb9c1c5"
+checksum_source = "mise-versions"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.6.0/ant_2.6.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/710876669"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.linux-x64-musl"]
-checksum = "sha256:45434d2721f801638340cc6f12277af32791c8cf3707134f690557e58a14d447"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.4.0/ant_2.4.0_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/682383229"
+checksum = "sha256:0dedb855c97fbee9934f8d067ddcae0592083615b577d128bc4311a03eb9c1c5"
+checksum_source = "mise-versions"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.6.0/ant_2.6.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/710876669"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.macos-arm64"]
-checksum = "sha256:c1d4967fc672327592d535267687261a6e63d379bc32fa16d0571e3b32e975b8"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.4.0/ant_2.4.0_macos_arm64.zip"
-url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/682383306"
+checksum = "sha256:321b140373330e91a006a66265175fc15c2c28e73f4d2c1ba272ae7e999c1448"
+checksum_source = "mise-versions"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.6.0/ant_2.6.0_macos_arm64.zip"
+url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/710876755"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.macos-x64"]
-checksum = "sha256:6ff73ff756a0e9927eba9586ffa45b7e017d09fb723c0dae66b7a5f0ce019c42"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.4.0/ant_2.4.0_macos_amd64.zip"
-url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/682383322"
+checksum = "sha256:f44442eb4d9e3e2f1332bb334393b225a1dea12f10d9a5e18e30f0088374af61"
+checksum_source = "mise-versions"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.6.0/ant_2.6.0_macos_amd64.zip"
+url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/710876763"
 
 [tools."aqua:anthropics/anthropic-cli"."platforms.windows-x64"]
-checksum = "sha256:af9bbdb7fe70257b7d11b2ad732d394a5a2d95d85c486be9de6fc22fb0f22abc"
-url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.4.0/ant_2.4.0_windows_amd64.zip"
-url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/682383380"
+checksum = "sha256:56a1391feac9ce8d86aa082433b9850a8284ff948d4e895581b5e7b4ad62b435"
+checksum_source = "mise-versions"
+url = "https://github.com/anthropics/anthropic-cli/releases/download/v2.6.0/ant_2.6.0_windows_amd64.zip"
+url_api = "https://api.github.com/repos/anthropics/anthropic-cli/releases/assets/710876771"
 
 [[tools."aqua:anthropics/claude-code"]]
 version = "2.1.318"
@@ -981,80 +988,80 @@ url = "https://github.com/arl/gitmux/releases/download/v0.11.5/gitmux_v0.11.5_ma
 url_api = "https://api.github.com/repos/arl/gitmux/releases/assets/278039550"
 
 [[tools."aqua:astral-sh/uv"]]
-version = "0.13.6"
+version = "0.13.7"
 backend = "aqua:astral-sh/uv"
-specifiers = ["0.13.6"]
+specifiers = ["0.13.7"]
 
 [tools."aqua:astral-sh/uv"."platforms.linux-arm64"]
-checksum = "sha256:229e194255c7958d86d56e8790d969a6f74736592133f0dfd0076f754c642c1d"
-url = "https://github.com/astral-sh/uv/releases/download/0.13.6/uv-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/679980412"
+checksum = "sha256:71279f8d3c67241e807b9d8db872d1bf541579fb9f08b7d1eb1682196d1e57dc"
+url = "https://github.com/astral-sh/uv/releases/download/0.13.7/uv-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/704009469"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.linux-arm64-musl"]
-checksum = "sha256:819692e404d23e5aae6bc44c0e260f1f5492fd1910ab4693b2c650f926dbe800"
-url = "https://github.com/astral-sh/uv/releases/download/0.13.6/uv-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/679980430"
+checksum = "sha256:2d3ec076a0c4c0e8250bb6418c44080828b544f1a3be0b6e46adf9fb6923de45"
+url = "https://github.com/astral-sh/uv/releases/download/0.13.7/uv-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/704009487"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.linux-x64"]
-checksum = "sha256:f29c3e94ffabd7e6f3ba521dba169a9b7ec12100bf3257087f0f24f6123f3645"
-url = "https://github.com/astral-sh/uv/releases/download/0.13.6/uv-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/679980644"
+checksum = "sha256:c5221ff41b7892bfc223543883600125f6a47fe845093e0f5bdff4f359196d83"
+url = "https://github.com/astral-sh/uv/releases/download/0.13.7/uv-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/704009823"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.linux-x64-musl"]
-checksum = "sha256:5d61f26b6c7213779eda90edc6971ea6b0b796bfb8d49a574c8ad69b59838548"
-url = "https://github.com/astral-sh/uv/releases/download/0.13.6/uv-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/679980664"
+checksum = "sha256:287491da03f2a785c70fa75b13e1f849918c2f2b5415fe84876b8214eeb792f9"
+url = "https://github.com/astral-sh/uv/releases/download/0.13.7/uv-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/704009859"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.macos-arm64"]
-checksum = "sha256:60fbd5c8a1ed681845eea28d9d622fcde03c51e91a43465b64a1e17db1ed3472"
-url = "https://github.com/astral-sh/uv/releases/download/0.13.6/uv-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/679980393"
+checksum = "sha256:81b811b57e4624df7ed3aac148e0359100d9962f3d9dce00aec533dc2e086731"
+url = "https://github.com/astral-sh/uv/releases/download/0.13.7/uv-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/704009442"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.macos-x64"]
-checksum = "sha256:63ba17fdda55ad1a230d4b37fc6017ffa10c23688c83818bd3bfdf914c652a02"
-url = "https://github.com/astral-sh/uv/releases/download/0.13.6/uv-x86_64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/679980609"
+checksum = "sha256:20c47e4c1f630b8abaff8c291fa9b9aa300fef92c4fbff95adf198b55287cda7"
+url = "https://github.com/astral-sh/uv/releases/download/0.13.7/uv-x86_64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/704009775"
 provenance = "github-attestations"
 
 [tools."aqua:astral-sh/uv"."platforms.windows-x64"]
-checksum = "sha256:a2a8820d5eea32f08ef467ef3b7f66883a9b076d5737a2fc2fbb5f458d1bb50f"
-url = "https://github.com/astral-sh/uv/releases/download/0.13.6/uv-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/679980629"
+checksum = "sha256:0cdc5b38fe5a8168ed6a25814f5ba43c21d313dd3187314fccb37b7cec46e021"
+url = "https://github.com/astral-sh/uv/releases/download/0.13.7/uv-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/astral-sh/uv/releases/assets/704009796"
 provenance = "github-attestations"
 
 [[tools."aqua:aws/aws-cli"]]
-version = "2.39.1"
+version = "2.39.4"
 backend = "aqua:aws/aws-cli"
-specifiers = ["2.39.1"]
+specifiers = ["2.39.4"]
 
 [tools."aqua:aws/aws-cli"."platforms.linux-arm64"]
-checksum = "sha256:5adf0b5052843e542b55a846d49ba2a2b3f3fb4960f35c11df9ac7c395cffaaf"
-url = "https://awscli.amazonaws.com/awscli-exe-linux-aarch64-2.39.1.zip"
+checksum = "sha256:76e4ac0f82b5b1ec68dfc747705fa3298c05e22648e5503f1869f0d035ad57bb"
+url = "https://awscli.amazonaws.com/awscli-exe-linux-aarch64-2.39.4.zip"
 
 [tools."aqua:aws/aws-cli"."platforms.linux-arm64-musl"]
-checksum = "sha256:5adf0b5052843e542b55a846d49ba2a2b3f3fb4960f35c11df9ac7c395cffaaf"
-url = "https://awscli.amazonaws.com/awscli-exe-linux-aarch64-2.39.1.zip"
+checksum = "sha256:76e4ac0f82b5b1ec68dfc747705fa3298c05e22648e5503f1869f0d035ad57bb"
+url = "https://awscli.amazonaws.com/awscli-exe-linux-aarch64-2.39.4.zip"
 
 [tools."aqua:aws/aws-cli"."platforms.linux-x64"]
-checksum = "sha256:5b6c10e0a8ccdcf30c84bd643fea511f103d257a4787a7cef878691d63169804"
-url = "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.39.1.zip"
+checksum = "sha256:5153610ddd5dff13d43b2965c92d58f16e9f3f54164eea76d3abb29f38787597"
+url = "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.39.4.zip"
 
 [tools."aqua:aws/aws-cli"."platforms.linux-x64-musl"]
-checksum = "sha256:5b6c10e0a8ccdcf30c84bd643fea511f103d257a4787a7cef878691d63169804"
-url = "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.39.1.zip"
+checksum = "sha256:5153610ddd5dff13d43b2965c92d58f16e9f3f54164eea76d3abb29f38787597"
+url = "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.39.4.zip"
 
 [tools."aqua:aws/aws-cli"."platforms.macos-arm64"]
-checksum = "sha256:2a0e523fc3f58efe7d35914b3cf6a35adc5820002489b7a4a65e006b2f4073de"
-url = "https://awscli.amazonaws.com/AWSCLIV2-2.39.1.pkg"
+checksum = "sha256:cb586f22b8e884844f17679ee610851703d14aa9e1022bf70d42626b65bd939e"
+url = "https://awscli.amazonaws.com/AWSCLIV2-2.39.4.pkg"
 
 [tools."aqua:aws/aws-cli"."platforms.macos-x64"]
-checksum = "sha256:2a0e523fc3f58efe7d35914b3cf6a35adc5820002489b7a4a65e006b2f4073de"
-url = "https://awscli.amazonaws.com/AWSCLIV2-2.39.1.pkg"
+checksum = "sha256:cb586f22b8e884844f17679ee610851703d14aa9e1022bf70d42626b65bd939e"
+url = "https://awscli.amazonaws.com/AWSCLIV2-2.39.4.pkg"
 
 [[tools."aqua:bufbuild/buf"]]
 version = "1.75.0"
@@ -1151,44 +1158,51 @@ url_api = "https://api.github.com/repos/cli/cli/releases/assets/679195750"
 provenance = "github-attestations"
 
 [[tools."aqua:cloudflare/cloudflared"]]
-version = "2026.10.5"
+version = "2026.10.7"
 backend = "aqua:cloudflare/cloudflared"
-specifiers = ["2026.10.5"]
+specifiers = ["2026.10.7"]
 
 [tools."aqua:cloudflare/cloudflared"."platforms.linux-arm64"]
-checksum = "sha256:72e0d05a67e09da87cf495e409a28c3cc5994dd23fc66a982eebea6a55923b7d"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.5/cloudflared-linux-arm64"
-url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/681691739"
+checksum = "sha256:3df43aedc9ff291d1735b5cb576cb97e0b157488796db2e32b28aecabb445775"
+checksum_source = "mise-versions"
+url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.7/cloudflared-linux-arm64"
+url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/692818763"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.linux-arm64-musl"]
-checksum = "sha256:72e0d05a67e09da87cf495e409a28c3cc5994dd23fc66a982eebea6a55923b7d"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.5/cloudflared-linux-arm64"
-url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/681691739"
+checksum = "sha256:3df43aedc9ff291d1735b5cb576cb97e0b157488796db2e32b28aecabb445775"
+checksum_source = "mise-versions"
+url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.7/cloudflared-linux-arm64"
+url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/692818763"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.linux-x64"]
-checksum = "sha256:e1bc0cf084fd9e590554fe769a86b1db46701c3f847a43d902f7b974a4e16298"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.5/cloudflared-linux-amd64"
-url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/681690401"
+checksum = "sha256:1f99fb518b83dec2ba8d870a7cc991d82a77e6196295a3d2754ba17ab9f91872"
+checksum_source = "mise-versions"
+url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.7/cloudflared-linux-amd64"
+url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/692817008"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.linux-x64-musl"]
-checksum = "sha256:e1bc0cf084fd9e590554fe769a86b1db46701c3f847a43d902f7b974a4e16298"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.5/cloudflared-linux-amd64"
-url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/681690401"
+checksum = "sha256:1f99fb518b83dec2ba8d870a7cc991d82a77e6196295a3d2754ba17ab9f91872"
+checksum_source = "mise-versions"
+url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.7/cloudflared-linux-amd64"
+url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/692817008"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.macos-arm64"]
-checksum = "sha256:184c7d4f5f977348243a6d7ca8f6cf6073b9b2746cfe8c1fe15aa59e9a522bf0"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.5/cloudflared-darwin-arm64.tgz"
-url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/681689374"
+checksum = "sha256:3586ccf397e98e5f437e60e7c307ca6ac463e110580503af8bb8e6f9ebf831bd"
+checksum_source = "mise-versions"
+url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.7/cloudflared-darwin-arm64.tgz"
+url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/692819281"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.macos-x64"]
-checksum = "sha256:6699392fed92367808c248c2d90bed66e49bbf66e1b4ee3e4141230f3f7391b3"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.5/cloudflared-darwin-amd64.tgz"
-url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/681689768"
+checksum = "sha256:02f3edfd87684dd5b705607688e4eb4b323f6e777b81e7b3a85af556aa356848"
+checksum_source = "mise-versions"
+url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.7/cloudflared-darwin-amd64.tgz"
+url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/692819049"
 
 [tools."aqua:cloudflare/cloudflared"."platforms.windows-x64"]
-checksum = "sha256:db4e4c413612a0916f3e1679d3caaf376f94911952d163028fb726fb2e0516a9"
-url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.5/cloudflared-windows-amd64.exe"
-url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/681692942"
+checksum = "sha256:2493dbc168923bb3e59e5e7716f71deced92992eea9acd6e9d74f84ac7751343"
+checksum_source = "mise-versions"
+url = "https://github.com/cloudflare/cloudflared/releases/download/2026.10.7/cloudflared-windows-amd64.exe"
+url_api = "https://api.github.com/repos/cloudflare/cloudflared/releases/assets/692820426"
 
 [[tools."aqua:direnv/direnv"]]
 version = "2.38.2"
@@ -1393,44 +1407,51 @@ url = "https://github.com/grafana/jsonnet-language-server/releases/download/v0.1
 url_api = "https://api.github.com/repos/grafana/jsonnet-language-server/releases/assets/354270599"
 
 [[tools."aqua:jdx/usage"]]
-version = "7.1.3"
+version = "7.2.0"
 backend = "aqua:jdx/usage"
-specifiers = ["7.1.3"]
+specifiers = ["7.2.0"]
 
 [tools."aqua:jdx/usage"."platforms.linux-arm64"]
-checksum = "sha256:f5e8cb2d9fea663e0b17472ce30ccc398c5dae4ddd7c6fb60f6b0f1d59386677"
-url = "https://github.com/jdx/usage/releases/download/v7.1.3/usage-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/677766044"
+checksum = "sha256:a618ab5e634ed485cea7ea49575da720cf1cc92c8619e3a6c2a008aff81035f9"
+checksum_source = "mise-versions"
+url = "https://github.com/jdx/usage/releases/download/v7.2.0/usage-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/706478545"
 
 [tools."aqua:jdx/usage"."platforms.linux-arm64-musl"]
-checksum = "sha256:2e3cc3ae62b3ef008eb739c527101087864e210da9df23c8e2b456c90b8dc8b4"
-url = "https://github.com/jdx/usage/releases/download/v7.1.3/usage-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/677763852"
+checksum = "sha256:320421c6047c2726b01476c69d36b18fa513b917bd0c8ae80d1f880521435cc8"
+checksum_source = "mise-versions"
+url = "https://github.com/jdx/usage/releases/download/v7.2.0/usage-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/706480827"
 
 [tools."aqua:jdx/usage"."platforms.linux-x64"]
-checksum = "sha256:8862647112681941439df958ea8240a96e14319adc7f28497f09bd2ba10c0344"
-url = "https://github.com/jdx/usage/releases/download/v7.1.3/usage-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/677764720"
+checksum = "sha256:32d475f22d8c5a637a61b0d6caa076ed4c5d1de3cde61efcf509e07478208340"
+checksum_source = "mise-versions"
+url = "https://github.com/jdx/usage/releases/download/v7.2.0/usage-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/706479906"
 
 [tools."aqua:jdx/usage"."platforms.linux-x64-musl"]
-checksum = "sha256:826cb318a95ac418e8c3f8237439ac39239dfe88e491adc3ecddd3fa4e58d057"
-url = "https://github.com/jdx/usage/releases/download/v7.1.3/usage-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/677764945"
+checksum = "sha256:beac5db300bf11ff71d8f8b762898265cdb5dc98bad64c49b790de5d808d6d02"
+checksum_source = "mise-versions"
+url = "https://github.com/jdx/usage/releases/download/v7.2.0/usage-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/706479159"
 
 [tools."aqua:jdx/usage"."platforms.macos-arm64"]
-checksum = "sha256:4878938599894c051baaf601cb5c7ee351f4276c9da0acbf959e868884f2b99b"
-url = "https://github.com/jdx/usage/releases/download/v7.1.3/usage-universal-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/677768757"
+checksum = "sha256:1e666f741c800aa5eda693b1d28cc8caa3ac4ec7e73b6ffff40bb42a13a886d1"
+checksum_source = "mise-versions"
+url = "https://github.com/jdx/usage/releases/download/v7.2.0/usage-universal-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/706597605"
 
 [tools."aqua:jdx/usage"."platforms.macos-x64"]
-checksum = "sha256:4878938599894c051baaf601cb5c7ee351f4276c9da0acbf959e868884f2b99b"
-url = "https://github.com/jdx/usage/releases/download/v7.1.3/usage-universal-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/677768757"
+checksum = "sha256:1e666f741c800aa5eda693b1d28cc8caa3ac4ec7e73b6ffff40bb42a13a886d1"
+checksum_source = "mise-versions"
+url = "https://github.com/jdx/usage/releases/download/v7.2.0/usage-universal-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/706597605"
 
 [tools."aqua:jdx/usage"."platforms.windows-x64"]
-checksum = "sha256:4abb3f7b7e9ecac17558be73336137fa83ec9a43d0c1168a9bbb5aedd1685a27"
-url = "https://github.com/jdx/usage/releases/download/v7.1.3/usage-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/jdx/usage/releases/assets/677772151"
+checksum = "sha256:3c9c624dd930c1779f7118eb7c80c42336661fd16754de79a41059868f8cb199"
+checksum_source = "mise-versions"
+url = "https://github.com/jdx/usage/releases/download/v7.2.0/usage-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/jdx/usage/releases/assets/706487297"
 
 [[tools."aqua:jesseduffield/lazydocker"]]
 version = "0.25.2"
@@ -1957,44 +1978,51 @@ url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-windows-x
 url_api = "https://api.github.com/repos/tamasfe/taplo/releases/assets/257323062"
 
 [[tools."aqua:temporalio/cli"]]
-version = "1.9.1"
+version = "1.10.0"
 backend = "aqua:temporalio/cli"
-specifiers = ["1.9.1"]
+specifiers = ["1.10.0"]
 
 [tools."aqua:temporalio/cli"."platforms.linux-arm64"]
-checksum = "sha256:6c57c352d52fc3df34412376fd9ba6f74b7e3ace8e426e6cba8600156d36a145"
-url = "https://github.com/temporalio/cli/releases/download/v1.9.1/temporal_cli_1.9.1_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/temporalio/cli/releases/assets/564294917"
+checksum = "sha256:6e526d2f089bf5acead2129f1f63e303b848410d5d9d86b9255359dcea6eaaa8"
+checksum_source = "mise-versions"
+url = "https://github.com/temporalio/cli/releases/download/v1.10.0/temporal_cli_1.10.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/temporalio/cli/releases/assets/703909582"
 
 [tools."aqua:temporalio/cli"."platforms.linux-arm64-musl"]
-checksum = "sha256:6c57c352d52fc3df34412376fd9ba6f74b7e3ace8e426e6cba8600156d36a145"
-url = "https://github.com/temporalio/cli/releases/download/v1.9.1/temporal_cli_1.9.1_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/temporalio/cli/releases/assets/564294917"
+checksum = "sha256:6e526d2f089bf5acead2129f1f63e303b848410d5d9d86b9255359dcea6eaaa8"
+checksum_source = "mise-versions"
+url = "https://github.com/temporalio/cli/releases/download/v1.10.0/temporal_cli_1.10.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/temporalio/cli/releases/assets/703909582"
 
 [tools."aqua:temporalio/cli"."platforms.linux-x64"]
-checksum = "sha256:09a0326a51db84d02735e53542b9ebd8c4758daf47482a9ab0abce15844e60d5"
-url = "https://github.com/temporalio/cli/releases/download/v1.9.1/temporal_cli_1.9.1_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/temporalio/cli/releases/assets/564294919"
+checksum = "sha256:521f461f3d108902763bb71e85cd0fd382dc9357b59604ae03da6ae734d16890"
+checksum_source = "mise-versions"
+url = "https://github.com/temporalio/cli/releases/download/v1.10.0/temporal_cli_1.10.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/temporalio/cli/releases/assets/703909584"
 
 [tools."aqua:temporalio/cli"."platforms.linux-x64-musl"]
-checksum = "sha256:09a0326a51db84d02735e53542b9ebd8c4758daf47482a9ab0abce15844e60d5"
-url = "https://github.com/temporalio/cli/releases/download/v1.9.1/temporal_cli_1.9.1_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/temporalio/cli/releases/assets/564294919"
+checksum = "sha256:521f461f3d108902763bb71e85cd0fd382dc9357b59604ae03da6ae734d16890"
+checksum_source = "mise-versions"
+url = "https://github.com/temporalio/cli/releases/download/v1.10.0/temporal_cli_1.10.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/temporalio/cli/releases/assets/703909584"
 
 [tools."aqua:temporalio/cli"."platforms.macos-arm64"]
-checksum = "sha256:41e0425378fcb4fb5766340b97435e20fe47bbff2d7bf644ec2d51f7662b7c56"
-url = "https://github.com/temporalio/cli/releases/download/v1.9.1/temporal_cli_1.9.1_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/temporalio/cli/releases/assets/564294914"
+checksum = "sha256:40a76ef7d525e6195b083e4cd50b184cc3bb242fea7f8dda2b9a8698ecbb7379"
+checksum_source = "mise-versions"
+url = "https://github.com/temporalio/cli/releases/download/v1.10.0/temporal_cli_1.10.0_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/temporalio/cli/releases/assets/703909583"
 
 [tools."aqua:temporalio/cli"."platforms.macos-x64"]
-checksum = "sha256:48cdd6c84c56e27ae8e4d9a47052b89289a9c552dee029b49dd312c6fb72873f"
-url = "https://github.com/temporalio/cli/releases/download/v1.9.1/temporal_cli_1.9.1_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/temporalio/cli/releases/assets/564294918"
+checksum = "sha256:150603ba135dc5f40f0a8f33b1a09732469692fae9a78e3024318e83f023136a"
+checksum_source = "mise-versions"
+url = "https://github.com/temporalio/cli/releases/download/v1.10.0/temporal_cli_1.10.0_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/temporalio/cli/releases/assets/703909577"
 
 [tools."aqua:temporalio/cli"."platforms.windows-x64"]
-checksum = "sha256:42637464c337a3da203fbd4e8c688e4b2d511fd42bd19c337c0422e923a7b619"
-url = "https://github.com/temporalio/cli/releases/download/v1.9.1/temporal_cli_1.9.1_windows_amd64.tar.gz"
-url_api = "https://api.github.com/repos/temporalio/cli/releases/assets/564295046"
+checksum = "sha256:08dc600ed4e6ed3ecd9ffc135ac8834c679a96275a5709acfa4034e1b42ad8db"
+checksum_source = "mise-versions"
+url = "https://github.com/temporalio/cli/releases/download/v1.10.0/temporal_cli_1.10.0_windows_amd64.tar.gz"
+url_api = "https://api.github.com/repos/temporalio/cli/releases/assets/703909742"
 
 [[tools."aqua:theseus-rs/postgresql-binaries"]]
 version = "18.6.1"
@@ -2037,91 +2065,98 @@ url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.6.
 url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/653680587"
 
 [[tools."aqua:twpayne/chezmoi"]]
-version = "2.73.3"
+version = "2.74.0"
 backend = "aqua:twpayne/chezmoi"
-specifiers = ["2.73.3"]
+specifiers = ["2.74.0"]
 
 [tools."aqua:twpayne/chezmoi"."platforms.linux-arm64"]
-checksum = "sha256:c9e6a6e71eb5291018e161a8426d7c313cd2e8553c2ca4029511fec2a33bc28c"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.73.3/chezmoi_2.73.3_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/659666007"
+checksum = "sha256:bf89495d1aab5e4fa0fc1ba9457837b34ee8dec9b787570f2de3e1c12a5835a5"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.74.0/chezmoi_2.74.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/698495649"
 provenance = "cosign"
 
 [tools."aqua:twpayne/chezmoi"."platforms.linux-arm64-musl"]
-checksum = "sha256:c9e6a6e71eb5291018e161a8426d7c313cd2e8553c2ca4029511fec2a33bc28c"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.73.3/chezmoi_2.73.3_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/659666007"
+checksum = "sha256:bf89495d1aab5e4fa0fc1ba9457837b34ee8dec9b787570f2de3e1c12a5835a5"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.74.0/chezmoi_2.74.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/698495649"
 provenance = "cosign"
 
 [tools."aqua:twpayne/chezmoi"."platforms.linux-x64"]
-checksum = "sha256:6e5827598cbfc02d132b04f95b5ea10efb5b79230e2a4a0e52df4af144a8ee9f"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.73.3/chezmoi_2.73.3_linux-glibc_amd64.tar.gz"
-url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/659666434"
+checksum = "sha256:1b98a567f726f41540414aea4caf912699d53e248b29ccf8369cf553657b2374"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.74.0/chezmoi_2.74.0_linux-glibc_amd64.tar.gz"
+url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/698495837"
 provenance = "cosign"
 
 [tools."aqua:twpayne/chezmoi"."platforms.linux-x64-musl"]
-checksum = "sha256:6e5827598cbfc02d132b04f95b5ea10efb5b79230e2a4a0e52df4af144a8ee9f"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.73.3/chezmoi_2.73.3_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/659666088"
+checksum = "sha256:0fd6400784ad310ef0904d74d99d5d95e7c1d01cfd249b3510c606ca45d6a1d5"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.74.0/chezmoi_2.74.0_linux-musl_amd64.tar.gz"
+url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/698495840"
 provenance = "cosign"
 
 [tools."aqua:twpayne/chezmoi"."platforms.macos-arm64"]
-checksum = "sha256:ec2d0005f369c912ee9891a26c30d65dc0eda51708f06948e5f7a43db69e1aa7"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.73.3/chezmoi_2.73.3_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/659665869"
+checksum = "sha256:9d89672a597a9333ab47ea5173fcececb85c04864205686a7aa5699c3d8bd98c"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.74.0/chezmoi_2.74.0_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/698495382"
 provenance = "cosign"
 
 [tools."aqua:twpayne/chezmoi"."platforms.macos-x64"]
-checksum = "sha256:d865487d6669243c948ee5542087bd95f4ad4ecb5a1311b85cf19f557694fe03"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.73.3/chezmoi_2.73.3_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/659666069"
+checksum = "sha256:3d30cb05efae2f4a68519d6d0e8856765f2b21a0686e66498ee6d2de7707e5e6"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.74.0/chezmoi_2.74.0_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/698495378"
 provenance = "cosign"
 
 [tools."aqua:twpayne/chezmoi"."platforms.windows-x64"]
-checksum = "sha256:e74f9948a9ac6a5d8b0c0896a9ea129a766d92e38b50b70ee1fa1dc077755d6e"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.73.3/chezmoi_2.73.3_windows_amd64.zip"
-url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/659666208"
+checksum = "sha256:13dee2831d371c6ce2ac30fc9ae1aad4f70c68e7d44700f6129fe4b244ee7a95"
+url = "https://github.com/twpayne/chezmoi/releases/download/v2.74.0/chezmoi_2.74.0_windows_amd64.zip"
+url_api = "https://api.github.com/repos/twpayne/chezmoi/releases/assets/698495241"
 provenance = "cosign"
 
 [[tools."aqua:x-motemen/ghq"]]
-version = "1.11.2"
+version = "1.12.0"
 backend = "aqua:x-motemen/ghq"
-specifiers = ["1.11.2"]
+specifiers = ["1.12.0"]
 
 [tools."aqua:x-motemen/ghq"."platforms.linux-arm64"]
-checksum = "sha256:0a083c5d5b214dd0f4f693cf8839b15f6b5cc4e2d91b0cb4abb8748dcdb353c9"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.11.2/ghq_linux_arm64.zip"
-url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/598741476"
+checksum = "sha256:3108a4d8a06c968bd669897a1c3d17c6af70afe015c72b982cc8f227b9c4e8e1"
+checksum_source = "mise-versions"
+url = "https://github.com/x-motemen/ghq/releases/download/v1.12.0/ghq_linux_arm64.zip"
+url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/706006375"
 
 [tools."aqua:x-motemen/ghq"."platforms.linux-arm64-musl"]
-checksum = "sha256:0a083c5d5b214dd0f4f693cf8839b15f6b5cc4e2d91b0cb4abb8748dcdb353c9"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.11.2/ghq_linux_arm64.zip"
-url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/598741476"
+checksum = "sha256:3108a4d8a06c968bd669897a1c3d17c6af70afe015c72b982cc8f227b9c4e8e1"
+checksum_source = "mise-versions"
+url = "https://github.com/x-motemen/ghq/releases/download/v1.12.0/ghq_linux_arm64.zip"
+url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/706006375"
 
 [tools."aqua:x-motemen/ghq"."platforms.linux-x64"]
-checksum = "sha256:efa5c1de4e763565b71649229449d8123ceb7131a8d0ed25755aaee73969cdf1"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.11.2/ghq_linux_amd64.zip"
-url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/598741424"
+checksum = "sha256:160e4430014f67eceea4aa899e9dcd8c09e3944d90902ed96fd6cac916f8aad6"
+checksum_source = "mise-versions"
+url = "https://github.com/x-motemen/ghq/releases/download/v1.12.0/ghq_linux_amd64.zip"
+url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/706006368"
 
 [tools."aqua:x-motemen/ghq"."platforms.linux-x64-musl"]
-checksum = "sha256:efa5c1de4e763565b71649229449d8123ceb7131a8d0ed25755aaee73969cdf1"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.11.2/ghq_linux_amd64.zip"
-url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/598741424"
+checksum = "sha256:160e4430014f67eceea4aa899e9dcd8c09e3944d90902ed96fd6cac916f8aad6"
+checksum_source = "mise-versions"
+url = "https://github.com/x-motemen/ghq/releases/download/v1.12.0/ghq_linux_amd64.zip"
+url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/706006368"
 
 [tools."aqua:x-motemen/ghq"."platforms.macos-arm64"]
-checksum = "sha256:8317f8ea5671bccb31e7747eb0a892a77a472dbc7c988f9d47cdfc969a59e242"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.11.2/ghq_darwin_arm64.zip"
-url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/598741463"
+checksum = "sha256:c1a3d26d435c35b3fa7ca1188488a7cd81d1ee975a4a00db8ee4dbe32be56dfe"
+checksum_source = "mise-versions"
+url = "https://github.com/x-motemen/ghq/releases/download/v1.12.0/ghq_darwin_arm64.zip"
+url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/706006438"
 
 [tools."aqua:x-motemen/ghq"."platforms.macos-x64"]
-checksum = "sha256:abfe6b378ec8b59dd441a7eb13bc0f0f5b38b76dbdc78bd034df826302004639"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.11.2/ghq_darwin_amd64.zip"
-url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/598741428"
+checksum = "sha256:e5dc9f2173e32c0fddc0ffffa67f770492e0f93f734a9bd898f63a21a64cc34d"
+checksum_source = "mise-versions"
+url = "https://github.com/x-motemen/ghq/releases/download/v1.12.0/ghq_darwin_amd64.zip"
+url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/706006440"
 
 [tools."aqua:x-motemen/ghq"."platforms.windows-x64"]
-checksum = "sha256:7ab0e759ac9f117f0b5eeea0985c58e693ecb8d2e29b7bcfbce657caac31bce8"
-url = "https://github.com/x-motemen/ghq/releases/download/v1.11.2/ghq_windows_amd64.zip"
-url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/598741479"
+checksum = "sha256:1525c69728ced46ccf7ed364c8daf7ea12b25b3ee63881e6da0e8584c8ca3159"
+checksum_source = "mise-versions"
+url = "https://github.com/x-motemen/ghq/releases/download/v1.12.0/ghq_windows_amd64.zip"
+url_api = "https://api.github.com/repos/x-motemen/ghq/releases/assets/706006431"
 
 [[tools."conda:mysql-client"]]
 version = "9.7.4"
@@ -2442,136 +2477,142 @@ conda_deps = [
 ]
 
 [[tools."github:Azure/azure-cli"]]
-version = "2.91.0"
+version = "2.92.0"
 backend = "github:Azure/azure-cli"
-specifiers = ["2.91.0"]
+specifiers = ["2.92.0"]
 
 [tools."github:Azure/azure-cli".options]
 matching_regex = '\.tar\.gz$'
 version_prefix = "azure-cli-"
 
 [tools."github:Azure/azure-cli"."platforms.linux-arm64"]
-checksum = "sha256:1d0a008190aa39d26c6cb6a4ab818e7f7b0fd96258f96b49952d91411a64b01b"
-url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.91.0/azure-cli-2.91.0-linux-arm64.tar.gz"
-url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/613899811"
+checksum = "sha256:ef78aad855168a61eb372c1624406b97a94f1b23935b9391d131565337acc703"
+checksum_source = "mise-versions"
+url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.92.0/azure-cli-2.92.0-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/703707441"
 
 [tools."github:Azure/azure-cli"."platforms.linux-arm64-musl"]
-checksum = "sha256:1d0a008190aa39d26c6cb6a4ab818e7f7b0fd96258f96b49952d91411a64b01b"
-url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.91.0/azure-cli-2.91.0-linux-arm64.tar.gz"
-url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/613899811"
+checksum = "sha256:ef78aad855168a61eb372c1624406b97a94f1b23935b9391d131565337acc703"
+checksum_source = "mise-versions"
+url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.92.0/azure-cli-2.92.0-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/703707441"
 
 [tools."github:Azure/azure-cli"."platforms.linux-x64"]
-checksum = "sha256:26bbdd9bf46cdbe03dcbdbbe37b2301608e29518ae32fbdfcf1eb143d41d9f38"
-url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.91.0/azure-cli-2.91.0-linux-x86_64.tar.gz"
-url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/613899860"
+checksum = "sha256:b90a489e0447b83e9d265b6d14f8b9306cd96b830c7f93e60bbcdf18cd2532af"
+checksum_source = "mise-versions"
+url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.92.0/azure-cli-2.92.0-linux-x86_64.tar.gz"
+url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/703707523"
 
 [tools."github:Azure/azure-cli"."platforms.linux-x64-musl"]
-checksum = "sha256:26bbdd9bf46cdbe03dcbdbbe37b2301608e29518ae32fbdfcf1eb143d41d9f38"
-url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.91.0/azure-cli-2.91.0-linux-x86_64.tar.gz"
-url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/613899860"
+checksum = "sha256:b90a489e0447b83e9d265b6d14f8b9306cd96b830c7f93e60bbcdf18cd2532af"
+checksum_source = "mise-versions"
+url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.92.0/azure-cli-2.92.0-linux-x86_64.tar.gz"
+url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/703707523"
 
 [tools."github:Azure/azure-cli"."platforms.macos-arm64"]
-checksum = "sha256:dc28a3eef40d0b20f266f1e76b7a91f7a8ecdeaa28d0c855459eaa74edacbae6"
-url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.91.0/azure-cli-2.91.0-macos-arm64.tar.gz"
-url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/613899707"
+checksum = "sha256:6fb7d8d6d3db65098e259d5d1d6364359b4b54b5aef4ea6b18bddddd9468407a"
+checksum_source = "mise-versions"
+url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.92.0/azure-cli-2.92.0-macos-arm64.tar.gz"
+url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/703707219"
 
 [tools."github:Azure/azure-cli"."platforms.macos-x64"]
-checksum = "sha256:b8c51c518c526d9ee0fd47716236f91804b578f9d560a2d8f60266fac7b67d6f"
-url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.91.0/azure-cli-2.91.0-macos-x86_64.tar.gz"
-url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/613899766"
+checksum = "sha256:75030452016f1d72cdcd60f1ff71328eac153fe13b00563554ab2dbc0fbe23cb"
+checksum_source = "mise-versions"
+url = "https://github.com/Azure/azure-cli/releases/download/azure-cli-2.92.0/azure-cli-2.92.0-macos-x86_64.tar.gz"
+url_api = "https://api.github.com/repos/Azure/azure-cli/releases/assets/703707363"
 
 [[tools."github:aquaproj/aqua"]]
-version = "2.65.2"
+version = "2.66.0"
 backend = "github:aquaproj/aqua"
-specifiers = ["v2.65.2"]
+specifiers = ["v2.66.0"]
 
 [tools."github:aquaproj/aqua"."platforms.linux-arm64"]
-checksum = "sha256:7abd3d2c27efad797c3284ab1ff21875b143daba28aecb2088917115b7f9cc81"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.65.2/aqua_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/665751208"
+checksum = "sha256:f5a88922adb1673438fd2c1c880063805ca7dd24370de9abc653f24d00e905ce"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.66.0/aqua_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/701484443"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.linux-arm64-musl"]
-checksum = "sha256:7abd3d2c27efad797c3284ab1ff21875b143daba28aecb2088917115b7f9cc81"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.65.2/aqua_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/665751208"
+checksum = "sha256:f5a88922adb1673438fd2c1c880063805ca7dd24370de9abc653f24d00e905ce"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.66.0/aqua_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/701484443"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.linux-x64"]
-checksum = "sha256:971abaccd16d0521fdb8e45990dba2aea17587f476aa075b621aeb972f52a61f"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.65.2/aqua_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/665751155"
+checksum = "sha256:9a9c156d125a8b78f2ec2d495d47fa969ad6ea37258c5387d887f98840b9bd1f"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.66.0/aqua_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/701484422"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.linux-x64-musl"]
-checksum = "sha256:971abaccd16d0521fdb8e45990dba2aea17587f476aa075b621aeb972f52a61f"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.65.2/aqua_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/665751155"
+checksum = "sha256:9a9c156d125a8b78f2ec2d495d47fa969ad6ea37258c5387d887f98840b9bd1f"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.66.0/aqua_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/701484422"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.macos-arm64"]
-checksum = "sha256:74096ac247be24ec3340e134b9ecdae37465009d7bd1acca934a14a5beeb3314"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.65.2/aqua_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/665751122"
+checksum = "sha256:578791b94305ce719bd6fff34d55d67383c5efbd6b1118491fd7f8dab7c9b6cd"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.66.0/aqua_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/701484395"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.macos-x64"]
-checksum = "sha256:6552dc8cd3b4e51f781b4341cc3bb396028755080c6927f5a6d20b8ada85d4d1"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.65.2/aqua_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/665751117"
+checksum = "sha256:22d5505e817d34b64e2edfc299aa6ac9e2d91d023b9cf44f8fe6d95fe1bc2b19"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.66.0/aqua_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/701484400"
 provenance = "github-attestations"
 
 [tools."github:aquaproj/aqua"."platforms.windows-x64"]
-checksum = "sha256:d22e7710ccfd45ba7dccf582240e0a0089ed0a47092b7d3037acb3829ba2027f"
-url = "https://github.com/aquaproj/aqua/releases/download/v2.65.2/aqua_windows_amd64.zip"
-url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/665751231"
+checksum = "sha256:489ed468d4103951d4a2634079a0d6bfb63e2104770b3449f5f3dd81cdcebfb3"
+url = "https://github.com/aquaproj/aqua/releases/download/v2.66.0/aqua_windows_amd64.zip"
+url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/701484454"
 provenance = "github-attestations"
 
 [[tools."github:endevco/aube"]]
-version = "2.8.4"
+version = "2.9.0"
 backend = "github:endevco/aube"
-specifiers = ["v2.8.4"]
+specifiers = ["v2.9.0"]
 
 [tools."github:endevco/aube"."platforms.linux-arm64"]
-checksum = "sha256:7cf94b73080d6604bf93e3e8d129c35264a851572a09a2b1236af75f592d87b5"
-url = "https://github.com/endevco/aube/releases/download/v2.8.4/aube-v2.8.4-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/682152819"
+checksum = "sha256:6439ed819ef506a076f002fb520686c84518dcea319e61be0816f1120a1d1862"
+url = "https://github.com/endevco/aube/releases/download/v2.9.0/aube-v2.9.0-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/702180337"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-arm64-musl"]
-checksum = "sha256:cd2035acdea72163e2fe745b8e890a12431ecebab418ec1bfc7cf6f32cc7d2c3"
-url = "https://github.com/endevco/aube/releases/download/v2.8.4/aube-v2.8.4-aarch64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/682114399"
+checksum = "sha256:8613abd9630853fea1a887d3d206366ef33940ca16b253e784636e8dfd630f14"
+url = "https://github.com/endevco/aube/releases/download/v2.9.0/aube-v2.9.0-aarch64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/702118733"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64"]
-checksum = "sha256:7cdc99ea7a4ceced9ee174c2f2406abf6ed252b192b222a8a5ecb386b2dc2fe1"
-url = "https://github.com/endevco/aube/releases/download/v2.8.4/aube-v2.8.4-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/682117678"
+checksum = "sha256:b0ecb21475ec057c523f45f1b1cc0861f614065c1cf9b51cc93548989c3a2f16"
+url = "https://github.com/endevco/aube/releases/download/v2.9.0/aube-v2.9.0-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/702135722"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.linux-x64-musl"]
-checksum = "sha256:36272090e3ec57b20e883f756e8c88cf5cd932c0244694f22cad21de25c3110a"
-url = "https://github.com/endevco/aube/releases/download/v2.8.4/aube-v2.8.4-x86_64-unknown-linux-musl.tar.gz"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/682114987"
+checksum = "sha256:5733309776a843bdc7b7503ec02a33c59c57bdf2390f41e615e39c6c671629de"
+url = "https://github.com/endevco/aube/releases/download/v2.9.0/aube-v2.9.0-x86_64-unknown-linux-musl.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/702165063"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.macos-arm64"]
-checksum = "sha256:3c755c18237fcefbd4bf113ca7017bb1010cd12d7b756b6e2b5577862d294c71"
-url = "https://github.com/endevco/aube/releases/download/v2.8.4/aube-v2.8.4-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/682142737"
+checksum = "sha256:8e4d70433ae1e7ba7f43581fbfd7756210881ce1f67e1440d166bd12297161e4"
+url = "https://github.com/endevco/aube/releases/download/v2.9.0/aube-v2.9.0-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/702221073"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.macos-x64"]
-checksum = "sha256:71686ed4d08272c3d851da54cbcf398f8daac61ccf2cba17cfdee473c973f6b3"
-url = "https://github.com/endevco/aube/releases/download/v2.8.4/libaube-x86_64-apple-darwin.dylib"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/682157270"
+checksum = "sha256:81d49028dff2961fbabf6fb21401decf77b3c034f387276329e4d66fe8674d09"
+url = "https://github.com/endevco/aube/releases/download/v2.9.0/libaube-x86_64-apple-darwin.dylib"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/702162456"
 provenance = "github-attestations"
 
 [tools."github:endevco/aube"."platforms.windows-x64"]
-checksum = "sha256:09309cb200c2b71f8968931d0651b3cab24dd5af645a6c8f241f05d457d0349c"
-url = "https://github.com/endevco/aube/releases/download/v2.8.4/aube-v2.8.4-x86_64-pc-windows-msvc.zip"
-url_api = "https://api.github.com/repos/endevco/aube/releases/assets/682151622"
+checksum = "sha256:b6a508864063be0bc34834e401e2379225fd5e56901059f6db4420e9efcc757e"
+url = "https://github.com/endevco/aube/releases/download/v2.9.0/aube-v2.9.0-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/endevco/aube/releases/assets/702161186"
 provenance = "github-attestations"
 
 [[tools."github:git-ecosystem/git-credential-manager"]]
@@ -2613,44 +2654,51 @@ url = "https://github.com/git-ecosystem/git-credential-manager/releases/download
 url_api = "https://api.github.com/repos/git-ecosystem/git-credential-manager/releases/assets/677977298"
 
 [[tools."github:google-antigravity/antigravity-cli"]]
-version = "1.4.9"
+version = "1.5.0"
 backend = "github:google-antigravity/antigravity-cli"
-specifiers = ["1.4.9"]
+specifiers = ["1.5.0"]
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-arm64"]
-checksum = "sha256:0e75190d5aa48b0f7623b201cfef542cd36a1279b3d28afa7fa099983a073493"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.4.9/agy_cli_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/684006888"
+checksum = "sha256:87e73a5ab4ecb3a9668660d259dafd13f5443149da0113664d59129a21a62ba4"
+checksum_source = "mise-versions"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.5.0/agy_cli_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/708344390"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-arm64-musl"]
-checksum = "sha256:5be406f7be4f87c06436a5832dcf066054d3be4f003b70db537e6e678ccf4068"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.4.9/agy_cli_linux_arm64_musl.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/684006891"
+checksum = "sha256:005dcd50a3d776e62695ea657d9cdb7888118ec881c853612a1eee9b47e6d118"
+checksum_source = "mise-versions"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.5.0/agy_cli_linux_arm64_musl.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/708344388"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-x64"]
-checksum = "sha256:3d84e3a461b9cbf9ffc9deede155a01921380e964f51a82c0bc505db80ae8525"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.4.9/agy_cli_linux_x64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/684006892"
+checksum = "sha256:f65e365a67be49abdaf92f5669c3157bd4b9c569f6b9f448340b00ca261b0f01"
+checksum_source = "mise-versions"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.5.0/agy_cli_linux_x64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/708344397"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.linux-x64-musl"]
-checksum = "sha256:cbfc66e6fa1b0f1faf9bd49dda3913468e1f8008aea7c84195eeb694d2bcf49f"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.4.9/agy_cli_linux_x64_musl.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/684006885"
+checksum = "sha256:feab046295c80f156a8e1d39135c362f3f4e7397259b2999b4725134b3dde955"
+checksum_source = "mise-versions"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.5.0/agy_cli_linux_x64_musl.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/708344391"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.macos-arm64"]
-checksum = "sha256:64204e14975e632ae7f26912bed48d49ffe17bb2719093ca38c00276b1f134f0"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.4.9/agy_cli_mac_arm64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/684007068"
+checksum = "sha256:105fb4f6181665f85cea79a9a26ef9e106ea0666b9a0904bb63a45e64951286b"
+checksum_source = "mise-versions"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.5.0/agy_cli_mac_arm64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/708344653"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.macos-x64"]
-checksum = "sha256:93034436d465082130891a284f0b25d0cfd46be576c09e78c1ef6dc2ff2fff77"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.4.9/agy_cli_mac_x64.tar.gz"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/684006887"
+checksum = "sha256:306bfdf4d9b14d949aa5b297fd234fa6713ce7f6a4bd4e85aaba0001a1ab69a4"
+checksum_source = "mise-versions"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.5.0/agy_cli_mac_x64.tar.gz"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/708344394"
 
 [tools."github:google-antigravity/antigravity-cli"."platforms.windows-x64"]
-checksum = "sha256:0581f6f8d473aecf00f7b56e30b5027f23b7b65934091d0e6b91b97c83a9bc08"
-url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.4.9/agy_cli_windows_x64.zip"
-url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/684007074"
+checksum = "sha256:2a1e6c23405eefdc2abef57ed3e7a6399ce3ddd2ca8d129d1dc207c6f85dc3fb"
+checksum_source = "mise-versions"
+url = "https://github.com/google-antigravity/antigravity-cli/releases/download/1.5.0/agy_cli_windows_x64.zip"
+url_api = "https://api.github.com/repos/google-antigravity/antigravity-cli/releases/assets/708344663"
 
 [[tools."github:jgm/pandoc"]]
 version = "3.13"
@@ -2700,44 +2748,51 @@ url_api = "https://api.github.com/repos/jgm/pandoc/releases/assets/679545200"
 provenance = "github-attestations"
 
 [[tools."github:router-for-me/CLIProxyAPI"]]
-version = "8.0.47"
+version = "8.0.55"
 backend = "github:router-for-me/CLIProxyAPI"
-specifiers = ["v8.0.47"]
+specifiers = ["v8.0.55"]
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-arm64"]
-checksum = "sha256:da1326ed4434fb6c9609927f317c093f9a4bb482a61e5451e9bea99a0dc7c4bf"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.47/CLIProxyAPI_8.0.47_linux_aarch64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/686826870"
+checksum = "sha256:62c136d7c6ee03cedebaad4be3e7fb9bcf14d095c96597fd92e68554c2a785c5"
+checksum_source = "mise-versions"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.55/CLIProxyAPI_8.0.55_linux_aarch64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/710420979"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-arm64-musl"]
-checksum = "sha256:da1326ed4434fb6c9609927f317c093f9a4bb482a61e5451e9bea99a0dc7c4bf"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.47/CLIProxyAPI_8.0.47_linux_aarch64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/686826870"
+checksum = "sha256:62c136d7c6ee03cedebaad4be3e7fb9bcf14d095c96597fd92e68554c2a785c5"
+checksum_source = "mise-versions"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.55/CLIProxyAPI_8.0.55_linux_aarch64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/710420979"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-x64"]
-checksum = "sha256:2b5111dc6a0dfe0d607457787f794330d1b477bc9daa6337c26b0cd032a7827e"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.47/CLIProxyAPI_8.0.47_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/686827270"
+checksum = "sha256:4cd593251db85e50c820f42e6ea5cecdd05f902201d3dbdb025671d4f306a123"
+checksum_source = "mise-versions"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.55/CLIProxyAPI_8.0.55_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/710421644"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.linux-x64-musl"]
-checksum = "sha256:2b5111dc6a0dfe0d607457787f794330d1b477bc9daa6337c26b0cd032a7827e"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.47/CLIProxyAPI_8.0.47_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/686827270"
+checksum = "sha256:4cd593251db85e50c820f42e6ea5cecdd05f902201d3dbdb025671d4f306a123"
+checksum_source = "mise-versions"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.55/CLIProxyAPI_8.0.55_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/710421644"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.macos-arm64"]
-checksum = "sha256:a5b260ec0f843d2291488acd76e5595232da8f3b8ec2d334154f1570f5f3ca08"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.47/CLIProxyAPI_8.0.47_darwin_aarch64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/686826265"
+checksum = "sha256:ad4fac1948bba2310b8d4ef4b8d0f7983d06c1c8732b4ff1a889d31a718884e7"
+checksum_source = "mise-versions"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.55/CLIProxyAPI_8.0.55_darwin_aarch64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/710419954"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.macos-x64"]
-checksum = "sha256:2e72cb7b28905b9135563e4fc01af00009ce72a444729eb95bdb634543ce7d41"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.47/CLIProxyAPI_8.0.47_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/686830742"
+checksum = "sha256:d7845ac6055a09eef02b871c86461b112912c3282a90e84b6da4ab04e975a0b8"
+checksum_source = "mise-versions"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.55/CLIProxyAPI_8.0.55_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/710431983"
 
 [tools."github:router-for-me/CLIProxyAPI"."platforms.windows-x64"]
-checksum = "sha256:8e23cbb2f9f695411b7df46320855820b352fb886c3c3bdf45ab4634f2f14632"
-url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.47/CLIProxyAPI_8.0.47_windows_amd64.zip"
-url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/686827631"
+checksum = "sha256:137dde06f2e675f5be1b3ca7fecbaf2cec3c4d979e1930fa6016ea2777a03d13"
+checksum_source = "mise-versions"
+url = "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.55/CLIProxyAPI_8.0.55_windows_amd64.zip"
+url_api = "https://api.github.com/repos/router-for-me/CLIProxyAPI/releases/assets/710421408"
 
 [[tools."github:sivchari/golance"]]
 version = "0.7.23"
@@ -3065,34 +3120,33 @@ checksum = "sha256:dcc60d59a0746999f99064a01c020445d54d84228c691cdbf25b49ac3b591
 url = "https://nodejs.org/dist/v26.13.0/node-v26.13.0-win-x64.zip"
 
 [[tools."npm:@fission-ai/openspec"]]
-version = "1.15.0"
-aube = { path = "locks/npm-fission-ai-openspec/1.15.0", digest = "sha256:ef1eed1791a47001d18dda66f988299e4011504c14b8356d3a546f60c3aaad01" }
+version = "1.16.0"
+aube = { path = ".mise/locks/npm-fission-ai-openspec/1.16.0", digest = "sha256:3b0055a4159e75426dc92ebdb0f2b726aa65d36a9831aca6518056cb11644d81" }
 backend = "npm:@fission-ai/openspec"
-specifiers = ["1.15.0"]
+specifiers = ["1.16.0"]
 
 [[tools."npm:@typescript/native-preview"]]
 version = "7.0.0-dev.20260707.2"
-aube = { path = "locks/npm-typescript-native-preview/7.0.0-dev.20260707.2", digest = "sha256:a45a98c540ad73f14a677ee62351ea6f8e1d714903f7dfe7f0d2f3bddc6133fb" }
+aube = { path = ".mise/locks/npm-typescript-native-preview/7.0.0-dev.20260707.2", digest = "sha256:a45a98c540ad73f14a677ee62351ea6f8e1d714903f7dfe7f0d2f3bddc6133fb" }
 backend = "npm:@typescript/native-preview"
 specifiers = ["7.0.0-dev.20260707.2"]
 
 [[tools."npm:ccusage"]]
-version = "20.0.45"
-aube = { path = "locks/npm-ccusage/20.0.45", digest = "sha256:c18adf825375bf31196ace6f23b765f88ef8eea7e99c3d666f387be6f23379f5" }
+version = "20.0.48"
+aube = { path = ".mise/locks/npm-ccusage/20.0.48", digest = "sha256:ce5fe373bd636e80bacb79224784ea0d2b723101bfa61b792d68c3cb54b7fb33" }
 backend = "npm:ccusage"
-specifiers = ["20.0.45"]
+specifiers = ["20.0.48"]
 
 [[tools."npm:defuddle"]]
 version = "0.19.6"
-aube = { path = "locks/npm-defuddle/0.19.6", digest = "sha256:e36bcc488c68303e0924304d8592e234b3eb20ca419754097cb7285f0e914e07" }
+aube = { path = ".mise/locks/npm-defuddle/0.19.6", digest = "sha256:e36bcc488c68303e0924304d8592e234b3eb20ca419754097cb7285f0e914e07" }
 backend = "npm:defuddle"
 specifiers = ["0.19.6"]
 
 [[tools."pipx:snowflake-cli"]]
-version = "3.31.0"
+version = "3.32.1"
 backend = "pipx:snowflake-cli"
-specifiers = ["3.31.0"]
-uv = { path = "locks/pipx-snowflake-cli/3.31.0", digest = "sha256:6cc7abdc5949590da3cc00477b035a505ef63f361e89531b25fd72093d9d2a49" }
+specifiers = ["3.32.1"]
 
 [[tools.pnpm]]
 version = "12.16.1"
