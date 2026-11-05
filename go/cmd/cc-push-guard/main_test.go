@@ -35,71 +35,89 @@ func TestOptOutSkipsInputAndCheck(t *testing.T) {
 	}
 }
 
-func TestParsePush(t *testing.T) {
+func TestFindPushes(t *testing.T) {
 	t.Parallel()
+	repo := []push{{dir: "/repo", args: []string{}}}
+	topic := []push{{dir: "/repo", args: []string{"origin", "topic"}}}
 	tests := []struct {
-		name, command, dir string
-		args               []string
-		applies, deny      bool
+		name, command string
+		want          []push
+		unverifiable  bool
 	}{
-		{"plain", "git push", "/repo", nil, true, false},
-		{"trailing LF", "git push\n", "/repo", nil, true, false},
-		{"echo words", "echo git push", "", nil, false, false},
-		{"log word", "git log --grep push", "", nil, false, false},
-		{"eval words", "eval git push", "", nil, true, true},
-		{"if compound", "if true; then git push; fi", "", nil, true, true},
-		{"if condition", "if git push; then true; fi", "", nil, true, true},
-		{"for compound", "for x in a; do git push; done", "", nil, true, true},
-		{"while compound", "while true; do git push; done", "", nil, true, true},
-		{"until compound", "until git push; do true; done", "", nil, true, true},
-		{"elif compound", "if false; then true; elif git push; then true; fi", "", nil, true, true},
-		{"else compound", "if false; then true; else git push; fi", "", nil, true, true},
-		{"negation", "! git push", "", nil, true, true},
-		{"case compound", "case a in a) git push;; esac", "", nil, true, true},
-		{"brace compound", "{ git push; }", "", nil, true, true},
-		{"function compound", "function f { git push; }; f", "", nil, true, true},
-		{"reserved literal", "echo 'then git push'", "", nil, false, false},
-		{"compound literal", "echo 'if true; then git push; fi'", "", nil, false, false},
-		{"remote", "git push -u origin HEAD:refs/heads/topic", "/repo", []string{"-u", "origin", "HEAD:refs/heads/topic"}, true, false},
-		{"cd quoted", `cd '/work/a b' && git push origin 'topic'`, "/work/a b", []string{"origin", "topic"}, true, false},
-		{"cd relative", `cd ../other && git push`, "/other", nil, true, false},
-		{"cd end options", `cd -- other && git push`, "/repo/other", nil, true, false},
-		{"C escaped", `git -C /work/a\ b push origin topic`, "/work/a b", []string{"origin", "topic"}, true, false},
-		{"multiple C", `git -C /work -C other push`, "/work/other", nil, true, false},
-		{"quoted dollar", `git -C '/work/$literal' push`, "/work/$literal", nil, true, false},
-		{"escaped dollar", `git -C /work/\$literal push`, "/work/$literal", nil, true, false},
-		{"dynamic", `git push "$REMOTE"`, "", nil, true, true},
-		{"dynamic command", `$GIT push`, "", nil, true, true},
-		{"dynamic subcommand", `git $ACTION`, "", nil, true, true},
-		{"switch", `git switch topic && git push`, "", nil, true, true},
-		{"extra command", `git push; echo done`, "", nil, true, true},
-		{"pipe", `git push | tee log`, "", nil, true, true},
-		{"eval", `eval 'git push'`, "", nil, true, true},
-		{"shell", `bash -c 'git push'`, "", nil, true, true},
-		{"subshell", `(git push)`, "", nil, true, true},
-		{"substitution", `echo $(git push)`, "", nil, true, true},
-		{"quoted substitution", `echo "$(git push)"`, "", nil, true, true},
-		{"backtick", "echo `git push`", "", nil, true, true},
-		{"environment", `FOO=bar git push`, "", nil, true, true},
-		{"wrapper", `command git push`, "", nil, true, true},
-		{"redirect", `git push >output`, "", nil, true, true},
-		{"git config", `git -c push.default=current push`, "", nil, true, true},
-		{"unclosed", `git push 'origin`, "", nil, true, true},
-		{"echo", `echo 'git push'`, "", nil, false, false},
-		{"literal substitution", `echo '$(git push)'`, "", nil, false, false},
-		{"log", `git log --grep='git push'`, "", nil, false, false},
-		{"status", `git status`, "", nil, false, false},
-		{"comment", `echo ok # git push`, "", nil, false, false},
+		{"plain", "git push", repo, false},
+		{"trailing LF", "git push\n", repo, false},
+		{"echo words", "echo git push", nil, false},
+		{"log word", "git log --grep push", nil, false},
+		{"eval words", "eval git push", repo, false},
+		{"if compound", "if true; then git push; fi", repo, false},
+		{"if condition", "if git push; then true; fi", repo, false},
+		{"for compound", "for x in a; do git push; done", repo, false},
+		{"while compound", "while true; do git push; done", repo, false},
+		{"until compound", "until git push; do true; done", repo, false},
+		{"elif compound", "if false; then true; elif git push; then true; fi", repo, false},
+		{"else compound", "if false; then true; else git push; fi", repo, false},
+		{"negation", "! git push", repo, false},
+		{"case compound", "case a in a) git push;; esac", repo, false},
+		{"brace compound", "{ git push; }", repo, false},
+		{"function compound", "function f { git push; }; f", repo, false},
+		{"reserved literal", "echo 'then git push'", nil, false},
+		{"compound literal", "echo 'if true; then git push; fi'", nil, false},
+		{"remote", "git push -u origin HEAD:refs/heads/topic", []push{{dir: "/repo", args: []string{"-u", "origin", "HEAD:refs/heads/topic"}}}, false},
+		{"cd quoted", `cd '/work/a b' && git push origin 'topic'`, []push{{dir: "/work/a b", args: []string{"origin", "topic"}}}, false},
+		{"cd relative", `cd ../other && git push`, []push{{dir: "/other", args: []string{}}}, false},
+		{"cd end options", `cd -- other && git push`, []push{{dir: "/repo/other", args: []string{}}}, false},
+		{"cd dynamic", `cd "$DIR" && git push`, nil, true},
+		{"cd tilde", `cd ~/work && git push`, nil, true},
+		{"C escaped", `git -C /work/a\ b push origin topic`, []push{{dir: "/work/a b", args: []string{"origin", "topic"}}}, false},
+		{"multiple C", `git -C /work -C other push`, []push{{dir: "/work/other", args: []string{}}}, false},
+		{"quoted dollar", `git -C '/work/$literal' push`, []push{{dir: "/work/$literal", args: []string{}}}, false},
+		{"escaped dollar", `git -C /work/\$literal push`, []push{{dir: "/work/$literal", args: []string{}}}, false},
+		{"dynamic", `git push "$REMOTE"`, nil, true},
+		{"dynamic branch", `git push origin "$(git branch --show-current)"`, nil, true},
+		{"dynamic command", `$GIT push`, nil, true},
+		{"dynamic subcommand", `git $ACTION`, nil, true},
+		{"glob", `git push origin refs/heads/*`, nil, true},
+		{"quoted glob", `git push origin 'refs/heads/*:refs/heads/*'`, []push{{dir: "/repo", args: []string{"origin", "refs/heads/*:refs/heads/*"}}}, false},
+		{"switch", `git switch topic && git push`, repo, false},
+		{"chained commit", `git add x && git commit -m y && git push origin topic && git rev-parse HEAD`, topic, false},
+		{"extra command", `git push; echo done`, repo, false},
+		{"pipe and redirect", `git push origin topic 2>&1 | tail -2`, topic, false},
+		{"two pushes", `git push origin topic; git push origin other`, []push{topic[0], {dir: "/repo", args: []string{"origin", "other"}}}, false},
+		{"eval", `eval 'git push'`, repo, false},
+		{"shell", `bash -c 'git push origin topic'`, topic, false},
+		{"shell dynamic", `bash -c "git push $REMOTE"`, nil, true},
+		{"subshell", `(git push)`, repo, false},
+		{"substitution", `echo $(git push)`, repo, false},
+		{"quoted substitution", `echo "$(git push)"`, repo, false},
+		{"backtick", "echo `git push`", repo, false},
+		{"environment", `FOO=bar git push`, repo, false},
+		{"git environment", `GIT_DIR=/x git push`, nil, true},
+		{"env wrapper", `env FOO=bar git push origin topic`, topic, false},
+		{"env git environment", `env GIT_DIR=/x git push`, nil, true},
+		{"env options", `env -u FOO git push`, nil, true},
+		{"wrapper", `command git push`, repo, false},
+		{"command lookup", `command -v git`, nil, false},
+		{"redirect", `git push >output`, repo, false},
+		{"git config", `git -c push.default=current push`, nil, true},
+		{"git dir", `git --git-dir=/x push`, nil, true},
+		{"unclosed", `git push 'origin`, nil, false},
+		{"echo", `echo 'git push'`, nil, false},
+		{"literal substitution", `echo '$(git push)'`, nil, false},
+		{"log", `git log --grep='git push'`, nil, false},
+		{"status", `git status`, nil, false},
+		{"comment", `echo ok # git push`, nil, false},
+		{"heredoc body", "cat > f <<'EOF'\ngit push origin topic\nEOF", nil, false},
+		{"commit message", "git commit -m \"$(cat <<'EOF'\nfix: x\n\ngit push origin topic\nEOF\n)\"", nil, false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			dir, args, applies, e := parsePush("/repo", tt.command)
-			if applies != tt.applies || (e != nil) != tt.deny {
-				t.Fatalf("applicable=%v err=%v", applies, e)
+			got, e := findPushes("/repo", tt.command, 0)
+			if (e != nil) != tt.unverifiable || (e != nil && !errors.Is(e, errUnverifiable)) {
+				t.Fatalf("err=%v", e)
 			}
-			if applies && e == nil && (dir != tt.dir || !reflect.DeepEqual(args, tt.args)) {
-				t.Fatalf("dir=%q args=%q", dir, args)
+			if e == nil && !reflect.DeepEqual(got, tt.want) {
+				t.Fatalf("pushes=%+v want %+v", got, tt.want)
 			}
 		})
 	}
@@ -121,12 +139,12 @@ func TestHookOutput(t *testing.T) {
 		{"same text is not evidence", "git push", errors.New(gitstate.ErrMergedBranch.Error()), true, ""},
 		{"confirmed", "git push", gitstate.ErrMergedBranch, true, merged},
 		{"wrapped confirmed", "git push", fmt.Errorf("private details: %w", gitstate.ErrMergedBranch), true, merged},
-		{"switch", "git switch topic && git push", nil, false, denySyntax},
-		{"chained commit", "git add x && git commit -m y && git push origin topic && git rev-parse HEAD", nil, false, denySyntax},
-		{"pipeline and redirect", "git push origin feature/example 2>&1 | tail -2", nil, false, denySyntax},
-		{"dynamic", `git push "$REMOTE"`, nil, false, denySyntax},
-		{"unclosed quote", `git push 'origin`, nil, false, denySyntax},
-		{"commit message mentioning push", "git commit -m \"$(cat <<'EOF'\nfix: cc-push-guard が git push を止める\nEOF\n)\"", nil, false, ""},
+		{"chained", "git add x && git commit -m y && git push origin topic && git rev-parse HEAD", nil, true, ""},
+		{"chained confirmed", "git add x && git commit -m y && git push origin topic && git rev-parse HEAD", gitstate.ErrMergedBranch, true, merged},
+		{"pipeline and redirect confirmed", "git push origin feature/example 2>&1 | tail -2", gitstate.ErrMergedBranch, true, merged},
+		{"dynamic", `git push "$REMOTE"`, nil, false, denyUnverifiable},
+		{"unclosed quote", `git push 'origin`, nil, false, ""},
+		{"commit message mentioning push", "git commit -m \"$(cat <<'EOF'\nfix: x\n\ngit push origin topic\nEOF\n)\"", nil, false, ""},
 	} {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
@@ -194,10 +212,11 @@ func TestGitCUsesPhysicalDirectory(t *testing.T) {
 	}
 	git(other, "init", "--initial-branch=main")
 	for _, command := range []string{"git -C '" + link + "/..' push", "git -C '" + link + "' -C .. push"} {
-		dir, _, applies, e := parsePush(work, command)
-		if e != nil || !applies {
-			t.Fatalf("parse: %v", e)
+		pushes, e := findPushes(work, command, 0)
+		if e != nil || len(pushes) != 1 {
+			t.Fatalf("pushes=%+v err=%v", pushes, e)
 		}
+		dir := pushes[0].dir
 		expected := git(work, "-C", link+"/..", "rev-parse", "--show-toplevel")
 		actual := git(dir, "rev-parse", "--show-toplevel")
 		if actual != expected {
