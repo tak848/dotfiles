@@ -16,7 +16,7 @@ import (
 	"github.com/tak848/dotfiles/go/internal/render"
 )
 
-const denySyntax = "push の対象を安全に確認できません。動的展開・eval・ブランチ変更などを分け、リテラルの git push 単独コマンドで再確認してください。"
+const denySyntax = "このコマンドは git push を含みますが、ほかのコマンドとの連結（&& ; |）・リダイレクト・動的展開（$VAR、$(...)）・eval などがあり、push 先がマージ済みで削除されたブランチでないかを確認できないため、実行しませんでした。git push を単独のコマンドに分け、remote とブランチ名をリテラルで書いて実行し直してください（cd <dir> && git push は可）。heredoc などの文字列に git push で始まる行を入れているときは、その文字列をファイルに書いてから渡してください。"
 
 type token struct {
 	text              string
@@ -216,7 +216,7 @@ func commandPush(ts []token, depth int) bool {
 	return false
 }
 
-// parsePush は echo 'git push' など無関係なコマンドを対象外とする。未対応構文は解析エラーにし、呼び出し側は通常の実行へ戻す。
+// parsePush は echo 'git push' など無関係なコマンドを対象外とする。未対応構文は解析エラーにし、呼び出し側は deny する。
 func parsePush(cwd, command string) (dir string, args []string, applicable bool, err error) {
 	ts, lexErr := lex(strings.TrimSpace(command))
 	if !potentialPush(ts, 0) {
@@ -316,7 +316,15 @@ func runWithEnv(ctx context.Context, r io.Reader, w io.Writer, check checkFunc, 
 		return nil
 	}
 	dir, args, applies, e := parsePush(in.CWD, *in.ToolInput.Command)
-	if e != nil || !applies || !filepath.IsAbs(dir) || ctx.Err() != nil {
+	if !applies || !filepath.IsAbs(in.CWD) || ctx.Err() != nil {
+		return nil
+	}
+	// git push を含むのに単独のリテラルな push として読めないコマンドは、push 先を確認できないので止める。
+	// 通すと git commit && git push や git push | tail の形で、削除済みのマージ済みブランチを作り直せてしまう。
+	if e != nil {
+		return writeDeny(w, denySyntax)
+	}
+	if !filepath.IsAbs(dir) {
 		return nil
 	}
 	e = check(ctx, dir, args)

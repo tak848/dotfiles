@@ -106,23 +106,27 @@ func TestParsePush(t *testing.T) {
 }
 func TestHookOutput(t *testing.T) {
 	t.Parallel()
+	merged := gitstate.ErrMergedBranch.Error() + "\n作業ディレクトリ: /repo"
 	for _, tt := range []struct {
-		name, command  string
-		err            error
-		wantCall, deny bool
+		name, command string
+		err           error
+		wantCall      bool
+		reason        string
 	}{
-		{"unrelated", "echo 'git push'", nil, false, false},
-		{"normal", "git push", nil, true, false},
-		{"unknown", "git push", errors.New("確認不能"), true, false},
-		{"timeout", "git push", context.DeadlineExceeded, true, false},
-		{"canceled", "git push", context.Canceled, true, false},
-		{"same text is not evidence", "git push", errors.New(gitstate.ErrMergedBranch.Error()), true, false},
-		{"confirmed", "git push", gitstate.ErrMergedBranch, true, true},
-		{"wrapped confirmed", "git push", fmt.Errorf("private details: %w", gitstate.ErrMergedBranch), true, true},
-		{"switch", "git switch topic && git push", nil, false, false},
-		{"pipeline and redirect", "git push origin feature/example 2>&1 | tail -2", nil, false, false},
-		{"dynamic", `git push "$REMOTE"`, nil, false, false},
-		{"unclosed quote", `git push 'origin`, nil, false, false},
+		{"unrelated", "echo 'git push'", nil, false, ""},
+		{"normal", "git push", nil, true, ""},
+		{"unknown", "git push", errors.New("確認不能"), true, ""},
+		{"timeout", "git push", context.DeadlineExceeded, true, ""},
+		{"canceled", "git push", context.Canceled, true, ""},
+		{"same text is not evidence", "git push", errors.New(gitstate.ErrMergedBranch.Error()), true, ""},
+		{"confirmed", "git push", gitstate.ErrMergedBranch, true, merged},
+		{"wrapped confirmed", "git push", fmt.Errorf("private details: %w", gitstate.ErrMergedBranch), true, merged},
+		{"switch", "git switch topic && git push", nil, false, denySyntax},
+		{"chained commit", "git add x && git commit -m y && git push origin topic && git rev-parse HEAD", nil, false, denySyntax},
+		{"pipeline and redirect", "git push origin feature/example 2>&1 | tail -2", nil, false, denySyntax},
+		{"dynamic", `git push "$REMOTE"`, nil, false, denySyntax},
+		{"unclosed quote", `git push 'origin`, nil, false, denySyntax},
+		{"commit message mentioning push", "git commit -m \"$(cat <<'EOF'\nfix: cc-push-guard が git push を止める\nEOF\n)\"", nil, false, ""},
 	} {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
@@ -136,7 +140,7 @@ func TestHookOutput(t *testing.T) {
 			if called != tt.wantCall {
 				t.Fatalf("called=%v", called)
 			}
-			if !tt.deny {
+			if tt.reason == "" {
 				if out.Len() != 0 {
 					t.Fatalf("allow output=%s", out.String())
 				}
@@ -148,7 +152,7 @@ func TestHookOutput(t *testing.T) {
 			if e = json.Unmarshal(out.Bytes(), &v); e != nil || v.Hook["permissionDecision"] != "deny" || v.Hook["hookEventName"] != "PreToolUse" {
 				t.Fatalf("deny output=%s err=%v", out.String(), e)
 			}
-			if v.Hook["permissionDecisionReason"] != gitstate.ErrMergedBranch.Error()+"\n作業ディレクトリ: /repo" {
+			if v.Hook["permissionDecisionReason"] != tt.reason {
 				t.Fatalf("unexpected reason: %s", out.String())
 			}
 		})
