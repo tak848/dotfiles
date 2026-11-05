@@ -72,7 +72,8 @@ local mcpAllow = [
     // GitHub の操作は gh で行う（公式 docs best-practices も CLI があるならそれが一番簡単な入り口としている）。
     // 公式の GitHub MCP は Authorization ヘッダが不正な形で接続に失敗していたうえ、リモートの MCP は Claude Code からの
     // OAuth に対応していない。.chezmoidata/mcp-auto-approve.yaml の github は Codex が使うので残す。
-    // 'github@claude-plugins-official': true,
+    // 導入済みのプラグインは enabledPlugins に無いと defaultEnabled（既定 true）で有効になるので、false を明示する。
+    'github@claude-plugins-official': false,
     // Claude Security は uv 専用の自前版だけを使う。初回無効で、必要なときだけ有効化する。
     // 'security-uv@tak848-plugins': true,
     // context7 の公式プラグインは `npx -y @upstash/context7-mcp` を起動する。registry からの
