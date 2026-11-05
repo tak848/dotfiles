@@ -59,7 +59,8 @@ func TestFeedbackNeedsNoHookKnowledge(t *testing.T) {
 		if d.Decision != "block" {
 			t.Fatal(d)
 		}
-		for _, forbidden := range []string{"hook", "gate", "補助チェック", "background_tasks", "session_crons", "transcript", "cwd", "検査ID", "検査 ID", "[github-", gitstate.CheckFailurePrefix} {
+		// 設定の名前も出さない。モデルが自分で設定を書き換えて判定を変えることを誘わないため。
+		for _, forbidden := range []string{"hook", "gate", "GATE", "EXTERNAL_WAIT", "PAUSE", "補助チェック", "background_tasks", "session_crons", "transcript", "cwd", "検査ID", "検査 ID", "[github-", gitstate.CheckFailurePrefix} {
 			if strings.Contains(d.Reason, forbidden) {
 				t.Fatalf("implementation detail %q in feedback: %s", forbidden, d.Reason)
 			}

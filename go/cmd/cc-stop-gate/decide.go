@@ -12,7 +12,9 @@ type facts struct {
 	Mode     string
 	Message  message
 	Inflight int
-	Issues   []string
+	// ExternalWait は、ホストが turn の外の出来事を新しい turn として届ける環境か（main.go の externalWaitEnv）。
+	ExternalWait bool
+	Issues       []string
 }
 
 // askQuestion は、質問の手順を示す 1 文。完遂確認・plan mode・Git の差し戻しで共通に使う。
@@ -22,11 +24,17 @@ type facts struct {
 // text の質問でターンが終わることは無い。
 const askQuestion = "ユーザーの判断が本当に必要なら、質問は必ず AskUserQuestion で行え。判断材料を先に見せる必要があるときは、判断材料を text に書いて最終行を「質問予告: <問いの要約>」にしろ。このゲートが必ず差し戻して AskUserQuestion を呼ばせるので、ターンは終わらない。判断材料が要らない質問なら AskUserQuestion を直接呼べ。"
 
+// finalReport は、照合の結果ではなく報告を最後の text に書かせる指示。完遂確認と resign で共通に使う。
+// 呼び出し元のエージェントは最後の text だけを受け取り、tool 呼び出しの前の text は要約されて
+// 届かないことがある（askNow と同じ理由）。差し戻しの後に照合の一覧だけを書くと、報告の中身が読み手に届かない。
+const finalReport = "照合の過程や一覧は最後の text に書くな。読み手（人、または作業を頼んだエージェント）が受け取るのは最後の text だけのことがある。tool 呼び出しの前の text は要約されて届かないことがあり、この差し戻しより前に書いた報告も届いているとは限らない。最後の text は読み手に渡す報告そのもの（結果・根拠・未確認のこと）にし、署名はその最終行に書け。"
+
 const completionCheck = `【署名の前に全項目を照合しろ】
 1. plan があるなら、記憶で済ませず今開き直せ。無ければユーザーの依頼を読み直せ。
 2. 依頼された全項目を一つずつ、実装した内容と実際に行った検証結果に照合しろ。
 3. やり残しを勝手に「別 PR」「次回」「対象外」にしていないか確認しろ。
 一つでも終わっていなければ、その作業を今実行しろ。` + askQuestion + `
+` + finalReport + `
 全項目を終えた場合だけ、最終行に装飾なしで次の署名を書け。
 完了誓約: <実装・検証を全項目終えた内容の1行要約>
 調査完了: <依頼された調査・回答を終えた内容の1行要約>
@@ -45,8 +53,8 @@ question と選択肢は直前に書いた問いに合わせ、判断材料を�
 
 const noWaitTarget = "「作業待機」と書かれていますが、実行中の背景タスクも予定済みの cron もありません。待つ対象が無いので、今できる作業を実行してください。"
 
-// resign は、署名の形式を既に使えている場合に完遂確認の全文を繰り返さないための 1 文。
-const resign = "対応後、依頼の全項目を照合し直し、最終行に同じ形式の署名を書け。"
+// resign は、署名の形式を既に使えている場合に完遂確認の全文を繰り返さないための短い指示。
+const resign = "対応後、依頼の全項目を照合し直し、同じ形式の署名を使え。" + finalReport
 
 // tellReason は、本文のどこが一致したかを引用する。否定文でも一致し得るため、
 // 残作業がある場合と無い場合の行動を両方示す。
@@ -66,7 +74,9 @@ func decide(f facts) decision {
 		return block(askNow)
 	}
 	if f.Message.Signature == waiting {
-		if f.Inflight > 0 {
+		// 外から再開される待ちは background_tasks / session_crons に出ないので、
+		// 有効なときは待つ対象の書かれた署名だけで通す（対象が空なら署名として認めていない）。
+		if f.Inflight > 0 || f.ExternalWait {
 			return decision{}
 		}
 		if plan {
