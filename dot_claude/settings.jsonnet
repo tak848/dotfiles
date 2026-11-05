@@ -69,7 +69,10 @@ local mcpAllow = [
     },
   },
   enabledPlugins: {
-    'github@claude-plugins-official': true,
+    // GitHub の操作は gh で行う（公式 docs best-practices も CLI があるならそれが一番簡単な入り口としている）。
+    // 公式の GitHub MCP は Authorization ヘッダが不正な形で接続に失敗していたうえ、リモートの MCP は Claude Code からの
+    // OAuth に対応していない。.chezmoidata/mcp-auto-approve.yaml の github は Codex が使うので残す。
+    // 'github@claude-plugins-official': true,
     // Claude Security は uv 専用の自前版だけを使う。初回無効で、必要なときだけ有効化する。
     // 'security-uv@tak848-plugins': true,
     // context7 の公式プラグインは `npx -y @upstash/context7-mcp` を起動する。registry からの
@@ -234,8 +237,7 @@ local mcpAllow = [
       'WebFetch(domain:docs.devin.ai)',
       'WebFetch(domain:devin.ai)',
       'WebFetch(domain:developers.openai.com)',
-      // MCP のツール（context7 / GitHub / Devin / AWS Knowledge）は .chezmoidata/mcp-auto-approve.yaml から作る。
-      // GitHub の PR 作成・更新（create_pull_request / update_pull_request）は都度確認のため入れていない。
+      // MCP のツール（context7 / Devin / AWS Knowledge。GitHub は Codex 用）は .chezmoidata/mcp-auto-approve.yaml から作る。
     ] + mcpAllow,
     deny: permissionRules.permissionsDeny,
   },
