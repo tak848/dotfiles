@@ -424,7 +424,8 @@ local mcpAllow = [
         hooks: [
           {
             type: 'command',
-            command: 'ccgate claude',
+            // CCGATE=0 で起動したセッションは ccgate を呼ばず、Claude Code の通常の確認に戻す（何も出力しなければ判定なし）
+            command: '[ "${CCGATE:-1}" = 0 ] || ccgate claude',
           },
         ],
       },
