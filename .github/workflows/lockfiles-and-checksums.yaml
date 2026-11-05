@@ -69,14 +69,20 @@ jobs:
       # 全削除して作り直すと uv.lock の exclude-newer と digest が毎回変わり、無関係な PR が競合する。
       # full mise lock は削除済みツールと旧バージョンを自動で整理するので、事前削除は不要。
       # pipx:snowflake-cli の依存グラフは uv で解決するので、mise lock の前に uv を入れておく。
-      # 解決に使う Python は uv が見つけられるものなら何でもよい（ランナーの python3 を使う）。
+      # config の python（3.13）も入れる。mise 2026.10.21 からの mise lock は、解決した依存グラフが
+      # `uv sync --frozen --no-build` で入るかを mise の python で試し（jdx/mise#15031）、mise の python が
+      # 入っていなければ PATH 上の python（ubuntu-26.04 のランナーでは 3.14）で試す。snowflake-cli が
+      # 固定している pyyaml 6.0.2 には cp314 の wheel が無いので試しに失敗し、mise は警告だけ出して
+      # 依存グラフの無いエントリを書く。この step は成功したまま、CI の mise install が
+      # "has no uv dependency graph" で落ちる。既存の依存グラフは再利用されるので、表に出るのは
+      # snowflake-cli の版が変わったときだけ。
       - name: Regenerate lockfiles and checksums
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           mise lock
-          ( cd dot_config/mise && mise install aqua:astral-sh/uv && mise lock )
+          ( cd dot_config/mise && mise install aqua:astral-sh/uv python && mise lock )
           # mise は repo の dot_config/mise では sidecar を .mise/locks/ に書くが、配布先の
           # ~/.config/mise/mise.lock では locks/ を置き場にする。そのまま配ると配布先の mise が
           # 保存のたびに locks/ へ移して mise.lock を書き換えるので、配布先の置き場に揃えておく。
