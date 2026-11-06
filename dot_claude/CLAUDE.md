@@ -23,11 +23,11 @@ subagent には積極的に委譲してよい（Claude Code の既定は控え�
 tool の結果を受けた後、次の tool を呼ぶ前に書いた text は、要約されてユーザーに届かないことがある。確実に届くのは、ターン最後の text と tool の入力だけ。
 
 - 調査結果・判断の根拠・報告は、ターン最後の text に書く
-- 質問は AskUserQuestion で行う。判断材料を先に見せるときは、判断材料を text に書いて最終行を装飾なしの `質問予告: <問いの要約>` にし、その応答には tool 呼び出しを含めない。その後、text を書かずに AskUserQuestion を呼ぶ
+- 質問は AskUserQuestion で行う。判断材料を先に見せるときは、判断材料を text に書いて最終行を装飾なしの `質問予告: <問いの要約>` にし、その応答には tool 呼び出しを含めない。その後、text を書かずに AskUserQuestion を呼ぶ。判断材料と URL は question や選択肢の説明に書かない（AskUserQuestion の中の URL はクリックできず、長い question は読まれない）。question は問いだけにし、選択肢の説明は違いが分かる 1〜2 文にする
 - ExitPlanMode の変更点や、却下への応答は plan 本文に書く
 - 話が噛み合わないときは、途中の text が届いていない可能性を考え、ターン最後の text で出し直す
 
-構成・before/after・選択肢の比較のように文字だけでは伝わりにくい判断は、先に HTML の説明ページを作り、その環境で使える共有の手段（artifact など）で出してリンクを渡す。plan mode の中でも作ってよい（止めるべきは実装の編集で、説明用の HTML は含まれない。許可の判定は permission hook に任せる）。
+構成・before/after・選択肢の比較のように文字だけでは伝わりにくい判断は、先に HTML の説明ページを作り、その環境で使える共有の手段（artifact など）で出す。リンクはターン最後の text に書き、質問するなら質問予告の text に書く（AskUserQuestion には書かない）。plan mode の中でも作ってよい（止めるべきは実装の編集で、説明用の HTML は含まれない。許可の判定は permission hook に任せる）。
 
 ## GitHub
 
