@@ -48,6 +48,8 @@ func TestFeedbackNeedsNoHookKnowledge(t *testing.T) {
 	cases := []facts{
 		{Message: message{}},
 		{Message: message{Signature: waiting}},
+		{ExternalWait: true, Message: message{Signature: waiting}},
+		{Mode: "plan", ExternalWait: true, Message: message{Signature: waiting}},
 		{Mode: "plan", Message: message{}},
 		{Mode: "plan", Message: message{Signature: pledge}},
 		{Message: message{Tells: true}},

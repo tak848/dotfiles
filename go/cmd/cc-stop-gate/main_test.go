@@ -25,12 +25,14 @@ func envMap(values map[string]string) lookupEnv {
 func TestRun(t *testing.T) {
 	t.Parallel()
 	tests := map[string]struct {
-		mode     string
-		text     string
-		tasks    string
-		crons    string
-		env      map[string]string
-		issues   []string
+		mode   string
+		text   string
+		tasks  string
+		crons  string
+		env    map[string]string
+		issues []string
+		// active は Stop 入力の stop_hook_active（Claude Code が既に Stop hook による継続中か）。
+		active   bool
 		blocked  bool
 		checked  bool
 		contains string
@@ -55,20 +57,35 @@ func TestRun(t *testing.T) {
 		"fake waiting":                   {mode: "default", text: "作業待機: 自分の作業", blocked: true, contains: "待つ対象が無い"},
 		"empty task":                     {mode: "default", text: "作業待機: 作業", tasks: `[null,{},"x"]`, blocked: true, contains: "待つ対象が無い"},
 		"background alone not exemption": {mode: "default", text: "終了します", tasks: `[{"id":"monitor-1"}]`, blocked: true, checked: true},
+		// Stop hook による継続中でも、作業待機以外の判定は解除しない。
+		"no signature while continuing":      {mode: "default", text: "終わりました。", active: true, blocked: true, checked: true, contains: "plan があるなら"},
+		"dirty while continuing":             {mode: "default", text: "完了誓約: 完了", issues: []string{"未 commit"}, active: true, blocked: true, checked: true, contains: "未 commit"},
+		"plan no signature while continuing": {mode: "plan", text: "計画を示しました。", active: true, blocked: true, contains: "ExitPlanMode"},
+		"fake waiting while continuing":      {mode: "default", text: "作業待機: 自分の作業", active: true, blocked: true, contains: "待つ対象が無い"},
 		// ホストが turn の外の出来事を新しい turn として届ける環境の待ち（CC_STOP_GATE_EXTERNAL_WAIT）。
-		"external wait unset":           {mode: "default", text: "作業待機: 任せた作業の結果", blocked: true, contains: "待つ対象が無い"},
-		"external wait not enabled":     {mode: "default", text: "作業待機: 任せた作業の結果", env: map[string]string{externalWaitEnv: "anything"}, blocked: true, contains: "待つ対象が無い"},
-		"external wait":                 {mode: "default", text: "作業待機: 任せた作業の結果", env: map[string]string{externalWaitEnv: "1"}},
-		"external wait skips git":       {mode: "acceptEdits", text: "作業待機: 承認の結果", env: map[string]string{externalWaitEnv: " TRUE "}, issues: []string{"未 commit"}},
-		"external wait plan":            {mode: "plan", text: "作業待機: 任せた調査の結果", env: map[string]string{externalWaitEnv: "yes"}},
-		"external wait empty target":    {mode: "default", text: "作業待機: ", env: map[string]string{externalWaitEnv: "on"}, blocked: true, checked: true, contains: "plan があるなら", excludes: "待つ対象が無い"},
-		"external wait signed tells":    {mode: "default", text: "続きは次回\n作業待機: 任せた作業の結果", env: map[string]string{externalWaitEnv: "1"}},
-		"external wait other signature": {mode: "default", text: "終わりました。", env: map[string]string{externalWaitEnv: "1"}, blocked: true, checked: true, contains: "plan があるなら"},
-		"question":                      {mode: "default", text: "| 案 | 影響 |\n|---|---|\n| A | 小 |\n質問予告: A と B のどちらにするか", blocked: true, contains: "今すぐ AskUserQuestion を呼べ"},
-		"question skips tells":          {mode: "default", text: "残りは B 案の判断だけです。\n質問予告: B 案にするか", blocked: true, contains: "質問予告を受け付けた"},
-		"question skips git issues":     {mode: "acceptEdits", text: "質問予告: どちらにするか", issues: []string{"未 commit"}, blocked: true, contains: "判断材料を繰り返すな"},
-		"plan question":                 {mode: "plan", text: "質問予告: 方針を選んでもらう", blocked: true, contains: "今すぐ AskUserQuestion を呼べ"},
-		"question not final":            {mode: "default", text: "質問予告: どちらにするか\n補足", blocked: true, checked: true, contains: "質問予告: <問いの要約>"},
+		// 無効なときは、Stop hook による継続中でも今と同じく差し戻す。
+		"external wait unset":                  {mode: "default", text: "作業待機: 任せた作業の結果", blocked: true, contains: "待つ対象が無い"},
+		"external wait unset while continuing": {mode: "default", text: "作業待機: 任せた作業の結果", active: true, blocked: true, contains: "待つ対象が無い", excludes: "作業待機の前に確かめろ"},
+		"external wait not enabled":            {mode: "default", text: "作業待機: 任せた作業の結果", env: map[string]string{externalWaitEnv: "anything"}, active: true, blocked: true, contains: "待つ対象が無い"},
+		"plan external wait unset":             {mode: "plan", text: "作業待機: 任せた調査の結果", active: true, blocked: true, contains: "待つ対象が無い"},
+		// 有効なときは、1 回目を確認の文で差し戻し、書き直した作業待機（stop_hook_active が true）を通す。
+		"external wait first":               {mode: "default", text: "作業待機: 任せた作業の結果", env: map[string]string{externalWaitEnv: "1"}, blocked: true, contains: "【作業待機の前に確かめろ】", excludes: "待つ対象が無い"},
+		"external wait rewritten":           {mode: "default", text: "作業待機: 任せた作業の結果", env: map[string]string{externalWaitEnv: "1"}, active: true},
+		"external wait inflight":            {mode: "default", text: "作業待機: 任せた作業の結果", env: map[string]string{externalWaitEnv: "1"}, tasks: `[{"id":"agent-1"}]`},
+		"external wait first skips git":     {mode: "acceptEdits", text: "作業待機: 承認の結果", env: map[string]string{externalWaitEnv: " TRUE "}, issues: []string{"未 commit"}, blocked: true, contains: "本当に必須か", excludes: "未 commit"},
+		"external wait rewritten skips git": {mode: "acceptEdits", text: "作業待機: 承認の結果", env: map[string]string{externalWaitEnv: " TRUE "}, issues: []string{"未 commit"}, active: true},
+		"external wait plan first":          {mode: "plan", text: "作業待機: 任せた調査の結果", env: map[string]string{externalWaitEnv: "yes"}, blocked: true, contains: "【作業待機の前に確かめろ】", excludes: "ExitPlanMode"},
+		"external wait plan rewritten":      {mode: "plan", text: "作業待機: 任せた調査の結果", env: map[string]string{externalWaitEnv: "yes"}, active: true},
+		"external wait empty target":        {mode: "default", text: "作業待機: ", env: map[string]string{externalWaitEnv: "on"}, blocked: true, checked: true, contains: "plan があるなら", excludes: "待つ対象が無い"},
+		"external wait empty target active": {mode: "default", text: "作業待機: ", env: map[string]string{externalWaitEnv: "on"}, active: true, blocked: true, checked: true, contains: "plan があるなら", excludes: "作業待機の前に確かめろ"},
+		"external wait signed tells first":  {mode: "default", text: "続きは次回\n作業待機: 任せた作業の結果", env: map[string]string{externalWaitEnv: "1"}, blocked: true, contains: "【作業待機の前に確かめろ】", excludes: "表現に一致しました"},
+		"external wait signed tells":        {mode: "default", text: "続きは次回\n作業待機: 任せた作業の結果", env: map[string]string{externalWaitEnv: "1"}, active: true},
+		"external wait other signature":     {mode: "default", text: "終わりました。", env: map[string]string{externalWaitEnv: "1"}, active: true, blocked: true, checked: true, contains: "plan があるなら"},
+		"question":                          {mode: "default", text: "| 案 | 影響 |\n|---|---|\n| A | 小 |\n質問予告: A と B のどちらにするか", blocked: true, contains: "今すぐ AskUserQuestion を呼べ"},
+		"question skips tells":              {mode: "default", text: "残りは B 案の判断だけです。\n質問予告: B 案にするか", blocked: true, contains: "質問予告を受け付けた"},
+		"question skips git issues":         {mode: "acceptEdits", text: "質問予告: どちらにするか", issues: []string{"未 commit"}, blocked: true, contains: "判断材料を繰り返すな"},
+		"plan question":                     {mode: "plan", text: "質問予告: 方針を選んでもらう", blocked: true, contains: "今すぐ AskUserQuestion を呼べ"},
+		"question not final":                {mode: "default", text: "質問予告: どちらにするか\n補足", blocked: true, checked: true, contains: "質問予告: <問いの要約>"},
 	}
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
@@ -76,8 +93,9 @@ func TestRun(t *testing.T) {
 			obj := map[string]any{
 				"hook_event_name": "Stop", "permission_mode": tt.mode,
 				"cwd": "/example/repo", "last_assistant_message": tt.text,
-				// これらは参照しない。ファイルが無くても正しく動く。
-				"transcript_path": "/not/a/transcript", "stop_hook_active": true,
+				"stop_hook_active": tt.active,
+				// これは参照しない。ファイルが無くても正しく動く。
+				"transcript_path": "/not/a/transcript",
 			}
 			if tt.tasks != "" {
 				obj["background_tasks"] = jsontext.Value(tt.tasks)
@@ -125,6 +143,44 @@ func TestRun(t *testing.T) {
 			}
 			if tt.excludes != "" && strings.Contains(got.Reason, tt.excludes) {
 				t.Errorf("reason must not contain %q: %s", tt.excludes, got.Reason)
+			}
+		})
+	}
+}
+
+// Stop 入力の stop_hook_active を facts に渡す。外からの待ちの作業待機は、値が true のときだけ通り、
+// false と、キーが無いとき（Stop hook による継続中ではない）は確認の文で差し戻す。
+func TestStopHookActiveInput(t *testing.T) {
+	t.Parallel()
+	env := envMap(map[string]string{externalWaitEnv: "1"})
+	for name, tt := range map[string]struct {
+		field   string
+		blocked bool
+	}{
+		"true":    {`,"stop_hook_active":true`, false},
+		"false":   {`,"stop_hook_active":false`, true},
+		"missing": {"", true},
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			payload := `{"hook_event_name":"Stop","permission_mode":"default","cwd":"/repo","last_assistant_message":"作業待機: 任せた作業の結果","background_tasks":[],"session_crons":[]` + tt.field + `}`
+			var out bytes.Buffer
+			check := func(context.Context, string, []string) []string { t.Fatal("waiting must not inspect git"); return nil }
+			if code := run(strings.NewReader(payload), &out, env, check); code != 0 {
+				t.Fatalf("exit = %d", code)
+			}
+			if !tt.blocked {
+				if out.Len() != 0 {
+					t.Fatalf("unexpected output: %s", out.String())
+				}
+				return
+			}
+			var got decision
+			if err := json.Unmarshal(out.Bytes(), &got); err != nil {
+				t.Fatal(err)
+			}
+			if got != block(waitCheck) {
+				t.Fatalf("got %v, want waitCheck", got)
 			}
 		})
 	}

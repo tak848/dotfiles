@@ -26,14 +26,17 @@ const (
 // externalWaitEnv は、turn の外で起きたこと（別のエージェントに任せた作業の結果、承認の結果、
 // 購読した通知など）をホストが後から新しい turn として届ける環境のための設定。
 // これらの待ちは background_tasks にも session_crons にも出ないので、有効なときは
-// 待つ対象を書いた「作業待機」をそのまま通す。待つ相手が実在するかは確かめない。
+// 待つ対象を書いた「作業待機」を、1 回だけ差し戻して待つ前に確かめさせ（decide.go の waitCheck）、
+// 書き直された作業待機（stop_hook_active が true）を通す。待つ相手が実在するかは確かめない。
 const externalWaitEnv = "CC_STOP_GATE_EXTERNAL_WAIT"
 
 type input struct {
-	Event           string           `json:"hook_event_name"`
-	Mode            string           `json:"permission_mode"`
-	CWD             string           `json:"cwd"`
-	LastMessage     *string          `json:"last_assistant_message"`
+	Event       string  `json:"hook_event_name"`
+	Mode        string  `json:"permission_mode"`
+	CWD         string  `json:"cwd"`
+	LastMessage *string `json:"last_assistant_message"`
+	// StopHookActive は、Claude Code が既に Stop hook による継続中のとき true（公式 docs hooks の Stop input）。
+	StopHookActive  bool             `json:"stop_hook_active"`
 	BackgroundTasks []jsontext.Value `json:"background_tasks"`
 	SessionCrons    []jsontext.Value `json:"session_crons"`
 }
@@ -80,11 +83,12 @@ func run(stdin io.Reader, stdout io.Writer, env lookupEnv, check checkFunc) int 
 	message := analyze(*in.LastMessage)
 	externalWait, _ := env(externalWaitEnv)
 	f := facts{
-		CWD:          in.CWD,
-		Mode:         in.Mode,
-		Message:      message,
-		Inflight:     inflightCount(in.BackgroundTasks) + inflightCount(in.SessionCrons),
-		ExternalWait: enabled(externalWait),
+		CWD:            in.CWD,
+		Mode:           in.Mode,
+		Message:        message,
+		Inflight:       inflightCount(in.BackgroundTasks) + inflightCount(in.SessionCrons),
+		ExternalWait:   enabled(externalWait),
+		StopHookActive: in.StopHookActive,
 	}
 	// 待機・質問予告と plan mode は git より先。背景作業中・質問中・計画作成中の差分に
 	// commit を要求せず、不要なネットワーク照会も行わない。
