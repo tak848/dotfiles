@@ -14,7 +14,10 @@ type facts struct {
 	Inflight int
 	// ExternalWait は、ホストが turn の外の出来事を新しい turn として届ける環境か（main.go の externalWaitEnv）。
 	ExternalWait bool
-	Issues       []string
+	// StopHookActive は、Stop hook による継続中か（Stop 入力の stop_hook_active）。
+	// 背景作業の無い作業待機を ExternalWait で通すときだけ使い、ほかの判定には使わない。
+	StopHookActive bool
+	Issues         []string
 }
 
 // askQuestion は、質問の手順を示す 1 文。完遂確認・plan mode・Git の差し戻しで共通に使う。
@@ -38,7 +41,7 @@ const completionCheck = `【署名の前に全項目を照合しろ】
 全項目を終えた場合だけ、最終行に装飾なしで次の署名を書け。
 完了誓約: <実装・検証を全項目終えた内容の1行要約>
 調査完了: <依頼された調査・回答を終えた内容の1行要約>
-実行中または予定済みの作業の完了を待つ必要がある場合は「作業待機: <待つ対象>」と書け。`
+実行中または予定済みの作業の完了を待つ必要がある場合は「作業待機: <待つ対象>」と書け。人の承認やレビューを待つ前に、それが本当に必須かを確かめろ。`
 
 const planCheck = `【plan mode で説明だけして止まるな】
 計画がまとまったなら ExitPlanMode で提示しろ。却下されたなら、何をどう変えたかを plan 本文の冒頭に書いて同じターンで再提示しろ。` + askQuestion + `
@@ -52,6 +55,16 @@ AskUserQuestion の前に text を書くな（tool 呼び出しの前の text �
 question と選択肢は直前に書いた問いに合わせ、判断材料を繰り返すな。`
 
 const noWaitTarget = "「作業待機」と書かれていますが、実行中の背景タスクも予定済みの cron もありません。待つ対象が無いので、今できる作業を実行してください。"
+
+// waitCheck は、背景タスクも cron も無い作業待機を、外から再開される待ちとして通す前に 1 回だけ返す確認。
+// 待つ相手が実在するかでは、待つ必要の無い待ち（必須でない承認など）と本物の待ちを見分けられないので、
+// 待つ前に確かめさせる。書き直された作業待機は Stop hook による継続中に届くので、そこで通す。
+const waitCheck = `【作業待機の前に確かめろ】
+1. 待つ相手は、この turn の外から結果を届けてくれるものか（任せた作業の結果、購読した通知、承認を求めた確認の結果など）。結果を届ける仕組みの無いもの（通知を頼んでいない CI、人の返事）を待つと、誰も再開しない。届けてもらう手段があるなら先に使え。
+2. 人の承認やレビューを待つなら、それが本当に必須かを確かめたか。決めつけずに、merge を試す・ブランチの保護設定を読むなどで確かめろ。必須でなければ待たずに進めろ。
+3. 待たずに進められる作業が残っていないか。残っていれば今実行しろ。
+確かめた結果、それでも待つ必要があるときだけ、最終行に同じ形式の署名「作業待機: <待つ対象>」を書き直せ。待つ必要が無くなったら作業を続けろ。` + askQuestion + `
+` + finalReport
 
 // resign は、署名の形式を既に使えている場合に完遂確認の全文を繰り返さないための短い指示。
 const resign = "対応後、依頼の全項目を照合し直し、同じ形式の署名を使え。" + finalReport
@@ -74,10 +87,18 @@ func decide(f facts) decision {
 		return block(askNow)
 	}
 	if f.Message.Signature == waiting {
-		// 外から再開される待ちは background_tasks / session_crons に出ないので、
-		// 有効なときは待つ対象の書かれた署名だけで通す（対象が空なら署名として認めていない）。
-		if f.Inflight > 0 || f.ExternalWait {
+		if f.Inflight > 0 {
 			return decision{}
+		}
+		// 外から再開される待ちは background_tasks / session_crons に出ないので、
+		// 有効なときは待つ対象の書かれた署名（対象が空なら署名として認めていない）を、
+		// 1 回確かめさせてから通す。差し戻した後に書き直された作業待機は stop_hook_active が true で届く。
+		// 今まで無条件に通していた待ちに確認を足すだけなので、通す条件は前より緩くならない。
+		if f.ExternalWait {
+			if f.StopHookActive {
+				return decision{}
+			}
+			return block(waitCheck)
 		}
 		if plan {
 			return block(noWaitTarget + "\n\n" + planCheck)
