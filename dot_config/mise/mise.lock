@@ -3054,37 +3054,37 @@ checksum = "sha256:8c457a0dc852c15beb35af77717ed32294345a300e15c444ed42c79ebc433
 url = "https://cache.agilebits.com/dist/1P/op2/pkg/v2.42.0/op_windows_amd64_v2.42.0.zip"
 
 [[tools."http:opencode"]]
-version = "2.2.2"
+version = "2.2.6"
 backend = "http:opencode"
-specifiers = ["2.2.2"]
+specifiers = ["2.2.6"]
 
 [tools."http:opencode"."platforms.linux-arm64"]
-checksum = "sha256:dd866cebb72d11c91a7a7c4c3fd961ee06e03a9d0a5ff8eaa2a8ebebf25de7ba"
-url = "https://opencode.ai/files/bin/2.2.2/opencode-linux-arm64.tar.gz"
+checksum = "sha256:f2d27600c367e45057d6a16f6a5c2aa8d77b41a9b10d4bc3d849c2f88870e944"
+url = "https://opencode.ai/files/bin/2.2.6/opencode-linux-arm64.tar.gz"
 
 [tools."http:opencode"."platforms.linux-arm64-musl"]
-checksum = "sha256:dd866cebb72d11c91a7a7c4c3fd961ee06e03a9d0a5ff8eaa2a8ebebf25de7ba"
-url = "https://opencode.ai/files/bin/2.2.2/opencode-linux-arm64.tar.gz"
+checksum = "sha256:f2d27600c367e45057d6a16f6a5c2aa8d77b41a9b10d4bc3d849c2f88870e944"
+url = "https://opencode.ai/files/bin/2.2.6/opencode-linux-arm64.tar.gz"
 
 [tools."http:opencode"."platforms.linux-x64"]
-checksum = "sha256:3a38b8c284450a5ca81a2c1ebbf29ebe05e618518f095da0066652167eb0eb33"
-url = "https://opencode.ai/files/bin/2.2.2/opencode-linux-x64.tar.gz"
+checksum = "sha256:08bb21d6326ce740d91cce7ebe88a6536933f6e1e30353b91a06b01f25da306c"
+url = "https://opencode.ai/files/bin/2.2.6/opencode-linux-x64.tar.gz"
 
 [tools."http:opencode"."platforms.linux-x64-musl"]
-checksum = "sha256:3a38b8c284450a5ca81a2c1ebbf29ebe05e618518f095da0066652167eb0eb33"
-url = "https://opencode.ai/files/bin/2.2.2/opencode-linux-x64.tar.gz"
+checksum = "sha256:08bb21d6326ce740d91cce7ebe88a6536933f6e1e30353b91a06b01f25da306c"
+url = "https://opencode.ai/files/bin/2.2.6/opencode-linux-x64.tar.gz"
 
 [tools."http:opencode"."platforms.macos-arm64"]
-checksum = "sha256:c1c901a6379d667b7a30a3eea5a8f6e93416dba43e889e834771f6fb174f35c9"
-url = "https://opencode.ai/files/bin/2.2.2/opencode-darwin-arm64.zip"
+checksum = "sha256:15491608f6b0bc4debe5eac35eab629a2b07ea9a1fbac68ad53bcea59fcc4b45"
+url = "https://opencode.ai/files/bin/2.2.6/opencode-darwin-arm64.zip"
 
 [tools."http:opencode"."platforms.macos-x64"]
-checksum = "sha256:898677aa3c686326a37eda1e5875a45c6d1510717ac663236aa200e913b13cff"
-url = "https://opencode.ai/files/bin/2.2.2/opencode-darwin-x64.zip"
+checksum = "sha256:b2962dc445d873df56ae7d3ba7e66502b046bbc4dafa820eca18d0303a98a29c"
+url = "https://opencode.ai/files/bin/2.2.6/opencode-darwin-x64.zip"
 
 [tools."http:opencode"."platforms.windows-x64"]
-checksum = "sha256:e604e66cc13128fe36db7c68c7b0ed31c10b2ce759dd3d702eae080dc140bed5"
-url = "https://opencode.ai/files/bin/2.2.2/opencode-windows-x64.zip"
+checksum = "sha256:f75c16b33b8523fe1ff41e7d97e3ae654a47d59a0e327def24db2d9291bb24be"
+url = "https://opencode.ai/files/bin/2.2.6/opencode-windows-x64.zip"
 
 [[tools.node]]
 version = "26.13.0"
