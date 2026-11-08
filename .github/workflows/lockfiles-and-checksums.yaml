@@ -35,7 +35,7 @@ jobs:
       # （mise-bootstrap 等）があると、push 時点の SHA を親にした commit が expectedHeadOid の不一致で
       # 必ず 1 回失敗し、再生成を丸ごとやり直していた。公開リポジトリなので token なしで取れる。
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
         with:
           ref: ${{ github.ref }}
           persist-credentials: false
@@ -50,7 +50,7 @@ jobs:
           echo "MISE_VERSION=$MISE_VERSION" >> "$GITHUB_ENV"
 
       - name: Setup mise
-        uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        uses: jdx/mise-action@v5.2.7
         with:
           version: ${{ env.MISE_VERSION }}
           install: false
@@ -93,7 +93,7 @@ jobs:
           bash .github/scripts/fill-lockfile-checksums.sh mise.lock dot_config/mise/mise.lock
 
       - name: Generate GitHub App Token
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        uses: actions/create-github-app-token@v3.3.0
         id: app-token
         with:
           app-id: ${{ vars.APP_ID }}

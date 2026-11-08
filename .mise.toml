@@ -22,6 +22,10 @@ pnpm = "12.16.1"
 # ci.yaml の lint で使う（actionlint は workflow の run: を shellcheck にかける）
 "aqua:rhysd/actionlint" = "1.7.12"
 "aqua:koalaman/shellcheck" = "0.11.0"
+# .github/workflows/actions.lock の生成と ci.yaml の検証で使う。gh の extension（gh extension install）ではなく
+# mise で入れて、mise.lock に checksum と provenance を残す。単体の実行ファイルとして gh-actions-lock で呼ぶ。
+# asset 名が darwin-arm64 のような OS 名だけなので、bin で名前を付ける（付けないと darwin / linux になる）
+"github:github/gh-actions-lock" = { version = "0.4.1", bin = "gh-actions-lock" }
 
 # install.sh からの bootstrap で使う。dot_config/mise/config.toml と揃える
 "aqua:twpayne/chezmoi" = "2.74.0"

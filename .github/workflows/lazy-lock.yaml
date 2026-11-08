@@ -33,12 +33,12 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
       - name: Setup mise
-        uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        uses: jdx/mise-action@v5.2.7
         with:
           cache: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -73,14 +73,14 @@ jobs:
       # 行えば起動する。PR の作成・ラベル付けは従来どおり GITHUB_TOKEN（App の権限は commit 用の範囲しか
       # 確かめていないため）
       - name: Generate GitHub App Token
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        uses: actions/create-github-app-token@v3.3.0
         id: app-token
         with:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
       - name: Create PR
-        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        uses: peter-evans/create-pull-request@v8.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch-token: ${{ steps.app-token.outputs.token }}
@@ -100,13 +100,13 @@ jobs:
     # （lockfiles-and-checksums.yaml の concurrency を参照）。この workflow 同士は先頭の concurrency で 1 本に絞る
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
         with:
           ref: ${{ github.head_ref }}
           persist-credentials: false
 
       - name: Setup mise
-        uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        uses: jdx/mise-action@v5.2.7
         with:
           cache: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -130,7 +130,7 @@ jobs:
           cp ~/.config/nvim/lazy-lock.json dot_config/nvim/
 
       - name: Generate GitHub App Token
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        uses: actions/create-github-app-token@v3.3.0
         id: app-token
         with:
           app-id: ${{ vars.APP_ID }}

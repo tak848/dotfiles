@@ -27,7 +27,7 @@ jobs:
       MISE_CONFIG_FILE: ${{ github.workspace }}/dot_config/mise/config.toml
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
@@ -38,7 +38,7 @@ jobs:
           echo "MISE_VERSION=$MISE_VERSION" >> "$GITHUB_ENV"
 
       - name: Setup mise
-        uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        uses: jdx/mise-action@v5.2.7
         with:
           version: ${{ env.MISE_VERSION }}
           # lazy = true のツールは素の mise install では入らない。Renovate の更新でも全ツールが両 OS で
@@ -186,6 +186,14 @@ jobs:
       - name: Check generated files are up-to-date
         if: matrix.os == 'ubuntu-latest'
         run: task check
+
+      # .github/workflows/actions.lock が workflow の uses: と一致し、固定した commit が今もタグから辿れるか。
+      # 書き込みはしない。結果は OS に依存しないので Ubuntu だけで実行する
+      - name: Verify actions.lock
+        if: matrix.os == 'ubuntu-latest'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh-actions-lock --verify
 
       - name: Setup chezmoi
         run: |
