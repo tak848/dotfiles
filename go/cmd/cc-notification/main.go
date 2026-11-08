@@ -14,6 +14,11 @@ type Input struct {
 }
 
 func main() {
+	// 読み上げは AGENT_TTS で明示的に有効にしたときだけ。stdin も読まずに終わる。
+	if !tts.Enabled(os.Getenv) {
+		return
+	}
+
 	var input Input
 	if err := json.UnmarshalRead(os.Stdin, &input, json.MatchCaseInsensitiveNames(true)); err != nil {
 		return

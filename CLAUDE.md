@@ -248,6 +248,16 @@ cmux には Feed の hook だけを止める設定が無い。`CMUX_CLAUDE_HOOKS
 - push 前の確認は `gitstate.PushTimeout`（30秒）の制限時間内に、すべての照会を行う。期限内に確認できなければ無出力で通常の処理へ戻す。外側の hook は終了処理と返答の猶予を含め40秒。呼び出し元がより短い期限を指定した場合はそちらを守る。本来の git push の制限時間、Stop 側の制限時間と失敗時の停止判定は変更しない
 - 既存 `cc-stop` は非同期の読み上げで別機能。Stop ゲートに `async` を付けると停止制御できない。ローカル設定に旧ゲートが残っていてもグローバル版で上書きされないので、展開時は二重登録を確認する
 
+### 読み上げ（cc-stop / cc-notification / codex-notification）
+
+`cc-stop`（Claude Code の Stop、async）、`cc-notification`（Notification、async）、`codex-notification`（Codex の `notify`）は、`go/internal/tts` で Google Cloud TTS（`GOOGLE_API_KEY` が無い・失敗したときは macOS の `say`）を使って読み上げる。既定では読み上げず、`AGENT_TTS` が `1` / `true` / `on` / `yes`（前後の空白を除き、大文字小文字を区別しない）のときだけ読み上げる。
+
+- 以前は常に読み上げていた。エージェントが自分で長く動くようになって読み上げの役目が薄れ、会議中などにも鳴るのに止める手段が無かったので、明示的に有効にしたときだけにした
+- hook は Claude Code / Codex の環境変数を引き継ぐ。判定は hook の実行のたびに行うので、バイナリを入れ替えれば起動済みのセッションにも効く。逆に、起動済みのセッションで有効にすることはできない
+- 判定は各コマンドの入口で行い、無効なら stdin も読まずに終わる
+- `CODEX_NOTIFICATION_DISABLED=1` は、`AGENT_TTS` を有効にしていても裏で回す `codex exec` だけを黙らせるために残している（#1048）
+- 環境変数の置き場所はユーザーが決める
+
 ### 途中の text の要約検出（cc-narration-check）
 
 `go/cmd/cc-narration-check` は PostToolBatch hook。Opus 5.5 / Sonnet 5.5 / Fable 5 / Fable 5.1 など（Opus 5 でも観測）では、tool の結果を受けた後、次の tool を呼ぶ前に書いた text がサーバー側で要約され、thinking ブロックに置き換わる（[anthropics/claude-code#74558](https://github.com/anthropics/claude-code/issues/74558)、公式 docs [Progress updates between tool calls](https://platform.claude.com/docs/en/build-with-claude/thinking#progress-updates)）。原文は画面にも transcript にも残らないが、モデル側の context には残るので、モデルは伝えたつもりでいる。この hook はそれを検出し、`additionalContext` で「読む必要のある内容ならターン最後の text で書き直せ」と伝える。
