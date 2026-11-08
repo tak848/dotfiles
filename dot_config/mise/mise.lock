@@ -3125,6 +3125,12 @@ aube = { path = "locks/npm-fission-ai-openspec/1.16.0", digest = "sha256:3b0055a
 backend = "npm:@fission-ai/openspec"
 specifiers = ["1.16.0"]
 
+[[tools."npm:@playwright/cli"]]
+version = "0.1.23"
+aube = { path = "locks/npm-playwright-cli/0.1.23", digest = "sha256:d4b89feeb1640094fb703345cead7618d32b4ad68aa73fc992a887e9bbcb7b9a" }
+backend = "npm:@playwright/cli"
+specifiers = ["0.1.23"]
+
 [[tools."npm:@typescript/native-preview"]]
 version = "7.0.0-dev.20260707.2"
 aube = { path = "locks/npm-typescript-native-preview/7.0.0-dev.20260707.2", digest = "sha256:a45a98c540ad73f14a677ee62351ea6f8e1d714903f7dfe7f0d2f3bddc6133fb" }
