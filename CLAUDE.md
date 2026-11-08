@@ -276,6 +276,9 @@ cmux には Feed の hook だけを止める設定が無い。`CMUX_CLAUDE_HOOKS
 ccgate（`ccgate.libsonnet`）の判定は自然文のルールを LLM が読む方式で、決定的な照合はできない。ただし設定の評価時に環境変数を読める（`std.native('env')`、未設定なら空文字）ので、セッションの起動時の環境変数でルールを切り替えている。
 
 - 既定では、別リポジトリの読み取りは通し、書き込みはユーザーが頼んだときだけ通す（`Unrelated Repository Access`）。ccgate は `--add-dir` の一覧を受け取らない（ccgate の docs rule-tuning）ので、add-dir で許可を伝えることはできない。`~/.claude`・`~/.codex`・`~/.cmuxterm`・`~/.config`・`~/.local/state`・`~/.local/share` はツールの状態・設定の置き場で、`.git` があってもリポジトリとして扱わない
+- 「頼んだ」は ccgate が渡す `recent_transcript`（直近のユーザー発言 3 件、各 200 文字まで）で判定する。ルールには、頼まれていればルール自体が当たらないと書いてある。ccgate の system prompt は「明示的な依頼でも deny は fallthrough に上げるだけ」と指示するので、`unless` だけでは、会話の中で頼んでも deny か fallthrough（Claude Code の確認）になっていた。以前のセッションの transcript を切り出して ccgate に与え、文言を変えると allow になり、頼まれていない場面や別のリポジトリへの書き込みは deny のままになることを確かめた
+- ccgate v0.11.1 は、AskUserQuestion の回答を `recent_transcript` に入れない（回答は `tool_result` と行の `toolUseResult` に入り、ccgate はユーザー発言の text block しか読まない）。そのため、deny の後に AskUserQuestion で確かめて承認を得ても、同じ操作がまた deny になる。回答を入れる修正は ccgate 側で行う
+- `Bash(git -C*)` は `permissions.deny` で止めている（今のリポジトリで不要な `-C` を付けるのを止めるため。#400）。ccgate より前に Claude Code が止めるので、ccgate のログには残らない。理由を返さないと、別のリポジトリで読むだけの git まで止まったのを見て、リポジトリをまたぐ作業そのものが禁止されていると読み違えるので、cc-deny-hint で `cd <repo> && git …` を使うよう伝えている
 - `CCGATE_CROSS_REPO=1` で起動したセッションは、このルールを外し、ソース置き場（`~/repos/*` など）のリポジトリへの読み書きを今のリポジトリと同じに扱う。ほかの deny（Git Destructive、Out-of-Repo Deletion など）は残る
 - `CCGATE=0` で起動したセッションは ccgate を呼ばず、Claude Code の通常の確認に戻る（`settings.jsonnet` の PermissionRequest の hook）
 - Git Destructive は、ユーザーがその操作を明示的に頼んだと recent_transcript から分かれば allow（Claude のみ。Codex は transcript が無いので fallthrough のまま）
