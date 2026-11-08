@@ -3135,31 +3135,31 @@ url = "https://nodejs.org/dist/v26.13.0/node-v26.13.0-win-x64.zip"
 
 [[tools."npm:@fission-ai/openspec"]]
 version = "1.16.1"
-aube = { path = ".mise/locks/npm-fission-ai-openspec/1.16.1", digest = "sha256:7075d2e2ed4fb671f684562d50335a330da6b430c9ed83a006e06b5a3bcd8966" }
+aube = { path = "locks/npm-fission-ai-openspec/1.16.1", digest = "sha256:7075d2e2ed4fb671f684562d50335a330da6b430c9ed83a006e06b5a3bcd8966" }
 backend = "npm:@fission-ai/openspec"
 specifiers = ["1.16.1"]
 
 [[tools."npm:@playwright/cli"]]
 version = "0.1.23"
-aube = { path = ".mise/locks/npm-playwright-cli/0.1.23", digest = "sha256:d4b89feeb1640094fb703345cead7618d32b4ad68aa73fc992a887e9bbcb7b9a" }
+aube = { path = "locks/npm-playwright-cli/0.1.23", digest = "sha256:d4b89feeb1640094fb703345cead7618d32b4ad68aa73fc992a887e9bbcb7b9a" }
 backend = "npm:@playwright/cli"
 specifiers = ["0.1.23"]
 
 [[tools."npm:@typescript/native-preview"]]
 version = "7.0.0-dev.20260707.2"
-aube = { path = ".mise/locks/npm-typescript-native-preview/7.0.0-dev.20260707.2", digest = "sha256:a45a98c540ad73f14a677ee62351ea6f8e1d714903f7dfe7f0d2f3bddc6133fb" }
+aube = { path = "locks/npm-typescript-native-preview/7.0.0-dev.20260707.2", digest = "sha256:a45a98c540ad73f14a677ee62351ea6f8e1d714903f7dfe7f0d2f3bddc6133fb" }
 backend = "npm:@typescript/native-preview"
 specifiers = ["7.0.0-dev.20260707.2"]
 
 [[tools."npm:ccusage"]]
 version = "20.0.48"
-aube = { path = ".mise/locks/npm-ccusage/20.0.48", digest = "sha256:ce5fe373bd636e80bacb79224784ea0d2b723101bfa61b792d68c3cb54b7fb33" }
+aube = { path = "locks/npm-ccusage/20.0.48", digest = "sha256:ce5fe373bd636e80bacb79224784ea0d2b723101bfa61b792d68c3cb54b7fb33" }
 backend = "npm:ccusage"
 specifiers = ["20.0.48"]
 
 [[tools."npm:defuddle"]]
 version = "0.19.6"
-aube = { path = ".mise/locks/npm-defuddle/0.19.6", digest = "sha256:cd81e1612fcb3d0bfd2e229ade6cc8b4ce3e141b144146fba80a23afb95c6797" }
+aube = { path = "locks/npm-defuddle/0.19.6", digest = "sha256:cd81e1612fcb3d0bfd2e229ade6cc8b4ce3e141b144146fba80a23afb95c6797" }
 backend = "npm:defuddle"
 specifiers = ["0.19.6"]
 
@@ -3167,7 +3167,7 @@ specifiers = ["0.19.6"]
 version = "3.32.1"
 backend = "pipx:snowflake-cli"
 specifiers = ["3.32.1"]
-uv = { path = ".mise/locks/pipx-snowflake-cli/3.32.1", digest = "sha256:cbbb11bdb5b7b4515e03160182fa8a28efcc1bfcca5804f383a8f9a938d2b0a5" }
+uv = { path = "locks/pipx-snowflake-cli/3.32.1", digest = "sha256:17bbfb8f35b993664b063a9f7d8bdd98ad9a28f367a09fa524825c2f03288687" }
 
 [[tools.pnpm]]
 version = "12.18.0"
