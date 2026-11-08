@@ -66,7 +66,7 @@ AZ_PYTHON = '{{ env.XDG_DATA_HOME | default(value=env.HOME ~ "/.local/share") }}
 # ランタイム（core backend）
 # ============================================
 node = "26.13.0"
-pnpm = { version = "12.16.1", lazy = true, lazy_bins = ["pnpm", "pnpx", "pn", "pnx"] }
+pnpm = { version = "12.18.0", lazy = true, lazy_bins = ["pnpm", "pnpx", "pn", "pnx"] }
 "github:endevco/aube" = { version = "v2.9.0", lazy = true, lazy_bins = ["aube", "aubr", "aubx"] } # 高速な Node.js パッケージマネージャ
 go = "1.27.3"
 # snowflake-cli（pipx backend）の install にだけ使う。lockfile revision 2 では pipx / pypi ツールの
@@ -80,7 +80,7 @@ python = "3.13.18"
 # aqua CLI（github backend）
 # ============================================
 # repo ごとの aqua.yaml（仕事の repo 等）のために入れる。グローバルのツールは aqua では入れない
-"github:aquaproj/aqua" = "v2.66.0"
+"github:aquaproj/aqua" = "v2.66.1"
 
 # ============================================
 # CLI ツール（aqua backend）
@@ -89,7 +89,7 @@ python = "3.13.18"
 "aqua:cli/cli" = "2.103.3"
 
 # シェル関連
-"aqua:junegunn/fzf" = "0.74.5"
+"aqua:junegunn/fzf" = "0.75.0"
 "aqua:starship/starship" = "1.27.0"
 "aqua:direnv/direnv" = "2.38.2"
 "aqua:ajeetdsouza/zoxide" = "0.10.0"
@@ -101,7 +101,7 @@ python = "3.13.18"
 # rga依存: ドキュメント変換（docx, epub, odt等）
 "github:jgm/pandoc" = { version = "3.13", lazy = true, lazy_bins = ["pandoc", "pandoc-lua", "pandoc-server"] }
 "aqua:jqlang/jq" = "1.8.1"
-"aqua:mikefarah/yq" = { version = "4.54.1", lazy = true, lazy_bins = ["yq"] }
+"aqua:mikefarah/yq" = { version = "4.54.2", lazy = true, lazy_bins = ["yq"] }
 "aqua:x-motemen/ghq" = { version = "1.12.0", lazy = true, lazy_bins = ["ghq"] }
 "aqua:jesseduffield/lazygit" = { version = "0.66.2", lazy = true, lazy_bins = ["lazygit"] }
 "aqua:jesseduffield/lazydocker" = { version = "0.25.2", lazy = true, lazy_bins = ["lazydocker"] }
@@ -117,7 +117,7 @@ python = "3.13.18"
 
 # エディタ・ターミナル
 "aqua:neovim/neovim" = { version = "0.12.6", lazy = true, lazy_bins = ["nvim"] }
-"github:tmux/tmux-builds" = { version = "v3.6a", lazy = true, lazy_bins = ["tmux"] }
+"github:tmux/tmux-builds" = { version = "v3.8", lazy = true, lazy_bins = ["tmux"] }
 "aqua:arl/gitmux" = { version = "0.11.5", lazy = true, lazy_bins = ["gitmux"] }
 
 # Python ツール
@@ -226,7 +226,7 @@ python = "3.13.18"
 "github:sorafujitani/ccsession" = { version = "v1.6.0", lazy = true, lazy_bins = ["ccsession"] }
 
 # Anthropic API CLI
-"aqua:anthropics/anthropic-cli" = { version = "2.6.0", lazy = true, lazy_bins = ["ant"] }
+"aqua:anthropics/anthropic-cli" = { version = "2.7.1", lazy = true, lazy_bins = ["ant"] }
 
 # Language Server
 "go:golang.org/x/tools/gopls" = { version = "v0.24.0", lazy = true, lazy_bins = ["gopls"] }
@@ -240,23 +240,23 @@ python = "3.13.18"
 
 # その他（1Password CLI は末尾の [tools."http:op"] を参照）
 "aqua:temporalio/cli" = "1.10.0"
-"aqua:jdx/usage" = { version = "7.2.0", lazy = true, lazy_bins = ["usage"] }
+"aqua:jdx/usage" = { version = "7.3.0", lazy = true, lazy_bins = ["usage"] }
 # Datadog の AI エージェント向け CLI コンパニオン
-"aqua:DataDog/pup" = "2.4.1"
+"aqua:DataDog/pup" = "2.4.2"
 
 # ============================================
 # npm グローバルパッケージ
 # ============================================
 "aqua:anthropics/claude-code" = "2.1.319"
-"github:google-antigravity/antigravity-cli" = { version = "1.5.0", lazy = true, lazy_bins = ["antigravity"] } # agy: Gemini CLI の後継
+"github:google-antigravity/antigravity-cli" = { version = "1.5.3", lazy = true, lazy_bins = ["antigravity"] } # agy: Gemini CLI の後継
 "aqua:openai/codex" = { version = "0.166.0", lazy = true, lazy_bins = ["codex"] }
 # opencode は http backend で管理（末尾の [tools."http:opencode"] を参照）
 # Grok Build CLI (xAI) は http backend で管理（末尾の [tools."http:grok"] を参照）
 # Claude Code のハーネスを ChatGPT サブスクの Codex backend に向ける Anthropic 互換プロキシ。claudex から使う
-"github:router-for-me/CLIProxyAPI" = "v8.0.55"
+"github:router-for-me/CLIProxyAPI" = "v8.0.60"
 "npm:ccusage" = { version = "20.0.48", lazy = true, lazy_bins = ["ccusage"] }
 "npm:@typescript/native-preview" = { version = "7.0.0-dev.20260707.2", lazy = true, lazy_bins = ["tsgo"] }
-"npm:@fission-ai/openspec" = { version = "1.16.0", lazy = true, lazy_bins = ["openspec"] }
+"npm:@fission-ai/openspec" = { version = "1.16.1", lazy = true, lazy_bins = ["openspec"] }
 "npm:defuddle" = { version = "0.19.6", lazy = true, lazy_bins = ["defuddle"] } # WebFetch の代替: URL 本文をモデル要約を挟まず clean な Markdown で取得
 "npm:@playwright/cli" = { version = "0.1.23", lazy = true, lazy_bins = ["playwright-cli"] } # ブラウザ操作の CLI。skill は入れず、使うときに頼む
 
@@ -312,7 +312,7 @@ linux-arm64 = { url = 'https://opencode.ai/files/bin/{{ version }}/opencode-linu
 # regex がこの並びを前提にしているので、[tools."aqua:aws/aws-cli"] の直後に version を置く。
 # renovate: datasource=github-tags depName=aws/aws-cli
 [tools."aqua:aws/aws-cli"]
-version = "2.39.4"
+version = "2.39.6"
 symlink_bins = true
 lazy = true
 lazy_bins = ["aws", "aws_completer"]
