@@ -38,6 +38,22 @@ var Neural2Voices = VoicePair{
 	EN: "en-US-Neural2-D",
 }
 
+// EnvEnabled は読み上げを有効にする環境変数。既定では読み上げない。
+const EnvEnabled = "AGENT_TTS"
+
+// Enabled は、AGENT_TTS が明示的に有効（1 / true / on / yes。前後の空白を除き、
+// 大文字小文字を区別しない）なときだけ true を返す。未設定・空・それ以外の値では
+// 読み上げない。hook は呼び出し元（Claude Code / Codex）の環境変数を引き継ぐので、
+// 起動するときの環境で決まる。
+func Enabled(getenv func(string) string) bool {
+	switch strings.ToLower(strings.TrimSpace(getenv(EnvEnabled))) {
+	case "1", "true", "on", "yes":
+		return true
+	default:
+		return false
+	}
+}
+
 const (
 	envBG      = "_TTS_BG"
 	envMsg     = "_TTS_MSG"

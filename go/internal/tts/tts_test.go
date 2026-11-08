@@ -61,3 +61,26 @@ func TestHomeDir(t *testing.T) {
 		t.Error("homeDir() returned empty string")
 	}
 }
+
+func TestEnabled(t *testing.T) {
+	t.Parallel()
+	for _, value := range []string{"1", "true", "TRUE", " on ", "Yes"} {
+		if !Enabled(func(string) string { return value }) {
+			t.Errorf("%s=%q: got false, want true", EnvEnabled, value)
+		}
+	}
+	for _, value := range []string{"", " ", "0", "false", "off", "no", "anything", "2"} {
+		if Enabled(func(string) string { return value }) {
+			t.Errorf("%s=%q: got true, want false", EnvEnabled, value)
+		}
+	}
+	// 参照するのは AGENT_TTS だけ。
+	if Enabled(func(key string) string {
+		if key == EnvEnabled {
+			return ""
+		}
+		return "1"
+	}) {
+		t.Errorf("other variables must not enable TTS")
+	}
+}

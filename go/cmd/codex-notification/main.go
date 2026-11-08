@@ -20,8 +20,10 @@ func main() {
 		return
 	}
 
-	// 裏で回す codex exec（レビューやエージェントからの呼び出し）では読み上げない
-	if disabled(os.Getenv) {
+	// 読み上げは AGENT_TTS で明示的に有効にしたときだけ。有効にしていても、
+	// 裏で回す codex exec（レビューやエージェントからの呼び出し）は
+	// CODEX_NOTIFICATION_DISABLED で黙らせられる
+	if !tts.Enabled(os.Getenv) || disabled(os.Getenv) {
 		return
 	}
 
