@@ -141,7 +141,7 @@ claudep() {
 
     # claudeap 用: fable スロットだけ Codex モデルに向ける（CLAUDEP_FABLE_MODEL が非空のとき）。
     # ANTHROPIC_DEFAULT_FABLE_MODEL が効くのは `fable` エイリアス（--model fable、/model fable、model: fable の
-    # subagent）だけで、settings.json の model に入っている claude-fable-5-1[1m] のような full ID には効かない。
+    # subagent）だけで、settings.json の model に入っている claude-fable-5-2[1m] のような full ID には効かない。
     # そのため claudeap は --model fable を明示して起動する（"$@" より前に置くので、呼び出し側の --model が勝つ）。
     # opus / sonnet / haiku のスロットは触らないので Claude のまま。
     local -a fable_env=() fable_args=()
