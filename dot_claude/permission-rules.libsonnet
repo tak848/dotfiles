@@ -19,9 +19,12 @@ local preToolResponse(reason) = {
 local worktreeReason = 'worktree は git worktree コマンドではなく、EnterWorktree か subagent の isolation: worktree で作ってください（.worktreeinclude のコピーと後片付けが効きます）。ユーザーが作った worktree は消したり動かしたりしないでください。一覧（git worktree list）は使えます。';
 
 local rules = [
+  // 今のリポジトリで不要な -C を付けるのを止めるためのもの（#400）。理由を返さないと、別のリポジトリで
+  // 読むだけの git まで黙って止められ、リポジトリをまたぐ作業そのものが禁止されていると読み違える。
   {
     matcher: 'Bash',
     spec: 'Bash(git -C*)',
+    reason: 'git -C は使わないでください。今のリポジトリでは git をそのまま実行し、別のリポジトリでは cd <そのリポジトリ> && git … の形で実行してください。リポジトリをまたぐ作業そのものを禁止するルールではありません。',
   },
   {
     matcher: 'Bash',
