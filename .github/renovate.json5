@@ -1,8 +1,10 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  // GitHub Actions の action は .github/workflows/actions.lock（gh actions-lock）で commit に固定するので、
+  // workflow の uses: は full semver のタグで書き、helpers:pinGitHubActionDigestsToSemver は使わない。
+  // 残すと digest に固定する PR が立ち、その PR の中で Renovate が実行する gh actions-lock が digest をタグに戻す。
   extends: [
     "config:recommended",
-    "helpers:pinGitHubActionDigestsToSemver",
     "group:allNonMajor",
     ":separateMultipleMajorReleases",
     ":prConcurrentLimitNone",

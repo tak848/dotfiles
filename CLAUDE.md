@@ -316,6 +316,7 @@ ccgate（`ccgate.libsonnet`）の判定は自然文のルールを LLM が読む
 | `mise.lock` | `.mise.toml` | `task mise:lock` |
 | `dot_config/mise/mise.lock` | `dot_config/mise/config.toml` | `task mise:lock` |
 | `dot_local/bin/executable_mise` | `.mise-bootstrap-version` | `task mise:bootstrap` |
+| `.github/workflows/actions.lock` | `.github/workflows/*.yaml` の `uses:` | `gh-actions-lock`（Renovate の PR では Renovate が実行する） |
 
 ### chezmoi apply 時の自動管理ファイル
 
@@ -390,7 +391,7 @@ run_ スクリプトは、必要なツールが見つからないときや処理
 
 | ワークフロー | トリガー | 処理 |
 |-------------|---------|------|
-| `ci.yaml` | push | ツールの導入確認、Go のテストと lint（gofmt / golangci-lint、設定は `.golangci.yml`）、シェルスクリプト・描画した run_ スクリプト・workflow の lint（shellcheck / actionlint）、zsh の構文（macOS のみ）、jsonnet の評価、`task check`（自動生成ファイルの diff）、chezmoi テンプレートの描画 |
+| `ci.yaml` | push | ツールの導入確認、Go のテストと lint（gofmt / golangci-lint、設定は `.golangci.yml`）、シェルスクリプト・描画した run_ スクリプト・workflow の lint（shellcheck / actionlint）、zsh の構文（macOS のみ）、jsonnet の評価、`task check`（自動生成ファイルの diff）、`actions.lock` の検証（`gh-actions-lock --verify`）、chezmoi テンプレートの描画 |
 | `lockfiles-and-checksums.yaml` | push（`.mise.toml` / `.mise-bootstrap-version` / `dot_config/mise/config.toml` 変更時、`main` / `lazy-lock-update` ブランチを除く） | `mise lock`（ルート + `dot_config/mise/`）→ `fill-lockfile-checksums.sh` を Renovate PR ブランチへ commit |
 | `mise-bootstrap.yaml` | push（`.mise-bootstrap-version` 変更時） | `mise generate bootstrap` |
 | `lazy-lock.yaml` | nvim 設定変更 / 週次 cron | Lazy.nvim lockfile 更新（PR 作成 or Renovate PR へコミット） |
@@ -399,6 +400,18 @@ run_ スクリプトは、必要なツールが見つからないときや処理
 `fill-lockfile-checksums.sh` は、`mise lock` では checksum が埋まらないツールを補う。mise は backend が checksum を供給できる場合しか lockfile に書き込まないため、`http` backend のツールや aqua-registry 側に checksum 定義が無いパッケージ（`anthropics/claude-code`, `tamasfe/taplo`, `aws/aws-cli`, `http:grok`, `http:opencode`, `http:op`）は url だけが残り、install 時の整合性検証が働かない。そこで実アーティファクトを取得して sha256 を計算し、lockfile に追記する。checksum のあるエントリは触らないので冪等。アーティファクトを丸ごとダウンロードする都合上、対象が増えるほど CI 時間は延びる（現状で合計 2 GB 強）。
 
 lockfile / bootstrap / lazy-lock の再生成は外部のコード（mise lock の依存解決、Lazy のプラグインの build hook など）を動かすので、書き込みできる GitHub App token を作る前の step で行い、commit の step でだけ App token を使う。GITHUB_TOKEN は読み取りに絞る（lazy-lock の週次 PR の作成だけ書き込みを付ける）。checkout は push 時点の SHA ではなくブランチの先頭を取り、token を `.git/config` に残さない。`commit-via-graphql.sh` は再生成をしない。生成中に別の commit でブランチの先頭が進んで commit が拒否されたら、新しい先頭を取り直し、その間に `FILES` が変わっていなければ生成物を新しい先頭に載せ直して commit する。`FILES` が変わっていれば上書きせずに異常終了する。生成の入力を変える push は paths に当たってその workflow を起動し、古い run を止めて新しい先頭から作り直す。concurrency の group は workflow ごとに分ける。group を共有すると待機できる run が 1 件だけなので、別 workflow の待機中の run が取り消され、生成物だけの commit では起動し直さない。待機枠を増やす `concurrency.queue: max` は actionlint（1.7.12）が未知のキーとして弾くので使わない。週次の lazy-lock PR はブランチの push だけを App token で行う（GITHUB_TOKEN の push では `ci.yaml` が起動せず、必須チェックが付かない）。
+
+### GitHub Actions の workflow lockfile（actions.lock）
+
+`.github/workflows/actions.lock` は GitHub の workflow dependency lockfile（2026-10 から public preview）で、[gh-actions-lock](https://github.com/github/gh-actions-lock) が生成する。この repo の workflow は全部 lockfile に入れてある（onboard 済み）。onboard した workflow では、GitHub Actions が lockfile に記録した commit で action を実行し、タグが付け替えられても記録した commit を使う。lockfile に無い action を使うと job が起動時に落ちる（公式 docs concepts/security/workflow-dependency-lockfiles）。
+
+- `uses:` は full semver のタグ（`actions/checkout@v7.0.1`）で書く。gh-actions-lock は SHA で固定した `uses:` をタグに書き換えるので（repo の "Require actions to be pinned to a full-length commit SHA" policy が有効なときは書き換えない、と Renovate の docs にある。この repo では無効）、Renovate の `helpers:pinGitHubActionDigestsToSemver` は外した。commit SHA と元の repo の ID（`owner_id` / `repo_id`）は lockfile に残る。`v7` や `main` のような動くタグ・ブランチを古い commit に戻す変更は gh-actions-lock が検出しないので、使わない（gh-actions-lock の README の Limitations）
+- Renovate が action を上げる PR では、Renovate が自分で gh-actions-lock を実行し、同じ commit で lockfile も書き換える（Renovate の github-actions manager の "GitHub Actions lockfile"。experimental）。Mend Cloud の Renovate（`renovate[bot]`）でも動くことは、他の repo の PR で確かめた（2026-11-06 の swallowarc/porker2#144）。Renovate が使う gh-actions-lock の版は Renovate 側の既定（`constraints.ghActionsLock`）で、`.mise.toml` の版とは別に上がる
+- workflow を足したときや `uses:` を手で変えたときは、repo の root で `gh-actions-lock` を実行して、書き換わった workflow と lockfile をまとめて commit する。lockfile は手で編集しない。`--accept-moved`（upstream の履歴が書き換わって、記録した commit がタグから辿れなくなったときに使う）は、upstream を確かめてから手で使う
+- gh-actions-lock は `.mise.toml` の `github:` backend で入れる（gh の extension としては入れていないので、`gh actions-lock` ではなく `gh-actions-lock` と打つ）。上流の手順は `gh extension install github/gh-actions-lock --pin <tag>` だが、mise で入れると mise.lock に checksum と provenance（GitHub の artifact attestation）が残り、Renovate の mise manager で版を追える。release の asset 名が `darwin-arm64` のような OS 名と arch だけなので、`bin` で名前を付けている（付けないと `darwin` / `linux` という名前で入る）
+- ci.yaml の `Verify actions.lock`（Ubuntu のみ）が `gh-actions-lock --verify` を実行する。lockfile に入っていない workflow や action、使われていないエントリ、記録した commit がタグから辿れなくなったもの（タグの付け替え）で落ちる。workflow を足して `gh-actions-lock` を忘れると、ここで落ちる（一時的な workflow を足して確かめた）
+- gh-actions-lock はリリースから日の浅いタグに、Dependabot の `cooldown` が無いという warning を出す（Dependabot の設定を読む。v0.2.0 のリリースノート）。Renovate の `minimumReleaseAge`（24 時間）を設定していても出るが、warning では落ちない
+- lockfile は reusable workflow の呼び出し（`jobs.<id>.uses`）・container image・ローカルの action（`uses: ./…`）を固定しない。今の workflow はどれも使っていない。public preview なので、lockfile の書式・gh-actions-lock の挙動・Renovate の対応は変わりうる
 
 ### zsh 設定の読み込み順序
 
