@@ -338,7 +338,10 @@ local mcpAllow = [
   effortLevel: 'xhigh',
   // モデル別の effort（CC 2.1.251+）。上の effortLevel より優先され、/effort もここに書き込む。
   // キーは canonical name で書けば、その alias・日付サフィックス付き・[1m] 付きの ID も同じエントリにマッチする。
-  // Fable 5.1 と GPT-6 Astra（claudex / claudeap / gpt-review が使う）は high に下げる。
+  // Fable 5.2 / 5.1 と GPT-6 Astra（claudex / claudeap / gpt-review が使う）は high に下げる。
+  // Fable 5.2（2.1.321 で fable エイリアスの既定になった）は上の一覧より後に出たので effortLevel が効かない。
+  // モデルの既定も high（API docs の models overview）だが、他のモデルと揃えて明示する。
+  // Fable 5.1 は /model claude-fable-5-1 で戻したとき用に残す。
   // Opus 5.5 / Sonnet 5.5 は上の effortLevel が効かず、モデルの既定の medium で起動していたので xhigh を明示する。
   // Haiku 4.5 は effort 自体に非対応なので書かない。
   // gpt-* のような未認識 ID もキーに書けば primary / subagent の両方で output_config.effort に反映される
@@ -346,6 +349,7 @@ local mcpAllow = [
   modelSettings: {
     'claude-opus-5-5': { effortLevel: 'xhigh' },
     'claude-sonnet-5-5': { effortLevel: 'xhigh' },
+    'claude-fable-5-2': { effortLevel: 'high' },
     'claude-fable-5-1': { effortLevel: 'high' },
     'gpt-6-astra': { effortLevel: 'high' },
     'gpt-6-astra-fast': { effortLevel: 'high' },

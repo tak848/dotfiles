@@ -51,6 +51,11 @@ oauth-model-alias:
       alias: "fable"
       fork: true
     - name: "gpt-6-astra"
+      alias: "claude-fable-5-2"
+      fork: true
+    # 旧 ID。Claude Code 2.1.321 で fable エイリアスの既定は claude-fable-5-2 になったが、
+    # 保存済みセッションや /model claude-fable-5-1 で戻した名前が漏れてきたときの逃げ道として残す
+    - name: "gpt-6-astra"
       alias: "claude-fable-5-1"
       fork: true
     - name: "gpt-6-astra"
