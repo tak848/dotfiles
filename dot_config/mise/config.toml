@@ -256,7 +256,7 @@ python = "3.13.18"
 "github:router-for-me/CLIProxyAPI" = "v8.0.61"
 "npm:ccusage" = { version = "20.0.48", lazy = true, lazy_bins = ["ccusage"] }
 "npm:@typescript/native-preview" = { version = "7.0.0-dev.20260707.2", lazy = true, lazy_bins = ["tsgo"] }
-"npm:@fission-ai/openspec" = { version = "1.16.1", lazy = true, lazy_bins = ["openspec"] }
+"npm:@fission-ai/openspec" = { version = "2.0.0", lazy = true, lazy_bins = ["openspec"] }
 "npm:defuddle" = { version = "0.19.6", lazy = true, lazy_bins = ["defuddle"] } # WebFetch の代替: URL 本文をモデル要約を挟まず clean な Markdown で取得
 "npm:@playwright/cli" = { version = "0.1.23", lazy = true, lazy_bins = ["playwright-cli"] } # ブラウザ操作の CLI。skill は入れず、使うときに頼む
 
