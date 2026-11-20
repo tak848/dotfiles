@@ -3141,10 +3141,10 @@ checksum = "sha256:dcc60d59a0746999f99064a01c020445d54d84228c691cdbf25b49ac3b591
 url = "https://nodejs.org/dist/v26.13.0/node-v26.13.0-win-x64.zip"
 
 [[tools."npm:@fission-ai/openspec"]]
-version = "1.16.1"
-aube = { path = "locks/npm-fission-ai-openspec/1.16.1", digest = "sha256:7075d2e2ed4fb671f684562d50335a330da6b430c9ed83a006e06b5a3bcd8966" }
+version = "2.1.1"
+aube = { path = "locks/npm-fission-ai-openspec/2.1.1", digest = "sha256:eea652efd2d41ab6ad70ac5ddf9d74792c32b52131fd82dafbd401d5cb798a71" }
 backend = "npm:@fission-ai/openspec"
-specifiers = ["1.16.1"]
+specifiers = ["2.1.1"]
 
 [[tools."npm:@playwright/cli"]]
 version = "0.1.23"
