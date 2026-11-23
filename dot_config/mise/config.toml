@@ -96,7 +96,7 @@ python = "3.13.18"
 
 # 検索・ファイル操作
 "aqua:twpayne/chezmoi" = "2.74.1"
-"aqua:BurntSushi/ripgrep" = { version = "15.2.0", lazy = true, lazy_bins = ["rg"] }
+"aqua:BurntSushi/ripgrep" = { version = "16.0.0", lazy = true, lazy_bins = ["rg"] }
 "aqua:phiresky/ripgrep-all" = { version = "0.10.10", lazy = true, lazy_bins = ["rga", "rga-fzf", "rga-fzf-open"] }
 # rga依存: ドキュメント変換（docx, epub, odt等）
 "github:jgm/pandoc" = { version = "3.14", lazy = true, lazy_bins = ["pandoc", "pandoc-lua", "pandoc-server"] }
