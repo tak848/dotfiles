@@ -2044,51 +2044,51 @@ url = "https://github.com/temporalio/cli/releases/download/v1.10.1/temporal_cli_
 url_api = "https://api.github.com/repos/temporalio/cli/releases/assets/744972499"
 
 [[tools."aqua:theseus-rs/postgresql-binaries"]]
-version = "18.7.0"
+version = "19.0.0"
 backend = "aqua:theseus-rs/postgresql-binaries"
-specifiers = ["18.7.0"]
+specifiers = ["19.0.0"]
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-arm64"]
-checksum = "sha256:6fcf45163aa044fe58597885b0e27c4b1614c53ad088d4d0ebbbfdf5df510eaf"
+checksum = "sha256:256ae47d0e9e0e6e22586643e10ed554b54d5679b6f401ef63d09a0fbc3368d2"
 checksum_source = "mise-versions"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.7.0/postgresql-18.7.0-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/740757683"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/19.0.0/postgresql-19.0.0-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/777810557"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-arm64-musl"]
-checksum = "sha256:6fcf45163aa044fe58597885b0e27c4b1614c53ad088d4d0ebbbfdf5df510eaf"
+checksum = "sha256:256ae47d0e9e0e6e22586643e10ed554b54d5679b6f401ef63d09a0fbc3368d2"
 checksum_source = "mise-versions"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.7.0/postgresql-18.7.0-aarch64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/740757683"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/19.0.0/postgresql-19.0.0-aarch64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/777810557"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-x64"]
-checksum = "sha256:53ca01952cb581145e4fb16b6b3b675da345a82879f350707b9f65863a0642f4"
+checksum = "sha256:ec7044fb9e2f1126383a869e463c8028d403d161c6a4a88501f43ca64112b623"
 checksum_source = "mise-versions"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.7.0/postgresql-18.7.0-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/740680306"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/19.0.0/postgresql-19.0.0-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/777983788"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.linux-x64-musl"]
-checksum = "sha256:53ca01952cb581145e4fb16b6b3b675da345a82879f350707b9f65863a0642f4"
+checksum = "sha256:ec7044fb9e2f1126383a869e463c8028d403d161c6a4a88501f43ca64112b623"
 checksum_source = "mise-versions"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.7.0/postgresql-18.7.0-x86_64-unknown-linux-gnu.tar.gz"
-url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/740680306"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/19.0.0/postgresql-19.0.0-x86_64-unknown-linux-gnu.tar.gz"
+url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/777983788"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.macos-arm64"]
-checksum = "sha256:86456c0ed99d2466524eaa074db6580cf7d748b91042e252c83eaca9a9d216e7"
+checksum = "sha256:3165a453906bb345f54e189f65db828a76d60e7696191afd26fca6dc73ba51a4"
 checksum_source = "mise-versions"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.7.0/postgresql-18.7.0-aarch64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/740414325"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/19.0.0/postgresql-19.0.0-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/777393734"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.macos-x64"]
-checksum = "sha256:9cd649259d6bf4af60a235e772c83853df215b63f4c1967c2eed7f9376aefb89"
+checksum = "sha256:f255a9c1a3489b4125794c7d2221ff6d82466d5da24876a3a9655c5a596e2efd"
 checksum_source = "mise-versions"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.7.0/postgresql-18.7.0-x86_64-apple-darwin.tar.gz"
-url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/740441727"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/19.0.0/postgresql-19.0.0-x86_64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/777498702"
 
 [tools."aqua:theseus-rs/postgresql-binaries"."platforms.windows-x64"]
-checksum = "sha256:6e054adb854dbed1f78f9933a1c65737d85a47d2446ce0e9b5f055fb3794fe5c"
+checksum = "sha256:2cf7918634790e9443ef4edb5ea47006e2fcbaa659e88e74c0dae63cdcf9d19b"
 checksum_source = "mise-versions"
-url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/18.7.0/postgresql-18.7.0-x86_64-pc-windows-msvc.tar.gz"
-url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/740513899"
+url = "https://github.com/theseus-rs/postgresql-binaries/releases/download/19.0.0/postgresql-19.0.0-x86_64-pc-windows-msvc.tar.gz"
+url_api = "https://api.github.com/repos/theseus-rs/postgresql-binaries/releases/assets/777430936"
 
 [[tools."aqua:twpayne/chezmoi"]]
 version = "2.74.1"

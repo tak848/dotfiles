@@ -153,7 +153,7 @@ python = "3.13.18"
 "aqua:go-task/task" = "3.54.0"
 "aqua:golangci/golangci-lint" = { version = "2.15.0", lazy = true, lazy_bins = ["golangci-lint"] }
 # lazy_bins に無いコマンドは実行しても入れるきっかけにならないので、実行ファイルを全部並べる
-"aqua:theseus-rs/postgresql-binaries" = { version = "18.7.0", lazy = true, lazy_bins = [
+"aqua:theseus-rs/postgresql-binaries" = { version = "19.0.0", lazy = true, lazy_bins = [
   "clusterdb",
   "createdb",
   "createuser",
