@@ -774,6 +774,7 @@ url_api = "https://api.github.com/repos/BurntSushi/ripgrep/releases/assets/47811
 version = "2.6.1"
 backend = "aqua:DataDog/pup"
 specifiers = ["2.6.1"]
+unsupported_platforms = ["windows-x64"]
 
 [tools."aqua:DataDog/pup"."platforms.linux-arm64"]
 checksum = "sha256:12f929447ea809925a5b7c9e82b645c203a99a0e06b328b44aa463e4242ef629"
@@ -956,6 +957,7 @@ url_api = "https://api.github.com/repos/anthropics/claude-code/releases/assets/7
 version = "0.11.5"
 backend = "aqua:arl/gitmux"
 specifiers = ["0.11.5"]
+unsupported_platforms = ["windows-x64"]
 
 [tools."aqua:arl/gitmux"."platforms.linux-arm64"]
 checksum = "sha256:89a03a76828267927d57904f0f716a9b9aad627d1697d5c0c883d60c09bb4ff6"
@@ -1038,6 +1040,7 @@ provenance = "github-attestations"
 version = "2.42.1"
 backend = "aqua:aws/aws-cli"
 specifiers = ["2.42.1"]
+unsupported_platforms = ["windows-x64"]
 
 [tools."aqua:aws/aws-cli"."platforms.linux-arm64"]
 checksum = "sha256:98f5f03bb6508a06ce9d9d6d2db97932dce735f3b7ad85616324a95edf4b815f"
@@ -1805,6 +1808,7 @@ url_api = "https://api.github.com/repos/openai/codex/releases/assets/769868206"
 version = "0.10.10"
 backend = "aqua:phiresky/ripgrep-all"
 specifiers = ["0.10.10"]
+unsupported_platforms = ["windows-x64"]
 
 [tools."aqua:phiresky/ripgrep-all"."platforms.linux-arm64"]
 checksum = "sha256:2cd875ab6c78b27e4830b5bca92c570a8a8dcfb368bc71b189b65ac01fbc3020"
@@ -1920,6 +1924,7 @@ url_api = "https://api.github.com/repos/starship/starship/releases/assets/650074
 version = "0.11.1"
 backend = "aqua:tak848/ccgate"
 specifiers = ["0.11.1"]
+unsupported_platforms = ["windows-x64"]
 
 [tools."aqua:tak848/ccgate"."platforms.linux-arm64"]
 checksum = "sha256:88cc13f1acac03f3b1fd2303964f0bc37d15fa5e7ae4aaac5b06b0f10d371341"
@@ -2899,6 +2904,7 @@ url_api = "https://api.github.com/repos/sivchari/gopls-lazy/releases/assets/5045
 version = "1.6.0"
 backend = "github:sorafujitani/ccsession"
 specifiers = ["v1.6.0"]
+unsupported_platforms = ["windows-x64"]
 
 [tools."github:sorafujitani/ccsession"."platforms.linux-arm64"]
 checksum = "sha256:93b5663c32d312029d74948bf989905ae0521c522af9286648d194d271f6e4ba"
