@@ -25,7 +25,7 @@ jobs:
     steps:
       # push 時点の SHA ではなくブランチの先頭を取る（lockfiles-and-checksums.yaml の同じ step を参照）
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
         with:
           ref: ${{ github.ref }}
           persist-credentials: false
@@ -37,7 +37,7 @@ jobs:
           echo "MISE_VERSION=${MISE_VERSION#v}" >> "$GITHUB_ENV"
 
       - name: Setup mise
-        uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        uses: jdx/mise-action@v5.2.7
         with:
           version: ${{ env.MISE_VERSION }}
           install: false
@@ -48,7 +48,7 @@ jobs:
         run: mise generate bootstrap -V "$MISE_VERSION" -w ./dot_local/bin/executable_mise
 
       - name: Generate GitHub App Token
-        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        uses: actions/create-github-app-token@v3.3.0
         id: app-token
         with:
           app-id: ${{ vars.APP_ID }}

@@ -12,6 +12,7 @@
   - mise によるツールのインストール確認
   - Jsonnet 構文チェック
   - `task check` で自動生成ファイルの diff チェック（Ubuntu のみ、mise.lock 除外）
+  - `gh-actions-lock --verify` で `actions.lock` の検証（Ubuntu のみ）
   - chezmoiテンプレートの検証
 
 ### lockfiles-and-checksums.yaml
@@ -38,6 +39,13 @@
   - chezmoi apply で nvim 設定をデプロイ
   - `nvim --headless "+Lazy! sync"` でプラグイン同期
   - lazy-lock.json を更新
+
+## actions.lock
+
+`actions.lock` は [gh-actions-lock](https://github.com/github/gh-actions-lock) が生成する workflow の依存の lockfile で、ここにある workflow は全部これに入れてある。GitHub Actions は lockfile に記録した commit で action を実行する。`uses:` は full semver のタグで書く（SHA では書かない）。
+
+- workflow を足したときや `uses:` を変えたときは、repo の root で `gh-actions-lock` を実行して、workflow と lockfile をまとめて commit する（`.mise.toml` で入る）。手で編集しない
+- Renovate が action を上げる PR では、Renovate が lockfile も書き換える
 
 ## 必要な Secrets / Variables
 
