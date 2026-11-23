@@ -38,7 +38,7 @@ jobs:
           echo "MISE_VERSION=$MISE_VERSION" >> "$GITHUB_ENV"
 
       - name: Setup mise
-        uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5.2.7
+        uses: jdx/mise-action@924e7c586e33d7d4bae9c14e26c5d22e2beb6e78 # v5.3.0
         with:
           version: ${{ env.MISE_VERSION }}
           # lazy = true のツールは素の mise install では入らない。Renovate の更新でも全ツールが両 OS で
