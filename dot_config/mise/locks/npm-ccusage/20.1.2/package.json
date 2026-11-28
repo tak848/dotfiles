@@ -2,6 +2,6 @@
   "name": "mise-npm-install",
   "private": true,
   "dependencies": {
-    "@fission-ai/openspec": "2.1.1"
+    "ccusage": "20.1.2"
   }
 }

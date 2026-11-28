@@ -1,0 +1,78 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      ccusage:
+        specifier: 20.1.2
+        version: 20.1.2
+
+packages:
+
+  '@ccusage/ccusage-darwin-arm64@20.1.2':
+    resolution: {integrity: sha512-8Dd8MNVLjKSzlmlqaOQyPlb1ZEBjiQYDRpmeME2FmNeoiZw1e02O8bDZhvcf3oSD5aBVV566b05sJkdXbiDFtg==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@ccusage/ccusage-darwin-x64@20.1.2':
+    resolution: {integrity: sha512-tI9d+MtFfynwVX9LYRbEGZLLvbOkOZ8TDeW3jomLW3/1h6q6eiI+lPIRAqTo5li3GA4nDe12T2elIq67uIJ+Zw==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@ccusage/ccusage-linux-arm64@20.1.2':
+    resolution: {integrity: sha512-I2wyYwrMxr5wi+Ei4tAhHzssg3/od0BtvMBMsAaEtYi3yX7AFkNuIXpU1jwVV3Q5KSZ8nkqZGUq7iXisJwVmLQ==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@ccusage/ccusage-linux-x64@20.1.2':
+    resolution: {integrity: sha512-/GRlq7gPk1LXcqV1wJoSMoM8/99Ztzjr7DLoADE/TSE86Da7rCrWx+mnomDbFHwXYkZAloMMbO+uHhQWv32GmQ==}
+    cpu: [x64]
+    os: [linux]
+
+  '@ccusage/ccusage-win32-arm64@20.1.2':
+    resolution: {integrity: sha512-qhw1BKV22+XWNScGuJhH8zU4y8kCs9aMBOm5DtUBSApGMs2DZu4phXEt/zMg0quJi1tTKY2bC8QIIpAorqcsmQ==}
+    cpu: [arm64]
+    os: [win32]
+
+  '@ccusage/ccusage-win32-x64@20.1.2':
+    resolution: {integrity: sha512-6DBHChdGkQgVbYv7GxGmKjhufNesNRC7yMlWRFYOtP9TicJIYyN2q1LsM+IiMQlfc365lsQft4C5M/RCun2Oow==}
+    cpu: [x64]
+    os: [win32]
+
+  ccusage@20.1.2:
+    resolution: {integrity: sha512-BVJWa3Sa3jf4OUGNe0hZAi96l6Rb9wixBTBU1OWlNsc8SwILyE7WurHaPqlwxIjBHIN4LTDwzS1X8rr+K2uNNw==}
+    hasBin: true
+
+snapshots:
+
+  '@ccusage/ccusage-darwin-arm64@20.1.2':
+    optional: true
+
+  '@ccusage/ccusage-darwin-x64@20.1.2':
+    optional: true
+
+  '@ccusage/ccusage-linux-arm64@20.1.2':
+    optional: true
+
+  '@ccusage/ccusage-linux-x64@20.1.2':
+    optional: true
+
+  '@ccusage/ccusage-win32-arm64@20.1.2':
+    optional: true
+
+  '@ccusage/ccusage-win32-x64@20.1.2':
+    optional: true
+
+  ccusage@20.1.2:
+    optionalDependencies:
+      '@ccusage/ccusage-darwin-arm64': 20.1.2
+      '@ccusage/ccusage-darwin-x64': 20.1.2
+      '@ccusage/ccusage-linux-arm64': 20.1.2
+      '@ccusage/ccusage-linux-x64': 20.1.2
+      '@ccusage/ccusage-win32-arm64': 20.1.2
+      '@ccusage/ccusage-win32-x64': 20.1.2

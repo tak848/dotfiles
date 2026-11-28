@@ -9,13 +9,13 @@ importers:
   .:
     dependencies:
       '@fission-ai/openspec':
-        specifier: 2.1.1
-        version: 2.1.1
+        specifier: 2.2.0
+        version: 2.2.0
 
 packages:
 
-  '@fission-ai/openspec@2.1.1':
-    resolution: {integrity: sha512-GQv1xU4uLrTVJ6MfOKNIxo/BgEk+e8C/XBmjTfzd/W3LNh4v2UMAsfTdn8mjHdjDA/KjfGstwUhZedQW4hdcZQ==}
+  '@fission-ai/openspec@2.2.0':
+    resolution: {integrity: sha512-tSLMp9NhjF8zqNI53lZcaeVOFxE25pmMA7WZDsHZbK1Rds4R6nXeCm3mSxvBN1DdiDbKPBHuEkoJrBzF3PVacA==}
     engines: {node: '>=22.20.0'}
     hasBin: true
 
@@ -165,8 +165,8 @@ packages:
     resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
     engines: {node: 18 || 20 || >=22}
 
-  brace-expansion@5.0.13:
-    resolution: {integrity: sha512-Vh3dmFbc4wZeox7M9I/0L9GfFd83Su4+yCck/OF9Gi/P/dAHn0RT7X4K9R7gMNMhDck3DvhR6QXsnQdjjgwNvQ==}
+  brace-expansion@5.1.0:
+    resolution: {integrity: sha512-aa11Dv491GKnYqxaul3aRJ0szew7yMJMfZPnqD44NjGrZXoj62l41OEDDpdpC4eE2P88vBFfLuSyRhpG91NUvg==}
     engines: {node: 20 || >=22}
 
   chalk@5.6.2:
@@ -320,8 +320,8 @@ packages:
     resolution: {integrity: sha512-yDPMNjp4WyfYBkHnjIRLfca1i6KMyGCtsVgoKe/z1+6vukgaENdgGBZt+ZmKPc4gavvEZ5OgHfHdrazhgNyG7w==}
     engines: {node: '>=12'}
 
-  tar@7.5.23:
-    resolution: {integrity: sha512-lkukzdoGngZHJZXxW4S/E4Fp9ghTDlyZXrQGRNoJ/LXvDKcXUTq2sg5yQe74po7Voea6n/IN09+wE/QvJMiifA==}
+  tar@7.5.24:
+    resolution: {integrity: sha512-to/OxuCk5DeVONcjjODT7aeoRq5NIPPlfPc0tNML+wLlnf6u5BcJz97Uukv3pT3jzorkFhUevylkAiBr+ZmV2w==}
     engines: {node: '>=18'}
 
   tinyglobby@0.2.17:
@@ -351,11 +351,11 @@ packages:
 
 snapshots:
 
-  '@fission-ai/openspec@2.1.1':
+  '@fission-ai/openspec@2.2.0':
     dependencies:
       '@inquirer/core': 12.1.1
       '@inquirer/prompts': 8.8.1
-      brace-expansion: 5.0.13
+      brace-expansion: 5.1.0
       chalk: 6.0.1
       commander: 14.0.3
       cross-spawn: 7.0.6
@@ -469,7 +469,7 @@ snapshots:
 
   balanced-match@4.0.4: {}
 
-  brace-expansion@5.0.13:
+  brace-expansion@5.1.0:
     dependencies:
       balanced-match: 4.0.4
 
@@ -579,7 +579,7 @@ snapshots:
   skills@1.8.1:
     dependencies:
       nostics: 1.4.0
-      tar: 7.5.23
+      tar: 7.5.24
       yaml: 2.9.1
 
   stdin-discarder@0.3.2: {}
@@ -593,7 +593,7 @@ snapshots:
     dependencies:
       ansi-regex: 6.6.0
 
-  tar@7.5.23:
+  tar@7.5.24:
     dependencies:
       '@isaacs/fs-minipass': 4.0.1
       chownr: 3.0.0
